@@ -1,0 +1,3513 @@
+;*****************************************************************************
+;  TSMC layout editor technology file - VXL013um8Mv21b.tf, Ver 2.2a
+;  For TSMC 0.13um process (total 8 metal layers)
+;  Document number: T-013-LO-LE-002 (Virtuoso)
+;  Used for Virtuoso-XL environment
+;*****************************************************************************
+; DISCLAIMER
+;
+; The information contained herein is provided by TSMC on an "AS IS" basis
+; without any warranty, and TSMC has no obligation to support or otherwise
+; maintain the information.  TSMC disclaims any representation that the
+; information does not infringe any intellectual property rights or proprietary
+; rights of any third parties.  There are no other warranties given by TSMC,
+; whether express, implied or statutory, including, without limitation, implied
+; warranties of merchantability and fitness for a particular purpose.
+;
+; STATEMENT OF USE
+;
+; This information contains confidential and proprietary information of TSMC.
+; No part of this information may be reproduced, transmitted, transcribed,
+; stored in a retrieval system, or translated into any human or computer
+; language, in any form or by any means, electronic, mechanical, magnetic,
+; optical, chemical, manual, or otherwise, without the prior written permission
+; of TSMC.  This information was prepared for informational purpose and is for
+; use by TSMC's customers only.  TSMC reserves the right to make changes in the
+; information at any time and without notice.
+;*****************************************************************************
+;
+;  03/20/2000 VER 1.0a by T.C.Chiang
+;    1) Add dummy metal layers
+;  03/30/2000 VER 1.0b by T.C.Chiang
+;    1) Add DMN2V/DMP2V
+;  08/25/2000 VER 1.0c by T.C.Chiang
+;    1) Add metal slot layers, FUSE(95), PMDMY(106), RHRIDMY(120), VARDMY(143),
+;	INDDMY(144)
+;    2) Add ESD1DMY(145),ESD2DMY(146),ESD3DMY(147),CTMDMY(148), POLYG pin (149)
+;    3) Add dummy metal insertion blockage layer DMEXCL(150)
+;    4) Modified EM_DRAM used layer(96-105)
+;    5) Remove unused layer HVPLDD/HVNLDD/HVII/PTDIODE/OD1/FLG1/FLG2/Poly1/HVI
+;    6) Rename LPR to HRI
+;    7) Modify tfcDefineSymContactDevice, tfcDefineDeviceProp and
+;	tfcDefineSymPinDevice sessions
+;    8) Modify y0-y9 display to blink for calibre debug use
+;  01/11/2001 VER 1.1a by T.C.Chiang
+;    1) Add NHV(14), SLTEXCL(79), TMVID(80), LMARK(109), RHDMY(117), VIAD(167),
+;	MD(168), CBD(169), UBM(170)
+;    2) Remove unused layer ALPAD, VCDUMMY, CTM2, CTM3, CTM4, CTM5, CTM6, CTM8
+;    3) Rename ESEXCL to DMSRM, CTM7 to CTM
+;  02/12/2001 VER 1.1b by T.C.Chiang
+;    1) Add IP tagging used layer IP(63;63), MD pin(159), PADDMY(160)
+;  05/29/2001 VER 1.1c by Daniel Yan
+;    1) Recover M1_PO, M1_OD SymContactDevice
+;  10/12/2001 VER 1.1d by Daniel Yan
+;    1) Add CAP1TDMY(78) to define capacitor for Emb1TRAM cell array
+;    2) Add RFDUMMY(161) to define RF devices
+;    3) Add SEALRING(162) to for special logic operations
+;  01/02/2002 VER 1.2a by Daniel Yan
+;    1) Add LVID(73) for Low-Vt IDentificaion layer
+;    2) Add VIAEXCL(153;1~9) for blockage in VIA insertion
+;    3) Add 154;0~7 for embflash process
+;       FLASH(154;0), MW(154;1), FLGT(154;2), MPOL(154;3), HVII(154;4),
+;	HVNW(154;5), HVPW(154;6), TOPMCON(154;7)
+;    4) Remove old embflash reserved layers:
+;       HVPF(81), HVNW(82), HNVT(83), VTEH(84), HPVT(85), TIM(86)
+;    5) Remove display of EM_DRAM layers.
+;    6) Rename VT1MN => VTL_N, VT1MP => VTL_P, VT2MN => VTH_N, VT2MP => VTH_P
+;    7) Remove ESD(27), please refer to ESD3DMY(147)
+;  01/30/2002 VER 1.2b by lwhung
+;    1) Add VARDMY(143;1), VARDMY(143;2), VARDMY(143;3) to define RF MOSCAP_G3,
+;	MOSCAP_G6, xjvar device
+;  04/04/2002 VER 1.3a by lwhung
+;    1) Add CSRDMY(165;0) for chip corner stress relief pattern layer
+;    2) Add DIFF dummy (6;1) and POLYG dummy (17;1)
+;    3) Add OD blockage ODBLK(150;20), POLY blockage POBLK(150;21)
+;    4) Rename FUSE(95) to FW(95)
+;    5) Add DIFF drain(6;3) layer for RF MOS to recognize Drain
+;    6) Add LW(109;2) for L target window
+;  05/14/2002 VER 1.3b by lwhung
+;    1) Add VIAP(151), MP(152), MP dummy(152;1), MP slot(152;2) for Additional
+;	Thick Metal process
+;    2) Add AP(42) for AL PAD.
+;    3) Add MOMDMY(155) dummy layer for DRC to cover interdigitated capacitor
+;	(IDMOM) region
+;  05/29/2002 VER 1.3c by lwhung
+;    1) Revise LW Virtuoso layer 75 to 105 for reserving 75 for PDK
+;  07/11/2002 VER 1.4a by lwhung
+;    1) Add HVTSRM(60) to cover SRAM cell array
+;    2) Remove LW(109;2)
+;    3) DSDDMY drawing1~drawing9 (40;1~9) for DSD internal use
+;    4) Remove display of additional thick metal process layers
+;    5) Remove METAL&VIA(net) and CONT(boundary) and boundary(drawing)
+;	in tfcDefineLayerProp
+;  08/02/2002 VER 1.5a by lwhung
+;    1) Add CDUDMY(165) for cover CDU pattern in 10um assembly isolation beside
+;	seal ring
+;    2) Add error (marker;error) (marker;warning) definition in tf file
+;    3) Add MWLDMY(154;8), MSLDMY(154;9), M4OPT drawing1(154;10),
+;	M4OPT drawing2(154;11) for flash process
+;  04/29/2003 VER 1.5b ytpu
+;    1) Add LN_CAP(72) for 2.5V Linear NMOS Capacitor N+ implant definition
+;    2) Add SRAM_DUMMY(waive;180;0) and SRAM_DUMMY(passgate;180;1) to recognize
+;	SRAM pass gate.
+;    3) Modify layer number of SRAM_DUMMY from 180 to 186; SRAM_DUMMY(waive;
+;	186;0) and SRAM_DUMMY(passgate;186;1) to recognize SRAM pass gate.
+;    4) Add one layer HVNTN(154,datatype:12) for EmbFlash process.
+;    5) Disable display number of some layers of technology file as follow:
+;	PW,RW,VTP,VTN,N2V,P2V,N3V.P3V,ESDHV,BPI,TMVID,RWDMY,CDMY,DNWDMY,DMP2V,
+;	DMN2V,PADDMY, CELLIMP,BC1,BC2,BTC,VCC.
+;    6) Embed flash add four layers and remove one layer:
+;	Add:
+;	PSUB(154;13): P_sub for HVNMOS.
+;	HNVT(154;14): Vt implant area for HVNMOS.
+;	PO1 (154;15): Area for floating gate contact.
+;	MCEL(154;16): Define memory cell area.
+;	Remove:
+;	TOPMCON(154;7)
+;    7) Add layer CBM(88) for capacitor buttom metal layer.
+;    8) Re-sort some layers by mask sequence.
+;    9) Add layer CB2(86;0;drawing) to CB2 layer
+;	( Dual zone pad's passivation2 opening).
+;    10) Add layer RFDUMMY(161,1) to define "additional terminal".
+;    11) Add MD layers: MD(dummy,168,1), MD(slot,168,2), DMEXCL(dummyf,150,15),
+;	SLTEXCL(dummyf,79,15); VIAD layer:VIAEXCL(dummyf,153,15).
+;    12) Modify layer name of SRAM_DUMMY to SRAMDMY.
+;    13) Add layers: SRAMDMY(186,allsram,2), SRAMDMY(186,cvss_sram,3),
+;	SRAMDMY(186,periphery,4).
+;    14) Modify all dummy layer name's postfix from DUMMY to DMY.
+;    15) Add layer LOGO(158).
+;    16) Remove some layers:LNR,DRCDUMMY,POLY2,NHV,COW,PDIMP,VTDN,VTDP,PUIMP.
+;    17) Change all layer name of DIFF to OD.
+;    18) Add layer POLYG(149,lvs,1)
+;    19) Modify the name of NTN layer to NT_N in techfile.
+;  12/11/2003 ytpu 2.0a
+;    1) Re-add DRCDMY(125).
+;    2) Add layer WBDMY(183).
+;    3) Add the pin layers of two layers OD, NW at datatype 6.
+;    4) Remove the DRCDMY(125) layer from this version.
+;    5) Add the layer DIODMY(119;1,drawing1) for DNW dual diode structure.
+;  05/03/2004 ytpu 2.1a
+;    1) Add CLDD(92) and CAVITY(90) for 1TRAM and 1TQ used respectively.
+;    2) The layer purpose of the layer number 182 was changed:
+;	R_rule(182,require,1)
+;	R_rule(182,recommend,2)
+;  09/27/2005 Ver 2.1b by Chen-Chia Wang, C.T.Yao
+;    1) Add NWDMY(114;1,lvs), RPDMY(115;1,lvs) for lvs to recognize 3
+;	terminal resistors.
+;    2) Add INDDMY(144;1,drawing1), (144;2,drawing2) and (144;30,rad).
+;    3) Remove useless layer VIAEXCL(153;9,dummy9).
+;    4) Add METAL2~7(32~37;5,drawing5), that is, datatype 5 of metal2 to
+;	metal 7 for X-route metal layers.
+;    5) Add EMBFH(154;21,fg1) and EMBFH(154;22,fg2) for double floating gate
+;	of embedded flash process.
+;    6) Move purposes: width 102->99, length 103->100, wellbody 104->101.
+;	Keep purposes which are not in PDK one: rad 102, require 103,
+;	recommend 104, fg1 106, fg2 107, all 255.
+;    7) Add display layer for PDK:  75.
+;	Keep display layers which are not in PDK one: EMBFH 71, R_rule 108,
+;	CLDD 113, WBDMY 118, CAVITY 125.
+;    8) Add RV(85), Via hole for AlCu Redistributional layer (Al RDL).
+;	It's a 65nm layer, reserved for future use.
+;    9) Add Virtuoso-XL features from techfile (Oct24,2003) inside PDK,
+;	based on standard version T-013-LO-LE-002 Ver2.1a.
+;   10) Remove/Correct errors in spacingRules & orderedSpacingRules.
+;   11) Fix cut layer bug in layerFunctions. Merge two layerRules into one.
+;	Add cut layer CONT in layerFunctions.
+;   12) Add RMDMY(116;1-9,drawing1-9) for metal resistor lvs dummy layer. 
+;   13) Remove PLDMY(124), no power line rules in 0.13um process. 
+;   14) Add COW(69;0) for capacitor open window.
+;  04/13/2006 Ver 2.2a by Allen Tsai
+;    1) Add AP(126;0,pin).
+;    2) Add IMSOR(74;1~31) for CMOS IMAGE SENSOR.
+;    3) Add IMSOR(74;32,FLD) for Cell FLD Implant in CMOS IMAGE SENSOR.
+;    4) Add PWELL for CIS process.
+;    5) Add IMSOR(74;29 ,CELL_NLDD) for CIS process.
+;    6) Add R_rule(182;3,analog) for analog recommended rules.
+;    7) Add FW(95;20,ap).
+;
+;*****************************************************************************
+; IMPORTANT NOTICE
+;*****************************************************************************
+; Though PDIFF(7;0) & NDIFF(8;0) are tape out layers, it's strongly suggested
+; to use OD(6;0) instead, which is the standard "Gate Oxide and Diffusion"
+; (OD) layer. Since PDIFF & NDIFF layers are not standard layers, the related
+; design rule checks are not provided in this tech file. Be sure to check
+; carefully the related mask logic operation if PDIFF/NDIFF layers are used.
+;*****************************************************************************
+;
+
+;********************************
+; LAYER DEFINITION
+;********************************
+layerDefinitions(
+
+ techPurposes(
+; ( PurposeName	Purpose	Abbreviation )
+; ( ---------	------	------------ )
+; User-Defined Purposes:
+  ( ap          70	)
+  ( analog      71	)
+  ( CELL_NLDD   72	)
+  ( CELLM       73 	)
+  ( CELLH       74	)
+  ( NPS	        75 	)
+  ( PL	        76	)
+  ( GM		77	)
+  ( RM	        78	)
+  ( BM  	79	)
+  ( ML	        80	)
+  ( PPS	        81	)
+  ( CIRPO	82	)
+  ( GM1	        83	)
+  ( GM2	        84	)
+  ( MS	        85 	)
+  ( LS	        86	)
+  ( YM		87	)
+  ( CM	        88	)
+  ( MM  	89	)
+  ( E_ML	90	)
+  ( CELL_TX	91	)
+  ( CELL_RS	92	)
+  ( CAP_IMP	93	)
+  ( MP	        94	)
+  ( DPW		95	)
+  ( SEL		96	)
+  ( ME		97	)
+  ( FLD		98	)
+  ( width	99	width	)
+  ( length	100	length	)
+  ( wellbody	101	wellbod	)
+  ( rad		102	rad	)
+  ( require	103	require	)
+  ( recommend	104	recommend )
+  ( dummyf	105	dummyf	)
+  ( fg1		106	fg1	)
+  ( fg2		107	fg2	)
+  ( periphery	108	periphery )
+  ( lvs		109	lvs	)
+  ( allsram	110	allsram	)
+  ( waive	111	waive	)
+  ( passgate	112	passgate )
+  ( col		113	col	)
+  ( row		114	row	)
+  ( dummy1	115	dummy1	)
+  ( dummy2	116	dummy2	)
+  ( dummy3	117	dummy3	)
+  ( dummy4	118	dummy4	)
+  ( dummy5	119	dummy5	)
+  ( dummy6	120	dummy6	)
+  ( dummy7	121	dummy7	)
+  ( dummy8	122	dummy8	)
+  ( dummy9	123	dummy9	)
+  ( drain	124	drain	)
+  ( cvss_sram	125	cvss_sram )
+  ( slot	126	slot	)
+  ( dummy	127	dummy	)
+; System-Reserved Purposes:
+  ( warning	234	wng	)
+  ( tool1	235	tl1	)
+  ( tool0	236	tl0	)
+  ( label	237	lbl	)
+  ( flight	238	flt	)
+  ( error	239	err	)
+  ( annotate	240	ant	)
+  ( drawing1	241	dr1	)
+  ( drawing2	242	dr2	)
+  ( drawing3	243	dr3	)
+  ( drawing4	244	dr4	)
+  ( drawing5	245	dr5	)
+  ( drawing6	246	dr6	)
+  ( drawing7	247	dr7	)
+  ( drawing8	248	dr8	)
+  ( drawing9	249	dr9	)
+  ( boundary	250	bnd	)
+  ( pin		251	pin	)
+  ( drawing	252	drw	)
+  ( net		253	net	)
+  ( cell	254	cel	)
+  ( all		255	all	)
+ ) ;techPurposes
+
+ techLayers(
+; ( LayerName	Layer#  Abbreviation )
+; ( ---------	------  ------------ )
+; User-Defined Layers: remaining layers: 4, 9, 10, 14, 18, 28, 44, 45, 62~66, 69, 94, 124
+  ( ref		0	ref	)
+  ( DNWELL	1	DNWELL	)
+  ( CB2		2	CB2	)
+  ( NWELL	3	NWELL	)
+  ( PLMIDE	5	PLMIDE	)
+  ( OD		6	OD	)
+  ( PDIFF	7	PDIFF	)
+  ( NDIFF	8	NDIFF	)
+  ( NT_N	11	NT_N	)
+  ( VTL_N	12	VTL_N	)
+  ( VTL_P	13	VTL_P	)
+  ( OD2		15	OD2	)
+  ( OD3		16	OD3	)
+  ( POLYG	17	POLYG	)
+  ( MWLDMY	19	MWLDMY	)
+  ( MSLDMY	20	MSLDMY	)
+  ( M4OPT	21	M4OPT	)
+  ( LN_CAP	22	LN_CAP	)
+  ( SRAMDMY	23	SRAMDMY	)
+  ( HVNTN	24	HVNTN	)
+  ( PIMP	25	PIMP	)
+  ( NIMP	26	NIMP	)
+  ( REDUNDMY	27	REDUNDM	)
+  ( RPO		29	RPO	)
+  ( CONT	30	CONT	)
+  ( METAL1	31	METAL1	)
+  ( METAL2	32	METAL2	)
+  ( METAL3	33	METAL3	)
+  ( METAL4	34	METAL4	)
+  ( METAL5	35	METAL5	)
+  ( METAL6	36	METAL6	)
+  ( METAL7	37	METAL7	)
+  ( METAL8	38	METAL8	)
+  ( METAL9	39	METAL9	)
+  ( DSDDMY	40	DSDDMY	)
+  ( VIAD	41	VIAD	)
+  ( MD		42	MD	)
+  ( PAD		43	PAD	)
+  ( HNVT	46	HNVT	)
+  ( PO1		47	PO1	)
+  ( MCEL	48	MCEL	)
+  ( RODMY	49	RODMY	)
+  ( DMSRM	50	DMSRM	)
+  ( VIA12	51	VIA12	)
+  ( VIA23	52	VIA23	)
+  ( VIA34	53	VIA34	)
+  ( VIA45	54	VIA45	)
+  ( VIA56	55	VIA56	)
+  ( VIA67	56	VIA67	)
+  ( VIA78	57	VIA78	)
+  ( VIA89	58	VIA89	)
+  ( RFDMY	59	RFDMY	)
+  ( HVTSRM	60	HVTSRM	)
+  ( UBM		61	UBM	)
+  ( VTH_N	67	VTH_N	)
+  ( VTH_P	68	VTH_P	)
+  ( COW 	69	COW	)
+  ( HRI		70	HRI	)
+  ( EMBFH	71	EMBFH	)
+  ( CBM		72	CBM	)
+  ( LVID	73	LVID	)
+  ( VIAEXCL	74	VIAEXCL	)
+  ( PDKREC	75	PDKREC	)
+  ( SEALRING	76	SEALRIN	)
+  ( CTM		77	CTM	)
+  ( CAP1TDMY	78	CAP1TDM	)
+  ( SLTEXCL	79	SLTEXCL	)
+  ( RV		80	RV	)
+  ( FLASH	81	FLASH	)
+  ( MW		82	MW	)
+  ( FLGT	83	FLGT	)
+  ( MPOL	84	MPOL	)
+  ( HVII	85	HVII	)
+  ( HVNW	86	HVNW	)
+  ( CTMDMY	87	CTMDMY	)
+  ( ESD3DMY	88	ESD3DMY	)
+  ( ESD2DMY	89	ESD2DMY	)
+  ( ESD1DMY	90	ESD1DMY	)
+  ( DMEXCL	91	DMEXCL	)
+  ( VARDMY	92	VARDMY	)
+  ( INDDMY	93	INDDMY	)
+  ( FW		95	FW	)
+  ( HVPW	96	HVPW	)
+  ( PSUB	97	PSUB	)
+  ( CSRDMY	98	CSRDMY	)
+  ( ODBLK	99	ODBLK	)
+  ( POBLK	100	POBLK	)
+  ( IP		101	IP	)
+  ( CDUDMY	102	CDUDMY	)
+  ( AP		103	AP	)
+  ( MOMDMY	104	MOMDMY	)
+  ( CBD		105	CBD	)
+  ( PMDMY	106	PMDMY	)
+  ( OVERLAP	107	OVERLAP	)
+  ( R_rule	108	R_rule	)
+  ( LMARK	109	LMARK	)
+  ( BJTDMY	110	BJTDMY	)
+  ( PSUB2	111	PSUB2	)
+  ( HOTWL	112	HOTWL	)
+  ( CLDD	113	CLDD	)
+  ( NWDMY	114	NWDMY	)
+  ( RPDMY	115	RPDMY	)
+  ( RMDMY	116	RMDMY	)
+  ( RHDMY	117	RHDMY	)
+  ( WBDMY	118	WBDMY	)
+  ( DIODMY	119	DIODMY	)
+  ( RHRIDMY	120	RHRIDMY	)
+  ( EXCL	121	EXCL	)
+  ( SDI		122	SDI	)
+  ( DPDMY	123	DPDMY	)
+;  ( PLDMY	124	PLDMY	)
+  ( CAVITY	125	CAVITY	)
+  ( LOGO	126	LOGO	)
+  ( boundary	127	boundar	)
+  ( PWELL	193	PWELL	)
+  ( IMSOR	194	IMSOR	)
+; System-Reserved Layers:
+  ( Unrouted	200	Unroute	)
+  ( Row		201	Row	)
+  ( Group	202	Group	)
+  ( Cannotoccupy 203	Cannoto	)
+  ( Canplace	204	Canplac	)
+  ( hardFence	205	hardFen	)
+  ( softFence	206	softFen	)
+  ( y0		207	y0	)
+  ( y1		208	y1	)
+  ( y2		209	y2	)
+  ( y3		210	y3	)
+  ( y4		211	y4	)
+  ( y5		212	y5	)
+  ( y6		213	y6	)
+  ( y7		214	y7	)
+  ( y8		215	y8	)
+  ( y9		216	y9	)
+  ( designFlow	217	designF	)
+  ( stretch	218	stretch	)
+  ( edgeLayer	219	edgeLay	)
+  ( changedLayer 220	changed	)
+  ( unset	221	unset	)
+  ( unknown	222	unknown	)
+  ( spike	223	spike	)
+  ( hiz		224	hiz	)
+  ( resist	225	resist	)
+  ( drive	226	drive	)
+  ( supply	227	supply	)
+  ( wire	228	wire	)
+  ( pin		229	pin	)
+  ( text	230	text	)
+  ( device	231	device	)
+  ( border	232	border	)
+  ( snap	233	snap	)
+  ( align	234	align	)
+  ( prBoundary	235	prBound	)
+  ( instance	236	instanc	)
+  ( annotate	237	annotat	)
+  ( marker	238	marker	)
+  ( select	239	select	)
+  ( grid	251	grid	)
+  ( axis	252	axis	)
+  ( hilite	253	hilite	)
+  ( background	254	backgro	)
+ ) ;techLayers
+
+ techLayerPurposePriorities(
+; Layers are ordered from highest to lowest priority.
+; ( LayerName	Purpose	)
+; ( ---------	-------	)
+  ( ref		drawing	)
+  ( DNWELL	drawing	)
+  ( PWELL	drawing	)
+  ( NWELL	drawing	)
+  ( PLMIDE	drawing	)
+  ( OD		drawing	)
+  ( OD2		drawing	)
+  ( OD3		drawing	)
+  ( POLYG	drawing	)
+  ( NT_N	drawing	)
+  ( VTL_N	drawing	)
+  ( VTL_P	drawing	)
+  ( VTH_N	drawing	)
+  ( VTH_P	drawing	)
+  ( PIMP	drawing	)
+  ( NIMP	drawing	)
+  ( RPO		drawing	)
+  ( CONT	drawing	)
+  ( METAL1	drawing	)
+  ( VIA12	drawing	)
+  ( METAL2	drawing	)
+  ( VIA23	drawing	)
+  ( METAL3	drawing	)
+  ( VIA34	drawing	)
+  ( METAL4	drawing	)
+  ( VIA45	drawing	)
+  ( METAL5	drawing	)
+  ( VIA56	drawing	)
+  ( METAL6	drawing	)
+  ( VIA67	drawing	)
+  ( METAL7	drawing	)
+  ( VIA78	drawing	)
+  ( METAL8	drawing	)
+  ( VIA89	drawing	)
+  ( METAL9	drawing	)
+; X-route metal layers
+  ( METAL2	drawing5 )
+  ( METAL3	drawing5 )
+  ( METAL4	drawing5 )
+  ( METAL5	drawing5 )
+  ( METAL6	drawing5 )
+  ( METAL7	drawing5 )
+  ( AP		drawing	)
+  ( PAD		drawing	)
+  ( WBDMY	drawing )
+  ( CB2		drawing	)
+  ( FW		drawing	)
+  ( FW		ap	)
+  ( PMDMY	drawing	)
+  ( LMARK	drawing	)
+  ( RODMY	drawing	)
+  ( DMSRM	drawing	)
+  ( HVTSRM	drawing	)
+  ( COW 	drawing	)
+  ( REDUNDMY	col	)
+  ( REDUNDMY	row	)
+  ( HRI		drawing	)
+  ( CTM		drawing	)
+  ( CTMDMY	drawing	)
+  ( CBM		drawing	)
+  ( INDDMY	drawing	)
+  ( INDDMY	drawing1 )
+  ( INDDMY	drawing2 )
+  ( INDDMY	rad	)
+  ( VARDMY	drawing	)
+  ( VARDMY	drawing1 )
+  ( VARDMY	drawing2 )
+  ( VARDMY	drawing3 )
+  ( ESD1DMY	drawing	)
+  ( ESD2DMY	drawing	)
+  ( ESD3DMY	drawing	)
+  ( FLASH	drawing	)
+  ( MW		drawing	)
+  ( FLGT	drawing	)
+  ( MPOL	drawing	)
+  ( HVII	drawing	)
+  ( HVNW	drawing	)
+  ( HVPW	drawing	)
+  ( MWLDMY	drawing	)
+  ( MSLDMY	drawing	)
+  ( M4OPT	drawing1 )
+  ( M4OPT	drawing2 )
+  ( HVNTN	drawing	)
+  ( PSUB	drawing	)
+  ( HNVT	drawing	)
+  ( PO1		drawing	)
+  ( MCEL	drawing	)
+  ( EMBFH	fg1	)
+  ( EMBFH	fg2	)
+  ( CLDD	drawing )
+  ( CAVITY	drawing )
+  ( OVERLAP	drawing	)
+  ( prBoundary	drawing	)
+  ( BJTDMY	drawing	)
+  ( PSUB2	drawing	)
+  ( HOTWL	drawing	)
+  ( NWDMY	drawing	)
+  ( NWDMY	lvs	)
+  ( RPDMY	drawing	)
+  ( RPDMY	lvs	)
+  ( RMDMY	drawing	)
+  ( RMDMY	drawing1 )
+  ( RMDMY	drawing2 )
+  ( RMDMY	drawing3 )
+  ( RMDMY	drawing4 )
+  ( RMDMY	drawing5 )
+  ( RMDMY	drawing6 )
+  ( RMDMY	drawing7 )
+  ( RMDMY	drawing8 )
+  ( RMDMY	drawing9 )
+  ( RHDMY	drawing	)
+  ( DIODMY	drawing	)
+  ( DIODMY	drawing1 )
+  ( RHRIDMY	drawing	)
+  ( EXCL	drawing	)
+  ( SDI		drawing	)
+  ( DPDMY	drawing	)
+;  ( PLDMY	drawing	)
+  ( LN_CAP	drawing	)
+  ( text	drawing	)
+  ( NWELL	pin	)
+  ( OD		pin	)
+  ( POLYG	lvs	) ; pin for LVS comparison
+  ( METAL1	pin	)
+  ( METAL2	pin	)
+  ( METAL3	pin	)
+  ( METAL4	pin	)
+  ( METAL5	pin	)
+  ( METAL6	pin	)
+  ( METAL7	pin	)
+  ( METAL8	pin	)
+  ( METAL9	pin	)
+  ( MD		pin	)
+  ( POLYG	pin	) ; pin for RC extraction
+  ( AP		pin	)
+  ( OD		dummy	)
+  ( POLYG	dummy	)
+  ( METAL1	dummy	)
+  ( METAL2	dummy	)
+  ( METAL3	dummy	)
+  ( METAL4	dummy	)
+  ( METAL5	dummy	)
+  ( METAL6	dummy	)
+  ( METAL7	dummy	)
+  ( METAL8	dummy	)
+  ( METAL9	dummy	)
+  ( MD		dummy	)
+  ( marker	error	)
+  ( marker	warning	)
+  ( prBoundary	label	)
+  ( prBoundary	boundary )
+  ( METAL1	net	)
+  ( METAL2	net	)
+  ( METAL3	net	)
+  ( METAL4	net	)
+  ( METAL5	net	)
+  ( METAL6	net	)
+  ( METAL7	net	)
+  ( METAL8	net	)
+  ( METAL9	net	)
+  ( CONT	net	)
+  ( VIA12	net	)
+  ( VIA23	net	)
+  ( VIA34	net	)
+  ( VIA45	net	)
+  ( VIA56	net	)
+  ( VIA67	net	)
+  ( VIA78	net	)
+  ( VIA89	net	)
+  ( METAL1	boundary )
+  ( METAL2	boundary )
+  ( METAL3	boundary )
+  ( METAL4	boundary )
+  ( METAL5	boundary )
+  ( METAL6	boundary )
+  ( METAL7	boundary )
+  ( METAL8	boundary )
+  ( METAL9	boundary )
+  ( CONT	boundary )
+  ( VIA12	boundary )
+  ( VIA23	boundary )
+  ( VIA34	boundary )
+  ( VIA45	boundary )
+  ( VIA56	boundary )
+  ( VIA67	boundary )
+  ( VIA78	boundary )
+  ( VIA89	boundary )
+  ( PDIFF	drawing	)
+  ( NDIFF	drawing	)
+  ( PDKREC	wellbody )
+  ( PDKREC	boundary )
+  ( PDKREC	width	)
+  ( PDKREC	length	)
+  ( instance	drawing	)
+  ( instance	label	)
+  ( hilite	drawing	)
+  ( hilite	drawing1 )
+  ( hilite	drawing2 )
+  ( hilite	drawing3 )
+  ( hilite	drawing4 )
+  ( hilite	drawing5 )
+  ( hilite	drawing6 )
+  ( hilite	drawing7 )
+  ( hilite	drawing8 )
+  ( hilite	drawing9 )
+  ( y0		drawing	)
+  ( y1		drawing	)
+  ( y2		drawing	)
+  ( y3		drawing	)
+  ( y4		drawing	)
+  ( y5		drawing	)
+  ( y6		drawing	)
+  ( y7		drawing	)
+  ( y8		drawing	)
+  ( y9		drawing	)
+  ( grid	drawing	)
+  ( grid	drawing1 )
+  ( axis	drawing	)
+  ( border	drawing	)
+  ( align	drawing	)
+  ( device	drawing	)
+  ( device	drawing1 )
+  ( device	drawing2 )
+  ( device	annotate )
+  ( device	label	)
+  ( wire	drawing	)
+  ( wire	label	)
+  ( wire	flight	)
+  ( select	drawing	)
+  ( drive	drawing	)
+  ( hiz		drawing	)
+  ( pin		drawing	)
+  ( pin		annotate )
+  ( pin		label	)
+  ( resist	drawing	)
+  ( spike	drawing	)
+  ( supply	drawing	)
+  ( unknown	drawing	)
+  ( unset	drawing	)
+  ( annotate	drawing	)
+  ( annotate	drawing1 )
+  ( annotate	drawing2 )
+  ( annotate	drawing3 )
+  ( annotate	drawing4 )
+  ( annotate	drawing5 )
+  ( annotate	drawing6 )
+  ( annotate	drawing7 )
+  ( annotate	drawing8 )
+  ( annotate	drawing9 )
+  ( designFlow	drawing	)
+  ( designFlow	drawing1 )
+  ( designFlow	drawing2 )
+  ( designFlow	drawing3 )
+  ( designFlow	drawing4 )
+  ( designFlow	drawing5 )
+  ( designFlow	drawing6 )
+  ( designFlow	drawing7 )
+  ( designFlow	drawing8 )
+  ( designFlow	drawing9 )
+  ( edgeLayer	drawing	)
+  ( edgeLayer	pin	)
+  ( changedLayer tool0	)
+  ( changedLayer tool1	)
+  ( snap	drawing	)
+  ( stretch	drawing	)
+  ( Row		drawing	)
+  ( Row		label	)
+  ( Group	drawing	)
+  ( Group	label	)
+  ( Cannotoccupy drawing )
+  ( Cannotoccupy boundary )
+  ( boundary	drawing	)
+  ( Canplace	drawing	)
+  ( background	drawing	)
+  ( text	drawing1 )
+  ( text	drawing2 )
+  ( Unrouted	drawing	)
+  ( Unrouted	drawing1 )
+  ( Unrouted	drawing2 )
+  ( Unrouted	drawing3 )
+  ( Unrouted	drawing4 )
+  ( Unrouted	drawing5 )
+  ( Unrouted	drawing6 )
+  ( Unrouted	drawing7 )
+  ( Unrouted	drawing8 )
+  ( Unrouted	drawing9 )
+  ( hardFence	drawing	)
+  ( softFence	drawing	)
+  ( METAL1	slot	)
+  ( METAL2	slot	)
+  ( METAL3	slot	)
+  ( METAL4	slot	)
+  ( METAL5	slot	)
+  ( METAL6	slot	)
+  ( METAL7	slot	)
+  ( METAL8	slot	)
+  ( METAL9	slot	)
+  ( MD		slot	)
+  ( OD		drain	)
+  ( DMEXCL	dummy1	)
+  ( DMEXCL	dummy2	)
+  ( DMEXCL	dummy3	)
+  ( DMEXCL	dummy4	)
+  ( DMEXCL	dummy5	)
+  ( DMEXCL	dummy6	)
+  ( DMEXCL	dummy7	)
+  ( DMEXCL	dummy8	)
+  ( DMEXCL	dummy9	)
+  ( DMEXCL	dummyf	)
+  ( ODBLK	dummy	)
+  ( POBLK	dummy	)
+  ( SLTEXCL	dummy1	)
+  ( SLTEXCL	dummy2	)
+  ( SLTEXCL	dummy3	)
+  ( SLTEXCL	dummy4	)
+  ( SLTEXCL	dummy5	)
+  ( SLTEXCL	dummy6	)
+  ( SLTEXCL	dummy7	)
+  ( SLTEXCL	dummy8	)
+  ( SLTEXCL	dummy9	)
+  ( SLTEXCL	dummyf	)
+  ( VIAD	drawing	)
+  ( MD		drawing	)
+  ( RV		drawing	)
+  ( CBD		drawing	)
+  ( UBM		drawing	)
+  ( IP		drawing	)
+  ( CAP1TDMY	drawing	)
+  ( RFDMY	drawing	)
+  ( RFDMY	drawing1 )
+  ( LVID	drawing	)
+  ( SEALRING	drawing	)
+  ( CSRDMY	drawing	)
+  ( CDUDMY	drawing	)
+  ( VIAEXCL	dummy1	)
+  ( VIAEXCL	dummy2	)
+  ( VIAEXCL	dummy3	)
+  ( VIAEXCL	dummy4	)
+  ( VIAEXCL	dummy5	)
+  ( VIAEXCL	dummy6	)
+  ( VIAEXCL	dummy7	)
+  ( VIAEXCL	dummy8	)
+  ( VIAEXCL	dummyf	)
+  ( LOGO	drawing	)
+  ( MOMDMY	drawing	)
+  ( DSDDMY	drawing1 )
+  ( DSDDMY	drawing2 )
+  ( DSDDMY	drawing3 )
+  ( DSDDMY	drawing4 )
+  ( DSDDMY	drawing5 )
+  ( DSDDMY	drawing6 )
+  ( DSDDMY	drawing7 )
+  ( DSDDMY	drawing8 )
+  ( DSDDMY	drawing9 )
+  ( SRAMDMY	waive	)
+  ( SRAMDMY	passgate )
+  ( SRAMDMY	allsram	)
+  ( SRAMDMY	cvss_sram )
+  ( SRAMDMY	periphery )
+  ( R_rule	require )
+  ( R_rule	recommend )
+  ( R_rule	analog  )
+  ( IMSOR	CELLM	)
+  ( IMSOR	CELLH   )
+  ( IMSOR	NPS	)
+  ( IMSOR	PL	)
+  ( IMSOR	GM	)
+  ( IMSOR	RM	)
+  ( IMSOR	BM	)
+  ( IMSOR	ML	)
+  ( IMSOR	PPS	)
+  ( IMSOR	CIRPO	)
+  ( IMSOR	GM1	)
+  ( IMSOR	GM2	)
+  ( IMSOR	MS	)
+  ( IMSOR	LS	)
+  ( IMSOR	YM	)
+  ( IMSOR	CM	)
+  ( IMSOR	MM	)
+  ( IMSOR	E_ML	)
+  ( IMSOR	CELL_TX	)
+  ( IMSOR	CELL_RS	)
+  ( IMSOR	CAP_IMP	)
+  ( IMSOR	MP	)
+  ( IMSOR	DPW	)
+  ( IMSOR	CELL_NLDD)
+  ( IMSOR	SEL	)
+  ( IMSOR	ME	)
+  ( IMSOR	FLD	)
+; Illegal layers without registration
+;  ( NWELL	net	)
+;  ( PDIFF	pin	)
+;  ( PDIFF	net	)
+;  ( NDIFF	pin	)
+;  ( NDIFF	net	)
+;  ( POLYG	boundary )
+;  ( POLYG	net	)
+;  ( CONT	pin	)
+;  ( VIA12	pin	)
+;  ( VIA23	pin	)
+;  ( VIA34	pin	)
+;  ( VIA45	pin	)
+;  ( VIA56	pin	)
+;  ( VIA67	pin	)
+;  ( VIA78	pin	)
+;  ( VIA89	pin	)
+ ) ;techLayerPurposePriorities
+
+ techDisplays(
+; ( LayerName	Purpose		Packet			Vis Sel Chg Drg Valid )
+; ( ---------	-------		------			--- --- --- --- ----- )
+  ( ref		drawing		redhidden_L		t t t t t )
+  ( DNWELL	drawing		tan			t t t t t )
+  ( PWELL       drawing         creamshortDash_L        t t t t t )
+  ( NWELL	drawing		creamthickLine2_L	t t t t t )
+  ( PLMIDE	drawing		white			t t t t t )
+  ( OD		drawing		redbackSlash_S		t t t t t )
+  ( PDIFF	drawing		reddot3_S		t t t t t )
+  ( NDIFF	drawing		orangedots_S		t t t t t )
+  ( OD2		drawing		winColor2winColor1daggerthickLine t t t t t )
+  ( OD3		drawing		winColor2winColor1crossthickLine t t t t t )
+  ( POLYG	drawing		bluecrossthickLine	t t t t t )
+  ( VTH_N	drawing		greenthickLine2_L	t t t t t )
+  ( VTH_P	drawing		yellowshortDash_L	t t t t t )
+  ( VTL_N	drawing		bluethickLine2_L	t t t t t )
+  ( VTL_P	drawing		graythickLine2_L	t t t t t )
+  ( NT_N	drawing		grayshortDash_L 	t t t t t )
+  ( LN_CAP	drawing		yellow			t t t t t )
+  ( PIMP	drawing		magenta			t t t t t )
+  ( NIMP	drawing		gray			t t t t t )
+  ( RPO		drawing		forest			t t t t t )
+  ( CONT	drawing		greencross_S		t t t t t )
+  ( METAL1	drawing		cyandot4_S		t t t t t )
+  ( VIA12	drawing		yellowX_S		t t t t t )
+  ( METAL2	drawing		goldstipple0_S		t t t t t )
+  ( VIA23	drawing		yellowhLine_S		t t t t t )
+  ( METAL3	drawing		forestdot4_S		t t t t t )
+  ( VIA34	drawing		purplevLine_S		t t t t t )
+  ( METAL4	drawing		slatedot4_S		t t t t t )
+  ( VIA45	drawing		whitetriangle_S 	t t t t t )
+  ( METAL5	drawing		winColor3dot3_S 	t t t t t )
+  ( VIA56	drawing		creamslash_S		t t t t t )
+  ( METAL6	drawing		tanstipple3_S		t t t t t )
+  ( VIA67	drawing		goldx_S			t t t t t )
+  ( METAL7	drawing		limedot4_S		t t t t t )
+  ( VIA78	drawing		tanvLine_S		t t t t t )
+  ( METAL8	drawing		creamcross_S		t t t t t )
+  ( VIA89	drawing		goldstipple3_S		t t t t t )
+  ( METAL9	drawing		limehLine_S		t t t t t )
+  ( METAL2	drawing5	golddot4_S		t t t t t )
+  ( METAL3	drawing5	foreststipple0_S	t t t t t )
+  ( METAL4	drawing5	slatedot3_S		t t t t t )
+  ( METAL5	drawing5	winColor3stipple3_S	t t t t t )
+  ( METAL6	drawing5	tandot4_S		t t t t t )
+  ( METAL7	drawing5	limedots_S		t t t t t )
+  ( AP		drawing		graydots_S		t t t t t )
+  ( PAD		drawing		orangedots_S		t t t t t )
+  ( WBDMY	drawing		purpleslash_S		t t t t t )
+  ( CB2		drawing		yellowdots_S		t t t t t )
+  ( COW		drawing		yellowdots_S		t t t t t )
+  ( FW		drawing		magentadots_S		t t t t t )
+  ( FW		ap		golddots_S		t t t t t )
+  ( PMDMY	drawing		blue			t t t t t )
+  ( LMARK	drawing		white			t t t t t )
+  ( RODMY	drawing		gold			t t t t t )
+  ( DMSRM	drawing		tan			t t t t t )
+  ( HVTSRM	drawing		forest			t t t t t )
+  ( REDUNDMY	col		yellowcrossthickLine	t t t t t )
+  ( REDUNDMY	row		tancrossthickLine	t t t t t )
+  ( HRI		drawing		magentadot2_S		t t t t t )
+  ( CTM		drawing		purpletriangle_S	t t t t t )
+  ( CBM		drawing		creamdot1_S		t t t t t )
+  ( FLASH	drawing		lime			t t t t t )
+  ( MW		drawing		creamthickLine2_L	t t t t t )
+  ( FLGT	drawing		orangesolid_S		t t t t t )
+  ( MPOL	drawing		bluecrossthickLine	t t t t t )
+  ( HVII	drawing		blue			t t t t t )
+  ( HVNW	drawing		redthickLine2_L 	t t t t t )
+  ( HVPW	drawing		orangethickLine2_L	t t t t t )
+  ( MWLDMY	drawing		grayshortDash_L 	t t t t t )
+  ( MSLDMY	drawing		magentashortDash_L	t t t t t )
+  ( M4OPT	drawing1	slatehLinethickLine2	t t t t t )
+  ( M4OPT	drawing2	slatevLinethickLine2	t t t t t )
+  ( HVNTN	drawing		creamdot2_S		t t t t t )
+  ( PSUB	drawing		reddot2_S		t t t t t )
+  ( HNVT	drawing		orangedot2_S		t t t t t )
+  ( PO1		drawing		creamdot1_S		t t t t t )
+  ( MCEL	drawing		magentadot2_S		t t t t t )
+  ( EMBFH	fg1		reddot2_S		t t t t t )
+  ( EMBFH	fg2		creamdot2_S		t t t t t )
+  ( CLDD	drawing		white			t t t t t )
+  ( CAVITY	drawing		white			t t t t t )
+  ( OVERLAP	drawing		orange			t t t t t )
+  ( prBoundary	drawing		purple			t t t t t )
+  ( BJTDMY	drawing		greentriangle_S 	t t t t t )
+  ( PSUB2	drawing		whiteX_S		t t t t t )
+  ( HOTWL	drawing		orangeX_S		t t t t t )
+  ( NWDMY	drawing		whitecrossdashed	t t t t t )
+  ( NWDMY	lvs		orangecrossdashed	t t t t t )
+  ( RPDMY	drawing		winColor4brickdashDot	t t t t t )
+  ( RPDMY	lvs		pinkbrickdashDot	t t t t t )
+  ( RMDMY	drawing		joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing1	joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing2	joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing3	joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing4	joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing5	joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing6	joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing7	joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing8	joy1brickdashDot	t t t t t )
+  ( RMDMY	drawing9	joy1brickdashDot	t t t t t )
+  ( RHDMY	drawing		pinkdaggerdashed	t t t t t )
+  ( DIODMY	drawing		white			t t t t t )
+  ( DIODMY	drawing1	pink			t t t t t )
+  ( RHRIDMY	drawing		white			t t t t t )
+  ( EXCL	drawing		greentriangle_S 	t t t t t )
+  ( SDI		drawing		white			t t t t t )
+  ( DPDMY	drawing		navy			t t t t t )
+;  ( PLDMY	drawing		pink			t t t t t )
+  ( text	drawing		white			t t t t t )
+  ( NWELL	pin		creamthickLine2_L	t t t t t )
+  ( OD		pin		redbackSlash_S		t t t t t )
+  ( METAL1	pin		cyanXthickLine2		t t t nil t )
+  ( METAL2	pin		goldXthickLine2		t t t nil t )
+  ( METAL3	pin		forestXthickLine2	t t t nil t )
+  ( METAL4	pin		slateXthickLine2	t t t nil t )
+  ( METAL5	pin		winColor3XthickLine2	t t t nil t )
+  ( METAL6	pin		tanXthickLine2		t t t nil t )
+  ( METAL7	pin		limeXthickLine2		t t t nil t )
+  ( METAL8	pin		creamXthickLine2	t t t nil t )
+  ( METAL9	pin		limeXthickLine2		t t t nil t )
+  ( POLYG	pin		blueXthickLine		t t t nil t )
+  ( POLYG	lvs		cyanXthickLine		t t t nil t )
+  ( MD		pin		tanXthickLine2		t t t nil t )
+  ( OD		dummy		redXthickLine2		t t t nil t )
+  ( POLYG	dummy		blueXthickLine		t t t nil t )
+  ( METAL1	dummy		cyanXthickLine2		t t t nil t )
+  ( METAL2	dummy		goldXthickLine2		t t t nil t )
+  ( METAL3	dummy		forestXthickLine2	t t t nil t )
+  ( METAL4	dummy		slateXthickLine2	t t t nil t )
+  ( METAL5	dummy		winColor3XthickLine2	t t t nil t )
+  ( METAL6	dummy		tanXthickLine2		t t t nil t )
+  ( METAL7	dummy		limeXthickLine2		t t t nil t )
+  ( METAL8	dummy		creamXthickLine2	t t t nil t )
+  ( METAL9	dummy		limeXthickLine2		t t t nil t )
+  ( MD		dummy		purpleXthickLine2	t t t t t )
+  ( marker	error		whiteX_SB		t t t t t )
+  ( marker	warning		yellowX_SB		t t t t t )
+  ( prBoundary	label		purple			t t t t nil )
+  ( prBoundary	boundary	purpledashed_L		t t t t nil )
+  ( METAL1	net		cyanX_S			t t t nil nil )
+  ( METAL2	net		yellowX_S		t t t nil nil )
+  ( METAL3	net		greenX_S		t t t nil nil )
+  ( METAL4	net		cyanX_S			t t t nil nil )
+  ( METAL5	net		whiteX_S		t t t nil nil )
+  ( METAL6	net		whiteX_S		t t t nil nil )
+  ( METAL7	net		whiteX_S		t t t nil nil )
+  ( METAL8	net		whiteX_S		t t t nil nil )
+  ( METAL9	net		whiteX_S		t t t nil nil )
+  ( METAL1	boundary	cyandot4_S		t t t nil nil )
+  ( METAL2	boundary	yellowdot4_S		t t t nil nil )
+  ( METAL3	boundary	greendot4_S		t t t nil nil )
+  ( METAL4	boundary	cyandot4_S		t t t nil nil )
+  ( METAL5	boundary	whitedot4_S		t t t nil nil )
+  ( METAL6	boundary	whitedot4_S		t t t nil nil )
+  ( METAL7	boundary	whitedot4_S		t t t nil nil )
+  ( METAL8	boundary	whitedot4_S		t t t nil nil )
+  ( METAL9	boundary	whitedot4_S		t t t nil nil )
+  ( CONT	net		limeX_S			t t t nil nil )
+  ( VIA12	net		magentaX_S		t t t nil nil )
+  ( VIA23	net		yellowX_S		t t t nil nil )
+  ( VIA34	net		blueX_S			t t t nil nil )
+  ( VIA45	net		whiteX_S		t t t nil nil )
+  ( VIA56	net		whiteX_S		t t t nil nil )
+  ( VIA67	net		whiteX_S		t t t nil nil )
+  ( VIA78	net		whiteX_S		t t t nil nil )
+  ( VIA89	net		whiteX_S		t t t nil nil )
+  ( CONT	boundary	limesolid_S		t t t nil nil )
+  ( VIA12	boundary	magentasolid_S		t t t nil nil )
+  ( VIA23	boundary	yellowsolid_S		t t t nil nil )
+  ( VIA34	boundary	bluesolid_S		t t t nil nil )
+  ( VIA45	boundary	white			t t t nil nil )
+  ( VIA56	boundary	white			t t t nil nil )
+  ( VIA67	boundary	white			t t t nil nil )
+  ( VIA78	boundary	white			t t t nil nil )
+  ( VIA89	boundary	white			t t t nil nil )
+  ( instance	drawing		red			t t t t nil )
+  ( instance	label		gold			t t t t nil )
+  ( hilite	drawing		white			t t t t nil )
+  ( hilite	drawing1	magenta			t t t t nil )
+  ( hilite	drawing2	tan			t t t t nil )
+  ( hilite	drawing3	cyan			t t t t nil )
+  ( hilite	drawing4	orange			t t t t nil )
+  ( hilite	drawing5	lime			t t t t nil )
+  ( hilite	drawing6	orange			t t t t nil )
+  ( hilite	drawing7	cream			t t t t nil )
+  ( hilite	drawing8	magenta			t t t t nil )
+  ( hilite	drawing9	pink			t t t t nil )
+  ( y0		drawing		winColor5dashed_LB	t t t t nil )
+  ( y1		drawing		browndashed_LB		t t t t nil )
+  ( y2		drawing		reddashed_LB		t t t t nil )
+  ( y3		drawing		pinkdashed_LB		t t t t nil )
+  ( y4		drawing		orangedashed_LB		t t t t nil )
+  ( y5		drawing		greendashed_LB		t t t t nil )
+  ( y6		drawing		bluedashed_LB		t t t t nil )
+  ( y7		drawing		purpledashed_LB		t t t t nil )
+  ( y8		drawing		golddashed_LB		t t t t nil )
+  ( y9		drawing		silverdashed_LB		t t t t nil )
+  ( grid	drawing		white			t nil t nil nil )
+  ( grid	drawing1	white			t nil t nil nil )
+  ( axis	drawing		white			t nil t t nil )
+  ( border	drawing		tan			t t t t nil )
+  ( align	drawing		tan			t t t t nil )
+  ( device	drawing		green			t t t t nil )
+  ( device	drawing1	greensolid_S		t t t t nil )
+  ( device	drawing2	greendashed_L		t t t t nil )
+  ( device	annotate	yellow			t t t t nil )
+  ( device	label		green			t t t t nil )
+  ( wire	drawing		graysolid_S		t t t t nil )
+  ( wire	label		graysolid_S		t t t t nil )
+  ( wire	flight		reddashed_L		t t t t nil )
+  ( select	drawing		tan			t t t t nil )
+  ( drive	drawing		blue			t t t t nil )
+  ( hiz		drawing		orange			t t t t nil )
+  ( pin		drawing		redsolid_S		t t t t nil )
+  ( pin		annotate	red			t t t t nil )
+  ( pin		label		red			t t t t nil )
+  ( resist	drawing		cyan			t t t t nil )
+  ( spike	drawing		purple			t t t t nil )
+  ( supply	drawing		lime			t t t t nil )
+  ( unknown	drawing		yellow			t t t t nil )
+  ( unset	drawing		forest			t t t t nil )
+  ( annotate	drawing		orange			t t t t nil )
+  ( designFlow	drawing		greensolid_S		t t t nil nil )
+  ( annotate	drawing1	pink			t t t t nil )
+  ( designFlow	drawing1	redsolid_S		t t t nil nil )
+  ( annotate	drawing2	lime			t t t t nil )
+  ( designFlow	drawing2	purplesolid_S		t t t nil nil )
+  ( annotate	drawing3	cyan			t t t t nil )
+  ( designFlow	drawing3	pinksolid_S		t t t nil nil )
+  ( annotate	drawing4	yellow			t t t t nil )
+  ( designFlow	drawing4	blacksolid_S		t t t nil nil )
+  ( annotate	drawing5	white			t t t t nil )
+  ( designFlow	drawing5	silversolid_S		t t t nil nil )
+  ( annotate	drawing6	silver			t t t t nil )
+  ( designFlow	drawing6	tansolid_S		t t t nil nil )
+  ( annotate	drawing7	red			t t t t nil )
+  ( designFlow	drawing7	cyansolid_S		t t t nil nil )
+  ( annotate	drawing8	tan			t t t t nil )
+  ( designFlow	drawing8	navysolid_S		t t t nil nil )
+  ( annotate	drawing9	green			t t t t nil )
+  ( designFlow	drawing9	orangesolid_S		t t t nil nil )
+  ( edgeLayer	drawing		winColor5_B		t t t t nil )
+  ( edgeLayer	pin		yellow			t t t t nil )
+  ( AP  	pin		yellow			t t t t nil )
+  ( changedLayer tool0		red			nil nil t nil nil )
+  ( changedLayer tool1		yellow			nil nil t nil nil )
+  ( snap	drawing		yellow			t t t t nil )
+  ( stretch	drawing		yellow			t t t t nil )
+  ( Row		drawing		cyan			t t t t nil )
+  ( Row		label		cyan			t nil t t nil )
+  ( Group	drawing		greendots_S		t t t t nil )
+  ( Group	label		green			t nil t t nil )
+  ( Cannotoccupy drawing	redXthickLine		t t t t nil )
+  ( Cannotoccupy boundary	redthickLine_L		t t t t nil )
+  ( boundary	drawing		reddashed_L		t t t t nil )
+  ( Canplace	drawing		cyan			t t t t nil )
+  ( background	drawing		blacksolid_S		t nil t nil nil )
+  ( text	drawing1	whitedashed_L		t t t t nil )
+  ( text	drawing2	whitesolid_S		t t t t nil )
+  ( Unrouted	drawing		winColor5dashed_L	t t t t nil )
+  ( Unrouted	drawing1	browndashed_L		t t t t nil )
+  ( Unrouted	drawing2	reddashed_L		t t t t nil )
+  ( Unrouted	drawing3	pinkdashed_L		t t t t nil )
+  ( Unrouted	drawing4	orangedashed_L		t t t t nil )
+  ( Unrouted	drawing5	greendashed_L		t t t t nil )
+  ( Unrouted	drawing6	bluedashed_L		t t t t nil )
+  ( Unrouted	drawing7	purpledashed_L		t t t t nil )
+  ( Unrouted	drawing8	golddashed_L		t t t t nil )
+  ( Unrouted	drawing9	silverdashed_L		t t t t nil )
+  ( hardFence	drawing		red			t t t t nil )
+  ( softFence	drawing		yellow			t t t t nil )
+  ( METAL1	slot		cyanXthickLine2		t t t nil t )
+  ( METAL2	slot		goldXthickLine2		t t t nil t )
+  ( METAL3	slot		forestXthickLine2	t t t nil t )
+  ( METAL4	slot		slateXthickLine2	t t t nil t )
+  ( METAL5	slot		winColor3XthickLine2	t t t nil t )
+  ( METAL6	slot		tanXthickLine2		t t t nil t )
+  ( METAL7	slot		limeXthickLine2		t t t nil t )
+  ( METAL8	slot		creamXthickLine2	t t t nil t )
+  ( METAL9	slot		limeXthickLine2		t t t nil t )
+  ( MD		slot		purpleXthickLine2	t t t t t )
+  ( OD		drain		reddagger_S		t t t t t )
+  ( INDDMY	drawing		blue			t t t t t )
+  ( INDDMY	drawing1	cream			t t t t t )
+  ( INDDMY	drawing2	lime			t t t t t )
+  ( INDDMY	rad		joy1			t t t t t )
+  ( ESD1DMY	drawing		purple			t t t t t )
+  ( ESD2DMY	drawing		cyan			t t t t t )
+  ( ESD3DMY	drawing		navy			t t t t t )
+  ( CTMDMY	drawing		green			t t t t t )
+  ( DMEXCL	dummy1		orange			t t t t t )
+  ( DMEXCL	dummy2		orange			t t t t t )
+  ( DMEXCL	dummy3		orange			t t t t t )
+  ( DMEXCL	dummy4		orange			t t t t t )
+  ( DMEXCL	dummy5		orange			t t t t t )
+  ( DMEXCL	dummy6		orange			t t t t t )
+  ( DMEXCL	dummy7		orange			t t t t t )
+  ( DMEXCL	dummy8		orange			t t t t t )
+  ( DMEXCL	dummy9		orange			t t t t t )
+  ( DMEXCL	dummyf		purple			t t t t t )
+  ( ODBLK	dummy		orange			t t t t t )
+  ( POBLK	dummy		orange			t t t t t )
+  ( SLTEXCL	dummy1		white			t t t t t )
+  ( SLTEXCL	dummy2		white			t t t t t )
+  ( SLTEXCL	dummy3		white			t t t t t )
+  ( SLTEXCL	dummy4		white			t t t t t )
+  ( SLTEXCL	dummy5		white			t t t t t )
+  ( SLTEXCL	dummy6		white			t t t t t )
+  ( SLTEXCL	dummy7		white			t t t t t )
+  ( SLTEXCL	dummy8		white			t t t t t )
+  ( SLTEXCL	dummy9		white			t t t t t )
+  ( SLTEXCL	dummyf		purple			t t t t t )
+  ( VIAD	drawing		forestx_S		t t t t t )
+  ( MD		drawing		purple			t t t t t )
+  ( RV		drawing		forestx_S		t t t t t )
+  ( CBD		drawing		lime			t t t t t )
+  ( UBM		drawing		graydot1thickLine	t t t t t )
+  ( IP		drawing		graydot1thickLine	t t t t t )
+  ( CAP1TDMY	drawing		green			t t t t t )
+  ( RFDMY	drawing		white			t t t t t )
+  ( RFDMY	drawing1	yellow			t t t t t )
+  ( LVID	drawing		magentathickLine_L	t t t t t )
+  ( SEALRING	drawing		goldstipple3_S		t t t t t )
+  ( CSRDMY	drawing		bluedot1_S		t t t t t )
+  ( CDUDMY	drawing		whiteslash_S		t t t t t )
+  ( VIAEXCL	dummy1		violet			t t t t t )
+  ( VIAEXCL	dummy2		violet			t t t t t )
+  ( VIAEXCL	dummy3		violet			t t t t t )
+  ( VIAEXCL	dummy4		violet			t t t t t )
+  ( VIAEXCL	dummy5		violet			t t t t t )
+  ( VIAEXCL	dummy6		violet			t t t t t )
+  ( VIAEXCL	dummy7		violet			t t t t t )
+  ( VIAEXCL	dummy8		violet			t t t t t )
+  ( VIAEXCL	dummyf		purple			t t t t t )
+  ( VARDMY	drawing		yellow			t t t t t )
+  ( VARDMY	drawing1	yellow			t t t t t )
+  ( VARDMY	drawing2	yellow			t t t t t )
+  ( VARDMY	drawing3	yellow			t t t t t )
+  ( LOGO	drawing		bluedashed_L		t t t t t )
+  ( MOMDMY	drawing		joy1			t t t t t )
+  ( DSDDMY	drawing1	cyandot3dashed		t t t t t )
+  ( DSDDMY	drawing2	golddot3dashed		t t t t t )
+  ( DSDDMY	drawing3	forestdot3dashed	t t t t t )
+  ( DSDDMY	drawing4	slatedot3dashed 	t t t t t )
+  ( DSDDMY	drawing5	winColor3dot3dashed	t t t t t )
+  ( DSDDMY	drawing6	tandot3dashed		t t t t t )
+  ( DSDDMY	drawing7	limedot3dashed		t t t t t )
+  ( DSDDMY	drawing8	creamdot3dashed 	t t t t t )
+  ( DSDDMY	drawing9	winColor5dot3dashed	t t t t t )
+  ( SRAMDMY	waive		blue			t t t t t )
+  ( SRAMDMY	passgate	red			t t t t t )
+  ( SRAMDMY	allsram		yellow			t t t t t )
+  ( SRAMDMY	cvss_sram	gold			t t t t t )
+  ( SRAMDMY	periphery	tan			t t t t t )
+  ( R_rule	require		reddots_S		t t t t t )
+  ( R_rule	recommend	pinkdots_S		t t t t t )
+  ( R_rule	analog		orangedots_S		t t t t t )
+  ( PDKREC	wellbody	purpledashed_L		nil t t t t )
+  ( PDKREC	boundary	grayshortDash_L		nil t t t t )
+  ( PDKREC	width		browndashed_L		t t t t nil )
+  ( PDKREC	length		greendashed_L		t t t t nil )
+  ( IMSOR        CELLM        magenta          t t t t t )
+  ( IMSOR        CELLH     orangestipple0_S t t t t t )
+  ( IMSOR        NPS          reddot3thickLine t t t t t )
+  ( IMSOR        PL           red              t t t t t )
+  ( IMSOR        GM           red              t t t t t )
+  ( IMSOR        RM           orangedots_S     t t t t t )
+  ( IMSOR        BM           winColor2winColor1daggerthickLine t t t t t )
+  ( IMSOR        ML           bluecrossthickLine t t t t t )
+  ( IMSOR        PPS          limecrossthickLine t t t t t )
+  ( IMSOR        CIRPO        creamdot3shortDash t t t t t )
+  ( IMSOR        GM1          graydot3thickLine2 t t t t t )
+  ( IMSOR        GM2          greendot3thickLine t t t t t )
+  ( IMSOR        MS           limedot3thickLine t t t t t )
+  ( IMSOR        LS           reddot3thickLine t t t t t )
+  ( IMSOR        YM           yellowdot3thickLine t t t t t )
+  ( IMSOR        CM           cyandot3thickLine t t t t t )
+  ( IMSOR        MM           magentadot3thickLine t t t t t )
+  ( IMSOR        E_ML         limebrickthickLine t t t t t )
+  ( IMSOR        CELL_TX      yellowdaggerthickLine t t t t t )
+  ( IMSOR        CELL_RS      cyandot3thickLine t t t t t )
+  ( IMSOR        CAP_IMP      magentastipple0thickLine t t t t t )
+  ( IMSOR        MP           limedot4_S       t t t t t )
+  ( IMSOR        DPW           limedot3_S       t t t t t )
+  ( IMSOR        CELL_NLDD         purpledashed_LB  t t t t t )
+  ( IMSOR        SEL		goldstipple0_S		t t t t t )
+  ( IMSOR        ME           pinkbrickdots    t t t t t )
+  ( IMSOR        FLD           creamthickLine2_L t t t t t )
+ ) ;techDisplays
+
+ 
+) ;layerDefinitions
+
+
+;********************************
+; LAYER RULES
+;********************************
+layerRules(
+
+ streamLayers(
+; ( layer		streamNumber dataType translate )
+; ( -----		------------ -------- --------- )
+  ( ("ref" "drawing")		0	0	nil	)
+  ( ("DNWELL" "drawing")	1	0	t	)
+  ( ("PWELL" "drawing")		2	0	t	)
+  ( ("NWELL" "drawing")		3	0	t	)
+  ( ("NWELL" "pin")		3	6	t	)
+  ( ("PLMIDE" "drawing")	5	0	t	)
+  ( ("OD" "drawing")		6	0	t	)
+  ( ("OD" "dummy")		6	1	t	)
+  ( ("OD" "drain")		6	3	t	)
+  ( ("OD" "pin")		6	6	t	)
+  ( ("PDIFF" "drawing")		7	0	t	)
+  ( ("NDIFF" "drawing")		8	0	t	)
+  ( ("NT_N" "drawing")		11	0	t	)
+  ( ("VTL_N" "drawing")		12	0	t	)
+  ( ("VTL_P" "drawing")		13	0	t	)
+  ( ("OD2" "drawing")		15	0	t	)
+  ( ("OD3" "drawing")		16	0	t	)
+  ( ("POLYG" "drawing")		17	0	t	)
+  ( ("POLYG" "dummy")		17	1	t	)
+  ( ("PIMP" "drawing")		25	0	t	)
+  ( ("NIMP" "drawing")		26	0	t	)
+  ( ("RPO" "drawing")		29	0	t	)
+  ( ("CONT" "drawing")		30	0	t	)
+  ( ("METAL1" "drawing")	31	0	t	)
+  ( ("METAL1" "dummy")		31	1	t	)
+  ( ("METAL1" "slot")		31	2	t	)
+  ( ("METAL2" "drawing")	32	0	t	)
+  ( ("METAL2" "dummy")		32	1	t	)
+  ( ("METAL2" "slot")		32	2	t	)
+  ( ("METAL3" "drawing")	33	0	t	)
+  ( ("METAL3" "dummy")		33	1	t	)
+  ( ("METAL3" "slot")		33	2	t	)
+  ( ("METAL4" "drawing")	34	0	t	)
+  ( ("METAL4" "dummy")		34	1	t	)
+  ( ("METAL4" "slot")		34	2	t	)
+  ( ("METAL5" "drawing")	35	0	t	)
+  ( ("METAL5" "dummy")		35	1	t	)
+  ( ("METAL5" "slot")		35	2	t	)
+  ( ("METAL6" "drawing")	36	0	t	)
+  ( ("METAL6" "dummy")		36	1	t	)
+  ( ("METAL6" "slot")		36	2	t	)
+  ( ("METAL7" "drawing")	37	0	t	)
+  ( ("METAL7" "dummy")		37	1	t	)
+  ( ("METAL7" "slot")		37	2	t	)
+  ( ("METAL8" "drawing")	38	0	t	)
+  ( ("METAL8" "dummy")		38	1	t	)
+  ( ("METAL8" "slot")		38	2	t	)
+  ( ("METAL9" "drawing")	39	0	t	)
+  ( ("METAL9" "dummy")		39	1	t	)
+  ( ("METAL9" "slot")		39	2	t	)
+  ( ("METAL2" "drawing5")	32	5	t	)
+  ( ("METAL3" "drawing5")	33	5	t	)
+  ( ("METAL4" "drawing5")	34	5	t	)
+  ( ("METAL5" "drawing5")	35	5	t	)
+  ( ("METAL6" "drawing5")	36	5	t	)
+  ( ("METAL7" "drawing5")	37	5	t	)
+  ( ("DSDDMY" "drawing1")	40	1	t	)
+  ( ("DSDDMY" "drawing2")	40	2	t	)
+  ( ("DSDDMY" "drawing3")	40	3	t	)
+  ( ("DSDDMY" "drawing4")	40	4	t	)
+  ( ("DSDDMY" "drawing5")	40	5	t	)
+  ( ("DSDDMY" "drawing6")	40	6	t	)
+  ( ("DSDDMY" "drawing7")	40	7	t	)
+  ( ("DSDDMY" "drawing8")	40	8	t	)
+  ( ("DSDDMY" "drawing9")	40	9	t	)
+  ( ("AP" "drawing")		42	0	t	)
+  ( ("PAD" "drawing")		43	0	t	)
+  ( ("RODMY" "drawing")		49	0	t	)
+  ( ("DMSRM" "drawing")		50	0	t	)
+  ( ("VIA12" "drawing")		51	0	t	)
+  ( ("VIA23" "drawing")		52	0	t	)
+  ( ("VIA34" "drawing")		53	0	t	)
+  ( ("VIA45" "drawing")		54	0	t	)
+  ( ("VIA56" "drawing")		55	0	t	)
+  ( ("VIA67" "drawing")		56	0	t	)
+  ( ("VIA78" "drawing")		57	0	t	)
+  ( ("VIA89" "drawing")		58	0	t	)
+  ( ("HVTSRM" "drawing")	60	0	t	)
+  ( ("REDUNDMY" "col")		61	1	t	)
+  ( ("REDUNDMY" "row")		61	2	t	)
+  ( ("IP" "drawing")		63	63	t	)
+  ( ("VTH_N" "drawing")		67	0	t	)
+  ( ("VTH_P" "drawing")		68	0	t	)
+  ( ("COW" "drawing")		69	0	t	)
+  ( ("HRI" "drawing")		70	0	t	)
+  ( ("LN_CAP" "drawing")	72	0	t	)
+  ( ("LVID" "drawing")		73	0	t	)
+  ( ("IMSOR" "CELLM")		74	0	t	)
+  ( ("IMSOR" "CELLH")   	74	1	t	)
+  ( ("IMSOR" "NPS")		74	2	t	)
+  ( ("IMSOR" "PL")		74	3	t	)
+  ( ("IMSOR" "GM")		74	4	t	)
+  ( ("IMSOR" "RM")		74	5	t	)
+  ( ("IMSOR" "BM")		74	6	t	)
+  ( ("IMSOR" "ML")		74	7	t	)
+  ( ("IMSOR" "PPS")		74	8	t	)
+  ( ("IMSOR" "CIRPO")		74	11	t	)
+  ( ("IMSOR" "GM1")		74	12	t	)
+  ( ("IMSOR" "GM2")		74	13	t	)
+  ( ("IMSOR" "MS")		74	15	t	)
+  ( ("IMSOR" "LS")		74	16	t	)
+  ( ("IMSOR" "YM")		74	17	t	)
+  ( ("IMSOR" "CM")		74	18	t	)
+  ( ("IMSOR" "MM")		74	19	t	)
+  ( ("IMSOR" "E_ML")		74	20	t	)
+  ( ("IMSOR" "CELL_TX")		74	23	t	)
+  ( ("IMSOR" "CELL_RS")		74	24	t	)
+  ( ("IMSOR" "CAP_IMP")		74	25	t	)
+  ( ("IMSOR" "MP")		74	27	t	)
+  ( ("IMSOR" "DPW")     	74	28	t	)
+  ( ("IMSOR" "CELL_NLDD")	74	29	t	)
+  ( ("IMSOR" "SEL")		74	30	t	)
+  ( ("IMSOR" "ME")		74	31	t	)
+  ( ("IMSOR" "FLD")      	74	32	t	)
+  ( ("PDKREC" "wellbody")	75	1	t	)
+  ( ("PDKREC" "width")		75	2	t	)
+  ( ("PDKREC" "length")		75	3	t	)
+  ( ("PDKREC" "boundary")	75	4	t	)
+  ( ("CTM" "drawing")		77	0	t	)
+  ( ("CAP1TDMY" "drawing")	78	0	t	)
+  ( ("SLTEXCL" "dummy1")	79	1	t	)
+  ( ("SLTEXCL" "dummy2")	79	2	t	)
+  ( ("SLTEXCL" "dummy3")	79	3	t	)
+  ( ("SLTEXCL" "dummy4")	79	4	t	)
+  ( ("SLTEXCL" "dummy5")	79	5	t	)
+  ( ("SLTEXCL" "dummy6")	79	6	t	)
+  ( ("SLTEXCL" "dummy7")	79	7	t	)
+  ( ("SLTEXCL" "dummy8")	79	8	t	)
+  ( ("SLTEXCL" "dummy9")	79	9	t	)
+  ( ("SLTEXCL" "dummyf")	79	15	t	)
+  ( ("RV" "drawing")		85	0	t	)
+  ( ("CB2" "drawing")		86	0	t	)
+  ( ("CBM" "drawing")		88	0	t	)
+  ( ("CAVITY" "drawing")	90	0	t	)
+  ( ("CLDD" "drawing")		92	0	t	)
+  ( ("FW" "drawing")		95	0	t	)
+  ( ("FW" "ap")		        95	20	t	)
+  ( ("PMDMY" "drawing")		106	0	t	)
+  ( ("OVERLAP" "drawing")	107	0	t	)
+  ( ("prBoundary" "drawing")	108	0	t	)
+  ( ("LMARK" "drawing")		109	0	t	)
+  ( ("BJTDMY" "drawing")	110	0	t	)
+  ( ("PSUB2" "drawing")		111	0	t	)
+  ( ("HOTWL" "drawing")		112	0	t	)
+  ( ("NWDMY" "drawing")		114	0	t	)
+  ( ("NWDMY" "lvs")		114	1	t	)
+  ( ("RPDMY" "drawing")		115	0	t	)
+  ( ("RPDMY" "lvs")		115	1	t	)
+  ( ("RMDMY" "drawing")		116	0	t	)
+  ( ("RMDMY" "drawing1")	116	1	t	)
+  ( ("RMDMY" "drawing2")	116	2	t	)
+  ( ("RMDMY" "drawing3")	116	3	t	)
+  ( ("RMDMY" "drawing4")	116	4	t	)
+  ( ("RMDMY" "drawing5")	116	5	t	)
+  ( ("RMDMY" "drawing6")	116	6	t	)
+  ( ("RMDMY" "drawing7")	116	7	t	)
+  ( ("RMDMY" "drawing8")	116	8	t	)
+  ( ("RMDMY" "drawing9")	116	9	t	)
+  ( ("RHDMY" "drawing")		117	0	t	)
+  ( ("DIODMY" "drawing")	119	0	t	)
+  ( ("DIODMY" "drawing1")	119	1	t	)
+  ( ("RHRIDMY" "drawing")	120	0	t	)
+  ( ("EXCL" "drawing")		121	0	t	)
+  ( ("SDI" "drawing")		122	0	t	)
+  ( ("DPDMY" "drawing")		123	0	t	)
+;  ( ("PLDMY" "drawing")		124	0	t	)
+  ( ("AP" "pin")		126	0	t	)
+  ( ("text" "drawing")		127	0	t	)
+  ( ("METAL1" "pin")		131	0	t	)
+  ( ("METAL2" "pin")		132	0	t	)
+  ( ("METAL3" "pin")		133	0	t	)
+  ( ("METAL4" "pin")		134	0	t	)
+  ( ("METAL5" "pin")		135	0	t	)
+  ( ("METAL6" "pin")		136	0	t	)
+  ( ("METAL7" "pin")		137	0	t	)
+  ( ("METAL8" "pin")		138	0	t	)
+  ( ("METAL9" "pin")		139	0	t	)
+  ( ("VARDMY" "drawing")	143	0	t	)
+  ( ("VARDMY" "drawing1")	143	1	t	)
+  ( ("VARDMY" "drawing2")	143	2	t	)
+  ( ("VARDMY" "drawing3")	143	3	t	)
+  ( ("INDDMY" "drawing")	144	0	t	)
+  ( ("INDDMY" "drawing1")	144	1	t	)
+  ( ("INDDMY" "drawing2")	144	2	t	)
+  ( ("INDDMY" "rad")		144	30	t	)
+  ( ("ESD1DMY" "drawing")	145	0	t	)
+  ( ("ESD2DMY" "drawing")	146	0	t	)
+  ( ("ESD3DMY" "drawing")	147	0	t	)
+  ( ("CTMDMY" "drawing")	148	0	t	)
+  ( ("POLYG" "pin")		149	0	t	)
+  ( ("POLYG" "lvs")		149	1	t	)
+  ( ("DMEXCL" "dummy1")		150	1	t	)
+  ( ("DMEXCL" "dummy2")		150	2	t	)
+  ( ("DMEXCL" "dummy3")		150	3	t	)
+  ( ("DMEXCL" "dummy4")		150	4	t	)
+  ( ("DMEXCL" "dummy5")		150	5	t	)
+  ( ("DMEXCL" "dummy6")		150	6	t	)
+  ( ("DMEXCL" "dummy7")		150	7	t	)
+  ( ("DMEXCL" "dummy8")		150	8	t	)
+  ( ("DMEXCL" "dummy9")		150	9	t	)
+  ( ("DMEXCL" "dummyf")		150	15	t	)
+  ( ("ODBLK" "dummy")		150	20	t	)
+  ( ("POBLK" "dummy")		150	21	t	)
+  ( ("VIAEXCL" "dummy1")	153	1	t	)
+  ( ("VIAEXCL" "dummy2")	153	2	t	)
+  ( ("VIAEXCL" "dummy3")	153	3	t	)
+  ( ("VIAEXCL" "dummy4")	153	4	t	)
+  ( ("VIAEXCL" "dummy5")	153	5	t	)
+  ( ("VIAEXCL" "dummy6")	153	6	t	)
+  ( ("VIAEXCL" "dummy7")	153	7	t	)
+  ( ("VIAEXCL" "dummy8")	153	8	t	)
+  ( ("VIAEXCL" "dummyf")	153	15	t	)
+  ( ("FLASH" "drawing")		154	0	t	)
+  ( ("MW" "drawing")		154	1	t	)
+  ( ("FLGT" "drawing")		154	2	t	)
+  ( ("MPOL" "drawing")		154	3	t	)
+  ( ("HVII" "drawing")		154	4	t	)
+  ( ("HVNW" "drawing")		154	5	t	)
+  ( ("HVPW" "drawing")		154	6	t	)
+  ( ("MWLDMY" "drawing")	154	8	t	)
+  ( ("MSLDMY" "drawing")	154	9	t	)
+  ( ("M4OPT" "drawing1")	154	10	t	)
+  ( ("M4OPT" "drawing2")	154	11	t	)
+  ( ("HVNTN" "drawing")		154	12	t	)
+  ( ("PSUB" "drawing")		154	13	t	)
+  ( ("HNVT" "drawing")		154	14	t	)
+  ( ("PO1" "drawing")		154	15	t	)
+  ( ("MCEL" "drawing")		154	16	t	)
+  ( ("EMBFH" "fg1")		154	21	t	)
+  ( ("EMBFH" "fg2")		154	22	t	)
+  ( ("MOMDMY" "drawing")	155	0	t	)
+  ( ("LOGO" "drawing")		158	0	t	)
+  ( ("MD" "pin")		159	0	t	)
+  ( ("RFDMY" "drawing")		161	0	t	)
+  ( ("RFDMY" "drawing1")	161	1	t	)
+  ( ("SEALRING" "drawing")	162	0	t	)
+  ( ("marker" "error")		163	0	t	)
+  ( ("marker" "warning")	164	0	t	)
+  ( ("CDUDMY" "drawing")	165	0	t	)
+  ( ("CSRDMY" "drawing")	166	0	t	)
+  ( ("VIAD" "drawing")		167	0	t	)
+  ( ("MD" "drawing")		168	0	t	)
+  ( ("MD" "dummy")		168	1	t	)
+  ( ("MD" "slot")		168	2	t	)
+  ( ("CBD" "drawing")		169	0	t	)
+  ( ("UBM" "drawing")		170	0	t	)
+  ( ("METAL1" "boundary")	171	0	nil	)
+  ( ("METAL2" "boundary")	172	0	nil	)
+  ( ("METAL3" "boundary")	173	0	nil	)
+  ( ("METAL4" "boundary")	174	0	nil	)
+  ( ("METAL5" "boundary")	175	0	nil	)
+  ( ("METAL6" "boundary")	176	0	nil	)
+  ( ("METAL7" "boundary")	177	0	nil	)
+  ( ("METAL8" "boundary")	178	0	nil	)
+  ( ("METAL9" "boundary")	179	0	nil	)
+  ( ("R_rule" "require")	182	1	t	)
+  ( ("R_rule" "recommend")	182	2	t	)
+  ( ("R_rule" "analog")  	182	3	t	)
+  ( ("WBDMY" "drawing")		183	0	t	)
+  ( ("SRAMDMY" "waive")		186	0	t	)
+  ( ("SRAMDMY" "passgate")	186	1	t	)
+  ( ("SRAMDMY" "allsram")	186	2	t	)
+  ( ("SRAMDMY" "cvss_sram")	186	3	t	)
+  ( ("SRAMDMY" "periphery")	186	4	t	)
+  ( ("VIA12" "boundary")	191	0	nil	)
+  ( ("VIA23" "boundary")	192	0	nil	)
+  ( ("VIA34" "boundary")	193	0	nil	)
+  ( ("VIA45" "boundary")	194	0	nil	)
+  ( ("VIA56" "boundary")	195	0	nil	)
+  ( ("VIA67" "boundary")	196	0	nil	)
+  ( ("VIA78" "boundary")	197	0	nil	)
+  ( ("VIA89" "boundary")	198	0	nil	)
+ ) ;streamLayers
+
+ viaLayers(
+ ;( layer1	viaLayer	layer2	)
+ ;( ------	--------	------	)
+  ( POLYG	CONT		METAL1	)
+  ( METAL1	CONT		OD	)
+  ( METAL1	VIA12		METAL2	)
+  ( METAL2	VIA23		METAL3	)
+  ( METAL3	VIA34		METAL4	)
+  ( METAL4	VIA45		METAL5	)
+  ( METAL5	VIA56		METAL6	)
+  ( METAL6	VIA67		METAL7	)
+  ( METAL7	VIA78		METAL8	)
+ ) ;viaLayers
+
+ equivalentLayers(
+ ;( list of layers )
+ ;( -------------- )
+; Error usage of PSUB2. PSUB2 is a reverse layer of PSUB in LVS.
+;  ( ("PDKREC" "wellbody")	PSUB2      )
+  ( ("PDKREC" "wellbody")	prBoundary )
+;  ( prBoundary	PSUB2      )
+ ) ;equivalentLayers
+
+ layerFunctions(
+ ;( layer	function )
+ ;( -----	-------- )
+  ( NWELL	"nwell"	)
+  ( OD		"ndiff"	)
+  ( POLYG	"poly"	)
+  ( CONT	"cut"	)
+  ( METAL1	"metal"	)
+  ( VIA12	"cut"	)
+  ( METAL2	"metal"	)
+  ( VIA23	"cut"	)
+  ( METAL3	"metal"	)
+  ( VIA34	"cut"	)
+  ( METAL4	"metal"	)
+  ( VIA45	"cut"	)
+  ( METAL5	"metal"	)
+  ( VIA56	"cut"	)
+  ( METAL6	"metal"	)
+  ( VIA67	"cut"	)
+  ( METAL7	"metal"	)
+  ( VIA78	"cut"	)
+  ( METAL8	"metal"	)
+ ) ;layerFunctions
+
+) ;layerRules
+
+
+;********************************
+; PHYSICAL RULES
+;********************************
+physicalRules(
+
+ spacingRules(
+; ( rule	layer1		layer2		value	)
+; ( ----	------		------		-----	)
+  ( minWidth	"NWELL"				0.62	) ; NW.W.1
+  ( minNotch	"NWELL"				0.62	) ; NW.S.1
+  ( minSpacing	"NWELL"				0.62	) ; NW.S.1
+  ( minArea	"NWELL"				1	) ; NW.A.1
+  ( minWidth	"DNWELL"			3.0	) ; DNW.W.1
+  ( minNotch	"DNWELL"			5.0	) ; DNW.S.1
+  ( minSpacing	"DNWELL"			5.0	) ; DNW.S.1
+  ( minSpacing	"DNWELL"	"NWELL"		3.5	) ; DNW.S.2
+  ( minOverlap	"NWELL"		"DNWELL"	2	) ; DNW.O.1
+  ( minWidth	"NT_N"				0.62	) ; NT_N.W.1
+  ( minNotch	"NT_N"				0.62	) ; NT_N.S.1
+  ( minSpacing	"NT_N"				0.62	) ; NT_N.S.1
+  ( minSpacing	"NT_N"		"OD"		0.38	) ; NT_N.S.2
+  ( minSpacing	"NT_N"		"NWELL"		1.2	) ; NT_N.S.3
+  ( minWidth	"VTL_N"				0.31	) ; VTL_N.W.1
+  ( minNotch	"VTL_N"				0.31	) ; VTL_N.S.1
+  ( minSpacing	"VTL_N"				0.31	) ; VTL_N.S.1
+;  ( minSpacing	"VTL_N"		"OD"		0.18	) ; error!
+;  ( minSpacing	"VTL_N"		"POLYG"		0.27	) ; error!
+  ( minWidth	"VTL_P"				0.31	) ; VTL_P.W.1
+  ( minNotch	"VTL_P"				0.31	) ; VTL_P.S.1
+  ( minSpacing	"VTL_P"				0.31	) ; VTL_P.S.1
+;  ( minSpacing	"VTL_P"		"OD"		0.18	) ; error!
+;  ( minSpacing	"VTL_P"		"POLYG"		0.27	) ; error!
+  ( minWidth	"VTH_N"				0.31	) ; VTH_N.W.1
+  ( minNotch	"VTH_N"				0.31	) ; VTH_N.S.1
+  ( minSpacing	"VTH_N"				0.31	) ; VTH_N.S.1
+;  ( minSpacing	"VTH_N"		"OD"		0.18	) ; error!
+;  ( minSpacing	"VTH_N"		"POLYG"		0.27	) ; error!
+  ( minWidth	"VTH_P"				0.31	) ; VTH_P.W.1
+  ( minNotch	"VTH_P"				0.31	) ; VTH_P.S.1
+  ( minSpacing	"VTH_P"				0.31	) ; VTH_P.S.1
+;  ( minSpacing	"VTH_P"		"OD"		0.18	) ; error!
+;  ( minSpacing	"VTH_P"		"POLYG"		0.27	) ; error!
+  ( minWidth	"OD"				0.15	) ; OD.W.1
+  ( minNotch	"OD"				0.21	) ; OD.S.1
+  ( minSpacing	"OD"				0.21	) ; OD.S.1
+  ( minSpacing	"OD"		"NWELL"		0.24	) ; OD.S.4
+  ( minArea	"OD"				0.122	) ; OD.A.1
+  ( minNotch	"OD2"				0.86	) ; OD2.S.1
+  ( minSpacing	"OD2"				0.86	) ; OD2.S.1
+  ( minSpacing	"OD2"		"OD"		0.27	) ; OD2.S.2
+;  ( minSpacing	"OD2"		"POLYG"		0.34	) ; error!
+  ( minSpacing	"OD2"		"NWELL"		0.62	) ; OD2.S.4
+  ( minOverlap	"NWELL"		"OD2"		0.62	) ; OD2.O.1
+  ( minWidth	"POLYG"				0.13	) ; PO.W.1
+  ( minNotch	"POLYG"				0.18	) ; PO.S.1
+  ( minSpacing	"POLYG"				0.18	) ; PO.S.1
+  ( minSpacing	"POLYG"		"OD"		0.07	) ; PO.S.4
+;  ( minOverlap	"POLYG"		"OD"		0.18	) ; error!
+  ( minWidth	"NIMP"				0.31	) ; NP.W.1
+  ( minNotch	"NIMP"				0.31	) ; NP.S.1
+  ( minSpacing	"NIMP"				0.31	) ; NP.S.1
+  ( minSpacing	"NIMP"		"OD"		0.03	) ; NP.S.3
+;  ( minSpacing	"NIMP"		"POLYG"		0.20	) ; error!
+  ( minOverlap	"NIMP"		"OD"		0.18	) ; NP.O.1
+  ( minArea	"NIMP"				0.25	) ; NP.A.1
+  ( minWidth	"PIMP"				0.31	) ; PP.W.1
+  ( minNotch	"PIMP"				0.31	) ; PP.S.1
+  ( minSpacing	"PIMP"				0.31	) ; PP.S.1
+  ( minSpacing	"PIMP"		"OD"		0.03	) ; PP.S.3
+;  ( minSpacing	"PIMP"		"POLYG"		0.20	) ; error!
+  ( minOverlap	"PIMP"		"OD"		0.18	) ; PP.O.1
+  ( minArea	"PIMP"				0.25	) ; PP.A.1
+  ( minWidth	"RPO"				0.43	) ; RPO.W.1
+  ( minNotch	"RPO"				0.43	) ; RPO.S.1
+  ( minSpacing	"RPO"				0.43	) ; RPO.S.1
+  ( minSpacing	"RPO"		"OD"		0.22	) ; RPO.S.2
+  ( minSpacing	"RPO"		"CONT"		0.22	) ; RPO.S.3
+  ( minSpacing	"RPO"		"POLYG"		0.30	) ; RPO.S.5
+  ( minArea	"RPO"				1	) ; RPO.A.1
+  ( minWidth	"CONT"				0.16	) ; CO.W.1
+  ( minNotch	"CONT"				0.18	) ; CO.S.1
+  ( minSpacing	"CONT"				0.18	) ; CO.S.1
+  ( minSpacing	"CONT"		"POLYG"		0.11	) ; error!
+  ( minSpacing	"CONT"		"OD"		0.14	) ; CO.S.5
+  ( minWidth	"METAL1"			0.16	) ; M1.W.1
+  ( minNotch	"METAL1"			0.18	) ; M1.S.1
+  ( minSpacing	"METAL1"			0.18	) ; M1.S.1
+  ( minArea	"METAL1"			0.122	) ; M1.A.1
+  ( minWidth	"METAL2"			0.20	) ; M2.W.1
+  ( minNotch	"METAL2"			0.21	) ; M2.S.1
+  ( minSpacing	"METAL2"			0.21	) ; M2.S.1
+  ( minArea	"METAL2"			0.144	) ; M2.A.1
+  ( minWidth	"METAL3"			0.20	) ; M3.W.1
+  ( minNotch	"METAL3"			0.21	) ; M3.S.1
+  ( minSpacing	"METAL3"			0.21	) ; M3.S.1
+  ( minArea	"METAL3"			0.144	) ; M3.A.1
+  ( minWidth	"METAL4"			0.20	) ; M4.W.1
+  ( minNotch	"METAL4"			0.21	) ; M4.S.1
+  ( minSpacing	"METAL4"			0.21	) ; M4.S.1
+  ( minArea	"METAL4"			0.144	) ; M4.A.1
+  ( minWidth	"METAL5"			0.20	) ; M5.W.1
+  ( minNotch	"METAL5"			0.21	) ; M5.S.1
+  ( minSpacing	"METAL5"			0.21	) ; M5.S.1
+  ( minArea	"METAL5"			0.144	) ; M5.A.1
+  ( minWidth	"METAL6"			0.20	) ; M6.W.1
+  ( minNotch	"METAL6"			0.21	) ; M6.S.1
+  ( minSpacing	"METAL6"			0.21	) ; M6.S.1
+  ( minArea	"METAL6"			0.144	) ; M6.A.1
+  ( minWidth	"METAL7"			0.20	) ; M7.W.1
+  ( minNotch	"METAL7"			0.21	) ; M7.S.1
+  ( minSpacing	"METAL7"			0.21	) ; M7.S.1
+  ( minArea	"METAL7"			0.144	) ; M7.A.1
+  ( minWidth	"METAL8"			0.40	) ; M8.W.1
+  ( minNotch	"METAL8"			0.42	) ; M8.S.1
+  ( minSpacing	"METAL8"			0.42	) ; M8.S.1
+  ( minArea	"METAL8"			0.562	) ; M8.A.1
+  ( minWidth	"VIA12"			0.19	) ; VIA1.W.1
+  ( minNotch	"VIA12"			0.22	) ; VIA1.S.1
+  ( minSpacing	"VIA12"			0.22	) ; VIA1.S.1
+  ( minWidth	"VIA23"			0.19	) ; VIA2.W.1
+  ( minNotch	"VIA23"			0.22	) ; VIA2.S.1
+  ( minSpacing	"VIA23"			0.22	) ; VIA2.S.1
+  ( minWidth	"VIA34"			0.19	) ; VIA3.W.1
+  ( minNotch	"VIA34"			0.22	) ; VIA3.S.1
+  ( minSpacing	"VIA34"			0.22	) ; VIA3.S.1
+  ( minWidth	"VIA45"			0.19	) ; VIA4.W.1
+  ( minNotch	"VIA45"			0.22	) ; VIA4.S.1
+  ( minSpacing	"VIA45"			0.22	) ; VIA4.S.1
+  ( minWidth	"VIA56"			0.19	) ; VIA5.W.1
+  ( minNotch	"VIA56"			0.22	) ; VIA5.S.1
+  ( minSpacing	"VIA56"			0.22	) ; VIA5.S.1
+  ( minWidth	"VIA67"			0.19	) ; VIA6.W.1
+  ( minNotch	"VIA67"			0.22	) ; VIA6.S.1
+  ( minSpacing	"VIA67"			0.22	) ; VIA6.S.1
+  ( minWidth	"VIA78"			0.36	) ; VIA7.W.1
+  ( minNotch	"VIA78"			0.35	) ; VIA7.S.1
+  ( minSpacing	"VIA78"			0.35	) ; VIA7.S.1
+;  ( minSpacing	"DNWELL"	"OD"		2.93	) ; error!
+;  ( minSpacing	"VTL_N"		"NWELL"		0.31	) ; error!
+;  ( minSpacing	"HRI"		"OD"		0.2	) ; error!
+;  ( minSpacing	"VTL_N"		"OD2"		0.31	) ; error!
+;  ( minSpacing	"HRI"		"POLYG"		0.2	) ; error!
+;  ( minWidth	("METAL1" "slot")		3.0	) ; error!
+;  ( minNotch	("METAL1" "slot")		0.16	) ; error!
+;  ( minSpacing	("METAL1" "slot")		0.16	) ; error!
+;  ( minWidth	("METAL2" "slot")		3.0	) ; error!
+;  ( minNotch	("METAL2" "slot")		0.20	) ; error!
+;  ( minSpacing	("METAL2" "slot")		0.20	) ; error!
+;  ( minWidth	("METAL3" "slot")		3.0	) ; error!
+;  ( minNotch	("METAL3" "slot")		0.20	) ; error!
+;  ( minSpacing	("METAL3" "slot")		0.20	) ; error!
+;  ( minWidth	("METAL4" "slot")		3.0	) ; error!
+;  ( minNotch	("METAL4" "slot")		0.20	) ; error!
+;  ( minSpacing	("METAL4" "slot")		0.20	) ; error!
+;  ( minWidth	("METAL5" "slot")		3.0	) ; error!
+;  ( minNotch	("METAL5" "slot")		0.20	) ; error!
+;  ( minSpacing	("METAL5" "slot")		0.20	) ; error!
+;  ( minWidth	("METAL6" "slot")		3.0	) ; error!
+;  ( minNotch	("METAL6" "slot")		0.20	) ; error!
+;  ( minSpacing	("METAL6" "slot")		0.20	) ; error!
+;  ( minWidth	("METAL7" "slot")		3.0	) ; error!
+;  ( minNotch	("METAL7" "slot")		0.20	) ; error!
+;  ( minSpacing	("METAL7" "slot")		0.20	) ; error!
+;  ( minWidth	("METAL8" "slot")		3.0	) ; error!
+;  ( minNotch	("METAL8" "slot")		0.44	) ; error!
+;  ( minSpacing	("METAL8" "slot")		0.44	) ; error!
+; Mixed signal process design rules
+  ( minWidth	"HRI"				0.31	) ; HRI.W.1
+  ( minNotch	"HRI"				0.31	) ; HRI.S.1
+  ( minSpacing	"HRI"				0.31	) ; HRI.S.1
+  ( minWidth	"CTM"				2.0	) ; CTM.W.1
+  ( minNotch	"CTM"				0.8	) ; CTM.S.1
+  ( minSpacing	"CTM"				0.8	) ; CTM.S.1
+  ( minSpacing	"VIA78"	"CTM"		0.3	) ; CTM.S.2
+  ( minWidth	"CBM"				0.88	) ; CBM.W.3
+  ( minNotch	"CBM"				0.92	) ; CBM.S.3
+  ( minSpacing	"CBM"				0.92	) ; CBM.S.3
+;  ( minSpacing	"HVTSRM"	"VTH_N"		0.31	)
+;  ( minSpacing	"HVTSRM"	"VTH_P"		0.31	)
+;  ( minWidth	"RHRIDMY"			10.0	)
+  ( routingOffset	"METAL1"	0	)
+  ( routingOffset	"METAL2"	0	)
+  ( routingOffset	"METAL3"	0	)
+  ( routingOffset	"METAL4"	0	)
+  ( routingOffset	"METAL5"	0	)
+  ( offset		"METAL1"	0.205	)
+  ( minSpacingThreshold "METAL1" ("0.180 LENGTHTHRESHOLD  1.000")	)
+  ( minSpacingRange	"METAL1" ("0.220 RANGE	0.300 10.000 USELENGTHTHRESHOLD" "0.600 RANGE	10.050 100000.000")	)
+  ( offset		"METAL2"	0.23	)
+  ( minSpacingRange	"METAL2" ("0.240 RANGE	0.390 10.000" "0.600 RANGE 10.050 100000.000")	)
+  ( offset		"METAL3"	0.205	)
+  ( minSpacingRange	"METAL3" ("0.240 RANGE	0.390 10.000" "0.600 RANGE 10.050 100000.000")	)
+  ( offset		"METAL4"	0.23	)
+  ( minSpacingRange	"METAL4" ("0.240 RANGE	0.390 10.000" "0.600 RANGE 10.050 100000.000")	)
+  ( offset		"METAL5"	0.205	)
+  ( minSpacingRange	"METAL5" ("0.240 RANGE	0.390 10.000" "0.600 RANGE 10.050 100000.000")	)
+  ( offset		"METAL6"	0.23	)
+  ( minSpacingRange	"METAL6" ("0.240 RANGE	0.390 10.000" "0.600 RANGE 10.050 100000.000")	)
+  ( offset		"METAL7"	0.41	)
+  ( minSpacingRange	"METAL7" ("0.240 RANGE	0.390 10.000" "0.600 RANGE 10.050 100000.000")	)
+  ( offset		"METAL8"	0.69	)
+  ( minSpacingRange	"METAL8" ("0.600 RANGE	10.050 100000.000")	)
+  ( sameNet		"METAL1"	"METAL1"	0.18	)
+  ( sameNet		"METAL2"	"METAL2"	0.21	)
+  ( sameNet		"METAL3"	"METAL3"	0.21	)
+  ( sameNet		"METAL4"	"METAL4"	0.21	)
+  ( sameNet		"METAL5"	"METAL5"	0.21	)
+  ( sameNet		"METAL6"	"METAL6"	0.21	)
+  ( sameNet		"METAL7"	"METAL7"	0.21	)
+  ( sameNet		"METAL8"	"METAL8"	0.42	)
+  ( sameNet		"VIA12"	"VIA12"	0.22	)
+  ( sameNet		"VIA23"	"VIA23"	0.22	)
+  ( sameNet		"VIA34"	"VIA34"	0.22	)
+  ( sameNet		"VIA45"	"VIA45"	0.22	)
+  ( sameNet		"VIA56"	"VIA56"	0.22	)
+  ( sameNet		"VIA67"	"VIA67"	0.22	)
+  ( sameNet		"VIA78"	"VIA78"	0.35	)
+  ( sameNet		"VIA12"	"VIA23"	0.0	)
+  ( sameNet		"VIA23"	"VIA34"	0.0	)
+  ( sameNet		"VIA34"	"VIA45"	0.0	)
+  ( sameNet		"VIA45"	"VIA56"	0.0	)
+  ( sameNet		"VIA56"	"VIA67"	0.0	)
+  ( sameNet		"VIA67"	"VIA78"	0.0	)
+ ) ;spacingRules
+
+ orderedSpacingRules(
+ ;( rule		layer1		layer2		value	)
+ ;( ----		------		------		-----	)
+;  ( minEnclosure	"NWELL"		"NIMP"		0.15	)
+; OD.EN.2, P+ACTIVE enclosure by NW. Ref: OD.EN.1=0.24.
+;  ( minEnclosure	"NWELL"		"OD"		0.31	)
+;  ( minEnclosure	"VTL_N"		"OD"		0.26	)
+;  ( minEnclosure	"VTH_N"		"OD"		0.26	)
+;  ( minEnclosure	"VTL_P"		"OD"		0.26	)
+;  ( minEnclosure	"VTH_P"		"OD"		0.26	)
+;  ( minEnclosure	"VTL_N"		"POLYG"		0.33	)
+;  ( minEnclosure	"VTH_N"		"POLYG"		0.33	)
+;  ( minEnclosure	"VTL_P"		"POLYG"		0.33	)
+;  ( minEnclosure	"VTH_P"		"POLYG"		0.33	)
+  ( minEnclosure	"NWELL"		"DNWELL"	1.5	) ; DNW.EN.1
+  ( minEnclosure	"NT_N"		"OD"		0.26	) ; NT_N.EN.1
+;  ( minEnclosure	"NT_N"		"POLYG"		0.26	)
+  ( minEnclosure	"OD2"		"POLYG"		0.34	) ; OD2.EN.1
+  ( minEnclosure	"OD2"		"OD"		0.27	) ; OD2.EX.1
+  ( minEnclosure	"NWELL"		"OD2"		0.62	) ; OD2.EX.2
+;  ( minEnclosure	"OD"		"POLYG"		0.4	)
+  ( minEnclosure	"POLYG"		"OD"		0.18	) ; PO.EX.1
+  ( minEnclosure	"PIMP"		"OD"		0.18	) ; PP.EX.1
+  ( minEnclosure	"NIMP"		"OD"		0.18	) ; NP.EX.1
+;  ( minEnclosure	"NIMP"		"OD2"		0.28	)
+  ( minEnclosure	"RPO"		"OD"		0.22	) ; RPO.EX.1
+  ( minEnclosure	"OD"		"RPO"		0.22	) ; RPO.EX.2
+  ( minEnclosure	"RPO"		"POLYG"		0.22	) ; RPO.EX.3
+  ( minEnclosure	"OD"		"CONT"		0.07	) ; CO.EN.1
+  ( minEnclosure	"POLYG"		"CONT"		0.07	) ; CO.EN.2
+  ( minEnclosure	"PIMP"		"CONT"		0.09	) ; CO.EN.3
+  ( minEnclosure	"NIMP"		"CONT"		0.09	) ; CO.EN.4
+;  ( minEnclosure	"PIMP"		"POLYG"		0.2	)
+;  ( minEnclosure	"NIMP"		"POLYG"		0.2	)
+;  ( minEnclosure	"NIMP"		"NWELL"		0	)
+  ( minEnclosure	"METAL1"	"CONT"		0	) ; M1.EN.1
+  ( minEnclosure	"METAL1"	"VIA12"		0.01	) ; VIA1.EN.1
+  ( minEnclosure	"METAL2"	"VIA12"		0.005	) ; M2.EN.1
+  ( minEnclosure	"METAL2"	"VIA23"	0.005	) ; VIA2.EN.1
+  ( minEnclosure	"METAL3"	"VIA23"	0.005	) ; M3.EN.1
+  ( minEnclosure	"METAL3"	"VIA34"	0.005	) ; VIA3.EN.1
+  ( minEnclosure	"METAL4"	"VIA34"	0.005	) ; M4.EN.1
+  ( minEnclosure	"METAL4"	"VIA45"	0.005	) ; VIA4.EN.1
+  ( minEnclosure	"METAL5"	"VIA45"	0.005	) ; M5.EN.1
+  ( minEnclosure	"METAL5"	"VIA56"	0.005	) ; VIA5.EN.1
+  ( minEnclosure	"METAL6"	"VIA56"	0.005	) ; M6.EN.1
+  ( minEnclosure	"METAL6"	"VIA67"	0.005	) ; VIA6.EN.1
+  ( minEnclosure	"METAL7"	"VIA67"	0.005	) ; M7.EN.1
+  ( minEnclosure	"METAL7"	"VIA78"	0.01	) ; VIA7.EN.1
+  ( minEnclosure	"METAL8"	"VIA78"	0.09	) ; M8.EN.1
+; cdsVia metals of VIA1.EN.1 ~ VIA7.EN.1 are rectangles.
+; cdsVia M8 of M8.EN.1 is a square.
+;  ( minEnclosure	"METAL1"	"PAD"		5	)
+;  ( minEnclosure	"METAL2"	"PAD"		5	)
+;  ( minEnclosure	"METAL3"	"PAD"		5	)
+;  ( minEnclosure	"METAL4"	"PAD"		5	)
+;  ( minEnclosure	"METAL5"	"PAD"		5	)
+;  ( minEnclosure	"METAL6"	"PAD"		5	)
+;  ( minEnclosure	"NWELL"		"NWELL"		0	)
+;  ( minEnclosure	"NWELL"		"PIMP"		0.6	)
+; Mixed signal process design rules
+;  ( minEnclosure	"RHDMY"		"POLYG"		0.2	)
+;  ( minEnclosure	"RHDMY"		"OD"		0.2	)
+;  ( minEnclosure	"CTM"		"METAL7"	1	) ; error!
+;  ( minEnclosure	"CTM"		"METAL8"	1	) ; error!
+  ( minEnclosure	"CTM"		"VIA78"	0.24	) ; CTM.EN.1
+  ( minEnclosure	"CBM"		"VIA78"	0.2	) ; CBM.EN.1
+  ( minEnclosure	"CBM"		"CTM"		0.4	) ; CTM.EN.2
+  ( minEnclosure	"CTMDMY"	"CBM"		10.0	) ; CBM.EN.2
+  ( minEnclosure	"INDDMY"	"METAL8"	50	) ; UTM8.R.1
+) ;orderedSpacingRules
+
+ mfgGridResolution(
+ ( 0.005 )
+ ) ;mfgGridResolution
+
+) ;physicalRules
+
+
+;********************************
+; ELECTRICAL RULES
+;********************************
+electricalRules(
+
+ characterizationRules(
+ ;( rule		layer1	layer2	value	)
+ ;( ----		------	------	-----	)
+  ( sheetRes		"POLYG"		7.54	)
+  ( sheetRes		"NIMP"		72715	)
+  ( sheetRes		"PIMP"		145.87	)
+  ( sheetRes		"NWELL"		1207	)
+  ( sheetRes		"METAL1"	0.087	)
+  ( areaCap		"METAL1"	9.3e-05	)
+  ( edgeCapacitance	"METAL1"	0.0	)
+  ( sheetRes		"METAL2"	0.057	)
+  ( areaCap		"METAL2"	0.000106	)
+  ( edgeCapacitance	"METAL2"	0.0	)
+  ( sheetRes		"METAL3"	0.057	)
+  ( areaCap		"METAL3"	9.5e-05	)
+  ( edgeCapacitance	"METAL3"	0.0	)
+  ( sheetRes		"METAL4"	0.057	)
+  ( areaCap		"METAL4"	0.0001	)
+  ( edgeCapacitance	"METAL4"	0.0	)
+  ( sheetRes		"METAL5"	0.057	)
+  ( areaCap		"METAL5"	9.5e-05	)
+  ( edgeCapacitance	"METAL5"	0.0	)
+  ( sheetRes		"METAL6"	0.057	)
+  ( areaCap		"METAL6"	8.6e-05	)
+  ( edgeCapacitance	"METAL6"	0.0	)
+  ( sheetRes		"METAL7"	0.057	)
+  ( areaCap		"METAL7"	6.5e-05	)
+  ( edgeCapacitance	"METAL7"	0.0	)
+  ( sheetRes		"METAL8"	0.02	)
+  ( areaCap		"METAL8"	3.2e-05	)
+  ( edgeCapacitance	"METAL8"	0.0	)
+  ( contactRes		"NIMP"		0.363776	)
+  ( contactRes		"PIMP"		0.367872	)
+  ( contactRes		"POLYG"		0.28416	)
+  ( contactRes		"VIA12"	1.02	)
+  ( contactRes		"VIA23"	1.02	)
+  ( contactRes		"VIA34"	1.02	)
+  ( contactRes		"VIA45"	1.02	)
+  ( contactRes		"VIA56"	1.02	)
+  ( contactRes		"VIA67"	1.02	)
+  ( contactRes		"VIA78"	0.45	)
+ ) ;characterizationRules
+
+ orderedCharacterizationRules(
+ ;( rule		layer1		layer2		value	)
+ ;( ----		------		------		-----	)
+  ( sheetRes		"NWELL"		"OD"		409	)
+  ( contactRes		"POLYG"		"NIMP"		0.283392 )
+  ( contactRes		"POLYG"		"PIMP"		0.28416	)
+ ) ;orderedCharacterizationRules
+
+) ;electricalRules
+
+
+;********************************
+; CONTROLS
+;********************************
+controls(
+ techParams(
+ ;( parameter	value	)
+ ;( ----------	-----	)
+  ( maskGrid	0.005 )
+  ( cadGrid	0.005 )
+  ( drcGrid	0.005 )
+  ( mfgGrid	0.005 )
+  ( scale	1.0 )
+  ( MPPS	(list (list nil (quote cwW) 0.16 (quote cwL) 0.16 (quote cwSp) 0.18 (quote cwRowSp) 0.18 (quote Cw) "CONT" (quote M1) "METAL1" (quote M1CwEnc) 0 (quote breakLayer) "PSUB2") (list nil (quote name) "nwell" (quote pathLayer) "OD" (quote pathWidth) 0.3 (quote pathCwEnc) 0.07 (quote enclosureLayers) (list) (quote spacings) (list nil)) (list nil (quote name) "psub" (quote pathLayer) "OD" (quote pathWidth) 0.3 (quote pathCwEnc) 0.07 (quote enclosureLayers) (list) (quote spacings) (list nil))) )
+ ) ;techParams
+
+ techPermissions(
+ ;( class	(read-only users)  (read & write users)	)
+ ;( ----------	-----------------  --------------------	)
+ ) ;techPermissions
+
+) ;controls
+
+
+;********************************
+; DEVICES
+;********************************
+devices(
+tcCreateCDSDeviceClass()
+
+;
+; no syEnhancement devices
+;
+
+;
+; no syDepletion devices
+;
+
+symContactDevice(
+; (name viaLayer viaPurpose layer1 purpose1 layer2 purpose2
+;  w l (row column xPitch yPitch xBias yBias) encByLayer1 encByLayer2 legalRegion)
+
+  (M1_PO CONT drawing POLYG drawing METAL1 drawing
+  0.16 0.16 (1 1 0.34 0.34 center center) 0.07 0.05 _NA_)
+
+  (M1_OD CONT drawing OD drawing METAL1 drawing
+  0.16 0.16 (1 1 0.34 0.34 center center) 0.07 0.05 _NA_)
+
+  (M1_PPOLYG CONT drawing POLYG drawing (PIMP drawing 0.2) METAL1 drawing
+  0.16 0.16 (1 1 0.34 0.34 center center) 0.07 0.05 _NA_)
+
+  (M1_NPOLYG CONT drawing POLYG drawing (NIMP drawing 0.2) METAL1 drawing
+  0.16 0.16 (1 1 0.34 0.34 center center) 0.07 0.05 _NA_)
+
+  (M1_NACTIVE CONT drawing OD drawing (NIMP drawing 0.18) METAL1 drawing
+  0.16 0.16 (1 1 0.34 0.34 center center) 0.07 0.05 _NA_)
+
+  (M1_NWELL CONT drawing OD drawing (NIMP drawing 0.03) METAL1 drawing (NWELL drawing 0.26)
+  0.16 0.16 (1 1 0.34 0.34 center center) 0.07 0.05 (inside NWELL drawing))
+
+  (M1_PACTIVE CONT drawing OD drawing (PIMP drawing 0.18) METAL1 drawing
+  0.16 0.16 (1 1 0.34 0.34 center center) 0.07 0.05 _NA_)
+
+  (M1_SUB CONT drawing OD drawing (PIMP drawing 0.03) METAL1 drawing (PDKREC wellbody 0)
+  0.16 0.16 (1 1 0.34 0.34 center center) 0.07 0.05 _NA_)
+
+  (M2_M1 VIA12 drawing METAL1 drawing METAL2 drawing
+  0.19 0.19 (1 1 0.41 0.41 center center) 0.05 0.05 _NA_)
+
+  (M3_M2 VIA23 drawing METAL2 drawing METAL3 drawing
+  0.19 0.19 (1 1 0.41 0.41 center center) 0.05 0.05 _NA_)
+
+  (M4_M3 VIA34 drawing METAL3 drawing METAL4 drawing
+  0.19 0.19 (1 1 0.41 0.41 center center) 0.05 0.05 _NA_)
+
+  (M5_M4 VIA45 drawing METAL4 drawing METAL5 drawing
+  0.19 0.19 (1 1 0.41 0.41 center center) 0.05 0.05 _NA_)
+
+  (M6_M5 VIA56 drawing METAL5 drawing METAL6 drawing
+  0.19 0.19 (1 1 0.41 0.41 center center) 0.05 0.05 _NA_)
+
+  (M7_M6 VIA67 drawing METAL6 drawing METAL7 drawing
+  0.19 0.19 (1 1 0.41 0.41 center center) 0.05 0.05 _NA_)
+
+  (M8_M7 VIA78 drawing METAL7 drawing METAL8 drawing
+  0.36 0.36 (1 1 0.71 0.71 center center) 0.05 0.09 _NA_)
+)
+
+cdsViaDevice(
+; (name cutLayer viaPurpose layer1 purpose1 layer2 purpose2
+;  row column origin stackedVias cutLayerW cutLayerL xCutSpacing yCutSpacing
+;  layer1XEnc layer1YEnc layer2XEnc layer2YEnc layer1Dir layer2Dir)
+
+  (M1_POc CONT drawing POLYG drawing METAL1 drawing
+     1 1 centerCenter t 0.16 0.16  0.18 0.18
+     0.07 0.07 0.05 0.05 "Y" "X")
+
+  (M1_ODc CONT drawing OD drawing METAL1 drawing
+     1 1 centerCenter t 0.16 0.16  0.18 0.18
+     0.07 0.07 0.05 0.05 "X" "Y")
+
+  (M2_M1c VIA12 drawing METAL1 drawing METAL2 drawing
+     1 1 centerCenter t 0.19 0.19  0.22 0.22
+     0.05 0.05 0.05 0.05 "Y" "X")
+
+  (M3_M2c VIA23 drawing METAL2 drawing METAL3 drawing
+     1 1 centerCenter t 0.19 0.19  0.22 0.22
+     0.05 0.05 0.05 0.05 "X" "Y")
+
+  (M4_M3c VIA34 drawing METAL3 drawing METAL4 drawing
+     1 1 centerCenter t 0.19 0.19  0.22 0.22
+     0.05 0.05 0.05 0.05 "Y" "X")
+
+  (M5_M4c VIA45 drawing METAL4 drawing METAL5 drawing
+     1 1 centerCenter t 0.19 0.19  0.22 0.22
+     0.05 0.05 0.05 0.05 "X" "Y")
+
+  (M6_M5c VIA56 drawing METAL5 drawing METAL6 drawing
+     1 1 centerCenter t 0.19 0.19  0.22 0.22
+     0.05 0.05 0.05 0.05 "Y" "X")
+
+  (M7_M6c VIA67 drawing METAL6 drawing METAL7 drawing
+     1 1 centerCenter t 0.19 0.19  0.22 0.22
+     0.05 0.05 0.05 0.05 "X" "Y")
+
+  (M8_M7c VIA78 drawing METAL7 drawing METAL8 drawing
+     1 1 centerCenter t 0.36 0.36  0.35 0.35
+     0.05 0.05 0.09 0.09 "Y" "X")
+)
+
+symPinDevice(
+; (name maskable layer1 purpose1 w1 layer2 purpose2 w2 legalRegion)
+  (po_T nil POLYG drawing 0.13 _NA_ _NA_ _NA_ _NA_)
+  (met1_T nil METAL1 drawing 0.16 _NA_ _NA_ _NA_ _NA_)
+  (met2_T nil METAL2 drawing 0.2 _NA_ _NA_ _NA_ _NA_)
+  (met3_T nil METAL3 drawing 0.2 _NA_ _NA_ _NA_ _NA_)
+  (met4_T nil METAL4 drawing 0.2 _NA_ _NA_ _NA_ _NA_)
+  (met5_T nil METAL5 drawing 0.2 _NA_ _NA_ _NA_ _NA_)
+  (met6_T nil METAL6 drawing 0.2 _NA_ _NA_ _NA_ _NA_)
+  (met7_T nil METAL7 drawing 0.2 _NA_ _NA_ _NA_ _NA_)
+  (met8_T nil METAL8 drawing 0.40 _NA_ _NA_ _NA_ _NA_)
+)
+
+tfcDefineDeviceProp(
+  ( layout M2_M1c defaultVia t )
+  ( layout M3_M2c defaultVia t )
+  ( layout M4_M3c defaultVia t )
+  ( layout M5_M4c defaultVia t )
+  ( layout M6_M5c defaultVia t )
+  ( layout M7_M6c defaultVia t )
+  ( layout M8_M7c defaultVia t )
+)
+
+;;;;;   Start of Artisan-defined devices  ;;;;;;
+
+ruleContactDevice(
+; ( viaName (layer1 purpose1 layer1BBox1 [layer1BBox2 ...])
+;     (viaLayer viaPurpose viaLayerBBox1 [viaLayerBBox2 ...])
+;     (layer2 purpose2 layer2BBox1 [layer2BBox2 ...])
+; )
+  ( ruleVia
+    ( METAL1 drawing
+       ( -1.500000 -0.900000 1.500000 0.900000 )
+    )
+    ( VIA12 drawing
+       ( -0.900000 -0.300000 -0.300000 0.300000 )
+       ( 0.300000 -0.300000 0.900000 0.300000 )
+    )
+    ( METAL2 drawing
+       ( -1.500000 -0.900000 1.500000 0.900000 )
+    )
+  )
+)
+
+tcCreateDeviceClass( "symbolic" "syEnhContact"
+    ; class parameters
+    ( (viaLayer "cont") (viaLayer2 "sl") (encByVia 0.2)
+      (layer1 "ndiff") (layer1Implant "") (layer1ImpEnc 1.2)
+      (layer2 "metal1") (layer2Implant "") (layer2ImpEnc 0.0)
+      (encByLayer1 0.7) (encByLayer2 0.7) (layer1XEnc 0.7)
+      (layer1YEnc 0.7) (layer2XEnc 0.7) (layer2YEnc 0.7) )
+    ; formal parameters
+    ( (w 1.4) (l 1.4) (row 1)
+      (column 1) (xPitch 3.3) (yPitch 3.3)
+      (offset 0.0) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "") (layer2Dir "")
+      (leakLength 1.4) (areaPin "") )
+    ; IL codes specifying geometry
+
+    (setq layer1X
+	(case layer1Dir
+	    (("x" "xy" "xt" "xb") layer1XEnc)
+	    (t encByLayer1)
+	)
+    )
+    (setq layer1Y
+	(case layer1Dir
+	    (("y" "yx" "yl" "yr") layer1YEnc)
+	    (t encByLayer1)
+	)
+    )
+    (setq layer2X
+	(case layer2Dir
+	    (("x" "xy" "xt" "xb") layer2XEnc)
+	    (t encByLayer2)
+	)
+    )
+    (setq layer2Y
+	(case layer2Dir
+	    (("y" "yx" "yl" "yr") layer2YEnc)
+	    (t encByLayer2)
+	)
+    )
+    (setq direction1
+	(case layer1Dir
+	    ("x"
+		(list "left" "right")
+	    )
+	    ("xt"
+		(list "left" "right" "top")
+	    )
+	    ("xb"
+		(list "left" "right" "bottom")
+	    )
+	    ("y"
+		(list "top" "bottom")
+	    )
+	    ("yl"
+		(list "top" "bottom" "left")
+	    )
+	    ("yr"
+		(list "top" "bottom" "right")
+	    )
+	    (t
+		(list "left" "right" "top" "bottom")
+	    )
+	)
+    )
+    (setq direction2
+	(case layer2Dir
+	    ("x"
+		(list "left" "right")
+	    )
+	    ("xt"
+		(list "left" "right" "top")
+	    )
+	    ("xb"
+		(list "left" "right" "bottom")
+	    )
+	    ("y"
+		(list "top" "bottom")
+	    )
+	    ("yl"
+		(list "top" "bottom" "left")
+	    )
+	    ("yr"
+		(list "top" "bottom" "right")
+	    )
+	    (t
+		(list "left" "right" "top" "bottom")
+	    )
+	)
+    )
+    (case side
+	(("left-leak" "right-leak")
+	    (setq orientation "vertical")
+	    (setq layer1X encByLayer1)
+	    (setq layer2X encByLayer2)
+	)
+	(("top-leak" "bottom-leak")
+	    (setq orientation "horizontal")
+	    (setq layer1X layer1Y)
+	    (setq layer2X layer2Y)
+	    (setq layer1Y encByLayer1)
+	    (setq layer2Y encByLayer2)
+	    (setq x xPitch)
+	    (setq xPitch yPitch)
+	    (setq yPitch x)
+	    (setq x w)
+	    (setq w l)
+	    (setq l x)
+	)
+	(t
+	    (setq orientation side)
+	)
+    )
+    (case orientation
+	("top"
+	    (setq llY offset)
+	    (setq urY
+		(plus
+		    (times yPitch
+			(difference row 1.0)
+		    ) l llY
+		)
+	    )
+	    (setq lleftY
+		(minus urY)
+	    )
+	    (setq urightY urY)
+	    (setq centerY offset)
+	    (setq n 1)
+	)
+	("bottom"
+	    (setq urY
+		(minus offset)
+	    )
+	    (setq llY
+		(difference urY
+		    (times yPitch
+			(difference row 1.0)
+		    ) l
+		)
+	    )
+	    (setq urightY
+		(minus llY)
+	    )
+	    (setq lleftY llY)
+	    (setq centerY
+		(minus offset)
+	    )
+	    (setq n 1)
+	)
+	("both"
+	    (setq llY offset)
+	    (setq urY
+		(plus
+		    (times yPitch
+			(difference row 1.0)
+		    ) l llY
+		)
+	    )
+	    (setq lleftY
+		(minus urY)
+	    )
+	    (setq urightY urY)
+	    (setq centerY offset)
+	    (setq n 2)
+	)
+	("vertical"
+	    (setq offset 0.0)
+	    (setq urightY
+		(quotient
+		    (plus
+			(times yPitch
+			    (difference row 1.0)
+			) l
+		    ) 2.0
+		)
+	    )
+	    (setq urY urightY)
+	    (setq lleftY
+		(minus urightY)
+	    )
+	    (setq llY lleftY)
+	    (setq centerY 0.0)
+	    (setq row 1)
+	    (setq column 1)
+	    (setq n 1)
+	)
+	("horizontal"
+	    (setq offset 0.0)
+	    (setq urightY
+		(quotient
+		    (plus
+			(times yPitch
+			    (difference row 1.0)
+			) l
+		    ) 2.0
+		)
+	    )
+	    (setq urY urightY)
+	    (setq lleftY
+		(minus urightY)
+	    )
+	    (setq llY lleftY)
+	    (setq centerY 0.0)
+	    (setq row 1)
+	    (setq column 1)
+	    (setq n 1)
+	)
+	(t
+	    (setq orientation "center")
+	    (setq offset 0.0)
+	    (setq urightY
+		(quotient
+		    (plus
+			(times yPitch
+			    (difference row 1.0)
+			) l
+		    ) 2.0
+		)
+	    )
+	    (setq urY urightY)
+	    (setq lleftY
+		(minus urightY)
+	    )
+	    (setq llY lleftY)
+	    (setq centerY 0.0)
+	    (setq n 1)
+	)
+    )
+    (setq urightX
+	(quotient
+	    (plus
+		(times xPitch
+		    (difference column 1)
+		) w
+	    ) 2.0
+	)
+    )
+    (setq lleftX
+	(minus urightX)
+    )
+    (setq moveX
+	(case xBias
+	    ("right"
+		(quotient
+		    (times
+			(difference 1 column) xPitch
+		    ) 2.0
+		)
+	    )
+	    ("left"
+		(quotient
+		    (times
+			(difference column 1) xPitch
+		    ) 2.0
+		)
+	    )
+	    (t 0.0)
+	)
+    )
+    (setq moveY
+	(case yBias
+	    ("top"
+		(quotient
+		    (times
+			(difference 1 row) yPitch
+		    ) 2.0
+		)
+	    )
+	    ("bottom"
+		(quotient
+		    (times
+			(difference row 1) yPitch
+		    ) 2.0
+		)
+	    )
+	    (t 0.0)
+	)
+    )
+    (setq net
+	(dbMakeNet tcCellView "ppd")
+    )
+    (setq x1
+	(case side
+	    ("left-leak"
+		(plus
+		    (difference lleftX layer1X leakLength) encByLayer1
+		)
+	    )
+	    ("right-leak"
+		(difference
+		    (plus urightX layer1X) encByLayer1
+		)
+	    )
+	    (t
+		(difference lleftX layer1X)
+	    )
+	)
+    )
+    (setq x2
+	(case side
+	    ("left-leak"
+		(plus
+		    (difference lleftX layer1X) encByLayer1
+		)
+	    )
+	    ("right-leak"
+		(plus
+		    (difference
+			(plus urightX layer1X) encByLayer1
+		    ) leakLength
+		)
+	    )
+	    (t
+		(plus urightX layer1X)
+	    )
+	)
+    )
+    (setq layer1AreaPin
+	(or
+	    (equal areaPin "all")
+	    (equal areaPin "layer1")
+	    (equal areaPin "layer12")
+	)
+    )
+    (setq layer2AreaPin
+	(or
+	    (equal areaPin "all")
+	    (equal areaPin "layer2")
+	    (equal areaPin "layer12")
+	)
+    )
+    (setq viaAreaPin
+	(or
+	    (equal areaPin "via")
+	    (equal areaPin "all")
+	)
+    )
+    (setq via2AreaPin
+	(or
+	    (equal areaPin "via2")
+	    (equal areaPin "all")
+	)
+    )
+    (when
+	(lessp x1 x2)
+	(setq y1
+	    (case side
+		("bottom-leak"
+		    (difference
+			(plus
+			    (difference lleftY layer1Y) encByLayer1
+			) leakLength
+		    )
+		)
+		("top-leak"
+		    (difference
+			(plus urightY layer1Y) encByLayer1
+		    )
+		)
+		(t
+		    (difference lleftY layer1Y)
+		)
+	    )
+	)
+	(setq y2
+	    (case side
+		("bottom-leak"
+		    (plus
+			(difference lleftY layer1Y) encByLayer1
+		    )
+		)
+		("top-leak"
+		    (plus
+			(difference
+			    (plus urightY layer1Y) encByLayer1
+			) leakLength
+		    )
+		)
+		(t
+		    (plus urightY layer1Y)
+		)
+	    )
+	)
+	(when
+	    (lessp y1 y2)
+	    (setq rect
+		(dbCreateRect tcCellView layer1
+		    (list
+			(range x1 y1)
+			(range x2 y2)
+		    )
+		)
+	    )
+	    (dbMoveFig rect tcCellView
+		(list
+		    (range moveX moveY) "R0"
+		)
+	    )
+	    (dbAddFigToNet rect net)
+	    (when layer1AreaPin
+		(setq pin
+		    (dbCreatePin net rect)
+		)
+		(dbSetq pin direction1 accessDir)
+	    )
+	    (unless
+		(equal layer1Implant "")
+		(setq x1
+		    (difference x1 layer1ImpEnc)
+		)
+		(setq x2
+		    (plus x2 layer1ImpEnc)
+		)
+		(when
+		    (lessp x1 x2)
+		    (setq y1
+			(difference y1 layer1ImpEnc)
+		    )
+		    (setq y2
+			(plus y2 layer1ImpEnc)
+		    )
+		    (setq rect
+			(dbCreateRect tcCellView layer1Implant
+			    (list
+				(range x1 y1)
+				(range x2 y2)
+			    )
+			)
+		    )
+		    (dbMoveFig rect tcCellView
+			(list
+			    (range moveX moveY) "R0"
+			)
+		    )
+		    (dbAddFigToNet rect net)
+		)
+	    )
+	)
+    )
+    (unless layer1AreaPin
+	(setq dot
+	    (dbCreateDot tcCellView layer1
+		(range 0.0 0.0)
+	    )
+	)
+	(setq pin
+	    (dbCreatePin net dot)
+	)
+	(dbSetq pin direction1 accessDir)
+    )
+    (unless via2AreaPin
+	(when
+	    (and
+		(nequal viaLayer viaLayer2)
+		(nequal viaLayer2 "")
+	    )
+	    (setq dot
+		(dbCreateDot tcCellView viaLayer2
+		    (range 0.0 0.0)
+		)
+	    )
+	    (setq pin
+		(dbCreatePin net dot)
+	    )
+	    (dbSetq pin
+		(list "right" "left" "top" "bottom") accessDir
+	    )
+	)
+    )
+    (for i 1 n
+	(for c 1 column
+	    (if
+		(equal side "horizontal") then
+		(setq lX
+		    (difference
+			(plus lleftX
+			    (times
+				(difference c 1.0) xPitch
+			    )
+			) layer1X
+		    )
+		)
+		(setq uX
+		    (plus lX w
+			(times 2.0 layer1X)
+		    )
+		)
+		else
+		(setq lX
+		    (plus lleftX
+			(times
+			    (difference c 1.0) xPitch
+			)
+		    )
+		)
+		(setq uX
+		    (plus lX w)
+		)
+	    )
+	    (for r 1 row
+		(if
+		    (equal side "vertical") then
+		    (setq lY
+			(difference
+			    (plus llY
+				(times
+				    (difference r 1.0) yPitch
+				)
+			    ) layer1Y
+			)
+		    )
+		    (setq uY
+			(plus lY l
+			    (times 2.0 layer1Y)
+			)
+		    )
+		    else
+		    (setq lY
+			(plus llY
+			    (times
+				(difference r 1.0) yPitch
+			    )
+			)
+		    )
+		    (setq uY
+			(plus lY l)
+		    )
+		)
+		(when
+		    (and
+			(lessp lX uX)
+			(lessp lY uY)
+		    )
+		    (setq rect
+			(dbCreateRect tcCellView viaLayer
+			    (list
+				(range lX lY)
+				(range uX uY)
+			    )
+			)
+		    )
+		    (dbMoveFig rect tcCellView
+			(list
+			    (range moveX moveY) "R0"
+			)
+		    )
+		    (dbAddFigToNet rect net)
+		)
+		(when
+		    (and
+			(nequal viaLayer viaLayer2)
+			(nequal viaLayer2 "")
+		    )
+		    (case side
+			("vertical"
+			    (setq x1
+				(plus lX encByVia)
+			    )
+			    (setq x2
+				(difference uX encByVia)
+			    )
+			    (when
+				(and
+				    (lessp x1 x2)
+				    (lessp lY uY)
+				)
+				(setq rect
+				    (dbCreateRect tcCellView viaLayer2
+					(list
+					    (range x1 lY)
+					    (range x2 uY)
+					)
+				    )
+				)
+				(dbMoveFig rect tcCellView
+				    (list
+					(range moveX moveY) "R0"
+				    )
+				)
+				(dbAddFigToNet rect net)
+			    )
+			)
+			("horizontal"
+			    (setq y1
+				(plus lY encByVia)
+			    )
+			    (setq y2
+				(difference uY encByVia)
+			    )
+			    (when
+				(and
+				    (lessp y1 y2)
+				    (lessp lX uX)
+				)
+				(setq rect
+				    (dbCreateRect tcCellView viaLayer2
+					(list
+					    (range lX y1)
+					    (range uX y2)
+					)
+				    )
+				)
+				(dbMoveFig rect tcCellView
+				    (list
+					(range moveX moveY) "R0"
+				    )
+				)
+				(dbAddFigToNet rect net)
+			    )
+			)
+			(t
+			    (setq x1
+				(plus lX encByVia)
+			    )
+			    (setq x2
+				(difference uX encByVia)
+			    )
+			    (when
+				(lessp x1 x2)
+				(setq y1
+				    (plus lY encByVia)
+				)
+				(setq y2
+				    (difference uY encByVia)
+				)
+				(when
+				    (lessp y1 y2)
+				    (setq rect
+					(dbCreateRect tcCellView viaLayer2
+					    (list
+						(range x1 y1)
+						(range x2 y2)
+					    )
+					)
+				    )
+				    (dbMoveFig rect tcCellView
+					(list
+					    (range moveX moveY) "R0"
+					)
+				    )
+				    (dbAddFigToNet rect net)
+				)
+			    )
+			)
+		    )
+		)
+	    )
+	)
+	(unless
+	    (or viaAreaPin
+		(equal viaLayer layer2)
+	    )
+	    (setq dot
+		(dbCreateDot tcCellView viaLayer
+		    (range 0.0 centerY)
+		)
+	    )
+	    (setq pin
+		(dbCreatePin net dot)
+	    )
+	    (dbSetq pin
+		(list "right" "left" "top" "bottom") accessDir
+	    )
+	)
+	(unless
+	    (equal layer2 "")
+	    (setq x1
+		(difference lleftX layer2X)
+	    )
+	    (setq x2
+		(plus urightX layer2X)
+	    )
+	    (when
+		(lessp x1 x2)
+		(setq y1
+		    (difference llY layer2Y)
+		)
+		(setq y2
+		    (plus urY layer2Y)
+		)
+		(when
+		    (lessp y1 y2)
+		    (setq rect
+			(dbCreateRect tcCellView layer2
+			    (list
+				(range x1 y1)
+				(range x2 y2)
+			    )
+			)
+		    )
+		    (dbMoveFig rect tcCellView
+			(list
+			    (range moveX moveY) "R0"
+			)
+		    )
+		    (dbAddFigToNet rect net)
+		    (when layer2AreaPin
+			(setq pin
+			    (dbCreatePin net rect)
+			)
+			(dbSetq pin direction2 accessDir)
+		    )
+		    (when
+			(nequal layer2Implant "")
+			(setq x1
+			    (difference x1 layer2ImpEnc)
+			)
+			(setq x2
+			    (plus x2 layer2ImpEnc)
+			)
+			(when
+			    (lessp x1 x2)
+			    (setq y1
+				(difference y1 layer2ImpEnc)
+			    )
+			    (setq y2
+				(plus y2 layer2ImpEnc)
+			    )
+			    (when
+				(lessp y1 y2)
+				(setq rect
+				    (dbCreateRect tcCellView layer2Implant
+					(list
+					    (range x1 y1)
+					    (range x2 y2)
+					)
+				    )
+				)
+				(dbMoveFig rect tcCellView
+				    (list
+					(range moveX moveY) "R0"
+				    )
+				)
+				(dbAddFigToNet rect net)
+			    )
+			)
+		    )
+		)
+	    )
+	    (unless layer2AreaPin
+		(setq dot
+		    (dbCreateDot tcCellView layer2
+			(range 0.0 centerY)
+		    )
+		)
+		(setq pin
+		    (dbCreatePin net dot)
+		)
+		(dbSetq pin direction2 accessDir)
+	    )
+	    (when
+		(and
+		    (null layer2AreaPin)
+		    (equal viaLayer layer2)
+		)
+		(if
+		    (equal i 1) then
+		    (case orientation
+			(("both" "top")
+			    (setq dot
+				(dbCreateDot tcCellView layer2
+				    (range 0.0
+					(plus centerY l)
+				    )
+				)
+			    )
+			    (setq pin
+				(dbCreatePin net dot)
+			    )
+			    (dbSetq pin direction2 accessDir)
+			)
+			("bottom"
+			    (setq dot
+				(dbCreateDot tcCellView layer2
+				    (range 0.0
+					(difference centerY l)
+				    )
+				)
+			    )
+			    (setq pin
+				(dbCreatePin net dot)
+			    )
+			    (dbSetq pin direction2 accessDir)
+			)
+			(t
+			    (setq dot
+				(dbCreateDot tcCellView layer2
+				    (range 0.0
+					(difference centerY
+					    (quotient l 2.0)
+					)
+				    )
+				)
+			    )
+			    (setq pin
+				(dbCreatePin net dot)
+			    )
+			    (dbSetq pin direction2 accessDir)
+			    (setq dot
+				(dbCreateDot tcCellView layer2
+				    (range 0.0
+					(plus centerY
+					    (quotient l 2.0)
+					)
+				    )
+				)
+			    )
+			    (setq pin
+				(dbCreatePin net dot)
+			    )
+			    (dbSetq pin direction2 accessDir)
+			)
+		    ) else
+		    (setq dot
+			(dbCreateDot tcCellView layer2
+			    (range 0.0
+				(difference centerY l)
+			    )
+			)
+		    )
+		    (setq pin
+			(dbCreatePin net dot)
+		    )
+		    (dbSetq pin direction2 accessDir)
+		)
+	    )
+	)
+	(setq Y llY)
+	(setq llY
+	    (minus urY)
+	)
+	(setq urY
+	    (minus Y)
+	)
+	(setq centerY
+	    (minus centerY)
+	)
+    )
+    (case side
+	("left-leak"
+	    (setq x2
+		(quotient
+		    (minus w) 2.0
+		)
+	    )
+	    (setq x1
+		(difference x2 leakLength)
+	    )
+	    (setq y1 x2)
+	    (setq y2
+		(minus x2)
+	    )
+	)
+	("right-leak"
+	    (setq x1
+		(quotient w 2.0)
+	    )
+	    (setq x2
+		(plus x1 leakLength)
+	    )
+	    (setq y1
+		(minus x1)
+	    )
+	    (setq y2 x1)
+	)
+	("top-leak"
+	    (setq x2
+		(quotient l 2.0)
+	    )
+	    (setq x1
+		(minus x2)
+	    )
+	    (setq y1 x2)
+	    (setq y2
+		(plus y2 leakLength)
+	    )
+	)
+	("bottom-leak"
+	    (setq x1
+		(quotient
+		    (minus l) 2.0
+		)
+	    )
+	    (setq x2
+		(minus x1)
+	    )
+	    (setq y2 x1)
+	    (setq y1
+		(difference y2 leakLength)
+	    )
+	)
+	(t
+	    (setq x1 0.0)
+	    (setq x2 0.0)
+	    (setq y1 0.0)
+	    (setq y2 0.0)
+	)
+    )
+    (when
+	(and
+	    (lessp x1 x2)
+	    (lessp y1 y2)
+	)
+	(setq rect
+	    (dbCreateRect tcCellView viaLayer
+		(list
+		    (range x1 y1)
+		    (range x2 y2)
+		)
+	    )
+	)
+	(dbMoveFig rect tcCellView
+	    (list
+		(range moveX moveY) "R0"
+	    )
+	)
+	(dbAddFigToNet rect net)
+    )
+)
+
+tfcDefineDeviceClassProp(
+; (viewName        devClassName      propName          propValue)
+  (symbolic        syEnhContact      function          "contact")
+)
+
+;;; device class "syEnhContact":
+tcDeclareDevice( "symbolic" "syEnhContact" "via1"
+    ( (viaLayer "VIA12") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL1") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL2") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.050000) (encByLayer2 0.060000) (layer1XEnc 0.010000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.005000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via1              res               1.020000)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via2"
+    ( (viaLayer "VIA23") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL2") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL3") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.060000) (encByLayer2 0.005000) (layer1XEnc 0.005000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.060000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via2              res               1.020000)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via2ts"
+    ( (viaLayer "VIA23") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL2") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL3") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.205000) (encByLayer2 0.005000) (layer1XEnc 0.025000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.060000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via2ts            res               1.020000)
+  (symbolic        via2ts            topstack          t)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via3"
+    ( (viaLayer "VIA34") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL3") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL4") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.005000) (encByLayer2 0.060000) (layer1XEnc 0.060000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.005000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via3              res               1.020000)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via3ts"
+    ( (viaLayer "VIA34") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL3") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL4") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.005000) (encByLayer2 0.060000) (layer1XEnc 0.265000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.005000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via3ts            res               1.020000)
+  (symbolic        via3ts            topstack          t)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via4"
+    ( (viaLayer "VIA45") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL4") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL5") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.060000) (encByLayer2 0.005000) (layer1XEnc 0.005000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.060000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via4              res               1.020000)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via4ts"
+    ( (viaLayer "VIA45") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL4") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL5") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.205000) (encByLayer2 0.005000) (layer1XEnc 0.025000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.060000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via4ts            res               1.020000)
+  (symbolic        via4ts            topstack          t)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via5"
+    ( (viaLayer "VIA56") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL5") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL6") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.005000) (encByLayer2 0.060000) (layer1XEnc 0.060000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.005000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via5              res               1.020000)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via5ts"
+    ( (viaLayer "VIA56") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL5") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL6") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.005000) (encByLayer2 0.060000) (layer1XEnc 0.265000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.005000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via5ts            res               1.020000)
+  (symbolic        via5ts            topstack          t)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via6"
+    ( (viaLayer "VIA67") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL6") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL7") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.060000) (encByLayer2 0.005000) (layer1XEnc 0.005000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.060000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via6              res               1.020000)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via6ts"
+    ( (viaLayer "VIA67") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL6") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL7") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.205000) (encByLayer2 0.005000) (layer1XEnc 0.025000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.060000) (layer2YEnc 0.000000) )
+    ( (w 0.190000) (l 0.190000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "xy")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via6ts            res               1.020000)
+  (symbolic        via6ts            topstack          t)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via7"
+    ( (viaLayer "VIA78") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL7") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL8") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.010000) (encByLayer2 0.090000) (layer1XEnc 0.050000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.000000) (layer2YEnc 0.000000) )
+    ( (w 0.360000) (l 0.360000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via7              res               0.630000)
+)
+
+tcDeclareDevice( "symbolic" "syEnhContact" "via7ts"
+    ( (viaLayer "VIA78") (viaLayer2 "") (encByVia 0.000000)
+      (layer1 "METAL7") (layer1Implant "") (layer1ImpEnc 0.000000)
+      (layer2 "METAL8") (layer2Implant "") (layer2ImpEnc 0.000000)
+      (encByLayer1 0.010000) (encByLayer2 0.090000) (layer1XEnc 0.050000)
+      (layer1YEnc 0.000000) (layer2XEnc 0.000000) (layer2YEnc 0.000000) )
+    ( (w 0.360000) (l 0.360000) (row 1)
+      (column 1) (xPitch 1.000000) (yPitch 1.000000)
+      (offset 0.000000) (side "center") (xBias "center")
+      (yBias "center") (layer1Dir "xy") (layer2Dir "")
+      (leakLength 0.000000) (areaPin "layer1") )
+)
+;
+
+tfcDefineDeviceProp(
+; (viewName        deviceName        propName          propValue)
+  (symbolic        via7ts            res               0.630000)
+)
+
+) ;devices
+
+
+;********************************
+; LAYER DEFINITION
+;********************************
+layerDefinitions(
+
+techLayerProperties(
+;( PropName               Layer1 [ Layer2 ]            PropValue )
+ ( routingOffset          METAL1                         0 )
+ ( routingPitch           METAL1                         0.390000 )
+ ( routingOffset          METAL2                         0 )
+ ( routingPitch           METAL2                         0.480000 )
+ ( routingOffset          METAL3                         0 )
+ ( routingPitch           METAL3                         0.480000 )
+ ( routingOffset          METAL4                         0 )
+ ( routingPitch           METAL4                         0.480000 )
+ ( routingOffset          METAL5                         0 )
+ ( routingPitch           METAL5                         0.480000 )
+ ( routingOffset          METAL6                         0 )
+ ( routingPitch           METAL6                         0.480000 )
+ ( routingPitch           METAL7                         0.900000 )
+)
+
+) ;layerDefinitions
+
+
+;********************************
+; LX RULES
+;********************************
+lxRules(
+
+ lxExtractLayers(
+ ;( list of layers or layer/purpose pairs  )
+ ;( -------------------------------------  )
+  ( NWELL OD OD2 POLYG MWLDMY MSLDMY M4OPT CONT METAL1
+    VIA12
+    METAL2
+    VIA23
+    METAL3
+    VIA34
+    METAL4
+    VIA45
+    METAL5
+    VIA56
+    METAL6
+    VIA67
+    METAL7
+    VIA78 METAL8 PDKREC prBoundary )
+ ) ;lxExtractLayers
+
+) ;lxRules
+
+
+;********************************
+; P&R RULES
+;********************************
+prRules(
+
+ prRoutingLayers(
+ ;( layer	preferredDirection )
+ ;( -----	------------------ )
+  ( METAL1	"horizontal"	)
+  ( METAL2	"vertical"	)
+  ( METAL3	"horizontal"	)
+  ( METAL4	"vertical"	)
+  ( METAL5	"horizontal"	)
+  ( METAL6	"vertical"	)
+  ( METAL7	"horizontal"	)
+  ( METAL8	"vertical"	)
+ ) ;prRoutingLayers
+
+ prViaTypes(
+ ;( device viewName             viaType    )
+ ;( ---------------             -------    )
+  ( ("M1_POLY1" "symbolic")	"default"  )
+  ( ("M2_M1" "symbolic")	"default"  )
+  ( ("M3_M2" "symbolic")	"default"  )
+  ( ("M4_M3" "symbolic")	"default"  )
+  ( ("M5_M4" "symbolic")	"default"  )
+  ( ("M6_M5" "symbolic")	"default"  )
+  ( ("M7_M6" "symbolic")	"default"  )
+  ( ("M8_M7" "symbolic")	"default"  )
+ ) ;prViaTypes
+
+ prRoutingPitch(
+ ;( layer	pitch	)
+ ;( -----	-----	)
+  ( METAL1	0.41	)
+  ( METAL2	0.46	)
+  ( METAL3	0.41	)
+  ( METAL4	0.46	)
+  ( METAL5	0.41	)
+  ( METAL6	0.46	)
+  ( METAL7	0.82	)
+  ( METAL8	1.38	)
+ ) ;prRoutingPitch
+
+ prRoutingOffset(
+ ;( layer	pitch	)
+ ;( -----	-----	)
+  ( METAL1	0.205	)
+  ( METAL2	0.23	)
+  ( METAL3	0.205	)
+  ( METAL4	0.23	)
+  ( METAL5	0.205	)
+  ( METAL6	0.23	)
+  ( METAL7	0.41	)
+  ( METAL8	0.69	)
+ ) ;prRoutingOffset
+
+
+ prMastersliceLayers(
+ ;( layers : listed in order of lowest (closest to substrate) to highest )
+ ;( -------------------------------------------------------------------- )
+  ( POLYG       )
+ ) ;prMastersliceLayers
+
+ prOverlapLayer(
+ ;( list of layers or layer/purpose pairs )
+ ;( ------------------------------------- )
+  ( OVERLAP )
+ ) ;prOverlapLayer
+
+ prStackVias(
+ ;( viaLayerPairList    stackable )
+ ;( ----------------    --------- )
+  ( METAL2	METAL2 )
+  ( METAL3	METAL3 )
+  ( METAL4	METAL4 )
+  ( METAL5	METAL5 )
+  ( METAL6	METAL6 )
+  ( METAL7	METAL7 )
+  ( VIA12	VIA23 )
+  ( VIA23	VIA34 )
+  ( VIA34	VIA45 )
+  ( VIA45	VIA56 )
+  ( VIA56	VIA67 )
+  ( VIA67	VIA78 )
+ ) ;prStackVias
+
+ prGenViaRules(
+ ;( ViaRuleName         viaLayer     (lowerPt upperPt xPitch yPitch resistence)
+ ;    Layer1            Direction    (wMin wMax overHang metalOverHang)
+ ;    Layer2            Direction    (wMin wMax overHang metalOverHang)
+ ;    (properties)
+ ;)
+ ;( ---------------------------------------------------------------------- )
+  ( Via12Array  	"VIA12"	( 0.19  0.19   plus(0.19 0.29) plus(0.19 0.29) 1.02 )
+      METAL1         	"horizontal"	( 0.16 9.995 0.0 0.0 )
+      METAL2         	"vertical"	( 0.20 9.995 0.0 0.0 )
+  )
+  ( Via23Array  	"VIA23"	( 0.19  0.19   plus(0.19 0.29) plus(0.19 0.29) 1.02 )
+      METAL2         	"vertical"	( 0.20 9.995 0.0 0.0 )
+      METAL3         	"horizontal"	( 0.20 9.995 0.0 0.0 )
+  )
+  ( Via34Array  	"VIA34"	( 0.19  0.19   plus(0.19 0.29) plus(0.19 0.29) 1.02 )
+      METAL3         	"horizontal"	( 0.20 9.995 0.0 0.0 )
+      METAL4         	"vertical"	( 0.20 9.995 0.0 0.0 )
+  )
+  ( Via45Array  	"VIA45"	( 0.19  0.19   plus(0.19 0.29) plus(0.19 0.29) 1.02 )
+      METAL4         	"vertical"	( 0.20 9.995 0.0 0.0 )
+      METAL5         	"horizontal"	( 0.20 9.995 0.0 0.0 )
+  )
+  ( Via56Array  	"VIA56"	( 0.19  0.19   plus(0.19 0.29) plus(0.19 0.29) 1.02 )
+      METAL5         	"horizontal"	( 0.20 9.995 0.0 0.0 )
+      METAL6         	"vertical"	( 0.20 9.995 0.0 0.0 )
+  )
+  ( Via67Array  	"VIA67"	( 0.19  0.19   plus(0.19 0.29) plus(0.19 0.29) 1.02 )
+      METAL6         	"vertical"	( 0.20 9.995 0.0 0.0 )
+      METAL7         	"horizontal"	( 0.20 9.995 0.0 0.0 )
+  )
+  ( Via78Array  	"VIA78"	( 0.36  0.36   plus(0.36 0.54) plus(0.36 0.54) 0.45 )
+      METAL7         	"horizontal"	( 0.20 9.995 0.0 0.0 )
+      METAL8         	"vertical"	( 0.40 9.995 0.0 0.0 )
+  )
+  ( TURNM1      	nil	( _NA_ _NA_ _NA_ _NA_ _NA_ )
+      METAL1         	"vertical"	( _NA_ _NA_ _NA_ _NA_ )
+      METAL1         	"horizontal"	( _NA_ _NA_ _NA_ _NA_ )
+  )
+  ( TURNM2      	nil	( _NA_ _NA_ _NA_ _NA_ _NA_ )
+      METAL2         	"vertical"	( _NA_ _NA_ _NA_ _NA_ )
+      METAL2         	"horizontal"	( _NA_ _NA_ _NA_ _NA_ )
+  )
+  ( TURNM3      	nil	( _NA_ _NA_ _NA_ _NA_ _NA_ )
+      METAL3         	"vertical"	( _NA_ _NA_ _NA_ _NA_ )
+      METAL3         	"horizontal"	( _NA_ _NA_ _NA_ _NA_ )
+  )
+  ( TURNM4      	nil	( _NA_ _NA_ _NA_ _NA_ _NA_ )
+      METAL4         	"vertical"	( _NA_ _NA_ _NA_ _NA_ )
+      METAL4         	"horizontal"	( _NA_ _NA_ _NA_ _NA_ )
+  )
+  ( TURNM5      	nil	( _NA_ _NA_ _NA_ _NA_ _NA_ )
+      METAL5         	"vertical"	( _NA_ _NA_ _NA_ _NA_ )
+      METAL5         	"horizontal"	( _NA_ _NA_ _NA_ _NA_ )
+  )
+  ( TURNM6      	nil	( _NA_ _NA_ _NA_ _NA_ _NA_ )
+      METAL6         	"vertical"	( _NA_ _NA_ _NA_ _NA_ )
+      METAL6         	"horizontal"	( _NA_ _NA_ _NA_ _NA_ )
+  )
+  ( TURNM7      	nil	( _NA_ _NA_ _NA_ _NA_ _NA_ )
+      METAL7         	"vertical"	( _NA_ _NA_ _NA_ _NA_ )
+      METAL7         	"horizontal"	( _NA_ _NA_ _NA_ _NA_ )
+  )
+  ( TURNM8      	nil	( _NA_ _NA_ _NA_ _NA_ _NA_ )
+      METAL8         	"vertical"	( _NA_ _NA_ _NA_ _NA_ )
+      METAL8         	"horizontal"	( _NA_ _NA_ _NA_ _NA_ )
+  )
+ ) ;prGenViaRules
+
+) ;prRules

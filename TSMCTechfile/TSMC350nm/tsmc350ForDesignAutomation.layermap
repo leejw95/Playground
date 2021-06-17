@@ -1,0 +1,297 @@
+   ref		drawing		0	0
+   PWELL	drawing		1	0
+   NWELL	drawing		2	0
+   DIFF		drawing		3	0
+   DIFF		boundary	3	2
+   DIFF		net		3	4
+   PDIFF	drawing		11	0
+   NDIFF	drawing		12	0
+   OD2		drawing		4	0
+   POLY1	drawing		13	0
+   POLY1	boundary	13	2
+   POLY1	net		13	3
+   POLY2	drawing		14	0
+   EPLY		drawing		9	0
+   BPLY		drawing		10	0
+   N2V		drawing		61	0
+   N3V		drawing		5	0
+   PIMP		drawing		7	0
+   NIMP		drawing		8	0
+   P2V		drawing		35	0
+   P3V		drawing		140	0
+   ESD		drawing		30	0
+   RPO		drawing		34	0
+   CONT		drawing		15	0
+   CONT		pin		15	1
+   METAL1	drawing		16	0
+   VIA12	drawing		17	0
+   VIA12	pin		17	1
+   METAL2	drawing		18	0
+   VIA23	drawing		27	0
+   VIA23	pin		27	1
+   METAL3	drawing		28	0
+   VIA34	drawing		29	0
+   VIA34	pin		29	1
+   METAL4	drawing		31	0
+   VIA45	drawing		32	0
+   VIA45	pin		32	1
+   METAL5	drawing		33	0
+   VIA56	drawing		39	0
+   METAL6	drawing		38	0
+   VIA67	drawing		21	0
+   METAL7	drawing		22	0
+   PAD		drawing		19	0
+   WBDMY	drawing		183	0
+   FW		drawing		235	0
+   LW		drawing		63	2
+   OVERLAP	drawing		110	0
+   BJTDUMMY	drawing		49	0
+   PSUB2	drawing		50	0
+   HOTWL	drawing		51	0
+   RWDUMMY	drawing		52	0
+   RWDUMMY	drawing1	52	1
+   RPDUMMY	drawing		54	0
+   RPDUMMY	drawing1	54	1
+   HVPRDMY	drawing		54	2
+   RP4TDUMMY	drawing		54	3
+   RMDUMMY	drawing		69	0
+   RMDUMMY	drawing1	69	1
+   RMDUMMY	drawing2	69	2
+   RMDUMMY	drawing3	69	3
+   RMDUMMY	drawing4	69	4
+   RMDUMMY	drawing5	69	5
+   RMDUMMY	drawing6	69	6
+   VCDUMMY	drawing		53	0
+   CDUMMY	drawing		68	0
+   DIODUMMY	drawing		56	0
+   PTDIODE	drawing		37	0
+   EXCL		drawing		55	0
+   SDI		drawing		58	0
+   TEXT		drawing		59	0
+   DRCDUMMY	drawing		60	0
+   LMARK	drawing		63	1
+   DPDUMMY	drawing		65	0
+   PLDUMMY	drawing		66	0
+   MTPCELL	drawing		115	0
+   LDDMY	drawing		127	0
+   CASDMY	drawing		127	1
+   DRC2DUMMY	drawing		130	0
+   CTMDUMMY	drawing		131	0
+   CTMDUMMY	drawing2	131	10
+   CTMDUMMY	drawing3	131	15
+   CTMDUMMY	drawing4	131	20
+   CTMDUMMY	drawing1	131	21
+   RHDUMMY	drawing		132	0
+   RLPPDUMMY	drawing		134	0
+   NOOPC	drawing		135	0
+   ESD1DUMMY	drawing		136	0
+   ESD2DUMMY	drawing		137	0
+   ESD3DUMMY	drawing		234	0
+   VARDUMMY	drawing		138	0
+   VARDUMMY	drawing1	138	1
+   VARDUMMY	drawing2	138	2
+   VARDUMMY	drawing3	138	3
+   VARDUMMY	drawing4	138	4
+   INDDUMMY	drawing		139	0
+   INDDUMMY	drawing1	139	1
+   DMN2V	drawing		184	0
+   DMP2V	drawing		149	0
+   PMDMY	drawing		236	0
+   IP		drawing		63	63
+   RFDUMMY	drawing		160	0
+   RFDUMMY	drawing1	160	1
+   RFDUMMY	drawing2	160	2
+   WELLBODY	drawing		103	0
+   SEALRING	drawing		126	0
+   LOGO		drawing		178	0
+   PSDMY	drawing		187	0
+   LVSDMY	dummy1		208	1
+   LVGDMY	drawing		209	1
+   SBDDMY	drawing		144	0
+   SGDUMMY	SBDDMY		144	1
+   LUPWDMY	drawing		255	1
+   SRAM 	dummy1		231	1
+   SRAM 	dummy2		231	2
+   SRAM 	dummy3		231	3
+   CTMDUMMY	drawing5	131	50
+   RFDUMMY	drawing3	160	50
+   LUPWDMY      dummy1		255	4
+   LUPWDMY	dummy2		255	5
+
+
+   streamLayers(
+ ;( layer		streamNumber dataType translate	)
+ ;( -----		------------ -------- ---------	)
+  ( ("ref" "drawing")		0	0	t	)
+  ( ("PWELL" "drawing")		1	0	t	)
+  ( ("NWELL" "drawing")		2	0	t	)
+  ( ("DIFF" "drawing")		3	0	t	)
+  ( ("OD2" "drawing")		4	0	t	)
+  ( ("HVOX" "drawing")		184	0	t	)
+  ( ("N3V" "drawing")		5	0	t	)
+  ( ("N5V" "drawing")		6	0	t	)
+  ( ("PIMP" "drawing")		7	0	t	)
+  ( ("NIMP" "drawing")		8	0	t	)
+  ( ("POLY3" "drawing")		9	0	t	)
+  ( ("POLY4" "drawing")		10	0	t	)
+  ( ("PDIFF" "drawing")		11	0	t	)
+  ( ("NDIFF" "drawing")		12	0	t	)
+  ( ("POLY1" "drawing")		13	0	t	)
+  ( ("POLY2" "drawing")		14	0	t	)
+  ( ("CONT" "drawing")		15	0	t	)
+  ( ("METAL1" "drawing")	16	0	t	)
+  ( ("METAL1" "dummy")		16	1	t	)
+  ( ("METAL1" "slot")		16	2	t	)
+  ( ("VIA12" "drawing")		17	0	t	)
+  ( ("METAL2" "drawing")	18	0	t	)
+  ( ("METAL2" "dummy")		18	1	t	)
+  ( ("METAL2" "slot")		18	2	t	)
+  ( ("PAD" "drawing")		19	0	t	)
+  ( ("BPI" "drawing")		20	0	t	)
+  ( ("PDD" "drawing")		21	0	t	)
+  ( ("NDD" "drawing")		22	0	t	)
+  ( ("VTP" "drawing")		23	0	t	)
+  ( ("VTN" "drawing")		24	0	t	)
+  ( ("VTDP" "drawing")		25	0	t	)
+  ( ("VTDN" "drawing")		26	0	t	)
+  ( ("VIA23" "drawing")		27	0	t	)
+  ( ("METAL3" "drawing")	28	0	t	)
+  ( ("METAL3" "dummy")		28	1	t	)
+  ( ("METAL3" "slot")		28	2	t	)
+  ( ("VIA34" "drawing")		29	0	t	)
+  ( ("ESD" "drawing")		30	0	t	)
+  ( ("METAL4" "drawing")	31	0	t	)
+  ( ("METAL4" "dummy")		31	1	t	)
+  ( ("METAL4" "slot")		31	2	t	)
+  ( ("RPO" "drawing")		34	0	t	)
+  ( ("ESD5V" "drawing")		36	0	t	)
+  ( ("PTDIODE" "drawing")	37	0	t	)
+  ( ("METAL1" "pin")		40	0	t	)
+  ( ("METAL2" "pin")		41	0	t	)
+  ( ("METAL3" "pin")		42	0	t	)
+  ( ("METAL4" "pin")		43	0	t	)
+  ( ("POLY1" "pin")		47	0	t	)
+  ( ("LPP" "drawing")		48	0	t	)
+  ( ("BJTDUMMY" "drawing")	49	0	t	)
+  ( ("PSUB2" "drawing")		50	0	t	)
+  ( ("HOTWL" "drawing")		51	0	t	)
+  ( ("RWDUMMY" "drawing")	52	0	t	)
+  ( ("VCDUMMY" "drawing")	53	0	t	)
+  ( ("RPDUMMY" "drawing")	54	0	t	)
+  ( ("HR500DMY" "drawing")	54	1	t	)
+  ( ("HR1KDMY" "drawing")	54	2	t	)
+  ( ("HR2KDMY" "drawing")	54	3	t	)
+  ( ("EXCL" "drawing")		55	0	t	)
+  ( ("DIODUMMY" "drawing")	56	0	t	)
+  ( ("TRAN" "drawing")		57	0	t	)
+  ( ("SDI" "drawing")		58	0	t	)
+  ( ("TEXT" "drawing")		59	0	t	)
+  ( ("DRCDUMMY" "drawing")	60	0	t	)
+  ( ("N2V" "drawing")		61	0	t	)
+  ( ("prBoundary" "drawing")	62	0	t	)
+  ( ("marker" "error")		63	0	t	)
+  ( ("IP" "drawing")		63	63	t	)
+  ( ("marker" "warning")	64	0	t	)
+  ( ("DPDUMMY" "drawing")	65	0	t	)
+  ( ("PLDUMMY" "drawing")	66	0	t	)
+  ( ("CDUMMY" "drawing")	68	0	t	)
+  ( ("RMDUMMY" "drawing")	69	0	t	)
+  ( ("CELLIMP" "drawing")	70	0	t	)
+  ( ("PIP250DMY" "drawing")	71	0	t	)
+  ( ("SBDMARK" "drawing")	72	0	t	)
+  ( ("RODUMMY" "drawing")	75	0	t	)
+  ( ("ESEXCL" "drawing")	76	0	t	)
+  ( ("PDIMP" "drawing")		78	0	t	)
+  ( ("PUIMP" "drawing")		79	0	t	)
+  ( ("DNWELL" "drawing")	82	0	t	)
+  ( ("SAC" "drawing")		85	0	t	)
+  ( ("C1" "drawing")		86	0	t	)
+  ( ("C2" "drawing")		87	0	t	)
+  ( ("PLMIDE" "drawing")	89	0	t	)
+  ( ("CAPP" "drawing")		92	0	t	)
+  ( ("HVNW" "drawing")		99	0	t	)
+  ( ("WELLBODY" "drawing")	103	0	t	)
+  ( ("NLD15DMY" "drawing")	130	0	t	)
+  ( ("PLD20DMY" "drawing")	130	1	t	)
+  ( ("MHMDMY" "drawing")	144	0	t	)
+    ( ("NOPP" "drawing")	145	0	t	)
+  ( ("RLPPDUMMY" "drawing")	134	0	t	)
+  ( ("DUMMY" "VARDUMMY")	138	0	t	)
+  ( ("DUMMY" "INDDUMMY" )       139	0 	t	)
+  ( ("DMEXCL" "dummy1")		150	1	t	)
+  ( ("DMEXCL" "dummy2")		150	2	t	)
+  ( ("DMEXCL" "dummy3")		150	3	t	)
+  ( ("DMEXCL" "dummy4")		150	4	t	)
+  ( ("METAL1" "boundary")		151	0	t	)
+  ( ("METAL2" "boundary")		152	0	t	)
+  ( ("METAL3" "boundary")		153	0	t	)
+  ( ("METAL4" "boundary")		154	0	t	)
+  ( ("DUMMY" "RFDUMMY" )	158	0	t	)
+  ( ("SLTEXCL" "dummy1")	158	1	t	)
+  ( ("SLTEXCL" "dummy2")	158	2	t	)
+  ( ("SLTEXCL" "dummy3")	158	3	t	)
+  ( ("SLTEXCL" "dummy4")	158	4	t	)
+  ( ("MD" "pin")		159	0	t	)
+  ( ("VIA12" "boundary")	161	0	t       )
+  ( ("VIA23" "boundary")	162	0	t       )
+  ( ("VIA34" "boundary")	163	0	t       )
+  ( ("MACRODMY" "drawing")      166     0       t       )
+  ( ("LVGDMY" "drawing")        166     1       t       )
+  ( ("MAC4TDMY" "drawing")      166	2	t	)
+  ( ("LVSDMY" "drawing")	166	3	t	)
+  ( ("LVSDMY" "MTDUM")	        166	4	t	)
+  ( ("VIAD" "drawing")		167	0	t	)
+  ( ("MD" "drawing")		168	0	t	)
+  ( ("CBD" "drawing")		169	0	t	)
+  ( ("UBM" "drawing")		170	0	t	)
+  ( ("NPLUSBL" "drawing")	179	0	t	)
+  ( ("SINKER" "drawing")	181	0	t	)
+  ( ("PBASE" "drawing")		182	0	t	)
+  ( ("HV" "SCRNW" )		185	0	t	)
+  ( ("EMCUT" "drawing")		186	0	t	)
+  ( ("PPI" "drawing")	189	0	t	)
+  ( ("AP" "drawing1")	189	20	t	)
+  ( ("LOGO" "drawing")		200	0	t	)
+  ( ("BNP" "drawing")		214	0	t	)
+  ( ("CPT" "drawing")		215	0	t	)
+  ( ("CODE" "drawing")		216	0	t	)
+  ( ("FUSE" "drawing")		235	0	t	)
+  ( ("PMDMY" "drawing")		236	0	t	)
+  ( ("OTP" "drawing")		237	0	t	)
+  ( ("FPW" "drawing")		240	0	t	)
+  ( ("PBODY" "drawing")		241	0	t	)
+  ( ("NBODY" "drawing")		242	0	t	)
+  ( ("TSV_VIA" "drawing")	251	0	t	)
+  ( ("TSV_PAD" "drawing")	251	1	t	)
+  ( ("TSV_PPI" "drawing")	251	2	t	)
+  ( ("POLY1" "dummy")		13	1	t	)
+  ( ("ODBLK" "dummy")		150	20	t	)
+  ( ("POBLK" "dummy")		150	21	t	)
+  ( ("MD" "dummy")		168	1	t	)
+  ( ("MD" "slot")		168	2	t	)
+  ( ("DIFF" "dummy")		3	1	t	)
+  ( ("HR250DMY" "drawing")	54	4	t	)
+  ( ("HR50DMY" "drawing")	54	5	t	)
+  ( ("EDRAM" "drawing")		255	3	t	)
+  ( ("HVIO" "drawing")		141	4	t	)
+  ( ("CONT" "boundary")		0	0	nil	)
+  ( ("CONT" "net")		0	0	nil	)
+  ( ("METAL1" "net")	        0	0	nil     )
+  ( ("METAL2" "net")	        0	0	nil     )
+  ( ("METAL3" "net")	        0	0	nil     )
+  ( ("METAL4" "net")	        0	0	nil     )
+  ( ("VIA12" "net")     	0  	0	nil     )
+  ( ("VIA23" "net")     	0  	0	nil     )
+  ( ("VIA34" "net")     	0  	0	nil     )
+  ( ("boundary" "drawing")	0	0	nil	)
+  (  ("DUMMY"	"CTMDMY")	131	0	t	)
+  (  ("HVDMY"	"drawing")	166	5	t	)
+  (  ("BJTDUMMY"	"drawing1")	49	1	t	)
+  (  ("RWDUMMY"	"drawing1")	52	1	t	)
+  (  ("LVSDMY"	"HR300DMY")	54	6	t	)
+  (  ("RPDUMMY"	"drawing1")	54	7	t	)
+  (  ("DIODUMMY"	"drawing1")	56	1	t	)
+  (  ("CTM"	"drawing")	67	0	t	)
+  (  ("CTM"	"drawing2")	67	2	t	)
+  (  ("CTM"	"drawing3")	67	3	t	)
+ ) ;streamLayers

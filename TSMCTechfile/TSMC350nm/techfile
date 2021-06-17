@@ -1,0 +1,1418 @@
+;*****************************************************************************
+; TSMC Layout Editor Technology File - virtuosoxl_0.35um_4M_v26d.tf, 04/29/2011
+; For TSMC 0.35um LO+MM 2P4M PROCESS (With 8K Normal Top Metal)
+
+; Technology File Document: T-035-LO-LE-002 Ver 2.6d
+; Used for Virtuoso-XL environment
+;*****************************************************************************
+; DISCLAIMER
+;
+; The information contained herein is provided by TSMC on an "AS IS" basis
+; without any warranty, and TSMC has no obligation to support or otherwise
+; maintain the information.  TSMC disclaims any representation that the
+; information does not infringe any intellectual property rights or proprietary
+; rights of any third parties.  There are no other warranties given by TSMC,
+; whether express, implied or statutory, including, without limitation, implied
+; warranties of merchantability and fitness for a particular purpose.
+;
+; STATEMENT OF USE
+;
+; This information contains confidential and proprietary information of TSMC.
+; No part of this information may be reproduced, transmitted, transcribed,
+; stored in a retrieval system, or translated into any human or computer
+; language, in any form or by any means, electronic, mechanical, magnetic,
+; optical, chemical, manual, or otherwise, without the prior written permission
+; of TSMC.  This information was prepared for informational purpose and is for
+; use by TSMC's customers only.  TSMC reserves the right to make changes in the
+; information at any time and without notice.
+;*****************************************************************************
+;
+;  03/20/2000 Ver 1.0a by T.C.Chiang
+;    1) Add dummy metal layers
+;
+;  05/08/2000 Ver 1.0b by T.C.Chiang
+;    1) Add DMEXCL(150)
+;    2) Add metal slot layers
+;    3) Remove PH(35)
+;
+;  08/08/2000 Ver 1.0c by T.C.Chiang
+;    1) Add 0.35um BiCMOS process used layers
+;
+;  02/01/2001 Ver 1.1a by T.C.Chiang
+;    1) Add Bump and RDL used layers VIAD(167), MD(168), CBD(169), UBM(170),
+;	MD pin(159)
+;    2) Add IP tagging layer IP(63;63)
+;    3) Add metal slot exclude layer SLTEXCL(158)
+;    4) Add POLY1 pin (47)
+;    5) Add FUSE(235), PMDMY(236)
+;    6) Add CAPP(92)
+;
+;  05/29/2002 Ver 2.5b by lwhung
+;    1) ADD BNP(214), CPT(215), CODE(216) for MASK ROM 1P4M Polycide 3.3V/5V
+;	process
+;
+;  07/22/2005 Ver 2.5c by Chen-Chia Wang
+;    1) Turn on RLPPDUMMY(134) in techfile, which is the same layer as
+;	PO2L(134) in HV process.
+;    2) Add HVDMY(238), ROMIMP(239).
+;    3) Restore stream numbers of marker(63;0,error), marker(64;0,warning).
+;    4) Add controls section for XL copy
+;    5) Add lxExtractlayer section
+;    6) Add WELLBODY(103) for PDK
+;    7) Modify metal sheet resistance values
+;    8) Add HV N-well HVNW(99), floating P-well FPW(240), PBODY(241) and
+;	NLD15DMY(130) for HV 12V LDMOS process (T-035-CV-DR-005)
+;    9) Rename VIA67(21) and METAL7(22) to PDD and NDD for high voltage
+;	process, since VIA67 and METAL7 are not used in 0.35um technology.
+;   10) Remove VIA67(166;0,boundary), VIA67(net), METAL7(22;1,dummy),
+;	METAL7(22;2,slot), METAL7(46;0,pin), METAL7(157;0,boundary),
+;	METAL7(net), DMEXCL(150;7,dummy7), SLTEXCL(158;7,dummy7)
+;   11) Add OTP(237) for one time program process
+;   12) Remove unused commodity 4T SRAM process layers: BC1(71), BC2(72),
+;	BTC(73), VCC(74), CPDUMMY(77)
+;  09/15/2005 Ver 2.5d.pre091505 by C.T.Yao
+;    1) Reserve layer 120 for HV 13.5V as temporary layers,             
+;	HVL(120;1,NAPT), HVL(120;2,PAPT), HVL(120;3,NLDD)
+;    2) AddAdd CNWELL(128;0) for capacitor nwell area, 
+;       CNWELL(128;1, LVTP) for capacitor nwell area with low VTP imp.;
+;    3) Add INDDMY(139) Layer for Dummy layer for DRC and LVS. Use "INDDMY" to fully cover spiral inductor
+;
+;   Ver 2.5e.pre by Zhang Zhonglin
+;       1. Modify the layer definition of  WELLBODY(103:0) to a non-mask layer.
+;       2. Add Dummy layer MHM(144)
+;       3. Add layer NOPP(145)
+;       4. Add LOGO(200) for production label and logo
+;       5. Add PPI(189) layer
+;       6. Change name of layer MHM to MHMDMY        
+;       7. Add layer NBODY(242), HR500DMY(54:1), HR1KDMY(54:2), HR2KDMY(54:3)
+;       8. Add layer PIP250DMY(71), SBDMARK(72)
+;       9. Add layer TSV_VIA(251;0) TSV_PAD(251;1) TSV_PPI(251;2)
+;  By X.M.Chen
+;      10. Add layer MACRODMY(166;0)   
+;      11. Add layer LVGDMY(166;1)   
+;
+;   By M.Feng
+;	1)Add layer POLY1(dummy)(13;1), ODBLK(dummy)(150;20), POBLK(dummy)(150;21), 
+;	  MD(dummy)(168;1), MD(slot)(168;2), DIFF(dummy)(3;1), HR250DMY(54;4), HR50DMY(54;5).
+;	2)Modify some rules to follow Logic Rules. 
+;
+;   05/05/08 Ver 2.5f_pre by M.Feng
+;	1)Add the layer PLD20DMY(130;1).
+;	2)Add the layer HVOX(184;0).
+;   05/28/2008 Ver 2.5f_pre by M.Feng
+;	1)Add layer EDRAM(255;3) for DRAM process
+;	2)Add layer HVIO (141;4) for BCD 40V
+;   09/12/2008 Ver 2.5f_pre by M.Feng
+;       1)Add 030BEOL to general release.
+;
+;   05/22/2009 Ver 2.6a_pre by S.Q.Zhang
+;      1) Add MAC4TDMY(166;2) for LVS to recognize 4T device
+;   07/01/2009
+;      1) Add LVSDMY(166;3) for LVS to recognize mismatch devices.
+;      2) Change the grid values of techParams and mfgGridResolution from 0.005 to 0.001 
+;         for HV process, and Change the grid values of techParams and mfgGridResolution  
+;         from 0.025 to 0.001 for other process.
+;
+;   08/30/2009 Ver 2.6a by S.Q.Zhang
+;      1) Comment the layers not used: (180;0)PPLUSBL(drawing), (183;0)HIPRO(drawing),
+;          (188;0)NEPI(drawing),(231;0)NLDDPROT(drawing),(232;0)NPLUSPROT(drawing),
+;          (233;0)NOGEN(drawing),(238;0)HVDMY(drawing),(239;0)ROMIMP(drawing),
+;          (80;0)CELLBRC1(drawing),(81;0)BLBRC2(drawing),(83;0)P1W(drawing),
+;          (84;0)P1R(drawing),(88;0)DPITCH(drawing),(187;0)PPBLPROT
+;      2) Add LVSDMY(MTDUM)(166;4) for LVS recognziation.
+;      3) Add DUMMY(INDDUMMY)(139;0)
+;
+;   11/03/2009  Ver 2.6b by S.Q.Zhang
+;      1) Add the layers: DUMMY(VARDUMMY)(138;0), DUMMY(RFDUMMY)(158;0),HV(SCRNW)(185;0)
+;
+;   02/02/2010  Ver 2.6c_pre020210 by R.H.Zhang
+;      1) Add the layers: AP(drawing1)(189;20)
+;      2) Change the grid values of techParams and mfgGridResolution from 0.001 to 0.005
+;
+;   02/28/2010  Ver 2.6c by R.H.Zhang
+;      1) Change the grid values of techParams and mfgGridResolution to 0.005 
+;         for HV process, and Change the grid values of techParams and mfgGridResolution  
+;         to 0.025 for other process.
+;
+;   04/29/2011  Ver 2.6d by N.Cai
+;      1) add layers: DUMMY(CTMDMY)(131;0), HVDMY(drawing)(166;5), BJTDUMMY(drawing1)(49;1)
+;         RWDUMMY(drawing1)(52;1), LVSDMY(HR300DMY)(54;6), RPDUMMY(drawing1)(54;7), DIODUMMY(drawing1)(56;1)
+;         CTM(drawing)(67;0), CTM(drawing2)(67;2), CTM(drawing3)(67;3)
+;      2) Add cdsvia class and modify related layerfunction class
+;      3) Unique display packet - each layer is assigned a unique display packet name as "techLayer_techPurpose"
+;      4) Change the layerFunctions writing
+;
+;
+;*****************************************************************************
+;   *NOTE*
+;   (1) The grid values of techParams and mfgGridResolution sections must use
+;	0.005 for HV process since backend rule values are shrunk by 90%.
+;	And it's suggested to use 0.025 for other processes since rule vaules
+;	are multiple integers of 0.05um.
+;   (2) This file is used for 0.35um HV process under Virtuoso-XL environment,
+;	and the only difference is the backend rule values (*90%) in
+;	spacingRules section.
+;*****************************************************************************
+; IMPORTANT NOTICE
+;*****************************************************************************
+; Though PDIFF(11;0) & NDIFF(12;0) are tape out layers, it's strongly suggested
+; to use DIFF(3;0) instead, which is the standard "Gate Oxide and Diffusion"
+; (OD) layer. Be sure to check carefully the related mask logic operation if
+; PDIFF/NDIFF layers are used.
+;*****************************************************************************
+
+
+;********************************
+; CONTROLS
+;********************************
+controls(
+ techParams(
+ ;( parameter           value	)
+ ;( ----------          -----	)
+  ( maskGrid       	0.025 )
+  ( cadGrid        	0.025 )
+  ( drcGrid        	0.025 )
+  ( mfgGrid        	0.025 )
+  ( scale          	1.0 )
+ ) ;techParams
+
+ techPermissions(
+ ;( class               (read-only users)  (read & write users)           )
+ ;( ----------          -----------------  --------------------           )
+ ) ;techPermissions
+
+) ;controls
+
+
+;********************************
+; LAYER DEFINITION
+;********************************
+layerDefinitions(
+
+ techPurposes(
+ ;( PurposeName	Purpose# Abbreviation )
+ ;( -----------	-------- ------------ )
+ ;User-Defined Purposes:
+  ( HR300DMY	97	)
+  ( CTMDMY	98	)
+  ( SCRNW	99	)
+  ( RFDUMMY	110	)
+  ( VARDUMMY	111	)
+  ( INDDUMMY	112	)
+  ( MTDUM	113     )
+  ( dummy7	114	)
+  ( dummy1	115	)
+  ( dummy2	116	)
+  ( dummy3	117	)
+  ( dummy4	118	)
+  ( dummy5	119	)
+  ( dummy6	120	)
+  ( slot	126	)
+  ( dummy	127	)
+ ;System-Reserved Purposes:
+  ( warning	234	wng	)
+  ( tool1	235	tl1	)
+  ( tool0	236	tl0	)
+  ( label	237	lbl	)
+  ( flight	238	flt	)
+  ( error	239	err	)
+  ( annotate	240	ant	)
+  ( drawing1	241	dr1	)
+  ( drawing2	242	dr2	)
+  ( drawing3	243	dr3	)
+  ( drawing4	244	dr4	)
+  ( drawing5	245	dr5	)
+  ( drawing6	246	dr6	)
+  ( drawing7	247	dr7	)
+  ( drawing8	248	dr8	)
+  ( drawing9	249	dr9	)
+  ( boundary	250	bnd	)
+  ( pin		251	pin	)
+  ( drawing	252	drw	)
+  ( net		253	net	)
+  ( cell	254	cel	)
+  ( all		255	all	)
+ ) ;techPurposes
+
+ techLayers(
+ ;( LayerName	Layer#	Abbreviation )
+ ;( ---------	------	------------ )
+ ;User-Defined Layers: 
+  ( ref		0	ref	)
+  ( PWELL	1	PWELL	)
+  ( NWELL	2	NWELL	)
+  ( DIFF	3	DIFF	)
+  ( OD2		4	OD2	)	; HVOX layer in 0.35um HV process
+  ( N3V		5	N3V	)
+  ( N5V		6	N5V	)
+  ( PIMP	7	PIMP	)
+  ( NIMP	8	NIMP	)
+  ( POLY3	9	POLY3	)
+  ( POLY4	10	POLY4	)
+  ( PDIFF	11	PDIFF	)
+  ( NDIFF	12	NDIFF	)
+  ( POLY1	13	POLY1	)
+  ( POLY2	14	POLY2	)
+  ( CONT	15	CONT	)
+  ( METAL1	16	METAL1	)
+  ( VIA12	17	VIA12	)
+  ( METAL2	18	METAL2	)
+  ( PAD		19	PAD	)
+  ( BPI		20	BPI	)
+  ( PDD		21	PDD	)
+  ( NDD		22	NDD	)
+  ( VTP		23	VTP	)
+  ( VTN		24	VTN	)
+  ( VTDP	25	VTDP	)
+  ( VTDN	26	VTDN	)
+  ( VIA23	27	VIA23	)
+  ( METAL3	28	METAL3	)
+  ( VIA34	29	VIA34	) 
+  ( ESD		30	ESD	)
+  ( METAL4	31	METAL4	)
+  ( RPO		34	RPO	)
+  ( DMEXCL	35	DMEXCL	)
+  ( ESD5V	36	ESD5V	)
+  ( PTDIODE	37	PTDIODE	)
+  ( VIAD	40	VIAD	)
+  ( MD		41	MD	)
+  ( CBD		42	CBD	)
+  ( UBM		43	UBM	)
+  ( IP		44	IP	)
+  ( SLTEXCL	45	SLTEXCL	)
+  ( FUSE	46	FUSE	)
+  ( LPP		48	LPP	)
+  ( BJTDUMMY	49	BJTDUMM	)
+  ( PSUB2	50	PSUB2	)
+  ( HOTWL	51	HOTWL	)
+  ( RWDUMMY	52	RWDUMMY	)
+  ( VCDUMMY	53	VCDUMMY	)
+  ( RPDUMMY	54	RPDUMMY	)
+  ( EXCL	55	EXCL	)
+  ( DIODUMMY	56	DIODUMM	)
+  ( TRAN	57	TRAN	)
+  ( SDI		58	SDI	)
+  ( TEXT	59	TEXT	)
+  ( DRCDUMMY	60	DRCDUMM	)
+  ( N2V		61	N2V	)
+  ( SBDMARK     62      SBDMARK )
+  ( PIP250DMY   63      PIP250DMY )
+  ( PMDMY	64	PMDMY	)
+  ( DPDUMMY	65	DPDUMMY	)
+  ( PLDUMMY	66	PLDUMMY	)
+  ( CTM		67	CTM	)
+  ( CDUMMY	68	CDUMMY	)
+  ( RMDUMMY	69	RMDUMMY	)
+  ( CELLIMP	70	CELLIMP	)
+  ( TSV_VIA 71  TSV_VIA )
+  ( TSV_PAD 72  TSV_PAD )
+  ( TSV_PPI 73  TSV_PPI )
+  ( PLD20DMY    74      PLD20DMY )
+  ( RODUMMY	75	RODUMMY	)
+  ( ESEXCL	76	ESEXCL	)
+  ( HVOX	77	HVOX	)
+  ( PDIMP	78	PDIMP	)
+  ( PUIMP	79	PUIMP	)
+  ( DNWELL	82	DNWELL	)
+  ( SAC		85	SAC	)
+  ( C1		86	C1	)
+  ( C2		87	C2	)
+  ( PLMIDE	89	PLMIDE	)
+  ( NPLUSBL	90	NPLUSBL	)
+  ( CAPP	92	CAPP	)
+  ( PBASE	93	PBASE	)
+  ( EMCUT	95	EMCUT	)
+  ( PPI		98	PPI	)
+  ( SINKER	102	SINKER	)
+  ( WELLBODY	103	WELLBODY )
+  ( HVNW	104	HVNW	)
+  ( FPW		105	FPW	)
+  ( PBODY	106	PBODY	)
+  ( NLD15DMY	107	NLD15DM	)
+  ( RLPPDUMMY	110	RLPPDUM	)
+  ( MHMDMY      111   MHMDMY )
+  ( NOPP              112   NOPP )
+  ( LOGO              113   LOGO ) 
+  ( HR500DMY    114     HR500DMY )  
+  ( HR1KDMY     115     HR1KDMY )
+  ( HR2KDMY     116     HR2KDMY )
+  ( NBODY       117     NBODY   )
+  ( HVL		120	HVL	)
+  ( OTP		121	OTP	)
+  ( BNP		124	BNP	)
+  ( CPT		125	CPT	)
+  ( CODE	126	CODE	)
+  ( boundary	127	boundar	)
+  ( MACRODMY    128     MACRODMY)  
+  ( LVGDMY      129     LVGDMY  )  
+  ( ODBLK	130	ODBLK   )  
+  ( POBLK	131 	POBLK   )  
+  ( HR250DMY	132 	HR250DMY)  
+  ( HR50DMY 	133	HR50DMY )  
+  ( EDRAM	134	EDRAM	)
+  ( HVIO	135	HVIO	) 
+  ( MAC4TDMY    136     MAC4TDMY)  
+  ( LVSDMY      137	LVSDMY)   
+  ( DUMMY       138	DUMMY )  
+  ( HV 		139	HV )  
+  ( AP		140	AP )  
+  ( HVDMY	141	HVDMY	)
+ ;System-Reserved Layers:
+  ( Unrouted	200	Unroute	)
+  ( Row		201	Row	)
+  ( Group	202	Group	)
+  ( Cannotoccupy 203	Cannoto	)
+  ( Canplace	204	Canplac	)
+  ( hardFence	205	hardFen	)
+  ( softFence	206	softFen	)
+  ( y0		207	y0	)
+  ( y1		208	y1	)
+  ( y2		209	y2	)
+  ( y3		210	y3	)
+  ( y4		211	y4	)
+  ( y5		212	y5	)
+  ( y6		213	y6	)
+  ( y7		214	y7	)
+  ( y8		215	y8	)
+  ( y9		216	y9	)
+  ( designFlow	217	designF	)
+  ( stretch	218	stretch	)
+  ( edgeLayer	219	edgeLay	)
+  ( changedLayer 220	changed	)
+  ( unset	221	unset	)
+  ( unknown	222	unknown	)
+  ( spike	223	spike	)
+  ( hiz		224	hiz	)
+  ( resist	225	resist	)
+  ( drive	226	drive	)
+  ( supply	227	supply	)
+  ( wire	228	wire	)
+  ( pin		229	pin	)
+  ( text	230	text	)
+  ( device	231	device	)
+  ( border	232	border	)
+  ( snap	233	snap	)
+  ( align	234	align	)
+  ( prBoundary	235	prBound	)
+  ( instance	236	instanc	)
+  ( annotate	237	annotat	)
+  ( marker	238	marker	)
+  ( select	239	select	)
+  ( grid	251	grid	)
+  ( axis	252	axis	)
+  ( hilite	253	hilite	)
+  ( background	254	backgro	)
+ ) ;techLayers
+
+ techLayerPurposePriorities(
+ ;layers are ordered from lowest to highest priority
+ ;( LayerName	Purpose	)
+ ;( ---------	-------	)
+  ( ref		drawing	)
+  ( PWELL	drawing	)
+  ( NWELL	drawing	)
+  ( DIFF	drawing	)
+  ( PDIFF	drawing	)
+  ( NDIFF	drawing	)
+  ( OD2		drawing	)	
+  ( HVOX	drawing	)	
+  ( POLY1	drawing	)
+  ( POLY1	dummy   )
+  ( POLY2	drawing	)
+  ( POLY3	drawing	)
+  ( POLY4	drawing	)
+  ( N2V		drawing	)
+  ( N3V		drawing	)
+  ( N5V		drawing	)
+  ( PIMP	drawing	)
+  ( NIMP	drawing	)
+  ( ESD		drawing	)
+  ( ESD5V	drawing	)
+  ( RPO		drawing	)
+  ( CONT	drawing	)
+  ( METAL1	drawing	)
+  ( VIA12	drawing	)
+  ( METAL2	drawing	)
+  ( VIA23	drawing	)
+  ( METAL3	drawing	)
+  ( VIA34	drawing	)
+  ( METAL4	drawing	)
+  ( PAD		drawing	)
+  ( FUSE	drawing	)
+  ( BPI		drawing	)
+  ( VTP		drawing	)
+  ( VTN		drawing	)
+  ( VTDP	drawing	)
+  ( VTDN	drawing	)
+  ( LPP		drawing	)
+  ( METAL1    pin    ) 
+  ( METAL2    pin    ) 
+  ( METAL3    pin    ) 
+  ( METAL4    pin    ) 
+  ( POLY1	pin	)
+  ( MD		pin	)
+  ( BJTDUMMY	drawing	)
+  ( PSUB2	drawing	)
+  ( HOTWL	drawing	)
+  ( RWDUMMY	drawing	)
+  ( RPDUMMY	drawing	)
+  ( HR500DMY	drawing	)
+  ( HR1KDMY	drawing	)
+  ( HR2KDMY	drawing	)
+  ( HR250DMY	drawing )
+  ( HR50DMY	drawing	)  
+  ( RMDUMMY	drawing	)
+  ( VCDUMMY	drawing	)
+  ( CDUMMY	drawing	)
+  ( DIODUMMY	drawing	)
+  ( PIP250DMY   drawing )
+  ( PTDIODE	drawing	)
+  ( MACRODMY    drawing )  
+  ( LVGDMY      drawing )  
+  ( EXCL	drawing	)
+  ( TRAN	drawing	)
+  ( SDI		drawing	)
+  ( TEXT	drawing	)
+  ( DRCDUMMY	drawing	)
+  ( DPDUMMY	drawing	)
+  ( PLDUMMY	drawing	)
+  ( marker	error	)
+  ( marker	warning	)
+  ( CELLIMP	drawing	)
+  ( TSV_VIA drawing )
+  ( TSV_PAD drawing )
+  ( TSV_PPI drawing )
+  ( RODUMMY	drawing	)
+  ( ESEXCL	drawing	)
+  ( PDIMP	drawing	)
+  ( PUIMP	drawing	)
+  ( DNWELL	drawing	)
+  ( SAC		drawing	)
+  ( C1		drawing	)
+  ( C2		drawing	)
+  ( PLMIDE	drawing	)
+  ( PMDMY	drawing	)
+  ( SBDMARK     drawing )
+  ( EDRAM	drawing	)
+  ( HVIO	drawing	)
+  ( METAL1	net	)
+  ( METAL2	net	)
+  ( METAL3	net	)
+  ( METAL4	net	)
+  ( METAL1	boundary )
+  ( METAL2	boundary )
+  ( METAL3	boundary )
+  ( METAL4	boundary )
+  ( CONT	net	)
+  ( VIA12      net	)
+  ( VIA23      net	)
+  ( VIA34      net	)
+  ( CONT	boundary )
+  ( VIA12      boundary )
+  ( VIA23      boundary )
+  ( VIA34      boundary )
+  ( prBoundary	drawing	)
+  ( prBoundary	label	)
+  ( prBoundary	boundary )
+  ( instance	drawing	)
+  ( instance	label	)
+  ( hilite	drawing	)
+  ( hilite	drawing1 )
+  ( hilite	drawing2 )
+  ( hilite	drawing3 )
+  ( hilite	drawing4 )
+  ( hilite	drawing5 )
+  ( hilite	drawing6 )
+  ( hilite	drawing7 )
+  ( hilite	drawing8 )
+  ( hilite	drawing9 )
+  ( y0		drawing	)
+  ( y1		drawing	)
+  ( y2		drawing	)
+  ( y3		drawing	)
+  ( y4		drawing	)
+  ( y5		drawing	)
+  ( y6		drawing	)
+  ( y7		drawing	)
+  ( y8		drawing	)
+  ( y9		drawing	)
+  ( grid	drawing	)
+  ( grid	drawing1 )
+  ( axis	drawing	)
+  ( border	drawing	)
+  ( align	drawing	)
+  ( device	drawing	)
+  ( device	drawing1 )
+  ( device	drawing2 )
+  ( device	annotate )
+  ( device	label	)
+  ( wire	drawing	)
+  ( wire	label	)
+  ( wire	flight	)
+  ( select	drawing	)
+  ( drive	drawing	)
+  ( hiz		drawing	)
+  ( pin		drawing	)
+  ( pin		annotate )
+  ( pin		label	)
+  ( resist	drawing	)
+  ( spike	drawing	)
+  ( supply	drawing	)
+  ( unknown	drawing	)
+  ( unset	drawing	)
+  ( annotate	drawing	)
+  ( designFlow	drawing	)
+  ( annotate	drawing1 )
+  ( designFlow	drawing1 )
+  ( annotate	drawing2 )
+  ( designFlow	drawing2 )
+  ( annotate	drawing3 )
+  ( designFlow	drawing3 )
+  ( annotate	drawing4 )
+  ( designFlow	drawing4 )
+  ( annotate	drawing5 )
+  ( designFlow	drawing5 )
+  ( annotate	drawing6 )
+  ( designFlow	drawing6 )
+  ( annotate	drawing7 )
+  ( designFlow	drawing7 )
+  ( annotate	drawing8 )
+  ( designFlow	drawing8 )
+  ( annotate	drawing9 )
+  ( designFlow	drawing9 )
+  ( edgeLayer	drawing	)
+  ( edgeLayer	pin	)
+  ( changedLayer tool0	)
+  ( changedLayer tool1	)
+  ( snap	drawing	)
+  ( stretch	drawing	)
+  ( Row		drawing	)
+  ( Row		label	)
+  ( Group	drawing	)
+  ( Group	label	)
+  ( Cannotoccupy drawing )
+  ( Cannotoccupy boundary )
+  ( boundary	drawing	)
+  ( Canplace	drawing	)
+  ( background	drawing	)
+  ( text	drawing	)
+  ( text	drawing1 )
+  ( text	drawing2 )
+  ( Unrouted	drawing	)
+  ( Unrouted	drawing1 )
+  ( Unrouted	drawing2 )
+  ( Unrouted	drawing3 )
+  ( Unrouted	drawing4 )
+  ( Unrouted	drawing5 )
+  ( Unrouted	drawing6 )
+  ( Unrouted	drawing7 )
+  ( Unrouted	drawing8 )
+  ( Unrouted	drawing9 )
+  ( hardFence	drawing	)
+  ( softFence	drawing	)
+  ( METAL1      dummy   )
+  ( METAL2      dummy   )
+  ( METAL3      dummy   )
+  ( METAL4      dummy   )
+  ( MD		dummy	)
+  ( METAL1      slot    )
+  ( METAL2      slot    )
+  ( METAL3      slot    )
+  ( METAL4      slot    )
+  ( MD 		slot	)
+  ( NPLUSBL	drawing	)
+  ( SINKER	drawing	)
+  ( PBASE	drawing	)
+  ( EMCUT	drawing	)
+  ( PPI	drawing	)
+  ( CAPP	drawing	)
+  ( DMEXCL	dummy1	)
+  ( DMEXCL	dummy2	)
+  ( DMEXCL	dummy3	)
+  ( DMEXCL	dummy4	)
+  ( SLTEXCL     dummy1	)
+  ( SLTEXCL     dummy2	)
+  ( SLTEXCL     dummy3	)
+  ( SLTEXCL     dummy4	)
+  ( VIAD	drawing	)
+  ( MD		drawing	)
+  ( CBD		drawing	)
+  ( UBM		drawing	)
+  ( IP		drawing	)
+  ( BNP		drawing	)
+  ( CPT		drawing	)
+  ( CODE	drawing	)
+  ( OTP		drawing	)
+  ( RLPPDUMMY	drawing	)
+  ( MHMDMY            drawing    )
+  ( NOPP              drawing    )  
+  ( LOGO              drawing    )    
+  ( PDD		drawing	)
+  ( NDD		drawing	)
+  ( HVNW	drawing	)
+  ( FPW		drawing	)
+  ( PBODY	drawing	)
+  ( NBODY       drawing )
+  ( NLD15DMY	drawing	)
+  ( PLD20DMY	drawing	)
+  ( WELLBODY	drawing	)
+  ( WELLBODY	boundary )
+  ( ODBLK	dummy   )
+  ( POBLK	dummy	)
+  ( DIFF 	dummy	)
+  ( MAC4TDMY    drawing )  
+  ( LVSDMY      drawing )  
+  ( LVSDMY	MTDUM )   
+  ( DUMMY       INDDUMMY )
+  ( DUMMY       VARDUMMY )  
+  ( DUMMY	RFDUMMY )
+  ( HV		SCRNW )  
+  ( AP		drawing1 )  
+  ( DUMMY	CTMDMY	)
+  ( HVDMY	drawing	)
+  ( BJTDUMMY	drawing1	)
+  ( RWDUMMY	drawing1	)
+  ( LVSDMY	HR300DMY	)
+  ( RPDUMMY	drawing1	)
+  ( DIODUMMY	drawing1	)
+  ( CTM	drawing	)
+  ( CTM	drawing2	)
+  ( CTM	drawing3	)
+ ) ;techLayerPurposePriorities
+
+ techDisplays(
+ ;( LayerName    Purpose      Packet          Vis Sel Con2ChgLy DrgEnbl Valid )
+ ;( ---------    -------      ------          --- --- --------- ------- ----- )
+ ( ref           drawing       ref_drawing                    t t t t t )
+ ( PWELL         drawing       PWELL_drawing                  t t t t t )
+ ( NWELL         drawing       NWELL_drawing                  t t t t t )
+ ( DIFF          drawing       DIFF_drawing                   t t t t t )
+ ( DIFF          dummy         DIFF_dummy                     t t t t t )
+ ( PDIFF         drawing       PDIFF_drawing                  t t t t t )
+ ( NDIFF         drawing       NDIFF_drawing                  t t t t t )
+ ( OD2           drawing       OD2_drawing                    t t t t t )	
+ ( HVOX          drawing       HVOX_drawing                   t t t t t )	
+ ( POLY1         dummy         POLY1_dummy                    t t t t t )
+ ( POLY1         drawing       POLY1_drawing                  t t t t t )
+ ( POLY2         drawing       POLY2_drawing                  t t t t t )
+ ( POLY3         drawing       POLY3_drawing                  t t t t t )
+ ( POLY4         drawing       POLY4_drawing                  t t t t t )
+ ( N2V           drawing       N2V_drawing                    t t t t t )
+ ( N3V           drawing       N3V_drawing                    t t t t t )
+ ( N5V           drawing       N5V_drawing                    t t t t t )
+ ( PIMP          drawing       PIMP_drawing                   t t t t t )
+ ( NIMP          drawing       NIMP_drawing                   t t t t t )
+ ( ESD           drawing       ESD_drawing                    t t t t t )
+ ( ESD5V         drawing       ESD5V_drawing                  t t t t t )
+ ( RPO           drawing       RPO_drawing                    t t t t t )
+ ( CONT          drawing       CONT_drawing                   t t t t t )
+ ( METAL1        drawing       METAL1_drawing                 t t t t t )
+ ( VIA12         drawing       VIA12_drawing                  t t t t t )
+ ( METAL2        drawing       METAL2_drawing                 t t t t t )  
+ ( VIA23         drawing       VIA23_drawing                  t t t t t )
+ ( METAL3        drawing       METAL3_drawing                 t t t t t )
+ ( VIA34         drawing       VIA34_drawing                  t t t t t )
+ ( METAL4        drawing       METAL4_drawing                 t t t t t )
+ ( PDD           drawing       PDD_drawing                    t t t t t )
+ ( NDD           drawing       NDD_drawing                    t t t t t )
+ ( PAD           drawing       PAD_drawing                    t t t t t )
+ ( FUSE          drawing       FUSE_drawing                   t t t t t )
+ ( BPI           drawing       BPI_drawing                    t t t t t )
+ ( VTP           drawing       VTP_drawing                    t t t t t )
+ ( VTN           drawing       VTN_drawing                    t t t t t )
+ ( VTDP          drawing       VTDP_drawing                   t t t t t )
+ ( VTDN          drawing       VTDN_drawing                   t t t t t )
+ ( LPP           drawing       LPP_drawing                    t t t t t )
+ ( METAL1        pin           METAL1_pin                     t t t nil t )
+ ( METAL2        pin           METAL2_pin                     t t t nil t )
+ ( METAL3        pin           METAL3_pin                     t t t nil t )
+ ( METAL4        pin           METAL4_pin                     t t t nil t )
+ ( POLY1         pin           POLY1_pin                      t t t nil t )
+ ( MD            pin           MD_pin                         t t t nil t )
+ ( BJTDUMMY      drawing       BJTDUMMY_drawing               t t t t t )
+ ( PSUB2         drawing       PSUB2_drawing                  t t t t t )
+ ( HOTWL         drawing       HOTWL_drawing                  t t t t t )
+ ( RWDUMMY       drawing       RWDUMMY_drawing                t t t t t )
+ ( RPDUMMY       drawing       RPDUMMY_drawing                t t t t t )
+ ( HR50DMY       drawing       HR50DMY_drawing                t t t t t )
+ ( HR250DMY      drawing       HR250DMY_drawing               t t t t t )
+ ( HR500DMY      drawing       HR500DMY_drawing               t t t t t )
+ ( HR1KDMY       drawing       HR1KDMY_drawing                t t t t t )
+ ( HR2KDMY       drawing       HR2KDMY_drawing                t t t t t )
+ ( RMDUMMY       drawing       RMDUMMY_drawing                t t t t t )
+ ( VCDUMMY       drawing       VCDUMMY_drawing                t t t t t )
+ ( CDUMMY        drawing       CDUMMY_drawing                 t t t t t )
+ ( PIP250DMY     drawing       PIP250DMY_drawing              t t t t t )
+ ( DIODUMMY      drawing       DIODUMMY_drawing               t t t t t )
+ ( PTDIODE       drawing       PTDIODE_drawing                t t t t t )
+ ( MACRODMY      drawing       MACRODMY_drawing               t t t t t )
+ ( LVGDMY        drawing       LVGDMY_drawing                 t t t t t )
+ ( EXCL          drawing       EXCL_drawing                   t t t t t )
+ ( TRAN          drawing       TRAN_drawing                   t t t t t )
+ ( SDI           drawing       SDI_drawing                    t t t t t )
+ ( TEXT          drawing       TEXT_drawing                   t t t t t )
+ ( DRCDUMMY      drawing       DRCDUMMY_drawing               t t t t t )
+ ( DPDUMMY       drawing       DPDUMMY_drawing                t t t t t )
+ ( PLDUMMY       drawing       PLDUMMY_drawing                t t t t t )
+ ( marker        error         marker_error                   t t t t t )
+ ( marker        warning       marker_warning                 t t t t t )
+ ( CELLIMP       drawing       CELLIMP_drawing                t t t t t )
+ ( TSV_VIA       drawing       TSV_VIA_drawing                t t t t t )
+ ( TSV_PAD       drawing       TSV_PAD_drawing                t t t t t )
+ ( TSV_PPI       drawing       TSV_PPI_drawing                t t t t t )
+ ( RODUMMY       drawing       RODUMMY_drawing                t t t t t )
+ ( ESEXCL        drawing       ESEXCL_drawing                 t t t t t )
+ ( PDIMP         drawing       PDIMP_drawing                  t t t t t )
+ ( PUIMP         drawing       PUIMP_drawing                  t t t t t )
+ ( DNWELL        drawing       DNWELL_drawing                 t t t t t )
+ ( SAC           drawing       SAC_drawing                    t t t t t )
+ ( C1            drawing       C1_drawing                     t t t t t )
+ ( C2            drawing       C2_drawing                     t t t t t )
+ ( PLMIDE        drawing       PLMIDE_drawing                 t t t t t )
+ ( SBDMARK       drawing       SBDMARK_drawing                t t t t t )
+ ( PMDMY         drawing       PMDMY_drawing                  t t t t t )
+ ( METAL1        net           METAL1_net                     t t t nil nil )
+ ( METAL2        net           METAL2_net                     t t t nil nil )
+ ( METAL3        net           METAL3_net                     t t t nil nil )
+ ( METAL4        net           METAL4_net                     t t t nil nil )
+ ( METAL1        boundary      METAL1_boundary                t t t nil nil )
+ ( METAL2        boundary      METAL2_boundary                t t t nil nil )
+ ( METAL3        boundary      METAL3_boundary                t t t nil nil )
+ ( METAL4        boundary      METAL4_boundary                t t t nil nil )
+ ( CONT          net           CONT_net                       t t t nil nil )
+ ( VIA12         net           VIA12_net                      t t t nil nil )
+ ( VIA23         net           VIA23_net                      t t t nil nil )
+ ( VIA34         net           VIA34_net                      t t t nil nil )
+ ( CONT          boundary      CONT_boundary                  t t t nil nil )
+ ( VIA12         boundary      VIA12_boundary                 t t t nil nil )
+ ( VIA23         boundary      VIA23_boundary                 t t t nil nil )
+ ( VIA34         boundary      VIA34_boundary                 t t t nil nil )
+ ( prBoundary    drawing       prBoundary_drawing             t t t t t )
+ ( prBoundary    label         prBoundary_label               t t t t nil )
+ ( prBoundary    boundary      prBoundary_boundary            t t t t nil )
+ ( instance      drawing       instance_drawing               t t t t nil )
+ ( instance      label         instance_label                 t t t t nil )
+ ( hilite        drawing       hilite_drawing                 t t t t nil )
+ ( hilite        drawing1      hilite_drawing1                t t t t nil )
+ ( hilite        drawing2      hilite_drawing2                t t t t nil )
+ ( hilite        drawing3      hilite_drawing3                t t t t nil )
+ ( hilite        drawing4      hilite_drawing4                t t t t nil )
+ ( hilite        drawing5      hilite_drawing5                t t t t nil )
+ ( hilite        drawing6      hilite_drawing6                t t t t nil )
+ ( hilite        drawing7      hilite_drawing7                t t t t nil )
+ ( hilite        drawing8      hilite_drawing8                t t t t nil )
+ ( hilite        drawing9      hilite_drawing9                t t t t nil )
+ ( y0            drawing       y0_drawing                     t t t t nil )
+ ( y1            drawing       y1_drawing                     t t t t nil )
+ ( y2            drawing       y2_drawing                     t t t t nil )
+ ( y3            drawing       y3_drawing                     t t t t nil )
+ ( y4            drawing       y4_drawing                     t t t t nil )
+ ( y5            drawing       y5_drawing                     t t t t nil )
+ ( y6            drawing       y6_drawing                     t t t t nil )
+ ( y7            drawing       y7_drawing                     t t t t nil )
+ ( y8            drawing       y8_drawing                     t t t t nil )
+ ( y9            drawing       y9_drawing                     t t t t nil )
+ ( grid          drawing       grid_drawing                   t nil t nil nil )
+ ( grid          drawing1      grid_drawing1                  t nil t nil nil )
+ ( axis          drawing       axis_drawing                   t nil t t nil )
+ ( border        drawing       border_drawing                 t t t t nil )
+ ( align         drawing       align_drawing                  t t t t nil )
+ ( device        drawing       device_drawing                 t t t t nil )
+ ( device        drawing1      device_drawing1                t t t t nil )
+ ( device        drawing2      device_drawing2                t t t t nil )
+ ( device        annotate      device_annotate                t t t t nil )
+ ( device        label         device_label                   t t t t nil )
+ ( wire          drawing       wire_drawing                   t t t t nil )
+ ( wire          label         wire_label                     t t t t nil )
+ ( wire          flight        wire_flight                    t t t t nil )
+ ( select        drawing       select_drawing                 t t t t nil )
+ ( drive         drawing       drive_drawing                  t t t t nil )
+ ( hiz           drawing       hiz_drawing                    t t t t nil )
+ ( pin           drawing       pin_drawing                    t t t t nil )
+ ( pin           annotate      pin_annotate                   t t t t nil )
+ ( pin           label         pin_label                      t t t t nil )
+ ( resist        drawing       resist_drawing                 t t t t nil )
+ ( spike         drawing       spike_drawing                  t t t t nil )
+ ( supply        drawing       supply_drawing                 t t t t nil )
+ ( unknown       drawing       unknown_drawing                t t t t nil )
+ ( unset         drawing       unset_drawing                  t t t t nil )
+ ( annotate      drawing       annotate_drawing               t t t t nil )
+ ( designFlow    drawing       designFlow_drawing             t t t nil nil )
+ ( annotate      drawing1      annotate_drawing1              t t t t nil )
+ ( designFlow    drawing1      designFlow_drawing1            t t t nil nil )
+ ( annotate      drawing2      annotate_drawing2              t t t t nil )
+ ( designFlow    drawing2      designFlow_drawing2            t t t nil nil )
+ ( annotate      drawing3      annotate_drawing3              t t t t nil )
+ ( designFlow    drawing3      designFlow_drawing3            t t t nil nil )
+ ( annotate      drawing4      annotate_drawing4              t t t t nil )
+ ( designFlow    drawing4      designFlow_drawing4            t t t nil nil )
+ ( annotate      drawing5      annotate_drawing5              t t t t nil )
+ ( designFlow    drawing5      designFlow_drawing5            t t t nil nil )
+ ( annotate      drawing6      annotate_drawing6              t t t t nil )
+ ( designFlow    drawing6      designFlow_drawing6            t t t nil nil )
+ ( annotate      drawing7      annotate_drawing7              t t t t nil )
+ ( designFlow    drawing7      designFlow_drawing7            t t t nil nil )
+ ( annotate      drawing8      annotate_drawing8              t t t t nil )
+ ( designFlow    drawing8      designFlow_drawing8            t t t nil nil )
+ ( annotate      drawing9      annotate_drawing9              t t t t nil )
+ ( designFlow    drawing9      designFlow_drawing9            t t t nil nil )
+ ( edgeLayer     drawing       edgeLayer_drawing              t t t t nil )
+ ( edgeLayer     pin           edgeLayer_pin                  t t t t nil )
+ ( changedLayer  tool0         changedLayer_tool0             nil nil t nil nil )
+ ( changedLayer  tool1         changedLayer_tool1             nil nil t nil nil )
+ ( snap          drawing       snap_drawing                   t t t t nil )
+ ( stretch       drawing       stretch_drawing                t t t t nil )
+ ( Row           drawing       Row_drawing                    t t t t nil )
+ ( Row           label         Row_label                      t nil t t nil )
+ ( Group         drawing       Group_drawing                  t t t t nil )
+ ( Group         label         Group_label                    t nil t t nil )
+ ( Cannotoccupy  drawing       Cannotoccupy_drawing           t t t t nil )
+ ( Cannotoccupy  boundary      Cannotoccupy_boundary          t t t t nil )
+ ( boundary      drawing       boundary_drawing               t t t t nil )
+ ( Canplace      drawing       Canplace_drawing               t t t t nil )
+ ( background    drawing       background_drawing             t nil t nil nil )
+ ( text          drawing       text_drawing                   t t t t nil )
+ ( text          drawing1      text_drawing1                  t t t t nil )
+ ( text          drawing2      text_drawing2                  t t t t nil )
+ ( Unrouted      drawing       Unrouted_drawing               t t t t nil )
+ ( Unrouted      drawing1      Unrouted_drawing1              t t t t nil )
+ ( Unrouted      drawing2      Unrouted_drawing2              t t t t nil )
+ ( Unrouted      drawing3      Unrouted_drawing3              t t t t nil )
+ ( Unrouted      drawing4      Unrouted_drawing4              t t t t nil )
+ ( Unrouted      drawing5      Unrouted_drawing5              t t t t nil )
+ ( Unrouted      drawing6      Unrouted_drawing6              t t t t nil )
+ ( Unrouted      drawing7      Unrouted_drawing7              t t t t nil )
+ ( Unrouted      drawing8      Unrouted_drawing8              t t t t nil )
+ ( Unrouted      drawing9      Unrouted_drawing9              t t t t nil )
+ ( hardFence     drawing       hardFence_drawing              t t t t nil )
+ ( softFence     drawing       softFence_drawing              t t t t nil )
+ ( METAL1        dummy         METAL1_dummy                   t t t t t )
+ ( METAL2        dummy         METAL2_dummy                   t t t t t )
+ ( METAL3        dummy         METAL3_dummy                   t t t t t )
+ ( METAL4        dummy         METAL4_dummy                   t t t t t )
+ ( MD            dummy         MD_dummy                       t t t t t )
+ ( METAL1        slot          METAL1_slot                    t t t t t )
+ ( METAL2        slot          METAL2_slot                    t t t t t )
+ ( METAL3        slot          METAL3_slot                    t t t t t )
+ ( METAL4        slot          METAL4_slot                    t t t t t )
+ ( MD            slot          MD_slot                        t t t t t )
+ ( NPLUSBL       drawing       NPLUSBL_drawing                t t t t t )
+ ( SINKER        drawing       SINKER_drawing                 t t t t t )
+ ( PBASE         drawing       PBASE_drawing                  t t t t t )
+ ( EMCUT         drawing       EMCUT_drawing                  t t t t t )
+ ( PPI           drawing       PPI_drawing                    t t t t t )
+ ( CAPP          drawing       CAPP_drawing                   t t nil t t )
+  ( DMEXCL       dummy1       DMEXCL_dummy1            t t t t t )
+  ( DMEXCL       dummy2       DMEXCL_dummy2            t t t t t )
+  ( DMEXCL       dummy3       DMEXCL_dummy3            t t t t t )
+  ( DMEXCL       dummy4       DMEXCL_dummy4            t t t t t )
+  ( SLTEXCL      dummy1       SLTEXCL_dummy1	 t t t t t )
+  ( SLTEXCL      dummy2       SLTEXCL_dummy2	 t t t t t )
+  ( SLTEXCL      dummy3       SLTEXCL_dummy3	 t t t t t )
+  ( SLTEXCL      dummy4       SLTEXCL_dummy4	 t t t t t )
+ ( ODBLK         dummy         ODBLK_dummy                    t t t t t )
+ ( POBLK         dummy         POBLK_dummy                    t t t t t )
+ ( VIAD          drawing       VIAD_drawing                   t t t t t )
+ ( MD            drawing       MD_drawing                     t t t t t )
+ ( CBD           drawing       CBD_drawing                    t t t t t )
+ ( UBM           drawing       UBM_drawing                    t t t t t )
+ ( IP            drawing       IP_drawing                     t t nil t t )
+ ( BNP           drawing       BNP_drawing                    t t t t t )
+ ( CPT           drawing       CPT_drawing                    t t t t t )
+ ( CODE          drawing       CODE_drawing                   t t t t t )
+ ( OTP           drawing       OTP_drawing                    t t t t t )
+ ( MHMDMY        drawing       MHMDMY_drawing                 t t t t t )
+ ( NOPP          drawing       NOPP_drawing                   t t t t t )
+ ( LOGO          drawing       LOGO_drawing                   t t t t t )   
+ ( RLPPDUMMY     drawing       RLPPDUMMY_drawing              t t t t t )
+ ( HVNW          drawing       HVNW_drawing                   t t t t t )
+ ( FPW           drawing       FPW_drawing                    t t t t t )
+ ( PBODY         drawing       PBODY_drawing                  t t t t t )
+ ( NBODY         drawing       NBODY_drawing                  t t t t t )
+ ( NLD15DMY      drawing       NLD15DMY_drawing               t t t t t )
+ ( PLD20DMY      drawing       PLD20DMY_drawing               t t t t t )
+ ( WELLBODY      drawing       WELLBODY_drawing               t t nil t t )
+ ( WELLBODY      boundary      WELLBODY_boundary              t t nil t t )
+ ( EDRAM         drawing       EDRAM_drawing                  t t t t t )
+ ( HVIO          drawing       HVIO_drawing                   t t t t t )
+ ( MAC4TDMY      drawing       MAC4TDMY_drawing               t t t t t )   
+ ( LVSDMY        drawing       LVSDMY_drawing                 t t t t t )  
+ ( LVSDMY        MTDUM         LVSDMY_MTDUM                   t t t t t ) 
+ ( DUMMY         INDDUMMY      DUMMY_INDDUMMY                 t t t t t )
+ ( DUMMY         VARDUMMY      DUMMY_VARDUMMY                 t t t t t )  
+ ( DUMMY         RFDUMMY       DUMMY_RFDUMMY                  t t t t t )
+ ( HV            SCRNW         HV_SCRNW                       t t t t t )  
+ ( AP            drawing1      AP_drawing1                    t t t t t )  
+ ( DUMMY         CTMDMY        DUMMY_CTMDMY                   t t t t t )
+ ( HVDMY         drawing       HVDMY_drawing                  t t t t t )
+ ( BJTDUMMY      drawing1      BJTDUMMY_drawing1              t t t t t )
+ ( RWDUMMY       drawing1      RWDUMMY_drawing1               t t t t t )
+ ( LVSDMY        HR300DMY      LVSDMY_HR300DMY                t t t t t )
+ ( RPDUMMY       drawing1      RPDUMMY_drawing1               t t t t t )
+ ( DIODUMMY      drawing1      DIODUMMY_drawing1              t t t t t )
+ ( CTM           drawing       CTM_drawing                    t t t t t )
+ ( CTM           drawing2      CTM_drawing2                   t t t t t )
+ ( CTM           drawing3      CTM_drawing3                   t t t t t )
+) ;techDisplays
+
+
+) ;layerDefinitions
+
+
+;********************************
+; LAYER RULES
+;********************************
+layerRules(
+ viaLayers(
+ ;( layer1      viaLayer      layer2 )
+ ;( ------      --------      ------ )
+  ( PDIFF         CONT        METAL1 )
+  ( NDIFF         CONT        METAL1 )
+  ( DIFF          CONT        METAL1 )
+  ( POLY1         CONT        METAL1 )
+  ( POLY2         CONT        METAL1 )
+  ( METAL1        VIA12       METAL2 )
+  ( METAL2        VIA23       METAL3 )
+  ( METAL3        VIA34       METAL4 )
+ )
+
+ streamLayers(
+ ;( layer		streamNumber dataType translate	)
+ ;( -----		------------ -------- ---------	)
+  ( ("ref" "drawing")		0	0	t	)
+  ( ("PWELL" "drawing")		1	0	t	)
+  ( ("NWELL" "drawing")		2	0	t	)
+  ( ("DIFF" "drawing")		3	0	t	)
+  ( ("OD2" "drawing")		4	0	t	)
+  ( ("HVOX" "drawing")		184	0	t	)	
+  ( ("N3V" "drawing")		5	0	t	)
+  ( ("N5V" "drawing")		6	0	t	)
+  ( ("PIMP" "drawing")		7	0	t	)
+  ( ("NIMP" "drawing")		8	0	t	)
+  ( ("POLY3" "drawing")		9	0	t	)
+  ( ("POLY4" "drawing")		10	0	t	)
+  ( ("PDIFF" "drawing")		11	0	t	)
+  ( ("NDIFF" "drawing")		12	0	t	)
+  ( ("POLY1" "drawing")		13	0	t	)
+  ( ("POLY2" "drawing")		14	0	t	)
+  ( ("CONT" "drawing")		15	0	t	)
+  ( ("METAL1" "drawing")	16	0	t	)
+  ( ("METAL1" "dummy")		16	1	t	)
+  ( ("METAL1" "slot")		16	2	t	)
+  ( ("VIA12" "drawing")		17	0	t	)
+  ( ("METAL2" "drawing")	18	0	t	)
+  ( ("METAL2" "dummy")		18	1	t	)
+  ( ("METAL2" "slot")		18	2	t	)
+  ( ("PAD" "drawing")		19	0	t	)
+  ( ("BPI" "drawing")		20	0	t	)
+  ( ("PDD" "drawing")		21	0	t	)
+  ( ("NDD" "drawing")		22	0	t	)
+  ( ("VTP" "drawing")		23	0	t	)
+  ( ("VTN" "drawing")		24	0	t	)
+  ( ("VTDP" "drawing")		25	0	t	)
+  ( ("VTDN" "drawing")		26	0	t	)
+  ( ("VIA23" "drawing")		27	0	t	)
+  ( ("METAL3" "drawing")	28	0	t	)
+  ( ("METAL3" "dummy")		28	1	t	)
+  ( ("METAL3" "slot")		28	2	t	)
+  ( ("VIA34" "drawing")		29	0	t	)
+  ( ("ESD" "drawing")		30	0	t	)
+  ( ("METAL4" "drawing")	31	0	t	)
+  ( ("METAL4" "dummy")		31	1	t	)
+  ( ("METAL4" "slot")		31	2	t	)
+  ( ("RPO" "drawing")		34	0	t	)
+  ( ("ESD5V" "drawing")		36	0	t	)
+  ( ("PTDIODE" "drawing")	37	0	t	)
+  ( ("METAL1" "pin")		40	0	t	)  
+  ( ("METAL2" "pin")		41	0	t	)  
+  ( ("METAL3" "pin")		42	0	t	)  
+  ( ("METAL4" "pin")		43	0	t	)  
+  ( ("POLY1" "pin")		47	0	t	)
+  ( ("LPP" "drawing")		48	0	t	)
+  ( ("BJTDUMMY" "drawing")	49	0	t	)
+  ( ("PSUB2" "drawing")		50	0	t	)
+  ( ("HOTWL" "drawing")		51	0	t	)
+  ( ("RWDUMMY" "drawing")	52	0	t	)
+  ( ("VCDUMMY" "drawing")	53	0	t	)
+  ( ("RPDUMMY" "drawing")	54	0	t	)
+  ( ("HR500DMY" "drawing")	54	1	t	)
+  ( ("HR1KDMY" "drawing")	54	2	t	)
+  ( ("HR2KDMY" "drawing")	54	3	t	)
+  ( ("EXCL" "drawing")		55	0	t	)
+  ( ("DIODUMMY" "drawing")	56	0	t	)
+  ( ("TRAN" "drawing")		57	0	t	)
+  ( ("SDI" "drawing")		58	0	t	)
+  ( ("TEXT" "drawing")		59	0	t	)
+  ( ("DRCDUMMY" "drawing")	60	0	t	)
+  ( ("N2V" "drawing")		61	0	t	)
+  ( ("prBoundary" "drawing")	62	0	t	)
+  ( ("marker" "error")		63	0	t	)
+  ( ("IP" "drawing")		63	63	t	)
+  ( ("marker" "warning")	64	0	t	)
+  ( ("DPDUMMY" "drawing")	65	0	t	)
+  ( ("PLDUMMY" "drawing")	66	0	t	)
+  ( ("CDUMMY" "drawing")	68	0	t	)
+  ( ("RMDUMMY" "drawing")	69	0	t	)
+  ( ("CELLIMP" "drawing")	70	0	t	)
+  ( ("PIP250DMY" "drawing")	71	0	t	)
+  ( ("SBDMARK" "drawing")	72	0	t	)
+  ( ("RODUMMY" "drawing")	75	0	t	)
+  ( ("ESEXCL" "drawing")	76	0	t	)
+  ( ("PDIMP" "drawing")		78	0	t	)
+  ( ("PUIMP" "drawing")		79	0	t	)
+  ( ("DNWELL" "drawing")	82	0	t	)
+  ( ("SAC" "drawing")		85	0	t	)
+  ( ("C1" "drawing")		86	0	t	)
+  ( ("C2" "drawing")		87	0	t	)
+  ( ("PLMIDE" "drawing")	89	0	t	)
+  ( ("CAPP" "drawing")		92	0	t	)
+  ( ("HVNW" "drawing")		99	0	t	)
+  ( ("WELLBODY" "drawing")	103	0	t	)
+  ( ("NLD15DMY" "drawing")	130	0	t	)
+  ( ("PLD20DMY" "drawing")	130	1	t	)
+  ( ("MHMDMY" "drawing")	144	0	t	)
+    ( ("NOPP" "drawing")	145	0	t	)
+  ( ("RLPPDUMMY" "drawing")	134	0	t	)
+  ( ("DUMMY" "VARDUMMY")	138	0	t	)
+  ( ("DUMMY" "INDDUMMY" )       139	0 	t	)
+  ( ("DMEXCL" "dummy1")		150	1	t	)
+  ( ("DMEXCL" "dummy2")		150	2	t	)
+  ( ("DMEXCL" "dummy3")		150	3	t	)
+  ( ("DMEXCL" "dummy4")		150	4	t	)
+  ( ("METAL1" "boundary")		151	0	t	)
+  ( ("METAL2" "boundary")		152	0	t	)
+  ( ("METAL3" "boundary")		153	0	t	)
+  ( ("METAL4" "boundary")		154	0	t	)
+  ( ("DUMMY" "RFDUMMY" )	158	0	t	)
+  ( ("SLTEXCL" "dummy1")	158	1	t	)
+  ( ("SLTEXCL" "dummy2")	158	2	t	)
+  ( ("SLTEXCL" "dummy3")	158	3	t	)
+  ( ("SLTEXCL" "dummy4")	158	4	t	)
+  ( ("MD" "pin")		159	0	t	)
+  ( ("VIA12" "boundary")	161	0	t       )
+  ( ("VIA23" "boundary")	162	0	t       )
+  ( ("VIA34" "boundary")	163	0	t       )
+  ( ("MACRODMY" "drawing")      166     0       t       ) 
+  ( ("LVGDMY" "drawing")        166     1       t       ) 
+  ( ("MAC4TDMY" "drawing")      166	2	t	)
+  ( ("LVSDMY" "drawing")	166	3	t	)
+  ( ("LVSDMY" "MTDUM")	        166	4	t	)
+  ( ("VIAD" "drawing")		167	0	t	)
+  ( ("MD" "drawing")		168	0	t	)
+  ( ("CBD" "drawing")		169	0	t	)
+  ( ("UBM" "drawing")		170	0	t	)
+  ( ("NPLUSBL" "drawing")	179	0	t	)
+  ( ("SINKER" "drawing")	181	0	t	)
+  ( ("PBASE" "drawing")		182	0	t	)
+  ( ("HV" "SCRNW" )		185	0	t	)
+  ( ("EMCUT" "drawing")		186	0	t	)
+  ( ("PPI" "drawing")	189	0	t	)
+  ( ("AP" "drawing1")	189	20	t	)
+  ( ("LOGO" "drawing")		200	0	t	)  
+  ( ("BNP" "drawing")		214	0	t	)
+  ( ("CPT" "drawing")		215	0	t	)
+  ( ("CODE" "drawing")		216	0	t	)
+  ( ("FUSE" "drawing")		235	0	t	)
+  ( ("PMDMY" "drawing")		236	0	t	)
+  ( ("OTP" "drawing")		237	0	t	)
+  ( ("FPW" "drawing")		240	0	t	)
+  ( ("PBODY" "drawing")		241	0	t	)
+  ( ("NBODY" "drawing")		242	0	t	)
+  ( ("TSV_VIA" "drawing")	251	0	t	)
+  ( ("TSV_PAD" "drawing")	251	1	t	)
+  ( ("TSV_PPI" "drawing")	251	2	t	)
+  ( ("POLY1" "dummy")		13	1	t	)
+  ( ("ODBLK" "dummy")		150	20	t	)
+  ( ("POBLK" "dummy")		150	21	t	)
+  ( ("MD" "dummy")		168	1	t	)
+  ( ("MD" "slot")		168	2	t	)
+  ( ("DIFF" "dummy")		3	1	t	)
+  ( ("HR250DMY" "drawing")	54	4	t	)
+  ( ("HR50DMY" "drawing")	54	5	t	)
+  ( ("EDRAM" "drawing")		255	3	t	)
+  ( ("HVIO" "drawing")		141	4	t	)
+  ( ("CONT" "boundary")		0	0	nil	)
+  ( ("CONT" "net")		0	0	nil	)
+  ( ("METAL1" "net")	        0	0	nil     )
+  ( ("METAL2" "net")	        0	0	nil     )
+  ( ("METAL3" "net")	        0	0	nil     )
+  ( ("METAL4" "net")	        0	0	nil     )
+  ( ("VIA12" "net")     	0  	0	nil     )
+  ( ("VIA23" "net")     	0  	0	nil     )
+  ( ("VIA34" "net")     	0  	0	nil     )
+  ( ("boundary" "drawing")	0	0	nil	)
+  (  ("DUMMY"	"CTMDMY")	131	0	t	)
+  (  ("HVDMY"	"drawing")	166	5	t	)
+  (  ("BJTDUMMY"	"drawing1")	49	1	t	)
+  (  ("RWDUMMY"	"drawing1")	52	1	t	)
+  (  ("LVSDMY"	"HR300DMY")	54	6	t	)
+  (  ("RPDUMMY"	"drawing1")	54	7	t	)
+  (  ("DIODUMMY"	"drawing1")	56	1	t	)
+  (  ("CTM"	"drawing")	67	0	t	)
+  (  ("CTM"	"drawing2")	67	2	t	)
+  (  ("CTM"	"drawing3")	67	3	t	)
+ ) ;streamLayers
+
+  layerFunctions(
+  ;( layer                 function        [maskNumber])
+  ;( -----                 --------        ------------)
+   ( NWELL    "nwell"      )
+   ( PWELL    "pwell"      )
+   ( PDIFF    "pdiff"      )
+   ( NDIFF    "ndiff"      )
+   ( POLY1    "poly"       )
+   ( POLY2    "poly"       )
+   ( PIMP     "pplus"      )
+   ( NIMP     "nplus"      )
+   ( CONT     "cut"        )
+   ( METAL1   "metal"      )
+   ( VIA12    "cut"       )
+   ( METAL2   "metal"      )
+   ( VIA23    "cut"       )
+   ( METAL3   "metal"      )
+   ( VIA34    "cut"       )
+   ( METAL4   "metal"      )
+   ( VIAD	    "cut"	 )
+   ( MD	    "metal"	 )
+) ;layerFunctions
+
+
+) ;layerRules
+
+
+;********************************
+; PHYSICAL RULES
+;********************************
+physicalRules(
+
+ spacingRules(
+ ;( rule		layer1		layer2		value	)
+ ;( ----		------		------		-----	)
+  ( minWidth		"CONT"			  	0.4	) ; CO.W.1
+  ( minSpacing		"CONT"				0.4	) ; CO.S.1
+  ( minWidth		"METAL1"			0.5	) ; M1.W.1
+  ( minSpacing		"METAL1"			0.45	) ; M1.S.1
+  ( minWidth		"METAL2"			0.6	) ; M2.W.1
+  ( minSpacing		"METAL2"			0.5	) ; M2.S.1
+  ( minWidth		"METAL3"			0.6	) ; M3.W.1
+  ( minSpacing		"METAL3"			0.5	) ; M3.S.1
+  ( minWidth		"METAL4"			0.6	) ; M4.W.1
+  ( minSpacing		"METAL4"			0.6	) ; M4.S.1
+  ( minWidth		"VIA12"				0.5	) ; VIA1.W.1
+  ( minSpacing		"VIA12"				0.45	) ; VIA1.S.1
+  ( minWidth		"VIA23"				0.5	) ; VIA2.W.1
+  ( minSpacing		"VIA23"				0.45	) ; VIA2.S.1
+  ( minWidth		"VIA34"				0.5	) ; VIA3.W.1
+  ( minSpacing		"VIA34"				0.45	) ; VIA3.S.1
+  ( sameNet		"METAL1"	"METAL1"	0.45	)
+  ( sameNet		"METAL2"	"METAL2"	0.5	)
+  ( sameNet		"METAL3"	"METAL3"	0.5	)
+  ( sameNet		"METAL4"	"METAL4"	0.6	)
+  ( sameNet		"VIA12"		"CONT"		0	)
+  ( sameNet		"VIA23"		"VIA12"		0	)
+  ( sameNet		"VIA34"		"VIA23"		0	)
+ ) ;spacingRules
+
+ mfgGridResolution(
+      ( 0.005 )
+ ) ;mfgGridResolution
+
+) ;physicalRules
+
+
+
+;********************************
+; DEVICES
+;********************************
+devices(
+
+tcCreateCDSDeviceClass()
+
+;
+; no syEnhancement devices
+;
+
+;
+; no syDepletion devices
+;
+
+symContactDevice(
+; (name viaLayer viaPurpose layer1 purpose1 layer2 purpose2
+;  w l (row column xPitch yPitch xBias yBias) encByLayer1 encByLayer2 legalRegion)
+
+  (M1_POLY1 CONT drawing POLY1 drawing METAL1 drawing
+  0.4 0.4 (1 1 0.8 0.8 center center) 0.2 0.15 _NA_)
+
+  (M1_P CONT drawing DIFF drawing (PIMP drawing 0.25) METAL1 drawing 
+  0.4 0.4 (1 1 0.8 0.8 center center) 0.25 0.15 _NA_)
+
+  (M1_N CONT drawing DIFF drawing (NIMP drawing 0.25) METAL1 drawing 
+  0.4 0.4 (1 1 0.8 0.8 center center) 0.25 0.15 _NA_)
+  (M2_M1 VIA12 drawing METAL1 drawing METAL2 drawing
+  0.5 0.5 (1 1 0.95 0.95 center center) 0.2 0.15 _NA_)
+
+  (M3_M2 VIA23 drawing METAL2 drawing METAL3 drawing
+  0.5 0.5 (1 1 0.95 0.95 center center) 0.2 0.15 _NA_)
+
+
+
+    
+  (M4_M3 VIA34 drawing METAL3 drawing METAL4 drawing
+  0.5 0.5 (1 1 0.95 0.95 center center) 0.2 0.15 _NA_)
+)
+
+tfcDefineDeviceProp(
+; (viewName	deviceName	propName	propValue)
+  (symbolic	M1_POLY1	viaType		"default")
+  (symbolic	M1_P		viaType		"default")
+  (symbolic	M1_N		viaType		"default")
+  (symbolic	M2_M1		viaType		"default")
+  (symbolic	M3_M2		viaType		"default")
+  (symbolic	M4_M3		viaType		"default")
+)
+
+symPinDevice(
+; (name maskable layer1 purpose1 w1 layer2 purpose2 w2 legalRegion)
+  (POLY1_T t POLY1 drawing 0.35 _NA_ _NA_ _NA_ _NA_)
+  (METAL1_T t METAL1 drawing 0.5 _NA_ _NA_ _NA_ _NA_)
+  (METAL2_T t METAL2 drawing 0.6 _NA_ _NA_ _NA_ _NA_)
+  (METAL3_T t METAL3 drawing 0.6 _NA_ _NA_ _NA_ _NA_)
+  (METAL4_T t METAL4 drawing 0.6 _NA_ _NA_ _NA_ _NA_)
+)
+cdsViaDevice(
+ ; (name cutLayer cutPurpose layer1 purpose1 layer2 purpose2
+ ;  row column origin stackedVias cutLayerW cutLayerL xCutSpacing yCutSpacing
+ ;  layer1XEnc layer1YEnc layer2XEnc layer2YEnc layer1Dir layer2Dir
+ ;  layer1XDirOverride layer1YDirOverride layer2XDirOverride layer2YDirOverride
+ ;  l_implantLayer1 l_implantLayer2 diffSpacing abutClass)
+
+        (M1_POLYc CONT drawing POLY1 drawing METAL1 drawing
+        1 1 centerCenter t 0.4 0.4 0.4 0.4
+        0.2 0.2 0.15 0.15 "XY" "XY"
+        0.2 0.2 0.15 0.15
+        nil nil _NA_ "")
+        (M1_Pc CONT drawing DIFF drawing METAL1 drawing
+        1 1 centerCenter t 0.4 0.4 0.4 0.4
+        0.25 0.25 0.15 0.15 "XY" "XY"
+        0.25 0.25 0.15 0.15
+        ( ((PIMP drawing) 0.25)) nil _NA_ "")
+
+        (M1_Nc CONT drawing DIFF drawing METAL1 drawing
+        1 1 centerCenter t 0.4 0.4 0.4 0.4
+        0.25 0.25 0.15 0.15 "XY" "XY"
+        0.25 0.25 0.15 0.15
+        ( ((NIMP drawing) 0.25)) nil _NA_ "")
+        (M2_M1c VIA12 drawing METAL1 drawing METAL2 drawing
+        1 1 centerCenter t 0.5 0.5  0.45 0.45
+        0.2 0.2 0.15 0.15 "Y" "X"
+        0.2 0.2 0.15 0.15  nil  nil  _NA_ ""   )
+
+        (M3_M2c VIA23 drawing METAL2 drawing METAL3 drawing
+        1 1 centerCenter t 0.5 0.5  0.45 0.45
+        0.2 0.2 0.15 0.15 "Y" "X"
+        0.2 0.2 0.15 0.15  nil  nil  _NA_ ""   )
+
+
+
+        (M4_M3c VIA34 drawing METAL3 drawing METAL4 drawing
+        1 1 centerCenter t 0.5 0.5  0.45 0.45
+        0.2 0.2 0.15 0.15 "Y" "X"
+        0.2 0.2 0.15 0.15  nil  nil  _NA_ ""   )
+)
+;
+; no ruleContact devices
+;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Opus Symbolic Device Class Definition
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;
+; no other device classes
+;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Opus Symbolic Device Declaration
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;
+; no other devices
+;
+) ;devices
+
+
+;********************************
+; LX RULES
+;********************************
+lxRules(
+
+ lxExtractLayers(
+ ;( list of layers or layer/purpose pairs  )
+ ;( -------------------------------------  )
+  ( NWELL DIFF PDIFF NDIFF OD2 POLY1 POLY2 CONT
+    METAL1
+    VIA12
+    METAL2
+    VIA23
+    METAL3
+    VIA34
+    METAL4
+    VIAD
+    MD)
+ ) ;lxExtractLayers
+
+ lxNoOverlapLayers(
+ ;( forbidden overlaps in LX )
+ ;( ------------------------ )
+  ( POLY1     	DIFF       )
+ ) ;lxNoOverlapLayers
+
+) ;lxRules
+
+
+;********************************
+; COMPACTOR RULES
+;********************************
+compactorRules(
+
+ compactorLayers(
+ ;( layer	usage	)
+ ;( -----	-----	)
+  ( METAL1	"conduction" )
+  ( VIA12      "via") 
+  ( METAL2	"conduction" )
+  ( VIA23      "via") 
+  ( METAL3	"conduction" )
+  ( VIA34      "via") 
+  ( METAL4	"conduction" )
+  ( VIAD	"via"           )
+  ( MD		"conduction"    )
+  ( CONT	"via"		)
+  ( POLY1	"conduction"	)
+  ( NWELL	"well"		)
+  ( PWELL	"well"		)
+  ( NIMP	"implant"	)
+  ( PIMP	"implant"	)
+) ;compactorLayers
+
+) ;compactorRules
+
+
+;********************************
+; LAS RULES
+;********************************
+lasRules(
+
+ lasProperties(
+ ;( propName                    propValue     )
+ ;( --------                    ---------     )
+  ( lasPrimitiveList    	"pmos nmos"          )
+  ( lasSwitchViewList   	"schematic cmos_sch" )
+ ) ;lasProperties
+
+) ;lasRules
+

@@ -1,6 +1,6 @@
 import StickDiagram
 import NMOSWithDummy
-import PMOSWithDummy
+import PMOSWithDummy_slicer
 import NbodyContact
 import PbodyContact
 import ViaPoly2Met1
@@ -50,43 +50,43 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ##############################################################################################################################################################
 
             # PMOS1(CLK input) Generation
-            _PMOS1inputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
+            _PMOS1inputs = copy.deepcopy(PMOSWithDummy_slicer._PMOS._ParametersForDesignCalculation)
             _PMOS1inputs['_PMOSNumberofGate'] = _CLKinputPMOSFinger1 + _CLKinputPMOSFinger2
             _PMOS1inputs['_PMOSChannelWidth'] = _PMOSChannelWidth
             _PMOS1inputs['_PMOSChannellength'] = _ChannelLength
             _PMOS1inputs['_PMOSDummy'] = _Dummy
             _PMOS1inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_PMOS1'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOS1In{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOS1'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_slicer._PMOS(_DesignParameter=None, _Name='PMOS1In{}'.format(_Name)))[0]
             self._DesignParameter['_PMOS1']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOS1inputs)
 
             # PMOS2(CLK input) Generation
-            _PMOS2inputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
+            _PMOS2inputs = copy.deepcopy(PMOSWithDummy_slicer._PMOS._ParametersForDesignCalculation)
             _PMOS2inputs['_PMOSNumberofGate'] = _CLKinputPMOSFinger1 + _CLKinputPMOSFinger2
             _PMOS2inputs['_PMOSChannelWidth'] = _PMOSChannelWidth
             _PMOS2inputs['_PMOSChannellength'] = _ChannelLength
             _PMOS2inputs['_PMOSDummy'] = _Dummy
             _PMOS2inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_PMOS2'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOS2In{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOS2'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_slicer._PMOS(_DesignParameter=None, _Name='PMOS2In{}'.format(_Name)))[0]
             self._DesignParameter['_PMOS2']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOS2inputs)
 
             # PMOS3 Generation
-            _PMOS3inputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
+            _PMOS3inputs = copy.deepcopy(PMOSWithDummy_slicer._PMOS._ParametersForDesignCalculation)
             _PMOS3inputs['_PMOSNumberofGate'] = _PMOSFinger
             _PMOS3inputs['_PMOSChannelWidth'] = _PMOSChannelWidth
             _PMOS3inputs['_PMOSChannellength'] = _ChannelLength
             _PMOS3inputs['_PMOSDummy'] = _Dummy
             _PMOS3inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_PMOS3'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOS3In{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOS3'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_slicer._PMOS(_DesignParameter=None, _Name='PMOS3In{}'.format(_Name)))[0]
             self._DesignParameter['_PMOS3']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOS3inputs)
 
             # PMOS4 Generation
-            _PMOS4inputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
+            _PMOS4inputs = copy.deepcopy(PMOSWithDummy_slicer._PMOS._ParametersForDesignCalculation)
             _PMOS4inputs['_PMOSNumberofGate'] = _PMOSFinger
             _PMOS4inputs['_PMOSChannelWidth'] = _PMOSChannelWidth
             _PMOS4inputs['_PMOSChannellength'] = _ChannelLength
             _PMOS4inputs['_PMOSDummy'] = _Dummy
             _PMOS4inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_PMOS4'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOS4In{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOS4'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_slicer._PMOS(_DesignParameter=None, _Name='PMOS4In{}'.format(_Name)))[0]
             self._DesignParameter['_PMOS4']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOS4inputs)
 
             #############################################################################################################################################################################

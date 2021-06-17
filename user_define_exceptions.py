@@ -1,16 +1,23 @@
-import exceptions
+# import exceptions
+#####exceptions are defined
 
-class DRCViolation(Exception):
-    """Design parameter should meet DRC requirements"""
+__all__=('FormatError','EndofFileError','IncorrectRecordSize','IncorrectDataSize')
 
-class IncorrectInputError(Exception):
-    """Input is incorrect data"""
+class FormatError(Exception):
+    """base class for all gds exceptions""" 
+class EndofFileError(FormatError):
+    """raised on unexpected end of file"""
+    
+class IncorrectRecordSize(FormatError):
+    """raised if record size is not correct"""
+    
+    
+class IncorrectDataSize(FormatError):
+    """raised if data size is not correct"""
+class IncorrectDataValue(FormatError):
+    """data has incorrect value"""
+class IncorrecElementName(FormatError):
+    """element name is incorrect"""
 
-class IncorrectDesignSpaceInformation(Exception):
-    """Information about Design Space is incorrect"""
-
-class IncompleteFunctionOperation(Exception):
-    """Function's operation is incomplete"""
-
-class UnsatisfiableDesignConstraints(Exception):
-    """Design constraints are too tight"""
+class IncorrectInputError(FormatError):
+    """Input is incorrect"""

@@ -14,7 +14,6 @@ import ViaMet42Met5
 import ViaMet52Met6
 import ViaMet62Met7
 import ftplib
-import Inverter
 import Transmission_Gate
 import opppcres_b
 import psubring

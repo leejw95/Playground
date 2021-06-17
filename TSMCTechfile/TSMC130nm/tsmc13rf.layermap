@@ -1,0 +1,509 @@
+#*****************************************************************************
+# TSMC 0.13um Layout Editor Mapping File - virtuoso_0.13um_1P8M_2.2c.map, 09/09/2009
+# 1P8M PROCESS 
+# Technology File Document: T-013-LO-LE-002 Ver 2.2C
+# Ref Document: T-013-LO-LE-001 Ver 2.2C
+#*****************************************************************************
+# DISCLAIMER
+#
+# The information contained herein is provided by TSMC on an "AS IS" basis
+# without any warranty, and TSMC has no obligation to support or otherwise
+# maintain the information.  TSMC disclaims any representation that the
+# information does not infringe any intellectual property rights or proprietary
+# rights of any third parties.  There are no other warranties given by TSMC,
+# whether express, implied or statutory, including, without limitation, implied
+# warranties of merchantability and fitness for a particular purpose.
+#
+# STATEMENT OF USE
+#
+# This information contains confidential and proprietary information of TSMC.
+# No part of this information may be reproduced, transmitted, transcribed,
+# stored in a retrieval system, or translated into any human or computer
+# language, in any form or by any means, electronic, mechanical, magnetic,
+# optical, chemical, manual, or otherwise, without the prior written permission
+# of TSMC.  This information was prepared for informational purpose and is for
+# use by TSMC's customers only.  TSMC reserves the right to make changes in the
+# information at any time and without notice.
+#*****************************************************************************
+# IMPORTANT NOTICE
+#
+# Though PDIFF(7;0) & NDIFF(8;0) are tape out layers, it's strongly suggested
+# to use OD(6;0) instead, which is the standard "Gate Oxide and Diffusion"
+# (OD) layer. Be sure to check carefully the related mask logic operation if
+# PDIFF/NDIFF layers are used.
+#*****************************************************************************
+#  Layer	Layer		Stream	Datatype
+#  Name		Purpose
+#----------------------------------------
+   ref		drawing		0	0
+   DNWELL	drawing		1	0
+   PWELL	drawing		2	0
+   NWELL	drawing		3	0
+#   RWELL	drawing		4	0
+   PLMIDE	drawing		5	0
+   PLMIDE	drawing1 	5	1
+   PLMIDE	drawing2 	5	2
+   OD		drawing		6	0
+   PDIFF	drawing		7	0
+   NDIFF	drawing		8	0
+#   VTP		drawing		9	0
+#   VTN		drawing		10	0
+   NT_N		drawing		11	0
+   VTL_N	drawing		12	0
+   VTL_P	drawing		13	0
+   VTH_N	drawing		67	0
+   VTH_P	drawing		68	0
+   UHVT_N	drawing		93	0
+   UHVT_P	drawing		94	0
+   OD2		drawing		15	0
+   OD3		drawing		16	0
+   POLYG	drawing		17	0
+#   NLDDLV	drawing		19	0
+#   PLDDLV	drawing		20	0
+#   NLDDMV	drawing		21	0
+#   PLDDMV	drawing		22	0
+#   NLDDHV	drawing		23	0
+#   PLDDHV	drawing		24	0
+   PIMP		drawing		25	0
+   NIMP		drawing		26	0
+#   ESD		drawing		27	0
+#   ESDHV	drawing		28	0
+   RPO		drawing		29	0
+   CONT		drawing		30	0
+   METAL1	drawing		31	0
+   METAL1   	BSL		31	100
+   METAL1   	BSD		31	101
+   VIA12	drawing		51	0
+   METAL2	drawing		32	0
+   VIA23	drawing		52	0
+   METAL3	drawing		33	0
+   VIA34	drawing		53	0
+   METAL4	drawing		34	0
+   VIA45	drawing		54	0
+   METAL5	drawing		35	0
+   VIA56	drawing		55	0
+   METAL6	drawing		36	0
+   VIA67	drawing		56	0
+   METAL7	drawing		37	0
+   VIA78	drawing		57	0
+   METAL8	drawing		38	0
+   VIA89	drawing		58	0
+   METAL9	drawing		39	0
+# X-route metal layers
+   METAL2	drawing5 	32	5
+   METAL3	drawing5 	33	5
+   METAL4	drawing5 	34	5
+   METAL5	drawing5 	35	5
+   METAL6	drawing5 	36	5
+   METAL7	drawing5 	37	5
+   AP		drawing		42	0
+   AP		drawing1 	42	10
+   AP    	BSL		42 	100
+   AP    	BSP		42 	102
+   PAD		drawing		43	0
+   IP		drawing		63	63
+   COW		drawing		69	0
+   LVID		drawing		73	0
+   RV		drawing		85	0
+   RV    	BSL		85	100
+   CB2		drawing		86	0
+   CB2      	BSL		86  	100
+   FW		drawing		95	0
+   FW		ap		95	20
+   LMARK	drawing		109	0
+   CAP1TDMY	drawing		78	0
+   SEALRING	drawing		162	0
+   CDUDMY	drawing		165	0
+   CSRDMY	drawing		166	0
+   LN_CAP	drawing		72	0
+#----------------------------------------
+# For Text layer
+   NWELL	pin		3	6
+   OD		pin		6	6
+   AP		pin		126	0
+   METAL1	pin		131	0
+   METAL1   	BSP   		131	100
+   METAL2	pin		132	0
+   METAL3	pin		133	0
+   METAL4	pin		134	0
+   METAL5	pin		135	0
+   METAL6	pin		136	0
+   METAL7	pin		137	0
+   METAL8	pin		138	0
+   METAL9	pin		139	0
+   POLYG	pin		149	0
+   POLYG	lvs		149	1
+   MD		pin		159	0
+#----------------------------------------
+# For SRAM process
+#   CELLIMP	drawing		44	0
+#   BC1		drawing		45	0
+#   BC2		drawing		46	0
+#   BTC		drawing		47	0
+#   VCC		drawing		48	0
+   RODMY	drawing		49	0
+   DMSRM	drawing		50	0
+   HVTSRM	drawing		60	0
+   REDUNDMY   	col		61	1
+   REDUNDMY   	row		61	2
+   SRM_LOP   	dpsrm		76	0
+   SRM   	drawing1 	185	1
+   PD_SRAM  	drawing		185	2
+   BCO_SRAM 	drawing		185	3
+   PO_PHANTOM  	drawing  	185	4
+   CO_PHANTOM  	drawing  	185	5
+   M1_PHANTOM 	drawing 	185	6
+   OD_PHANTOM 	drawing 	185	7
+   M3_PHANTOM 	drawing 	185	8
+   PO_PD      	drawing 	185	9
+   SRAMDMY	waive		186	0
+   SRAMDMY	passgate 	186	1
+   SRAMDMY	allsram		186	2
+   SRAMDMY	cvss_sram 	186	3
+   SRAMDMY	periphery 	186	4
+   SRAMDMY	periphery_g 	186	5
+#----------------------------------------
+#  For MIXED-MODE purpose
+#   BPI		drawing		64	0
+   HRI		drawing		70	0
+   CTM		drawing		77	0
+   CBM		drawing		88	0
+   OD		drain		6	3
+#----------------------------------------
+# For NVM process
+#  OD1		drawing		87	0
+#  FLG1		drawing		88	0
+#  FLG2		drawing		89	0
+#  Poly1	drawing		90	0
+#  HVI		drawing		91	0
+#  HVNLDD	drawing		93	0
+#  HVPLDD	drawing		94	0
+#----------------------------------------
+# For HV/EmbFlash process
+   HV           NBL		141     1
+   HV	        HVOX		141     2
+   HV	        HVIO		141     4
+   HV	        HVET		141     5
+   HV	        HVPP		141     6
+   HV           drawing1 	141	7
+   HV		drawing2 	141	8
+   HV		drawing3 	141	9
+   HV		drawing4 	141	10
+   HV		drawing5 	141	11
+   HV		drawing6 	141	12
+   HV		drawing7 	141	13
+   FLASH	drawing		154	0
+   MW		drawing		154	1
+   FLGT		drawing		154	2
+   MPOL		drawing		154	3
+   HVII		drawing		154	4
+   HVNW		drawing		154	5
+   HVPW		drawing		154	6
+   MWLDMY	drawing		154	8
+   MSLDMY	drawing		154	9
+   M4OPT	drawing1 	154	10
+   M4OPT	drawing2 	154	11
+   HVNTN	drawing		154	12
+   PSUB		drawing		154	13
+   HNVT 	drawing		154	14
+   PO1		drawing		154	15
+   MCEL		drawing		154	16
+   EMBFH	fg1		154	21
+   EMBFH	fg2		154	22
+   MCEL		drawing1 	154	31	
+   PO1		drawing1 	154	32	
+   MPOL		drawing1 	154	33	
+   HVII		drawing1 	154	34	
+   HVNW		drawing1 	154	35	
+   HVPW		drawing1 	154	36	
+   PSUB		drawing1 	154	37	
+   FLGT		drawing1 	154	38	
+   EMBFH	drawing2 	154	39	
+   EMBFH	drawing1 	154	40	
+   FLGT		drawing2 	154	41	
+   FLGT		drawing3 	154	42	
+#----------------------------------------
+# For EM_DRAM process
+#  DNW2		drawing		96	0
+#  CW		drawing		97	0
+#  P1D		drawing		98	0
+#  P1W		drawing		99	0
+   CLDD		drawing		92	0
+#  BLC		drawing		101	0
+#  CROWN	drawing		102	0
+#  P3		drawing		103	0
+#  P1C		drawing		104	0
+#  DPITCH	drawing		105	0
+   CAVITY	drawing		90	0
+#----------------------------------------
+# For P&R purpose
+   OVERLAP	drawing		107	0
+   prBoundary   drawing		108	0
+#----------------------------------------
+# Dummy layer for LVS/DRC checking
+   PMDMY	drawing		106	0
+   BJTDMY	drawing		110	0
+   PSUB2	drawing		111	0
+   HOTWL	drawing		112	0
+   SBDDMY	drawing 	113	0
+#  RWDUMMY	drawing		113	0
+   NWDMY	drawing		114	0
+   NWDMY	lvs		114	1
+   RPDMY	drawing		115	0
+   RPDMY	lvs		115	1
+   RMDMY	drawing		116	0
+   RMDMY	drawing1 	116	1
+   RMDMY	drawing2 	116	2
+   RMDMY	drawing3 	116	3
+   RMDMY	drawing4 	116	4
+   RMDMY	drawing5 	116	5
+   RMDMY	drawing6 	116	6
+   RMDMY	drawing7 	116	7
+   RMDMY	drawing8 	116	8
+   RMDMY	drawing9 	116	9
+   RHDMY	drawing		117	0
+#  CDUMMY	drawing		118	0
+   DIODMY	drawing		119	0
+   DIODMY	drawing1 	119	1
+   RHRIDMY	drawing		120	0
+   RHRIDMY	drawing1	120	10
+   RHRIDMY	drawing2	120	20
+   EXCL		drawing		121	0
+   SDI		drawing		122	0
+   DPDMY	drawing		123	0
+   PLDMY	drawing		124	0
+#  DNWDUMMY	drawing		126	0
+   text		drawing		127	0
+#  DMP2V	drawing		129	0
+#  DMN2V	drawing		130	0
+   VARDMY	drawing		143	0
+   VARDMY	drawing1 	143	1
+   VARDMY	drawing2 	143	2
+   VARDMY	drawing3 	143	3
+   INDDMY	drawing		144	0
+   INDDMY	drawing1 	144	1
+   INDDMY	drawing2 	144	2
+   INDDMY	rad		144	30
+   ESD1DMY	drawing		145	0
+   ESD2DMY	drawing		146	0
+   ESD3DMY	drawing		147	0
+   ESDIMP	drawing		189	0
+   CTMDMY	drawing		148	0
+#  TMVID	drawing		80	0
+#  PADDMY	drawing		160	0
+   RFDMY	drawing		161	0
+   RFDMY	drawing1 	161	1
+   MOMDMY	drawing		155	0
+   MOMDMY	drawing1	155	1
+   MOMDMY	drawing2	155	2
+   MOMDMY	drawing3	155	3
+   MOMDMY	drawing4	155	4
+   MOMDMY	drawing5	155	5
+   MOMDMY	drawing6	155	6
+   MOMDMY	drawing7	155	7
+   MOMDMY	drawing8	155	8
+   MOMDMY	drawing9	155	9
+   MOMDMY	drawinga	155	10
+   MOMDMY	dummy1  	155	20
+   MOMDMY	dummy2  	155	21
+   MOMDMY	dummy3  	155	22
+   MOMDMY	dummy4  	155	23
+   MOMDMY	dummy5  	155	24
+   MOMDMY	dummy6  	155	25
+   IO_buffer	dummy  	        128	0
+   LOGO		drawing		158	0
+#----------------------------------------
+# DRC error report
+   marker	error		163	0
+   marker	warning		164	0
+#----------------------------------------
+# Solder Bump and RDL layer
+   VIAD		drawing		167	0
+   MD		drawing		168	0
+   CBD		drawing		169	0
+   CBD      	BSL		169	100
+   UBM		drawing		170	0
+   UBM		BSL		170	100
+   UBM		pin		207	1
+#----------------------------------------
+# Layers for Auto P&R tools
+   METAL1	boundary 	171	0
+   METAL2	boundary 	172	0
+   METAL3	boundary 	173	0
+   METAL4	boundary 	174	0
+   METAL5	boundary 	175	0
+   METAL6	boundary 	176	0
+   METAL7	boundary 	177	0
+   METAL8	boundary 	178	0
+   METAL9	boundary 	179	0
+   VIA12	boundary 	191	0
+   VIA23	boundary 	192	0
+   VIA34	boundary 	193	0
+   VIA45	boundary 	194	0
+   VIA56	boundary 	195	0
+   VIA67	boundary 	196	0
+   VIA78	boundary 	197	0
+   VIA89	boundary 	198	0
+#----------------------------------------
+# Dummy metal
+   OD		dummy		6	1
+   POLYG	dummy		17	1
+   METAL1	dummy		31	1
+   METAL2	dummy		32	1
+   METAL3	dummy		33	1
+   METAL4	dummy		34	1
+   METAL5	dummy		35	1
+   METAL6	dummy		36	1
+   METAL7	dummy		37	1
+   METAL8	dummy		38	1
+   METAL9	dummy		39	1
+   MD		dummy		168	1
+#----------------------------------------
+# Metal slot
+   METAL1	slot		31	2
+   METAL2	slot		32	2
+   METAL3	slot		33	2
+   METAL4	slot		34	2
+   METAL5	slot		35	2
+   METAL6	slot		36	2
+   METAL7	slot		37	2
+   METAL8	slot		38	2
+   METAL9	slot		39	2
+   MD		slot		168	2
+#----------------------------------------
+# Dummy metal insertion blockage layer
+   DMEXCL	dummy1		150	1
+   DMEXCL	dummy2		150	2
+   DMEXCL	dummy3		150	3
+   DMEXCL	dummy4		150	4
+   DMEXCL	dummy5		150	5
+   DMEXCL	dummy6		150	6
+   DMEXCL	dummy7		150	7
+   DMEXCL	dummy8		150	8
+   DMEXCL	dummy9		150	9
+   DMEXCL	dummyf		150	15
+   ODBLK	dummy		150	20
+   POBLK	dummy		150	21
+#----------------------------------------
+# Metal slot insertion blockage layer
+   SLTEXCL	dummy1		79	1
+   SLTEXCL	dummy2		79	2
+   SLTEXCL	dummy3		79	3
+   SLTEXCL	dummy4		79	4
+   SLTEXCL	dummy5		79	5
+   SLTEXCL	dummy6		79	6
+   SLTEXCL	dummy7		79	7
+   SLTEXCL	dummy8		79	8
+   SLTEXCL	dummy9		79	9
+   SLTEXCL	dummyf		79	15
+#----------------------------------------
+# Via insertion blockage layer
+   VIAEXCL	dummy1		153	1
+   VIAEXCL	dummy2		153	2
+   VIAEXCL	dummy3		153	3
+   VIAEXCL	dummy4		153	4
+   VIAEXCL	dummy5		153	5
+   VIAEXCL	dummy6		153	6
+   VIAEXCL	dummy7		153	7
+   VIAEXCL	dummy8		153	8
+#  VIAEXCL	dummy9		153	9
+   VIAEXCL	dummyf	153	15
+#----------------------------------------
+# For DSD internal use
+   DSDDMY	drawing1 	40	1
+   DSDDMY	drawing2 	40	2
+   DSDDMY	drawing3 	40	3
+   DSDDMY	drawing4 	40	4
+   DSDDMY	drawing5 	40	5
+   DSDDMY	drawing6 	40	6
+   DSDDMY	drawing7 	40	7
+   DSDDMY	drawing8 	40	8
+   DSDDMY	drawing9 	40	9
+#----------------------------------------
+# For Cu CUP bond pad use
+   WBDMY	drawing		183	0
+#----------------------------------------
+# PDK reserved layers
+   PDKREC	wellbody 	75	1
+   PDKREC	width		75	2
+   PDKREC	length		75	3
+   PDKREC	boundary	75	4
+#----------------------------------------
+   R_rule	require	  	182	1
+   R_rule	recommend 	182	2
+   R_rule	analog	  	182	3
+   R_rule	guideline	182	4
+   ex_R_rule	require	  	182	11
+   ex_R_rule	recommend 	182	12
+   ex_R_rule	analog	  	182	13
+   ex_R_rule	guideline	182	14
+#----------------------------------------
+# For Image process
+   IMSOR	CELLM		74	0
+   IMSOR	CELLH   	74	1
+   IMSOR	NPS		74	2
+   IMSOR	PL		74	3
+   IMSOR	GM		74	4
+   IMSOR	RM		74	5
+   IMSOR	BM		74	6
+   IMSOR	ML		74	7
+   IMSOR	PPS		74	8
+   IMSOR	CIRPO		74	11
+   IMSOR	GM1		74	12
+   IMSOR	GM2		74	13
+   IMSOR	MS		74	15
+   IMSOR	LS		74	16
+   IMSOR	YM		74	17
+   IMSOR	CM		74	18
+   IMSOR	MM		74	19
+   IMSOR	E_ML		74	20
+   IMSOR	CELL_TX		74	23
+   IMSOR	CELL_RS		74	24
+   IMSOR	CAP_IMP		74	25
+   IMSOR	CPW		74	26
+   IMSOR	MP		74	27
+   IMSOR	DPW		74	28
+   IMSOR	CELL_NLDD	74	29
+   IMSOR	SEL		74	30
+   IMSOR	ME		74	31
+   IMSOR	FLD		74	32
+   IMSOR	SiON_Cut	74	33
+   IMSOR	DPWL_2  	74	34
+   IMSOR	CISPRY  	74	35
+   IMSOR	BCPW  	        74	36
+   IMSOR	BWAT  	        74	37
+   IMSOR	BCP  	        74	38
+   IMSOR	TXEN  	        74	39
+   IMSOR	CDNI  	        74	40
+   IMSOR	DNPPD1          74	41
+   IMSOR	DNPPD2          74	42
+   IMSOR	CPO  	        74	43
+   IMSOR	CPKT  	        74	44
+   IMSOR	BARC  	        74	45
+   IMSOR	BMS  	        74	46
+   IMSOR        drawing1        74      49
+   noncell_DS  	drawing       	74	47
+   noncell_DW  	drawing1      	74	48
+#----------------------------------------
+   GND_DMY 	drawing		59	0
+   ISO_PW  	drawing		82	0
+   BJTNPNDMY 	drawing1	110	1
+   EDRAM	drawing		104	1
+   DM6V		dummy		200	20
+#----------------------------------------
+# TSV process layers
+   TSV 		drawing		251	0
+   TSV 		pin		251	1
+   TSV 		dummy		251	2
+   TSV_CB 	drawing		252	0
+   TSV_PPI	drawing		253	0
+   TSV_PPI	pin		253	1
+   FFCDMY	drawing1	255	1
+   FFCDMY	drawing		255	2
+   VDDDMY	drawing		255	4
+   VSSDMY	drawing		255	5
+#---------------------------------------
+# Metal Thin Film Resistor
+   MTFR		drawing		83	0
+   MTFRV	drawing		84	0
+

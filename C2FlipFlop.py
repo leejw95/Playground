@@ -23,6 +23,7 @@ import base64
 
 import sys
 
+##lol
 class _FLIPFLOP(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation= dict(
       

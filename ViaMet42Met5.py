@@ -57,13 +57,13 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
             
 
     def _CalculateViaMet42Met5DesignParameter(self, _ViaMet42Met5NumberOfCOX=None, _ViaMet42Met5NumberOfCOY=None ):
-        print '#########################################################################################################'
-        print '                                    {}  ViaMet42Met5 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet42Met5 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         ###############################################Check the number of CO On Via Contact###########################################################################################
         if _ViaMet42Met5NumberOfCOX ==0 or _ViaMet42Met5NumberOfCOY==0:
-            print '************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name'])
+            print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
             if DesignParameters._DebugMode == 0:
                 return 0
         ###############################################################################################################################################################################
@@ -71,20 +71,20 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
         _XYCoordinateOfViaMet42Met5 = [[0,0]]
 
 
-        print '#############################     Met5 Layer Calculation   ##############################################'
+        print ('#############################     Met5 Layer Calculation   ##############################################')
         _LengthViaMet42Met5BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet42Met5NumberOfCOX,NumOfVIAxY=_ViaMet42Met5NumberOfCOY )
         self._DesignParameter['_Met5Layer']['_XYCoordinates']=_XYCoordinateOfViaMet42Met5
         self._DesignParameter['_Met5Layer']['_XWidth']=_DRCObj._VIAxMinWidth + (_ViaMet42Met5NumberOfCOX - 1)* _LengthViaMet42Met5BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
         self._DesignParameter['_Met5Layer']['_YWidth']=_DRCObj._VIAxMinWidth + (_ViaMet42Met5NumberOfCOY - 1)* _LengthViaMet42Met5BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
 
-        print '#############################     Met2 Layer Calculation   ##############################################'
+        print ('#############################     Met2 Layer Calculation   ##############################################')
         _LengthViaMet42Met5BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet42Met5NumberOfCOX,NumOfVIAxY=_ViaMet42Met5NumberOfCOY )
 
         self._DesignParameter['_Met4Layer']['_XYCoordinates']=_XYCoordinateOfViaMet42Met5
         self._DesignParameter['_Met4Layer']['_XWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet42Met5NumberOfCOX - 1)*  _LengthViaMet42Met5BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
         self._DesignParameter['_Met4Layer']['_YWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet42Met5NumberOfCOY - 1)*  _LengthViaMet42Met5BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
 
-        print '#############################     Cont Layer Calculation   ##############################################'
+        print ('#############################     Cont Layer Calculation   ##############################################')
 
         tmp=[]
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._VIAxMinWidth
@@ -117,20 +117,20 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
 
 
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  ViaMet42Met5 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet42Met5 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
     def _CalculateViaMet42Met5DesignParameterMinimumEnclosureX(self, _ViaMet42Met5NumberOfCOX=None, _ViaMet42Met5NumberOfCOY=None ):
 
-        print '#########################################################################################################'
-        print '                                    {}  ViaMet42Met5 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet42Met5 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         ###############################################Check the number of CO On Via Contact###########################################################################################
         if _ViaMet42Met5NumberOfCOX ==0 or _ViaMet42Met5NumberOfCOY==0:
-            print '************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name'])
+            print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
             if DesignParameters._DebugMode == 0:
                 return 0
         ###############################################################################################################################################################################
@@ -138,13 +138,13 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
         _XYCoordinateOfViaMet42Met5 = [[0,0]]
 
 
-        print '#############################     Met5 Layer Calculation   ##############################################'
+        print ('#############################     Met5 Layer Calculation   ##############################################')
         _LengthViaMet42Met5BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet42Met5NumberOfCOX,NumOfVIAxY=_ViaMet42Met5NumberOfCOY )
         self._DesignParameter['_Met5Layer']['_XYCoordinates']=_XYCoordinateOfViaMet42Met5
         self._DesignParameter['_Met5Layer']['_XWidth']=_DRCObj._VIAxMinWidth+ (_ViaMet42Met5NumberOfCOX - 1)* _LengthViaMet42Met5BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia1,_DRCObj._MetalxMinEnclosureCO])
         self._DesignParameter['_Met5Layer']['_YWidth']=_DRCObj._VIAxMinWidth + (_ViaMet42Met5NumberOfCOY - 1)* _LengthViaMet42Met5BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
 
-        print '#############################     Met2 Layer Calculation   ##############################################'
+        print ('#############################     Met2 Layer Calculation   ##############################################')
         _LengthViaMet42Met5BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet42Met5NumberOfCOX,NumOfVIAxY=_ViaMet42Met5NumberOfCOY )
 
         self._DesignParameter['_Met4Layer']['_XYCoordinates']=_XYCoordinateOfViaMet42Met5
@@ -154,7 +154,7 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
 
 
 
-        print '#############################     Cont Layer Calculation   ##############################################'
+        print ('#############################     Cont Layer Calculation   ##############################################')
 
         tmp=[]
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._VIAxMinWidth
@@ -185,19 +185,19 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
 
 
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  ViaMet42Met5 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet42Met5 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
     def _CalculateViaMet42Met5DesignParameterMinimumEnclosureY(self, _ViaMet42Met5NumberOfCOX=None, _ViaMet42Met5NumberOfCOY=None ):
 
-        print '#########################################################################################################'
-        print '                                    {}  ViaMet42Met5 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet42Met5 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         ###############################################Check the number of CO On Via Contact###########################################################################################
         if _ViaMet42Met5NumberOfCOX ==0 or _ViaMet42Met5NumberOfCOY==0:
-            print '************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name'])
+            print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
             if DesignParameters._DebugMode == 0:
                 return 0
         ###############################################################################################################################################################################
@@ -205,13 +205,13 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
         _XYCoordinateOfViaMet42Met5 = [[0,0]]
 
 
-        print '#############################     Met5 Layer Calculation   ##############################################'
+        print ('#############################     Met5 Layer Calculation   ##############################################')
         _LengthViaMet42Met5BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet42Met5NumberOfCOX,NumOfVIAxY=_ViaMet42Met5NumberOfCOY )
         self._DesignParameter['_Met5Layer']['_XYCoordinates']=_XYCoordinateOfViaMet42Met5
         self._DesignParameter['_Met5Layer']['_XWidth']=_DRCObj._VIAxMinWidth+ (_ViaMet42Met5NumberOfCOX - 1)* _LengthViaMet42Met5BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
         self._DesignParameter['_Met5Layer']['_YWidth']=_DRCObj._VIAxMinWidth + (_ViaMet42Met5NumberOfCOY - 1)* _LengthViaMet42Met5BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia1,_DRCObj._MetalxMinEnclosureCO])
 
-        print '#############################     Met2 Layer Calculation   ##############################################'
+        print ('#############################     Met2 Layer Calculation   ##############################################')
         _LengthViaMet42Met5BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet42Met5NumberOfCOX,NumOfVIAxY=_ViaMet42Met5NumberOfCOY )
 
         self._DesignParameter['_Met4Layer']['_XYCoordinates']=_XYCoordinateOfViaMet42Met5
@@ -221,7 +221,7 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
 
 
 
-        print '#############################     Cont Layer Calculation   ##############################################'
+        print ('#############################     Cont Layer Calculation   ##############################################')
 
         tmp=[]
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._VIAxMinWidth
@@ -250,9 +250,9 @@ class _ViaMet42Met5(StickDiagram._StickDiagram):
 
         self._DesignParameter['_COLayer']['_XYCoordinates']=tmp
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  ViaMet42Met5 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet42Met5 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 if __name__=='__main__':
     pass

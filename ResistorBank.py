@@ -616,3 +616,4 @@ if __name__ == '__main__' :
     ftp.storbinary('STOR ResistorBank.gds', myfile)
     myfile.close()
     ftp.close()
+

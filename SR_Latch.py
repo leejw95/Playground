@@ -1394,7 +1394,7 @@ if __name__ == '__main__' :
                                   NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = True)
 
     SRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SRLatchObj._DesignParameter)
-    _fileName = 'SRLatchJIChoFile.gds'
+    _fileName = 'SRLatch.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
     tmp = SRLatchObj._CreateGDSStream(SRLatchObj._DesignParameter['_GDSFile']['_GDSFile'])
@@ -1411,7 +1411,7 @@ if __name__ == '__main__' :
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('jicho0927', 'cho89140616!!')
     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('SRLatchJIChoFile.gds', 'rb')
-    ftp.storbinary('STOR SRLatchJIChoFile.gds', myfile)
+    myfile = open('SRLatch.gds', 'rb')
+    ftp.storbinary('STOR SRLatchFile.gds', myfile)
     myfile.close()
     ftp.close()

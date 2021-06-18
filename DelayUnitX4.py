@@ -243,11 +243,10 @@ class _DELAYUNITX4(StickDiagram._StickDiagram):
 
                                      _Dummy=DelayUnitDesign._DelayUnitDesign['_Dummy']
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  DelayUnitX4 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  DelayUnitX4 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
-        print 'aoc1'
 
 
         _DRCObj=DRC.DRC()
@@ -1174,7 +1173,6 @@ class _DELAYUNITX4(StickDiagram._StickDiagram):
             #DRC Space BTW Selection Routing Met2 and Selection Routing Met2 (BTW DU1~DU )
             RoutingMet_RightSide = self._DesignParameter['_DelayUnit1']['_XYCoordinates'][0][0] + self._DesignParameter['_DelayUnit1']['_DesignObj']._DesignParameter['_SelectionRoutingXORtopRightMet2']['_XYCoordinates'][0][-1][0] + self._DesignParameter['_DelayUnit1']['_DesignObj']._DesignParameter['_SelectionRoutingXORtopRightMet2']['_Width']/2
             RoutingMet_LeftSide = self._DesignParameter['_DelayUnit2']['_XYCoordinates'][0][0] + self._DesignParameter['_DelayUnit2']['_DesignObj']._DesignParameter['_SelectionRoutingXORtopLeftMet2']['_XYCoordinates'][0][-1][0] - self._DesignParameter['_DelayUnit2']['_DesignObj']._DesignParameter['_SelectionRoutingXORtopLeftMet2']['_Width']/2
-            print ' carhatt' ,RoutingMet_LeftSide , RoutingMet_RightSide
             
             RoutingMet4_RightSide = self._DesignParameter['_DelayUnit1']['_XYCoordinates'][0][0] + self._DesignParameter['_DelayUnit1']['_DesignObj']._DesignParameter['_SelectionRoutingXORbotRightMet4']['_XYCoordinates'][0][-1][0] + self._DesignParameter['_DelayUnit1']['_DesignObj']._DesignParameter['_SelectionRoutingXORbotRightMet4']['_Width']/2
             RoutingMet4_LeftSide = self._DesignParameter['_DelayUnit2']['_XYCoordinates'][0][0] + self._DesignParameter['_DelayUnit2']['_DesignObj']._DesignParameter['_SelectionRoutingXORbotLeftMet4']['_XYCoordinates'][0][-1][0] - self._DesignParameter['_DelayUnit2']['_DesignObj']._DesignParameter['_SelectionRoutingXORbotLeftMet4']['_Width']/2
@@ -1242,9 +1240,9 @@ class _DELAYUNITX4(StickDiagram._StickDiagram):
             
         
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  DelayUnit Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  DelayUnit Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         
 
@@ -1344,7 +1342,7 @@ if __name__=='__main__':
     testStreamFile.close()
 
 
-    print '###############open ftp connection & update gds file to cadence server###################'
+    print ('###############open ftp connection & update gds file to cadence server###################')
     ftp_cadence_server = ftplib.FTP('141.223.86.109')
     ftp_cadence_server.login('sgjeong2',base64.b64decode('YWx2aDE1OTk1MQ==') )
     if DesignParameters._Technology == '065nm':
@@ -1357,15 +1355,15 @@ if __name__=='__main__':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc90')
     elif DesignParameters._Technology == '045nm':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc45')
-    print ftp_cadence_server.pwd()
+    print (ftp_cadence_server.pwd())
     testStreamFile = open('./{}'.format(_fileName), 'rb')
     ftp_cadence_server.storbinary('STOR {}'.format(_fileName), testStreamFile)
-    print 'close ftp connection'
+    print ('close ftp connection')
     ftp_cadence_server.quit()
     testStreamFile.close()
 
 
-    print '##########################################################################################'
+    print ('##########################################################################################')
 
 
 

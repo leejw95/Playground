@@ -286,9 +286,9 @@ _NumberOfParallelBufferLeftSide = None,
 
                                   _Dummy=None
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  Top View Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  Top View Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 
@@ -1590,7 +1590,7 @@ _NumberOfParallelBufferLeftSide = None,
                 if BufferHeight is not DelayUnitXORHeight:
                     _DelayUnitDesignCalculationParameters['_DelayUnitDesignCalculationParameters']['_XorTopDesignCalculatrionParameters']['_XORVdd2VssHeight'] = max(DelayUnitXORHeight,BufferHeight)
                     _DelayUnitDesignCalculationParameters['_DelayUnitDesignCalculationParameters']['_XorBotDesignCalculatrionParameters']['_XORVdd2VssHeight'] = max(DelayUnitXORHeight,BufferHeight)
-                    print _DelayUnitDesignCalculationParameters['_DelayUnitDesignCalculationParameters']['_XorTopDesignCalculatrionParameters']['_XORVdd2VssHeight']
+                    print (_DelayUnitDesignCalculationParameters['_DelayUnitDesignCalculationParameters']['_XorTopDesignCalculatrionParameters']['_XORVdd2VssHeight'])
                     DRC_PASS = 0
             
             
@@ -1607,9 +1607,9 @@ _NumberOfParallelBufferLeftSide = None,
             
         
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  TopView Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  TopView Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         
 
@@ -1691,7 +1691,7 @@ if __name__=='__main__':
     testStreamFile.close()
 
 
-    print '###############open ftp connection & update gds file to cadence server###################'
+    print ('###############open ftp connection & update gds file to cadence server###################')
     ftp_cadence_server = ftplib.FTP('141.223.86.109')
     ftp_cadence_server.login('sgjeong2',base64.b64decode('YWx2aDE1OTk1MQ==') )
     if DesignParameters._Technology == '065nm':
@@ -1704,15 +1704,15 @@ if __name__=='__main__':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc90')
     elif DesignParameters._Technology == '045nm':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc45')
-    print ftp_cadence_server.pwd()
+    print (ftp_cadence_server.pwd())
     testStreamFile = open('./{}'.format(_fileName), 'rb')
     ftp_cadence_server.storbinary('STOR {}'.format(_fileName), testStreamFile)
-    print 'close ftp connection'
+    print ('close ftp connection')
     ftp_cadence_server.quit()
     testStreamFile.close()
 
 
-    print '##########################################################################################'
+    print ('##########################################################################################')
 
 
 

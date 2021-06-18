@@ -207,9 +207,9 @@ class _CLKTreeUnit(StickDiagram._StickDiagram):
 
                                      _Dummy=None
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  CLK Tree Unit Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  CLK Tree Unit Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 
@@ -523,7 +523,7 @@ class _CLKTreeUnit(StickDiagram._StickDiagram):
 
 
             if _OutputViaLevelForTop is None:
-                print "No option for OutputVia Level(TOP)"
+                print ("No option for OutputVia Level(TOP)")
             else :
                 for i in range(0, 6-_OutputViaLevelForTop):
                     for j in range(1,6):
@@ -532,7 +532,7 @@ class _CLKTreeUnit(StickDiagram._StickDiagram):
                         self._DesignParameter['_ClkTreeElementTop']['_DesignObj']._DesignParameter['_AdditionalMet3RoutingOnOutput']['_Ignore'] = True
 
             if _OutputViaLevelForBot is None:
-                print "No option for OutputVia Level(BOT)"
+                print ("No option for OutputVia Level(BOT)")
             else :
                 for i in range(0, 6-_OutputViaLevelForBot):
                     for j in range(1,6):
@@ -764,8 +764,8 @@ class _CLKTreeUnit(StickDiagram._StickDiagram):
 
 
             if self._DesignParameter['_Name']['_Name'] == '_Node3InClkTree':
-                print 'check'
-                print self._DesignParameter['_ClkTreeElementTop']['_DesignObj']._DesignParameter['_ViaMet22Met3OnOutput1']['_Ignore']
+                print ('check')
+                print (self._DesignParameter['_ClkTreeElementTop']['_DesignObj']._DesignParameter['_ViaMet22Met3OnOutput1']['_Ignore'])
 
 
             if DRC_PASS==1 :
@@ -775,9 +775,9 @@ class _CLKTreeUnit(StickDiagram._StickDiagram):
 
 
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  ClkTreeElement Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ClkTreeElement Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 if __name__=='__main__':
@@ -890,7 +890,7 @@ if __name__=='__main__':
     testStreamFile.close()
 
 
-    print '###############open ftp connection & update gds file to cadence server###################'
+    print ('###############open ftp connection & update gds file to cadence server###################')
     ftp_cadence_server = ftplib.FTP('141.223.86.109')
     ftp_cadence_server.login('sgjeong2',base64.b64decode('YWx2aDE1OTk1MQ==') )
     if DesignParameters._Technology == '065nm':
@@ -903,15 +903,15 @@ if __name__=='__main__':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc90')
     elif DesignParameters._Technology == '045nm':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc45')
-    print ftp_cadence_server.pwd()
+    print (ftp_cadence_server.pwd())
     testStreamFile = open('./{}'.format(_fileName), 'rb')
     ftp_cadence_server.storbinary('STOR {}'.format(_fileName), testStreamFile)
-    print 'close ftp connection'
+    print ('close ftp connection')
     ftp_cadence_server.quit()
     testStreamFile.close()
 
 
-    print '##########################################################################################'
+    print ('##########################################################################################')
 
 
 

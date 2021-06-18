@@ -359,7 +359,6 @@ class _Inverter(StickDiagram._StickDiagram):
             self._DesignParameter['_AdditionalMet2OnPMOS']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
             self._DesignParameter['_AdditionalMet2OnPMOS']['_YWidth'] = _DRCObj._MetalxMinArea / (self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'])
 
-            print['EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE']
 
 
 

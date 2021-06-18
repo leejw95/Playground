@@ -102,10 +102,9 @@ class _CLKTree(StickDiagram._StickDiagram):
 
                                      _Dummy=None
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  CLK Tree Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
-
+        print ('#########################################################################################################')
+        print ('                                    {}  CLK Tree Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
         _DRCObj=DRC.DRC()
@@ -219,7 +218,7 @@ class _CLKTree(StickDiagram._StickDiagram):
                 
                 if (Xlocation in _DictForUnitXlocation) is True:
                     if _DictForUnitXlocation[Xlocation] is None:
-                        print 'You Should Put X location Value of Node' + str(i)
+                        print ('You Should Put X location Value of Node' + str(i))
                         return 1
                     else:
                         self._DesignParameter[_CurrentNode]['_XYCoordinates'] = [[ _DictForUnitXlocation[Xlocation] , Ylocation ]]
@@ -231,7 +230,7 @@ class _CLKTree(StickDiagram._StickDiagram):
                             self._DesignParameter[_CurrentNode]['_XYCoordinates'] = [[ self._DesignParameter[_MotherNode]['_XYCoordinates'][0][0] + _DefaultXspace * 2**(_TotalLevel - NodeLevel), Ylocation ]]
                         else :
                             self._DesignParameter[_CurrentNode]['_XYCoordinates'] = [[ self._DesignParameter[_MotherNode]['_XYCoordinates'][0][0] - _DefaultXspace * 2**(_TotalLevel - NodeLevel), Ylocation ]]
-                print ''
+                print ('')
 
            
             if _ParallelMetalWidth is None:
@@ -535,9 +534,9 @@ class _CLKTree(StickDiagram._StickDiagram):
             
         
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  ClkTree Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ClkTree Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         
 
@@ -627,7 +626,7 @@ if __name__=='__main__':
     testStreamFile.close()
 
 
-    print '###############open ftp connection & update gds file to cadence server###################'
+    print ('###############open ftp connection & update gds file to cadence server###################')
     ftp_cadence_server = ftplib.FTP('141.223.86.109')
     ftp_cadence_server.login('sgjeong2',base64.b64decode('YWx2aDE1OTk1MQ==') )
     if DesignParameters._Technology == '065nm':
@@ -640,15 +639,15 @@ if __name__=='__main__':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc90')
     elif DesignParameters._Technology == '045nm':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc45')
-    print ftp_cadence_server.pwd()
+    print (ftp_cadence_server.pwd())
     testStreamFile = open('./{}'.format(_fileName), 'rb')
     ftp_cadence_server.storbinary('STOR {}'.format(_fileName), testStreamFile)
-    print 'close ftp connection'
+    print ('close ftp connection')
     ftp_cadence_server.quit()
     testStreamFile.close()
 
 
-    print '##########################################################################################'
+    print ('##########################################################################################')
 
 
 

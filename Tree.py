@@ -217,14 +217,13 @@ class _CLKTree(StickDiagram._StickDiagram):
                                      _XbiasforGateViaforVertical = None, _XbiasforGateViaforInverted = None,
                                      _Dummy=None
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  CLK Tree Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  CLK Tree Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 
         _DRCObj=DRC.DRC()
-        print _DRCObj._MetalxMinWidth*2
         while True:
             # _Name='ClkTree'
             
@@ -468,7 +467,7 @@ class _CLKTree(StickDiagram._StickDiagram):
 
                 if (Xlocation in _DictForUnitXlocation) is True:
                     if _DictForUnitXlocation[Xlocation] is None:
-                        print 'You Should Put X location Value of Node' + str(i)
+                        print ('You Should Put X location Value of Node' + str(i))
                         return 1
                     else:
                         self._DesignParameter[_CurrentNode]['_XYCoordinates'] = [[ _DictForUnitXlocation[Xlocation] , Ylocation ]]
@@ -594,7 +593,7 @@ class _CLKTree(StickDiagram._StickDiagram):
             
             ########################### Output-Input Metal Connection (For Node) ############################## Parallel Metal
             for i in range(1,_NumberOfNode+1):
-                print i
+                print (i)
                 if _DictForNodeInformation['_LevelOfNode'+str(i)] is _TotalLevel:
                     break
                 MetalName = 'OutputParallelMetalOfNode' + str(i)
@@ -620,7 +619,7 @@ class _CLKTree(StickDiagram._StickDiagram):
                     self._DesignParameter[MetalName] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],_Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[],_Width=400)
                     self._DesignParameter[MetalName]['_Width'] = _ParallelMetalWidth
                     tmp = []
-                    print LeftBuffer, RightBuffer
+                    print (LeftBuffer, RightBuffer)
                     for LineNum in range(1,6):
                             tmp.append([ [a+b for a,b in zip(self._DesignParameter[LeftBuffer]['_XYCoordinates'][0],self._DesignParameter[LeftBuffer]['_DesignObj']._DesignParameter['_ViaMet32Met4OnInLineTop'+str(LineNum)]['_XYCoordinates'][-1]) ]     
                                         ,[a+b for a,b in zip(self._DesignParameter[RightBuffer]['_XYCoordinates'][0],self._DesignParameter[RightBuffer]['_DesignObj']._DesignParameter['_ViaMet32Met4OnInLineTop'+str(LineNum)]['_XYCoordinates'][0])] ])
@@ -1143,9 +1142,9 @@ class _CLKTree(StickDiagram._StickDiagram):
             
         
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  ClkTree Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ClkTree Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         
 
@@ -1263,7 +1262,7 @@ if __name__=='__main__':
     testStreamFile.close()
 
 
-    print '###############open ftp connection & update gds file to cadence server###################'
+    print ('###############open ftp connection & update gds file to cadence server###################')
     ftp_cadence_server = ftplib.FTP('141.223.86.109')
     ftp_cadence_server.login('sgjeong2',base64.b64decode('YWx2aDE1OTk1MQ==') )
     if DesignParameters._Technology == '065nm':
@@ -1276,15 +1275,15 @@ if __name__=='__main__':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc90')
     elif DesignParameters._Technology == '045nm':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc45')
-    print ftp_cadence_server.pwd()
+    print (ftp_cadence_server.pwd())
     testStreamFile = open('./{}'.format(_fileName), 'rb')
     ftp_cadence_server.storbinary('STOR {}'.format(_fileName), testStreamFile)
-    print 'close ftp connection'
+    print ('close ftp connection')
     ftp_cadence_server.quit()
     testStreamFile.close()
 
 
-    print '##########################################################################################'
+    print ('##########################################################################################')
 
 
 

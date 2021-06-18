@@ -306,9 +306,9 @@ class _ClkTreeElement(StickDiagram._StickDiagram):
 
                                      _Dummy=None
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  CLK Tree Element Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  CLK Tree Element Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 
@@ -863,7 +863,7 @@ class _ClkTreeElement(StickDiagram._StickDiagram):
                         XYofVIAtmp.append([ self._DesignParameter[VerticalMetal]['_XYCoordinates'][2*j][0][0] + self._DesignParameter[VIA1]['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']/2 - self._DesignParameter[VerticalMetal]['_Width']/2
                                           , self._DesignParameter[NMOS]['_XYCoordinates'][0][1] + self._DesignParameter[NMOS]['_DesignObj']._DesignParameter['_NPLayer']['_YWidth']/2 ])
                                       
-                print XYofVIAtmp
+                print (XYofVIAtmp)
                 self._DesignParameter[VIA1]['_XYCoordinates'] = XYofVIAtmp
                 self._DesignParameter[VIA2]['_XYCoordinates'] = self._DesignParameter[VIA1]['_XYCoordinates']
                 self._DesignParameter[VIA3]['_XYCoordinates'] = self._DesignParameter[VIA1]['_XYCoordinates']
@@ -1139,9 +1139,9 @@ class _ClkTreeElement(StickDiagram._StickDiagram):
             
             #Additional OutPut Metal2 with Via and OutputConnection Metal
             if _ElementType is '_Inverted' :
-                print 'not implemented yet'
+                print ('not implemented yet')
             elif _ElementType is '_Vertical' :
-                print 'not implemented yet'
+                print ('not implemented yet')
             else:
                 for i in range(1,6):
                     Output2ViaAdiMetforLowerRes = '_OutputConnectionAndOutputviaMet2OnMOS' + str(i)
@@ -1482,9 +1482,9 @@ class _ClkTreeElement(StickDiagram._StickDiagram):
             
         
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  ClkTreeElement Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  ClkTreeElement Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         
 
@@ -1593,7 +1593,7 @@ if __name__=='__main__':
     testStreamFile.close()
 
 
-    print '###############open ftp connection & update gds file to cadence server###################'
+    print ('###############open ftp connection & update gds file to cadence server###################')
     ftp_cadence_server = ftplib.FTP('141.223.86.109')
     ftp_cadence_server.login('sgjeong2',base64.b64decode('YWx2aDE1OTk1MQ==') )
     if DesignParameters._Technology == '065nm':
@@ -1606,15 +1606,15 @@ if __name__=='__main__':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc90')
     elif DesignParameters._Technology == '045nm':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc45')
-    print ftp_cadence_server.pwd()
+    print (ftp_cadence_server.pwd())
     testStreamFile = open('./{}'.format(_fileName), 'rb')
     ftp_cadence_server.storbinary('STOR {}'.format(_fileName), testStreamFile)
-    print 'close ftp connection'
+    print ('close ftp connection')
     ftp_cadence_server.quit()
     testStreamFile.close()
 
 
-    print '##########################################################################################'
+    print ('##########################################################################################')
 
 
 

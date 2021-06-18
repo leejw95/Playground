@@ -312,9 +312,9 @@ class _FLIPFLOP(StickDiagram._StickDiagram):
 
                                      _Dummy=False
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  FlipFlop Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  FlipFlop Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
         _DRCObj=DRC.DRC()
@@ -840,7 +840,7 @@ class _FLIPFLOP(StickDiagram._StickDiagram):
                                     - max([P_tmpDRCPolyMinSpaceByAdditionalMet1OnPMOS,P_tmpDRCMet1MinSpaceByViaPoly2Met1, _tmpDRCMinSpacePoly2OD ]) + _BiasDictforViaPoly2Met1OnGate[Pbias]
                                 ]
                             ]
-                    print 'ssa1', self._DesignParameter[NGateRouting]['_XYCoordinates']
+                    print ('ssa1', self._DesignParameter[NGateRouting]['_XYCoordinates'])
                 elif i == 3:
                     self._DesignParameter[NGateRouting]['_XYCoordinates']=\
                                 [
@@ -887,7 +887,7 @@ class _FLIPFLOP(StickDiagram._StickDiagram):
                                 - max([P_tmpDRCPolyMinSpaceByAdditionalMet1OnPMOS,P_tmpDRCMet1MinSpaceByViaPoly2Met1, _tmpDRCMinSpacePoly2OD ]) + _BiasDictforViaPoly2Met1OnGate[Pbias]
                             ]
                         ]
-                    print 'ssa2', self._DesignParameter[NGateRouting]['_XYCoordinates'] , _BiasDictforViaPoly2Met1OnGate[Nbias]
+                    print ('ssa2', self._DesignParameter[NGateRouting]['_XYCoordinates'] , _BiasDictforViaPoly2Met1OnGate[Nbias])
                 elif i == 4 :
                     self._DesignParameter[NGateRouting]['_XYCoordinates']=\
                                 [
@@ -1244,8 +1244,8 @@ class _FLIPFLOP(StickDiagram._StickDiagram):
             
     
                 if error == 1 :
-                    print '****************************** Error occured in _XOREdgeBtwNWandPW setting ******************************'
-                    print '_XOREdgeBtwNWandPW Should be same or higher than' , _FFEdgeBtwNWandPW+ tempVal
+                    print ('****************************** Error occured in _XOREdgeBtwNWandPW setting ******************************')
+                    print ('_XOREdgeBtwNWandPW Should be same or higher than' , _FFEdgeBtwNWandPW+ tempVal)
                     return 0
                     
                 for i in range(1,5):
@@ -1260,8 +1260,8 @@ class _FLIPFLOP(StickDiagram._StickDiagram):
                         if _HeightCalOption != 'ON' :
                             error = 1
                 if error == 1 :
-                    print '****************************** Error occured in _XORVdd2VssHeight setting ******************************'
-                    print '_XORVdd2VssHeight Should be same or higher than' , _FFVdd2VssHeight + tempVal2
+                    print ('****************************** Error occured in _XORVdd2VssHeight setting ******************************')
+                    print ('_XORVdd2VssHeight Should be same or higher than' , _FFVdd2VssHeight + tempVal2)
                     return 0            
              
             
@@ -1364,10 +1364,10 @@ class _FLIPFLOP(StickDiagram._StickDiagram):
                     PVIA = '_ViaPoly2Met1OnPMOS' + str(i) + 'Gate'
                     NViaBias = '_YbiasNMOS' + str(i)+ 'GateVia'
                     PViaBias = '_YbiasPMOS' + str(i)+ 'GateVia'
-                    print 'abcd' , self._DesignParameter[NVIA]['_XYCoordinates'][0], NVIA
+                    print ('abcd' , self._DesignParameter[NVIA]['_XYCoordinates'][0], NVIA)
                     if len(self._DesignParameter[NMOS]['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates']) is 1:
                     # NMOS adjusting
-                        print 'abcd' , self._DesignParameter[NVIA]['_XYCoordinates'][0], NVIA
+                        print ('abcd' , self._DesignParameter[NVIA]['_XYCoordinates'][0], NVIA)
                         _DistanceBtwVia2GateY = \
                             float(self._DesignParameter[NVIA]['_XYCoordinates'][0][1] - self._DesignParameter[NVIA]['_DesignObj']._DesignParameter['_POLayer']['_YWidth']/2 ) \
                             -float(self._DesignParameter[NMOS]['_XYCoordinates'][0][1] + self._DesignParameter[NMOS]['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][1]+self._DesignParameter[NMOS]['_DesignObj']._DesignParameter['_POLayer']['_YWidth']/2) 
@@ -1375,7 +1375,7 @@ class _FLIPFLOP(StickDiagram._StickDiagram):
                             temp = round(abs(_DRCObj._PolygateMinSpace- _DistanceBtwVia2GateY)/_DRCObj._MinSnapSpacing + 0.5) * _DRCObj._MinSnapSpacing
                             _BiasDictforViaPoly2Met1OnGate[NViaBias] += temp
                             DRC_PASS = 0
-                        print 'sungyu' , _BiasDictforViaPoly2Met1OnGate[NViaBias] ,  NViaBias
+                        print ('sungyu' , _BiasDictforViaPoly2Met1OnGate[NViaBias] ,  NViaBias)
                             
                     
                     if len(self._DesignParameter[PMOS]['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates']) is 1:
@@ -1407,9 +1407,9 @@ class _FLIPFLOP(StickDiagram._StickDiagram):
             
         
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  FlipFlop Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  FlipFlop Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 if __name__=='__main__':

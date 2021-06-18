@@ -91,7 +91,7 @@ if __name__=='__main__':
     # _SLVT = True
     # _Guardring = True
     DesignParameters._Technology='028nm'
-    print 'Technology Process', DesignParameters._Technology
+    print ('Technology Process', DesignParameters._Technology)
     SquareObj=_Square(_DesignParameter=None, _Name='Square')
     #SquareObj._CalculatePMOSDesignParameter(_PMOSNumberofGate=_PMOSFinger, _PMOSChannelWidth=_PMOSWidth, _PMOSChannellength=_PMOSChannelLength ,_PMOSDummy=_PMOSDummy, _SLVT=_SLVT)
     SquareObj._sqfunction(_a,_b)
@@ -103,4 +103,4 @@ if __name__=='__main__':
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
-    print '##########################################################################################'
+    print ('##########################################################################################')

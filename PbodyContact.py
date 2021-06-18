@@ -34,9 +34,9 @@ class _PbodyContact(StickDiagram._StickDiagram):
 
         
     def _CalculatePbodyContactDesignParameter(self,  _NumberOfPbodyCOX=None, _NumberOfPbodyCOY=None,  _Met1XWidth=None, _Met1YWidth=None ):
-        print '#########################################################################################################'
-        print '                                  {}  PbodyContact Calculation Start                                     '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                  {}  PbodyContact Calculation Start                                     '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
         _DRCObj=DRC.DRC()
         _XYCoordinateOfPbodyContact = [[0,0]]
 
@@ -46,14 +46,14 @@ class _PbodyContact(StickDiagram._StickDiagram):
 
         _LengthPbodyBtwCO = _DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOX=_NumberOfPbodyCOX,NumOfCOY=_NumberOfPbodyCOY )
 
-        print '#############################     DIFF Layer Calculation    ##############################################'
+        print ('#############################     DIFF Layer Calculation    ##############################################')
 
         self._DesignParameter['_ODLayer']['_XYCoordinates']=_XYCoordinateOfPbodyContact
 
         self._DesignParameter['_ODLayer']['_XWidth'] = _DRCObj._CoMinWidth + (_NumberOfPbodyCOX - 1) * _LengthPbodyBtwCO + 2 * _DRCObj._CoMinEnclosureByODAtLeastTwoSide
         self._DesignParameter['_ODLayer']['_YWidth'] = _DRCObj._CoMinWidth + (_NumberOfPbodyCOY - 1) * _LengthPbodyBtwCO + 2 * _DRCObj._CoMinEnclosureByODAtLeastTwoSide
 
-        print '#############################     PIMP  Layer Calculation    ##############################################'
+        print ('#############################     PIMP  Layer Calculation    ##############################################')
         self._DesignParameter['_PPLayer']['_XYCoordinates']=_XYCoordinateOfPbodyContact
 
         if DesignParameters._Technology == '028nm':
@@ -68,7 +68,7 @@ class _PbodyContact(StickDiagram._StickDiagram):
 
 
 
-        print '###########################     Metal1  Layer Calculation    ##############################################'
+        print ('###########################     Metal1  Layer Calculation    ##############################################')
 
         self._DesignParameter['_Met1Layer']['_XYCoordinates']=_XYCoordinateOfPbodyContact
 
@@ -87,7 +87,7 @@ class _PbodyContact(StickDiagram._StickDiagram):
             self._DesignParameter['_Met1Layer']['_YWidth'] =_Met1YWidth
 
 
-        print '#############################     CONT Layer Caculation    ##############################################'
+        print ('#############################     CONT Layer Caculation    ##############################################')
 
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
@@ -123,9 +123,9 @@ class _PbodyContact(StickDiagram._StickDiagram):
 
 
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                  {}  PbodyContact Calculation End                                   '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                  {}  PbodyContact Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
         
 
 
@@ -148,4 +148,4 @@ if __name__=='__main__':
     testStreamFile.close()
     
 
-    print '##########################################################################################'
+    print ('##########################################################################################')

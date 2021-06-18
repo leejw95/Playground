@@ -99,7 +99,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
 
-        print '#################################       Coordinates Settings      ########################################'
+        print ('#################################       Coordinates Settings      ########################################')
         _ResistorBankOrigin = [[0,0]]
         _ResistorSpaceX = (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] -
                                                              self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_YWidth'])
@@ -113,9 +113,16 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         self._DesignParameter['_ResistorBank']['_XYCoordinates'] = tmp
         del tmp
+        
+        print ('####################################       Pin Generations      #########################################')
+        self._DesignParameter['_Spin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], 
+                                                                      _XYCoordinates=[[0,0]], _Mag=0.05, _Angle=0, _TEXT = 'S')
+        
+        self._DesignParameter['_SBpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], 
+                                                                      _XYCoordinates=[[0,0]], _Mag=0.05, _Angle=0, _TEXT = 'SB')
 
 
-        print '################################       Additional Path Settings      #####################################'
+        print ('################################       Additional Path Settings      #####################################')
         self._DesignParameter['_Met4LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met4LayerVCM']['_Width'] = (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet32Met4OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'])
         if self._DesignParameter['_Met4LayerVCM']['_Width'] % 2 == 1 :
@@ -215,7 +222,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         del tmp
 
-        ##Path for inputs for other transmission gate
+        ##Path for inputs for other transmission gate and pin declare
         self._DesignParameter['_Met2LayerInput'] = self._PathElementDeclaration(
             _Layer = DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],
             _XYCoordinates=[], _Width=100)
@@ -228,14 +235,14 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             for j in range (0, 2) : ## for nmos and pmos
                 for k in range (0, _XRBNum) :
                     if j == 0 : ## nmos settings
-                        tmp.append([[_ResistorBankOrigin[0][0] - 
-                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
+                        tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] - 
+                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
                                      self._DesignParameter['_Met2LayerInput']['_Width'] // 2 +
                                     (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (_TotalInputnum - (i * _YRBNum + j * _XRBNum + k))),
                                     _ResistorBankOrigin[0][1] + 
                                      self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_YWidth'] * _YRBNum],
-                                    [_ResistorBankOrigin[0][0] - 
-                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
+                                    [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] - 
+                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
                                     self._DesignParameter['_Met2LayerInput']['_Width'] // 2 +
                                     (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (_TotalInputnum - (i * _YRBNum + j * _XRBNum + k))),
                                     _ResistorBankOrigin[0][1] +
@@ -243,8 +250,25 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                                     (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (k) + 
                                     _ResistorSpaceY * i]])
                         
-                        tmp.append([[_ResistorBankOrigin[0][0] - 
-                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
+                        self._DesignParameter['_Spin']['_XYCoordinates'] = [[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] - 
+                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
+                                     self._DesignParameter['_Met2LayerInput']['_Width'] // 2 +
+                                    (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (_TotalInputnum - (i * _YRBNum + j * _XRBNum + k))),
+                                    _ResistorBankOrigin[0][1] + 
+                                     self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_YWidth'] * _YRBNum],
+                                    [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] - 
+                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
+                                    self._DesignParameter['_Met2LayerInput']['_Width'] // 2 +
+                                    (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (_TotalInputnum - (i * _YRBNum + j * _XRBNum + k))),
+                                    _ResistorBankOrigin[0][1] +
+                                    self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][1] + 
+                                    (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (k) + 
+                                    _ResistorSpaceY * i]]
+                        
+                        self._DesignParameter['_Spin']['_Text']
+                        
+                        tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] - 
+                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
                                     self._DesignParameter['_Met2LayerInput']['_Width'] +
                                     (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (_TotalInputnum - (i * _YRBNum + j * _XRBNum + k))),
                                     _ResistorBankOrigin[0][1] +
@@ -279,14 +303,14 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                         
                     else : ##pmos settings
                         ##1st connection
-                        tmp.append([[_ResistorBankOrigin[0][0] - 
-                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
+                        tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] - 
+                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
                                      self._DesignParameter['_Met2LayerInput']['_Width'] // 2 +
                                     (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (_TotalInputnum - (i * _YRBNum + j * _XRBNum + k))),
                                     _ResistorBankOrigin[0][1] + 
                                      self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_YWidth'] * _YRBNum],
-                                    [_ResistorBankOrigin[0][0] - 
-                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
+                                    [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] - 
+                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
                                     self._DesignParameter['_Met2LayerInput']['_Width'] // 2 +
                                     (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (_TotalInputnum - (i * _YRBNum + j * _XRBNum + k))),
                                     _ResistorBankOrigin[0][1] +
@@ -296,8 +320,8 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                                     ])
                         
                         ##second connection
-                        tmp.append([[_ResistorBankOrigin[0][0] - 
-                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
+                        tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] - 
+                                    (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] // 2 + _DRCObj._MetalxMinSpace +
                                     self._DesignParameter['_Met2LayerInput']['_Width'] +
                                     (_DRCObj._MetalxMinSpace + self._DesignParameter['_Met2LayerInput']['_Width']) * (_TotalInputnum - (i * _YRBNum + j * _XRBNum + k))),
                                     _ResistorBankOrigin[0][1] +
@@ -330,7 +354,15 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                                      _ResistorSpaceY * i]
                                     ])
                     
+        
         self._DesignParameter['_Met2LayerInput']['_XYCoordinates'] = tmp
+        del tmp
+        
+        
+        
+        
+        
+        
 
         
 

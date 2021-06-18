@@ -48,7 +48,7 @@ class _PMOS(StickDiagram._StickDiagram):
         print '#############################     POLY Layer Calculation    ##############################################'
         # POLY Layer XWidth and YWidth Setting
         self._DesignParameter['_POLayer']['_XWidth']= _PMOSChannellength
-        self._DesignParameter['_POLayer']['_YWidth']= _PMOSChannelWidth + 2 * _DRCObj._PolygateMinExtensionOnOD + 25*2
+        self._DesignParameter['_POLayer']['_YWidth']= _PMOSChannelWidth + 2 * _DRCObj._PolygateMinExtensionOnOD
 
         # POLY Layer Coordinate Setting
         _LengthPMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_POLayer']['_XWidth']
@@ -75,26 +75,27 @@ class _PMOS(StickDiagram._StickDiagram):
         if _PMOSDummy == True:
             print '#############################     POLY Dummy Layer Calculation    ##############################################'
             # POLY Dummy Layer XWidth and YWidth Setting
-            self._DesignParameter['_PODummyLayer']['_XWidth']= 30
+            self._DesignParameter['_PODummyLayer']['_XWidth']= _PMOSChannellength
             self._DesignParameter['_PODummyLayer']['_YWidth']= _PMOSChannelWidth + 2 * _DRCObj._PolygateMinExtensionOnOD
 
             # POLY Dummy Layer Coordinate Setting
             _LengthPMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_POLayer']['_XWidth']
             if (_PMOSNumberofGate % 2) == 0: # When the number of finger is even
                 _xycoordinatetmp_dummy = [
-                                   [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate / 2 - 0.5) *  _LengthPMOSBtwPO + 0 *  _LengthPMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2) ,  _XYCoordinateOfPMOS[0][1] + float(self._DesignParameter['_POLayer']['_YWidth'])/2 - float(self._DesignParameter['_PODummyLayer']['_YWidth'])/2+15],
-                                   [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate / 2 - 0.5) *  _LengthPMOSBtwPO + (_PMOSNumberofGate -1) *  _LengthPMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2,  _XYCoordinateOfPMOS[0][1] + float(self._DesignParameter['_POLayer']['_YWidth'])/2 - float(self._DesignParameter['_PODummyLayer']['_YWidth'])/2+15]
+                                   [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate / 2 - 0.5) *  _LengthPMOSBtwPO + 0 *  _LengthPMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2) ,  _XYCoordinateOfPMOS[0][1]],
+                                   [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate / 2 - 0.5) *  _LengthPMOSBtwPO + (_PMOSNumberofGate -1) *  _LengthPMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2,  _XYCoordinateOfPMOS[0][1]]
                                    ]
             elif (_PMOSNumberofGate % 2) == 1: # When the number of finger is odd
                 _xycoordinatetmp_dummy = [
-                                   [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate - 1) / 2 *  _LengthPMOSBtwPO + 0 *  _LengthPMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfPMOS[0][1] + float(self._DesignParameter['_POLayer']['_YWidth'])/2 - float(self._DesignParameter['_PODummyLayer']['_YWidth'])/2+15],
-                                   [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate - 1) / 2 *  _LengthPMOSBtwPO + (_PMOSNumberofGate -1) *  _LengthPMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfPMOS[0][1] + float(self._DesignParameter['_POLayer']['_YWidth'])/2 - float(self._DesignParameter['_PODummyLayer']['_YWidth'])/2+15]
+                                   [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate - 1) / 2 *  _LengthPMOSBtwPO + 0 *  _LengthPMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfPMOS[0][1]],
+                                   [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate - 1) / 2 *  _LengthPMOSBtwPO + (_PMOSNumberofGate -1) *  _LengthPMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfPMOS[0][1]]
                                    ]
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
         else:
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = []
 
-
+            if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
+                self._DesignParameter['_PODummyLayer']['_YWidth'] = float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']) + 2
 
         print '#############################     METAL1 Layer Calcuation    ##############################################'
         # METAL1 Layer XWidth and YWidth Setting
@@ -167,25 +168,34 @@ class _PMOS(StickDiagram._StickDiagram):
         if DesignParameters._Technology == '028nm':
             self._DesignParameter['_PPLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._PpMinEnclosureOfPo2
         else:
-            self._DesignParameter['_PPLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._PpMinEnclosureOfPo2
+            self._DesignParameter['_PPLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._PpMinEnclosureOfPo
 
 
         if _SLVT == True:
             print '#############################     SLVT Layer Calculation    ##############################################'
             # SLVT Dummy Layer XWidth and YWidth Setting
-            self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_PPLayer']['_XWidth']
-            self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_PPLayer']['_YWidth']
+            self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD
+            self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
 
             # SLVT Layer Coordinate Setting
             self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = self._DesignParameter['_PPLayer']['_XYCoordinates']
+
         else:
             self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = []
 
         if DesignParameters._Technology=='028nm':
             print '#############################     PCCRIT Layer Calculation    ##############################################'
-            self._DesignParameter['_PCCRITLayer']['_XYCoordinates'] = _XYCoordinateOfPMOS
-            self._DesignParameter['_PCCRITLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] - 2*_DRCObj._PolygateWithPCCRIT
-            self._DesignParameter['_PCCRITLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 10
+            if self._DesignParameter['_POLayer']['_XWidth'] < 34:
+                self._DesignParameter['_PCCRITLayer'][
+                    '_XWidth'] = _PMOSNumberofGate * _LengthPMOSBtwMet1 + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD + 2 * _DRCObj._PCCRITExtension
+                self._DesignParameter['_PCCRITLayer']['_YWidth'] = self._DesignParameter['_ODLayer'][
+                                                                       '_YWidth'] + 2 * _DRCObj._PCCRITExtension
+                self._DesignParameter['_PCCRITLayer']['_XYCoordinates'] = _XYCoordinateOfPMOS
+
+            else:
+                self._DesignParameter['_PCCRITLayer']['_XWidth'] = None
+                self._DesignParameter['_PCCRITLayer']['_YWidth'] = None
+                self._DesignParameter['_PCCRITLayer']['_XYCoordinates'] = []
 
         print '#########################     Supply Routing Coordinates Calculation   ##################################'
         tmp=[]

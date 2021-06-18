@@ -1,6 +1,6 @@
 import StickDiagram
 import NMOSWithDummy
-import PMOSWithDummy_slicer
+import PMOSWithDummy
 import NbodyContact
 import PbodyContact
 import ViaPoly2Met1
@@ -42,7 +42,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             _DRCObj = DRC.DRC()
             _XYCoordinateOfPMOS = [[0, 0]]
             _PODummyWidth = 30
-            _Name = 'PMOSWithDummyOfSlicer'
+            _Name = 'PMOSSetofSlicer'
             _CLKinputPMOSFinger = _CLKinputPMOSFinger1 + _CLKinputPMOSFinger2
 
             ##############################################################################################################################################################
@@ -50,43 +50,43 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ##############################################################################################################################################################
 
             # PMOS1(CLK input) Generation
-            _PMOS1inputs = copy.deepcopy(PMOSWithDummy_slicer._PMOS._ParametersForDesignCalculation)
+            _PMOS1inputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
             _PMOS1inputs['_PMOSNumberofGate'] = _CLKinputPMOSFinger1 + _CLKinputPMOSFinger2
             _PMOS1inputs['_PMOSChannelWidth'] = _PMOSChannelWidth
             _PMOS1inputs['_PMOSChannellength'] = _ChannelLength
             _PMOS1inputs['_PMOSDummy'] = _Dummy
             _PMOS1inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_PMOS1'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_slicer._PMOS(_DesignParameter=None, _Name='PMOS1In{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOS1'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOS1In{}'.format(_Name)))[0]
             self._DesignParameter['_PMOS1']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOS1inputs)
 
             # PMOS2(CLK input) Generation
-            _PMOS2inputs = copy.deepcopy(PMOSWithDummy_slicer._PMOS._ParametersForDesignCalculation)
+            _PMOS2inputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
             _PMOS2inputs['_PMOSNumberofGate'] = _CLKinputPMOSFinger1 + _CLKinputPMOSFinger2
             _PMOS2inputs['_PMOSChannelWidth'] = _PMOSChannelWidth
             _PMOS2inputs['_PMOSChannellength'] = _ChannelLength
             _PMOS2inputs['_PMOSDummy'] = _Dummy
             _PMOS2inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_PMOS2'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_slicer._PMOS(_DesignParameter=None, _Name='PMOS2In{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOS2'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOS2In{}'.format(_Name)))[0]
             self._DesignParameter['_PMOS2']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOS2inputs)
 
             # PMOS3 Generation
-            _PMOS3inputs = copy.deepcopy(PMOSWithDummy_slicer._PMOS._ParametersForDesignCalculation)
+            _PMOS3inputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
             _PMOS3inputs['_PMOSNumberofGate'] = _PMOSFinger
             _PMOS3inputs['_PMOSChannelWidth'] = _PMOSChannelWidth
             _PMOS3inputs['_PMOSChannellength'] = _ChannelLength
             _PMOS3inputs['_PMOSDummy'] = _Dummy
             _PMOS3inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_PMOS3'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_slicer._PMOS(_DesignParameter=None, _Name='PMOS3In{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOS3'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOS3In{}'.format(_Name)))[0]
             self._DesignParameter['_PMOS3']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOS3inputs)
 
             # PMOS4 Generation
-            _PMOS4inputs = copy.deepcopy(PMOSWithDummy_slicer._PMOS._ParametersForDesignCalculation)
+            _PMOS4inputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
             _PMOS4inputs['_PMOSNumberofGate'] = _PMOSFinger
             _PMOS4inputs['_PMOSChannelWidth'] = _PMOSChannelWidth
             _PMOS4inputs['_PMOSChannellength'] = _ChannelLength
             _PMOS4inputs['_PMOSDummy'] = _Dummy
             _PMOS4inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_PMOS4'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_slicer._PMOS(_DesignParameter=None, _Name='PMOS4In{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOS4'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOS4In{}'.format(_Name)))[0]
             self._DesignParameter['_PMOS4']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOS4inputs)
 
             #############################################################################################################################################################################
@@ -208,24 +208,24 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
                                                                            self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2- \
                                                                            self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace - _DRCObj._Metal1MinSpacetoGate
-                                                                           - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth'] / 2
+
                                                                                   ]]
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'] = [[self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0],
                                                                            self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - \
                                                                            self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace - _DRCObj._Metal1MinSpacetoGate
-                                                                                  - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth'] / 2]]
+                                                                                  ]]
 
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'] = [[self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - \
                                                                             self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace - _DRCObj._Metal1MinSpacetoGate
-                                                                                  - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth'] / 2]]
+                                                                                  ]]
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'] = [[self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - \
                                                                             self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace - _DRCObj._Metal1MinSpacetoGate
-                                                                                  - self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth'] / 2]]
+                                                                                  ]]
 
 
             ##################################################################################################################################################################################
@@ -321,8 +321,8 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             # PMOS1 Poly Layer Generation
             tmp1 = [[[self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][-1][0] +
-                      self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] / 2 +\
-                      self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
+                self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] / 2 +\
+                self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
                       self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][1]],
                      [self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][0][0] -
                       self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] / 2 +\
@@ -332,7 +332,17 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter['_AdditionalPolyOnPMOS1']['_XYCoordinates'] = tmp1
             self._DesignParameter['_AdditionalPolyOnPMOS1']['_Width'] = self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
 
-            # PMOS2 Poly Layer Generation
+
+            self._DesignParameter['_AdditionalPolyGateOnPMOS1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],_Datatype=DesignParameters._LayerMapping['POLY'][1], _XYCoordinates=[],_Width=400)
+
+            tmp = []
+            for i in range(0, len(self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'])):
+                tmp.append([[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]], [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][1]]])
+            self._DesignParameter['_AdditionalPolyGateOnPMOS1']['_XYCoordinates'] = tmp
+            self._DesignParameter['_AdditionalPolyGateOnPMOS1']['_Width'] = _DRCObj._PolygateMinWidth
+            del tmp
+
+    # PMOS2 Poly Layer Generation
             tmp2 = [[[self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][-1][0] +
                       self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] / 2 +\
                       self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0],
@@ -343,6 +353,17 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                       self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][1]]]]
             self._DesignParameter['_AdditionalPolyOnPMOS2']['_XYCoordinates'] = tmp2
             self._DesignParameter['_AdditionalPolyOnPMOS2']['_Width'] = self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
+
+            self._DesignParameter['_AdditionalPolyGateOnPMOS2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],_Datatype=DesignParameters._LayerMapping['POLY'][1], _XYCoordinates=[],_Width=400)
+
+            tmp = []
+            for i in range(0, len(self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'])):
+                tmp.append([[self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1]], [self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][1]]])
+            self._DesignParameter['_AdditionalPolyGateOnPMOS2']['_XYCoordinates'] = tmp
+            self._DesignParameter['_AdditionalPolyGateOnPMOS2']['_Width'] = _DRCObj._PolygateMinWidth
+            del tmp
+
+
 
             # PMOS3 Poly Layer Generation
             tmp3 = [[[self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][-1][0] +
@@ -356,6 +377,17 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter['_AdditionalPolyOnPMOS3']['_XYCoordinates'] = tmp3
             self._DesignParameter['_AdditionalPolyOnPMOS3']['_Width'] = self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
 
+            self._DesignParameter['_AdditionalPolyGateOnPMOS3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],_Datatype=DesignParameters._LayerMapping['POLY'][1], _XYCoordinates=[],_Width=400)
+
+            tmp = []
+            for i in range(0, len(self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'])):
+                tmp.append([[self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1]], [self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][1]]])
+            self._DesignParameter['_AdditionalPolyGateOnPMOS3']['_XYCoordinates'] = tmp
+            self._DesignParameter['_AdditionalPolyGateOnPMOS3']['_Width'] = _DRCObj._PolygateMinWidth
+            del tmp
+
+
+
             # PMOS4 Poly Layer Generation
             tmp4 = [[[self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][-1][0] +
                       self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] / 2 +\
@@ -367,6 +399,15 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                       self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'][0][1]]]]
             self._DesignParameter['_AdditionalPolyOnPMOS4']['_XYCoordinates'] = tmp4
             self._DesignParameter['_AdditionalPolyOnPMOS4']['_Width'] = self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
+
+            self._DesignParameter['_AdditionalPolyGateOnPMOS4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0], _Datatype=DesignParameters._LayerMapping['POLY'][1], _XYCoordinates=[], _Width=400)
+
+            tmp = []
+            for i in range(0, len(self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'])):
+                tmp.append([[self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1]], [self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'][0][1]]])
+            self._DesignParameter['_AdditionalPolyGateOnPMOS4']['_XYCoordinates'] = tmp
+            self._DesignParameter['_AdditionalPolyGateOnPMOS4']['_Width'] = _DRCObj._PolygateMinWidth
+            del tmp
 
             #########################################################################################################################################
             ############################################### Guardring Generation ####################################################################
@@ -392,7 +433,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_RingODLayer4']['_Width'] = _GuardringWidth
 
                 toptmp = self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 10
-                bottomtmp = self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) - 2*_DRCObj._Metal1MinEnclosureCO2 + _DRCObj._CoMinWidth - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth']
+                bottomtmp = self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) - 2*_DRCObj._Metal1MinEnclosureCO2 - self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] # - _DRCObj._CoMinWidth - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth']
                 lefttmp = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - 35
                 righttmp = self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] + (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] + 35
 
@@ -592,16 +633,16 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             pass
 if __name__ == '__main__':
-    PMOSWithDummyOfSlicerObj = _PMOSWithDummyOfSlicer(_DesignParameter=None, _Name='PMOSWithDummyOfSlicer1')
-    PMOSWithDummyOfSlicerObj._CalculateDesignParameter(_ChannelLength=30, _VDD2VSSHeight=None, _Dummy=True, _SLVT=True,
+    PMOSSetofSlicerObj = _PMOSWithDummyOfSlicer(_DesignParameter=None, _Name='PMOSSetofSlicer')
+    PMOSSetofSlicerObj._CalculateDesignParameter(_ChannelLength=30, _VDD2VSSHeight=None, _Dummy=True, _SLVT=True,
                                                        _GuardringWidth=100, _Guardring=True,
                                                        _PMOSFinger=2, _CLKinputPMOSFinger1=2, _CLKinputPMOSFinger2=2, _PMOSChannelWidth=1000)
 
-    PMOSWithDummyOfSlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=PMOSWithDummyOfSlicerObj._DesignParameter)
+    PMOSSetofSlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=PMOSSetofSlicerObj._DesignParameter)
     _fileName = 'autoInverter_HeightCal2.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    tmp = PMOSWithDummyOfSlicerObj._CreateGDSStream(PMOSWithDummyOfSlicerObj._DesignParameter['_GDSFile']['_GDSFile'])
+    tmp = PMOSSetofSlicerObj._CreateGDSStream(PMOSSetofSlicerObj._DesignParameter['_GDSFile']['_GDSFile'])
 
     tmp.write_binary_gds_stream(testStreamFile)
 

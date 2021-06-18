@@ -1,5 +1,5 @@
 import StickDiagram
-import NMOSWithDummy_slicer
+import NMOSWithDummy
 import PMOSWithDummy
 import NbodyContact
 import PbodyContact
@@ -27,7 +27,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
 
 
-    def __init__(self, _DesignParameter=None, _Name='NMOSWithDummyOfSlicer'):
+    def __init__(self, _DesignParameter=None, _Name='NMOSSetofSlicer'):
         if _DesignParameter != None:
             self._DesignParameter = _DesignParameter
         else:
@@ -43,59 +43,59 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             _DRCObj = DRC.DRC()
             _XYCoordinateOfNMOS = [[0, 0]]
             _PODummyWidth = 30
-            _Name = 'NMOSWithDummyOfSlicer'
+            _Name = 'NMOSSetofSlicer'
             ##############################################################################################################################################################
             ################################################################### PMOS Generation  #########################################################################
             ##############################################################################################################################################################
 
             # NMOS1(Data input) Generation
-            _NMOS1inputs = copy.deepcopy(NMOSWithDummy_slicer._NMOS._ParametersForDesignCalculation)
+            _NMOS1inputs = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
             _NMOS1inputs['_NMOSNumberofGate'] = _DATAinputNMOSFinger
             _NMOS1inputs['_NMOSChannelWidth'] = _NMOSChannelWidth
             _NMOS1inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS1inputs['_NMOSDummy'] = _Dummy
             _NMOS1inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_NMOS1'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy_slicer._NMOS(_DesignParameter=None, _Name='NMOS1In{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOS1'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS1In{}'.format(_Name)))[0]
             self._DesignParameter['_NMOS1']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOS1inputs)
 
             # NMOS2(Data input) Generation
-            _NMOS2inputs = copy.deepcopy(NMOSWithDummy_slicer._NMOS._ParametersForDesignCalculation)
+            _NMOS2inputs = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
             _NMOS2inputs['_NMOSNumberofGate'] = _DATAinputNMOSFinger
             _NMOS2inputs['_NMOSChannelWidth'] = _NMOSChannelWidth
             _NMOS2inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS2inputs['_NMOSDummy'] = _Dummy
             _NMOS2inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_NMOS2'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy_slicer._NMOS(_DesignParameter=None, _Name='NMOS2In{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOS2'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS2In{}'.format(_Name)))[0]
             self._DesignParameter['_NMOS2']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOS2inputs)
 
             # NMOS3 Generation
-            _NMOS3inputs = copy.deepcopy(NMOSWithDummy_slicer._NMOS._ParametersForDesignCalculation)
+            _NMOS3inputs = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
             _NMOS3inputs['_NMOSNumberofGate'] = _NMOSFinger
             _NMOS3inputs['_NMOSChannelWidth'] = _NMOSChannelWidth
             _NMOS3inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS3inputs['_NMOSDummy'] = _Dummy
             _NMOS3inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_NMOS3'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy_slicer._NMOS(_DesignParameter=None, _Name='NMOS3In{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOS3'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS3In{}'.format(_Name)))[0]
             self._DesignParameter['_NMOS3']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOS3inputs)
 
             # NMOS4 Generation
-            _NMOS4inputs = copy.deepcopy(NMOSWithDummy_slicer._NMOS._ParametersForDesignCalculation)
+            _NMOS4inputs = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
             _NMOS4inputs['_NMOSNumberofGate'] = _NMOSFinger
             _NMOS4inputs['_NMOSChannelWidth'] = _NMOSChannelWidth
             _NMOS4inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS4inputs['_NMOSDummy'] = _Dummy
             _NMOS4inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_NMOS4'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy_slicer._NMOS(_DesignParameter=None, _Name='NMOS4In{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOS4'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS4In{}'.format(_Name)))[0]
             self._DesignParameter['_NMOS4']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOS4inputs)
 
             # NMOS5(CLK input) Generation
-            _NMOS5inputs = copy.deepcopy(NMOSWithDummy_slicer._NMOS._ParametersForDesignCalculation)
+            _NMOS5inputs = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
             _NMOS5inputs['_NMOSNumberofGate'] = _CLKinputNMOSFinger
             _NMOS5inputs['_NMOSChannelWidth'] = _NMOSChannelWidth
             _NMOS5inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS5inputs['_NMOSDummy'] = _Dummy
             _NMOS5inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_NMOS5'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy_slicer._NMOS(_DesignParameter=None, _Name='NMOS5In{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOS5'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS5In{}'.format(_Name)))[0]
             self._DesignParameter['_NMOS5']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOS5inputs)
             ##################################################################################################################################################################################
 
@@ -251,23 +251,23 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             #################################################################### NMOS Gate Coordinate Setting ###################################################################
             self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0],
                                                                            self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + \
-                                                                           self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth']/2]]
+                                                                           self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate ]]
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'] = [[self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0],
                                                                            self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + \
-                                                                           self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate + self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth']/2]]
+                                                                           self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate ]]
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'] = [[self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + \
-                                                                            self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth']/2]]
+                                                                            self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate ]]
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_XYCoordinates'] = [[self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + \
-                                                                            self._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth']/2]]
+                                                                            self._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate ]]
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_XYCoordinates'] = [[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + \
-                                                                            self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth']/2]]
+                                                                            self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate ]]
 
             ##################################################################################################################################################################################
             ################################################################# NMOS VIA1 Generation ###########################################################################################
@@ -611,7 +611,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_RingPpLayer3']['_Width'] = 21*2 + _GuardringWidth
                 self._DesignParameter['_RingPpLayer4']['_Width'] = 21*2 + _GuardringWidth
 
-                toptmp    = self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 - _DRCObj._CoMinWidth  + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_POLayerGate']['_YWidth']
+                toptmp    = self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
                 bottomtmp = self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) \
                             - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - SpaceBtwNMOS - 10
                 lefttmp   = self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] - (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0] - 35
@@ -769,16 +769,16 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             print('x')
 
 if __name__ == '__main__':
-    NMOSWithDummyOfSlicerObj = _NMOSWithDummyOfSlicer(_DesignParameter=None, _Name='NMOSWithDummyOfSlicer1')
-    NMOSWithDummyOfSlicerObj._CalculateDesignParameter(_ChannelLength=30, _NPRatio=None, _VDD2VSSHeight=None, _Dummy=True, _SLVT=True,
+    NMOSSetofSlicerObj = _NMOSWithDummyOfSlicer(_DesignParameter=None, _Name='NMOSSetofSlicer')
+    NMOSSetofSlicerObj._CalculateDesignParameter(_ChannelLength=30, _NPRatio=None, _VDD2VSSHeight=None, _Dummy=True, _SLVT=True,
                                                        _GuardringWidth=100, _Guardring=True,
                                                        _NMOSFinger=2, _DATAinputNMOSFinger=1, _CLKinputNMOSFinger=3, _NMOSChannelWidth=1000)
 
-    NMOSWithDummyOfSlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NMOSWithDummyOfSlicerObj._DesignParameter)
+    NMOSSetofSlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NMOSSetofSlicerObj._DesignParameter)
     _fileName = 'autoInverter_HeightCal2.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    tmp = NMOSWithDummyOfSlicerObj._CreateGDSStream(NMOSWithDummyOfSlicerObj._DesignParameter['_GDSFile']['_GDSFile'])
+    tmp = NMOSSetofSlicerObj._CreateGDSStream(NMOSSetofSlicerObj._DesignParameter['_GDSFile']['_GDSFile'])
 
     tmp.write_binary_gds_stream(testStreamFile)
 

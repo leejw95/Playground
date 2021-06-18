@@ -8,8 +8,8 @@ import ViaMet12Met2
 import ViaMet22Met3
 import ContGeneration
 
-import PMOSWithDummyOfSlicer
-import NMOSWithDummyOfSlicer
+import PMOSSetofSlicer
+import NMOSSetofSlicer
 
 import DesignParameters
 import user_define_exceptions
@@ -58,7 +58,7 @@ class _Slicer(StickDiagram._StickDiagram):
             ################################################################### PMOS SET Generation  #########################################################################
             ##############################################################################################################################################################
             # PMOS SET Generation
-            _PMOSSETinputs = copy.deepcopy(PMOSWithDummyOfSlicer._PMOSWithDummyOfSlicer._ParametersForDesignCalculation)
+            _PMOSSETinputs = copy.deepcopy(PMOSSetofSlicer._PMOSWithDummyOfSlicer._ParametersForDesignCalculation)
             _PMOSSETinputs['_CLKinputPMOSFinger1'] = _CLKinputPMOSFinger1
             _PMOSSETinputs['_CLKinputPMOSFinger2'] = _CLKinputPMOSFinger2
             _PMOSSETinputs['_PMOSFinger'] = _PMOSFinger
@@ -68,7 +68,7 @@ class _Slicer(StickDiagram._StickDiagram):
             _PMOSSETinputs['_SLVT'] = _SLVT
             _PMOSSETinputs['_GuardringWidth'] = _GuardringWidth
             _PMOSSETinputs['_Guardring'] = _Guardring
-            self._DesignParameter['_PMOSSET'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummyOfSlicer._PMOSWithDummyOfSlicer(_DesignParameter=None, _Name='PMOSSETIn{}'.format(_Name)))[0]
+            self._DesignParameter['_PMOSSET'] = self._SrefElementDeclaration(_DesignObj=PMOSSetofSlicer._PMOSWithDummyOfSlicer(_DesignParameter=None, _Name='PMOSSETIn{}'.format(_Name)))[0]
             self._DesignParameter['_PMOSSET']['_DesignObj']._CalculateDesignParameter(**_PMOSSETinputs)
             self._DesignParameter['_PMOSSET']['_XYCoordinates'] = [[0, 0+abs(self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_bottomtmp']['_Ignore']) \
                                                                        + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_Width'] +_DRCObj._NwMinSpacetoNactive]]
@@ -77,7 +77,7 @@ class _Slicer(StickDiagram._StickDiagram):
             ################################################################### NMOS SET Generation  #########################################################################
             ##############################################################################################################################################################
             # NMOS SET Generation
-            _NMOSSETinputs = copy.deepcopy(NMOSWithDummyOfSlicer._NMOSWithDummyOfSlicer._ParametersForDesignCalculation)
+            _NMOSSETinputs = copy.deepcopy(NMOSSetofSlicer._NMOSWithDummyOfSlicer._ParametersForDesignCalculation)
             _NMOSSETinputs['_DATAinputNMOSFinger'] = _DATAinputNMOSFinger
             _NMOSSETinputs['_NMOSFinger'] = _NMOSFinger
             _NMOSSETinputs['_CLKinputNMOSFinger'] = _CLKinputNMOSFinger
@@ -88,7 +88,7 @@ class _Slicer(StickDiagram._StickDiagram):
             _NMOSSETinputs['_GuardringWidth'] = _GuardringWidth
             _NMOSSETinputs['_Guardring'] = _Guardring
 
-            self._DesignParameter['_NMOSSET'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummyOfSlicer._NMOSWithDummyOfSlicer(_DesignParameter=None, _Name='NMOSSETIn{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOSSET'] = self._SrefElementDeclaration(_DesignObj=NMOSSetofSlicer._NMOSWithDummyOfSlicer(_DesignParameter=None, _Name='NMOSSETIn{}'.format(_Name)))[0]
             self._DesignParameter['_NMOSSET']['_DesignObj']._CalculateDesignParameter(**_NMOSSETinputs)
             self._DesignParameter['_NMOSSET']['_XYCoordinates'] = [[0, 0-abs(self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_toptmp']['_Ignore']) \
                                                                         -_DRCObj._PpMinWidth/2]]
@@ -622,7 +622,7 @@ class _Slicer(StickDiagram._StickDiagram):
             pass
             #########################################################################################################################################
 if __name__ == '__main__':
-    SlicerObj = _Slicer(_DesignParameter=None, _Name='Slicer1')
+    SlicerObj = _Slicer(_DesignParameter=None, _Name='Slicer')
     SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
                                         _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
                                         _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,

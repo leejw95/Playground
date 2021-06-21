@@ -54,9 +54,9 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                _NMOSSubringType = True, _NMOSSubringXWidth = None, _NMOSSubringYWidth = None, _NMOSSubringWidth = None,
                                _TotalSubringType = True, _TotalSubringXWidth = None, _TotalSubringYWidth = None, _TotalSubringWidth = None):
 
-        print '#########################################################################################################'
-        print '                                {}  ResistorBank Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                {}  ResistorBank Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         _DRCObj = DRC.DRC()
         _Name = 'ResistorBank'
@@ -76,7 +76,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         # self._DesignParameter['_InverterRB'] = self._SrefElementDeclaration(_DesignObj=Inverter._Inverter(_DesignParameter=None, _Name='InverterIn{}'.format(_Name)))[0]
         # self._DesignParameter['_InverterRB']['_DesignObj']._CalculateInverter(**_Inverterinputs)
 
-        print '##############################     TransmissionGate Generation    ########################################'
+        print ('##############################     TransmissionGate Generation    ########################################')
         _TransmissionGateinputs = copy.deepcopy(Transmission_Gate._TransmissionGate._ParametersForDesignCalculation)
         _TransmissionGateinputs['_Finger'] = _TransmissionGateFinger
         _TransmissionGateinputs['_ChannelWidth'] = _TransmissionGateChannelWidth
@@ -91,7 +91,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._CalculateTransmissionGate(**_TransmissionGateinputs)
 
 
-        print '###############################       Opppcres_b Generation      #########################################'
+        print ('###############################       Opppcres_b Generation      #########################################')
         _Opppcresinputs = copy.deepcopy(opppcres_b._Opppcres._ParametersForDesignCalculation)
         _Opppcresinputs['_ResWidth'] = _ResistorWidth
         _Opppcresinputs['_ResLength'] = _ResistorLength
@@ -102,7 +102,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         self._DesignParameter['_OpppcresRB']['_DesignObj']._CalculateOpppcresDesignParameter(**_Opppcresinputs)
 
 
-        print '#################################       PSubring Generation      #########################################'
+        print ('#################################       PSubring Generation      #########################################')
         _PMOSSubringinputs = copy.deepcopy(psubring._PSubring._ParametersForDesignCalculation)
         _PMOSSubringinputs['_PType'] = False
         _PMOSSubringinputs['_XWidth'] = (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] -
@@ -152,7 +152,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         self._DesignParameter['_TotalSubringRB']['_DesignObj']._CalculatePSubring(**_TotalSubringinputs)
 
 
-        print '#################################       Coordinates Settings      ########################################'
+        print ('#################################       Coordinates Settings      ########################################')
 
         ## Inverter and Transmission Gate Settings
 
@@ -200,7 +200,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
 
 
-        print '###############################       Additional Path Settings      ######################################'
+        print ('###############################       Additional Path Settings      ######################################')
         ##Additional NWell Generation
         self._DesignParameter['_NWLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_NWLayer']['_Width'] = _PMOSSubringinputs['_YWidth']
@@ -606,7 +606,7 @@ if __name__ == '__main__' :
 
     testStreamFile.close()
 
-    print '###############      Sending to FTP Server...      ##################'
+    print ('###############      Sending to FTP Server...      ##################')
 
 
     ftp = ftplib.FTP('141.223.29.61')

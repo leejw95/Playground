@@ -55,15 +55,15 @@ class _NMOS(StickDiagram._StickDiagram):
 
     def _CalculateNMOSDesignParameter(self, _NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None,
                                       _NMOSDummy=False, _SLVT=False):
-        print '#########################################################################################################'
-        print '                                    {}  NMOSContact Calculation Start                                    '.format(
-            self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  NMOSContact Calculation Start                                    '.format(
+            self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
         _DRCObj = DRC.DRC()
 
         _XYCoordinateOfNMOS = [[0, 0]]
 
-        print '#############################     POLY Layer Calculation    ##############################################'
+        print ('#############################     POLY Layer Calculation    ##############################################')
 
         self._DesignParameter['_POLayer']['_XWidth'] = _NMOSChannellength
 
@@ -84,7 +84,7 @@ class _NMOS(StickDiagram._StickDiagram):
             tmp.append(_xycoordinatetmp)
         self._DesignParameter['_POLayer']['_XYCoordinates'] = tmp
 
-        print '#############################     DIFF Layer Calculation    ##############################################'
+        print ('#############################     DIFF Layer Calculation    ##############################################')
         _LengthNMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
                            self._DesignParameter['_POLayer']['_XWidth']
 
@@ -94,7 +94,7 @@ class _NMOS(StickDiagram._StickDiagram):
         self._DesignParameter['_ODLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
 
         if _NMOSDummy == True:
-            print '#############################     POLY Dummy Layer Calculation    ##############################################'
+            print ('#############################     POLY Dummy Layer Calculation    ##############################################')
 
             self._DesignParameter['_PODummyLayer']['_XWidth'] = _NMOSChannellength
             if _NMOSChannelWidth * _NMOSChannellength > _DRCObj._PODummyMinArea:
@@ -136,7 +136,7 @@ class _NMOS(StickDiagram._StickDiagram):
  #                   [self._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0],
  #                    self._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][1] - _DRCObj._PoDummyLengthToMove]]
 
-        print '#############################     METAL1 Layer Calcuation    ##############################################'
+        print ('#############################     METAL1 Layer Calcuation    ##############################################')
         self._DesignParameter['_Met1Layer']['_XWidth'] = _DRCObj._CoMinWidth + 2 * _DRCObj._Metal1MinEnclosureCO
         self._DesignParameter['_Met1Layer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
         _LengthNMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
@@ -156,7 +156,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
         self._DesignParameter['_Met1Layer']['_XYCoordinates'] = tmp
 
-        print '#############################     CONT Layer Calculation    ##############################################'
+        print ('#############################     CONT Layer Calculation    ##############################################')
         _XNumberOfCOInNMOS = _NMOSNumberofGate + 1
         _YNumberOfCOInNMOS = int(float(self._DesignParameter['_ODLayer']['_YWidth'] - 2 * max(
             [_DRCObj._CoMinEnclosureByODAtLeastTwoSide, _DRCObj._Metal1MinEnclosureCO2]) + _DRCObj._CoMinSpace) / (
@@ -171,8 +171,8 @@ class _NMOS(StickDiagram._StickDiagram):
         tmp = []
         ###############################################Check the number of CO On NMOS TR##############################################################################################
         if _XNumberOfCOInNMOS == 0 or _YNumberOfCOInNMOS == 0:
-            print '************************* Error occured in {} Design Parameter Calculation******************************'.format(
-                self._DesignParameter['_Name']['_Name'])
+            print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(
+                self._DesignParameter['_Name']['_Name']))
             if DesignParameters._DebugMode == 0:
                 return 0
         ###############################################################################################################################################################################
@@ -206,7 +206,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmp
 
-        print '#############################     NIMP Layer Calculation    ####################'
+        print ('#############################     NIMP Layer Calculation    ####################')
         self._DesignParameter['_NPLayer']['_XYCoordinates'] = [] ## NO NIMP Layer FOR 28nm TECH
         self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer'][
                                                            '_XWidth'] + 2 * _DRCObj._NpMinExtensiononNactive if _NMOSDummy == False else \
@@ -217,7 +217,7 @@ class _NMOS(StickDiagram._StickDiagram):
                                                            '_YWidth'] + 2 * _DRCObj._NpMinEnclosureOfPo
 
         if _SLVT == True:
-            print '#############################     SLVT Layer Calculation    ##############################################'
+            print ('#############################     SLVT Layer Calculation    ##############################################')
             # SLVT Dummy Layer XWidth and YWidth Setting
             self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD
             self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
@@ -238,51 +238,51 @@ class _NMOS(StickDiagram._StickDiagram):
                 self._DesignParameter['_PCCRITLayer']['_XYCoordinates'] = []
 
         if DesignParameters._Technology == '180nm':
-            print '#############################     WELLBODY Layer Calculation    #########################################'
+            print ('#############################     WELLBODY Layer Calculation    #########################################')
             self._DesignParameter['_WELLBodyLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
             self._DesignParameter['_WELLBodyLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth']
             self._DesignParameter['_WELLBodyLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
 
         if DesignParameters._Technology == '065nm':
-            print '################################     PDK Layer Calculation    ############################################'
+            print ('################################     PDK Layer Calculation    ############################################')
             self._DesignParameter['_PDKLayer']['_XYCoordinates'] = []
             self._DesignParameter['_PDKLayer']['_XWidth'] = self._DesignParameter['_NPLayer']['_XWidth']
             self._DesignParameter['_PDKLayer']['_YWidth'] = self._DesignParameter['_NPLayer']['_YWidth']
 
-        print '#########################     Supply Routing Coordinates Calculation   ##################################'
+        print ('#########################     Supply Routing Coordinates Calculation   ##################################')
         tmp = []
         _LengthNMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
                              self._DesignParameter['_POLayer']['_XWidth']
         if (_NMOSNumberofGate % 2) == 0:
-            for i in range(0, _NMOSNumberofGate / 2 + 1):
+            for i in range(0, _NMOSNumberofGate // 2 + 1):
                 # _XYCenter=[self._XYCoordinateNMOS[0] -  self._NumberOfNMOSGate / 2 * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
                 tmp.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 \
                             * _LengthNMOSBtwMet1 + i * 2 * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
         elif (_NMOSNumberofGate % 2) == 1:
-            for i in range(0, (_NMOSNumberofGate - 1) / 2 + 1):
+            for i in range(0, (_NMOSNumberofGate - 1) // 2 + 1):
                 # _XYCenter=[self._XYCoordinateNMOS[0] - (  (self._NumberOfNMOSGate + 1) / 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
                 tmp.append([_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) / 2 - 0.5) \
                             * _LengthNMOSBtwMet1 + i * 2 * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
 
         self._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'] = tmp
 
-        print '#########################     Output Routing Coordinates Calculation    ##################################'
+        print ('#########################     Output Routing Coordinates Calculation    ##################################')
         tmp = []
         _LengthNMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
                              self._DesignParameter['_POLayer']['_XWidth']
         if (_NMOSNumberofGate % 2) == 0:
-            for i in range(0, _NMOSNumberofGate / 2):
+            for i in range(0, _NMOSNumberofGate // 2):
                 # _XYCenter=[self._XYCoordinateNMOS[0] -  self._NumberOfNMOSGate / 2 * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
                 tmp.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 \
                             * _LengthNMOSBtwMet1 + (i * 2 + 1) * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
         elif (_NMOSNumberofGate % 2) == 1:
-            for i in range(0, (_NMOSNumberofGate - 1) / 2 + 1):
+            for i in range(0, (_NMOSNumberofGate - 1) // 2 + 1):
                 # _XYCenter=[self._XYCoordinateNMOS[0] - (  (self._NumberOfNMOSGate + 1) / 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
                 tmp.append([_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) / 2 - 0.5) \
                             * _LengthNMOSBtwMet1 + (i * 2 + 1) * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
         self._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'] = tmp
 
-        print '#########################     Gate Routing Coordinates Calculation   ##################################'
+        print ('#########################     Gate Routing Coordinates Calculation   ##################################')
         tmp = []
         _LengthNMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
                              self._DesignParameter['_POLayer']['_XWidth']
@@ -298,10 +298,10 @@ class _NMOS(StickDiagram._StickDiagram):
         self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'] = tmp
 
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  NMOSContact Calculation End                                   '.format(
-            self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  NMOSContact Calculation End                                   '.format(
+            self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 if __name__ == '__main__':
@@ -321,4 +321,4 @@ if __name__ == '__main__':
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
-    print '##########################################################################################'
+    print ('##########################################################################################')

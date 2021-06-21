@@ -33,9 +33,9 @@ class _NbodyContact(StickDiagram._StickDiagram):
 
 
     def _CalculateNbodyContactDesignParameter(self, _NumberOfNbodyCOX=None, _NumberOfNbodyCOY=None,  _Met1XWidth=None, _Met1YWidth=None ):
-        print '#########################################################################################################'
-        print '                                  {}  NbodyContact Calculation Start                                     '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                  {}  NbodyContact Calculation Start                                     '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         _DRCObj=DRC.DRC()
         _XYCoordinateOfNbodyContact=[[0,0]]
@@ -43,7 +43,7 @@ class _NbodyContact(StickDiagram._StickDiagram):
         _LengthNbodyBtwCO = _DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOX=_NumberOfNbodyCOX,NumOfCOY=_NumberOfNbodyCOY )
 
 
-        print '#############################     DIFF Layer Calculation    ##############################################'
+        print ('#############################     DIFF Layer Calculation    ##############################################')
 
         self._DesignParameter['_ODLayer']['_XYCoordinates']=_XYCoordinateOfNbodyContact
 
@@ -57,14 +57,14 @@ class _NbodyContact(StickDiagram._StickDiagram):
         #     self._DesignParameter['_PDKLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth']
         #     self._DesignParameter['_PDKLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
 
-        print '#############################     NIMP  Layer Calculation    ##############################################'
+        print ('#############################     NIMP  Layer Calculation    ##############################################')
         # self._DesignParameter['_NPLayer']['_XYCoordinates']=_XYCoordinateOfNbodyContact
         # self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
         # self._DesignParameter['_NPLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
 
 
 
-        print '###########################     Metal1  Layer Calculation    ##############################################'
+        print ('###########################     Metal1  Layer Calculation    ##############################################')
 
 
         self._DesignParameter['_Met1Layer']['_XYCoordinates']=_XYCoordinateOfNbodyContact
@@ -84,7 +84,7 @@ class _NbodyContact(StickDiagram._StickDiagram):
             self._DesignParameter['_Met1Layer']['_YWidth'] =_Met1YWidth
 
 
-        print '#############################     CONT Layer Caculation    ##############################################'
+        print ('#############################     CONT Layer Caculation    ##############################################')
 
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
@@ -121,9 +121,9 @@ class _NbodyContact(StickDiagram._StickDiagram):
 
         del _DRCObj
 
-        print '#########################################################################################################'
-        print '                                  {}  NbodyContact Calculation End                                       '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                  {}  NbodyContact Calculation End                                       '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 
@@ -146,5 +146,5 @@ if __name__=='__main__':
     testStreamFile.close()
    
 
-    print '##########################################################################################'
+    print ('##########################################################################################')
 

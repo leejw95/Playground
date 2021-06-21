@@ -427,9 +427,9 @@ class _DELAYUNIT(StickDiagram._StickDiagram):
                                      
                                      _Dummy=False
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  DelayUnit Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  DelayUnit Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
         _DRCObj=DRC.DRC()
@@ -871,7 +871,7 @@ class _DELAYUNIT(StickDiagram._StickDiagram):
                                                                           ,[_Xlocation2 + _XBiasForCLKbarverticalMet4,self._DesignParameter['_FFtop']['_XYCoordinates'][0][1]+(-self._DesignParameter['_FFtop']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnPMOS4Gate']['_XYCoordinates'][0][1])] ]]
 
                                                                           
-            print 'aa?' , self._DesignParameter['_ViaMet22Met3OnCLKTopRight']['_XYCoordinates']
+            print ('aa?' , self._DesignParameter['_ViaMet22Met3OnCLKTopRight']['_XYCoordinates'])
             # # )################################ CLK VIA ################################
             if _XBiasForViaMet22Met3OnCLKBotLeft is None:
                 _XBiasForViaMet22Met3OnCLKBotLeft = 0
@@ -1199,7 +1199,7 @@ class _DELAYUNIT(StickDiagram._StickDiagram):
                 MOS_RightSide = self._DesignParameter[TopOrBot]['_XYCoordinates'][0][0] + self._DesignParameter[TopOrBot]['_DesignObj']._DesignParameter[PMOS]['_XYCoordinates'][0][0] + self._DesignParameter[TopOrBot]['_DesignObj']._DesignParameter[PMOS]['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][-1][0]
                 
                 if VIA_RightSide > MOS_RightSide:
-                    print 'WIP'
+                    print ('WIP')
                     if PMOS is '_PMOS1' :
                         ConnectionIndex = len(self._DesignParameter[TopOrBot]['_DesignObj']._DesignParameter[PMOS]['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) - 1
                     else :
@@ -1240,7 +1240,7 @@ class _DELAYUNIT(StickDiagram._StickDiagram):
                 MOS_LeftSide = self._DesignParameter[TopOrBot]['_XYCoordinates'][0][0] + self._DesignParameter[TopOrBot]['_DesignObj']._DesignParameter[PMOS]['_XYCoordinates'][0][0] + self._DesignParameter[TopOrBot]['_DesignObj']._DesignParameter[PMOS]['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][0]
                 
                 if VIA_LeftSide < MOS_LeftSide:
-                    print 'WIP'
+                    print ('WIP')
                     if PMOS is '_PMOS1' :
                         ConnectionIndex = 0
                     else :
@@ -1580,7 +1580,7 @@ class _DELAYUNIT(StickDiagram._StickDiagram):
             self._DesignParameter['_AdditionalMet1OnCLKBarTopLeft']['_XWidth'] = Met1_RightSide-Met1_LeftSide
             self._DesignParameter['_AdditionalMet1OnCLKBarTopLeft']['_YWidth'] = Met1_UpSide-Met1_DownSide
             self._DesignParameter['_AdditionalMet1OnCLKBarTopLeft']['_XYCoordinates'] =[ [(Met1_RightSide+Met1_LeftSide)/2 ,(Met1_UpSide+Met1_DownSide)/2] ]
-            print 'straw1' , self._DesignParameter['_AdditionalMet1OnCLKBarTopLeft']['_XYCoordinates']
+            print ('straw1' , self._DesignParameter['_AdditionalMet1OnCLKBarTopLeft']['_XYCoordinates'])
             
             #CLK Left Additional Met1
             Met1_LeftSide = min( (self._DesignParameter['_FFbot']['_XYCoordinates'][0][0] + self._DesignParameter['_FFbot']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnNMOS2Gate']['_XYCoordinates'][0][0] - self._DesignParameter['_FFbot']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnNMOS2Gate']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']/2 )
@@ -1782,9 +1782,9 @@ class _DELAYUNIT(StickDiagram._StickDiagram):
             
         
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  DelayUnit Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  DelayUnit Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         
 
@@ -1886,7 +1886,7 @@ if __name__=='__main__':
     testStreamFile.close()
 
 
-    print '###############open ftp connection & update gds file to cadence server###################'
+    print ('###############open ftp connection & update gds file to cadence server###################')
     ftp_cadence_server = ftplib.FTP('141.223.86.109')
     ftp_cadence_server.login('sgjeong2',base64.b64decode('YWx2aDE1OTk1MQ==') )
     if DesignParameters._Technology == '065nm':
@@ -1899,15 +1899,15 @@ if __name__=='__main__':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc90')
     elif DesignParameters._Technology == '045nm':
         ftp_cadence_server.cwd('/home/home18/sgjeong2/OPUS/tsmc45')
-    print ftp_cadence_server.pwd()
+    print (ftp_cadence_server.pwd())
     testStreamFile = open('./{}'.format(_fileName), 'rb')
     ftp_cadence_server.storbinary('STOR {}'.format(_fileName), testStreamFile)
-    print 'close ftp connection'
+    print ('close ftp connection')
     ftp_cadence_server.quit()
     testStreamFile.close()
 
 
-    print '##########################################################################################'
+    print ('##########################################################################################')
 
 
 

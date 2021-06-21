@@ -28,14 +28,14 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             _SLVT = False, _NumSupplyCOX=None, _NumSupplyCOY=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None,
                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None) :
         ## You Should Draw N-WELL Afterwards!!
-        print '#########################################################################################################'
-        print '                              {}  TransmissionGate Calculation Start                                     '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                              {}  TransmissionGate Calculation Start                                     '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         _DRCObj = DRC.DRC()
         _Name = 'TransmissionGate'
 
-        print '###############################     MOSFET Generation    ################################################'
+        print ('###############################     MOSFET Generation    ################################################')
         _NMOSinputs = copy.deepcopy(NMOS._NMOS._ParametersForDesignCalculation)
         _NMOSinputs['_NMOSNumberofGate'] = _Finger
         _NMOSinputs['_NMOSChannelWidth'] = _ChannelWidth
@@ -60,7 +60,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_PMOSTG'] = self._SrefElementDeclaration(_DesignObj=PMOS._PMOS(_DesignParameter=None, _Name='PMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_PMOSTG']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOSinputs)
 
-        print '################################     VDD VSS Generation    ##############################################'
+        print ('################################     VDD VSS Generation    ##############################################')
         print (self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'])
         _NumSupplyCOX = int(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + 1)
         if _NumSupplyCOX < 2:
@@ -86,7 +86,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_NbodycontactTG'] = self._SrefElementDeclaration(_DesignObj=NbodyContact._NbodyContact(_DesignParameter=None, _Name='Nbodycontactin{}'.format(_Name)))[0]
         self._DesignParameter['_NbodycontactTG']['_DesignObj']._CalculateNbodyContactDesignParameter(**_NBodyinputs)
 
-        print '###########################     Via Generation for PMOS Outputs     #####################################'
+        print ('###########################     Via Generation for PMOS Outputs     #####################################')
         _ViaPMOSMet12 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
         if (_NumVIAPoly2Met1COX == None and _NumVIAPoly2Met1COY == None):
             _ViaPMOSMet12['_ViaMet12Met2NumberOfCOX'] = 1
@@ -137,7 +137,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
 
-        print '###########################     Via Generation for NMOS Outputs     #####################################'
+        print ('###########################     Via Generation for NMOS Outputs     #####################################')
         _ViaNMOSMet12 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
         if (_NumVIAPoly2Met1COX == None and _NumVIAPoly2Met1COY == None):
             _ViaNMOSMet12['_ViaMet12Met2NumberOfCOX'] = 1
@@ -225,7 +225,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
         del tmp4X_P, tmp4vX_P
 
-        print "###########################     Via Generation for NMOS Controls      #####################################"
+        print ("###########################     Via Generation for NMOS Controls      #####################################")
         _ViaNMOSPoly2Met1 = copy.deepcopy(ViaPoly2Met1._ViaPoly2Met1._ParametersForDesignCalculation)
         _TotalLenOfNMOSGate = \
             self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting'][
@@ -269,7 +269,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
         del tmp4X, tmp4vX
 
-        print'################################     Coordinates Settings     ############################################'
+        print('################################     Coordinates Settings     ############################################')
 
         _VDD2VSSMinHeight = (self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
                             (self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
@@ -423,7 +423,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         del tmp1, tmp2
 
 
-        print'################################     Additional path Settings     #########################################'
+        print ('################################     Additional path Settings     #########################################')
         ##Input Poly Routings (Vertical & Horizontal)
 
         self._DesignParameter['_ControlNMOSRoutingTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0], _Datatype=DesignParameters._LayerMapping['POLY'][1],_XYCoordinates=[], _Width=100)
@@ -638,7 +638,7 @@ if __name__ == '__main__' :
 
     testStreamFile.close()
 
-    print '###############      Sending to FTP Server...      ##################'
+    print ('###############      Sending to FTP Server...      ##################')
 
     ftp = ftplib.FTP('141.223.29.61')
     ftp.login('junung', 'chlwnsdnd1!')

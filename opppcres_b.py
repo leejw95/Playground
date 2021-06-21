@@ -30,34 +30,34 @@ class _Opppcres(StickDiagram._StickDiagram) :
 
 
     def _CalculateOpppcresDesignParameter(self, _ResWidth = None, _ResLength = None, _CONUMX = None, _CONUMY = None):
-        print '#########################################################################################################'
-        print '                                    {}  Opppcres Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  Opppcres Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         _DRCObj = DRC.DRC()
         _XYCoordinateOfOPRES = [[0,0]]
 
-        print '#############################     OP Layer Calculation    ################################################'
+        print ('#############################     OP Layer Calculation    ################################################')
         self._DesignParameter['_OPLayer']['_XWidth'] = _ResWidth + _DRCObj._OPlayeroverPoly * 2
         self._DesignParameter['_OPLayer']['_YWidth'] = _ResLength
         self._DesignParameter['_OPLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
-        print '#############################     POLY Layer Calculation    ##############################################'
+        print ('#############################     POLY Layer Calculation    ##############################################')
         self._DesignParameter['_POLayer']['_XWidth'] = _ResWidth
         self._DesignParameter['_POLayer']['_YWidth'] = _ResLength + _DRCObj._PolyoverOPlayer * 2
         self._DesignParameter['_POLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
-        print '#############################     PRES Layer Calculation    ##############################################'
+        print ('#############################     PRES Layer Calculation    ##############################################')
         self._DesignParameter['_PRESLayer']['_XWidth'] = _ResWidth + _DRCObj._PRESlayeroverPoly * 2
         self._DesignParameter['_PRESLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + _DRCObj._PRESlayeroverPoly * 2
         self._DesignParameter['_PRESLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
-        print '#############################     PIMP Layer Calculation    ##############################################'
+        print ('#############################     PIMP Layer Calculation    ##############################################')
         self._DesignParameter['_PPLayer']['_XWidth'] = self._DesignParameter['_PRESLayer']['_XWidth']
         self._DesignParameter['_PPLayer']['_YWidth'] = self._DesignParameter['_PRESLayer']['_YWidth']
         self._DesignParameter['_PPLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
-        print '#############################     CONT Layer Calculation    ##############################################'
+        print ('#############################     CONT Layer Calculation    ##############################################')
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
         tmp = []
@@ -89,7 +89,7 @@ class _Opppcres(StickDiagram._StickDiagram) :
 
         del tmp
 
-        print '#########################     Port1 Routing Coordinates Calculation    ####################################'
+        print ('#########################     Port1 Routing Coordinates Calculation    ####################################')
         tmp = []
         tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
                                                                               (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)//2 + _DRCObj._CoMinWidth//2)])
@@ -98,7 +98,7 @@ class _Opppcres(StickDiagram._StickDiagram) :
 
         # Downward
 
-        print '#########################     Port2 Routing Coordinates Calculation    ####################################'
+        print ('#########################     Port2 Routing Coordinates Calculation    ####################################')
         tmp = []
         tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
                     (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
@@ -107,7 +107,7 @@ class _Opppcres(StickDiagram._StickDiagram) :
 
         #Upward
 
-        print '#############################     Metal1 Layer Calculation    #############################################'
+        print ('#############################     Metal1 Layer Calculation    #############################################')
         self._DesignParameter['_Met1Layer']['_XWidth'] = (_CONUMX - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + _DRCObj._CoMinWidth + _DRCObj._Metal1MinEnclosureCO3 * 2
         self._DesignParameter['_Met1Layer']['_YWidth'] = (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + _DRCObj._CoMinWidth + _DRCObj._Metal1MinEnclosureCO3 * 2
         self._DesignParameter['_Met1Layer']['_XYCoordinates'] = [self._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'][0], self._DesignParameter['_XYCoordinatePort2Routing']['_XYCoordinates'][0]]
@@ -131,7 +131,7 @@ if __name__ == '__main__' :
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
-    print '###############################    Transporting to FTP server    ########################################'
+    print ('###############################    Transporting to FTP server    ########################################')
     ftp = ftplib.FTP('141.223.29.61')
     ftp.login('junung', 'chlwnsdnd1!')
     ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')

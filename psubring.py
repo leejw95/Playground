@@ -31,16 +31,16 @@ class _PSubring(StickDiagram._StickDiagram):
             self._DesignParameter['_Name']['_Name']=_Name
 
     def _CalculatePSubring(self, _PType = True, _XWidth = None, _YWidth = None, _Width = None):
-        print '#########################################################################################################'
-        print '                                    {}  PSubring Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  PSubring Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
         _DRCObj = DRC.DRC()
         _XYCoordinateOfPSubring = [[0, 0]]
 
         if _XWidth == None or _YWidth == None or _Width < _DRCObj._MetalxMinWidth :
             raise NotImplementedError
 
-        print '#############################     METAL1 Layer Calcuation    ############################################'
+        print ('#############################     METAL1 Layer Calcuation    ############################################')
         if _XWidth % 2 == 0 and _YWidth % 2 == 0 and _Width % 2 == 0:
             self._DesignParameter['_Met1Layerx']['_XWidth'] = _XWidth + 2 * _Width
             self._DesignParameter['_Met1Layerx']['_YWidth'] = _Width
@@ -295,7 +295,7 @@ class _PSubring(StickDiagram._StickDiagram):
         #     self._DesignParameter['_Met1Layery2']['_XYCoordinates'] = [[_XYCoordinateOfPSubring[0][0] + int(_XWidth / 2 + 0.5) + int(_Width / 2 + 0.5) + 2,
         #                                                                 _XYCoordinateOfPSubring[0][1] - int(_YWidth / 2 + 0.5) - int(_Width / 2 + 0.5) - 2]]
 
-        print '###############################     DIFF Layer Calcuation     ############################################'
+        print ('###############################     DIFF Layer Calcuation     ############################################')
 
         if _XWidth % 2 == 0 and _YWidth % 2 == 0 and _Width % 2 == 0:
             self._DesignParameter['_ODLayerx']['_XWidth'] = _XWidth + 2 * _Width
@@ -592,7 +592,7 @@ class _PSubring(StickDiagram._StickDiagram):
         #          _XYCoordinateOfPSubring[0][1] - int(_YWidth / 2 + 0.5) - int(_Width / 2 + 0.5) - 2]]
 
 
-        print '##############################     CONT Layer Calcuation    ##############################################'
+        print ('##############################     CONT Layer Calcuation    ##############################################')
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
         _COXNumMin1 = int((self._DesignParameter['_Met1Layerx']['_XWidth'] - _DRCObj._CoMinWidth -_DRCObj._Metal1MinEnclosureCO2 * 2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1
@@ -654,7 +654,7 @@ class _PSubring(StickDiagram._StickDiagram):
 
 
         if _PType == True :
-            print '##############################     PIMP Layer Calcuation     ##############################################'
+            print ('##############################     PIMP Layer Calcuation     ##############################################')
             if _Width % 2 == 1 :
                 self._DesignParameter['_PPLayer']['_Width'] = _Width + 2 * _DRCObj._PpMinExtensiononPactive + 1
             else :
@@ -683,7 +683,7 @@ class _PSubring(StickDiagram._StickDiagram):
 
 
         if _PType == False :
-            print '##############################     NWELL Layer Calcuation    ##############################################'
+            print ('##############################     NWELL Layer Calcuation    ##############################################')
             if _Width % 2 == 1 :
                 self._DesignParameter['_NWLayer']['_Width'] = _Width + 2 * _DRCObj._NwMinEnclosurePactive + 1
             else :
@@ -735,7 +735,7 @@ if __name__ == '__main__' :
 
     testStreamFile.close()
 
-    print '###############      Sending to FTP Server...      ##################'
+    print ('###############      Sending to FTP Server...      ##################')
 
     ftp = ftplib.FTP('141.223.29.61')
     ftp.login('junung', 'chlwnsdnd1!')

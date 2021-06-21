@@ -239,9 +239,9 @@ class _XOR(StickDiagram._StickDiagram):
 
                                      _Dummy=False
                                      ):
-        print '#########################################################################################################'
-        print '                                    {}  INV Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  INV Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
         _DRCObj=DRC.DRC()
@@ -1230,7 +1230,7 @@ class _XOR(StickDiagram._StickDiagram):
                                                                     + self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][0][0] - self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']/2)
             _DistanceBtwMet2ConnectionViaEdge2Met2OutputViaEdge1 = (pow(_DistanceBtwMet2ConnectionViaEdge2Met2OutputViaEdge1X,2) + pow(_DistanceBtwMet2ConnectionViaEdge2Met2OutputViaEdge1Y,2))**0.5
             
-            print self._DesignParameter['_ViaMet12Met2OnPMOSconnection']['_XYCoordinates'][-temp_num3]
+            print (self._DesignParameter['_ViaMet12Met2OnPMOSconnection']['_XYCoordinates'][-temp_num3])
             _DistanceBtwMet2ConnectionViaEdge2Met2OutputRouting1 =  float(self._DesignParameter['_ViaMet12Met2OnPMOSconnection']['_XYCoordinates'][temp_num][1] - self._DesignParameter['_ViaMet12Met2OnPMOSconnection']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']/2\
                                                                     - self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][1] - self._DesignParameter['_OutputRouting']['_Width']/2)
             _DistanceBtwMet2ConnectionViaEdge2Met2OutputRouting2 =  float(self._DesignParameter['_ViaMet12Met2OnPMOSconnection']['_XYCoordinates'][-temp_num3][1] - self._DesignParameter['_ViaMet12Met2OnPMOSconnection']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']/2\
@@ -1293,7 +1293,7 @@ class _XOR(StickDiagram._StickDiagram):
             if _NumberOfSupplyCOX is None:
                 _NumberOfSupplyCOX =int(_LengthOfOD - 2*_DRCObj._CoMinEnclosureByOD + _DRCObj.DRCCOMinSpace(NumOfCOY=None, NumOfCOX=None))/(_DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOY=None, NumOfCOX=None)) if _PbodyDesignCalculationParameters['_NumberOfPbodyCOY']==1 \
                         else int(_LengthOfOD - 2*_DRCObj._CoMinEnclosureByOD + _DRCObj.DRCCOMinSpace(NumOfCOY=3, NumOfCOX=3))/(_DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOY=3, NumOfCOX=3))
-                print 'kakao' , _NumberOfSupplyCOX , _LengthOfBody ,_LengthOfOD , 'numerator', _LengthOfOD - 2*_DRCObj._CoMinEnclosureByOD + _DRCObj.DRCCOMinSpace(NumOfCOY=2, NumOfCOX=2), 'denominator' , (_DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOY=2, NumOfCOX=2))
+                print ('kakao' , _NumberOfSupplyCOX , _LengthOfBody ,_LengthOfOD , 'numerator', _LengthOfOD - 2*_DRCObj._CoMinEnclosureByOD + _DRCObj.DRCCOMinSpace(NumOfCOY=2, NumOfCOX=2), 'denominator' , (_DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOY=2, NumOfCOX=2)))
             _PbodyDesignCalculationParameters['_NumberOfPbodyCOX']=_NumberOfSupplyCOX
             _NbodyDesignCalculationParameters['_NumberOfNbodyCOX']=_NumberOfSupplyCOX
 
@@ -1344,8 +1344,8 @@ class _XOR(StickDiagram._StickDiagram):
             
     
                 if error == 1 :
-                    print '****************************** Error occured in _XOREdgeBtwNWandPW setting ******************************'
-                    print '_XOREdgeBtwNWandPW Should be same or higher than' , _XOREdgeBtwNWandPW+ tempVal
+                    print ('****************************** Error occured in _XOREdgeBtwNWandPW setting ******************************')
+                    print ('_XOREdgeBtwNWandPW Should be same or higher than' , _XOREdgeBtwNWandPW+ tempVal)
                     return 0
                     
                 for i in range(1,6):
@@ -1362,8 +1362,8 @@ class _XOR(StickDiagram._StickDiagram):
                         if _HeightCalOption != 'ON' :
                             error = 1
                 if error == 1 :
-                    print '****************************** Error occured in _XORVdd2VssHeight + _HeightCalibration setting ******************************'
-                    print '_XORVdd2VssHeight + _HeightCalibration Should be same or higher than' , _XORVdd2VssHeight + _HeightCalibration + tempVal2
+                    print ('****************************** Error occured in _XORVdd2VssHeight + _HeightCalibration setting ******************************')
+                    print ('_XORVdd2VssHeight + _HeightCalibration Should be same or higher than' , _XORVdd2VssHeight + _HeightCalibration + tempVal2)
                     return 0            
              
 
@@ -1492,7 +1492,7 @@ class _XOR(StickDiagram._StickDiagram):
                 M3Length_P = self._DesignParameter['_ViaMet22Met3OnPMOSconnection']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']
                 M3Width2_P = self._DesignParameter['_ViaMet22Met3OnPMOSconnection']['_XYCoordinates'][-1][0] - self._DesignParameter['_ViaMet22Met3OnPMOSconnection']['_XYCoordinates'][InvMOSLeftEdgeViaIndex][0] + self._DesignParameter['_ViaMet22Met3OnPMOSconnection']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
                 
-                print M3Width, M3Width2, M3Length
+                print (M3Width, M3Width2, M3Length)
                 if SpaceM2 < max(_DRCObj.DRCMETALxMinSpace(_Width=M2Width, _ParallelLength=M2Length),_DRCObj.DRCMETALxMinSpace(_Width=M2Width_P, _ParallelLength=M2Length_P) ):
                     _InvMOS2MOS3spacebias += _DRCObj._MinSnapSpacing
                     DRC_PASS = 0
@@ -1614,7 +1614,7 @@ class _XOR(StickDiagram._StickDiagram):
                             temp = round( abs(_DRCObj._PolygateMinSpace - _DistanceBtwVia2GateY)/_DRCObj._MinSnapSpacing + 0.5) * _DRCObj._MinSnapSpacing
                             _BiasDictforViaPoly2Met1OnGate[PViaBias] -= temp
                             DRC_PASS = 0
-                    print NViaBias, _BiasDictforViaPoly2Met1OnGate[NViaBias]
+                    print (NViaBias, _BiasDictforViaPoly2Met1OnGate[NViaBias])
             
             
                         
@@ -1637,11 +1637,11 @@ class _XOR(StickDiagram._StickDiagram):
             
         
         del _DRCObj
-        print '#########################################################################################################'
-        print '                                    {}  XOR Calculation End                                    '.format(self._DesignParameter['_Name']['_Name'])
-        print '#########################################################################################################'
+        print ('#########################################################################################################')
+        print ('                                    {}  XOR Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
-        print 'ODSPACE' ,_SpaceBTWMOS12MOS2OD
+        print ('ODSPACE' ,_SpaceBTWMOS12MOS2OD)
 
 
 if __name__=='__main__':

@@ -291,38 +291,43 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             _LengthPMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']
             tmp = []
-            tmpx = []
-            PMOS23tmp = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1]
-            PMOS23tmp2 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1, self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
-            PMOS23tmp3 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
-            # PMOS12tmp4 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
-            if (_CLKinputPMOSFinger % 2) == 0:
-                if (_CLKinputPMOSFinger1 % 2) == 0:
-                    for j in PMOS12tmp3:
-                        for i in range(0, _CLKinputPMOSFinger/2):
-                            tmpx=[j - (_CLKinputPMOSFinger/2 - 1)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
-                            tmp.append(tmpx)
-                elif (_CLKinputPMOSFinger1 % 2) == 1:
-                    for j in PMOS12tmp3:
-                        for i in range(0, _CLKinputPMOSFinger/2 + 1):
-                            tmpx = [j - (_CLKinputPMOSFinger/2) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
-                            tmp.append(tmpx)
 
-            elif (_CLKinputPMOSFinger % 2) == 1:
-                if (_CLKinputPMOSFinger1 % 2) == 0:
-                    for j in PMOS12tmp:
-                        for i in range(0, _CLKinputPMOSFinger/2 + 1):
-                            tmpx=[j - (_CLKinputPMOSFinger/2-0.5)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
-                            tmp.append(tmpx)
-                elif (_CLKinputPMOSFinger1 % 2) == 1:
-                    for j in PMOS12tmp2:
-                        for i in range(0, _CLKinputPMOSFinger/2 + 1):
-                            tmpx = [j - (_CLKinputPMOSFinger/2-0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
-                            tmp.append(tmpx)
+            for i in range(0, int((_CLKinputPMOSFinger1 + 1) // 2)) :
+                tmp.append([self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0], self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1]])
+                tmp.append([-(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0]), self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1]])
+
+            # tmpx = []
+            # PMOS23tmp = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1]
+            # PMOS23tmp2 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1, self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
+            # PMOS23tmp3 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
+            # # PMOS12tmp4 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
+            # if (_CLKinputPMOSFinger % 2) == 0:
+            #     if (_CLKinputPMOSFinger1 % 2) == 0:
+            #         for j in PMOS12tmp3:
+            #             for i in range(0, _CLKinputPMOSFinger/2):
+            #                 tmpx=[j - (_CLKinputPMOSFinger/2 - 1)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
+            #                 tmp.append(tmpx)
+            #     elif (_CLKinputPMOSFinger1 % 2) == 1:
+            #         for j in PMOS12tmp3:
+            #             for i in range(0, _CLKinputPMOSFinger/2 + 1):
+            #                 tmpx = [j - (_CLKinputPMOSFinger/2) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
+            #                 tmp.append(tmpx)
+            #
+            # elif (_CLKinputPMOSFinger % 2) == 1:
+            #     if (_CLKinputPMOSFinger1 % 2) == 0:
+            #         for j in PMOS12tmp:
+            #             for i in range(0, _CLKinputPMOSFinger/2 + 1):
+            #                 tmpx=[j - (_CLKinputPMOSFinger/2-0.5)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
+            #                 tmp.append(tmpx)
+            #     elif (_CLKinputPMOSFinger1 % 2) == 1:
+            #         for j in PMOS12tmp2:
+            #             for i in range(0, _CLKinputPMOSFinger/2 + 1):
+            #                 tmpx = [j - (_CLKinputPMOSFinger/2-0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
+            #                 tmp.append(tmpx)
 
             self._DesignParameter['_ViaMet22Met3OnPMOSOutput1']['_XYCoordinates'] = tmp
-            del tmp
-            del tmpx
+ #           del tmp
+#            del tmpx
             del _ViaNumY
             print('x')
 
@@ -336,51 +341,51 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet32Met4OnPMOSOutput1'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4OnPMOSOutputIn1{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet32Met4OnPMOSOutput1']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_VIACLKPMOSMet34)
 
-            _LengthPMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
-                                 self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']
-            tmp = []
-            tmpx = []
-            PMOS23tmp = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
-                         self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1]
-            PMOS23tmp2 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1,
-                          self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
-            PMOS23tmp3 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
-                          self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
-            # PMOS12tmp4 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
-            if (_CLKinputPMOSFinger % 2) == 0:
-                if (_CLKinputPMOSFinger1 % 2) == 0:
-                    for j in PMOS12tmp3:
-                        for i in range(0, _CLKinputPMOSFinger / 2):
-                            tmpx = [
-                                j - (_CLKinputPMOSFinger / 2 - 1) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
-                                self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
-                            tmp.append(tmpx)
-                elif (_CLKinputPMOSFinger1 % 2) == 1:
-                    for j in PMOS12tmp3:
-                        for i in range(0, _CLKinputPMOSFinger / 2 + 1):
-                            tmpx = [j - (_CLKinputPMOSFinger / 2) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
-                                    self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
-                            tmp.append(tmpx)
-
-            elif (_CLKinputPMOSFinger % 2) == 1:
-                if (_CLKinputPMOSFinger1 % 2) == 0:
-                    for j in PMOS12tmp:
-                        for i in range(0, _CLKinputPMOSFinger / 2 + 1):
-                            tmpx = [
-                                j - (_CLKinputPMOSFinger / 2 - 0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
-                                self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
-                            tmp.append(tmpx)
-                elif (_CLKinputPMOSFinger1 % 2) == 1:
-                    for j in PMOS12tmp2:
-                        for i in range(0, _CLKinputPMOSFinger / 2 + 1):
-                            tmpx = [
-                                j - (_CLKinputPMOSFinger / 2 - 0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
-                                self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
-                            tmp.append(tmpx)
+            # _LengthPMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
+            #                      self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']
+            # tmp = []
+            # tmpx = []
+            # PMOS23tmp = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
+            #              self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1]
+            # PMOS23tmp2 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1,
+            #               self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
+            # PMOS23tmp3 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
+            #               self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
+            # # PMOS12tmp4 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
+            # if (_CLKinputPMOSFinger % 2) == 0:
+            #     if (_CLKinputPMOSFinger1 % 2) == 0:
+            #         for j in PMOS12tmp3:
+            #             for i in range(0, _CLKinputPMOSFinger / 2):
+            #                 tmpx = [
+            #                     j - (_CLKinputPMOSFinger / 2 - 1) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
+            #                     self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
+            #                 tmp.append(tmpx)
+            #     elif (_CLKinputPMOSFinger1 % 2) == 1:
+            #         for j in PMOS12tmp3:
+            #             for i in range(0, _CLKinputPMOSFinger / 2 + 1):
+            #                 tmpx = [j - (_CLKinputPMOSFinger / 2) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
+            #                         self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
+            #                 tmp.append(tmpx)
+            #
+            # elif (_CLKinputPMOSFinger % 2) == 1:
+            #     if (_CLKinputPMOSFinger1 % 2) == 0:
+            #         for j in PMOS12tmp:
+            #             for i in range(0, _CLKinputPMOSFinger / 2 + 1):
+            #                 tmpx = [
+            #                     j - (_CLKinputPMOSFinger / 2 - 0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
+            #                     self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
+            #                 tmp.append(tmpx)
+            #     elif (_CLKinputPMOSFinger1 % 2) == 1:
+            #         for j in PMOS12tmp2:
+            #             for i in range(0, _CLKinputPMOSFinger / 2 + 1):
+            #                 tmpx = [
+            #                     j - (_CLKinputPMOSFinger / 2 - 0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
+            #                     self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
+            #                 tmp.append(tmpx)
 
             self._DesignParameter['_ViaMet32Met4OnPMOSOutput1']['_XYCoordinates'] = tmp
             del tmp
-            del tmpx
+#            del tmpx
             del _ViaNumY
             print('x')
 

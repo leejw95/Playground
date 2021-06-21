@@ -726,16 +726,6 @@ class _Slicer(StickDiagram._StickDiagram):
                                                                             ]
 
 
-            ########################################### Met2 Routing Generation for CLK PMOS Gate --- CLK NMOS Gate Connection ##########################################
-            # self._DesignParameter['_Met2PNMOSCLK'] = self._DesignParameter(_Layer = DesignParameters._LayerMapping['METAL2'][0], _Datatype = DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=400)
-            # self._DesignParameter['_Met2PNMOSCLK']['_Width'] = _DRCObj._MetalxMinWidth * 3
-            # if()
-
-
-
-
-
-
 
 
 

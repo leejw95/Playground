@@ -415,8 +415,8 @@ if __name__ == '__main__':
     # # del globals()['var']
     # # print globals()
 
-    _NMOSFinger = 1
-    _NMOSWidth = 200
+    _NMOSFinger = 6
+    _NMOSWidth = 275
     _NMOSChannelLength = 30
     _NMOSDummy = True
     _SLVT = True

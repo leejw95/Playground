@@ -374,11 +374,11 @@ if __name__ == '__main__' :
     _YRBNum = 8
 
     _TransmissionGateFinger = 6
-    _TransmissionGateChannelWidth = 200
+    _TransmissionGateChannelWidth = 275
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2256 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2386 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _ResistorWidth = 1250

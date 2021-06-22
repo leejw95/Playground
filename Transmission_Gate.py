@@ -2,8 +2,8 @@ import StickDiagram
 import DesignParameters
 import copy
 import DRC
-import NMOS
-import PMOS
+import NMOSWithDummy
+import PMOSWithDummy
 import NbodyContact
 import PbodyContact
 import ViaPoly2Met1
@@ -36,28 +36,28 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _Name = 'TransmissionGate'
 
         print ('###############################     MOSFET Generation    ################################################')
-        _NMOSinputs = copy.deepcopy(NMOS._NMOS._ParametersForDesignCalculation)
+        _NMOSinputs = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
         _NMOSinputs['_NMOSNumberofGate'] = _Finger
         _NMOSinputs['_NMOSChannelWidth'] = _ChannelWidth
         _NMOSinputs['_NMOSChannellength'] = _ChannelLength
         _NMOSinputs['_NMOSDummy'] = _Dummy
         _NMOSinputs['_SLVT'] = _SLVT
 
-        self._DesignParameter['_NMOSTG'] = self._SrefElementDeclaration(_DesignObj=NMOS._NMOS(_DesignParameter=None, _Name='NMOSIn{}'.format(_Name)))[0]
+        self._DesignParameter['_NMOSTG'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_NMOSTG']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOSinputs)
 
         if _NPRatio == None:
             _NPRatio = 2
         # Default NPRatio = 2
 
-        _PMOSinputs = copy.deepcopy(PMOS._PMOS._ParametersForDesignCalculation)
+        _PMOSinputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
         _PMOSinputs['_PMOSNumberofGate'] = _Finger
         _PMOSinputs['_PMOSChannelWidth'] = round(_ChannelWidth * _NPRatio)
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
         _PMOSinputs['_SLVT'] = _SLVT
 
-        self._DesignParameter['_PMOSTG'] = self._SrefElementDeclaration(_DesignObj=PMOS._PMOS(_DesignParameter=None, _Name='PMOSIn{}'.format(_Name)))[0]
+        self._DesignParameter['_PMOSTG'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_PMOSTG']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOSinputs)
 
         print ('################################     VDD VSS Generation    ##############################################')
@@ -592,7 +592,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
     lst = ['_Finger', '_ChannelWidth', '_ChannelLength', '_NPRatio', '_VDD2VSSHeight', '_Dummy','_SLVT', '_LVT', '_HVT', '_NumSupplyCOX'
         , '_NumSupplyCOY', '_SupplyMet1XWidth', '_SupplyMet1YWidth','_NumVIAPoly2Met1COX', '_NumVIAPoly2Met1COY', '_NumVIAMet12COX', '_NumVIAMet12COY']
-    ans = [6, 200, 30, 2, 2000, True, True, 4, 2, None, None, None, None, None, None]
+    ans = [6, 275, 30, 2, 2000, True, True, 4, 2, None, None, None, None, None, None]
     # for i in range (17) :
     #     if i == 5 or i==6 or i==7 or i==8 :
     #         print (lst[i]+'?'+'(True/False)')

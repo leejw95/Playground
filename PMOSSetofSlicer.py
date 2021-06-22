@@ -301,6 +301,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             #     tmp.append([-(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0]), self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1]])
 
             tmpx = []
+            tmpy = []
             PMOS23tmp = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1]
             PMOS23tmp2 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1, self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
             PMOS23tmp3 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0]]
@@ -330,9 +331,14 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                             tmpx = [j - (_CLKinputPMOSFinger/2-0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
 
-            self._DesignParameter['_ViaMet22Met3OnPMOSOutput1']['_XYCoordinates'] = tmp
+            self._DesignParameter['_ViaMet22Met3OnPMOSOutput1']['_XYCoordinates'] = tmp[0:int((_CLKinputPMOSFinger1+1) // 2)]
+            for i in range(len(self._DesignParameter['_ViaMet22Met3OnPMOSOutput1']['_XYCoordinates'])):
+                tmpy.append([-1 * self._DesignParameter['_ViaMet22Met3OnPMOSOutput1']['_XYCoordinates'][i][0], self._DesignParameter['_ViaMet22Met3OnPMOSOutput1']['_XYCoordinates'][i][1]])
+            self._DesignParameter['_ViaMet22Met3OnPMOSOutput1']['_XYCoordinates'] = tmp[0:int((_CLKinputPMOSFinger1+1) // 2)] + tmpy
+
             del tmp
             del tmpx
+            del tmpy
             del _ViaNumY
             print('x')
 
@@ -350,6 +356,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                                  self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']
             tmp = []
             tmpx = []
+            tmpy = []
             PMOS23tmp = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
                          self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1]
             PMOS23tmp2 = [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - _LengthPMOSBtwMet1,
@@ -388,9 +395,14 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                                 self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
 
-            self._DesignParameter['_ViaMet32Met4OnPMOSOutput1']['_XYCoordinates'] = tmp
+
+            self._DesignParameter['_ViaMet32Met4OnPMOSOutput1']['_XYCoordinates'] = tmp[0:int((_CLKinputPMOSFinger1+1) // 2)]
+            for i in range(len(self._DesignParameter['_ViaMet32Met4OnPMOSOutput1']['_XYCoordinates'])):
+                tmpy.append([-1 * self._DesignParameter['_ViaMet32Met4OnPMOSOutput1']['_XYCoordinates'][i][0], self._DesignParameter['_ViaMet32Met4OnPMOSOutput1']['_XYCoordinates'][i][1]])
+            self._DesignParameter['_ViaMet32Met4OnPMOSOutput1']['_XYCoordinates'] = tmp[0:int((_CLKinputPMOSFinger1+1) // 2)] + tmpy
             del tmp
             del tmpx
+            del tmpy
             del _ViaNumY
             print('x')
 

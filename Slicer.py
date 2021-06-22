@@ -839,7 +839,7 @@ class _Slicer(StickDiagram._StickDiagram):
 
             ########################################### Met2 Routing Generation for Inner PMOS Gate --- Inner NMOS Gate Connection (Cross-coupled) ##########################################
             self._DesignParameter['_Met2PNMOSGate'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=400)
-            self._DesignParameter['_Met2PNMOSGate']['_Width'] = _DRCObj._MetalxMinWidth
+            self._DesignParameter['_Met2PNMOSGate']['_Width'] = 2 * _DRCObj._MetalxMinWidth
             if (_PMOSFinger < _NMOSFinger):
                 self._DesignParameter['_Met2PNMOSGate']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet12Met2OnPMOSGate1']['_XYCoordinates'][0],
                                                                              [self._DesignParameter['_ViaMet12Met2OnPMOSGate1']['_XYCoordinates'][0][0], self._DesignParameter['_ViaMet12Met2OnNMOSGate1']['_XYCoordinates'][0][1]],

@@ -40,6 +40,8 @@ class _Opppcres(StickDiagram._StickDiagram) :
         print ('#############################     OP Layer Calculation    ################################################')
         self._DesignParameter['_OPLayer']['_XWidth'] = _ResWidth + _DRCObj._OPlayeroverPoly * 2
         self._DesignParameter['_OPLayer']['_YWidth'] = _ResLength
+        if _ResLength < _DRCObj._PolyoverOPlayer :
+            raise NotImplementedError
         self._DesignParameter['_OPLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
         print ('#############################     POLY Layer Calculation    ##############################################')

@@ -218,7 +218,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         del tmp
 
-        ##Path for inputs for other transmission gate and pin declare
+        ##Path for inputs for other transmission gate and pin declaration
         self._DesignParameter['_Met2LayerInput'] = self._PathElementDeclaration(
             _Layer = DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],
             _XYCoordinates=[], _Width=100)
@@ -382,7 +382,7 @@ if __name__ == '__main__' :
     _TransmissionGateSLVT = True     #T/F?
 
     _ResistorWidth = 1250
-    _ResistorLength = 1234
+    _ResistorLength = 4000
     _ResistorMetXCO = None
     _ResistorMetYCO = None
 

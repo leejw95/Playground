@@ -604,7 +604,7 @@ class _PSubring(StickDiagram._StickDiagram):
         _COXNumMin2 = int((self._DesignParameter['_Met1Layery']['_XWidth'] - _DRCObj._CoMinWidth -_DRCObj._Metal1MinEnclosureCO2 * 2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) 
         if _COXNumMin2 == 0 :
             _COXNumMin2 = 1
-        _COYNumMin2 = int((self._DesignParameter['_Met1Layery']['_YWidth'] - _DRCObj._CoMinWidth - 2 * self._DesignParameter['_Met1Layerx']['_YWidth'] - _DRCObj._Metal1MinEnclosureCO2 * 2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) 
+        _COYNumMin2 = int((self._DesignParameter['_Met1Layery']['_YWidth'] - _DRCObj._CoMinWidth - 2 * self._DesignParameter['_Met1Layerx']['_YWidth'] - _DRCObj._Metal1MinEnclosureCO2 * 2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1
         if _COYNumMin2 == 0 :
             _COYNumMin2 = 1
         tmp = []

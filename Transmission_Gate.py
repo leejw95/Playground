@@ -61,7 +61,6 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_PMOSTG']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOSinputs)
 
         print ('################################     VDD VSS Generation    ##############################################')
-        print (self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'])
         _NumSupplyCOX = int(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + 1)
         if _NumSupplyCOX < 2:
             _NumSupplyCOX = 2
@@ -194,8 +193,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         ## [-1] means the last value of the list or key of dict
 
         tmp4X_P = int(round(_TotalLenOfPMOSGate // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)))
-        if tmp4X_P < 1:
-            _NumVIAPoly2Met1COX = 1  ## Default value for # of contact in x axis
+        if tmp4X_P <= 1:
+            tmp4X_P = 2  ## Default value for # of contact in x axis
+            _NumVIAPoly2Met1COX = tmp4X_P
         if _NumVIAPoly2Met1COX == None:
             _NumVIAPoly2Met1COX = tmp4X_P
         if _NumVIAPoly2Met1COY == None:
@@ -211,8 +211,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _ViaPMOSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
 
         tmp4vX_P = int(round(self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)))
-        if tmp4vX_P < 1:
-            _NumVIAMet12Met2COX = 1  ## Default value for # of contact in x axis
+        if tmp4vX_P <= 1:
+            tmp4vX_P = 2  ## Default value for # of contact in x axis
+            _NumVIAMet12Met2COX = tmp4vX_P
         else:
             _NumVIAMet12Met2COX = tmp4vX_P
         _NumVIAMet12Met2COY = 1
@@ -237,8 +238,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         ## [-1] means the last value of the list or key of dict
 
         tmp4X = int(round(_TotalLenOfNMOSGate // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)))
-        if tmp4X < 1:
-            _NumVIAPoly2Met1COX = 1  ## Default value for # of contact in x axis
+        if tmp4X <= 1:
+            tmp4X = 2  ## Default value for # of contact in x axis
         if _NumVIAPoly2Met1COX == None:
             _NumVIAPoly2Met1COX = tmp4X
         if _NumVIAPoly2Met1COY == None:
@@ -255,8 +256,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _ViaNMOSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
 
         tmp4vX = int(round(self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)))
-        if tmp4vX < 1:
-            _NumVIAMet12Met2COX = 1  ## Default value for # of contact in x axis
+        if tmp4vX <= 1:
+            tmp4vX = 2  ## Default value for # of contact in x axis
         else:
             _NumVIAMet12Met2COX = tmp4vX
         _NumVIAMet12Met2COY = 1

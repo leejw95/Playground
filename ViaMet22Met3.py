@@ -207,7 +207,7 @@ class _ViaMet22Met3(StickDiagram._StickDiagram):
         print ('#############################     Met3 Layer Calculation   ##############################################')
         _LengthViaMet22Met3BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet22Met3NumberOfCOX,NumOfVIAxY=_ViaMet22Met3NumberOfCOY )
         self._DesignParameter['_Met3Layer']['_XYCoordinates']=_XYCoordinateOfViaMet22Met3
-        self._DesignParameter['_Met3Layer']['_XWidth']=_DRCObj._VIAxMinWidth+ (_ViaMet22Met3NumberOfCOX - 1)* _LengthViaMet22Met3BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
+        self._DesignParameter['_Met3Layer']['_XWidth']=_DRCObj._VIAxMinWidth + (_ViaMet22Met3NumberOfCOX - 1)* _LengthViaMet22Met3BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
         self._DesignParameter['_Met3Layer']['_YWidth']=_DRCObj._VIAxMinWidth + (_ViaMet22Met3NumberOfCOY - 1)* _LengthViaMet22Met3BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia1,_DRCObj._MetalxMinEnclosureCO])
 
         print ('#############################     Met2 Layer Calculation   ##############################################')

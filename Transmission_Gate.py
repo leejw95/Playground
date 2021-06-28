@@ -204,7 +204,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _ViaPMOSPoly2Met1['_ViaPoly2Met1NumberOfCOY'] = _NumVIAPoly2Met1COY
 
 
-        self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnPMOSInputIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnPMOSControlIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_ViaPMOSPoly2Met1)
 
 
@@ -220,7 +220,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _ViaPMOSMet12Met2['_ViaMet12Met2NumberOfCOX'] = _NumVIAMet12Met2COX
         _ViaPMOSMet12Met2['_ViaMet12Met2NumberOfCOY'] = _NumVIAMet12Met2COY
 
-        self._DesignParameter['_ViaMet12Met2OnPMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,_Name='ViaMet12Met2OnPMOSInputIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet12Met2OnPMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,_Name='ViaMet12Met2OnPMOSControlIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaPMOSMet12Met2)
 
 
@@ -248,7 +248,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _ViaNMOSPoly2Met1['_ViaPoly2Met1NumberOfCOY'] = _NumVIAPoly2Met1COY
 
 
-        self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnNMOSInputIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnNMOSControlIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_ViaNMOSPoly2Met1)
 
 
@@ -265,7 +265,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _ViaNMOSMet12Met2['_ViaMet12Met2NumberOfCOY'] = _NumVIAMet12Met2COY
 
 
-        self._DesignParameter['_ViaMet12Met2OnNMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,_Name='ViaMet12Met2OnNMOSInputIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet12Met2OnNMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,_Name='ViaMet12Met2OnNMOSControlIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaNMOSMet12Met2)
 
         del tmp4X, tmp4vX
@@ -309,7 +309,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                      _DRCObj._Metal1MinSpace3]]
 
         self._DesignParameter['_PMOSTG']['_XYCoordinates'] = [[0, _VDD2VSSHeight - (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] /2 ,
-                    self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] /2 +
+                    self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] //2 +
                                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
                     self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
                     _DRCObj._Metal1MinSpace3)]]

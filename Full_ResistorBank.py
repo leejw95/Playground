@@ -160,12 +160,22 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                          self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB'][
                              '_XYCoordinates'][0][1] + _DRCObj._MetalxMinSpace9 +
                          i * _ResistorSpaceY],
-                        [_ResistorBankOrigin[0][0] - _ResistorSpaceX +
-                         (_XRBNum + 1) * _ResistorSpaceX,
+                        [_ResistorBankOrigin[0][0] +
+                         (_XRBNum) * _ResistorSpaceX + self._DesignParameter['_Met5LayerVRX']['_Width'],
                          _ResistorBankOrigin[0][1] +
                          self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB'][
                              '_XYCoordinates'][0][1] + _DRCObj._MetalxMinSpace9 +
                          i * _ResistorSpaceY]])
+        
+        for i in range (0, 2) :
+            tmp.append([[_ResistorBankOrigin[0][0] - _ResistorSpaceX + i * ((_XRBNum + 1) * _ResistorSpaceX) + self._DesignParameter['_Met5LayerVRX']['_Width'] // 2,
+                        _ResistorBankOrigin[0][1] +
+                         self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB'][
+                             '_XYCoordinates'][0][1] + _DRCObj._MetalxMinSpace9 + (_YRBNum - 1) * _ResistorSpaceY],
+                        [_ResistorBankOrigin[0][0] - _ResistorSpaceX + i * ((_XRBNum + 1) * _ResistorSpaceX) + self._DesignParameter['_Met5LayerVRX']['_Width'] // 2,
+                        _ResistorBankOrigin[0][1] +
+                         self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB'][
+                             '_XYCoordinates'][0][1] + _DRCObj._MetalxMinSpace9]])
 
         self._DesignParameter['_Met5LayerVRX']['_XYCoordinates'] = tmp
 
@@ -388,18 +398,18 @@ if __name__ == '__main__' :
     _XRBNum = 4
     _YRBNum = 8
 
-    _TransmissionGateFinger = 2
-    _TransmissionGateChannelWidth = 500  ##200nm ~ 500nm range
+    _TransmissionGateFinger = 6
+    _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 3353 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2318 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _PowerLine = True # T/F?
 
-    _ResistorWidth = 500
-    _ResistorLength = 500
+    _ResistorWidth = 1250
+    _ResistorLength = 1234    ## minimum : 400
     _ResistorMetXCO = None
     _ResistorMetYCO = None
 

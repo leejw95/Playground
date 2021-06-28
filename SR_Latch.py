@@ -1383,6 +1383,8 @@ class _SRLatch(StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__' :
+    DesignParameters._Technology = '028nm'
+
     SRLatchObj = _SRLatch(_DesignParameter=None, _Name='SRLatch')
     SRLatchObj._CalculateDesignParameter(_Finger1 = 5, _Finger2 = 1, _Finger3 = 2, _Finger4 = 2, \
                                   #_PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \

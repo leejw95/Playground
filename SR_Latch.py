@@ -10,6 +10,8 @@ import ViaPoly2Met1
 import ViaMet12Met2
 import ViaMet22Met3
 import ViaMet32Met4
+import ViaMet42Met5
+import ViaMet52Met6
 import math
 
 class _SRLatch(StickDiagram._StickDiagram) :
@@ -430,7 +432,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         MiddleCoordinateX = (self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0]) / 2 ## Center of MOSs
 
         self._DesignParameter['PbodyContact']['_XYCoordinates'] = [[MiddleCoordinateX, 0]]
-        self._DesignParameter['NbodyContact']['_XYCoordinates'] = [[MiddleCoordinateX, _VDD2VSSHeightAtOneSide], [MiddleCoordinateX, -_VDD2VSSHeightAtOneSide]]
+        self._DesignParameter['NbodyContact']['_XYCoordinates'] = [[MiddleCoordinateX, _VDD2VSSHeightAtOneSide], [MiddleCoordinateX, 0 - _VDD2VSSHeightAtOneSide]]
 
         #####################################################Via Met1&Met2 Coordinates Setting###############################################################
         _LengthbtwViaCentertoViaCenter = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
@@ -1289,19 +1291,32 @@ class _SRLatch(StickDiagram._StickDiagram) :
 
         del _ViaNumMet12
 
-
+        ## Right Metal 4 routing
         self._DesignParameter['_AdditionalMet4Routing3'] = self._PathElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL4'][0],_Datatype = DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates = [], _Width=None)
         self._DesignParameter['_AdditionalMet4Routing3']['_Width'] = _DRCObj._MetalxMinWidth
-        self._DesignParameter['_AdditionalMet4Routing3']['_XYCoordinates'] = [[[self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][0], self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][1]], [self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][0], (self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][1] + self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][2][1]) / 2 + _DRCObj._MetalxMinWidth / 2]]]
+        self._DesignParameter['_AdditionalMet4Routing3']['_XYCoordinates'] = [[[self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][0], 
+                                                                                self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][1]], 
+                                                                                [self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][0], 
+                                                                                (self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][1] + 
+                                                                                self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][2][1]) / 2 + _DRCObj._MetalxMinWidth / 2]]]
+
 
         self._DesignParameter['_AdditionalMet4Routing1'] = self._PathElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL4'][0],_Datatype = DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates = [], _Width=None)
         self._DesignParameter['_AdditionalMet4Routing1']['_Width'] = _DRCObj._MetalxMinWidth #### ??????
-        self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS4']['_XYCoordinates'][1][0], self._DesignParameter['_NMOS4']['_XYCoordinates'][1][1] - _DRCObj._MetalxMinWidth / 2], [self._DesignParameter['_PMOS4']['_XYCoordinates'][1][0], (self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][0][1] + self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][2][1]) / 2]], \
-                                                                             [[self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][0][1]], [self._DesignParameter['_NMOS3']['_XYCoordinates'][1][0], self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][1][1]]], \
-                                                                              [[self._DesignParameter['_NMOS4']['_XYCoordinates'][1][0] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] - _DRCObj._MetalxMinWidth / 2, self._DesignParameter['_NMOS4']['_XYCoordinates'][1][1]], [self._DesignParameter['_NMOS4']['_XYCoordinates'][1][0], self._DesignParameter['_NMOS4']['_XYCoordinates'][1][1]]]]
-
-
-
+        self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS4']['_XYCoordinates'][1][0], 
+                                                                            self._DesignParameter['_NMOS4']['_XYCoordinates'][1][1] - _DRCObj._MetalxMinWidth / 2], 
+                                                                            [self._DesignParameter['_PMOS4']['_XYCoordinates'][1][0], 
+                                                                            (self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][0][1] + 
+                                                                            self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][2][1]) / 2]], \
+                                                                            [[self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0], 
+                                                                            self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][0][1]], 
+                                                                            [self._DesignParameter['_NMOS3']['_XYCoordinates'][1][0], 
+                                                                            self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][1][1]]], \
+                                                                            [[self._DesignParameter['_NMOS4']['_XYCoordinates'][1][0] + 
+                                                                            self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] - _DRCObj._MetalxMinWidth / 2, 
+                                                                            self._DesignParameter['_NMOS4']['_XYCoordinates'][1][1]], 
+                                                                            [self._DesignParameter['_NMOS4']['_XYCoordinates'][1][0], 
+                                                                            self._DesignParameter['_NMOS4']['_XYCoordinates'][1][1]]]]
 
         _ViaNumMet34X = int(self._DesignParameter['_Met1OutputRouting']['_Width'] / _DRCObj._MetalxMinWidth)
         if _ViaNumMet34X < 1 :
@@ -1364,7 +1379,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         self._DesignParameter['_INbpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'INb')
         self._DesignParameter['_OUTpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'OUT')
 
-        self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[0, _VDD2VSSHeightAtOneSide], [0, -(_VDD2VSSHeightAtOneSide)]]
+        self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[0, _VDD2VSSHeightAtOneSide], [0, 0 - _VDD2VSSHeightAtOneSide]]
         self._DesignParameter['_VSSpin']['_XYCoordinates'] = [[0,0]]
         self._DesignParameter['_INbpin']['_XYCoordinates'] = [[self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][0], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][1]]]
         self._DesignParameter['_INpin']['_XYCoordinates'] = [[self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][0], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][1]]]
@@ -1372,23 +1387,226 @@ class _SRLatch(StickDiagram._StickDiagram) :
 
 
 
-        ########################### Additonal Power Line Generation ###############################
+        ########################### Additonal Power Line Generation (Metal First then Via) ###############################
+        if _PowerLine == True :
+            self._DesignParameter['_Met2LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met3LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met4LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met5LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met6LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+    
+            
+            self._DesignParameter['_Met2LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met3LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met4LayerVSS1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met4LayerVSS2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met4LayerVSS3'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met4LayerVSS4'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)            
+            self._DesignParameter['_Met5LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met6LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
 
-        self._DesignParameter['_Met2LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-        self._DesignParameter['_Met3LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-        self._DesignParameter['_Met4LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-        self._DesignParameter['_Met5LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-        self._DesignParameter['_Met6LayerVDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
- 
-        
-        self._DesignParameter['_Met2LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-        self._DesignParameter['_Met3LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-        self._DesignParameter['_Met4LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-        self._DesignParameter['_Met5LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-        self._DesignParameter['_Met6LayerVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_Met2LayerVDD']['_XWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met2LayerVDD']['_YWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met3LayerVDD']['_XWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met3LayerVDD']['_YWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met4LayerVDD']['_XWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met4LayerVDD']['_YWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met5LayerVDD']['_XWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met5LayerVDD']['_YWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met6LayerVDD']['_XWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met6LayerVDD']['_YWidth'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
 
-        self._DesignParameter['_Met2LayerVDD']['_XWidth'] = self._DesignParameter
+            self._DesignParameter['_Met2LayerVSS']['_XWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met2LayerVSS']['_YWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met3LayerVSS']['_XWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met3LayerVSS']['_YWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met4LayerVSS1']['_XWidth'] = (self._DesignParameter['_AdditionalMet4Routing3']['_XYCoordinates'][0][0][0] - _DRCObj._MetalxMinSpace21 -
+                                                                self._DesignParameter['_AdditionalMet4Routing3']['_Width'] // 2)- \
+                                                                (self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] - 
+                                                                self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2)
+            self._DesignParameter['_Met4LayerVSS1']['_YWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met4LayerVSS2']['_XWidth'] = (self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'][1][0][0] - _DRCObj._MetalxMinSpace21 -
+                                                                self._DesignParameter['_AdditionalMet4Routing1']['_Width'] // 2) - \
+                                                                (self._DesignParameter['_AdditionalMet4Routing3']['_XYCoordinates'][0][0][0] + _DRCObj._MetalxMinSpace21 +
+                                                                self._DesignParameter['_AdditionalMet4Routing3']['_Width'] // 2)
+            self._DesignParameter['_Met4LayerVSS2']['_YWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met4LayerVSS3']['_XWidth'] = (self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'][0][0][0] - _DRCObj._MetalxMinSpace21 -
+                                                                self._DesignParameter['_AdditionalMet4Routing1']['_Width'] // 2) - \
+                                                                (self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'][1][0][0] + _DRCObj._MetalxMinSpace21 +
+                                                                self._DesignParameter['_AdditionalMet4Routing1']['_Width'] // 2)
+            self._DesignParameter['_Met4LayerVSS3']['_YWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met4LayerVSS4']['_XWidth'] = (self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] + 
+                                                                self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2) - \
+                                                                (self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'][0][0][0] + _DRCObj._MetalxMinSpace21 +
+                                                                self._DesignParameter['_AdditionalMet4Routing1']['_Width'] // 2)
+            self._DesignParameter['_Met4LayerVSS4']['_YWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met5LayerVSS']['_XWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met5LayerVSS']['_YWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            self._DesignParameter['_Met6LayerVSS']['_XWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_Met6LayerVSS']['_YWidth'] = self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            
+            self._DesignParameter['_Met2LayerVDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+            self._DesignParameter['_Met3LayerVDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+            self._DesignParameter['_Met4LayerVDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+            self._DesignParameter['_Met5LayerVDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+            self._DesignParameter['_Met6LayerVDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
 
+            self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact']['_XYCoordinates']
+            self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact']['_XYCoordinates']
+            
+            self._DesignParameter['_Met4LayerVSS1']['_XYCoordinates'] = [[self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] - 
+                                                                        self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 +
+                                                                        int(round(self._DesignParameter['_Met4LayerVSS1']['_XWidth'] + 0.5)) // 2 ,
+                                                                        self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
+            self._DesignParameter['_Met4LayerVSS2']['_XYCoordinates'] = [[self._DesignParameter['_AdditionalMet4Routing3']['_XYCoordinates'][0][0][0] + _DRCObj._MetalxMinSpace21 +
+                                                                        self._DesignParameter['_AdditionalMet4Routing3']['_Width'] // 2 +
+                                                                        self._DesignParameter['_Met4LayerVSS2']['_XWidth'] // 2 ,
+                                                                        self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
+            self._DesignParameter['_Met4LayerVSS3']['_XYCoordinates'] = [[self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'][1][0][0] + _DRCObj._MetalxMinSpace21 +
+                                                                        self._DesignParameter['_AdditionalMet4Routing1']['_Width'] // 2 +
+                                                                        self._DesignParameter['_Met4LayerVSS3']['_XWidth'] // 2 ,
+                                                                        self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
+            self._DesignParameter['_Met4LayerVSS4']['_XYCoordinates'] = [[self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'][0][0][0] + _DRCObj._MetalxMinSpace21 +
+                                                                        self._DesignParameter['_AdditionalMet4Routing1']['_Width'] // 2 +
+                                                                        int(round(self._DesignParameter['_Met4LayerVSS4']['_XWidth'] + 0.5)) // 2 ,
+                                                                        self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
+            self._DesignParameter['_Met5LayerVSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact']['_XYCoordinates']
+            self._DesignParameter['_Met6LayerVSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact']['_XYCoordinates']
+
+
+            ############ Via Generations ##############
+            _ViaNumVDDX = int(self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVDDY = int(self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVSSX1 = int(self._DesignParameter['_Met4LayerVSS1']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVSSX2 = int(self._DesignParameter['_Met4LayerVSS2']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVSSX3 = int(self._DesignParameter['_Met4LayerVSS3']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVSSX4 = int(self._DesignParameter['_Met4LayerVSS4']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+
+            if _ViaNumVDDX < 1 :
+                _ViaNumVDDX = 1
+            if _ViaNumVDDY < 1 :
+                _ViaNumVDDY = 1
+            if _ViaNumVSSX1 < 1 :
+                self._DesignParameter['_Met4LayerVSS1']['_XYCoordinates'] = []
+            if _ViaNumVSSX2 < 1 :
+                self._DesignParameter['_Met4LayerVSS2']['_XYCoordinates'] = []
+            if _ViaNumVSSX3 < 1 :
+                self._DesignParameter['_Met4LayerVSS3']['_XYCoordinates'] = []
+            if _ViaNumVSSX4 < 1 :
+                self._DesignParameter['_Met4LayerVSS4']['_XYCoordinates'] = []
+
+            _ViaVDDMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+            _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVDDX
+            _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet12Met2VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name = 'ViaMet12Met2VDDIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet12Met2VDD']['_DesignObj']._CalculateViaMet12Met2DesignParameter(**_ViaVDDMet12Met2)
+            self._DesignParameter['_ViaMet12Met2VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+
+            _ViaVDDMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+            _ViaVDDMet22Met3['_ViaMet22Met3NumberOfCOX'] = _ViaNumVDDX
+            _ViaVDDMet22Met3['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet22Met3VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name = 'ViaMet22Met3VDDIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet22Met3VDD']['_DesignObj']._CalculateViaMet22Met3DesignParameter(**_ViaVDDMet22Met3)
+            self._DesignParameter['_ViaMet22Met3VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+
+            _ViaVDDMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOX'] = _ViaNumVDDX
+            _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet32Met4VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met4VDDIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet32Met4VDD']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVDDMet32Met4)
+            self._DesignParameter['_ViaMet32Met4VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+
+            _ViaVDDMet42Met5 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
+            _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] = _ViaNumVDDX
+            _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet42Met5VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met5VDDIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet42Met5VDD']['_DesignObj']._CalculateViaMet42Met5DesignParameter(**_ViaVDDMet42Met5)
+            self._DesignParameter['_ViaMet42Met5VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+
+            _ViaVDDMet52Met6 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
+            _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOX'] = _ViaNumVDDX
+            _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet52Met6VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None, _Name = 'ViaMet52Met6VDDIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet52Met6VDD']['_DesignObj']._CalculateViaMet52Met6DesignParameter(**_ViaVDDMet52Met6)
+            self._DesignParameter['_ViaMet52Met6VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
+
+
+            _ViaVSSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVDDX
+            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet12Met2VSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name = 'ViaMet12Met2VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet12Met2VSS']['_DesignObj']._CalculateViaMet12Met2DesignParameter(**_ViaVSSMet12Met2)
+            self._DesignParameter['_ViaMet12Met2VSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact']['_XYCoordinates']
+
+            _ViaVSSMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = _ViaNumVDDX
+            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet22Met3VSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name = 'ViaMet22Met3VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet22Met3VSS']['_DesignObj']._CalculateViaMet22Met3DesignParameter(**_ViaVSSMet22Met3)
+            self._DesignParameter['_ViaMet22Met3VSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact']['_XYCoordinates']
+
+            _ViaVSSMet32Met41 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            _ViaVSSMet32Met41['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX1
+            _ViaVSSMet32Met41['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet32Met4VSS1'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met41VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet32Met4VSS1']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVSSMet32Met41)
+            self._DesignParameter['_ViaMet32Met4VSS1']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS1']['_XYCoordinates']
+
+            _ViaVSSMet32Met42 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            _ViaVSSMet32Met42['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX2
+            _ViaVSSMet32Met42['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet32Met4VSS2'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met42VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet32Met4VSS2']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVSSMet32Met42)
+            self._DesignParameter['_ViaMet32Met4VSS2']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS2']['_XYCoordinates']
+
+            _ViaVSSMet32Met43 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            _ViaVSSMet32Met43['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX3
+            _ViaVSSMet32Met43['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet32Met4VSS3'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met43VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet32Met4VSS3']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVSSMet32Met43)
+            self._DesignParameter['_ViaMet32Met4VSS3']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS3']['_XYCoordinates']
+
+            _ViaVSSMet32Met44 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            _ViaVSSMet32Met44['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX4
+            _ViaVSSMet32Met44['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet32Met4VSS4'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met44VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet32Met4VSS4']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVSSMet32Met44)
+            self._DesignParameter['_ViaMet32Met4VSS4']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS4']['_XYCoordinates']
+
+            _ViaVSSMet42Met51 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
+            _ViaVSSMet42Met51['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX1
+            _ViaVSSMet42Met51['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet42Met5VSS1'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met51VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet42Met5VSS1']['_DesignObj']._CalculateViaMet42Met5DesignParameter(**_ViaVSSMet42Met51)
+            self._DesignParameter['_ViaMet42Met5VSS1']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS1']['_XYCoordinates']
+
+            _ViaVSSMet42Met52 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
+            _ViaVSSMet42Met52['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX2
+            _ViaVSSMet42Met52['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet42Met5VSS2'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met52VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet42Met5VSS2']['_DesignObj']._CalculateViaMet42Met5DesignParameter(**_ViaVSSMet42Met52)
+            self._DesignParameter['_ViaMet42Met5VSS2']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS2']['_XYCoordinates']
+
+            _ViaVSSMet42Met53 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
+            _ViaVSSMet42Met53['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX3
+            _ViaVSSMet42Met53['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet42Met5VSS3'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met53VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet42Met5VSS3']['_DesignObj']._CalculateViaMet42Met5DesignParameter(**_ViaVSSMet42Met53)
+            self._DesignParameter['_ViaMet42Met5VSS3']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS3']['_XYCoordinates']
+
+            _ViaVSSMet42Met54 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
+            _ViaVSSMet42Met54['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX4
+            _ViaVSSMet42Met54['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet42Met5VSS4'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met54VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet42Met5VSS4']['_DesignObj']._CalculateViaMet42Met5DesignParameter(**_ViaVSSMet42Met54)
+            self._DesignParameter['_ViaMet42Met5VSS4']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS4']['_XYCoordinates']
+
+            _ViaVSSMet52Met6 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
+            _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOX'] = _ViaNumVDDX
+            _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet52Met6VSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None, _Name = 'ViaMet52Met6VSSIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet52Met6VSS']['_DesignObj']._CalculateViaMet52Met6DesignParameter(**_ViaVSSMet52Met6)
+            self._DesignParameter['_ViaMet52Met6VSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact']['_XYCoordinates']
 
 
 

@@ -505,7 +505,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_Met2OnNMOS4forArea'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
                 self._DesignParameter['_Met2OnNMOS4forArea']['_XWidth'] = 73
                 self._DesignParameter['_Met2OnNMOS4forArea']['_YWidth'] = 174
-                self._DesignParameter['_Met2OnNMOS4forArea']['_XYCoordinates'] = [self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][1]]
+                self._DesignParameter['_Met2OnNMOS4forArea']['_XYCoordinates'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates']
 
 
 

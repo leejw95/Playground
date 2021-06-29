@@ -398,12 +398,12 @@ if __name__ == '__main__' :
     _XRBNum = 4
     _YRBNum = 8
 
-    _TransmissionGateFinger = 6
-    _TransmissionGateChannelWidth = 400  ##200nm ~ 500nm range
+    _TransmissionGateFinger = 1
+    _TransmissionGateChannelWidth = 200  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2879 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2336 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _PowerLine = False # T/F?

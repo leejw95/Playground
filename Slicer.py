@@ -375,10 +375,13 @@ class _Slicer(StickDiagram._StickDiagram):
 
             _VIANMOSMet23['_ViaMet22Met3NumberOfCOX'] = 1
 
-            _tmpNumY = _NMOSChannelWidth // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth) - 1
+            _tmpNumY = int(_NMOSChannelWidth // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 1
             if _tmpNumY < 1 :
                 _tmpNumY = 1
+            if _NMOSChannelWidth < 800:
+                _tmpNumY = _tmpNumY - 1
             _VIANMOSMet23['_ViaMet22Met3NumberOfCOY'] = _tmpNumY
+
 
             self._DesignParameter['_ViaMet22Met3OnNMOSOutput'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3OnNMOSOutputIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_VIANMOSMet23)
@@ -1090,8 +1093,8 @@ if __name__ == '__main__':
     #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
     #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
 
-    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 1, _CLKinputPMOSFinger2 = 1, _PMOSFinger = 1, _PMOSChannelWidth = 1000,
-                                        _DATAinputNMOSFinger = 10, _NMOSFinger = 1, _CLKinputNMOSFinger = 1, _NMOSChannelWidth = 1000,
+    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 1, _CLKinputPMOSFinger2 = 1, _PMOSFinger = 1, _PMOSChannelWidth =500,
+                                        _DATAinputNMOSFinger = 1, _NMOSFinger =1, _CLKinputNMOSFinger = 1, _NMOSChannelWidth = 500,
                                         _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
                                         _SlicerGuardringWidth=200, _SlicerGuardring= None,
                                         _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,

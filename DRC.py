@@ -1319,7 +1319,7 @@ class DRCMETALx:
 
             self._MetalxMinEnclosureCO=0 #I
             self._MetalxMinEnclosureCO2=32 #J
-            self._MetalxMinArea=11 #K
+            self._MetalxMinArea=11000 #K
 
         if DesignParameters._Technology=='065nm':
             self._MetalxMinWidth=100

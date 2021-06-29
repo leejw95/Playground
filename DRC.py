@@ -1313,7 +1313,7 @@ class DRCMETALx:
             self._MetalxMinSpace7 = 173  # (M4 with width > 0.700) minimum space to (M4 with width > 0.072), for run length > 0.700, >= 0.173 , junung
             self._MetalxMinSpace8 = 181  # (M4 with width > 0.700) minimum space to (M4 with width > 0.156), for run length > 0.700, >= 0.181 , junung
             self._MetalxMinSpace9 = 210  # (M5 with width > 0.208) minimum space to (M5 with width > 0.700), for run length > 0.700, >= 0.21 , junung
-
+            self._MetalxMinSpace10 = 280 # (M6 with width > 0.700) minimum space to (M6 with width > 0.700), >= 0.28, junung
 
             self._MetalxMinSpaceAtCorner=60 #S1/S2
 
@@ -1905,8 +1905,8 @@ class DRCSLVT:
             self._SlvtMinWidth=170
             self._SlvtMinSpace=170
             self._SlvtMinExtensionOnOD=56
-            self._SlvtMinArea=95
-
+            self._SlvtMinArea=95 ##????
+            self._SlvtMinArea2 = 160000 ## SLVT (BH) Minimum Area 0.16um^2, junung
     def DRCSLVTMinSpace(self, _Width=None, _ParallelLength=None):
         if DesignParameters._Technology=='028nm':
             if _Width==None  and _ParallelLength==None:

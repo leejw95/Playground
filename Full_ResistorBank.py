@@ -399,14 +399,14 @@ if __name__ == '__main__' :
     _YRBNum = 8
 
     _TransmissionGateFinger = 6
-    _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
+    _TransmissionGateChannelWidth = 400  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2318 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2879 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
-    _PowerLine = True # T/F?
+    _PowerLine = False # T/F?
 
     _ResistorWidth = 1250
     _ResistorLength = 1234    ## minimum : 400

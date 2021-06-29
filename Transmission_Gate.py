@@ -271,8 +271,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         del tmp4X, tmp4vX
 
         print('################################     Coordinates Settings     ############################################')
-
-        _VDD2VSSMinHeight = (self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
+        if (_ChannelWidth * _NPRatio <= 700) :
+            _VDD2VSSMinHeight = (self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
                             (self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
                             max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
                                 self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
@@ -283,6 +283,19 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
                             self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
                             + 5 * _DRCObj._Metal1MinSpace3
+
+        else :
+            _VDD2VSSMinHeight = (self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
+                            (self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
+                            max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                                self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
+                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) + \
+                            max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                                self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
+                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) + \
+                            self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
+                            self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
+                            + 4 * _DRCObj._Metal1MinSpace3 + _DRCObj._MetalxMinSpace8
 
         print ('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ SET MINIMUM HEIGHT VALUE TO FOR TransmissionGate : ', _VDD2VSSMinHeight)
 
@@ -303,16 +316,26 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         #self._DesignParameter['_NbodycontactTG']['_XYCoordinates'] = _NbodyObj._DesignParameter['_XYCoordinates']
 
         self._DesignParameter['_NMOSTG']['_XYCoordinates'] = [[0, max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
-                    self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2 +
-                                                                      (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
-                     self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                     _DRCObj._Metal1MinSpace3]]
+                        self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2 +
+                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                        self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
+                        _DRCObj._Metal1MinSpace3]]
+        
 
-        self._DesignParameter['_PMOSTG']['_XYCoordinates'] = [[0, _VDD2VSSHeight - (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] /2 ,
-                    self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] //2 +
-                                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
-                    self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                    _DRCObj._Metal1MinSpace3)]]
+
+        if (_ChannelWidth * _NPRatio <= 700) :
+            self._DesignParameter['_PMOSTG']['_XYCoordinates'] = [[0, _VDD2VSSHeight - (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] /2 ,
+                        self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] //2 +
+                                                                                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                        self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
+                        _DRCObj._Metal1MinSpace3)]]
+
+        else :
+            self._DesignParameter['_PMOSTG']['_XYCoordinates'] = [[0, _VDD2VSSHeight - (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] /2 ,
+                        self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] //2 +
+                                                                                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                        self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
+                        _DRCObj._MetalxMinSpace8)]]
 
         ## control via coordinate
 

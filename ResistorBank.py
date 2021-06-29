@@ -145,17 +145,17 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                          - self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) * 2 + \
                                         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + _DRCObj._Metal1MinSpace3 * 2
 
-        if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700 and _TransmissionGateFinger == 1) :
+        if (_TransmissionGateChannelWidth  <= 700 and _TransmissionGateFinger == 1) :
             _NMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 * 3 +\
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +\
                                             (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4 +\
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        elif (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700 and _TransmissionGateFinger != 1) :
+        elif (_TransmissionGateChannelWidth  <= 700 and _TransmissionGateFinger != 1) :
             _NMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 * 2 + _DRCObj._Metal1MinSpace2 +\
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +\
                                             (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4 +\
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        elif (_TransmissionGateChannelWidth * _TransmissionGateNPRatio > 700 and _TransmissionGateFinger == 1) :
+        elif (_TransmissionGateChannelWidth  > 700 and _TransmissionGateFinger == 1) :
             _NMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 + _DRCObj._MetalxMinSpace8 + _DRCObj._Metal1MinSpace3 +\
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +\
                                             (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4 +\
@@ -174,13 +174,13 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         _TotalSubringinputs['_XWidth'] = max(_PMOSSubringinputs['_XWidth'] + _PMOSSubringinputs['_Width'] * 2 + _DRCObj._PpMinExtensiononPactive * 2, _NMOSSubringinputs['_XWidth'] + _NMOSSubringinputs['_Width'] * 2 + _DRCObj._NwMinEnclosurePactive * 2) + \
                                         self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + \
                                         _DRCObj._RXMinSpacetoPRES * 2 + _DRCObj._PpMinSpace
-        if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
-            _TotalSubringinputs['_YWidth'] = max(_TransmissionGateVDD2VSSHeight + _NMOSSubringinputs['_Width']//2 + _PMOSSubringinputs['_Width']//2 + _DRCObj._MetalxMinSpace10 * 2 + 2,
+        #if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
+        _TotalSubringinputs['_YWidth'] = max(_TransmissionGateVDD2VSSHeight + _NMOSSubringinputs['_Width']//2 + _PMOSSubringinputs['_Width']//2 + _DRCObj._MetalxMinSpace10 * 2 + 2,
                                              self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_YWidth'] + _DRCObj._RXMinSpacetoPRES * 2)
 
-        else :
-            _TotalSubringinputs['_YWidth'] = max(_TransmissionGateVDD2VSSHeight + _NMOSSubringinputs['_Width']//2 + _PMOSSubringinputs['_Width']//2 + _DRCObj._MetalxMinSpace10 * 2 + 2 + (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3),
-                                             self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_YWidth'] + _DRCObj._RXMinSpacetoPRES * 2)
+        # else :
+        #     _TotalSubringinputs['_YWidth'] = max(_TransmissionGateVDD2VSSHeight + _NMOSSubringinputs['_Width']//2 + _PMOSSubringinputs['_Width']//2 + _DRCObj._MetalxMinSpace10 * 2 + 2 + (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3),
+        #                                      self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_YWidth'] + _DRCObj._RXMinSpacetoPRES * 2)
 
         _TotalSubringinputs['_Width'] = _TotalSubringWidth
 
@@ -196,7 +196,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         _VDD2VSSMinHeight = _NMOSSubringinputs['_Width'] * 1.5 + _NMOSSubringinputs['_YWidth'] + _DRCObj._Metal1MinSpace3 + _PMOSSubringinputs['_Width'] * 1.5 + _PMOSSubringinputs['_YWidth']
 
-        print ('@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@# SET MINIMUM HEIGHT VALUE TO : ', _VDD2VSSMinHeight)
+        print ('@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@# SET MINIMUM HEIGHT VALUE FOR RESISTOR BANK : ', _VDD2VSSMinHeight)
 
         if _TransmissionGateVDD2VSSHeight != _VDD2VSSMinHeight :
             raise NotImplementedError
@@ -206,22 +206,22 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
 
         ## MOS  SUBRING  Settings
-        if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
-            self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] ,
+        #if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
+        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] ,
                                                                       self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight - (_PMOSSubringinputs['_YWidth'])//2 - (_PMOSSubringinputs['_Width']) // 2]]
 
-        else : 
-            self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] ,
-                                                                      self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight - (_PMOSSubringinputs['_YWidth'])//2 - (_PMOSSubringinputs['_Width']) // 2 + (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3)]]
+        # else : 
+        #     self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] ,
+        #                                                               self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight - (_PMOSSubringinputs['_YWidth'])//2 - (_PMOSSubringinputs['_Width']) // 2 + (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3)]]
 
 
-        if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
-            self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0],
+        #if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
+        self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0],
                                                                     self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + (_NMOSSubringinputs['_YWidth']) // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-        else :
-            self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0],
-                                                                    self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + (_NMOSSubringinputs['_YWidth']) // 2 + _NMOSSubringinputs['_Width'] // 2 - (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3 - 1)//2 + 1]]
+        # else :
+        #     self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0],
+        #                                                             self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + (_NMOSSubringinputs['_YWidth']) // 2 + _NMOSSubringinputs['_Width'] // 2 - (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3 - 1)//2 + 1]]
 
         ##Total Guardring Settings
         self._DesignParameter['_TotalSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] + _TotalSubringinputs['_XWidth'] // 2
@@ -468,76 +468,76 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                     self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
                                                                     _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
 
-            if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
-                self._DesignParameter['_Met1LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met1LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met1LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
+            #if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
+            self._DesignParameter['_Met1LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            self._DesignParameter['_Met1LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            self._DesignParameter['_Met1LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
                                                                             abs(self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] -
                                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-                self._DesignParameter['_Met2LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met2LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
+            self._DesignParameter['_Met2LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            self._DesignParameter['_Met2LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
                                                                             abs(self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] -
                                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-                self._DesignParameter['_Met3LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met3LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
+            self._DesignParameter['_Met3LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            self._DesignParameter['_Met3LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
                                                                             abs(self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] -
                                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-                self._DesignParameter['_Met4LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met4LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
+            self._DesignParameter['_Met4LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            self._DesignParameter['_Met4LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
                                                                             abs(self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] -
                                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-                self._DesignParameter['_Met5LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met5LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met5LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
+            self._DesignParameter['_Met5LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            self._DesignParameter['_Met5LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            self._DesignParameter['_Met5LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
                                                                             abs(self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] -
                                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-                self._DesignParameter['_Met6LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met6LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met6LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
+            self._DesignParameter['_Met6LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            self._DesignParameter['_Met6LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            self._DesignParameter['_Met6LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
                                                                             abs(self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] -
                                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-            else :
-                self._DesignParameter['_Met1LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met1LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met1LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
-                                                                            abs(self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] -
-                                                                                abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
-                                                                            _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2 - (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3 - 1)]]
+            # else :
+            #     self._DesignParameter['_Met1LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            #     self._DesignParameter['_Met1LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            #     self._DesignParameter['_Met1LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0],
+            #                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] -
+            #                                                                     abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
+            #                                                                 _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2 - (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3 - 1)]]
 
-                self._DesignParameter['_Met2LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met2LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
+            #     self._DesignParameter['_Met2LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            #     self._DesignParameter['_Met2LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            #     self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
 
-                self._DesignParameter['_Met3LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met3LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
+            #     self._DesignParameter['_Met3LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            #     self._DesignParameter['_Met3LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            #     self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
 
-                self._DesignParameter['_Met4LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met4LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
+            #     self._DesignParameter['_Met4LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            #     self._DesignParameter['_Met4LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            #     self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
 
-                self._DesignParameter['_Met5LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met5LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met5LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
+            #     self._DesignParameter['_Met5LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            #     self._DesignParameter['_Met5LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            #     self._DesignParameter['_Met5LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
 
-                self._DesignParameter['_Met6LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
-                self._DesignParameter['_Met6LayerVSS']['_YWidth'] = _LengthYbtwGuardring
-                self._DesignParameter['_Met6LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
+            #     self._DesignParameter['_Met6LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] * 2 + _NMOSSubringinputs['_XWidth']
+            #     self._DesignParameter['_Met6LayerVSS']['_YWidth'] = _LengthYbtwGuardring
+            #     self._DesignParameter['_Met6LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met1LayerVSS']['_XYCoordinates']
             
 
             #Via Generations

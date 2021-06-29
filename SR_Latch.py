@@ -1530,7 +1530,6 @@ class _SRLatch(StickDiagram._StickDiagram) :
             self._DesignParameter['_ViaMet52Met6VDD']['_DesignObj']._CalculateViaMet52Met6DesignParameter(**_ViaVDDMet52Met6)
             self._DesignParameter['_ViaMet52Met6VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
 
-
             _ViaVSSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
             _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVDDX
             _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = _ViaNumVDDY

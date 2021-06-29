@@ -269,6 +269,7 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_GuardringVSS']['_XYCoordinates'] = [[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth']/2]]
             print('x')
 
+            _LengthbtwViaCentertoViaCenter = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
 
             ##################################################################################################################################################################################
             ################################################################# NMOS VIA1 Generation ###########################################################################################
@@ -280,16 +281,37 @@ class _Slicer(StickDiagram._StickDiagram):
                 _tmpNumViaX = 2
             _VIAInnerNMOSGateMet12['_ViaMet12Met2NumberOfCOX'] = _tmpNumViaX
             _VIAInnerNMOSGateMet12['_ViaMet12Met2NumberOfCOY'] = 1
+
+            if _NMOSChannelWidth < 400 :
+                a =  _LengthbtwViaCentertoViaCenter / 4
+            else :
+                a = 0
+
             self._DesignParameter['_ViaMet12Met2OnNMOSGate1'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2OnInnerNMOSGateIn1{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet12Met2OnNMOSGate1']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_VIAInnerNMOSGateMet12)
             self._DesignParameter['_ViaMet12Met2OnNMOSGate1']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'][0][0],
                                                                                     self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'][0][1]\
-                                                                                    +self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]],
+                                                                                    +self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + a],
                                                                                    [self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_XYCoordinates'][0][0],
                                                                                     self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_XYCoordinates'][0][1] \
-                                                                                    +self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]]
+                                                                                    +self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + a]
                                                                                   ]
             del _tmpNumViaX
+            del a
+
+            if _NMOSChannelWidth < 400 :
+                self._DesignParameter['_Metal1forGate2&3'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+                self._DesignParameter['_Metal1forGate2&3']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOSGate1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+                self._DesignParameter['_Metal1forGate2&3']['_YWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOSGate1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                self._DesignParameter['_Metal1forGate2&3']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'][0][0],
+                                                                                    self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'][0][1]\
+                                                                                    +self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] - 16],
+                                                                                   [self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_XYCoordinates'][0][0],
+                                                                                    self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_XYCoordinates'][0][1] \
+                                                                                    +self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] - 16]
+                                                                                  ]
+
+
 
 
             # VIA1 Generation for Gate of Outer NMOS
@@ -378,8 +400,10 @@ class _Slicer(StickDiagram._StickDiagram):
             _tmpNumY = int(_NMOSChannelWidth // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 1
             if _tmpNumY < 1 :
                 _tmpNumY = 1
-            if _NMOSChannelWidth < 800:
+            if 400 <= _NMOSChannelWidth < 800:
                 _tmpNumY = _tmpNumY - 1
+                if _tmpNumY < 1 :
+                    _tmpNumY = 1
             _VIANMOSMet23['_ViaMet22Met3NumberOfCOY'] = _tmpNumY
 
 
@@ -1236,6 +1260,10 @@ class _Slicer(StickDiagram._StickDiagram):
 
                 del _VIANMOSMet23Routing
 
+
+
+
+
             # elif _NMOSFinger == 3 :
             #     _VIANMOSMet23Routing = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
             #     _VIANMOSMet23Routing['_ViaMet22Met3NumberOfCOX'] = 1
@@ -1262,19 +1290,19 @@ if __name__ == '__main__':
     DesignParameters._Technology = '028nm'
 
     SlicerObj = _Slicer(_DesignParameter=None, _Name='Slicer')
-    # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
-    #                                     _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
-    #                                     _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
-    #                                     _SlicerGuardringWidth=200, _SlicerGuardring= None,
-    #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
-    #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
-
-    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 1, _CLKinputPMOSFinger2 = 1, _PMOSFinger = 1, _PMOSChannelWidth =300,
-                                        _DATAinputNMOSFinger = 1, _NMOSFinger =1, _CLKinputNMOSFinger = 1, _NMOSChannelWidth = 300,
+    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
+                                        _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
                                         _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
                                         _SlicerGuardringWidth=200, _SlicerGuardring= None,
                                         _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
                                         _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
+
+    # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 2, _CLKinputPMOSFinger2 = 2, _PMOSFinger = 2, _PMOSChannelWidth =200,
+    #                                     _DATAinputNMOSFinger = 2, _NMOSFinger = 2, _CLKinputNMOSFinger = 2, _NMOSChannelWidth = 200,
+    #                                     _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
+    #                                     _SlicerGuardringWidth=200, _SlicerGuardring= None,
+    #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
+    #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
 
     SlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerObj._DesignParameter)
     _fileName = 'SlicerX.gds'

@@ -17,6 +17,23 @@ import SR_Latch
 import math
 
 class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
+
+    _ParametersForDesignCalculation = dict(
+                                    _SRFinger1 = None, _SRFinger2 = None, _SRFinger3 = None, _SRFinger4 = None, \
+                                  _SRNMOSChannelWidth1 = None, _SRPMOSChannelWidth1 = None, _SRNMOSChannelWidth2 = None, _SRPMOSChannelWidth2 = None, _SRNMOSChannelWidth3 = None, 
+                                  _SRPMOSChannelWidth3 = None, _SRNMOSChannelWidth4 = None, _SRPMOSChannelWidth4 = None, _SRChannelLength = None, _SRNPRatio = None,\
+                                  _SRVDD2VSSHeightAtOneSide = None, _SRDummy = None, _SRNumSupplyCoX = None, _SRNumSupplyCoY = None, \
+                                  _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, SRNumViaPoly2Met1CoX = None, \
+                                  SRNumViaPoly2Met1CoY = None, SRNumViaPMOSMet12Met2CoX = None, SRNumViaPMOSMet12Met2CoY = None, \
+                                  SRNumViaNMOSMet12Met2CoX = None, SRNumViaNMOSMet12Met2CoY = None, SRNumViaPMOSMet22Met3CoX = None, SRNumViaPMOSMet22Met3CoY = None, \
+                                  SRNumViaNMOSMet22Met3CoX = None, SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = False, 
+                                  _SLCLKinputPMOSFinger1 = None, _SLCLKinputPMOSFinger2 = None, _SLPMOSFinger = None, _SLPMOSChannelWidth = None,
+                                    _SLDATAinputNMOSFinger = None, _SLNMOSFinger = None, _SLCLKinputNMOSFinger = None, _SLNMOSChannelWidth = None,
+                                    _SLChannelLength = None, _SLDummy = False, _SLSLVT = False, _SLGuardringWidth = None, _SLGuardring = False,
+                                    _SLSlicerGuardringWidth=None, _SLSlicerGuardring=False,
+                                    _SLNumSupplyCOY=None, _SLNumSupplyCOX=None, _SLSupplyMet1XWidth=None, _SLSupplyMet1YWidth=None, _SLVDD2VSSHeight = None,
+                                    _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None)
+
     def __init__(self, _DesignParameter = None, _Name = 'SlicerwithSRLatch'):
         if _DesignParameter != None :
             self._DesignParameter = _DesignParameter
@@ -82,3 +99,40 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
         _SRLatchinputs['NumViaNMOSMet22Met3CoY'] = SRNumViaNMOSMet22Met3CoY
         _SRLatchinputs['_SLVT'] = _SRSLVT
         _SRLatchinputs['_PowerLine'] = _SRPowerLine
+
+        self._DesignParameter['_SRLatch'] = self._SrefElementDeclaration(_DesignObj = SR_Latch._SRLatch(_DesignParameter=None, _Name = "SRLatchIn{}".format(_Name)))[0]
+        self._DesignParameter['_SRLatch']['_DesignObj']._CalculateDesignParameter(**_SRLatchinputs)
+
+        print ('###############################         Slicer Generation        #########################################')
+
+        _Slicerinputs = copy.deepcopy(Slicer._Slicer._ParametersForDesignCalculation)
+        _Slicerinputs['_CLKinputPMOSFinger1'] = _SLCLKinputPMOSFinger1 
+        _Slicerinputs['_CLKinputPMOSFinger2'] = _SLCLKinputPMOSFinger2 
+        _Slicerinputs['_PMOSFinger'] = _SLPMOSFinger
+        _Slicerinputs['_PMOSChannelWidth'] = _SLPMOSChannelWidth
+        _Slicerinputs['_DATAinputNMOSFinger'] = _SLDATAinputNMOSFinger
+        _Slicerinputs['_NMOSFinger'] = _SLNMOSFinger
+        _Slicerinputs['_CLKinputNMOSFinger'] = _SLCLKinputNMOSFinger
+        _Slicerinputs['_NMOSChannelWidth'] = _SLNMOSChannelWidth
+        _Slicerinputs['_ChannelLength'] = _SLChannelLength
+        _Slicerinputs['_Dummy'] = _SLDummy
+        _Slicerinputs['_SLVT'] = _SLSLVT
+        _Slicerinputs['_GuardringWidth'] = _SLGuardringWidth
+        _Slicerinputs['_Guardring'] = _SLGuardring
+        _Slicerinputs['_SlicerGuardringWidth'] = _SLSlicerGuardringWidth
+        _Slicerinputs['_SlicerGuardring'] = _SLSlicerGuardring
+        _Slicerinputs['_NumSupplyCOX'] = _SLNumSupplyCOX
+        _Slicerinputs['_NumSupplyCOY'] = _SLNumSupplyCOY
+        _Slicerinputs['_SupplyMet1XWidth'] = _SLSupplyMet1XWidth
+        _Slicerinputs['_SupplyMet1YWidth'] = _SLSupplyMet1YWidth
+        _Slicerinputs['_VDD2VSSHeight'] = _SLVDD2VSSHeight
+        _Slicerinputs['_NumVIAPoly2Met1COX'] = _SLNumVIAPoly2Met1COX
+        _Slicerinputs['_NumVIAPoly2Met1COY'] = _SLNumVIAPoly2Met1COY
+        _Slicerinputs['_NumVIAMet12COX'] = _SLNumVIAMet12COX
+        _Slicerinputs['_NumVIAMet12COY'] = _SLNumVIAMet12COY
+
+        self._DesignParameter['_Slicer'] = self._SrefElementDeclaration(_DesignObj = Slicer._Slicer(_DesignParameter=None, _Name = "SlicerIn{}".format(_Name)))[0]
+        self._DesignParameter['_SRLatch']['_DesignObj']._CalculateDesignParameter(**_Slicerinputs)
+
+        
+        

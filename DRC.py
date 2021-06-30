@@ -116,6 +116,7 @@ class DRCPP:
             self._PpMinSpacetoPRES = 170 ##ADDED BY Junung
             self._RXMinSpacetoPRES = 230 ##Added By Junung
             self._RXMinSpacetoOP = 160 ## Added By Junung
+            self._PpMinArea = 160000 ## Added By Junung
 
 
         if DesignParameters._Technology=='065nm':

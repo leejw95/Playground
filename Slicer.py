@@ -1321,3 +1321,11 @@ if __name__ == '__main__':
     ftp.storbinary('STOR SlicerX.gds', myfile)
     myfile.close()
     ftp.close()
+
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('SlicerX.gds', 'rb')
+    ftp.storbinary('STOR SlicerX.gds', myfile)
+    myfile.close()
+    ftp.close()

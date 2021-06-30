@@ -1647,6 +1647,14 @@ if __name__ == '__main__' :
     myfile.close()
     ftp.close()
 
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('SRLatch.gds', 'rb')
+    ftp.storbinary('STOR SRLatchFile.gds', myfile)
+    myfile.close()
+    ftp.close()
+
     ftp = ftplib.FTP('141.223.29.61')
     ftp.login('junung', 'chlwnsdnd1!')
     ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')

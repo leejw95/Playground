@@ -171,7 +171,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         _TotalSubringinputs = copy.deepcopy(psubring._PSubring._ParametersForDesignCalculation)
         _TotalSubringinputs['_PType'] = True
-        _TotalSubringinputs['_XWidth'] = max(_PMOSSubringinputs['_XWidth'] + _PMOSSubringinputs['_Width'] * 2 + _DRCObj._PpMinExtensiononPactive * 2, _NMOSSubringinputs['_XWidth'] + _NMOSSubringinputs['_Width'] * 2 + _DRCObj._NwMinEnclosurePactive * 2) + \
+        _TotalSubringinputs['_XWidth'] = max(_PMOSSubringinputs['_XWidth'] + _PMOSSubringinputs['_Width'] * 2 + _DRCObj._PpMinExtensiononPactive2 * 2, _NMOSSubringinputs['_XWidth'] + _NMOSSubringinputs['_Width'] * 2 + _DRCObj._NwMinEnclosurePactive * 2) + \
                                         self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + \
                                         _DRCObj._RXMinSpacetoPRES * 2 + _DRCObj._PpMinSpace
         #if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
@@ -230,10 +230,10 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                            (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0]
                                                                             - self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) +
                                                                          self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']//2 +
-                                                                         _DRCObj._Metal1MinSpace3 + max(_PMOSSubringinputs['_Width'] + _DRCObj._NwMinEnclosurePactive ,_NMOSSubringinputs['_Width'] + _DRCObj._PpMinExtensiononPactive * 2 + _DRCObj._PpMinSpace)),
+                                                                         _DRCObj._Metal1MinSpace3 + max(_PMOSSubringinputs['_Width'] + _DRCObj._NwMinEnclosurePactive ,_NMOSSubringinputs['_Width'] + _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace)),
                                                                        min(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2,
                                                                            self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TotalSubringinputs['_YWidth'] // 2 -
-                                                                           (_NMOSSubringinputs['_Width']//2 + _DRCObj._PpMinExtensiononPactive * 2 + _DRCObj._PpMinSpace))]]
+                                                                           (_NMOSSubringinputs['_Width']//2 + _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace))]]
 
         ## Resistor Settings
         self._DesignParameter['_OpppcresRB']['_XYCoordinates'] = [
@@ -654,7 +654,7 @@ if __name__ == '__main__' :
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2402 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2318 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _PowerLine = False

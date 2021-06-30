@@ -406,7 +406,7 @@ if __name__ == '__main__' :
     _TransmissionGateVDD2VSSHeight = 2336 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
-    _PowerLine = False # T/F?
+    _PowerLine = True # T/F?
 
     _ResistorWidth = 1250
     _ResistorLength = 1234    ## minimum : 400

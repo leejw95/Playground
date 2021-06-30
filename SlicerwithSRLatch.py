@@ -47,7 +47,7 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
                                   _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, SRNumViaPoly2Met1CoX = None, \
                                   SRNumViaPoly2Met1CoY = None, SRNumViaPMOSMet12Met2CoX = None, SRNumViaPMOSMet12Met2CoY = None, \
                                   SRNumViaNMOSMet12Met2CoX = None, SRNumViaNMOSMet12Met2CoY = None, SRNumViaPMOSMet22Met3CoX = None, SRNumViaPMOSMet22Met3CoY = None, \
-                                  SRNumViaNMOSMet22Met3CoX = None, SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _PowerLine = False,
+                                  SRNumViaNMOSMet22Met3CoX = None, SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = False,
                                   _SLCLKinputPMOSFinger1 = None, _SLCLKinputPMOSFinger2 = None, _SLPMOSFinger = None, _SLPMOSChannelWidth = None,
                                     _SLDATAinputNMOSFinger = None, _SLNMOSFinger = None, _SLCLKinputNMOSFinger = None, _SLNMOSChannelWidth = None,
                                     _SLChannelLength = None, _SLDummy = False, _SLSLVT = False, _SLGuardringWidth = None, _SLGuardring = False,
@@ -98,7 +98,7 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
         _SRLatchinputs['NumViaNMOSMet22Met3CoX'] = SRNumViaNMOSMet22Met3CoX
         _SRLatchinputs['NumViaNMOSMet22Met3CoY'] = SRNumViaNMOSMet22Met3CoY
         _SRLatchinputs['_SLVT'] = _SRSLVT
-        _SRLatchinputs['_PowerLine'] = _PowerLine
+        _SRLatchinputs['_PowerLine'] = _SRPowerLine
 
 
 
@@ -141,9 +141,13 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
         print ('#################################       Coordinates Settings      ########################################')
         _XYCoordinateOfSlicer = [[0,0]]
         self._DesignParameter['_Slicer']['_XYCoordinates'] = _XYCoordinateOfSlicer
-        self._DesignParameter['_SRLatch']['_XYCoordinates'] = [[]]
+        self._DesignParameter['_SRLatch']['_XYCoordinates'] = [[_XYCoordinateOfSlicer[0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'][1][0] +
+                                                            +_DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace +
+                                                            int(round(self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 0.5)) // 2 +
+                                                            self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][0],
+                                                            _XYCoordinateOfSlicer[0][1]]]
 
-
+        
 if __name__ == '__main__' :
     DesignParameters._Technology = '028nm'
 

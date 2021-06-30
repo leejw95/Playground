@@ -664,9 +664,9 @@ class _PSubring(StickDiagram._StickDiagram):
         if _PType == True :
             print ('##############################     PIMP Layer Calcuation     ##############################################')
             if _Width % 2 == 1 :
-                self._DesignParameter['_PPLayer']['_Width'] = _Width + 2 * _DRCObj._PpMinExtensiononPactive + 1
+                self._DesignParameter['_PPLayer']['_Width'] = _Width + 2 * _DRCObj._PpMinExtensiononPactive2 + 1
             else :
-                self._DesignParameter['_PPLayer']['_Width'] = _Width + 2 * _DRCObj._PpMinExtensiononPactive
+                self._DesignParameter['_PPLayer']['_Width'] = _Width + 2 * _DRCObj._PpMinExtensiononPactive2
             if _YWidth % 2 == 1 :
                 _tmpY = _YWidth + 1
             else :
@@ -678,14 +678,14 @@ class _PSubring(StickDiagram._StickDiagram):
                 _tmpW = _Width
 
             self._DesignParameter['_PPLayer']['_XYCoordinates'] = [[[self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0],
-                                                                     self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] + _tmpY // 2 + _tmpW + _DRCObj._PpMinExtensiononPactive],
+                                                                     self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] + _tmpY // 2 + _tmpW + _DRCObj._PpMinExtensiononPactive2],
                                                                     [self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0],
                                                                      self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_tmpY // 2 + _tmpW // 2)],
                                                                     [self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0],
                                                                      self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_tmpY // 2 + _tmpW // 2)],
                                                                     [self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0],
                                                                      self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] + (_tmpY // 2 + _tmpW // 2)],
-                                                                    [self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] + _tmpW // 2 + _DRCObj._PpMinExtensiononPactive,
+                                                                    [self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] + _tmpW // 2 + _DRCObj._PpMinExtensiononPactive2,
                                                                      self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] + (_tmpY // 2 + _tmpW // 2)]
                                                                     ]]
 

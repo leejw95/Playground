@@ -1629,7 +1629,7 @@ if __name__ == '__main__' :
                                   NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None, \
                                   NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None, \
                                   NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = True,
-                                  _PowerLine = True)
+                                  _PowerLine = False)
 
     SRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SRLatchObj._DesignParameter)
     _fileName = 'SRLatch.gds'

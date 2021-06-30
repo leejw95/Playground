@@ -15,6 +15,13 @@ import ViaMet52Met6
 import math
 
 class _SRLatch(StickDiagram._StickDiagram) :
+    _ParametersForDesignCalculation = dict(_Finger1 = None, _Finger2 = None, _Finger3 = None, _Finger4 = None,
+                                        _NMOSChannelWidth1 = None, _PMOSChannelWidth1 = None, _NMOSChannelWidth2 = None, _PMOSChannelWidth2 = None, _NMOSChannelWidth3 = None, _PMOSChannelWidth3 = None, _NMOSChannelWidth4 = None, _PMOSChannelWidth4 = None, 
+                                        _ChannelLength = None, _NPRatio = None, _VDD2VSSHeightAtOneSide = None, _Dummy = None,
+                                        _NumSupplyCoX = None, _NumSupplyCoY = None, _SupplyMet1XWidth = None, _SupplyMet1YWidth = None,
+                                        NumViaPoly2Met1CoX = None, NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None,
+                                        NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None,
+                                        NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = None, _PowerLine = False)
 
     def __init__(self, _DesignParameter = None, _Name = 'SRLatch'):
         if _DesignParameter != None :

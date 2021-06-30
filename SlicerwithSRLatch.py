@@ -53,7 +53,7 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
                                     _SLChannelLength = None, _SLDummy = False, _SLSLVT = False, _SLGuardringWidth = None, _SLGuardring = False,
                                     _SLSlicerGuardringWidth=None, _SLSlicerGuardring=False,
                                     _SLNumSupplyCOY=None, _SLNumSupplyCOX=None, _SLSupplyMet1XWidth=None, _SLSupplyMet1YWidth=None, _SLVDD2VSSHeight = None,
-                                    _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None) :
+                                    _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _SLPowerLine = False) :
 
 
         print ('#########################################################################################################')
@@ -130,9 +130,73 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
         _Slicerinputs['_NumVIAPoly2Met1COY'] = _SLNumVIAPoly2Met1COY
         _Slicerinputs['_NumVIAMet12COX'] = _SLNumVIAMet12COX
         _Slicerinputs['_NumVIAMet12COY'] = _SLNumVIAMet12COY
+        _Slicerinputs['_PowerLine'] = _SLPowerLine
 
         self._DesignParameter['_Slicer'] = self._SrefElementDeclaration(_DesignObj = Slicer._Slicer(_DesignParameter=None, _Name = "SlicerIn{}".format(_Name)))[0]
-        self._DesignParameter['_SRLatch']['_DesignObj']._CalculateDesignParameter(**_Slicerinputs)
+        self._DesignParameter['_Slicer']['_DesignObj']._CalculateDesignParameter(**_Slicerinputs)
 
-        
-        
+
+        print ('#################################       Coordinates Settings      ########################################')
+        _XYCoordinateOfSlicer = [[0,0]]
+        self._DesignParameter['_Slicer']['_XYCoordinates'] = _XYCoordinateOfSlicer
+        self._DesignParameter['_SRLatch']['_XYCoordinates'] = [[]]
+
+
+if __name__ == '__main__' :
+    DesignParameters._Technology = '028nm'
+
+    SlicerwithSRLatchObj = _SlicerwithSRLatch(_DesignParameter=None, _Name='SlicerwithSRLatch')
+    SlicerwithSRLatchObj._CalculateDesignParameter(_SRFinger1 = 5, _SRFinger2 = 1, _SRFinger3 = 2, _SRFinger4 = 2, 
+                                  _SRNMOSChannelWidth1 = 200, _SRPMOSChannelWidth1 = 400, _SRNMOSChannelWidth2 = 200, _SRPMOSChannelWidth2 = 400, 
+                                  _SRNMOSChannelWidth3 = 200, _SRPMOSChannelWidth3 = 400, _SRNMOSChannelWidth4 = 200, _SRPMOSChannelWidth4 = 400, 
+                                  _SRChannelLength = 30, _SRNPRatio = None,
+                                  _SRVDD2VSSHeightAtOneSide = None, _SRDummy = True, _SRNumSupplyCoX = None, _SRNumSupplyCoY = 2, 
+                                  _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, SRNumViaPoly2Met1CoX = None, \
+                                  SRNumViaPoly2Met1CoY = None, SRNumViaPMOSMet12Met2CoX = None, SRNumViaPMOSMet12Met2CoY = None, 
+                                  SRNumViaNMOSMet12Met2CoX = None, SRNumViaNMOSMet12Met2CoY = None, SRNumViaPMOSMet22Met3CoX = None, SRNumViaPMOSMet22Met3CoY = None, 
+                                  SRNumViaNMOSMet22Met3CoX = None, SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = True, _SRPowerLine = True, 
+                                  _SLCLKinputPMOSFinger1 = 6, _SLCLKinputPMOSFinger2 = 3, _SLPMOSFinger = 2, _SLPMOSChannelWidth = 1000,
+                                    _SLDATAinputNMOSFinger = 12, _SLNMOSFinger = 2, _SLCLKinputNMOSFinger = 8, _SLNMOSChannelWidth = 1000,
+                                    _SLChannelLength = 30, _SLDummy = True, _SLSLVT = True, _SLGuardringWidth = 200, _SLGuardring = True,
+                                    _SLSlicerGuardringWidth=200, _SLSlicerGuardring=None,
+                                    _SLNumSupplyCOY=None, _SLNumSupplyCOX=None, _SLSupplyMet1XWidth=None, _SLSupplyMet1YWidth=None, _SLVDD2VSSHeight = None,
+                                    _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _SLPowerLine = True)
+
+    SlicerwithSRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SlicerwithSRLatchObj._DesignParameter)
+    _fileName = 'SlicerwithSRLatch.gds'
+    testStreamFile = open('./{}'.format(_fileName), 'wb')
+
+    tmp = SlicerwithSRLatchObj._CreateGDSStream(SlicerwithSRLatchObj._DesignParameter['_GDSFile']['_GDSFile'])
+
+    tmp.write_binary_gds_stream(testStreamFile)
+
+    testStreamFile.close()
+
+    import ftplib
+
+    #ftp = ftplib.FTP('141.223.29.61')
+    #ftp.login('jicho0927', 'cho89140616!!')
+    #ftp.cwd('/mnt/sda/jicho0927/OPUS/SAMSUNG28n')
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('SlicerwithSRLatch.gds', 'rb')
+    ftp.storbinary('STOR SliverwithSRLatch.gds', myfile)
+    myfile.close()
+    ftp.close()
+
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('SlicerwithSRLatch.gds', 'rb')
+    ftp.storbinary('STOR SlicerwithSRLatch.gds', myfile)
+    myfile.close()
+    ftp.close()
+
+    ftp = ftplib.FTP('141.223.29.61')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
+    myfile = open('SlicerwithSRLatch.gds', 'rb')
+    ftp.storbinary('STOR SlicerwithSRLatch.gds', myfile)
+    myfile.close()
+    ftp.close()

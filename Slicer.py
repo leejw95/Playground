@@ -32,7 +32,7 @@ class _Slicer(StickDiagram._StickDiagram):
                                         _ChannelLength=None, _Dummy=False, _SLVT=False, _GuardringWidth=None, _Guardring=False,
                                         _SlicerGuardringWidth=None, _SlicerGuardring=False,
                                         _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight=None,
-                                        _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
+                                        _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)#, _PowerLine=None)
 
 
     def __init__(self, _DesignParameter=None, _Name='Slicer'):
@@ -1286,10 +1286,11 @@ class _Slicer(StickDiagram._StickDiagram):
 
 
             # if _PowerLine == True :
-            #     self._DesignParameter['_GuardringVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            #     self._DesignParameter['_GuardringVSS']['_XWidth'] = NMOS_righttmp - NMOS_lefttmp + _GuardringWidth
-            #     self._DesignParameter['_GuardringVSS']['_YWidth'] = (NMOS_bottomtmp + self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]) - GuardringMet1Coordinate1[0][1]
-            #     self._DesignParameter['_GuardringVSS']['_XYCoordinates'] = [[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+            #     self._DesignParameter['_SupplyLlineMet2VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            #     self._DesignParameter['_SupplyLlineMet2VSS']['_XWidth'] = NMOS_righttmp - NMOS_lefttmp + _GuardringWidth
+            #     self._DesignParameter['_SupplyLlineMet2VSS']['_YWidth'] = (NMOS_bottomtmp + self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]) - GuardringMet1Coordinate1[0][1] + _GuardringWidth
+            #     self._DesignParameter['_SupplyLlineMet2VSS']['_XYCoordinates'] = [[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+            #
             #     print('x')
 
 
@@ -1305,7 +1306,7 @@ if __name__ == '__main__':
                                         _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
                                         _SlicerGuardringWidth=200, _SlicerGuardring= None,
                                         _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
-                                        _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
+                                        _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)#, _PowerLine=None)
 
     # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 2, _CLKinputPMOSFinger2 = 2, _PMOSFinger = 2, _PMOSChannelWidth =200,
     #                                     _DATAinputNMOSFinger = 2, _NMOSFinger = 2, _CLKinputNMOSFinger = 2, _NMOSChannelWidth = 200,

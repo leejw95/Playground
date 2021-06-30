@@ -1285,6 +1285,16 @@ class _Slicer(StickDiagram._StickDiagram):
             #     del _VIANMOSMet23Routing
 
 
+            # if _PowerLine == True :
+            #     self._DesignParameter['_GuardringVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            #     self._DesignParameter['_GuardringVSS']['_XWidth'] = NMOS_righttmp - NMOS_lefttmp + _GuardringWidth
+            #     self._DesignParameter['_GuardringVSS']['_YWidth'] = (NMOS_bottomtmp + self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]) - GuardringMet1Coordinate1[0][1]
+            #     self._DesignParameter['_GuardringVSS']['_XYCoordinates'] = [[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+            #     print('x')
+
+
+
+
             #########################################################################################################################################
 if __name__ == '__main__':
     DesignParameters._Technology = '028nm'

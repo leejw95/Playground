@@ -1305,7 +1305,7 @@ if __name__ == '__main__':
     #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
 
     SlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerObj._DesignParameter)
-    _fileName = 'SlicerX.gds'
+    _fileName = 'Slicer.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
     tmp = SlicerObj._CreateGDSStream(SlicerObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)
@@ -1317,7 +1317,7 @@ if __name__ == '__main__':
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('jicho0927', 'cho89140616!!')
     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('SlicerX.gds', 'rb')
-    ftp.storbinary('STOR SlicerX.gds', myfile)
+    myfile = open('Slicer.gds', 'rb')
+    ftp.storbinary('STOR Slicer.gds', myfile)
     myfile.close()
     ftp.close()

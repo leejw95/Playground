@@ -1372,28 +1372,28 @@ class _Slicer(StickDiagram._StickDiagram):
 
 
 
-
+                _LengthofSupplyLine = self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]
 
 
                 self._DesignParameter['_SupplyLlineMet2VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                self._DesignParameter['_SupplyLlineMet2VDD']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
-                self._DesignParameter['_SupplyLlineMet2VDD']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                self._DesignParameter['_SupplyLlineMet2VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], (Ptoptmp + Gtoptmp) / 2]] ###[[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                self._DesignParameter['_SupplyLlineMet2VDD']['_XWidth'] = _LengthofSupplyLine
+                self._DesignParameter['_SupplyLlineMet2VDD']['_YWidth'] = _GuardringWidth
+                self._DesignParameter['_SupplyLlineMet2VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]] ###[[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
                 self._DesignParameter['_SupplyLlineMet3VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                self._DesignParameter['_SupplyLlineMet3VDD']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
-                self._DesignParameter['_SupplyLlineMet3VDD']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                self._DesignParameter['_SupplyLlineMet3VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], (Ptoptmp + Gtoptmp) / 2]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                self._DesignParameter['_SupplyLlineMet3VDD']['_XWidth'] = _LengthofSupplyLine
+                self._DesignParameter['_SupplyLlineMet3VDD']['_YWidth'] = _GuardringWidth
+                self._DesignParameter['_SupplyLlineMet3VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
                 self._DesignParameter['_SupplyLlineMet4VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                self._DesignParameter['_SupplyLlineMet4VDD']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
-                self._DesignParameter['_SupplyLlineMet4VDD']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                self._DesignParameter['_SupplyLlineMet4VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], (Ptoptmp + Gtoptmp) / 2]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                self._DesignParameter['_SupplyLlineMet4VDD']['_XWidth'] = _LengthofSupplyLine
+                self._DesignParameter['_SupplyLlineMet4VDD']['_YWidth'] = _GuardringWidth
+                self._DesignParameter['_SupplyLlineMet4VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
                 self._DesignParameter['_SupplyLlineMet5VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                self._DesignParameter['_SupplyLlineMet5VDD']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
-                self._DesignParameter['_SupplyLlineMet5VDD']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                self._DesignParameter['_SupplyLlineMet5VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], (Ptoptmp + Gtoptmp) / 2]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                self._DesignParameter['_SupplyLlineMet5VDD']['_XWidth'] = _LengthofSupplyLine
+                self._DesignParameter['_SupplyLlineMet5VDD']['_YWidth'] = _GuardringWidth
+                self._DesignParameter['_SupplyLlineMet5VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
                 _ViaNumVDDX12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
                         _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
@@ -1449,8 +1449,7 @@ class _Slicer(StickDiagram._StickDiagram):
                                                       _Name='ViaMet22Met3VDDIn{}'.format(_Name)))[0]
                 self._DesignParameter['_ViaMet22Met3VDD']['_DesignObj']._CalculateViaMet22Met3DesignParameter(
                 **_ViaVDDMet22Met3)
-                self._DesignParameter['_ViaMet22Met3VDD']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet3VDD'][
-                '_XYCoordinates']
+                self._DesignParameter['_ViaMet22Met3VDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0], Ptoptmp]]
 
                 _ViaVDDMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
                 _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOX'] = _ViaNumVDDX34
@@ -1460,8 +1459,7 @@ class _Slicer(StickDiagram._StickDiagram):
                                                       _Name='ViaMet32Met4VDDIn{}'.format(_Name)))[0]
                 self._DesignParameter['_ViaMet32Met4VDD']['_DesignObj']._CalculateViaMet32Met4DesignParameter(
                 **_ViaVDDMet32Met4)
-                self._DesignParameter['_ViaMet32Met4VDD']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet3VDD'][
-                    '_XYCoordinates']
+                self._DesignParameter['_ViaMet32Met4VDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0], Ptoptmp]]
 
                 _ViaVDDMet42Met5 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
                 _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] = _ViaNumVDDX45
@@ -1471,27 +1469,26 @@ class _Slicer(StickDiagram._StickDiagram):
                                                       _Name='ViaMet42Met5VDDIn{}'.format(_Name)))[0]
                 self._DesignParameter['_ViaMet42Met5VDD']['_DesignObj']._CalculateViaMet42Met5DesignParameter(
                     **_ViaVDDMet42Met5)
-                self._DesignParameter['_ViaMet42Met5VDD']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet3VDD'][
-                '_XYCoordinates']
+                self._DesignParameter['_ViaMet42Met5VDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0], Ptoptmp]]
 
             #########################################################################################################################################
 if __name__ == '__main__':
     DesignParameters._Technology = '028nm'
 
     SlicerObj = _Slicer(_DesignParameter=None, _Name='Slicer')
-    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
-                                        _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
-                                        _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
-                                        _SlicerGuardringWidth=200, _SlicerGuardring= None,
-                                        _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
-                                        _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=False)
-
-    # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 2, _CLKinputPMOSFinger2 = 2, _PMOSFinger = 2, _PMOSChannelWidth =200,
-    #                                     _DATAinputNMOSFinger = 2, _NMOSFinger = 2, _CLKinputNMOSFinger = 2, _NMOSChannelWidth = 200,
+    # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
+    #                                     _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
     #                                     _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
     #                                     _SlicerGuardringWidth=200, _SlicerGuardring= None,
     #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
-    #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
+    #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=False)
+
+    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 2, _CLKinputPMOSFinger2 = 2, _PMOSFinger = 2, _PMOSChannelWidth =400,
+                                        _DATAinputNMOSFinger = 2, _NMOSFinger = 2, _CLKinputNMOSFinger = 2, _NMOSChannelWidth = 400,
+                                        _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
+                                        _SlicerGuardringWidth=200, _SlicerGuardring= None,
+                                        _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
+                                        _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
 
     SlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerObj._DesignParameter)
     _fileName = 'Slicer.gds'

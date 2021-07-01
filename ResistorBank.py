@@ -88,6 +88,8 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         _TransmissionGateinputs['_VDD2VSSHeight'] = _TransmissionGateVDD2VSSHeight
         _TransmissionGateinputs['_SLVT'] = _TransmissionGateSLVT
         _TransmissionGateinputs['_SupplyMet1YWidth'] = _NMOSSubringWidth
+        _TransmissionGateinputs['_Gatereverse'] = True
+        _TransmissionGateinputs['_Bodycontact'] = False
 
         self._DesignParameter['_TransmissionGateRB'] = self._SrefElementDeclaration(_DesignObj=Transmission_Gate._TransmissionGate(_DesignParameter=None, _Name = 'TransmissionGateIn{}'.format(_Name)))[0]
         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._CalculateTransmissionGate(**_TransmissionGateinputs)
@@ -649,7 +651,7 @@ if __name__ == '__main__' :
     # _InverterVDD2VSSHeight = 2252 ## SHOULD BE FIXED OVER MIN VALUE
     # _InverterSLVT = True     #T/F?
 
-    _TransmissionGateFinger = 2
+    _TransmissionGateFinger = 6
     _TransmissionGateChannelWidth = 275
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2
@@ -716,6 +718,14 @@ if __name__ == '__main__' :
     ftp = ftplib.FTP('141.223.29.61')
     ftp.login('junung', 'chlwnsdnd1!')
     ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
+    myfile = open('ResistorBank.gds', 'rb')
+    ftp.storbinary('STOR ResistorBank.gds', myfile)
+    myfile.close()
+    ftp.close()
+
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
     myfile = open('ResistorBank.gds', 'rb')
     ftp.storbinary('STOR ResistorBank.gds', myfile)
     myfile.close()

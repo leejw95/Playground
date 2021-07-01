@@ -113,10 +113,10 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             if _tmpNumCOY < 1:
                 _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOX'] = 1
-                _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOY'] = 1
+                _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOY'] = 2
             else:
                 _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOX'] = _tmpNumCOY
-                _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOY'] = 1
+                _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOY'] = 2
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS1'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnNMOSGate1In{}'.format(_Name)))[0]
             self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_VIANMOSPoly2Met1NMOS1)
@@ -132,10 +132,10 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             if _tmpNumCOY < 1:
                 _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOX'] = 1
-                _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOY'] = 1
+                _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOY'] = 2
             else:
                 _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOX'] = _tmpNumCOY
-                _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOY'] = 1
+                _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOY'] = 2
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS2'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnNMOSGate2In{}'.format(_Name)))[0]
             self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_VIANMOSPoly2Met1NMOS2)
@@ -249,6 +249,12 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_NMOS5']['_XYCoordinates'] = [[_XYCoordinateOfNMOS[0][0],
                                                                       _XYCoordinateOfNMOS[0][1] - (self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + SpaceBtwNMOS)
                                                                     ]]
+
+            if _CLKinputNMOSFinger > 2 * _NMOSFinger + 4 :
+                self._DesignParameter['_NMOS5']['_XYCoordinates'] = [[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] -  _DRCObj._PolygateMinSpace - 3 *_DRCObj._PolygateMinWidth]]
+
+
+
 
             #################################################################### NMOS Gate Coordinate Setting ###################################################################
             # self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0],
@@ -660,12 +666,12 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0],
-                                                                           self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + max(self._DesignParameter['_ViaMet12Met2OnNMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + \
-                                                                           self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate ]]
+                                                                           self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnNMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 - \
+                                                                           self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace - _DRCObj._Metal1MinSpacetoGate ]]
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'] = [[self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0],
-                                                                           self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] + max(self._DesignParameter['_ViaMet12Met2OnNMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + \
-                                                                           self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace + _DRCObj._Metal1MinSpacetoGate ]]
+                                                                           self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnNMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 - \
+                                                                           self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace - _DRCObj._Metal1MinSpacetoGate ]]
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'] = [[self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + max(self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + \
@@ -693,10 +699,10 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 # _LengthPPolyVIAtoGoDown = math.sqrt(
                 #     _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
                 self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'] = [
-                    [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp1],
+                    [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthNPolyVIAtoGoUp1],
                     ]
                 self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'] = [
-                [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp1]
+                [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthNPolyVIAtoGoUp1]
                    ]
 
             if _NMOSFinger == 1 :
@@ -893,9 +899,10 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_RingPpLayer3']['_Width'] = 21*2 + _GuardringWidth
                 self._DesignParameter['_RingPpLayer4']['_Width'] = 21*2 + _GuardringWidth
 
-                toptmp    = self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-                bottomtmp = self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) \
-                            - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - SpaceBtwNMOS - 10
+                toptmp    = self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                bottomtmp = self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) - 10
+                    # self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) \
+                    #         - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - SpaceBtwNMOS - 10
                 lefttmp   = min(self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) - (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) - 35
                 righttmp  = max(self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0]) + (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 35
 
@@ -1049,7 +1056,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             self._DesignParameter['_SLVTforArea'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=400)
             self._DesignParameter['_SLVTforArea']['_Width'] = self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth']
-            self._DesignParameter['_SLVTforArea']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]], [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1]]]]
+            self._DesignParameter['_SLVTforArea']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]], [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth'] / 2]]]
 
 
 
@@ -1086,6 +1093,21 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             del tmp
             print('x')
             print('x')
+
+
+            ############################################################### Code for re-coordinating of NMOS5 ##############################################################
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     NMOSSetofSlicerObj = _NMOSWithDummyOfSlicer(_DesignParameter=None, _Name='NMOSSetofSlicer')

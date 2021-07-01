@@ -139,7 +139,7 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'] = tmp
             self._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'] = tmp2
             del tmp
-
+            
             # Guardring OD Layer
             tmp=[]
             # Horizontal OD

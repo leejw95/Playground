@@ -206,7 +206,7 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
 
 
 
-        print ('#################################       Coordinates Settings      ########################################')
+        print ('#################################       Coordinates Settings      #########################################')
         _XYCoordinateOfSlicer = [[0,0]]
         self._DesignParameter['_Slicer']['_XYCoordinates'] = _XYCoordinateOfSlicer
         self._DesignParameter['_SRLatch']['_XYCoordinates'] = [[_XYCoordinateOfSlicer[0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'][1][0] +

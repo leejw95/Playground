@@ -402,6 +402,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
                 print('_VDD2VSSMinHeightAtOneSide =', _VDD2VSSMinHeightAtOneSide)
                 raise NotImplementedError
 
+    #    self._DesignParameter['_VDD2VSSHeightAtOneSide'] = _VDD2VSSHeightAtOneSide
 
 
         #####################################################MOS Coordinates Setting###############################################################
@@ -1385,12 +1386,14 @@ class _SRLatch(StickDiagram._StickDiagram) :
         self._DesignParameter['_INpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'IN')
         self._DesignParameter['_INbpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'INb')
         self._DesignParameter['_OUTpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'OUT')
+        self._DesignParameter['_OUTbpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'OUT')
 
         self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[0, _VDD2VSSHeightAtOneSide], [0, 0 - _VDD2VSSHeightAtOneSide]]
         self._DesignParameter['_VSSpin']['_XYCoordinates'] = [[0,0]]
         self._DesignParameter['_INbpin']['_XYCoordinates'] = [[self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][0], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][1]]]
         self._DesignParameter['_INpin']['_XYCoordinates'] = [[self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][0], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][1]]]
-        self._DesignParameter['_OUTpin']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1']['_XYCoordinates'][1][0] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][1][1]]]
+        self._DesignParameter['_OUTpin']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1']['_XYCoordinates'][1][0] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS1']['_XYCoordinates'][1][1]]]
+        self._DesignParameter['_OUTbpin']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1']['_XYCoordinates'][1][0] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0], 0 - (self._DesignParameter['_PMOS1']['_XYCoordinates'][1][1])]]
 
 
 

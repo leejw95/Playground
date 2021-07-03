@@ -1401,13 +1401,13 @@ class _Slicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_SupplyLlineMet5VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
                 _ViaNumVDDX12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
-                        _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
+                        _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
                 _ViaNumVDDX23 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
-                        _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
+                        _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
                 _ViaNumVDDX34 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
-                        _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
+                        _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
                 _ViaNumVDDX45 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
-                        _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
+                        _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
 
                 if _ViaNumVDDX12 < 1:
                     _ViaNumVDDX12 = 1
@@ -1720,19 +1720,19 @@ if __name__ == '__main__':
     DesignParameters._Technology = '028nm'
 
     SlicerObj = _Slicer(_DesignParameter=None, _Name='Slicer')
-    # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
-    #                                     _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
-    #                                     _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
-    #                                     _SlicerGuardringWidth=200, _SlicerGuardring= None,
-    #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
-    #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
-
-    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 =5, _CLKinputPMOSFinger2 =5, _PMOSFinger = 5, _PMOSChannelWidth =400,
-                                        _DATAinputNMOSFinger =5, _NMOSFinger =5, _CLKinputNMOSFinger = 5, _NMOSChannelWidth = 400,
+    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 1, _PMOSChannelWidth = 1000,
+                                        _DATAinputNMOSFinger = 12, _NMOSFinger = 1, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
                                         _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
                                         _SlicerGuardringWidth=200, _SlicerGuardring= None,
                                         _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
                                         _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
+
+    # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 =5, _CLKinputPMOSFinger2 =5, _PMOSFinger = 5, _PMOSChannelWidth =400,
+    #                                     _DATAinputNMOSFinger =5, _NMOSFinger =5, _CLKinputNMOSFinger = 5, _NMOSChannelWidth = 400,
+    #                                     _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
+    #                                     _SlicerGuardringWidth=200, _SlicerGuardring= None,
+    #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
+    #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
 
     SlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerObj._DesignParameter)
     _fileName = 'Slicer.gds'

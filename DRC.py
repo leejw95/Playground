@@ -1315,6 +1315,7 @@ class DRCMETALx:
             self._MetalxMinSpace8 = 181  # (M4 with width > 0.700) minimum space to (M4 with width > 0.156), for run length > 0.700, >= 0.181 , junung
             self._MetalxMinSpace9 = 210  # (M5 with width > 0.208) minimum space to (M5 with width > 0.700), for run length > 0.700, >= 0.21 , junung
             self._MetalxMinSpace10 = 280 # (M6 with width > 0.700) minimum space to (M6 with width > 0.700), >= 0.28, junung
+            self._MetalxMinSpace11 = 500 # (M6 with width > 1.500) minimum space to (M6 with width > 0.700), >= 0.5, junung
 
             self._MetalxMinSpaceAtCorner=60 #S1/S2
 

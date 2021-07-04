@@ -476,6 +476,10 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                     abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1]))) \
                                     + _NMOSSubringinputs['_Width'] // 2 + _TotalSubringinputs['_Width'] // 2
 
+            _LengthOfPMOSRouting = (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'][0][1] + 
+                                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2) - \
+                                    (self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] - (_PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_YWidth'] // 2))
+
             # self._DesignParameter['_Met2LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_XWidth']
             # self._DesignParameter['_Met2LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width']
             # self._DesignParameter['_Met2LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
@@ -492,10 +496,10 @@ class _ResistorBank(StickDiagram._StickDiagram) :
             #                                                             self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
             #                                                             _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
             self._DesignParameter['_Met2LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width']
-            self._DesignParameter['_Met2LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth']
+            self._DesignParameter['_Met2LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth'] - _LengthOfPMOSRouting - _DRCObj._MetalxMinSpace5
             self._DesignParameter['_Met2LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] - 
                                                                         (_PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_XWidth'] // 2),
-                                                                        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1]]]
+                                                                        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] + (_LengthOfPMOSRouting + _DRCObj._MetalxMinSpace5) // 2]]
             self._DesignParameter['_Met3LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width']
             self._DesignParameter['_Met3LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth']
             self._DesignParameter['_Met3LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] - 
@@ -676,7 +680,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
             
             self._DesignParameter['_ViaMet32Met4OnVDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4OnVDDIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet32Met4OnVDD']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVDDMet32Met4)
-            self._DesignParameter['_ViaMet32Met4OnVDD']['_XYCoordinates'] = self._DesignParameter['_Met2LayerVDD']['_XYCoordinates']
+            self._DesignParameter['_ViaMet32Met4OnVDD']['_XYCoordinates'] = self._DesignParameter['_Met3LayerVDD']['_XYCoordinates']
 
             self._DesignParameter['_ViaMet42Met5OnVDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name='ViaMet42Met5OnVDDIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet42Met5OnVDD']['_DesignObj']._CalculateViaMet42Met5DesignParameter(**_ViaVDDMet42Met5)

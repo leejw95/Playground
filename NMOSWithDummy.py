@@ -16,7 +16,9 @@ class _NMOS(StickDiagram._StickDiagram):
                 _ODLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0],
                                                           _Datatype=DesignParameters._LayerMapping['DIFF'][1],
                                                           _XYCoordinates=[], _XWidth=400, _YWidth=400),
-                # boundary type:1, #path type:2, #sref type: 3, #gds data type: 4, #Design Name data type: 5,  #other data type: ?
+                _ODLayerPINDrawing=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['RXPIN'][0],
+                                                          _Datatype=DesignParameters._LayerMapping['RXPIN'][1],
+                                                          _XYCoordinates=[], _XWidth=400, _YWidth=400),
                 _PODummyLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],
                                                                _Datatype=DesignParameters._LayerMapping['POLY'][1],
                                                                _XYCoordinates=[], _XWidth=400, _YWidth=400),
@@ -26,11 +28,18 @@ class _NMOS(StickDiagram._StickDiagram):
                 _POLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],
                                                           _Datatype=DesignParameters._LayerMapping['POLY'][1],
                                                           _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                _POLayerPINDrawing=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PCPIN'][0],
+                                                          _Datatype=DesignParameters._LayerMapping['PCPIN'][1],
+                                                          _XYCoordinates=[], _XWidth=400, _YWidth=400),
+
                 _PDKLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PDK'][0],
                                                            _Datatype=DesignParameters._LayerMapping['PDK'][1],
                                                            _XYCoordinates=[], _XWidth=400, _YWidth=400),
                 _Met1Layer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],
                                                             _Datatype=DesignParameters._LayerMapping['METAL1'][1],
+                                                            _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                _METAL1PINDrawing=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['M1PIN'][0],
+                                                            _Datatype=DesignParameters._LayerMapping['M1PIN'][1],
                                                             _XYCoordinates=[], _XWidth=400, _YWidth=400),
                 _NPLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['NIMP'][0],
                                                           _Datatype=DesignParameters._LayerMapping['NIMP'][1],
@@ -89,6 +98,9 @@ class _NMOS(StickDiagram._StickDiagram):
         self._DesignParameter['_ODLayer']['_YWidth'] = _NMOSChannelWidth
 
         self._DesignParameter['_ODLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
+
+
+
 
         if _NMOSDummy == True:
             print ('#############################     POLY Dummy Layer Calculation    ##############################################')
@@ -178,6 +190,13 @@ class _NMOS(StickDiagram._StickDiagram):
             tmp.append(_xycoordinatetmp)
 
         self._DesignParameter['_Met1Layer']['_XYCoordinates'] = tmp
+
+        self._DesignParameter['_METAL1PINDrawing']['_XWidth'] = _DRCObj._CoMinWidth + 2 * _DRCObj._Metal1MinEnclosureCO
+        self._DesignParameter['_METAL1PINDrawing']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
+        self._DesignParameter['_METAL1PINDrawing']['_XYCoordinates'] = tmp
+
+
+
 
         print ('#############################     CONT Layer Calculation    ##############################################')
         _XNumberOfCOInNMOS = _NMOSNumberofGate + 1
@@ -328,6 +347,29 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
+        print ('##################################################### Diff Pin Generation & Coordinates ####################################################')
+
+        self._DesignParameter['_ODLayerPINDrawing']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] / 2 - (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)
+        self._DesignParameter['_ODLayerPINDrawing']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
+
+        self._DesignParameter['_ODLayerPINDrawing']['_XYCoordinates'] = [[(self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]], \
+                                                                         [0 - (self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]]]
+
+
+        print ('##################################################### POLayer Pin Generation & Coordinates ####################################################')
+        self._DesignParameter['_POLayerPINDrawing']['_XWidth'] = self._DesignParameter['_POLayer']['_XWidth']
+        self._DesignParameter['_POLayerPINDrawing']['_YWidth'] = (self._DesignParameter['_SLVTLayer']['_YWidth'] - self._DesignParameter['_ODLayer']['_YWidth']) / 2
+        tmp1 = []
+        tmp2 = []
+        for i in range(0, len(self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'])) :
+            tmp1.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], - (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
+            tmp2.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
+
+        if _NMOSFinger == 1 :
+            self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1 + tmp2
+        else :
+            self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1
+
 
 if __name__ == '__main__':
     # _NMOSFinger = 4
@@ -415,8 +457,8 @@ if __name__ == '__main__':
     # # del globals()['var']
     # # print globals()
 
-    _NMOSFinger = 6
-    _NMOSWidth = 275
+    _NMOSFinger = 1
+    _NMOSWidth = 200
     _NMOSChannelLength = 30
     _NMOSDummy = True
     _SLVT = True
@@ -426,9 +468,18 @@ if __name__ == '__main__':
     NMOSObj._CalculateNMOSDesignParameter(_NMOSNumberofGate=_NMOSFinger, _NMOSChannelWidth=_NMOSWidth,
                                           _NMOSChannellength=_NMOSChannelLength, _NMOSDummy=_NMOSDummy, _SLVT=_SLVT)
     NMOSObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NMOSObj._DesignParameter)
-    testStreamFile = open('./testStreamFile2.gds', 'wb')
+    testStreamFile = open('./NMOSWithDummy.gds', 'wb')
     tmp = NMOSObj._CreateGDSStream(NMOSObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
     print ('##########################################################################################')
+    import ftplib
+
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('NMOSWithDummy.gds', 'rb')
+    ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
+    myfile.close()
+    ftp.close()

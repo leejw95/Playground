@@ -16,7 +16,7 @@ import Slicer
 import SR_Latch
 import math
 
-class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
+class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
     _ParametersForDesignCalculation = dict(
                                     _SRFinger1 = None, _SRFinger2 = None, _SRFinger3 = None, _SRFinger4 = None, \
@@ -34,7 +34,7 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
                                     _SLNumSupplyCOY=None, _SLNumSupplyCOX=None, _SLSupplyMet1XWidth=None, _SLSupplyMet1YWidth=None, _SLVDD2VSSHeight = None,
                                     _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None)
 
-    def __init__(self, _DesignParameter = None, _Name = 'SlicerwithSRLatch'):
+    def __init__(self, _DesignParameter = None, _Name = 'SlicerWithSRLatch'):
         if _DesignParameter != None :
             self._DesignParameter = _DesignParameter
 
@@ -57,12 +57,12 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
 
 
         print ('#########################################################################################################')
-        print ('                                {}  SlicerwithSRLatch Calculation Start                                  '.format(self._DesignParameter['_Name']['_Name']))
+        print ('                                {}  SlicerWithSRLatch Calculation Start                                  '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
 
         _DRCObj = DRC.DRC()
-        _Name = 'SlicerwithSRLatch'
+        _Name = 'SlicerWithSRLatch'
 
         print ('###############################        SRLatch Generation       #########################################')
 
@@ -294,8 +294,8 @@ class _SlicerwithSRLatch (StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
     DesignParameters._Technology = '028nm'
 
-    SlicerwithSRLatchObj = _SlicerwithSRLatch(_DesignParameter=None, _Name='SlicerwithSRLatch')
-    SlicerwithSRLatchObj._CalculateDesignParameter(_SRFinger1 = 5, _SRFinger2 = 1, _SRFinger3 = 2, _SRFinger4 = 2,
+    SlicerWithSRLatchObj = _SlicerWithSRLatch(_DesignParameter=None, _Name='SlicerWithSRLatch')
+    SlicerWithSRLatchObj._CalculateDesignParameter(_SRFinger1 = 5, _SRFinger2 = 1, _SRFinger3 = 2, _SRFinger4 = 2,
                                   _SRNMOSChannelWidth1 = 200, _SRPMOSChannelWidth1 = 400, _SRNMOSChannelWidth2 = 200, _SRPMOSChannelWidth2 = 400,
                                   _SRNMOSChannelWidth3 = 200, _SRPMOSChannelWidth3 = 400, _SRNMOSChannelWidth4 = 200, _SRPMOSChannelWidth4 = 400,
                                   _SRChannelLength = 30, _SRNPRatio = None,
@@ -339,11 +339,11 @@ if __name__ == '__main__' :
     #                                                _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None,
     #                                                _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _SLPowerLine=True)
 
-    SlicerwithSRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SlicerwithSRLatchObj._DesignParameter)
-    _fileName = 'SlicerwithSRLatch.gds'
+    SlicerWithSRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SlicerWithSRLatchObj._DesignParameter)
+    _fileName = 'SlicerWithSRLatch.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    tmp = SlicerwithSRLatchObj._CreateGDSStream(SlicerwithSRLatchObj._DesignParameter['_GDSFile']['_GDSFile'])
+    tmp = SlicerWithSRLatchObj._CreateGDSStream(SlicerWithSRLatchObj._DesignParameter['_GDSFile']['_GDSFile'])
 
     tmp.write_binary_gds_stream(testStreamFile)
 
@@ -357,7 +357,7 @@ if __name__ == '__main__' :
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('jicho0927', 'cho89140616!!')
     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('SlicerwithSRLatch.gds', 'rb')
+    myfile = open('SlicerWithSRLatch.gds', 'rb')
     ftp.storbinary('STOR SlicerwithSRLatch.gds', myfile)
     myfile.close()
     ftp.close()
@@ -365,7 +365,7 @@ if __name__ == '__main__' :
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('junung', 'chlwnsdnd1!')
     ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('SlicerwithSRLatch.gds', 'rb')
+    myfile = open('SlicerWithSRLatch.gds', 'rb')
     ftp.storbinary('STOR SlicerwithSRLatch.gds', myfile)
     myfile.close()
     ftp.close()
@@ -373,7 +373,7 @@ if __name__ == '__main__' :
     ftp = ftplib.FTP('141.223.29.61')
     ftp.login('junung', 'chlwnsdnd1!')
     ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-    myfile = open('SlicerwithSRLatch.gds', 'rb')
+    myfile = open('SlicerWithSRLatch.gds', 'rb')
     ftp.storbinary('STOR SlicerwithSRLatch.gds', myfile)
     myfile.close()
     ftp.close()

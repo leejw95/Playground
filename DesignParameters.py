@@ -207,6 +207,7 @@ if _Technology == '180nm':
     # _DataType = layermapping[('DIFF', 'drawing')][1]
 elif _Technology == '028nm':
     _LayerMapping.update({'DIFF':_LayerMappingTmp[('RX', 'drawing')]})
+    _LayerMapping.update({'DIFFPINDrawing':_LayerMappingTmp[('RX', 'pin')]})
 elif _Technology == '065nm':
     _LayerMapping.update({'DIFF':_LayerMappingTmp[('OD', 'drawing')]})
             # _Layernumber = layermapping[('OD', 'drawing')][0]
@@ -279,6 +280,7 @@ if _Technology == '180nm':
             # _DataType = layermapping[('METAL1', 'drawing')][1]
 elif _Technology == '028nm':
     _LayerMapping.update({'METAL1PIN':_LayerMappingTmp[('M1', 'label')]})
+    _LayerMapping.update({'METAL1PINDrawing':_LayerMappingTmp[('M1', 'pin')]})
 elif _Technology == '065nm':
     _LayerMapping.update({'METAL1PIN':_LayerMappingTmp[('M1', 'pin')]})
             # _Layernumber = layermapping[('M1', 'drawing')][0]
@@ -862,6 +864,7 @@ if _Technology == '180nm':
             # _DataType = layermapping[('POLY1', 'drawing')][1]
 elif _Technology == '028nm':
     _LayerMapping.update({'POLY':_LayerMappingTmp[('PC', 'drawing')]})
+    _LayerMapping.update({'POLYPINDrawing':_LayerMappingTmp[('PC', 'pin')]})
 elif _Technology == '065nm':
     _LayerMapping.update({'POLY':_LayerMappingTmp[('PO', 'drawing')]})
             # _Layernumber = layermapping[('PO', 'drawing')][0]

@@ -1,0 +1,4 @@
+M2 40um, 272ohm & 2.75fF
+
+Cgi=Cdi=2.9fF/um (gate input cap)
+Ri=690 ohm/um (gate input resistance)

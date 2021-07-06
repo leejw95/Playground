@@ -365,7 +365,7 @@ class _NMOS(StickDiagram._StickDiagram):
             tmp1.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], - (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
             tmp2.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
 
-        if _NMOSFinger == 1 :
+        if _NMOSNumberofGate == 1 :
             self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1 + tmp2
         else :
             self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1

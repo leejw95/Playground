@@ -278,7 +278,7 @@ class _PMOS(StickDiagram._StickDiagram):
             tmp1.append([self._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], - (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
             tmp2.append([self._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][i][0], (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
 
-        if _PMOSFinger == 1 :
+        if _PMOSNumberofGate == 1 :
             self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1 + tmp2
         else :
             self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1

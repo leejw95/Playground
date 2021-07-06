@@ -77,7 +77,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             _NMOS3inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS3inputs['_NMOSDummy'] = _Dummy
             _NMOS3inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_NMOS3'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS3In{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOS3'] = self._SrefElementDeclaration(_Reflect = [1,0,0], _Angle=0,_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS3In{}'.format(_Name)))[0]
             self._DesignParameter['_NMOS3']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOS3inputs)
 
             # NMOS4 Generation
@@ -87,7 +87,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             _NMOS4inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS4inputs['_NMOSDummy'] = _Dummy
             _NMOS4inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_NMOS4'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS4In{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOS4'] = self._SrefElementDeclaration(_Reflect = [1,0,0], _Angle=0,_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS4In{}'.format(_Name)))[0]
             self._DesignParameter['_NMOS4']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOS4inputs)
 
             # NMOS5(CLK input) Generation
@@ -97,7 +97,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             _NMOS5inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS5inputs['_NMOSDummy'] = _Dummy
             _NMOS5inputs['_SLVT'] = _SLVT
-            self._DesignParameter['_NMOS5'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS5In{}'.format(_Name)))[0]
+            self._DesignParameter['_NMOS5'] = self._SrefElementDeclaration(_Reflect = [1,0,0], _Angle=0,_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOS5In{}'.format(_Name)))[0]
             self._DesignParameter['_NMOS5']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOS5inputs)
             ##################################################################################################################################################################################
 

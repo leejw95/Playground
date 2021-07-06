@@ -21,7 +21,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
                                         _NumSupplyCoX = None, _NumSupplyCoY = None, _SupplyMet1XWidth = None, _SupplyMet1YWidth = None,
                                         NumViaPoly2Met1CoX = None, NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None,
                                         NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None,
-                                        NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = None, _PowerLine = False)
+                                        NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = None, _PCPin = None, _PowerLine = False)
 
     def __init__(self, _DesignParameter = None, _Name = 'SRLatch'):
         if _DesignParameter != None :
@@ -37,7 +37,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
                                   _SupplyMet1XWidth = None, _SupplyMet1YWidth = None, NumViaPoly2Met1CoX = None, \
                                   NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None, \
                                   NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None, \
-                                  NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = None, _PowerLine = False) :
+                                  NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = None, _PCPin = None, _PowerLine = False) :
 
         _DRCObj = DRC.DRC()
         _Name = 'SRLatch'
@@ -52,6 +52,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         _NMOSinputs['_NMOSChannellength'] = _ChannelLength
         _NMOSinputs['_NMOSDummy'] = _Dummy
         _NMOSinputs['_SLVT'] = _SLVT
+        _NMOSinputs['_PCPin'] = _PCPin
    #     _NMOSinputs['_Flip'] = None
 
         self._DesignParameter['_NMOS1'] = self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, \
@@ -67,6 +68,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         _NMOSinputs['_NMOSChannellength'] = _ChannelLength
         _NMOSinputs['_NMOSDummy'] = _Dummy
         _NMOSinputs['_SLVT'] = _SLVT
+        _NMOSinputs['_PCPin'] = _PCPin
    #     _NMOSinputs['_Flip'] = None
 
         self._DesignParameter['_NMOS2'] = \
@@ -83,6 +85,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         _NMOSinputs['_NMOSChannellength'] = _ChannelLength
         _NMOSinputs['_NMOSDummy'] = _Dummy
         _NMOSinputs['_SLVT'] = _SLVT
+        _NMOSinputs['_PCPin'] = _PCPin
    #     _NMOSinputs['_Flip'] = None
 
         self._DesignParameter['_NMOS3'] = \
@@ -99,6 +102,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         _NMOSinputs['_NMOSChannellength'] = _ChannelLength
         _NMOSinputs['_NMOSDummy'] = _Dummy
         _NMOSinputs['_SLVT'] = _SLVT
+        _NMOSinputs['_PCPin'] = _PCPin
    #     _NMOSinputs['_Flip'] = None
 
         self._DesignParameter['_NMOS4'] = \
@@ -118,6 +122,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
         _PMOSinputs['_SLVT'] = _SLVT
+        _PMOSinputs['_PCPin'] = _PCPin
   #      _PMOSinputs['_Flip'] = None
 
         self._DesignParameter['_PMOS1'] = \
@@ -134,6 +139,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
         _PMOSinputs['_SLVT'] = _SLVT
+        _PMOSinputs['_PCPin'] = _PCPin
    #     _PMOSinputs['_Flip'] = None
 
         self._DesignParameter['_PMOS2'] = \
@@ -150,6 +156,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
         _PMOSinputs['_SLVT'] = _SLVT
+        _PMOSinputs['_PCPin'] = _PCPin
    #     _PMOSinputs['_Flip'] = None
 
         self._DesignParameter['_PMOS3'] = \
@@ -166,6 +173,7 @@ class _SRLatch(StickDiagram._StickDiagram) :
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
         _PMOSinputs['_SLVT'] = _SLVT
+        _PMOSinputs['_PCPin'] = _PCPin
   #      _PMOSinputs['_Flip'] = None
 
         self._DesignParameter['_PMOS4'] = \
@@ -1698,7 +1706,7 @@ if __name__ == '__main__' :
                                   _SupplyMet1XWidth = None, _SupplyMet1YWidth = None, NumViaPoly2Met1CoX = None, \
                                   NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None, \
                                   NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None, \
-                                  NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = True,
+                                  NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = True, _PCPin = False,
                                   _PowerLine = False)
 
     # SRLatchObj._CalculateDesignParameter(_Finger1 = 1, _Finger2 = 1, _Finger3 = 1, _Finger4 = 1, \

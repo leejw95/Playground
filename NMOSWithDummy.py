@@ -191,6 +191,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
         self._DesignParameter['_Met1Layer']['_XYCoordinates'] = tmp
 
+
         self._DesignParameter['_METAL1PINDrawing']['_XWidth'] = _DRCObj._CoMinWidth + 2 * _DRCObj._Metal1MinEnclosureCO
         self._DesignParameter['_METAL1PINDrawing']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
         self._DesignParameter['_METAL1PINDrawing']['_XYCoordinates'] = tmp
@@ -347,13 +348,14 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
+
         print ('##################################################### Diff Pin Generation & Coordinates ####################################################')
 
         self._DesignParameter['_ODLayerPINDrawing']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] / 2 - (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)
         self._DesignParameter['_ODLayerPINDrawing']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
 
         self._DesignParameter['_ODLayerPINDrawing']['_XYCoordinates'] = [[(self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]], \
-                                                                         [0 - (self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]]]
+                                                                        [0 - (self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]]]
 
 
         print ('##################################################### POLayer Pin Generation & Coordinates ####################################################')
@@ -371,12 +373,15 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1
 
 
+
+
 if __name__ == '__main__':
     _NMOSFinger = 1
     _NMOSWidth = 200
     _NMOSChannelLength = 30
     _NMOSDummy = True
     _SLVT = True
+
     DesignParameters._Technology = '028nm'
     #    print 'Technology Process', DesignParameters._Technology
     NMOSObj = _NMOS(_DesignParameter=None, _Name='NMOS')

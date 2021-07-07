@@ -376,91 +376,6 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    # _NMOSFinger = 4
-    # _NMOSWidth = 600
-    # _NMOSChannelLength = 40
-    # _NMOSDummy = True
-    # # DesignParameters._Technology='045nm'
-    # # print 'Technology Process', DesignParameters._Technology
-    # NMOSObj=_NMOS(_DesignParameter=None, _Name='NMOS')
-    # NMOSObj._CalculateNMOSDesignParameter(_NMOSNumberofGate=_NMOSFinger, _NMOSChannelWidth=_NMOSWidth, _NMOSChannellength=_NMOSChannelLength, _NMOSDummy=_NMOSDummy)
-    # NMOSObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NMOSObj._DesignParameter)
-    # testStreamFile=open('./testStreamFile.gds','wb')
-    # tmp=NMOSObj._CreateGDSStream(NMOSObj._DesignParameter['_GDSFile']['_GDSFile'])
-    # tmp.write_binary_gds_stream(testStreamFile)
-    # testStreamFile.close()
-    # print '###############open ftp connection & update gds file to cadence server###################'
-    # ftp_cadence_server=ftplib.FTP('141.223.86.109')
-    # ftp_cadence_server.login(base64.b64decode('YWxlY25ldzE='),base64.b64decode('NzNoazNhYWs='))
-    # if DesignParameters._Technology =='065nm':
-    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/design_automation')
-    # elif DesignParameters._Technology =='180nm':
-    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/DesignAutomationTSMC018')
-    # elif DesignParameters._Technology =='045nm':
-    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/DesignAutomationTSMC45')
-    # print ftp_cadence_server.pwd()
-    # testStreamFile=open('./testStreamFile.gds','rb')
-    # ftp_cadence_server.storbinary('STOR testStreamFile.gds', testStreamFile)
-    # print 'close ftp connection'
-    # ftp_cadence_server.quit()
-    # testStreamFile.close()
-    #
-    # print '##########################################################################################'
-    # # print globals()
-    # # tmp=globals()
-    # # for var in tmp.keys():
-    # #     print var
-    # # all = [var for var in globals().keys() if var[1] != "_" ]
-    # # print all
-    # # for var in all:
-    # #     del globals()[var]
-    # #
-    # # del globals()['all']
-    # # del globals()['var']
-    # # print globals()
-
-    # _NMOSFinger = 3
-    # _NMOSWidth = 600
-    # _NMOSChannelLength = 60
-    # _NMOSDummy = True
-    # DesignParameters._Technology='065nm'
-    # print 'Technology Process', DesignParameters._Technology
-    # NMOSObj=_NMOS(_DesignParameter=None, _Name='NMOS')
-    # NMOSObj._CalculateNMOSDesignParameter(_NMOSNumberofGate=_NMOSFinger, _NMOSChannelWidth=_NMOSWidth, _NMOSChannellength=_NMOSChannelLength, _NMOSDummy=_NMOSDummy)
-    # NMOSObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NMOSObj._DesignParameter)
-    # testStreamFile=open('./testStreamFile.gds','wb')
-    # tmp=NMOSObj._CreateGDSStream(NMOSObj._DesignParameter['_GDSFile']['_GDSFile'])
-    # tmp.write_binary_gds_stream(testStreamFile)
-    # testStreamFile.close()
-    # print '###############open ftp connection & update gds file to cadence server###################'
-    # ftp_cadence_server=ftplib.FTP('141.223.86.109')
-    # ftp_cadence_server.login(base64.b64decode('YWxlY25ldzE='),base64.b64decode('NzNoazNhYWs='))
-    # if DesignParameters._Technology =='065nm':
-    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/design_automation')
-    # elif DesignParameters._Technology =='180nm':
-    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/DesignAutomationTSMC018')
-    # elif DesignParameters._Technology =='045nm':
-    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/DesignAutomationTSMC45')
-    # print ftp_cadence_server.pwd()
-    # testStreamFile=open('./testStreamFile.gds','rb')
-    # ftp_cadence_server.storbinary('STOR testStreamFile.gds', testStreamFile)
-    # print 'close ftp connection'
-    # ftp_cadence_server.quit()
-    # testStreamFile.close()
-    #
-    # print '##########################################################################################'
-    # # tmp=globals()
-    # # for var in tmp.keys():
-    # #     print var
-    # # all = [var for var in globals().keys() if var[1] != "_" ]
-    # # print all
-    # # for var in all:
-    # #     del globals()[var]
-    # #
-    # # del globals()['all']
-    # # del globals()['var']
-    # # print globals()
-
     _NMOSFinger = 1
     _NMOSWidth = 200
     _NMOSChannelLength = 30
@@ -484,6 +399,14 @@ if __name__ == '__main__':
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('jicho0927', 'cho89140616!!')
     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('NMOSWithDummy.gds', 'rb')
+    ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
+    myfile.close()
+    ftp.close()
+
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
     myfile = open('NMOSWithDummy.gds', 'rb')
     ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
     myfile.close()

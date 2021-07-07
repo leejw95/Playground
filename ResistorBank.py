@@ -14,7 +14,7 @@ import ViaMet42Met5
 import ViaMet52Met6
 import ViaMet62Met7
 import ftplib
-import Transmission_Gate
+import TransmissionGate
 import opppcres_b
 import psubring
 
@@ -79,7 +79,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         # self._DesignParameter['_InverterRB']['_DesignObj']._CalculateInverter(**_Inverterinputs)
 
         print ('##############################     TransmissionGate Generation    ########################################')
-        _TransmissionGateinputs = copy.deepcopy(Transmission_Gate._TransmissionGate._ParametersForDesignCalculation)
+        _TransmissionGateinputs = copy.deepcopy(TransmissionGate._TransmissionGate._ParametersForDesignCalculation)
         _TransmissionGateinputs['_Finger'] = _TransmissionGateFinger
         _TransmissionGateinputs['_ChannelWidth'] = _TransmissionGateChannelWidth
         _TransmissionGateinputs['_ChannelLength'] = _TransmissionGateChannelLength
@@ -91,7 +91,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         _TransmissionGateinputs['_Gatereverse'] = False
         _TransmissionGateinputs['_Bodycontact'] = False
 
-        self._DesignParameter['_TransmissionGateRB'] = self._SrefElementDeclaration(_DesignObj=Transmission_Gate._TransmissionGate(_DesignParameter=None, _Name = 'TransmissionGateIn{}'.format(_Name)))[0]
+        self._DesignParameter['_TransmissionGateRB'] = self._SrefElementDeclaration(_DesignObj=TransmissionGate._TransmissionGate(_DesignParameter=None, _Name = 'TransmissionGateIn{}'.format(_Name)))[0]
         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._CalculateTransmissionGate(**_TransmissionGateinputs)
 
 
@@ -121,11 +121,13 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
         elif (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700 and _TransmissionGateFinger != 1) :
-            _PMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 * 2 + _DRCObj._Metal1MinSpace2 +\
-                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +\
-                                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4 +\
-                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
-                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+            _PMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 * 2 + _DRCObj._Metal1MinSpace2 * 2 +\
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +\
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + \
+                                            max((_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4 + 
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
         elif (_TransmissionGateChannelWidth * _TransmissionGateNPRatio > 700 and _TransmissionGateFinger == 1) :
             _PMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 + _DRCObj._MetalxMinSpace8 + _DRCObj._Metal1MinSpace3 +\
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +\
@@ -158,11 +160,13 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
         elif (_TransmissionGateChannelWidth  <= 700 and _TransmissionGateFinger != 1) :
-            _NMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 * 2 + _DRCObj._Metal1MinSpace2 +\
-                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +\
-                                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4 +\
-                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
-                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+            _NMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 * 2 + _DRCObj._Metal1MinSpace2 * 2 +\
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +\
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + \
+                                            max((_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4 + 
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
+                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
         elif (_TransmissionGateChannelWidth  > 700 and _TransmissionGateFinger == 1) :
             _NMOSSubringinputs['_YWidth'] = _DRCObj._Metal1MinSpace3 + _DRCObj._MetalxMinSpace8 + _DRCObj._Metal1MinSpace3 +\
                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +\
@@ -379,29 +383,29 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         self._DesignParameter['_ViaMet42Met5OnRes']['_XYCoordinates'] = []
 
         ## VIA Generation for VCM
-        _ViaVCMMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-        _ViaVCMMet22Met3['_ViaMet22Met3NumberOfCOX'] = 2
-        _ViaVCMMet22Met3['_ViaMet22Met3NumberOfCOY'] = 1
+        # _ViaVCMMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+        # _ViaVCMMet22Met3['_ViaMet22Met3NumberOfCOX'] = 2
+        # _ViaVCMMet22Met3['_ViaMet22Met3NumberOfCOY'] = 1
 
-        self._DesignParameter['_ViaVCMMet22Met3'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,_Name='ViaVCMMet22Met3In{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaVCMMet22Met3']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaVCMMet22Met3)
-        self._DesignParameter['_ViaVCMMet22Met3']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],
-                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_SupplyPMOSRoutingXTG']['_XYCoordinates'][0][1][1]],
-                                                                        [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],
-                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'][0][1][1]]]
+        # self._DesignParameter['_ViaVCMMet22Met3'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,_Name='ViaVCMMet22Met3In{}'.format(_Name)))[0]
+        # self._DesignParameter['_ViaVCMMet22Met3']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaVCMMet22Met3)
+        # self._DesignParameter['_ViaVCMMet22Met3']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],
+        #                                                                 self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][1][1]],
+        #                                                                 [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],
+        #                                                                 self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'][0][1][1]]]
 
-        _ViaVCMMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-        _ViaVCMMet32Met4['_ViaMet32Met4NumberOfCOX'] = 2
-        _ViaVCMMet32Met4['_ViaMet32Met4NumberOfCOY'] = 1
+        # _ViaVCMMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+        # _ViaVCMMet32Met4['_ViaMet32Met4NumberOfCOX'] = 2
+        # _ViaVCMMet32Met4['_ViaMet32Met4NumberOfCOY'] = 1
 
-        self._DesignParameter['_ViaVCMMet32Met4'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,_Name='ViaVCMMet32Met4In{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaVCMMet32Met4']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**_ViaVCMMet32Met4)
-        self._DesignParameter['_ViaVCMMet32Met4']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],
-                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_SupplyPMOSRoutingXTG']['_XYCoordinates'][0][1][1]],
-                                                                        [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],
-                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'][0][1][1]]]
+        # self._DesignParameter['_ViaVCMMet32Met4'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,_Name='ViaVCMMet32Met4In{}'.format(_Name)))[0]
+        # self._DesignParameter['_ViaVCMMet32Met4']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**_ViaVCMMet32Met4)
+        # self._DesignParameter['_ViaVCMMet32Met4']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],
+        #                                                                 self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][1][1]],
+        #                                                                 [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],
+        #                                                                 self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'][0][1][1]]]
 
-        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'] = []
+        
 
 
         ##Metal align for Resistor
@@ -423,8 +427,8 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         self._DesignParameter['_Met3LayerResAX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met3LayerResAX']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']
-        if self._DesignParameter['_Met3LayerResAX']['_Width'] > 700 :
-            self._DesignParameter['_Met3LayerResAX']['_Width'] = 700
+        if self._DesignParameter['_Met3LayerResAX']['_Width'] > 208 :
+            self._DesignParameter['_Met3LayerResAX']['_Width'] = 208
         
                                                             # (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] - 
                                                             # self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][1] 
@@ -439,12 +443,12 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                       # self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] // 2 -
                                                       # (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) -
                                                       # self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][1])
-        if (_TransmissionGateFinger != 1) :
-            self._DesignParameter['_Met3LayerResAX']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0],
-                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] - (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth) // 4],
+        # if (_TransmissionGateFinger != 1) :
+        self._DesignParameter['_Met3LayerResAX']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutputTG']['_XYCoordinates'][0][0],
+                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutputTG']['_XYCoordinates'][0][1]],
                                                                         [self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0] +
                                                                        self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
-                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] - (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth) // 4]]]
+                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutputTG']['_XYCoordinates'][0][1]]]]
             
                                                                     # [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
                                                                     #    self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
@@ -457,17 +461,17 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                     #   self._DesignParameter['_ViaMet32Met4OnRes']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] // 2 + _DRCObj._MetalxMinSpace11 + 
                                                                     #    self._DesignParameter['_Met3LayerResAX']['_Width'] // 2 ]]]
 
-        elif (_TransmissionGateFinger == 1) :
-            self._DesignParameter['_Met3LayerResAX']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                                                                       self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][0][0],
-                                                                       self._DesignParameter['_ViaMet32Met4OnRes']['_XYCoordinates'][0][1] +
-                                                                       self._DesignParameter['_ViaMet32Met4OnRes']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] // 2 + _DRCObj._MetalxMinSpace11 + 
-                                                                       self._DesignParameter['_Met3LayerResAX']['_Width'] // 2 ],
-                                                                      [self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0] +
-                                                                      self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
-                                                                      self._DesignParameter['_ViaMet32Met4OnRes']['_XYCoordinates'][0][1] +
-                                                                      self._DesignParameter['_ViaMet32Met4OnRes']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] // 2 + _DRCObj._MetalxMinSpace11 + 
-                                                                       self._DesignParameter['_Met3LayerResAX']['_Width'] // 2 ]]]
+        # elif (_TransmissionGateFinger == 1) :
+        #     self._DesignParameter['_Met3LayerResAX']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+        #                                                                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][0][0],
+        #                                                                self._DesignParameter['_ViaMet32Met4OnRes']['_XYCoordinates'][0][1] +
+        #                                                                self._DesignParameter['_ViaMet32Met4OnRes']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] // 2 + _DRCObj._MetalxMinSpace11 + 
+        #                                                                self._DesignParameter['_Met3LayerResAX']['_Width'] // 2 ],
+        #                                                               [self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0] +
+        #                                                               self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+        #                                                               self._DesignParameter['_ViaMet32Met4OnRes']['_XYCoordinates'][0][1] +
+        #                                                               self._DesignParameter['_ViaMet32Met4OnRes']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] // 2 + _DRCObj._MetalxMinSpace11 + 
+        #                                                                self._DesignParameter['_Met3LayerResAX']['_Width'] // 2 ]]]
 
 
         self._DesignParameter['_Met3LayerResAY'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=100)
@@ -520,49 +524,49 @@ class _ResistorBank(StickDiagram._StickDiagram) :
             
 
             # self._DesignParameter['_Met2LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_XWidth']
-            self._DesignParameter['_Met2LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2 - _DRCObj._MetalxMinSpace5 - self._DesignParameter['_ViaVCMMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2
-            self._DesignParameter['_Met2LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width']
-            self._DesignParameter['_Met2LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] -
-                                                                        (_PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2) + self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
-                                                                        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
-                                                                        _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
-            self._DesignParameter['_Met3LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2 - _DRCObj._MetalxMinSpace5 - self._DesignParameter['_ViaVCMMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2
-            self._DesignParameter['_Met3LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width']
-            self._DesignParameter['_Met3LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] -
-                                                                        (_PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2) + self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
-                                                                        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
-                                                                        _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
-                                                                        # [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
-                                                                        # self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
-                                                                        # _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
+            # self._DesignParameter['_Met2LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2
+            # self._DesignParameter['_Met2LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width']
+            # self._DesignParameter['_Met2LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] -
+            #                                                             (_PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2) + self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
+            #                                                             self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
+            #                                                             _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
+            # self._DesignParameter['_Met3LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2
+            # self._DesignParameter['_Met3LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width']
+            # self._DesignParameter['_Met3LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] -
+            #                                                             (_PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2) + self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
+            #                                                             self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
+            #                                                             _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
+            #                                                             # [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
+            #                                                             # self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
+            #                                                             # _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
 
                                                                         
-            self._DesignParameter['_Met4LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2 - _DRCObj._MetalxMinSpace5 - self._DesignParameter['_ViaVCMMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2
-            self._DesignParameter['_Met4LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width']
-            self._DesignParameter['_Met4LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] -
-                                                                        (_PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2) + self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
-                                                                        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
-                                                                        _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
+            # self._DesignParameter['_Met4LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2
+            # self._DesignParameter['_Met4LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width']
+            # self._DesignParameter['_Met4LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] -
+            #                                                             (_PMOSSubringinputs['_Width'] + _PMOSSubringinputs['_XWidth'] // 2) + self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
+            #                                                             self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
+            #                                                             _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
             # self._DesignParameter['_Met4LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_XWidth']
             # self._DesignParameter['_Met4LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width']
             # self._DesignParameter['_Met4LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
             #                                                             self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] +
             #                                                             _PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_YWidth'] // 2]]
-            # self._DesignParameter['_Met2LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width']
-            # self._DesignParameter['_Met2LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth'] - _LengthOfPMOSRouting - _DRCObj._MetalxMinSpace5
-            # self._DesignParameter['_Met2LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] - 
-            #                                                             (_PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_XWidth'] // 2),
-            #                                                             self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] + (_LengthOfPMOSRouting + _DRCObj._MetalxMinSpace5) // 2]]
-            # self._DesignParameter['_Met3LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width']
-            # self._DesignParameter['_Met3LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth']
-            # self._DesignParameter['_Met3LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] - 
-            #                                                             (_PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_XWidth'] // 2),
-            #                                                             self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1]]]
-            # self._DesignParameter['_Met4LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width']
-            # self._DesignParameter['_Met4LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth']
-            # self._DesignParameter['_Met4LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] - 
-            #                                                             (_PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_XWidth'] // 2),
-            #                                                             self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1]]]
+            self._DesignParameter['_Met2LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width']
+            self._DesignParameter['_Met2LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth'] - _LengthOfPMOSRouting - _DRCObj._MetalxMinSpace5
+            self._DesignParameter['_Met2LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] - 
+                                                                        (_PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_XWidth'] // 2),
+                                                                        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] + (_LengthOfPMOSRouting + _DRCObj._MetalxMinSpace5) // 2]]
+            self._DesignParameter['_Met3LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width']
+            self._DesignParameter['_Met3LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth']
+            self._DesignParameter['_Met3LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] - 
+                                                                        (_PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_XWidth'] // 2),
+                                                                        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1]]]
+            self._DesignParameter['_Met4LayerVDD']['_XWidth'] = _PMOSSubringinputs['_Width']
+            self._DesignParameter['_Met4LayerVDD']['_YWidth'] = _PMOSSubringinputs['_Width'] * 2 + _PMOSSubringinputs['_YWidth']
+            self._DesignParameter['_Met4LayerVDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] - 
+                                                                        (_PMOSSubringinputs['_Width'] // 2 + _PMOSSubringinputs['_XWidth'] // 2),
+                                                                        self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1]]]
 
 
             
@@ -590,7 +594,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                 #                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                 #                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-            self._DesignParameter['_Met2LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2 - _DRCObj._MetalxMinSpace5 - self._DesignParameter['_ViaVCMMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2
+            self._DesignParameter['_Met2LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2
             self._DesignParameter['_Met2LayerVSS']['_YWidth'] = _LengthYbtwGuardring
             self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
                                                                         (_NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2) - self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
@@ -598,7 +602,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-            self._DesignParameter['_Met3LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2 - _DRCObj._MetalxMinSpace5 - self._DesignParameter['_ViaVCMMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2
+            self._DesignParameter['_Met3LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2
             self._DesignParameter['_Met3LayerVSS']['_YWidth'] = _LengthYbtwGuardring
             self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
                                                                         (_NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2) - self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
@@ -606,7 +610,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                                 abs(self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) -
                                                                             _LengthYbtwGuardring // 2 + _NMOSSubringinputs['_Width'] // 2]]
 
-            self._DesignParameter['_Met4LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2 - _DRCObj._MetalxMinSpace5 - self._DesignParameter['_ViaVCMMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2
+            self._DesignParameter['_Met4LayerVSS']['_XWidth'] = _NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2 
             self._DesignParameter['_Met4LayerVSS']['_YWidth'] = _LengthYbtwGuardring
             self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
                                                                         (_NMOSSubringinputs['_Width'] + _NMOSSubringinputs['_XWidth'] // 2) - self._DesignParameter['_Met2LayerVDD']['_XWidth'] // 2,
@@ -851,7 +855,7 @@ if __name__ == '__main__' :
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2418 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2524 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _PowerLine = True

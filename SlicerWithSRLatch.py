@@ -371,6 +371,15 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                                                 [self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]]
                                                             ]
 
+
+
+
+        # print ('#################################       Supply Line Routing      #########################################')
+        # if _SRPowerLine == True and _SLPowerLine == True :
+
+
+
+
 if __name__ == '__main__' :
     DesignParameters._Technology = '028nm'
 

@@ -3392,7 +3392,7 @@ class _SRLatch(StickDiagram._StickDiagram):
             self._DesignParameter['_Met6LayerVDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates']
 
             self._DesignParameter['_Met2LayerVSS1']['_XYCoordinates'] = [[((self._DesignParameter['_AdditionalMet2Routing1']['_XYCoordinates'][0][0][0] - _DRCObj._MetalxMinSpace21 - self._DesignParameter['_AdditionalMet2Routing1']['_Width'] // 2) + self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] - self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2) / 2, self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
-            self._DesignParameter['_Met2LayerVSS2']['_XYCoordinates'] = [[(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 + (self._DesignParameter['_AdditionalMet2Routing1']['_XYCoordinates'][0][0][0] + _DRCObj._MetalxMinSpace21 + self._DesignParameter['_AdditionalMet2Routing1']['_Width'] // 2)) / 2, self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
+            self._DesignParameter['_Met2LayerVSS2']['_XYCoordinates'] = [[(self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] + self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 + (self._DesignParameter['_AdditionalMet2Routing1']['_XYCoordinates'][0][0][0] + _DRCObj._MetalxMinSpace21 + self._DesignParameter['_AdditionalMet2Routing1']['_Width'] // 2)) / 2, self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
             self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact']['_XYCoordinates']
             self._DesignParameter['_Met4LayerVSS1']['_XYCoordinates'] = [[self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] - self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 + int(round(self._DesignParameter['_Met4LayerVSS1']['_XWidth'] + 0.5)) // 2, self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
             self._DesignParameter['_Met4LayerVSS2']['_XYCoordinates'] = [[self._DesignParameter['_AdditionalMet4Routing3']['_XYCoordinates'][0][0][0] + _DRCObj._MetalxMinSpace21 + self._DesignParameter['_AdditionalMet4Routing3']['_Width'] // 2 + self._DesignParameter['_Met4LayerVSS2']['_XWidth'] // 2, self._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]]]
@@ -3413,10 +3413,10 @@ class _SRLatch(StickDiagram._StickDiagram):
             _ViaNumVSSX2forMet2 = int(
                 self._DesignParameter['_Met2LayerVSS2']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
 
-            _ViaNumVSSXforMet3 = int(
+            _ViaNumVSSX1forMet3 = int(
                 self._DesignParameter['_Met2LayerVSS1']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
-            # _ViaNumVSSX2forMet3 = int(
-            #     self._DesignParameter['_Met3LayerVSS2']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVSSX2forMet3 = int(
+                self._DesignParameter['_Met2LayerVSS2']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
 
             _ViaNumVSSX1 = int(
                 self._DesignParameter['_Met4LayerVSS1']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
@@ -3439,14 +3439,14 @@ class _SRLatch(StickDiagram._StickDiagram):
                 self._DesignParameter['_Met4LayerVSS3']['_XYCoordinates'] = []
             if _ViaNumVSSX4 < 1:
                 self._DesignParameter['_Met4LayerVSS4']['_XYCoordinates'] = []
-            if _ViaNumVSSXforMet3 < 1:
+            if _ViaNumVSSX1forMet3 < 1:
                 self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = []
             if _ViaNumVSSX1forMet2 < 1 :
                 self._DesignParameter['_Met2LayerVSS1']['_XYCoordinates'] = []
             if _ViaNumVSSX2forMet2 < 1 :
                 self._DesignParameter['_Met2LayerVSS2']['_XYCoordinates'] = []
-            # if _ViaNumVSSX2forMet3 < 1:
-            #     self._DesignParameter['_Met3LayerVSS2']['_XYCoordinates'] = []
+            if _ViaNumVSSX2forMet3 < 1:
+                self._DesignParameter['_Met3LayerVSS2']['_XYCoordinates'] = []
 
             _ViaVDDMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
             _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVDDX
@@ -3527,16 +3527,29 @@ class _SRLatch(StickDiagram._StickDiagram):
                 '_XYCoordinates']
 
 
-            _ViaVSSMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSXforMet3
-            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY
+            _ViaVSSMet22Met31 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+            _ViaVSSMet22Met31['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX1forMet3
+            _ViaVSSMet22Met31['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY
             self._DesignParameter['_ViaMet22Met3VSS1'] = self._SrefElementDeclaration(
                 _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
                                                       _Name='ViaMet22Met3VSS1In{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet22Met3VSS1']['_DesignObj']._CalculateViaMet22Met3DesignParameter(
-                **_ViaVSSMet22Met3)
+                **_ViaVSSMet22Met31)
             self._DesignParameter['_ViaMet22Met3VSS1']['_XYCoordinates'] = self._DesignParameter['_Met2LayerVSS1'][
                 '_XYCoordinates']
+
+            _ViaVSSMet22Met32 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+            _ViaVSSMet22Met32['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX2forMet3
+            _ViaVSSMet22Met32['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY
+            self._DesignParameter['_ViaMet22Met3VSS2'] = self._SrefElementDeclaration(
+                _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
+                                                      _Name='ViaMet22Met3VSS2In{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet22Met3VSS2']['_DesignObj']._CalculateViaMet22Met3DesignParameter(
+                **_ViaVSSMet22Met32)
+            self._DesignParameter['_ViaMet22Met3VSS2']['_XYCoordinates'] = self._DesignParameter['_Met2LayerVSS2'][
+                '_XYCoordinates']
+
+
 
             # _ViaVSSMet22Met32 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
             # _ViaVSSMet22Met32['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX2forMet3
@@ -3653,29 +3666,29 @@ if __name__ == '__main__':
     DesignParameters._Technology = '028nm'
 
     SRLatchObj = _SRLatch(_DesignParameter=None, _Name='SRLatch')
-    # SRLatchObj._CalculateDesignParameter(_Finger1=5, _Finger2=1, _Finger3=2, _Finger4=2, \
-    #                                      # _PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \
-    #                                      _NMOSChannelWidth1=200, _PMOSChannelWidth1=400, _NMOSChannelWidth2=200,
-    #                                      _PMOSChannelWidth2=400, _NMOSChannelWidth3=200, _PMOSChannelWidth3=400,
-    #                                      _NMOSChannelWidth4=200, _PMOSChannelWidth4=400, _ChannelLength=30, \
-    #                                      _VDD2VSSHeightAtOneSide=None, _Dummy=True, _NumSupplyCoX=None, _NumSupplyCoY=2, \
-    #                                      _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, NumViaPoly2Met1CoX=None, \
-    #                                      NumViaPoly2Met1CoY=None, NumViaPMOSMet12Met2CoX=None,
-    #                                      NumViaPMOSMet12Met2CoY=None, \
-    #                                      NumViaNMOSMet12Met2CoX=None, NumViaNMOSMet12Met2CoY=None,
-    #                                      NumViaPMOSMet22Met3CoX=None, NumViaPMOSMet22Met3CoY=None, \
-    #                                      NumViaNMOSMet22Met3CoX=None, NumViaNMOSMet22Met3CoY=None, _SLVT=True,
-    #                                      _PowerLine=False)
+    SRLatchObj._CalculateDesignParameter(_Finger1=5, _Finger2=1, _Finger3=2, _Finger4=2, \
+                                         # _PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \
+                                         _NMOSChannelWidth1=200, _PMOSChannelWidth1=400, _NMOSChannelWidth2=200,
+                                         _PMOSChannelWidth2=400, _NMOSChannelWidth3=200, _PMOSChannelWidth3=400,
+                                         _NMOSChannelWidth4=200, _PMOSChannelWidth4=400, _ChannelLength=30, \
+                                         _VDD2VSSHeightAtOneSide=None, _Dummy=True, _NumSupplyCoX=None, _NumSupplyCoY=2, \
+                                         _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, NumViaPoly2Met1CoX=None, \
+                                         NumViaPoly2Met1CoY=None, NumViaPMOSMet12Met2CoX=None,
+                                         NumViaPMOSMet12Met2CoY=None, \
+                                         NumViaNMOSMet12Met2CoX=None, NumViaNMOSMet12Met2CoY=None,
+                                         NumViaPMOSMet22Met3CoX=None, NumViaPMOSMet22Met3CoY=None, \
+                                         NumViaNMOSMet22Met3CoX=None, NumViaNMOSMet22Met3CoY=None, _SLVT=True,
+                                         _PowerLine=True)
 
-    SRLatchObj._CalculateDesignParameter(_Finger1 = 3, _Finger2 =3, _Finger3 = 3, _Finger4 = 3, \
-                                  #_PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \
-                                  _NMOSChannelWidth1 = 200, _PMOSChannelWidth1 = 400, _NMOSChannelWidth2 = 200, _PMOSChannelWidth2 = 400, _NMOSChannelWidth3 = 200, _PMOSChannelWidth3 = 400, _NMOSChannelWidth4 = 200, _PMOSChannelWidth4 = 400, _ChannelLength = 30,\
-                                  _VDD2VSSHeightAtOneSide = None, _Dummy = True, _NumSupplyCoX = None, _NumSupplyCoY = 2, \
-                                  _SupplyMet1XWidth = None, _SupplyMet1YWidth = None, NumViaPoly2Met1CoX = None, \
-                                  NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None, \
-                                  NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None, \
-                                  NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = True,
-                                  _PowerLine = True)
+    # SRLatchObj._CalculateDesignParameter(_Finger1 = 3, _Finger2 =3, _Finger3 = 3, _Finger4 = 3, \
+    #                               #_PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \
+    #                               _NMOSChannelWidth1 = 200, _PMOSChannelWidth1 = 400, _NMOSChannelWidth2 = 200, _PMOSChannelWidth2 = 400, _NMOSChannelWidth3 = 200, _PMOSChannelWidth3 = 400, _NMOSChannelWidth4 = 200, _PMOSChannelWidth4 = 400, _ChannelLength = 30,\
+    #                               _VDD2VSSHeightAtOneSide = None, _Dummy = True, _NumSupplyCoX = None, _NumSupplyCoY = 2, \
+    #                               _SupplyMet1XWidth = None, _SupplyMet1YWidth = None, NumViaPoly2Met1CoX = None, \
+    #                               NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None, \
+    #                               NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None, \
+    #                               NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = True,
+    #                               _PowerLine = True)
 
 
     SRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SRLatchObj._DesignParameter)

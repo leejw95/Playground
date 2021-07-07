@@ -122,38 +122,38 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
         print ('################################       Additional Path Settings      #####################################')
-        self._DesignParameter['_Met4LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met4LayerVCM']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']
+        # self._DesignParameter['_Met4LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[], _Width=100)
+        # self._DesignParameter['_Met4LayerVCM']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']
 
-        tmp = []
+        # tmp = []
 
-        for i in range (0, _XRBNum) :
-                tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-                            _ResistorBankOrigin[0][1] - _ResistorSpaceY],
-                            [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-                            _ResistorBankOrigin[0][1] + _YRBNum * _ResistorSpaceY]])
+        # for i in range (0, _XRBNum) :
+        #         tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
+        #                     _ResistorBankOrigin[0][1] - _ResistorSpaceY],
+        #                     [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
+        #                     _ResistorBankOrigin[0][1] + _YRBNum * _ResistorSpaceY]])
 
-        self._DesignParameter['_Met4LayerVCM']['_XYCoordinates'] = tmp
+        # self._DesignParameter['_Met4LayerVCM']['_XYCoordinates'] = tmp
 
-        del tmp
+        # del tmp
 
-        self._DesignParameter['_Met4LayerVRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met4LayerVRX']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet32Met4OnRes']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']
+        # self._DesignParameter['_Met4LayerVRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[], _Width=100)
+        # self._DesignParameter['_Met4LayerVRX']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet32Met4OnRes']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']
 
-        if self._DesignParameter['_Met4LayerVRX']['_Width'] > 1500 :
-            self._DesignParameter['_Met4LayerVRX']['_Width'] = 1500
+        # if self._DesignParameter['_Met4LayerVRX']['_Width'] > 1500 :
+        #     self._DesignParameter['_Met4LayerVRX']['_Width'] = 1500
 
-        tmp = []
+        # tmp = []
 
-        for i in range (0, _XRBNum) :
-                tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet32Met4OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-                            _ResistorBankOrigin[0][1] - _ResistorSpaceY],
-                            [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet32Met4OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-                            _ResistorBankOrigin[0][1] + _YRBNum * _ResistorSpaceY]])
+        # for i in range (0, _XRBNum) :
+        #         tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet32Met4OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
+        #                     _ResistorBankOrigin[0][1] - _ResistorSpaceY],
+        #                     [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet32Met4OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
+        #                     _ResistorBankOrigin[0][1] + _YRBNum * _ResistorSpaceY]])
         
-        self._DesignParameter['_Met4LayerVRX']['_XYCoordinates'] = tmp
+        # self._DesignParameter['_Met4LayerVRX']['_XYCoordinates'] = tmp
 
-        del tmp
+        # del tmp
 
         if _PowerLine == True :
             self._DesignParameter['_Met4LayerVDD'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[], _Width=100)
@@ -377,10 +377,10 @@ if __name__ == '__main__' :
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2418 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2524 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
-    _PowerLine = True # T/F?
+    _PowerLine = False # T/F?
 
     _ResistorWidth = 1250
     _ResistorLength = 1234    ## minimum : 400

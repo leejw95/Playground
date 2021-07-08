@@ -130,8 +130,8 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
         _SlicerWithSRLatchinputs['_SLPowerLine'] = _SLPowerLine
 
 
-        self._DesignParameter['_SlicerWithSRLatch'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatch._SlicerWithSRLatch(_DesignParameter=None, _Name = "SlicerWithSRLatchIn{}".format(_Name)))[0]
-        self._DesignParameter['_SlicerWithSRLatch']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchinputs)
+        self._DesignParameter['_SlicerWithSRLatch1'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatch._SlicerWithSRLatch(_DesignParameter=None, _Name = "SlicerWithSRLatchIn{}".format(_Name)))[0]
+        self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchinputs)
 
 
         print ('#################################       Coordinates Settings      #########################################')
@@ -139,19 +139,19 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
 
         _GuardRingRX2RXSpace = _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace
 
-        PMOS_toptmp = self._DesignParameter['_SlicerWithSRLatch']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_toptmp']['_Ignore']
-        NMOS_bottomtmp = self._DesignParameter['_SlicerWithSRLatch']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_bottomtmp']['_Ignore']
-        Guardring_top = self._DesignParameter['_SlicerWithSRLatch']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatch']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _SLGuardringWidth/2 + _GuardRingRX2RXSpace + _SLSlicerGuardringWidth/2
-        Guardring_bottom = self._DesignParameter['_SlicerWithSRLatch']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatch']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _SLGuardringWidth/2 - _GuardRingRX2RXSpace - _SLSlicerGuardringWidth/2
+        PMOS_toptmp = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_toptmp']['_Ignore']
+        NMOS_bottomtmp = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_bottomtmp']['_Ignore']
+        Guardring_top = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _SLGuardringWidth/2 + _GuardRingRX2RXSpace + _SLSlicerGuardringWidth/2
+        Guardring_bottom = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _SLGuardringWidth/2 - _GuardRingRX2RXSpace - _SLSlicerGuardringWidth/2
         GuardringHeight = Guardring_top - Guardring_bottom
 
-        _VDD2VSSHeightAtOneSide = self._DesignParameter['_SlicerWithSRLatch']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]
+        _VDD2VSSHeightAtOneSide = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]
 
         tmp = []
         for i in range(0, _NumberofSlicerWithSRLatch) :
             tmp.append([_OriginXYCoordinateOfSlicerWithSRLatch[0][0], _OriginXYCoordinateOfSlicerWithSRLatch[0][1] - i * GuardringHeight])
 
-        self._DesignParameter['_SlicerWithSRLatch']['_XYCoordinates'] = tmp
+        self._DesignParameter['_SlicerWithSRLatch1']['_XYCoordinates'] = tmp
 
 
 

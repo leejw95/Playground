@@ -52,15 +52,15 @@ class _ViaMet72Met8(StickDiagram._StickDiagram):
         print ('#############################     Met7 Layer Calculation   ##############################################')
         _LengthViaMet72Met8BtwCO = _DRCObj._VIAzMinWidth + _DRCObj.DRCVIAzMinSpace(NumOfVIAzX=_ViaMet72Met8NumberOfCOX,NumOfVIAzY=_ViaMet72Met8NumberOfCOY )
         self._DesignParameter['_Met7Layer']['_XYCoordinates']=_XYCoordinateOfViaMet72Met8
-        self._DesignParameter['_Met7Layer']['_XWidth']=_DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOX - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
-        self._DesignParameter['_Met7Layer']['_YWidth']=_DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
+        self._DesignParameter['_Met7Layer']['_XWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOX - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([12,_DRCObj._MetalzMinEnclosureCO2])
+        self._DesignParameter['_Met7Layer']['_YWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([12,_DRCObj._MetalzMinEnclosureCO2])
 
         print ('#############################     Met8 Layer Calculation   ##############################################')
         _LengthViaMet72Met8BtwCO = _DRCObj._VIAzMinWidth + _DRCObj.DRCVIAzMinSpace(NumOfVIAzX=_ViaMet72Met8NumberOfCOX,NumOfVIAzY=_ViaMet72Met8NumberOfCOY )
 
         self._DesignParameter['_Met8Layer']['_XYCoordinates']=_XYCoordinateOfViaMet72Met8
-        self._DesignParameter['_Met8Layer']['_XWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOX - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
-        self._DesignParameter['_Met8Layer']['_YWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
+        self._DesignParameter['_Met8Layer']['_XWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOX - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([12,_DRCObj._MetalzMinEnclosureCO2])
+        self._DesignParameter['_Met8Layer']['_YWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([12,_DRCObj._MetalzMinEnclosureCO2])
 
         print ('#############################     Cont Layer Calculation   ##############################################')
 
@@ -119,16 +119,16 @@ class _ViaMet72Met8(StickDiagram._StickDiagram):
         print ('#############################     Met7 Layer Calculation   ##############################################')
         _LengthViaMet72Met8BtwCO = _DRCObj._VIAzMinWidth + _DRCObj.DRCVIAzMinSpace(NumOfVIAzX=_ViaMet72Met8NumberOfCOX,NumOfVIAzY=_ViaMet72Met8NumberOfCOY )
         self._DesignParameter['_Met7Layer']['_XYCoordinates']=_XYCoordinateOfViaMet72Met8
-        self._DesignParameter['_Met7Layer']['_XWidth']=_DRCObj._VIAzMinWidth+ (_ViaMet72Met8NumberOfCOX - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia1,_DRCObj._MetalxMinEnclosureCO])
-        self._DesignParameter['_Met7Layer']['_YWidth']=_DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
+        self._DesignParameter['_Met7Layer']['_XWidth']=_DRCObj._VIAzMinWidth+ (_ViaMet72Met8NumberOfCOX - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([1,_DRCObj._MetalzMinEnclosureCO])
+        self._DesignParameter['_Met7Layer']['_YWidth']=_DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([12,_DRCObj._MetalzMinEnclosureCO2])
 
         print ('#############################     Met8 Layer Calculation   ##############################################')
         _LengthViaMet72Met8BtwCO = _DRCObj._VIAzMinWidth + _DRCObj.DRCVIAzMinSpace(NumOfVIAzX=_ViaMet72Met8NumberOfCOX,NumOfVIAzY=_ViaMet72Met8NumberOfCOY )
 
         self._DesignParameter['_Met8Layer']['_XYCoordinates']=_XYCoordinateOfViaMet72Met8
-        self._DesignParameter['_Met8Layer']['_XWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOX - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia1,_DRCObj._MetalxMinEnclosureCO])
+        self._DesignParameter['_Met8Layer']['_XWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOX - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([1,_DRCObj._MetalzMinEnclosureCO])
 
-        self._DesignParameter['_Met8Layer']['_YWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
+        self._DesignParameter['_Met8Layer']['_YWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([12,_DRCObj._MetalzMinEnclosureCO2])
 
 
 
@@ -186,16 +186,16 @@ class _ViaMet72Met8(StickDiagram._StickDiagram):
         print ('#############################     Met7 Layer Calculation   ##############################################')
         _LengthViaMet72Met8BtwCO = _DRCObj._VIAzMinWidth + _DRCObj.DRCVIAzMinSpace(NumOfVIAzX=_ViaMet72Met8NumberOfCOX,NumOfVIAzY=_ViaMet72Met8NumberOfCOY )
         self._DesignParameter['_Met7Layer']['_XYCoordinates']=_XYCoordinateOfViaMet72Met8
-        self._DesignParameter['_Met7Layer']['_XWidth']=_DRCObj._VIAzMinWidth+ (_ViaMet72Met8NumberOfCOX - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
-        self._DesignParameter['_Met7Layer']['_YWidth']=_DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia1,_DRCObj._MetalxMinEnclosureCO])
+        self._DesignParameter['_Met7Layer']['_XWidth']=_DRCObj._VIAzMinWidth+ (_ViaMet72Met8NumberOfCOX - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([12,_DRCObj._MetalzMinEnclosureCO2])
+        self._DesignParameter['_Met7Layer']['_YWidth']=_DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)* _LengthViaMet72Met8BtwCO+ 2 * max([1,_DRCObj._MetalzMinEnclosureCO])
 
         print ('#############################     Met8 Layer Calculation   ##############################################')
         _LengthViaMet72Met8BtwCO = _DRCObj._VIAzMinWidth + _DRCObj.DRCVIAzMinSpace(NumOfVIAzX=_ViaMet72Met8NumberOfCOX,NumOfVIAzY=_ViaMet72Met8NumberOfCOY )
 
         self._DesignParameter['_Met8Layer']['_XYCoordinates']=_XYCoordinateOfViaMet72Met8
-        self._DesignParameter['_Met8Layer']['_XWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOX - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
+        self._DesignParameter['_Met8Layer']['_XWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOX - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([12,_DRCObj._MetalzMinEnclosureCO2])
 
-        self._DesignParameter['_Met8Layer']['_YWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([_DRCObj._Metal1MinEnclosureVia1,_DRCObj._MetalxMinEnclosureCO])
+        self._DesignParameter['_Met8Layer']['_YWidth'] = _DRCObj._VIAzMinWidth + (_ViaMet72Met8NumberOfCOY - 1)*  _LengthViaMet72Met8BtwCO+ 2 * max([1,_DRCObj._MetalzMinEnclosureCO])
 
 
 
@@ -264,26 +264,40 @@ if __name__=='__main__':
 
     testStreamFile.close()
     print ('###############open ftp connection & update gds file to cadence server###################')
-    ftp_cadence_server=ftplib.FTP('141.223.86.109')
-    ftp_cadence_server.login(base64.b64decode('YWxlY25ldzE='),base64.b64decode('NzNoazNhYWs='))
-    if DesignParameters._Technology =='065nm':
-        ftp_cadence_server.cwd('/home/alecnew1/OPUS/design_automation')
-    elif DesignParameters._Technology =='180nm':
-        ftp_cadence_server.cwd('/home/alecnew1/OPUS/DesignAutomationTSMC018')
-    elif DesignParameters._Technology =='045nm':
-        ftp_cadence_server.cwd('/home/alecnew1/OPUS/DesignAutomationTSMC45')
-    print (ftp_cadence_server.pwd())
-    testStreamFile=open('./testStreamFile1.gds','rb')
-    ftp_cadence_server.storbinary('STOR testStreamFile1.gds', testStreamFile)
-    testStreamFile.close()
-    testStreamFile=open('./testStreamFile2.gds','rb')
-    ftp_cadence_server.storbinary('STOR testStreamFile2.gds', testStreamFile)
-    testStreamFile.close()
-    testStreamFile=open('./testStreamFile3.gds','rb')
-    ftp_cadence_server.storbinary('STOR testStreamFile3.gds', testStreamFile)
-    testStreamFile.close()
-    print ('close ftp connection')
-    ftp_cadence_server.quit()
-    testStreamFile.close()
+    # ftp_cadence_server=ftplib.FTP('141.223.86.109')
+    # ftp_cadence_server.login(base64.b64decode('YWxlY25ldzE='),base64.b64decode('NzNoazNhYWs='))
+    # if DesignParameters._Technology =='065nm':
+    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/design_automation')
+    # elif DesignParameters._Technology =='180nm':
+    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/DesignAutomationTSMC018')
+    # elif DesignParameters._Technology =='045nm':
+    #     ftp_cadence_server.cwd('/home/alecnew1/OPUS/DesignAutomationTSMC45')
+    # print (ftp_cadence_server.pwd())
+    # testStreamFile=open('./testStreamFile1.gds','rb')
+    # ftp_cadence_server.storbinary('STOR testStreamFile1.gds', testStreamFile)
+    # testStreamFile.close()
+    # testStreamFile=open('./testStreamFile2.gds','rb')
+    # ftp_cadence_server.storbinary('STOR testStreamFile2.gds', testStreamFile)
+    # testStreamFile.close()
+    # testStreamFile=open('./testStreamFile3.gds','rb')
+    # ftp_cadence_server.storbinary('STOR testStreamFile3.gds', testStreamFile)
+    # testStreamFile.close()
+    # print ('close ftp connection')
+    # ftp_cadence_server.quit()
+    # testStreamFile.close()
+
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('./testStreamFile1.gds','rb')
+    ftp.storbinary('STOR testStreamFile1.gds', myfile)
+    myfile.close()
+    myfile = open('./testStreamFile2.gds','rb')
+    ftp.storbinary('STOR testStreamFile2.gds', myfile)
+    myfile.close()
+    myfile = open('./testStreamFile3.gds','rb')
+    ftp.storbinary('STOR testStreamFile3.gds', myfile)
+    myfile.close()
+    ftp.close()
 
     print ('##########################################################################################')

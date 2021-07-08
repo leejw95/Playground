@@ -445,8 +445,9 @@ if __name__ == '__main__' :
     myfile.close()
     ftp.close()
 
+    import base64
     ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
     ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
     myfile = open('FullResistorBank.gds', 'rb')
     ftp.storbinary('STOR FullResistorBank.gds', myfile)

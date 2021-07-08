@@ -243,7 +243,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_ViaMet32Met4OnNMOSOutputTG']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_ViaNMOSMet34)
 
         self._DesignParameter['_ViaMet42Met5OnNMOSOutputTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None,_Name='ViaMet42Met5OnNMOSOutputIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet42Met5OnNMOSOutputTG']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_ViaNMOSMet45)
+        self._DesignParameter['_ViaMet42Met5OnNMOSOutputTG']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureX(**_ViaNMOSMet45)
 
         self._DesignParameter['_ViaMet52Met6OnNMOSOutputTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None,_Name='ViaMet52Met6OnNMOSOutputIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet52Met6OnNMOSOutputTG']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureX(**_ViaNMOSMet56)

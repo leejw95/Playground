@@ -273,6 +273,8 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
         _CenterPoint = (PMOS_bottomtmp + NMOS_toptmp) / 2
 
+
+
         # self._DesignParameter['_Met5forShieldingSRInput'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _Width=400)
         # self._DesignParameter['_Met5forShieldingSRInput']['_Width'] = 8 * _DRCObj._MetalxMinWidth
         #
@@ -392,6 +394,13 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                                                 [self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]]
                                                             ]
 
+
+        SRLatch_vsstmp = self._DesignParameter['_SRLatch']['_XYCoordinates'][0][1]
+
+        self._DesignParameter['_VSSSupply'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=400)
+        self._DesignParameter['_VSSSupply']['_Width'] = self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+
+        self._DesignParameter['_VSSSupply']['_XYCoordinates'] = [[[_XYCoordinateOfSlicer[0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'][1][0], SRLatch_vsstmp], self._DesignParameter['_SRLatch']['_XYCoordinates'][0]]]
 
 
 

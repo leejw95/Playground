@@ -69,69 +69,133 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
 
         print ('###############################        SlicerWithSRLatch Generation       #########################################')
 
-        _SlicerWithSRLatchinputs = copy.deepcopy(SlicerWithSRLatch._SlicerWithSRLatch._ParametersForDesignCalculation)
-        _SlicerWithSRLatchinputs['_SRFinger1'] = _SRFinger1
-        _SlicerWithSRLatchinputs['_SRFinger2'] = _SRFinger2
-        _SlicerWithSRLatchinputs['_SRFinger3'] = _SRFinger3
-        _SlicerWithSRLatchinputs['_SRFinger4'] = _SRFinger4
-        _SlicerWithSRLatchinputs['_SRNMOSChannelWidth1'] = _SRNMOSChannelWidth1
-        _SlicerWithSRLatchinputs['_SRPMOSChannelWidth1'] = _SRPMOSChannelWidth1
-        _SlicerWithSRLatchinputs['_SRNMOSChannelWidth2'] = _SRNMOSChannelWidth2
-        _SlicerWithSRLatchinputs['_SRPMOSChannelWidth2'] = _SRPMOSChannelWidth2
-        _SlicerWithSRLatchinputs['_SRNMOSChannelWidth3'] = _SRNMOSChannelWidth3
-        _SlicerWithSRLatchinputs['_SRPMOSChannelWidth3'] = _SRPMOSChannelWidth3
-        _SlicerWithSRLatchinputs['_SRNMOSChannelWidth4'] = _SRNMOSChannelWidth4
-        _SlicerWithSRLatchinputs['_SRPMOSChannelWidth4'] = _SRPMOSChannelWidth4
-        _SlicerWithSRLatchinputs['_SRChannelLength'] = _SRChannelLength
-        _SlicerWithSRLatchinputs['_SRNPRatio'] = _SRNPRatio
-        _SlicerWithSRLatchinputs['_SRVDD2VSSHeightAtOneSide'] = _SRVDD2VSSHeightAtOneSide
-        _SlicerWithSRLatchinputs['_SRDummy'] = _SRDummy
-        _SlicerWithSRLatchinputs['_SRNumSupplyCoX'] = _SRNumSupplyCoX
-        _SlicerWithSRLatchinputs['_SRNumSupplyCoY'] = _SRNumSupplyCoY
-        _SlicerWithSRLatchinputs['_SRSupplyMet1XWidth'] = _SRSupplyMet1XWidth
-        _SlicerWithSRLatchinputs['_SRSupplyMet1YWidth'] = _SRSupplyMet1YWidth
-        _SlicerWithSRLatchinputs['SRNumViaPoly2Met1CoX'] = SRNumViaPoly2Met1CoX
-        _SlicerWithSRLatchinputs['SRNumViaPoly2Met1CoY'] = SRNumViaPoly2Met1CoY
-        _SlicerWithSRLatchinputs['SRNumViaPMOSMet12Met2CoX'] = SRNumViaPMOSMet12Met2CoX
-        _SlicerWithSRLatchinputs['SRNumViaPMOSMet12Met2CoY'] = SRNumViaPMOSMet12Met2CoY
-        _SlicerWithSRLatchinputs['SRNumViaNMOSMet12Met2CoX'] = SRNumViaNMOSMet12Met2CoX
-        _SlicerWithSRLatchinputs['SRNumViaNMOSMet12Met2CoY'] = SRNumViaNMOSMet12Met2CoY
-        _SlicerWithSRLatchinputs['SRNumViaPMOSMet22Met3CoX'] = SRNumViaPMOSMet22Met3CoX
-        _SlicerWithSRLatchinputs['SRNumViaPMOSMet22Met3CoY'] = SRNumViaPMOSMet22Met3CoY
-        _SlicerWithSRLatchinputs['SRNumViaNMOSMet22Met3CoX'] = SRNumViaNMOSMet22Met3CoX
-        _SlicerWithSRLatchinputs['SRNumViaNMOSMet22Met3CoY'] = SRNumViaNMOSMet22Met3CoY
-        _SlicerWithSRLatchinputs['_SRSLVT'] = _SRSLVT
-        _SlicerWithSRLatchinputs['_SRPowerLine'] = _SRPowerLine
+        _SlicerWithSRLatchEdgeinputs = copy.deepcopy(SlicerWithSRLatch._SlicerWithSRLatch._ParametersForDesignCalculation)
+        _SlicerWithSRLatchEdgeinputs['_SRFinger1'] = _SRFinger1
+        _SlicerWithSRLatchEdgeinputs['_SRFinger2'] = _SRFinger2
+        _SlicerWithSRLatchEdgeinputs['_SRFinger3'] = _SRFinger3
+        _SlicerWithSRLatchEdgeinputs['_SRFinger4'] = _SRFinger4
+        _SlicerWithSRLatchEdgeinputs['_SRNMOSChannelWidth1'] = _SRNMOSChannelWidth1
+        _SlicerWithSRLatchEdgeinputs['_SRPMOSChannelWidth1'] = _SRPMOSChannelWidth1
+        _SlicerWithSRLatchEdgeinputs['_SRNMOSChannelWidth2'] = _SRNMOSChannelWidth2
+        _SlicerWithSRLatchEdgeinputs['_SRPMOSChannelWidth2'] = _SRPMOSChannelWidth2
+        _SlicerWithSRLatchEdgeinputs['_SRNMOSChannelWidth3'] = _SRNMOSChannelWidth3
+        _SlicerWithSRLatchEdgeinputs['_SRPMOSChannelWidth3'] = _SRPMOSChannelWidth3
+        _SlicerWithSRLatchEdgeinputs['_SRNMOSChannelWidth4'] = _SRNMOSChannelWidth4
+        _SlicerWithSRLatchEdgeinputs['_SRPMOSChannelWidth4'] = _SRPMOSChannelWidth4
+        _SlicerWithSRLatchEdgeinputs['_SRChannelLength'] = _SRChannelLength
+        _SlicerWithSRLatchEdgeinputs['_SRNPRatio'] = _SRNPRatio
+        _SlicerWithSRLatchEdgeinputs['_SRVDD2VSSHeightAtOneSide'] = _SRVDD2VSSHeightAtOneSide
+        _SlicerWithSRLatchEdgeinputs['_SRDummy'] = _SRDummy
+        _SlicerWithSRLatchEdgeinputs['_SRNumSupplyCoX'] = _SRNumSupplyCoX
+        _SlicerWithSRLatchEdgeinputs['_SRNumSupplyCoY'] = _SRNumSupplyCoY
+        _SlicerWithSRLatchEdgeinputs['_SRSupplyMet1XWidth'] = _SRSupplyMet1XWidth
+        _SlicerWithSRLatchEdgeinputs['_SRSupplyMet1YWidth'] = _SRSupplyMet1YWidth
+        _SlicerWithSRLatchEdgeinputs['SRNumViaPoly2Met1CoX'] = SRNumViaPoly2Met1CoX
+        _SlicerWithSRLatchEdgeinputs['SRNumViaPoly2Met1CoY'] = SRNumViaPoly2Met1CoY
+        _SlicerWithSRLatchEdgeinputs['SRNumViaPMOSMet12Met2CoX'] = SRNumViaPMOSMet12Met2CoX
+        _SlicerWithSRLatchEdgeinputs['SRNumViaPMOSMet12Met2CoY'] = SRNumViaPMOSMet12Met2CoY
+        _SlicerWithSRLatchEdgeinputs['SRNumViaNMOSMet12Met2CoX'] = SRNumViaNMOSMet12Met2CoX
+        _SlicerWithSRLatchEdgeinputs['SRNumViaNMOSMet12Met2CoY'] = SRNumViaNMOSMet12Met2CoY
+        _SlicerWithSRLatchEdgeinputs['SRNumViaPMOSMet22Met3CoX'] = SRNumViaPMOSMet22Met3CoX
+        _SlicerWithSRLatchEdgeinputs['SRNumViaPMOSMet22Met3CoY'] = SRNumViaPMOSMet22Met3CoY
+        _SlicerWithSRLatchEdgeinputs['SRNumViaNMOSMet22Met3CoX'] = SRNumViaNMOSMet22Met3CoX
+        _SlicerWithSRLatchEdgeinputs['SRNumViaNMOSMet22Met3CoY'] = SRNumViaNMOSMet22Met3CoY
+        _SlicerWithSRLatchEdgeinputs['_SRSLVT'] = _SRSLVT
+        _SlicerWithSRLatchEdgeinputs['_SRPowerLine'] = _SRPowerLine
 
-        _SlicerWithSRLatchinputs['_SLCLKinputPMOSFinger1'] = _SLCLKinputPMOSFinger1
-        _SlicerWithSRLatchinputs['_SLCLKinputPMOSFinger2'] = _SLCLKinputPMOSFinger2
-        _SlicerWithSRLatchinputs['_SLPMOSFinger'] = _SLPMOSFinger
-        _SlicerWithSRLatchinputs['_SLPMOSChannelWidth'] = _SLPMOSChannelWidth
-        _SlicerWithSRLatchinputs['_SLDATAinputNMOSFinger'] = _SLDATAinputNMOSFinger
-        _SlicerWithSRLatchinputs['_SLNMOSFinger'] = _SLNMOSFinger
-        _SlicerWithSRLatchinputs['_SLCLKinputNMOSFinger'] = _SLCLKinputNMOSFinger
-        _SlicerWithSRLatchinputs['_SLNMOSChannelWidth'] = _SLNMOSChannelWidth
-        _SlicerWithSRLatchinputs['_SLChannelLength'] = _SLChannelLength
-        _SlicerWithSRLatchinputs['_SLDummy'] = _SLDummy
-        _SlicerWithSRLatchinputs['_SLSLVT'] = _SLSLVT
-        _SlicerWithSRLatchinputs['_SLGuardringWidth'] = _SLGuardringWidth
-        _SlicerWithSRLatchinputs['_SLGuardring'] = _SLGuardring
-        _SlicerWithSRLatchinputs['_SLSlicerGuardringWidth'] = _SLSlicerGuardringWidth
-        _SlicerWithSRLatchinputs['_SLSlicerGuardring'] = _SLSlicerGuardring
-        _SlicerWithSRLatchinputs['_SLNumSupplyCOX'] = _SLNumSupplyCOX
-        _SlicerWithSRLatchinputs['_SLNumSupplyCOY'] = _SLNumSupplyCOY
-        _SlicerWithSRLatchinputs['_SLSupplyMet1XWidth'] = _SLSupplyMet1XWidth
-        _SlicerWithSRLatchinputs['_SLSupplyMet1YWidth'] = _SLSupplyMet1YWidth
-        _SlicerWithSRLatchinputs['_SLVDD2VSSHeight'] = _SLVDD2VSSHeight
-        _SlicerWithSRLatchinputs['_SLNumVIAPoly2Met1COX'] = _SLNumVIAPoly2Met1COX
-        _SlicerWithSRLatchinputs['_SLNumVIAPoly2Met1COY'] = _SLNumVIAPoly2Met1COY
-        _SlicerWithSRLatchinputs['_SLNumVIAMet12COY'] = _SLNumVIAMet12COX
-        _SlicerWithSRLatchinputs['_SLNumVIAMet12COY'] = _SLNumVIAMet12COY
-        _SlicerWithSRLatchinputs['_SLPowerLine'] = _SLPowerLine
+        _SlicerWithSRLatchEdgeinputs['_SLCLKinputPMOSFinger1'] = _SLCLKinputPMOSFinger1
+        _SlicerWithSRLatchEdgeinputs['_SLCLKinputPMOSFinger2'] = _SLCLKinputPMOSFinger2
+        _SlicerWithSRLatchEdgeinputs['_SLPMOSFinger'] = _SLPMOSFinger
+        _SlicerWithSRLatchEdgeinputs['_SLPMOSChannelWidth'] = _SLPMOSChannelWidth
+        _SlicerWithSRLatchEdgeinputs['_SLDATAinputNMOSFinger'] = _SLDATAinputNMOSFinger
+        _SlicerWithSRLatchEdgeinputs['_SLNMOSFinger'] = _SLNMOSFinger
+        _SlicerWithSRLatchEdgeinputs['_SLCLKinputNMOSFinger'] = _SLCLKinputNMOSFinger
+        _SlicerWithSRLatchEdgeinputs['_SLNMOSChannelWidth'] = _SLNMOSChannelWidth
+        _SlicerWithSRLatchEdgeinputs['_SLChannelLength'] = _SLChannelLength
+        _SlicerWithSRLatchEdgeinputs['_SLDummy'] = _SLDummy
+        _SlicerWithSRLatchEdgeinputs['_SLSLVT'] = _SLSLVT
+        _SlicerWithSRLatchEdgeinputs['_SLGuardringWidth'] = _SLGuardringWidth
+        _SlicerWithSRLatchEdgeinputs['_SLGuardring'] = _SLGuardring
+        _SlicerWithSRLatchEdgeinputs['_SLSlicerGuardringWidth'] = _SLSlicerGuardringWidth
+        _SlicerWithSRLatchEdgeinputs['_SLSlicerGuardring'] = _SLSlicerGuardring
+        _SlicerWithSRLatchEdgeinputs['_SLNumSupplyCOX'] = _SLNumSupplyCOX
+        _SlicerWithSRLatchEdgeinputs['_SLNumSupplyCOY'] = _SLNumSupplyCOY
+        _SlicerWithSRLatchEdgeinputs['_SLSupplyMet1XWidth'] = _SLSupplyMet1XWidth
+        _SlicerWithSRLatchEdgeinputs['_SLSupplyMet1YWidth'] = _SLSupplyMet1YWidth
+        _SlicerWithSRLatchEdgeinputs['_SLVDD2VSSHeight'] = _SLVDD2VSSHeight
+        _SlicerWithSRLatchEdgeinputs['_SLNumVIAPoly2Met1COX'] = _SLNumVIAPoly2Met1COX
+        _SlicerWithSRLatchEdgeinputs['_SLNumVIAPoly2Met1COY'] = _SLNumVIAPoly2Met1COY
+        _SlicerWithSRLatchEdgeinputs['_SLNumVIAMet12COY'] = _SLNumVIAMet12COX
+        _SlicerWithSRLatchEdgeinputs['_SLNumVIAMet12COY'] = _SLNumVIAMet12COY
+        _SlicerWithSRLatchEdgeinputs['_SLPowerLine'] = _SLPowerLine
+
+        # _SlicerWithSRLatchXinputs = copy.deepcopy(SlicerWithSRLatch._SlicerWithSRLatch._ParametersForDesignCalculation)
+        # _SlicerWithSRLatchXinputs['_SRFinger1'] = _SRFinger1
+        # _SlicerWithSRLatchXinputs['_SRFinger2'] = _SRFinger2
+        # _SlicerWithSRLatchXinputs['_SRFinger3'] = _SRFinger3
+        # _SlicerWithSRLatchXinputs['_SRFinger4'] = _SRFinger4
+        # _SlicerWithSRLatchXinputs['_SRNMOSChannelWidth1'] = _SRNMOSChannelWidth1
+        # _SlicerWithSRLatchXinputs['_SRPMOSChannelWidth1'] = _SRPMOSChannelWidth1
+        # _SlicerWithSRLatchXinputs['_SRNMOSChannelWidth2'] = _SRNMOSChannelWidth2
+        # _SlicerWithSRLatchXinputs['_SRPMOSChannelWidth2'] = _SRPMOSChannelWidth2
+        # _SlicerWithSRLatchXinputs['_SRNMOSChannelWidth3'] = _SRNMOSChannelWidth3
+        # _SlicerWithSRLatchXinputs['_SRPMOSChannelWidth3'] = _SRPMOSChannelWidth3
+        # _SlicerWithSRLatchXinputs['_SRNMOSChannelWidth4'] = _SRNMOSChannelWidth4
+        # _SlicerWithSRLatchXinputs['_SRPMOSChannelWidth4'] = _SRPMOSChannelWidth4
+        # _SlicerWithSRLatchXinputs['_SRChannelLength'] = _SRChannelLength
+        # _SlicerWithSRLatchXinputs['_SRNPRatio'] = _SRNPRatio
+        # _SlicerWithSRLatchXinputs['_SRVDD2VSSHeightAtOneSide'] = _SRVDD2VSSHeightAtOneSide
+        # _SlicerWithSRLatchXinputs['_SRDummy'] = _SRDummy
+        # _SlicerWithSRLatchXinputs['_SRNumSupplyCoX'] = _SRNumSupplyCoX
+        # _SlicerWithSRLatchXinputs['_SRNumSupplyCoY'] = _SRNumSupplyCoY
+        # _SlicerWithSRLatchXinputs['_SRSupplyMet1XWidth'] = _SRSupplyMet1XWidth
+        # _SlicerWithSRLatchXinputs['_SRSupplyMet1YWidth'] = _SRSupplyMet1YWidth
+        # _SlicerWithSRLatchXinputs['SRNumViaPoly2Met1CoX'] = SRNumViaPoly2Met1CoX
+        # _SlicerWithSRLatchXinputs['SRNumViaPoly2Met1CoY'] = SRNumViaPoly2Met1CoY
+        # _SlicerWithSRLatchXinputs['SRNumViaPMOSMet12Met2CoX'] = SRNumViaPMOSMet12Met2CoX
+        # _SlicerWithSRLatchXinputs['SRNumViaPMOSMet12Met2CoY'] = SRNumViaPMOSMet12Met2CoY
+        # _SlicerWithSRLatchXinputs['SRNumViaNMOSMet12Met2CoX'] = SRNumViaNMOSMet12Met2CoX
+        # _SlicerWithSRLatchXinputs['SRNumViaNMOSMet12Met2CoY'] = SRNumViaNMOSMet12Met2CoY
+        # _SlicerWithSRLatchXinputs['SRNumViaPMOSMet22Met3CoX'] = SRNumViaPMOSMet22Met3CoX
+        # _SlicerWithSRLatchXinputs['SRNumViaPMOSMet22Met3CoY'] = SRNumViaPMOSMet22Met3CoY
+        # _SlicerWithSRLatchXinputs['SRNumViaNMOSMet22Met3CoX'] = SRNumViaNMOSMet22Met3CoX
+        # _SlicerWithSRLatchXinputs['SRNumViaNMOSMet22Met3CoY'] = SRNumViaNMOSMet22Met3CoY
+        # _SlicerWithSRLatchXinputs['_SRSLVT'] = _SRSLVT
+        # _SlicerWithSRLatchXinputs['_SRPowerLine'] = _SRPowerLine
+        #
+        # _SlicerWithSRLatchXinputs['_SLCLKinputPMOSFinger1'] = _SLCLKinputPMOSFinger1
+        # _SlicerWithSRLatchXinputs['_SLCLKinputPMOSFinger2'] = _SLCLKinputPMOSFinger2
+        # _SlicerWithSRLatchXinputs['_SLPMOSFinger'] = _SLPMOSFinger
+        # _SlicerWithSRLatchXinputs['_SLPMOSChannelWidth'] = _SLPMOSChannelWidth
+        # _SlicerWithSRLatchXinputs['_SLDATAinputNMOSFinger'] = _SLDATAinputNMOSFinger
+        # _SlicerWithSRLatchXinputs['_SLNMOSFinger'] = _SLNMOSFinger
+        # _SlicerWithSRLatchXinputs['_SLCLKinputNMOSFinger'] = _SLCLKinputNMOSFinger
+        # _SlicerWithSRLatchXinputs['_SLNMOSChannelWidth'] = _SLNMOSChannelWidth
+        # _SlicerWithSRLatchXinputs['_SLChannelLength'] = _SLChannelLength
+        # _SlicerWithSRLatchXinputs['_SLDummy'] = _SLDummy
+        # _SlicerWithSRLatchXinputs['_SLSLVT'] = _SLSLVT
+        # _SlicerWithSRLatchXinputs['_SLGuardringWidth'] = _SLGuardringWidth
+        # _SlicerWithSRLatchXinputs['_SLGuardring'] = _SLGuardring
+        # _SlicerWithSRLatchXinputs['_SLSlicerGuardringWidth'] = _SLSlicerGuardringWidth
+        # _SlicerWithSRLatchXinputs['_SLSlicerGuardring'] = _SLSlicerGuardring
+        # _SlicerWithSRLatchXinputs['_SLNumSupplyCOX'] = _SLNumSupplyCOX
+        # _SlicerWithSRLatchXinputs['_SLNumSupplyCOY'] = _SLNumSupplyCOY
+        # _SlicerWithSRLatchXinputs['_SLSupplyMet1XWidth'] = _SLSupplyMet1XWidth
+        # _SlicerWithSRLatchXinputs['_SLSupplyMet1YWidth'] = _SLSupplyMet1YWidth
+        # _SlicerWithSRLatchXinputs['_SLVDD2VSSHeight'] = _SLVDD2VSSHeight
+        # _SlicerWithSRLatchXinputs['_SLNumVIAPoly2Met1COX'] = _SLNumVIAPoly2Met1COX
+        # _SlicerWithSRLatchXinputs['_SLNumVIAPoly2Met1COY'] = _SLNumVIAPoly2Met1COY
+        # _SlicerWithSRLatchXinputs['_SLNumVIAMet12COY'] = _SLNumVIAMet12COX
+        # _SlicerWithSRLatchXinputs['_SLNumVIAMet12COY'] = _SLNumVIAMet12COY
+        # _SlicerWithSRLatchXinputs['_SLPowerLine'] = False
 
 
-        self._DesignParameter['_SlicerWithSRLatch1'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatch._SlicerWithSRLatch(_DesignParameter=None, _Name = "SlicerWithSRLatchIn{}".format(_Name)))[0]
-        self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchinputs)
+
+        self._DesignParameter['_SlicerWithSRLatchX4'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatch._SlicerWithSRLatch(_DesignParameter=None, _Name = "SlicerWithSRLatchIn{}".format(_Name)))[0]
+        self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchEdgeinputs)
+
+        # self._DesignParameter['_SlicerWithSRLatchX'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatch._SlicerWithSRLatch(_DesignParameter=None, _Name = "SlicerWithSRLatchXIn{}".format(_Name)))[0]
+        # self._DesignParameter['_SlicerWithSRLatchX']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchXinputs)
 
 
         print ('#################################       Coordinates Settings      #########################################')
@@ -139,21 +203,20 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
 
         _GuardRingRX2RXSpace = _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace
 
-        PMOS_toptmp = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_toptmp']['_Ignore']
-        NMOS_bottomtmp = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_bottomtmp']['_Ignore']
-        Guardring_top = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _SLGuardringWidth/2 + _GuardRingRX2RXSpace + _SLSlicerGuardringWidth/2
-        Guardring_bottom = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _SLGuardringWidth/2 - _GuardRingRX2RXSpace - _SLSlicerGuardringWidth/2
+        PMOS_toptmp = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_toptmp']['_Ignore']
+        NMOS_bottomtmp = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_bottomtmp']['_Ignore']
+        Guardring_top = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _SLGuardringWidth/2 + _GuardRingRX2RXSpace + _SLSlicerGuardringWidth/2
+        Guardring_bottom = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _SLGuardringWidth/2 - _GuardRingRX2RXSpace - _SLSlicerGuardringWidth/2
         GuardringHeight = Guardring_top - Guardring_bottom
 
-        _VDD2VSSHeightAtOneSide = self._DesignParameter['_SlicerWithSRLatch1']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]
+        _VDD2VSSHeightAtOneSide = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]
 
         tmp = []
+
         for i in range(0, _NumberofSlicerWithSRLatch) :
             tmp.append([_OriginXYCoordinateOfSlicerWithSRLatch[0][0], _OriginXYCoordinateOfSlicerWithSRLatch[0][1] - i * GuardringHeight])
 
-        self._DesignParameter['_SlicerWithSRLatch1']['_XYCoordinates'] = tmp
-
-
+        self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'] = tmp
 
 
 

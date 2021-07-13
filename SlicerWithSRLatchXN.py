@@ -332,11 +332,11 @@ if __name__ == '__main__' :
     #                                                _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _SLPowerLine=True)
 
     if _SLPMOSChannelWidth < 300 :
-        print("<_PMOSChannelWidth> should be over 300nm.")
+        print("<_SLPMOSChannelWidth> should be over 300nm.")
         raise NotImplementedError
 
     if _SLNMOSChannelWidth < 300 :
-        print("<_NMOSChannelWidth> should be over 300nm.")
+        print("<_SLNMOSChannelWidth> should be over 300nm.")
         raise NotImplementedError
 
 

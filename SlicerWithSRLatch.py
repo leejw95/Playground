@@ -24,10 +24,10 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                   _SRNMOSChannelWidth1 = None, _SRPMOSChannelWidth1 = None, _SRNMOSChannelWidth2 = None, _SRPMOSChannelWidth2 = None, _SRNMOSChannelWidth3 = None, 
                                   _SRPMOSChannelWidth3 = None, _SRNMOSChannelWidth4 = None, _SRPMOSChannelWidth4 = None, _SRChannelLength = None, _SRNPRatio = None,\
                                   _SRVDD2VSSHeightAtOneSide = None, _SRDummy = None, _SRNumSupplyCoX = None, _SRNumSupplyCoY = None, \
-                                  _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, SRNumViaPoly2Met1CoX = None, \
-                                  SRNumViaPoly2Met1CoY = None, SRNumViaPMOSMet12Met2CoX = None, SRNumViaPMOSMet12Met2CoY = None, \
-                                  SRNumViaNMOSMet12Met2CoX = None, SRNumViaNMOSMet12Met2CoY = None, SRNumViaPMOSMet22Met3CoX = None, SRNumViaPMOSMet22Met3CoY = None, \
-                                  SRNumViaNMOSMet22Met3CoX = None, SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = False, 
+                                  _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, _SRNumViaPoly2Met1CoX = None, \
+                                  _SRNumViaPoly2Met1CoY = None, _SRNumViaPMOSMet12Met2CoX = None, _SRNumViaPMOSMet12Met2CoY = None, \
+                                  _SRNumViaNMOSMet12Met2CoX = None, _SRNumViaNMOSMet12Met2CoY = None, _SRNumViaPMOSMet22Met3CoX = None, _SRNumViaPMOSMet22Met3CoY = None, \
+                                  _SRNumViaNMOSMet22Met3CoX = None, _SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = False,
                                   _SLCLKinputPMOSFinger1 = None, _SLCLKinputPMOSFinger2 = None, _SLPMOSFinger = None, _SLPMOSChannelWidth = None,
                                     _SLDATAinputNMOSFinger = None, _SLNMOSFinger = None, _SLCLKinputNMOSFinger = None, _SLNMOSChannelWidth = None,
                                     _SLChannelLength = None, _SLDummy = False, _SLSLVT = False, _SLGuardringWidth = None, _SLGuardring = False,
@@ -45,10 +45,10 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
     def _CalculateDesignParameter(self, _SRFinger1 = None, _SRFinger2 = None, _SRFinger3 = None, _SRFinger4 = None, \
                                   _SRNMOSChannelWidth1 = None, _SRPMOSChannelWidth1 = None, _SRNMOSChannelWidth2 = None, _SRPMOSChannelWidth2 = None, _SRNMOSChannelWidth3 = None, _SRPMOSChannelWidth3 = None, _SRNMOSChannelWidth4 = None, _SRPMOSChannelWidth4 = None, _SRChannelLength = None, _SRNPRatio = None,\
                                   _SRVDD2VSSHeightAtOneSide = None, _SRDummy = None, _SRNumSupplyCoX = None, _SRNumSupplyCoY = None, \
-                                  _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, SRNumViaPoly2Met1CoX = None, \
-                                  SRNumViaPoly2Met1CoY = None, SRNumViaPMOSMet12Met2CoX = None, SRNumViaPMOSMet12Met2CoY = None, \
-                                  SRNumViaNMOSMet12Met2CoX = None, SRNumViaNMOSMet12Met2CoY = None, SRNumViaPMOSMet22Met3CoX = None, SRNumViaPMOSMet22Met3CoY = None, \
-                                  SRNumViaNMOSMet22Met3CoX = None, SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = False,
+                                  _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, _SRNumViaPoly2Met1CoX = None, \
+                                  _SRNumViaPoly2Met1CoY = None, _SRNumViaPMOSMet12Met2CoX = None, _SRNumViaPMOSMet12Met2CoY = None, \
+                                  _SRNumViaNMOSMet12Met2CoX = None, _SRNumViaNMOSMet12Met2CoY = None, _SRNumViaPMOSMet22Met3CoX = None, _SRNumViaPMOSMet22Met3CoY = None, \
+                                  _SRNumViaNMOSMet22Met3CoX = None, _SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = False,
                                   _SLCLKinputPMOSFinger1 = None, _SLCLKinputPMOSFinger2 = None, _SLPMOSFinger = None, _SLPMOSChannelWidth = None,
                                     _SLDATAinputNMOSFinger = None, _SLNMOSFinger = None, _SLCLKinputNMOSFinger = None, _SLNMOSChannelWidth = None,
                                     _SLChannelLength = None, _SLDummy = False, _SLSLVT = False, _SLGuardringWidth = None, _SLGuardring = False,
@@ -88,16 +88,16 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
         _SRLatchinputs['_NumSupplyCoY'] = _SRNumSupplyCoY
         _SRLatchinputs['_SupplyMet1XWidth'] = _SRSupplyMet1XWidth
         _SRLatchinputs['_SupplyMet1YWidth'] = _SRSupplyMet1YWidth
-        _SRLatchinputs['NumViaPoly2Met1CoX'] = SRNumViaPoly2Met1CoX
-        _SRLatchinputs['NumViaPoly2Met1CoY'] = SRNumViaPoly2Met1CoY
-        _SRLatchinputs['NumViaPMOSMet12Met2CoX'] = SRNumViaPMOSMet12Met2CoX
-        _SRLatchinputs['NumViaPMOSMet12Met2CoY'] = SRNumViaPMOSMet12Met2CoY
-        _SRLatchinputs['NumViaNMOSMet12Met2CoX'] = SRNumViaNMOSMet12Met2CoX
-        _SRLatchinputs['NumViaNMOSMet12Met2CoY'] = SRNumViaNMOSMet12Met2CoY
-        _SRLatchinputs['NumViaPMOSMet22Met3CoX'] = SRNumViaPMOSMet22Met3CoX
-        _SRLatchinputs['NumViaPMOSMet22Met3CoY'] = SRNumViaPMOSMet22Met3CoY
-        _SRLatchinputs['NumViaNMOSMet22Met3CoX'] = SRNumViaNMOSMet22Met3CoX
-        _SRLatchinputs['NumViaNMOSMet22Met3CoY'] = SRNumViaNMOSMet22Met3CoY
+        _SRLatchinputs['NumViaPoly2Met1CoX'] = _SRNumViaPoly2Met1CoX
+        _SRLatchinputs['NumViaPoly2Met1CoY'] = _SRNumViaPoly2Met1CoY
+        _SRLatchinputs['NumViaPMOSMet12Met2CoX'] = _SRNumViaPMOSMet12Met2CoX
+        _SRLatchinputs['NumViaPMOSMet12Met2CoY'] = _SRNumViaPMOSMet12Met2CoY
+        _SRLatchinputs['NumViaNMOSMet12Met2CoX'] = _SRNumViaNMOSMet12Met2CoX
+        _SRLatchinputs['NumViaNMOSMet12Met2CoY'] = _SRNumViaNMOSMet12Met2CoY
+        _SRLatchinputs['NumViaPMOSMet22Met3CoX'] = _SRNumViaPMOSMet22Met3CoX
+        _SRLatchinputs['NumViaPMOSMet22Met3CoY'] = _SRNumViaPMOSMet22Met3CoY
+        _SRLatchinputs['NumViaNMOSMet22Met3CoX'] = _SRNumViaNMOSMet22Met3CoX
+        _SRLatchinputs['NumViaNMOSMet22Met3CoY'] = _SRNumViaNMOSMet22Met3CoY
         _SRLatchinputs['_SLVT'] = _SRSLVT
         _SRLatchinputs['_PowerLine'] = _SRPowerLine
 
@@ -414,21 +414,83 @@ if __name__ == '__main__' :
     DesignParameters._Technology = '028nm'
 
     SlicerWithSRLatchObj = _SlicerWithSRLatch(_DesignParameter=None, _Name='SlicerWithSRLatch')
-    SlicerWithSRLatchObj._CalculateDesignParameter(_SRFinger1 = 5, _SRFinger2 = 1, _SRFinger3 = 2, _SRFinger4 = 2,
-                                  _SRNMOSChannelWidth1 = 200, _SRPMOSChannelWidth1 = 400, _SRNMOSChannelWidth2 = 200, _SRPMOSChannelWidth2 = 400,
-                                  _SRNMOSChannelWidth3 = 200, _SRPMOSChannelWidth3 = 400, _SRNMOSChannelWidth4 = 200, _SRPMOSChannelWidth4 = 400,
-                                  _SRChannelLength = 30, _SRNPRatio = None,
-                                  _SRVDD2VSSHeightAtOneSide = None, _SRDummy = True, _SRNumSupplyCoX = None, _SRNumSupplyCoY = 2,
-                                  _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, SRNumViaPoly2Met1CoX = None, \
-                                  SRNumViaPoly2Met1CoY = None, SRNumViaPMOSMet12Met2CoX = None, SRNumViaPMOSMet12Met2CoY = None,
-                                  SRNumViaNMOSMet12Met2CoX = None, SRNumViaNMOSMet12Met2CoY = None, SRNumViaPMOSMet22Met3CoX = None, SRNumViaPMOSMet22Met3CoY = None,
-                                  SRNumViaNMOSMet22Met3CoX = None, SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = True, _SRPowerLine = True,
-                                  _SLCLKinputPMOSFinger1 = 6, _SLCLKinputPMOSFinger2 = 3, _SLPMOSFinger = 2, _SLPMOSChannelWidth = 1000,
-                                    _SLDATAinputNMOSFinger = 12, _SLNMOSFinger = 2, _SLCLKinputNMOSFinger = 8, _SLNMOSChannelWidth = 1000,
-                                    _SLChannelLength = 30, _SLDummy = True, _SLSLVT = True, _SLGuardringWidth = 200, _SLGuardring = True,
-                                    _SLSlicerGuardringWidth=200, _SLSlicerGuardring=None,
-                                    _SLNumSupplyCOY=None, _SLNumSupplyCOX=None, _SLSupplyMet1XWidth=None, _SLSupplyMet1YWidth=None, _SLVDD2VSSHeight = None,
-                                    _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _SLPowerLine = True)
+
+    _SRFinger1 = 5
+    _SRFinger2 = 1
+    _SRFinger3 = 2
+    _SRFinger4 = 2
+    _SRNMOSChannelWidth1 = 200
+    _SRPMOSChannelWidth1 = 400
+    _SRNMOSChannelWidth2 = 200
+    _SRPMOSChannelWidth2 = 400
+    _SRNMOSChannelWidth3 = 200
+    _SRPMOSChannelWidth3 = 400
+    _SRNMOSChannelWidth4 = 200
+    _SRPMOSChannelWidth4 = 400
+    _SRChannelLength = 30
+    _SRNPRatio = None
+    _SRVDD2VSSHeightAtOneSide = None
+    _SRDummy = True
+    _SRNumSupplyCoX = None
+    _SRNumSupplyCoY = 2
+    _SRSupplyMet1XWidth = None
+    _SRSupplyMet1YWidth = None
+    _SRNumViaPoly2Met1CoX = None
+    _SRNumViaPoly2Met1CoY = None
+    _SRNumViaPMOSMet12Met2CoX = None
+    _SRNumViaPMOSMet12Met2CoY = None
+    _SRNumViaNMOSMet12Met2CoX = None
+    _SRNumViaNMOSMet12Met2CoY = None
+    _SRNumViaPMOSMet22Met3CoX = None
+    _SRNumViaPMOSMet22Met3CoY = None
+    _SRNumViaNMOSMet22Met3CoX = None
+    _SRNumViaNMOSMet22Met3CoY = None
+    _SRSLVT = True
+    _SRPowerLine = True
+    _SLCLKinputPMOSFinger1 = 6
+    _SLCLKinputPMOSFinger2 = 3
+    _SLPMOSFinger = 2
+    _SLPMOSChannelWidth = 1000
+    _SLDATAinputNMOSFinger = 12
+    _SLNMOSFinger = 2
+    _SLCLKinputNMOSFinger = 8
+    _SLNMOSChannelWidth = 1000
+    _SLChannelLength = 30
+    _SLDummy = True
+    _SLSLVT = True
+    _SLGuardringWidth = 200
+    _SLGuardring = True
+    _SLSlicerGuardringWidth = 200
+    _SLSlicerGuardring = None
+    _SLNumSupplyCOY = None
+    _SLNumSupplyCOX = None
+    _SLSupplyMet1XWidth = None
+    _SLSupplyMet1YWidth = None
+    _SLVDD2VSSHeight = None
+    _SLNumVIAPoly2Met1COX = None
+    _SLNumVIAPoly2Met1COY = None
+    _SLNumVIAMet12COX = None
+    _SLNumVIAMet12COY = None
+    _SLPowerLine = True
+
+
+
+
+    SlicerWithSRLatchObj._CalculateDesignParameter(_SRFinger1 = _SRFinger1, _SRFinger2 = _SRFinger2, _SRFinger3 = _SRFinger3, _SRFinger4 = _SRFinger4,
+                                  _SRNMOSChannelWidth1 = _SRNMOSChannelWidth1, _SRPMOSChannelWidth1 = _SRPMOSChannelWidth1, _SRNMOSChannelWidth2 = _SRNMOSChannelWidth2, _SRPMOSChannelWidth2 = _SRPMOSChannelWidth2,
+                                  _SRNMOSChannelWidth3 = _SRNMOSChannelWidth3, _SRPMOSChannelWidth3 = _SRPMOSChannelWidth3, _SRNMOSChannelWidth4 = _SRNMOSChannelWidth4, _SRPMOSChannelWidth4 = _SRPMOSChannelWidth4,
+                                  _SRChannelLength = _SRChannelLength, _SRNPRatio = _SRNPRatio,
+                                  _SRVDD2VSSHeightAtOneSide = _SRVDD2VSSHeightAtOneSide, _SRDummy = _SRDummy, _SRNumSupplyCoX = _SRNumSupplyCoX, _SRNumSupplyCoY = _SRNumSupplyCoY,
+                                  _SRSupplyMet1XWidth = _SRSupplyMet1XWidth, _SRSupplyMet1YWidth = _SRSupplyMet1YWidth, _SRNumViaPoly2Met1CoX = _SRNumViaPoly2Met1CoX, \
+                                  _SRNumViaPoly2Met1CoY = _SRNumViaPoly2Met1CoY, _SRNumViaPMOSMet12Met2CoX = _SRNumViaPMOSMet12Met2CoX, _SRNumViaPMOSMet12Met2CoY = _SRNumViaPMOSMet12Met2CoY,
+                                  _SRNumViaNMOSMet12Met2CoX = _SRNumViaNMOSMet12Met2CoX, _SRNumViaNMOSMet12Met2CoY = _SRNumViaNMOSMet12Met2CoY, _SRNumViaPMOSMet22Met3CoX = _SRNumViaPMOSMet22Met3CoX, _SRNumViaPMOSMet22Met3CoY = _SRNumViaPMOSMet22Met3CoY,
+                                  _SRNumViaNMOSMet22Met3CoX = _SRNumViaNMOSMet22Met3CoX, _SRNumViaNMOSMet22Met3CoY = _SRNumViaNMOSMet22Met3CoY, _SRSLVT = _SRSLVT, _SRPowerLine = _SRPowerLine,
+                                  _SLCLKinputPMOSFinger1 = _SLCLKinputPMOSFinger1, _SLCLKinputPMOSFinger2 = _SLCLKinputPMOSFinger2, _SLPMOSFinger = _SLPMOSFinger, _SLPMOSChannelWidth = _SLPMOSChannelWidth,
+                                  _SLDATAinputNMOSFinger = _SLDATAinputNMOSFinger, _SLNMOSFinger = _SLNMOSFinger, _SLCLKinputNMOSFinger = _SLCLKinputNMOSFinger, _SLNMOSChannelWidth = _SLNMOSChannelWidth,
+                                  _SLChannelLength = _SLChannelLength, _SLDummy = _SLDummy, _SLSLVT = _SLSLVT, _SLGuardringWidth = _SLGuardringWidth, _SLGuardring = _SLGuardring,
+                                  _SLSlicerGuardringWidth=_SLSlicerGuardringWidth, _SLSlicerGuardring=_SLSlicerGuardring,
+                                  _SLNumSupplyCOY=_SLNumSupplyCOY, _SLNumSupplyCOX=_SLNumSupplyCOX, _SLSupplyMet1XWidth=_SLSupplyMet1XWidth, _SLSupplyMet1YWidth=_SLSupplyMet1YWidth, _SLVDD2VSSHeight = _SLVDD2VSSHeight,
+                                  _SLNumVIAPoly2Met1COX=_SLNumVIAPoly2Met1COX, _SLNumVIAPoly2Met1COY=_SLNumVIAPoly2Met1COY, _SLNumVIAMet12COX=_SLNumVIAMet12COX, _SLNumVIAMet12COY=_SLNumVIAMet12COY, _SLPowerLine = _SLPowerLine)
 
     # SlicerwithSRLatchObj._CalculateDesignParameter(_SRFinger1=10, _SRFinger2=10, _SRFinger3=10, _SRFinger4=10,
     #                                                _SRNMOSChannelWidth1=200, _SRPMOSChannelWidth1=400,
@@ -457,6 +519,18 @@ if __name__ == '__main__' :
     #                                                _SLSupplyMet1YWidth=None, _SLVDD2VSSHeight=None,
     #                                                _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None,
     #                                                _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _SLPowerLine=True)
+
+
+    if _SLPMOSChannelWidth < 300 :
+        print("<_PMOSChannelWidth> should be over 300nm.")
+        raise NotImplementedError
+
+    if _SLNMOSChannelWidth < 300 :
+        print("<_NMOSChannelWidth> should be over 300nm.")
+        raise NotImplementedError
+
+
+
 
     SlicerWithSRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SlicerWithSRLatchObj._DesignParameter)
     _fileName = 'SlicerWithSRLatch.gds'

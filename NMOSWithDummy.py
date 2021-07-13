@@ -376,7 +376,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    _NMOSFinger = 1
+    _NMOSFinger = 10
     _NMOSWidth = 200
     _NMOSChannelLength = 30
     _NMOSDummy = True

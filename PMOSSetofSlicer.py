@@ -453,6 +453,8 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             _VIAPMOSMet12['_ViaMet12Met2NumberOfCOY'] = _ViaNumY
             self._DesignParameter['_ViaMet12Met2OnPMOSOutput2'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2OnPMOSOutputIn2{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**_VIAPMOSMet12)
+            del _ViaNumY
+
 
             _VIAPMOSMet23 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
             _VIAPMOSMet23['_ViaMet22Met3NumberOfCOX'] = 1
@@ -487,7 +489,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                         tmpx=[j - (_PMOSFinger/2)*_LengthPMOSBtwMet1 + _LengthPMOSBtwMet1 * (2*i), self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_XYCoordinates'] = tmp
-  #          self._DesignParameter['_ViaMet22Met3OnPMOSOutput2']['_XYCoordinates'] = tmp
+   #         self._DesignParameter['_ViaMet22Met3OnPMOSOutput2']['_XYCoordinates'] = tmp
             del tmp
             del tmpx
           #  del tmp1

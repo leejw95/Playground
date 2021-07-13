@@ -1847,13 +1847,14 @@ class _Slicer(StickDiagram._StickDiagram):
 if __name__ == '__main__':
     DesignParameters._Technology = '028nm'
 
+
     SlicerObj = _Slicer(_DesignParameter=None, _Name='Slicer')
-    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
-                                        _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
-                                        _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
-                                        _SlicerGuardringWidth=200, _SlicerGuardring= None,
-                                        _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
-                                        _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
+    # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
+    #                                     _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
+    #                                     _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
+    #                                     _SlicerGuardringWidth=200, _SlicerGuardring= None,
+    #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
+    #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
 
     # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 =3, _CLKinputPMOSFinger2 =2, _PMOSFinger = 1, _PMOSChannelWidth =1000,
     #                                     _DATAinputNMOSFinger =11, _NMOSFinger =1, _CLKinputNMOSFinger = 7, _NMOSChannelWidth = 1000,
@@ -1861,18 +1862,51 @@ if __name__ == '__main__':
     #                                     _SlicerGuardringWidth=200, _SlicerGuardring= None,
     #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
     #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
+    _CLKinputPMOSFinger1 = 3
+    _CLKinputPMOSFinger2 = 2
+    _PMOSFinger = 3
+    _PMOSChannelWidth = 300
+    _DATAinputNMOSFinger = 1
+    _NMOSFinger = 3
+    _CLKinputNMOSFinger = 7
+    _NMOSChannelWidth = 300
+    _ChannelLength = 30
+    _Dummy = True
+    _SLVT = True
+    _GuardringWidth = 200
+    _Guardring = True
+    _SlicerGuardringWidth = 200
+    _SlicerGuardring = None
+    _NumSupplyCOY = None
+    _NumSupplyCOX = None
+    _SupplyMet1XWidth = None
+    _SupplyMet1YWidth = None
+    _VDD2VSSHeight = None
+    _NumVIAPoly2Met1COX = None
+    _NumVIAPoly2Met1COY = None
+    _NumVIAMet12COX = None
+    _NumVIAMet12COY = None
+    _PowerLine = True
+    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1=_CLKinputPMOSFinger1, _CLKinputPMOSFinger2=_CLKinputPMOSFinger2, _PMOSFinger=_PMOSFinger,
+                                        _PMOSChannelWidth=_PMOSChannelWidth,
+                                        _DATAinputNMOSFinger=_DATAinputNMOSFinger, _NMOSFinger=_NMOSFinger, _CLKinputNMOSFinger=_CLKinputNMOSFinger,
+                                        _NMOSChannelWidth=_NMOSChannelWidth,
+                                        _ChannelLength=_ChannelLength, _Dummy=_Dummy, _SLVT=_SLVT, _GuardringWidth=_GuardringWidth,
+                                        _Guardring=_Guardring,
+                                        _SlicerGuardringWidth=_SlicerGuardringWidth, _SlicerGuardring=_SlicerGuardring,
+                                        _NumSupplyCOY=_NumSupplyCOY, _NumSupplyCOX=_NumSupplyCOX, _SupplyMet1XWidth=_SupplyMet1XWidth,
+                                        _SupplyMet1YWidth=_SupplyMet1YWidth, _VDD2VSSHeight=_VDD2VSSHeight,
+                                        _NumVIAPoly2Met1COX=_NumVIAPoly2Met1COX, _NumVIAPoly2Met1COY=_NumVIAPoly2Met1COY, _NumVIAMet12COX=_NumVIAMet12COX,
+                                        _NumVIAMet12COY=_NumVIAMet12COY, _PowerLine=_PowerLine)
 
-    # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1=3, _CLKinputPMOSFinger2=2, _PMOSFinger=1,
-    #                                     _PMOSChannelWidth=300,
-    #                                     _DATAinputNMOSFinger=11, _NMOSFinger=1, _CLKinputNMOSFinger=7,
-    #                                     _NMOSChannelWidth=300,
-    #                                     _ChannelLength=30, _Dummy=True, _SLVT=True, _GuardringWidth=200,
-    #                                     _Guardring=True,
-    #                                     _SlicerGuardringWidth=200, _SlicerGuardring=None,
-    #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None,
-    #                                     _SupplyMet1YWidth=None, _VDD2VSSHeight=None,
-    #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None,
-    #                                     _NumVIAMet12COY=None, _PowerLine=True)
+    if _PMOSChannelWidth < 300 :
+        print("<_PMOSChannelWidth> should be over 300nm.")
+        raise NotImplementedError
+
+    if _NMOSChannelWidth < 300 :
+        print("<_NMOSChannelWidth> should be over 300nm.")
+        raise NotImplementedError
+
 
     SlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerObj._DesignParameter)
     _fileName = 'Slicer.gds'

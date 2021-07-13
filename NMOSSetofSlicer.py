@@ -906,7 +906,10 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_RingPpLayer3']['_Width'] = 21*2 + _GuardringWidth
                 self._DesignParameter['_RingPpLayer4']['_Width'] = 21*2 + _GuardringWidth
 
-                toptmp = self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (2 * _DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                if _NMOSChannelWidth <400 :
+                    toptmp = self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (2 * _DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                else :
+                    toptmp = self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
                 bottomtmp = self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) - 10
                     # self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) \
                     #         - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - SpaceBtwNMOS - 10

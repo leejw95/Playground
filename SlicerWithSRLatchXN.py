@@ -35,7 +35,7 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
                                     _SLNumSupplyCOY=None, _SLNumSupplyCOX=None, _SLSupplyMet1XWidth=None, _SLSupplyMet1YWidth=None, _SLVDD2VSSHeight = None,
                                     _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _NumberofSlicerWithSRLatch = None)
 
-    def __init__(self, _DesignParameter = None, _Name = 'SlicerWithSRLatchXNObj'):
+    def __init__(self, _DesignParameter = None, _Name = 'SlicerWithSRLatchXN'):
         if _DesignParameter != None :
             self._DesignParameter = _DesignParameter
 
@@ -65,7 +65,7 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
 
 
         _DRCObj = DRC.DRC()
-        _Name = 'SlicerWithSRLatchXNObj'
+        _Name = 'SlicerWithSRLatchXN'
 
         print ('###############################        SlicerWithSRLatch Generation       #########################################')
 
@@ -191,8 +191,8 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
 
 
 
-        self._DesignParameter['SlicerWithSRLatchXNObj'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatch._SlicerWithSRLatch(_DesignParameter=None, _Name = "SlicerWithSRLatchIn{}".format(_Name)))[0]
-        self._DesignParameter['SlicerWithSRLatchXNObj']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchEdgeinputs)
+        self._DesignParameter['SlicerWithSRLatchXN'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatch._SlicerWithSRLatch(_DesignParameter=None, _Name = "SlicerWithSRLatchIn{}".format(_Name)))[0]
+        self._DesignParameter['SlicerWithSRLatchXN']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchEdgeinputs)
 
         # self._DesignParameter['_SlicerWithSRLatchX'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatch._SlicerWithSRLatch(_DesignParameter=None, _Name = "SlicerWithSRLatchXIn{}".format(_Name)))[0]
         # self._DesignParameter['_SlicerWithSRLatchX']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchXinputs)
@@ -203,20 +203,20 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
 
         _GuardRingRX2RXSpace = _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace
 
-        PMOS_toptmp = self._DesignParameter['SlicerWithSRLatchXNObj']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_toptmp']['_Ignore']
-        NMOS_bottomtmp = self._DesignParameter['SlicerWithSRLatchXNObj']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_bottomtmp']['_Ignore']
-        Guardring_top = self._DesignParameter['SlicerWithSRLatchXNObj']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['SlicerWithSRLatchXNObj']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _SLGuardringWidth/2 + _GuardRingRX2RXSpace + _SLSlicerGuardringWidth/2
-        Guardring_bottom = self._DesignParameter['SlicerWithSRLatchXNObj']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['SlicerWithSRLatchXNObj']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _SLGuardringWidth/2 - _GuardRingRX2RXSpace - _SLSlicerGuardringWidth/2
+        PMOS_toptmp = self._DesignParameter['SlicerWithSRLatchXN']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_toptmp']['_Ignore']
+        NMOS_bottomtmp = self._DesignParameter['SlicerWithSRLatchXN']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_bottomtmp']['_Ignore']
+        Guardring_top = self._DesignParameter['SlicerWithSRLatchXN']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['SlicerWithSRLatchXN']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _SLGuardringWidth/2 + _GuardRingRX2RXSpace + _SLSlicerGuardringWidth/2
+        Guardring_bottom = self._DesignParameter['SlicerWithSRLatchXN']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['SlicerWithSRLatchXN']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _SLGuardringWidth/2 - _GuardRingRX2RXSpace - _SLSlicerGuardringWidth/2
         GuardringHeight = Guardring_top - Guardring_bottom
 
-        _VDD2VSSHeightAtOneSide = self._DesignParameter['SlicerWithSRLatchXNObj']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]
+        _VDD2VSSHeightAtOneSide = self._DesignParameter['SlicerWithSRLatchXN']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]
 
         tmp = []
 
         for i in range(0, _NumberofSlicerWithSRLatch) :
             tmp.append([_OriginXYCoordinateOfSlicerWithSRLatch[0][0], _OriginXYCoordinateOfSlicerWithSRLatch[0][1] - i * GuardringHeight])
 
-        self._DesignParameter['SlicerWithSRLatchXNObj']['_XYCoordinates'] = tmp
+        self._DesignParameter['SlicerWithSRLatchXN']['_XYCoordinates'] = tmp
 
 
 
@@ -257,7 +257,7 @@ if __name__ == '__main__' :
     _SRNumViaNMOSMet22Met3CoX = None
     _SRNumViaNMOSMet22Met3CoY = None
     _SRSLVT = True
-    _SRPowerLine = True
+    _SRPowerLine = False
     _SLCLKinputPMOSFinger1 = 6
     _SLCLKinputPMOSFinger2 = 3
     _SLPMOSFinger = 2
@@ -282,11 +282,11 @@ if __name__ == '__main__' :
     _SLNumVIAPoly2Met1COY = None
     _SLNumVIAMet12COX = None
     _SLNumVIAMet12COY = None
-    _SLPowerLine = True
+    _SLPowerLine = False
     _N = 4
 
 
-    SlicerWithSRLatchXNObj = SlicerWithSRLatchXNObj(_DesignParameter=None, _Name='SlicerWithSRLatchXNObj')
+    SlicerWithSRLatchXNObj = SlicerWithSRLatchXNObj(_DesignParameter=None, _Name='SlicerWithSRLatchXN')
     SlicerWithSRLatchXNObj._CalculateDesignParameter(_SRFinger1 = _SRFinger1, _SRFinger2 = _SRFinger2, _SRFinger3 = _SRFinger3, _SRFinger4 = _SRFinger4,
                                   _SRNMOSChannelWidth1 = _SRNMOSChannelWidth1, _SRPMOSChannelWidth1 = _SRPMOSChannelWidth1, _SRNMOSChannelWidth2 = _SRNMOSChannelWidth2, _SRPMOSChannelWidth2 = _SRPMOSChannelWidth2,
                                   _SRNMOSChannelWidth3 = _SRNMOSChannelWidth3, _SRPMOSChannelWidth3 = _SRPMOSChannelWidth3, _SRNMOSChannelWidth4 = _SRNMOSChannelWidth4, _SRPMOSChannelWidth4 = _SRPMOSChannelWidth4,
@@ -336,7 +336,7 @@ if __name__ == '__main__' :
 
 
     SlicerWithSRLatchXNObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SlicerWithSRLatchXNObj._DesignParameter)
-    _fileName = 'SlicerWithSRLatchXNObj.gds'
+    _fileName = 'SlicerWithSRLatchXN.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
     tmp = SlicerWithSRLatchXNObj._CreateGDSStream(SlicerWithSRLatchXNObj._DesignParameter['_GDSFile']['_GDSFile'])
@@ -350,8 +350,8 @@ if __name__ == '__main__' :
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('jicho0927', 'cho89140616!!')
     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('SlicerWithSRLatchXNObj.gds', 'rb')
-    ftp.storbinary('STOR SlicerWithSRLatchXNObj.gds', myfile)
+    myfile = open('SlicerWithSRLatchXN.gds', 'rb')
+    ftp.storbinary('STOR SlicerWithSRLatchXN.gds', myfile)
     myfile.close()
     ftp.close()
 

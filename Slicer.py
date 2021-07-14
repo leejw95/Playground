@@ -11,7 +11,7 @@ import ViaMet42Met5
 import ViaMet52Met6
 import ViaMet62Met7
 import ContGeneration
-
+import warnings
 import PMOSSetofSlicer
 import NMOSSetofSlicer
 
@@ -1863,11 +1863,9 @@ class _Slicer(StickDiagram._StickDiagram):
             if _NMOSChannelWidth < 300 :
                 print("<_NMOSChannelWidth> should be over 300nm.")
                 raise NotImplementedError
-            #
-            # if _DATAinputNMOSFinger < 2 :
-            #     print("<_DATAinputNMOSFinger> should be over 2.")
-            #     raise NotImplementedError
 
+            if _DATAinputNMOSFinger == 1 and _NMOSFinger == 1 :
+                warnings.warn("The input signal can be disturbed.")
 
 
 
@@ -1895,8 +1893,8 @@ if __name__ == '__main__':
     _CLKinputPMOSFinger2 = 3
     _PMOSFinger = 2
     _PMOSChannelWidth = 1000
-    _DATAinputNMOSFinger = 12
-    _NMOSFinger = 3
+    _DATAinputNMOSFinger = 1
+    _NMOSFinger = 1
     _CLKinputNMOSFinger = 8
     _NMOSChannelWidth = 1000
     _ChannelLength = 30

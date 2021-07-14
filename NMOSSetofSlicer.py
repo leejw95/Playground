@@ -114,9 +114,13 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             if _tmpNumCOY < 1:
                 _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOX'] = 1
                 _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOY'] = 2
+                if _DATAinputNMOSFinger == 1 :
+                    _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOY'] = 1
             else:
                 _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOX'] = _tmpNumCOY
                 _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOY'] = 2
+                if _DATAinputNMOSFinger == 1 :
+                    _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOY'] = 1
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS1'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnNMOSGate1In{}'.format(_Name)))[0]
             self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_VIANMOSPoly2Met1NMOS1)
@@ -133,9 +137,15 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             if _tmpNumCOY < 1:
                 _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOX'] = 1
                 _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOY'] = 2
+                if _DATAinputNMOSFinger == 1 :
+                    _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOY'] = 1
+
             else:
                 _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOX'] = _tmpNumCOY
                 _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOY'] = 2
+                if _DATAinputNMOSFinger == 1 :
+                    _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOY'] = 1
+
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS2'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnNMOSGate2In{}'.format(_Name)))[0]
             self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_VIANMOSPoly2Met1NMOS2)

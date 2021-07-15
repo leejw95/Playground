@@ -479,9 +479,14 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                                                  [[_XYCoordinateOfSlicer[0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'][1][0], Inverter_vsstmp], self._DesignParameter['_Inverter']['_XYCoordinates'][0]]]
 
         print ('#################################       Design Constraints      #########################################')
-        if _InvChannelWidth > 250 :
-            print("<_InvChannelWidth> should be smaller than 200nm.")
+        # if _InvChannelWidth > 250 :
+        #     print("<_InvChannelWidth> should be smaller than 200nm.")
+        #     raise NotImplementedError
+
+        if self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][1][1] - _SLSlicerGuardringWidth > self._DesignParameter['_Inverter']['_XYCoordinates'][0][1] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 :
             raise NotImplementedError
+
+
 
         # print ('#################################       Supply Line Routing      #########################################')
         # if _SRPowerLine == True and _SLPowerLine == True :

@@ -13,6 +13,12 @@ import ViaMet32Met4
 import math
 
 class _Inverter(StickDiagram._StickDiagram) :
+    _ParametersForDesignCalculation = dict(_Finger = None, _ChannelWidth = None, _ChannelLength = None, _NPRatio = None,\
+                                  _VDD2VSSHeight = None, _Dummy = None, _NumSupplyCoX = None, _NumSupplyCoY = None, \
+                                  _SupplyMet1XWidth = None, _SupplyMet1YWidth = None, _NumViaPoly2Met1CoX = None, \
+                                  _NumViaPoly2Met1CoY = None, _NumViaPMOSMet12Met2CoX = None, \
+                                  _NumViaPMOSMet12Met2CoY = None, _NumViaNMOSMet12Met2CoX = None, _NumViaNMOSMet12Met2CoY = None, _SLVT = None, _SupplyLine = None)
+
 
     def __init__(self, _DesignParameter = None, _Name = 'Inverter') :
         if _DesignParameter != None :

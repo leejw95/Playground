@@ -195,9 +195,6 @@ class _Inverter(StickDiagram._StickDiagram) :
                                      2 * _DRCObj._Metal1MinSpace3 + 2 * self._DesignParameter['_VIAPMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 3 * _DRCObj._Metal1MinSpace2
 
 
-
-
-
         if _VDD2VSSHeight == None :
             _VDD2VSSHeight = _VDD2VSSMinHeight
 
@@ -392,11 +389,11 @@ class _Inverter(StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__':
-    _Finger = 3
+    _Finger = 5
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 2
-    _VDD2VSSHeight = None
+    _VDD2VSSHeight = 1224
     _Dummy = True
     _SLVT = True
     _LVT = False
@@ -407,13 +404,17 @@ if __name__ == '__main__':
     _SupplyMet1YWidth = None
     _NumVIAPoly2Met1COX = None
     _NumVIAPoly2Met1COY = None
+    NumViaPMOSMet12Met2CoX = None
+    NumViaPMOSMet12Met2CoY = None
+    NumViaNMOSMet12Met2CoX = None
+    NumViaNMOSMet12Met2CoY = None
     _NumVIAMet12COX = None
     _NumVIAMet12COY = None
     InverterObj = _Inverter(_DesignParameter=None, _Name='Inverter')
     InverterObj._CalculateDesignParameter(_Finger = _Finger, _ChannelWidth = _ChannelWidth, _ChannelLength = _ChannelLength, _NPRatio = _NPRatio, _VDD2VSSHeight = _VDD2VSSHeight,
-                                          _Dummy = True, _NumSupplyCoX = None, _NumSupplyCoY = None, _SupplyMet1XWidth = None, _SupplyMet1YWidth = None, NumViaPoly2Met1CoX = None, \
-                                  NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None, NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None,
-                                          _SLVT = True)
+                                          _Dummy = _Dummy, _NumSupplyCoX = _NumSupplyCOX, _NumSupplyCoY = _NumSupplyCOY, _SupplyMet1XWidth = _SupplyMet1XWidth, _SupplyMet1YWidth = _SupplyMet1YWidth, NumViaPoly2Met1CoX = _NumVIAPoly2Met1COX, \
+                                  NumViaPoly2Met1CoY = _NumVIAPoly2Met1COY, NumViaPMOSMet12Met2CoX = NumViaPMOSMet12Met2CoX, NumViaPMOSMet12Met2CoY = NumViaPMOSMet12Met2CoY, NumViaNMOSMet12Met2CoX = NumViaNMOSMet12Met2CoX, NumViaNMOSMet12Met2CoY = NumViaNMOSMet12Met2CoY,
+                                          _SLVT = _SLVT)
 
     InverterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = InverterObj._DesignParameter)
     _fileName = 'Inverter.gds'

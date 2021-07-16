@@ -1077,7 +1077,8 @@ class _Slicer(StickDiagram._StickDiagram):
 
             _VIAMet32Met4OnforCLKRouting = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
             _VIAMet32Met4OnforCLKRouting['_ViaMet32Met4NumberOfCOX'] = 1
-            _VIAMet32Met4OnforCLKRouting['_ViaMet32Met4NumberOfCOY'] = 2
+            _VIAMet32Met4OnforCLKRouting['_ViaMet32Met' \
+                                         '4NumberOfCOY'] = 2
 
             self._DesignParameter['_VIAMet32Met4OnforCLKPNRouting'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='VIAMet32Met3OnforPNRouting{}'.format(_Name)))[0]
             self._DesignParameter['_VIAMet32Met4OnforCLKPNRouting']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_VIAMet32Met4OnforCLKRouting)

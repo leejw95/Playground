@@ -611,17 +611,17 @@ class _PSubring(StickDiagram._StickDiagram):
 
         for i in range (1, _COXNumMin1 -1) :
             for j in range (0,_COYNumMin1) :
-                if _COXNumMin1 % 2 == 0 and _COYNumMin1 == 0 :
+                if _COXNumMin1 % 2 == 0 and _COYNumMin1 % 2 == 0 :
                     tmp.append([self._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin1 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
                                 self._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin1 // 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
                     tmp.append([self._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin1 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
                                 self._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin1 // 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                elif _COXNumMin1 % 2 == 0 and _COYNumMin1 == 1 :
+                elif _COXNumMin1 % 2 == 0 and _COYNumMin1 % 2 == 1 :
                     tmp.append([self._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin1 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
                                 self._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin1 - 1) / 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
                     tmp.append([self._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin1 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
                                 self._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin1 - 1) / 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                elif _COXNumMin1 % 2 == 1 and _COYNumMin1 == 0 :
+                elif _COXNumMin1 % 2 == 1 and _COYNumMin1 % 2 == 0 :
                     tmp.append([self._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin1 - 1) // 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
                                 self._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin1 // 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
                     tmp.append([self._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin1 - 1) / 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
@@ -634,26 +634,26 @@ class _PSubring(StickDiagram._StickDiagram):
 
         for i in range (0, _COXNumMin2) :
             for j in range (0, _COYNumMin2) :
-                if _COXNumMin2 % 2 == 0 and _COYNumMin2 == 0 :
-                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin2 / 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin2 / 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin2 / 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin2 / 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                elif _COXNumMin2 % 2 == 0 and _COYNumMin2 == 1 :
-                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin2 / 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin2 - 1) / 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin2 / 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin2 - 1) / 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                elif _COXNumMin2 % 2 == 1 and _COYNumMin2 == 0 :
-                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin2 - 1) / 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin2 / 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin2 - 1) / 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin2 / 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                if _COXNumMin2 % 2 == 0 and _COYNumMin2 % 2 == 0 :
+                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin2 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin2 // 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin2 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin2 // 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                elif _COXNumMin2 % 2 == 0 and _COYNumMin2 % 2 == 1 :
+                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin2 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin2 - 1) // 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin2 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin2 - 1) // 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                elif _COXNumMin2 % 2 == 1 and _COYNumMin2 % 2 == 0 :
+                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin2 - 1) // 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin2 // 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin2 - 1) // 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COYNumMin2 // 2 - 0.5) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
                 else :
-                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin2 - 1) / 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin2 - 1) / 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin2 - 1) / 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin2 - 1) / 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin2 - 1) // 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][0][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin2 - 1) // 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    tmp.append([self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COXNumMin2 - 1) // 2) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                self._DesignParameter['_Met1Layery']['_XYCoordinates'][1][1] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * ((_COYNumMin2 - 1) // 2) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
 
 
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmp

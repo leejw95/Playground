@@ -403,7 +403,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] //2 +
                                                                                                 (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
                             self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                            _DRCObj._Metal1MinSpace3)]]
+                            _DRCObj._MetalxMinSpace8)]]
 
             else :
                 self._DesignParameter['_PMOSTG']['_XYCoordinates'] = [[0, _VDD2VSSHeight - (self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
@@ -500,7 +500,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
             else :
                 self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_XYCoordinates'] = tmp1 + tmp2
-                self._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_XYCoordinates'] = tmp1
+                self._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_XYCoordinates'] = tmp2
                 self._DesignParameter['_ViaMet32Met4OnNMOSOutputTG']['_XYCoordinates'] = []
                 self._DesignParameter['_ViaMet42Met5OnNMOSOutputTG']['_XYCoordinates'] = []
                 self._DesignParameter['_ViaMet52Met6OnNMOSOutputTG']['_XYCoordinates'] = []
@@ -533,7 +533,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             
             else :
                 self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_XYCoordinates'] = tmp1 + tmp2
-                self._DesignParameter['_ViaMet22Met3OnPMOSOutputTG']['_XYCoordinates'] = tmp1
+                self._DesignParameter['_ViaMet22Met3OnPMOSOutputTG']['_XYCoordinates'] = tmp2
                 self._DesignParameter['_ViaMet32Met4OnPMOSOutputTG']['_XYCoordinates'] = []
                 self._DesignParameter['_ViaMet42Met5OnPMOSOutputTG']['_XYCoordinates'] = []
                 self._DesignParameter['_ViaMet52Met6OnPMOSOutputTG']['_XYCoordinates'] = []

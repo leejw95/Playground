@@ -113,6 +113,13 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         _GapbtwOriginY = _ResistorBankOrigin[0][1] + (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1] + 
                                                     self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])
 
+
+        self._DesignParameter['_ResistorSpaceX']= {'_Ignore': _ResistorSpaceX, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+        self._DesignParameter['_ResistorSpaceY']= {'_Ignore': _ResistorSpaceY, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+        self._DesignParameter['_GapbtwOriginX']= {'_Ignore': _GapbtwOriginX, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+        self._DesignParameter['_GapbtwOriginY']= {'_Ignore': _GapbtwOriginY, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+
+
         tmp = []
         for i in range (0, _XRBNum) :
             for j in range(0, _YRBNum) :

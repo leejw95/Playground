@@ -1324,6 +1324,8 @@ class DRCMETALx:
             self._MetalxMinEnclosureCO2=32 #J
             self._MetalxMinArea=11000 #K
 
+            self._MetalxMaxWidth = 4500 # M7 not over MOB maximum width <= 4.5 , junung
+
         if DesignParameters._Technology=='065nm':
             self._MetalxMinWidth=100
             self._MetalxMinSpace=100

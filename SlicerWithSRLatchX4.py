@@ -17,7 +17,7 @@ import SlicerWithSRLatch
 
 import math
 
-class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
+class SlicerWithSRLatchX4Obj (StickDiagram._StickDiagram) :
 
     _ParametersForDesignCalculation = dict(
                                     _SRFinger1 = None, _SRFinger2 = None, _SRFinger3 = None, _SRFinger4 = None, \
@@ -76,7 +76,7 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
 
 
         print ('#########################################################################################################')
-        print ('                                {}  SlicerWithSRLatchXNObj Calculation Start                                  '.format(self._DesignParameter['_Name']['_Name']))
+        print ('                                {}  SlicerWithSRLatchX4Obj Calculation Start                                  '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
 
@@ -622,8 +622,8 @@ if __name__ == '__main__' :
 
 
 
-    SlicerWithSRLatchXNObj = SlicerWithSRLatchXNObj(_DesignParameter=None, _Name='SlicerWithSRLatchX4')
-    SlicerWithSRLatchXNObj._CalculateDesignParameter(_SRFinger1 = _SRFinger1, _SRFinger2 = _SRFinger2, _SRFinger3 = _SRFinger3, _SRFinger4 = _SRFinger4,
+    SlicerWithSRLatchX4Obj = SlicerWithSRLatchX4Obj(_DesignParameter=None, _Name='SlicerWithSRLatchX4')
+    SlicerWithSRLatchX4Obj._CalculateDesignParameter(_SRFinger1 = _SRFinger1, _SRFinger2 = _SRFinger2, _SRFinger3 = _SRFinger3, _SRFinger4 = _SRFinger4,
                                   _SRNMOSChannelWidth1 = _SRNMOSChannelWidth1, _SRPMOSChannelWidth1 = _SRPMOSChannelWidth1, _SRNMOSChannelWidth2 = _SRNMOSChannelWidth2, _SRPMOSChannelWidth2 = _SRPMOSChannelWidth2,
                                   _SRNMOSChannelWidth3 = _SRNMOSChannelWidth3, _SRPMOSChannelWidth3 = _SRPMOSChannelWidth3, _SRNMOSChannelWidth4 = _SRNMOSChannelWidth4, _SRPMOSChannelWidth4 = _SRPMOSChannelWidth4,
                                   _SRChannelLength = _SRChannelLength, _SRNPRatio = _SRNPRatio,
@@ -687,11 +687,11 @@ if __name__ == '__main__' :
 
 
 
-    SlicerWithSRLatchXNObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SlicerWithSRLatchXNObj._DesignParameter)
+    SlicerWithSRLatchX4Obj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary = SlicerWithSRLatchX4Obj._DesignParameter)
     _fileName = 'SlicerWithSRLatchX4.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    tmp = SlicerWithSRLatchXNObj._CreateGDSStream(SlicerWithSRLatchXNObj._DesignParameter['_GDSFile']['_GDSFile'])
+    tmp = SlicerWithSRLatchX4Obj._CreateGDSStream(SlicerWithSRLatchX4Obj._DesignParameter['_GDSFile']['_GDSFile'])
 
     tmp.write_binary_gds_stream(testStreamFile)
 

@@ -181,7 +181,7 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
         _SlicerWithSRLatchEdgeinputs['_InvSLVT'] = _InvSLVT
         _SlicerWithSRLatchEdgeinputs['_InvPowerLine'] = _InvPowerLine
 
-
+        _SlicerWithSRLatchEdgeinputs['_SLSRInvSupplyLine'] = None
 
 
 

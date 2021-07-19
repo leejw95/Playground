@@ -82,11 +82,11 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
         print('################################        Supply Generation        #########################################')
         if _SLSRInvSupplyLine == True :
-            _InvPowerLine =False
+            _InvPowerLine = False
             _SLPowerLine = True
             _SRPowerLine = True
 
-        else :
+        elif _SLSRInvSupplyLine == False :
             _InvPowerLine = False
             _SLPowerLine = False
             _SRPowerLine = False

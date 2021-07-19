@@ -40,7 +40,7 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                   _InvSupplyMet1YWidth=None, _InvNumViaPoly2Met1CoX=None, \
                                   _InvNumViaPoly2Met1CoY=None, _InvNumViaPMOSMet12Met2CoX=None,
                                   _InvNumViaPMOSMet12Met2CoY=None, _InvNumViaNMOSMet12Met2CoX=None, \
-                                  _InvNumViaNMOSMet12Met2CoY=None, _InvSLVT=None, _InvSupplyLine=None, _SLSRInvSupplyLine=None
+                                  _InvNumViaNMOSMet12Met2CoY=None, _InvSLVT=None, _InvPowerLine=None, _SLSRInvSupplyLine=None
     )
 
     def __init__(self, _DesignParameter = None, _Name = 'SlicerWithSRLatch'):
@@ -68,7 +68,7 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                   _InvSupplyMet1YWidth=None, _InvNumViaPoly2Met1CoX=None, \
                                   _InvNumViaPoly2Met1CoY=None, _InvNumViaPMOSMet12Met2CoX=None,
                                   _InvNumViaPMOSMet12Met2CoY=None, _InvNumViaNMOSMet12Met2CoX=None, \
-                                  _InvNumViaNMOSMet12Met2CoY=None, _InvSLVT=None, _InvSupplyLine=None, _SLSRInvSupplyLine=None
+                                  _InvNumViaNMOSMet12Met2CoY=None, _InvSLVT=None, _InvPowerLine=None, _SLSRInvSupplyLine=None
                                   ) :
 
 
@@ -82,12 +82,12 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
         print('################################        Supply Generation        #########################################')
         if _SLSRInvSupplyLine == True :
-            _InvSupplyLine =True
+            _InvPowerLine =False
             _SLPowerLine = True
             _SRPowerLine = True
 
         else :
-            _InvSupplyLine = False
+            _InvPowerLine = False
             _SLPowerLine = False
             _SRPowerLine = False
 
@@ -201,7 +201,7 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
         _Inverterinputs['_NumViaNMOSMet12Met2CoX'] = _InvNumViaNMOSMet12Met2CoX
         _Inverterinputs['_NumViaNMOSMet12Met2CoY'] = _InvNumViaNMOSMet12Met2CoY
         _Inverterinputs['_SLVT'] = _InvSLVT
-        _Inverterinputs['_SupplyLine'] = _InvSupplyLine
+        _Inverterinputs['_SupplyLine'] = _InvPowerLine
 
         self._DesignParameter['_Inverter'] = self._SrefElementDeclaration(_DesignObj = Inverter._Inverter(_DesignParameter=None, _Name = "InverterIn{}".format(_Name)))[0]
         self._DesignParameter['_Inverter']['_DesignObj']._CalculateDesignParameter(**_Inverterinputs)
@@ -684,7 +684,7 @@ if __name__ == '__main__' :
     _InvNumViaNMOSMet12Met2CoX = None
     _InvNumViaNMOSMet12Met2CoY = None
     _InvSLVT = True
-    _InvSupplyLine = None
+    _InvPowerLine = None
     _SLSRInvSupplyLine = True
 
 
@@ -709,7 +709,7 @@ if __name__ == '__main__' :
                                   _InvSupplyMet1YWidth=_InvSupplyMet1YWidth, _InvNumViaPoly2Met1CoX=_InvNumViaPoly2Met1CoX, \
                                   _InvNumViaPoly2Met1CoY=_InvNumViaPoly2Met1CoY, _InvNumViaPMOSMet12Met2CoX=_InvNumViaPMOSMet12Met2CoX,
                                   _InvNumViaPMOSMet12Met2CoY=_InvNumViaPMOSMet12Met2CoY, _InvNumViaNMOSMet12Met2CoX=_InvNumViaNMOSMet12Met2CoX, \
-                                  _InvNumViaNMOSMet12Met2CoY=_InvNumViaNMOSMet12Met2CoY, _InvSLVT=_InvSLVT, _InvSupplyLine=_InvSupplyLine, _SLSRInvSupplyLine=_SLSRInvSupplyLine
+                                  _InvNumViaNMOSMet12Met2CoY=_InvNumViaNMOSMet12Met2CoY, _InvSLVT=_InvSLVT, _InvPowerLine=_InvPowerLine, _SLSRInvSupplyLine=_SLSRInvSupplyLine
                                                    )
 
     # SlicerwithSRLatchObj._CalculateDesignParameter(_SRFinger1=10, _SRFinger2=10, _SRFinger3=10, _SRFinger4=10,

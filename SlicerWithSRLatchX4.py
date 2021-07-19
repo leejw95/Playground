@@ -27,7 +27,7 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
                                   _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, _SRNumViaPoly2Met1CoX = None, \
                                   _SRNumViaPoly2Met1CoY = None, _SRNumViaPMOSMet12Met2CoX = None, _SRNumViaPMOSMet12Met2CoY = None, \
                                   _SRNumViaNMOSMet12Met2CoX = None, _SRNumViaNMOSMet12Met2CoY = None, _SRNumViaPMOSMet22Met3CoX = None, _SRNumViaPMOSMet22Met3CoY = None, \
-                                  _SRNumViaNMOSMet22Met3CoX = None, _SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = False,
+                                  _SRNumViaNMOSMet22Met3CoX = None, _SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = None,
                                   _SLCLKinputPMOSFinger1 = None, _SLCLKinputPMOSFinger2 = None, _SLPMOSFinger = None, _SLPMOSChannelWidth = None,
                                     _SLDATAinputNMOSFinger = None, _SLNMOSFinger = None, _SLCLKinputNMOSFinger = None, _SLNMOSChannelWidth = None,
                                     _SLChannelLength = None, _SLDummy = False, _SLSLVT = False, _SLGuardringWidth = None, _SLGuardring = False,
@@ -40,7 +40,7 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
                                     _InvSupplyMet1YWidth=None, _InvNumViaPoly2Met1CoX=None, \
                                     _InvNumViaPoly2Met1CoY=None, _InvNumViaPMOSMet12Met2CoX=None,
                                     _InvNumViaPMOSMet12Met2CoY=None, _InvNumViaNMOSMet12Met2CoX=None, \
-                                _InvNumViaNMOSMet12Met2CoY=None, _InvSLVT=None, _InvSupplyLine=None, _SLSRInvSupplyLineX4=None
+                                _InvNumViaNMOSMet12Met2CoY=None, _InvSLVT=None, _InvPowerLine=None, _SLSRInvSupplyLineX4=None
     )
 
     def __init__(self, _DesignParameter = None, _Name = 'SlicerWithSRLatchX4'):
@@ -56,20 +56,20 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
                                     _SRSupplyMet1XWidth = None, _SRSupplyMet1YWidth = None, _SRNumViaPoly2Met1CoX = None, \
                                     _SRNumViaPoly2Met1CoY = None, _SRNumViaPMOSMet12Met2CoX = None, _SRNumViaPMOSMet12Met2CoY = None, \
                                     _SRNumViaNMOSMet12Met2CoX = None, _SRNumViaNMOSMet12Met2CoY = None, _SRNumViaPMOSMet22Met3CoX = None, _SRNumViaPMOSMet22Met3CoY = None, \
-                                    _SRNumViaNMOSMet22Met3CoX = None, _SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = False,
+                                    _SRNumViaNMOSMet22Met3CoX = None, _SRNumViaNMOSMet22Met3CoY = None, _SRSLVT = None, _SRPowerLine = None,
                                     _SLCLKinputPMOSFinger1 = None, _SLCLKinputPMOSFinger2 = None, _SLPMOSFinger = None, _SLPMOSChannelWidth = None,
                                     _SLDATAinputNMOSFinger = None, _SLNMOSFinger = None, _SLCLKinputNMOSFinger = None, _SLNMOSChannelWidth = None,
                                     _SLChannelLength = None, _SLDummy = False, _SLSLVT = False, _SLGuardringWidth = None, _SLGuardring = False,
                                     _SLSlicerGuardringWidth=None, _SLSlicerGuardring=False,
                                     _SLNumSupplyCOY=None, _SLNumSupplyCOX=None, _SLSupplyMet1XWidth=None, _SLSupplyMet1YWidth=None, _SLVDD2VSSHeight = None,
-                                    _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _SLPowerLine = False, _NumberofSlicerWithSRLatch = None, \
+                                    _SLNumVIAPoly2Met1COX=None, _SLNumVIAPoly2Met1COY=None, _SLNumVIAMet12COX=None, _SLNumVIAMet12COY=None, _SLPowerLine = None, _NumberofSlicerWithSRLatch = None, \
                                   _InvFinger=None, _InvChannelWidth=None, _InvChannelLength=None,
                                   _InvNPRatio=None, _InvVDD2VSSHeight=None, _InvDummy=None, _InvNumSupplyCoX=None,
                                   _InvNumSupplyCoY=None, _InvSupplyMet1XWidth=None,
                                   _InvSupplyMet1YWidth=None, _InvNumViaPoly2Met1CoX=None, \
                                   _InvNumViaPoly2Met1CoY=None, _InvNumViaPMOSMet12Met2CoX=None,
                                   _InvNumViaPMOSMet12Met2CoY=None, _InvNumViaNMOSMet12Met2CoX=None, \
-                                  _InvNumViaNMOSMet12Met2CoY=None, _InvSLVT=None, _InvSupplyLine=None, _SLSRInvSupplyLineX4=None
+                                  _InvNumViaNMOSMet12Met2CoY=None, _InvSLVT=None, _InvPowerLine=None, _SLSRInvSupplyLineX4=None
                                   ) :
 
 
@@ -83,17 +83,19 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
         _DRCObj = DRC.DRC()
         _Name = 'SlicerWithSRLatchX4'
 
+
+        print ('###############################        Supply Generation       #########################################')
+
+
         if _SLSRInvSupplyLineX4 == True :
             _SRPowerLine = True
             _SLPowerLine = False
-            _InvSupplyLine = False
+            _InvPowerLine = False
 
         else :
             _SRPowerLine = False
             _SLPowerLine = False
-            _InvSupplyLine = False
-
-
+            _InvPowerLine = False
 
 
         print ('###############################        SlicerWithSRLatch Generation       #########################################')
@@ -177,7 +179,7 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
         _SlicerWithSRLatchEdgeinputs['_InvNumViaNMOSMet12Met2CoX'] = _InvNumViaNMOSMet12Met2CoX
         _SlicerWithSRLatchEdgeinputs['_InvNumViaNMOSMet12Met2CoY'] = _InvNumViaNMOSMet12Met2CoY
         _SlicerWithSRLatchEdgeinputs['_InvSLVT'] = _InvSLVT
-        _SlicerWithSRLatchEdgeinputs['_InvSupplyLine'] = _InvSupplyLine
+        _SlicerWithSRLatchEdgeinputs['_InvPowerLine'] = _InvPowerLine
 
 
 
@@ -370,7 +372,7 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
             tmp = []
             for i in range(0, _NumberofSlicerWithSRLatch):
                 tmp.append([self._DesignParameter['SlicerWithSRLatchX4']['_XYCoordinates'][i][0] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], \
-                            self._DesignParameter['SlicerWithSRLatchX4']['_XYCoordinates'][i][1] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][1]])
+                            self._DesignParameter['SlicerWithSRLatchX4']['_XYCoordinates'][i][1] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + Ptoptmp])
 
 
             self._DesignParameter['_SupplyLlineMet2VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
@@ -383,9 +385,146 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
             self._DesignParameter['_SupplyLlineMet3VDD']['_YWidth'] = _SLGuardringWidth
             self._DesignParameter['_SupplyLlineMet3VDD']['_XYCoordinates'] = tmp
 
+            del tmp
+
+
+            _ViaNumVDDX12 = int((self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] -
+                     self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
+            _ViaNumVDDX23 = int((self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] -
+                     self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
+
+            if _ViaNumVDDX12 < 1:
+                _ViaNumVDDX12 = 1
+            if _ViaNumVDDX23 < 1:
+                _ViaNumVDDX23 = 1
+
+            _ViaNumVDDY12 = int(_SLGuardringWidth // (
+                    _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVDDY23 = int(_SLGuardringWidth // (
+                    _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+
+            if _ViaNumVDDY12 < 1:
+                _ViaNumVDDY12 = 1
+            if _ViaNumVDDY23 < 1:
+                _ViaNumVDDY23 = 1
 
 
 
+            _ViaVDDMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+            _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVDDX12
+            _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOY'] = _ViaNumVDDY12
+            self._DesignParameter['_ViaMet12Met2VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2VDDIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet12Met2VDD']['_DesignObj']._CalculateViaMet12Met2DesignParameter(**_ViaVDDMet12Met2)
+            self._DesignParameter['_ViaMet12Met2VDD']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet2VDD']['_XYCoordinates']
+
+            _ViaVDDMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+            _ViaVDDMet22Met3['_ViaMet22Met3NumberOfCOX'] = _ViaNumVDDX23
+            _ViaVDDMet22Met3['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY23
+            self._DesignParameter['_ViaMet22Met3VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3VDDIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet22Met3VDD']['_DesignObj']._CalculateViaMet22Met3DesignParameter(**_ViaVDDMet22Met3)
+            self._DesignParameter['_ViaMet22Met3VDD']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet2VDD']['_XYCoordinates']
+
+
+
+            tmp = []
+            tmp.append([self._DesignParameter['SlicerWithSRLatchX4']['_XYCoordinates'][_NumberofSlicerWithSRLatch-1][0] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], \
+                            self._DesignParameter['SlicerWithSRLatchX4']['_XYCoordinates'][_NumberofSlicerWithSRLatch-1][1] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][1]])
+
+
+            self._DesignParameter['_SupplyLineMet2VSS1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_SupplyLineMet2VSS1']['_XWidth'] = self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XWidth']
+            self._DesignParameter['_SupplyLineMet2VSS1']['_YWidth'] = self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_YWidth']
+            self._DesignParameter['_SupplyLineMet2VSS1']['_XYCoordinates'] = tmp
+
+            self._DesignParameter['_SupplyLineMet3VSS1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_SupplyLineMet3VSS1']['_XWidth'] = self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XWidth']
+            self._DesignParameter['_SupplyLineMet3VSS1']['_YWidth'] = self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_YWidth']
+            self._DesignParameter['_SupplyLineMet3VSS1']['_XYCoordinates'] = tmp
+
+            del tmp
+
+
+            _ViaNumVSSX12 = int(self._DesignParameter['_SupplyLineMet2VSS1']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
+            _ViaNumVSSX23 = int(self._DesignParameter['_SupplyLineMet3VSS1']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
+
+            if _ViaNumVSSX12 < 1:
+                _ViaNumVSSX12 = 1
+            if _ViaNumVSSX23 < 1:
+                _ViaNumVSSX23 = 1
+
+
+            _ViaNumVSSY12 = int(self._DesignParameter['_SupplyLineMet2VSS1']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVSSY23 = int(self._DesignParameter['_SupplyLineMet3VSS1']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+
+            if _ViaNumVSSY12 < 1:
+                _ViaNumVSSY12 = 1
+            if _ViaNumVSSY23 < 1:
+                _ViaNumVSSY23 = 1
+
+
+            _ViaVSSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVSSX12
+            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = _ViaNumVSSY12
+            self._DesignParameter['_ViaMet12Met2VSS1'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2VSS1In{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet12Met2VSS1']['_DesignObj']._CalculateViaMet12Met2DesignParameter(**_ViaVSSMet12Met2)
+            self._DesignParameter['_ViaMet12Met2VSS1']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS1']['_XYCoordinates']
+
+            _ViaVSSMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX23
+            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] = _ViaNumVSSY23
+            self._DesignParameter['_ViaMet22Met3VSS1'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3VSS1In{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet22Met3VSS1']['_DesignObj']._CalculateViaMet22Met3DesignParameter(**_ViaVSSMet22Met3)
+            self._DesignParameter['_ViaMet22Met3VSS1']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS1']['_XYCoordinates']
+
+
+            tmp = []
+            tmp.append([self._DesignParameter['SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], \
+                            self._DesignParameter['SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + Gtoptmp])
+
+            self._DesignParameter['_SupplyLineMet2VSS2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_SupplyLineMet2VSS2']['_XWidth'] = self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XWidth']
+            self._DesignParameter['_SupplyLineMet2VSS2']['_YWidth'] = _SLGuardringWidth
+            self._DesignParameter['_SupplyLineMet2VSS2']['_XYCoordinates'] = tmp
+
+            self._DesignParameter['_SupplyLineMet3VSS2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_SupplyLineMet3VSS2']['_XWidth'] = self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringVSS']['_XWidth']
+            self._DesignParameter['_SupplyLineMet3VSS2']['_YWidth'] = _SLGuardringWidth
+            self._DesignParameter['_SupplyLineMet3VSS2']['_XYCoordinates'] = tmp
+
+            del tmp
+
+
+            _ViaNumVSSX12 = int(self._DesignParameter['_SupplyLineMet2VSS2']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
+            _ViaNumVSSX23 = int(self._DesignParameter['_SupplyLineMet3VSS2']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
+
+            if _ViaNumVSSX12 < 1:
+                _ViaNumVSSX12 = 1
+            if _ViaNumVSSX23 < 1:
+                _ViaNumVSSX23 = 1
+
+
+            _ViaNumVSSY12 = int(self._DesignParameter['_SupplyLineMet2VSS2']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumVSSY23 = int(self._DesignParameter['_SupplyLineMet3VSS2']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+
+            if _ViaNumVSSY12 < 1:
+                _ViaNumVSSY12 = 1
+            if _ViaNumVSSY23 < 1:
+                _ViaNumVSSY23 = 1
+
+
+            _ViaVSSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVSSX12
+            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = _ViaNumVSSY12
+            self._DesignParameter['_ViaMet12Met2VSS2'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2VSS2In{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet12Met2VSS2']['_DesignObj']._CalculateViaMet12Met2DesignParameter(**_ViaVSSMet12Met2)
+            self._DesignParameter['_ViaMet12Met2VSS2']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS2']['_XYCoordinates']
+
+            _ViaVSSMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX23
+            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] = _ViaNumVSSY23
+            self._DesignParameter['_ViaMet22Met3VSS2'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3VSS2In{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet22Met3VSS2']['_DesignObj']._CalculateViaMet22Met3DesignParameter(**_ViaVSSMet22Met3)
+            self._DesignParameter['_ViaMet22Met3VSS2']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS2']['_XYCoordinates']
 
 
 
@@ -470,7 +609,7 @@ if __name__ == '__main__' :
     _InvNumViaNMOSMet12Met2CoX = None
     _InvNumViaNMOSMet12Met2CoY = None
     _InvSLVT = True
-    _InvSupplyLine = None
+    _InvPowerLine = None
     _SLSRInvSupplyLineX4 = True
 
 
@@ -504,7 +643,7 @@ if __name__ == '__main__' :
                                                      _InvNumViaPMOSMet12Met2CoY=_InvNumViaPMOSMet12Met2CoY,
                                                      _InvNumViaNMOSMet12Met2CoX=_InvNumViaNMOSMet12Met2CoX, \
                                                      _InvNumViaNMOSMet12Met2CoY=_InvNumViaNMOSMet12Met2CoY,
-                                                     _InvSLVT=_InvSLVT, _InvSupplyLine=_InvSupplyLine, _SLSRInvSupplyLineX4=_SLSRInvSupplyLineX4
+                                                     _InvSLVT=_InvSLVT, _InvPowerLine=_InvPowerLine, _SLSRInvSupplyLineX4=_SLSRInvSupplyLineX4
 
                                                      )
 

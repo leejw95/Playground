@@ -267,6 +267,12 @@ class SlicerWithSRLatchXNObj (StickDiagram._StickDiagram) :
         Guardring_bottom = self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _SLGuardringWidth/2 - _GuardRingRX2RXSpace - _SLSlicerGuardringWidth/2
         GuardringHeight = Guardring_top - Guardring_bottom
 
+        self._DesignParameter['_GuardringHeight']= {'_Ignore': GuardringHeight, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+        self._DesignParameter['_PMOS_toptmp']= {'_Ignore': PMOS_toptmp, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+        self._DesignParameter['_NMOS_bottomtmp']= {'_Ignore': NMOS_bottomtmp, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+        self._DesignParameter['_Guardring_top']= {'_Ignore': Guardring_top, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+        self._DesignParameter['_Guardring_bottom']= {'_Ignore': Guardring_bottom, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+
         _VDD2VSSHeightAtOneSide = self._DesignParameter['SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]
 
         tmp = []

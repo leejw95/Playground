@@ -1894,8 +1894,8 @@ if __name__ == '__main__':
     _CLKinputPMOSFinger2 = 3
     _PMOSFinger = 2
     _PMOSChannelWidth = 1000
-    _DATAinputNMOSFinger = 1
-    _NMOSFinger = 1
+    _DATAinputNMOSFinger = 12
+    _NMOSFinger = 2
     _CLKinputNMOSFinger = 8
     _NMOSChannelWidth = 1000
     _ChannelLength = 30

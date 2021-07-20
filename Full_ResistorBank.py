@@ -903,12 +903,18 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                                         j * _ResistorSpaceY]],
                         _Mag = 0.5, _Angle=0, _TEXT='SB<{0}>'.format(i + _XRBNum * j))
                     
+        tmp = []
+        for i in range (len(self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'])) :
+            tmp.append([(self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][1][0] - self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][0]) // 2,
+                                        self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1]])
+        
         
         self._DesignParameter['_VRXpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1],
                         _Presentation=[0,1,2], _Reflect=[0,0,0], 
-                        _XYCoordinates=[[_ResistorBankOrigin[0][0] + (self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][1][0] - self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][0]) // 2,
-                                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][1]]],
+                        _XYCoordinates=tmp,
                         _Mag = 0.5, _Angle=0, _TEXT='VRX')
+
+        del tmp
 
         self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1],
                         _Presentation=[0,1,2], _Reflect=[0,0,0], 
@@ -922,11 +928,17 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                                         self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'][0][0][1]]],
                         _Mag = 0.5, _Angle=0, _TEXT='VSS')
 
+        tmp = []
+        for i in range (len(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'])) :
+            tmp.append([(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][i][1][0] - self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][i][0][0]) // 2,
+                                        self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][i][0][1]])
+
         self._DesignParameter['_VCMpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1],
                         _Presentation=[0,1,2], _Reflect=[0,0,0], 
-                        _XYCoordinates=[[(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][0][1][0] - self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][0][0][0]) // 2,
-                                        self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][0][0][1]]],
+                        _XYCoordinates=tmp,
                         _Mag = 0.5, _Angle=0, _TEXT='VCM')
+
+        del tmp
         
         
         

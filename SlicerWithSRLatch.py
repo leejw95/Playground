@@ -451,7 +451,7 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
 
         _ViaMet32Met4forCLKInput = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-        _ViaMet32Met4forCLKInput['_ViaMet32Met4NumberOfCOX'] = (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][-1][0] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0]) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)
+        _ViaMet32Met4forCLKInput['_ViaMet32Met4NumberOfCOX'] = (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][-1][0] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0]) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) + 4
         _ViaMet32Met4forCLKInput['_ViaMet32Met4NumberOfCOY'] = 1
 
         self._DesignParameter['_ViaMet32Met4forCLKInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4forCLKInputIn{}'.format(_Name)))[0]
@@ -460,13 +460,34 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                                                                 self._DesignParameter['_Inverter']['_XYCoordinates'][0][1] + (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][1][1]) / 2]]
 
         _ViaMet42Met5forCLKInput = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-        _ViaMet42Met5forCLKInput['_ViaMet42Met5NumberOfCOX'] = (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][-1][0] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0]) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)
+        _ViaMet42Met5forCLKInput['_ViaMet42Met5NumberOfCOX'] = (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][-1][0] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0]) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) + 4
         _ViaMet42Met5forCLKInput['_ViaMet42Met5NumberOfCOY'] = 1
 
         self._DesignParameter['_ViaMet42Met5forCLKInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name='ViaMet42Met5forCLKInputIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet42Met5forCLKInput']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureY(**_ViaMet42Met5forCLKInput)
         self._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'] = [[self._DesignParameter['_Inverter']['_XYCoordinates'][0][0] + (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][1][0]) / 2, \
                                                                                 self._DesignParameter['_Inverter']['_XYCoordinates'][0][1] + (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][1][1]) / 2]]
+
+
+        _ViaMet52Met6forCLKInput = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
+        _ViaMet52Met6forCLKInput['_ViaMet52Met6NumberOfCOX'] = (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][-1][0] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0]) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) + 4
+        _ViaMet52Met6forCLKInput['_ViaMet52Met6NumberOfCOY'] = 1
+
+        self._DesignParameter['_ViaMet52Met6forCLKInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None, _Name='ViaMet52Met6forCLKInputIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet52Met6forCLKInput']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureY(**_ViaMet52Met6forCLKInput)
+        self._DesignParameter['_ViaMet52Met6forCLKInput']['_XYCoordinates'] = [[self._DesignParameter['_Inverter']['_XYCoordinates'][0][0] + (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][1][0]) / 2, \
+                                                                                self._DesignParameter['_Inverter']['_XYCoordinates'][0][1] + (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][1][1]) / 2]]
+
+        _ViaMet62Met7forCLKInput = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
+        _ViaMet62Met7forCLKInput['_ViaMet62Met7NumberOfCOX'] = (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][-1][0] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0]) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) + 4
+        _ViaMet62Met7forCLKInput['_ViaMet62Met7NumberOfCOY'] = 1
+
+        self._DesignParameter['_ViaMet62Met7forCLKInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name='ViaMet62Met7forCLKInputIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet62Met7forCLKInput']['_DesignObj']._CalculateViaMet62Met7DesignParameterMinimumEnclosureY(**_ViaMet62Met7forCLKInput)
+        self._DesignParameter['_ViaMet62Met7forCLKInput']['_XYCoordinates'] = [[self._DesignParameter['_Inverter']['_XYCoordinates'][0][0] + (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][0] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][1][0]) / 2, \
+                                                                                self._DesignParameter['_Inverter']['_XYCoordinates'][0][1] + (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'][0][1][1]) / 2]]
+
+
 
 
         # self._DesignParameter['_Met5forShieldingSRInput'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _Width=400)

@@ -551,7 +551,7 @@ class SlicerWithSRLatchX4Obj (StickDiagram._StickDiagram) :
 
 if __name__ == '__main__' :
     DesignParameters._Technology = '028nm'
-
+    #####################SRLatch#######################
     _SRFinger1 = 5
     _SRFinger2 = 1
     _SRFinger3 = 2
@@ -584,6 +584,7 @@ if __name__ == '__main__' :
     _SRNumViaNMOSMet22Met3CoY = None
     _SRSLVT = True
     _SRPowerLine = None
+    #####################Slicer#######################
     _SLCLKinputPMOSFinger1 = 6
     _SLCLKinputPMOSFinger2 = 3
     _SLPMOSFinger = 2
@@ -610,6 +611,7 @@ if __name__ == '__main__' :
     _SLNumVIAMet12COY = None
     _SLPowerLine = None
     _N = 4
+    #####################Inverter#######################
     _InvFinger = 16
     _InvChannelWidth = 200
     _InvChannelLength = 30
@@ -628,6 +630,7 @@ if __name__ == '__main__' :
     _InvNumViaNMOSMet12Met2CoY = None
     _InvSLVT = True
     _InvPowerLine = None
+    #####################Power#######################
     _SLSRInvSupplyLineX4 = True
 
 

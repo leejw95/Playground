@@ -545,6 +545,102 @@ class SlicerWithSRLatchX4Obj (StickDiagram._StickDiagram) :
             self._DesignParameter['_ViaMet22Met3VSS2']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS2']['_XYCoordinates']
 
 
+        print ('#################################       Clock Routing      #########################################')
+        self._DesignParameter['_Met6RoutingCLK0'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=400)
+        self._DesignParameter['_Met6RoutingCLK90'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=400)
+        self._DesignParameter['_Met6RoutingCLK180'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=400)
+        self._DesignParameter['_Met6RoutingCLK270'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=400)
+
+        self._DesignParameter['_Met7RoutingCLK0'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=400)
+        self._DesignParameter['_Met7RoutingCLK90'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=400)
+        self._DesignParameter['_Met7RoutingCLK180'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=400)
+        self._DesignParameter['_Met7RoutingCLK270'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=400)
+
+        _CLKRoutingMetThickness = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_XWidth']
+        _Cen2CenBtwMet = _CLKRoutingMetThickness + _DRCObj._MetalxMinSpace11
+
+        self._DesignParameter['_Met6RoutingCLK0']['_Width'] = _CLKRoutingMetThickness
+        self._DesignParameter['_Met6RoutingCLK90']['_Width'] = _CLKRoutingMetThickness
+        self._DesignParameter['_Met6RoutingCLK180']['_Width'] = _CLKRoutingMetThickness
+        self._DesignParameter['_Met6RoutingCLK270']['_Width'] = _CLKRoutingMetThickness
+
+        self._DesignParameter['_Met7RoutingCLK0']['_Width'] = _CLKRoutingMetThickness
+        self._DesignParameter['_Met7RoutingCLK90']['_Width'] = _CLKRoutingMetThickness
+        self._DesignParameter['_Met7RoutingCLK180']['_Width'] = _CLKRoutingMetThickness
+        self._DesignParameter['_Met7RoutingCLK270']['_Width'] = _CLKRoutingMetThickness
+
+
+        _MidofCLKIn0_90 = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1] + (self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][1]) / 2
+        _MidofCLKIn180_270 = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1] + (self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][1]) / 2
+        _MidofCLKIn0_270 = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1] + (self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][1]) / 2
+
+
+
+        self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'] = [[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0] - self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_DesignObj']._DesignParameter['_Met5Layer']['_XWidth'] / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]], \
+                                                                        [self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 + _DRCObj._MetalxMinSpace11 + _CLKRoutingMetThickness / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]]
+
+        self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'] = [[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0] - self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_DesignObj']._DesignParameter['_Met5Layer']['_XWidth'] / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]], \
+                                                                        [self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 + _DRCObj._MetalxMinSpace11 + _CLKRoutingMetThickness / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]]
+
+        self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'] = [[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0] - self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_DesignObj']._DesignParameter['_Met5Layer']['_XWidth'] / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]], \
+                                                                        [self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 + _DRCObj._MetalxMinSpace11 + _CLKRoutingMetThickness / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]]
+
+        self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'] = [[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0] - self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_DesignObj']._DesignParameter['_Met5Layer']['_XWidth'] / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]], \
+                                                                        [self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 + _DRCObj._MetalxMinSpace11 + _CLKRoutingMetThickness / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]]
+
+
+        self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'] = [[self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'][0][1], \
+                                                                       [self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'][0][1][0], _MidofCLKIn0_90 + _DRCObj._MetalxMinSpace11 / 2 + _CLKRoutingMetThickness / 2]]]
+
+        self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'] = [[self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'][0][1], \
+                                                                        [self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'][0][1][0], _MidofCLKIn0_90 - _DRCObj._MetalxMinSpace11 / 2 - _CLKRoutingMetThickness / 2]]]
+
+        self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'] = [[self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'][0][1], \
+                                                                         [self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'][0][1][0], _MidofCLKIn180_270 + _DRCObj._MetalxMinSpace11 / 2 + _CLKRoutingMetThickness / 2]]]
+
+        self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'] = [[self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'][0][1], \
+                                                                         [self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'][0][1][0], _MidofCLKIn180_270 - _DRCObj._MetalxMinSpace11 / 2 - _CLKRoutingMetThickness / 2]]]
+
+
+        self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'].append([[self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][0][1][0], self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][0][1][1]], [self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][0][1][0] + 2 * _Cen2CenBtwMet, self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][0][1][1]]])
+        self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'].append([[self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][0][1][0], self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][0][1][1]], [self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][0][1][0] + _Cen2CenBtwMet, self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][0][1][1]]])
+        self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'].append([[self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][0][1][0], self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][0][1][1]], [self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][0][1][0] + _Cen2CenBtwMet, self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][0][1][1]]])
+        self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'].append([[self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][0][1][0], self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][0][1][1]], [self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][0][1][0] + 2 * _Cen2CenBtwMet, self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][0][1][1]]])
+
+        self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'].append([[self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'][-1][1][0], self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'][-1][1][1] + _CLKRoutingMetThickness / 2], [self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'][-1][1][0], _MidofCLKIn0_270 + _Cen2CenBtwMet / 2 + _Cen2CenBtwMet]])
+        self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'].append([[self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'][-1][1][0], self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'][-1][1][1] + _CLKRoutingMetThickness / 2], [self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'][-1][1][0], _MidofCLKIn0_270 + _Cen2CenBtwMet / 2]])
+        self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'].append([[self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'][-1][1][0], self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'][-1][1][1] - _CLKRoutingMetThickness / 2], [self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'][-1][1][0], _MidofCLKIn0_270 - _Cen2CenBtwMet / 2]])
+        self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'].append([[self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'][-1][1][0], self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'][-1][1][1] - _CLKRoutingMetThickness / 2], [self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'][-1][1][0], _MidofCLKIn0_270 - _Cen2CenBtwMet / 2 - _Cen2CenBtwMet]])
+
+        self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'].append([[self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][-1][1][0], self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][-1][1][1]], [self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][-1][1][0] + _Cen2CenBtwMet, self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][-1][1][1]]])
+        self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'].append([[self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][-1][1][0], self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][-1][1][1]], [self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][-1][1][0] + 2 * _Cen2CenBtwMet, self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][-1][1][1]]])
+        self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'].append([[self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][-1][1][0], self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][-1][1][1]], [self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][-1][1][0] + 2 * _Cen2CenBtwMet, self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][-1][1][1]]])
+        self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'].append([[self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][-1][1][0], self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][-1][1][1]], [self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][-1][1][0] + _Cen2CenBtwMet, self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][-1][1][1]]])
+
+        _ViaMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
+        _ViaMet62Met7['_ViaMet62Met7NumberOfCOX'] = 2
+        _ViaMet62Met7['_ViaMet62Met7NumberOfCOY'] = 2
+        self._DesignParameter['_ViaMet62Met7'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name='ViaMet62Met7In{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet62Met7']['_DesignObj']._CalculateViaMet62Met7DesignParameter(**_ViaMet62Met7)
+
+        tmp = []
+        for i in range(0, len(self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates']) - 1) :
+            tmp.append(self._DesignParameter['_Met7RoutingCLK0']['_XYCoordinates'][i][1])
+            tmp.append(self._DesignParameter['_Met7RoutingCLK90']['_XYCoordinates'][i][1])
+            tmp.append(self._DesignParameter['_Met7RoutingCLK180']['_XYCoordinates'][i][1])
+            tmp.append(self._DesignParameter['_Met7RoutingCLK270']['_XYCoordinates'][i][1])
+
+        for i in range(0, len(self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'])) :
+            tmp.append(self._DesignParameter['_Met6RoutingCLK0']['_XYCoordinates'][i][1])
+            tmp.append(self._DesignParameter['_Met6RoutingCLK90']['_XYCoordinates'][i][1])
+            tmp.append(self._DesignParameter['_Met6RoutingCLK180']['_XYCoordinates'][i][1])
+            tmp.append(self._DesignParameter['_Met6RoutingCLK270']['_XYCoordinates'][i][1])
+
+
+        self._DesignParameter['_ViaMet62Met7']['_XYCoordinates'] = tmp
+
+        del tmp
+
 
 
 

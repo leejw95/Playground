@@ -1445,31 +1445,31 @@ class _Slicer(StickDiagram._StickDiagram):
                 Ptoptmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][1]
                 Gtoptmp = self._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][0][1]
 
-                self._DesignParameter['_SupplyLlineMet2VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                self._DesignParameter['_SupplyLlineMet2VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
-                self._DesignParameter['_SupplyLlineMet2VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                self._DesignParameter['_SupplyLlineMet2VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] ###[[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                self._DesignParameter['_SupplyLineMet2VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+                self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
+                self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
+                self._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] ###[[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
-                self._DesignParameter['_SupplyLlineMet3VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                self._DesignParameter['_SupplyLlineMet3VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
-                self._DesignParameter['_SupplyLlineMet3VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                self._DesignParameter['_SupplyLlineMet3VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                self._DesignParameter['_SupplyLineMet3VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+                self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
+                self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
+                self._DesignParameter['_SupplyLineMet3VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
-                # self._DesignParameter['_SupplyLlineMet4VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                # self._DesignParameter['_SupplyLlineMet4VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
-                # self._DesignParameter['_SupplyLlineMet4VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                # self._DesignParameter['_SupplyLlineMet4VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                # self._DesignParameter['_SupplyLineMet4VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+                # self._DesignParameter['_SupplyLineMet4VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
+                # self._DesignParameter['_SupplyLineMet4VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
+                # self._DesignParameter['_SupplyLineMet4VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
                 #
-                # self._DesignParameter['_SupplyLlineMet5VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                # self._DesignParameter['_SupplyLlineMet5VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
-                # self._DesignParameter['_SupplyLlineMet5VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                # self._DesignParameter['_SupplyLlineMet5VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                # self._DesignParameter['_SupplyLineMet5VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+                # self._DesignParameter['_SupplyLineMet5VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
+                # self._DesignParameter['_SupplyLineMet5VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
+                # self._DesignParameter['_SupplyLineMet5VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
 
-                _ViaNumVSSX12 = int(self._DesignParameter['_SupplyLlineMet2VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
-                _ViaNumVSSX23 = int(self._DesignParameter['_SupplyLlineMet3VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
-                # _ViaNumVSSX34 = int(self._DesignParameter['_SupplyLlineMet4VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
-                # _ViaNumVSSX45 = int(self._DesignParameter['_SupplyLlineMet5VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
+                _ViaNumVSSX12 = int(self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
+                _ViaNumVSSX23 = int(self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
+                # _ViaNumVSSX34 = int(self._DesignParameter['_SupplyLineMet4VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
+                # _ViaNumVSSX45 = int(self._DesignParameter['_SupplyLineMet5VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
 
                 if _ViaNumVSSX12 < 1 :
                     _ViaNumVSSX12 = 1
@@ -1480,10 +1480,10 @@ class _Slicer(StickDiagram._StickDiagram):
                 # if _ViaNumVSSX45 < 1 :
                 #     _ViaNumVSSX45 = 1
 
-                _ViaNumVSSY12 = int(self._DesignParameter['_SupplyLlineMet2VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
-                _ViaNumVSSY23 = int(self._DesignParameter['_SupplyLlineMet3VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
-                # _ViaNumVSSY34 = int(self._DesignParameter['_SupplyLlineMet4VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
-                # _ViaNumVSSY45 = int(self._DesignParameter['_SupplyLlineMet5VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                _ViaNumVSSY12 = int(self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                _ViaNumVSSY23 = int(self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                # _ViaNumVSSY34 = int(self._DesignParameter['_SupplyLineMet4VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                # _ViaNumVSSY45 = int(self._DesignParameter['_SupplyLineMet5VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
 
                 if _ViaNumVSSY12 < 1 :
                     _ViaNumVSSY12 = 1
@@ -1500,28 +1500,28 @@ class _Slicer(StickDiagram._StickDiagram):
                 _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = _ViaNumVSSY12
                 self._DesignParameter['_ViaMet12Met2VSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name = 'ViaMet12Met2VSSIn{}'.format(_Name)))[0]
                 self._DesignParameter['_ViaMet12Met2VSS']['_DesignObj']._CalculateViaMet12Met2DesignParameter(**_ViaVSSMet12Met2)
-                self._DesignParameter['_ViaMet12Met2VSS']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet2VSS']['_XYCoordinates']
+                self._DesignParameter['_ViaMet12Met2VSS']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates']
 
                 _ViaVSSMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
                 _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX23
                 _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] = _ViaNumVSSY23
                 self._DesignParameter['_ViaMet22Met3VSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name = 'ViaMet22Met3VSSIn{}'.format(_Name)))[0]
                 self._DesignParameter['_ViaMet22Met3VSS']['_DesignObj']._CalculateViaMet22Met3DesignParameter(**_ViaVSSMet22Met3)
-                self._DesignParameter['_ViaMet22Met3VSS']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet2VSS']['_XYCoordinates']
+                self._DesignParameter['_ViaMet22Met3VSS']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates']
 
                 # _ViaVSSMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
                 # _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX34
                 # _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] = _ViaNumVSSY34
                 # self._DesignParameter['_ViaMet32Met4VSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met4VSSIn{}'.format(_Name)))[0]
                 # self._DesignParameter['_ViaMet32Met4VSS']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVSSMet32Met4)
-                # self._DesignParameter['_ViaMet32Met4VSS']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet2VSS']['_XYCoordinates']
+                # self._DesignParameter['_ViaMet32Met4VSS']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates']
                 #
                 # _ViaVSSMet42Met5 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
                 # _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX45
                 # _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOY'] = _ViaNumVSSY45
                 # self._DesignParameter['_ViaMet42Met5VSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met5VSSIn{}'.format(_Name)))[0]
                 # self._DesignParameter['_ViaMet42Met5VSS']['_DesignObj']._CalculateViaMet42Met5DesignParameter(**_ViaVSSMet42Met5)
-                # self._DesignParameter['_ViaMet42Met5VSS']['_XYCoordinates'] = self._DesignParameter['_SupplyLlineMet2VSS']['_XYCoordinates']
+                # self._DesignParameter['_ViaMet42Met5VSS']['_XYCoordinates'] = self._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates']
 
 
 
@@ -1540,15 +1540,15 @@ class _Slicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_SupplyLineMet3VDD']['_YWidth'] = _GuardringWidth
                 self._DesignParameter['_SupplyLineMet3VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
-                # self._DesignParameter['_SupplyLlineMet4VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                # self._DesignParameter['_SupplyLlineMet4VDD']['_XWidth'] = _LengthofSupplyLine
-                # self._DesignParameter['_SupplyLlineMet4VDD']['_YWidth'] = _GuardringWidth
-                # self._DesignParameter['_SupplyLlineMet4VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                # self._DesignParameter['_SupplyLineMet4VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+                # self._DesignParameter['_SupplyLineMet4VDD']['_XWidth'] = _LengthofSupplyLine
+                # self._DesignParameter['_SupplyLineMet4VDD']['_YWidth'] = _GuardringWidth
+                # self._DesignParameter['_SupplyLineMet4VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
                 #
-                # self._DesignParameter['_SupplyLlineMet5VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                # self._DesignParameter['_SupplyLlineMet5VDD']['_XWidth'] = _LengthofSupplyLine
-                # self._DesignParameter['_SupplyLlineMet5VDD']['_YWidth'] = _GuardringWidth
-                # self._DesignParameter['_SupplyLlineMet5VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
+                # self._DesignParameter['_SupplyLineMet5VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+                # self._DesignParameter['_SupplyLineMet5VDD']['_XWidth'] = _LengthofSupplyLine
+                # self._DesignParameter['_SupplyLineMet5VDD']['_YWidth'] = _GuardringWidth
+                # self._DesignParameter['_SupplyLineMet5VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
                 _ViaNumVDDX12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
                         _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2

@@ -41,62 +41,66 @@ class _Inverter(StickDiagram._StickDiagram):
         _Name = 'Inverter'
 
         # _NMOS Generation ---------------------------------------------------------------------------------------------
-        _NMOSparameters = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
-        _NMOSparameters['_NMOSNumberofGate'] = _Finger
-        _NMOSparameters['_NMOSChannelWidth'] = _ChannelWidth
-        _NMOSparameters['_NMOSChannellength'] = _ChannelLength
-        _NMOSparameters['_NMOSDummy'] = _Dummy
-        _NMOSparameters['_SLVT'] = _SLVT
+        NMOSparameters = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
+        NMOSparameters['_NMOSNumberofGate'] = _Finger
+        NMOSparameters['_NMOSChannelWidth'] = _ChannelWidth
+        NMOSparameters['_NMOSChannellength'] = _ChannelLength
+        NMOSparameters['_NMOSDummy'] = _Dummy
+        NMOSparameters['_SLVT'] = _SLVT
 
         self._DesignParameter['_NMOS'] = \
             self._SrefElementDeclaration(_DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None,
                                                                         _Name='NMOSIn{}'.format(_Name)))[0]
-        self._DesignParameter['_NMOS']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOSparameters)
+        self._DesignParameter['_NMOS']['_DesignObj']._CalculateNMOSDesignParameter(**NMOSparameters)
+        del NMOSparameters
 
         # _PMOS Generation ---------------------------------------------------------------------------------------------
-        _PMOSparameters = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
-        _PMOSparameters['_PMOSNumberofGate'] = _Finger
-        _PMOSparameters['_PMOSChannelWidth'] = round(_ChannelWidth * _NPRatio)
-        _PMOSparameters['_PMOSChannellength'] = _ChannelLength
-        _PMOSparameters['_PMOSDummy'] = _Dummy
-        _PMOSparameters['_SLVT'] = _SLVT
+        PMOSparameters = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
+        PMOSparameters['_PMOSNumberofGate'] = _Finger
+        PMOSparameters['_PMOSChannelWidth'] = round(_ChannelWidth * _NPRatio)
+        PMOSparameters['_PMOSChannellength'] = _ChannelLength
+        PMOSparameters['_PMOSDummy'] = _Dummy
+        PMOSparameters['_SLVT'] = _SLVT
 
         self._DesignParameter['_PMOS'] = \
             self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None,
                                                                         _Name='PMOSIn{}'.format(_Name)))[0]
-        self._DesignParameter['_PMOS']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOSparameters)
+        self._DesignParameter['_PMOS']['_DesignObj']._CalculatePMOSDesignParameter(**PMOSparameters)
+        del PMOSparameters
 
         # VDD Generation -----------------------------------------------------------------------------------------------
         _ContactNum = _NumSupplyCoX
         if _ContactNum == None:
-            _ContactNum = int((self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1
+            xWidthOfPMOS = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']
+            _ContactNum = int(xWidthOfPMOS // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1
         if _ContactNum < 2:
             _ContactNum = 2
 
         if _NumSupplyCoY == None:
             _NumSupplyCoY = 1
 
-        _Nbodyinputs = copy.deepcopy(NbodyContact._NbodyContact._ParametersForDesignCalculation)
-        _Nbodyinputs['_NumberOfNbodyCOX'] = _ContactNum
-        _Nbodyinputs['_NumberOfNbodyCOY'] = _NumSupplyCoY
-        _Nbodyinputs['_Met1XWidth'] = _SupplyMet1XWidth
-        _Nbodyinputs['_Met1YWidth'] = _SupplyMet1YWidth
+        NbodyParameters = copy.deepcopy(NbodyContact._NbodyContact._ParametersForDesignCalculation)
+        NbodyParameters['_NumberOfNbodyCOX'] = _ContactNum
+        NbodyParameters['_NumberOfNbodyCOY'] = _NumSupplyCoY
+        NbodyParameters['_Met1XWidth'] = _SupplyMet1XWidth
+        NbodyParameters['_Met1YWidth'] = _SupplyMet1YWidth
 
         self._DesignParameter['NbodyContact'] = self._SrefElementDeclaration(_DesignObj=NbodyContact._NbodyContact(_DesignParameter=None,
                                                                                                                    _Name='NbodyContactIn{}'.format(_Name)))[0]
-        self._DesignParameter['NbodyContact']['_DesignObj']._CalculateNbodyContactDesignParameter(**_Nbodyinputs)
-
+        self._DesignParameter['NbodyContact']['_DesignObj']._CalculateNbodyContactDesignParameter(**NbodyParameters)
+        del NbodyParameters
 
         #####################################VSS Generation######################################
-        _Pbodyinputs = copy.deepcopy(PbodyContact._PbodyContact._ParametersForDesignCalculation)
-        _Pbodyinputs['_NumberOfPbodyCOX'] = _ContactNum
-        _Pbodyinputs['_NumberOfPbodyCOY'] = _NumSupplyCoY
-        _Pbodyinputs['_Met1XWidth'] = _SupplyMet1XWidth
-        _Pbodyinputs['_Met1YWidth'] = _SupplyMet1YWidth
+        PbodyParameters = copy.deepcopy(PbodyContact._PbodyContact._ParametersForDesignCalculation)
+        PbodyParameters['_NumberOfPbodyCOX'] = _ContactNum
+        PbodyParameters['_NumberOfPbodyCOY'] = _NumSupplyCoY
+        PbodyParameters['_Met1XWidth'] = _SupplyMet1XWidth
+        PbodyParameters['_Met1YWidth'] = _SupplyMet1YWidth
 
         self._DesignParameter['PbodyContact'] = self._SrefElementDeclaration(_DesignObj=PbodyContact._PbodyContact(_DesignParameter=None,
                                                                                                                    _Name='PbodyContactIn{}'.format(_Name)))[0]
-        self._DesignParameter['PbodyContact']['_DesignObj']._CalculatePbodyContactDesignParameter(**_Pbodyinputs)
+        self._DesignParameter['PbodyContact']['_DesignObj']._CalculatePbodyContactDesignParameter(**PbodyParameters)
+        del PbodyParameters
         del _ContactNum
 
 

@@ -13,6 +13,7 @@ import ViaPoly2Met1
 import ViaMet12Met2
 import ViaMet22Met3
 import ViaMet32Met4
+from Private import FileManage
 
 
 class _Inverter(StickDiagram._StickDiagram):
@@ -491,7 +492,7 @@ class _Inverter(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    _Finger = 10
+    _Finger = 5
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 2
@@ -533,22 +534,8 @@ if __name__ == '__main__':
 
     testStreamFile.close()
 
-    import ftplib
 
     print ('###############      Sending to FTP Server...      ##################')
+    FileManage.Upload2FTP(_fileName=_fileName)
 
-    # ftp = ftplib.FTP('141.223.29.61')
-    # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-    # myfile = open('Inverter.gds', 'rb')
-    # ftp.storbinary('STOR Inverter.gds', myfile)
-    # myfile.close()
-    # ftp.close()
-
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('Inverter.gds', 'rb')
-    ftp.storbinary('STOR Inverter.gds', myfile)
-    myfile.close()
-    ftp.close()
+    print ('###############      Finished      ##################')

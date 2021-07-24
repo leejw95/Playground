@@ -995,7 +995,7 @@ if __name__ == '__main__' :
     _InvNumViaNMOSMet12Met2CoY = None
     _InvSLVT = True
     _InvPowerLine = None
-    #####################Power#######################
+    #####################Power Line#######################
     _SLSRInvSupplyLineX4 = True
 
 

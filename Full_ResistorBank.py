@@ -1139,10 +1139,18 @@ if __name__ == '__main__' :
     myfile.close()
     ftp.close()
 
-    import base64
+    # import base64
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # myfile = open('FullResistorBank.gds', 'rb')
+    # ftp.storbinary('STOR FullResistorBank.gds', myfile)
+    # myfile.close()
+    # ftp.close()
+
     ftp = ftplib.FTP('141.223.22.156')
-    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
     myfile = open('FullResistorBank.gds', 'rb')
     ftp.storbinary('STOR FullResistorBank.gds', myfile)
     myfile.close()

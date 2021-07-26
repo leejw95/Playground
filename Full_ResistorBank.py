@@ -221,35 +221,35 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         del tmp
 
-        self._DesignParameter['_Met7LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1],_XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met7LayerVCM']['_Width'] = _ResistorSpaceY
+        # self._DesignParameter['_Met7LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1],_XYCoordinates=[], _Width=100)
+        # self._DesignParameter['_Met7LayerVCM']['_Width'] = _ResistorSpaceY
 
-        self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                                                                    _ResistorBankOrigin[0][1] + _GapbtwOriginY + _ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
-                                                                    [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-                                                                    _ResistorBankOrigin[0][1] + _GapbtwOriginY + _ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]],
-                                                                    [[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                                                                    _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY
-                                                                    - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)],
-                                                                    [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-                                                                    _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY
-                                                                    - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)]]]
+        # self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
+        #                                                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]],
+        #                                                             [[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY
+        #                                                             - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)],
+        #                                                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY
+        #                                                             - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)]]]
 
-        _ViaVCMMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-        _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-        _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+        # _ViaVCMMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
+        # _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+        # _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
 
-        self._DesignParameter['_ViaMet62Met7OnVCM'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVCMIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet62Met7OnVCM']['_DesignObj']._CalculateViaMet62Met7DesignParameter(**_ViaVCMMet62Met7)
+        # self._DesignParameter['_ViaMet62Met7OnVCM'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVCMIn{}'.format(_Name)))[0]
+        # self._DesignParameter['_ViaMet62Met7OnVCM']['_DesignObj']._CalculateViaMet62Met7DesignParameter(**_ViaVCMMet62Met7)
 
-        tmp = []
-        for i in range (0, len(self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'])) :
-            for j in range (0, len(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'])) :
-                tmp.append([self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'][i][0][0],
-                            self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][j][0][1]])
-        self._DesignParameter['_ViaMet62Met7OnVCM']['_XYCoordinates'] = tmp
+        # tmp = []
+        # for i in range (0, len(self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'])) :
+        #     for j in range (0, len(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'])) :
+        #         tmp.append([self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'][i][0][0],
+        #                     self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][j][0][1]])
+        # self._DesignParameter['_ViaMet62Met7OnVCM']['_XYCoordinates'] = tmp
 
-        del tmp
+        # del tmp
 
 
 
@@ -296,19 +296,30 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         self._DesignParameter['_Met7LayerVRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met7LayerVRX']['_Width'] = _DRCObj._MetalxMaxWidth
 
-        _Met7LayerVRXEA = ((_YRBNum * _ResistorSpaceY) - (_ResistorSpaceY * 3 + _DRCObj._MetalxMinSpace11 * 2)) // (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11)
-        _GapbtwfirstVRX = (((_YRBNum * _ResistorSpaceY) - (_ResistorSpaceY * 3 + _DRCObj._MetalxMinSpace11 * 2)) - (_DRCObj._MetalxMaxWidth * _Met7LayerVRXEA + _DRCObj._MetalxMinSpace11 * (_Met7LayerVRXEA - 1))) // 2
+        # _Met7LayerVRXEA = ((_YRBNum * _ResistorSpaceY) - (_ResistorSpaceY * 3 + _DRCObj._MetalxMinSpace11 * 2)) // (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11)
+        # _GapbtwfirstVRX = (((_YRBNum * _ResistorSpaceY) - (_ResistorSpaceY * 3 + _DRCObj._MetalxMinSpace11 * 2)) - (_DRCObj._MetalxMaxWidth * _Met7LayerVRXEA + _DRCObj._MetalxMinSpace11 * (_Met7LayerVRXEA - 1))) // 2
 
+        # tmp = []
+        # for i in range (0, _Met7LayerVRXEA) :
+        #     tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+        #                 _ResistorBankOrigin[0][1] + _ResistorSpaceY * 1.5 + _DRCObj._MetalxMinSpace + _GapbtwfirstVRX + i * (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11) + _DRCObj._MetalxMaxWidth // 2],
+        #                 [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+        #                 _ResistorBankOrigin[0][1] + _ResistorSpaceY * 1.5 + _DRCObj._MetalxMinSpace + _GapbtwfirstVRX + i * (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11) + _DRCObj._MetalxMaxWidth // 2]])
+
+        # self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'] = tmp
+
+        # del tmp
+
+        _Met7LayerVRXEA = int(((_YRBNum * _ResistorSpaceY) * 0.6) // (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11))
         tmp = []
-        for i in range (0, _Met7LayerVRXEA) :
-            tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                        _ResistorBankOrigin[0][1] + _ResistorSpaceY * 1.5 + _DRCObj._MetalxMinSpace + _GapbtwfirstVRX + i * (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11) + _DRCObj._MetalxMaxWidth // 2],
-                        [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-                        _ResistorBankOrigin[0][1] + _ResistorSpaceY * 1.5 + _DRCObj._MetalxMinSpace + _GapbtwfirstVRX + i * (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11) + _DRCObj._MetalxMaxWidth // 2]])
+        for i in range (0, _Met7LayerVRXEA) : 
+                tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+                            _ResistorBankOrigin[0][1] + _GapbtwOriginY + (i + 1) * ((_YRBNum * _ResistorSpaceY) // (_Met7LayerVRXEA + 1))],
+                            [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+                            _ResistorBankOrigin[0][1] + _GapbtwOriginY + (i + 1) * ((_YRBNum * _ResistorSpaceY) // (_Met7LayerVRXEA + 1))]])
 
+        
         self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'] = tmp
-
-        del tmp
 
         _ViaVRXMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
         _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVRX']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
@@ -326,7 +337,61 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         del tmp
 
+        _SpacebtwVRX = (self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][1][0][1] - self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][1]) - \
+                        self._DesignParameter['_Met7LayerVRX']['_Width']
 
+
+        self._DesignParameter['_Met7LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1],_XYCoordinates=[], _Width=100)
+        self._DesignParameter['_Met7LayerVCM']['_Width'] = _SpacebtwVRX - _DRCObj._MetalxMinSpace11 * 2
+
+        tmp = []
+        for i in range (0, len(self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'])) :
+            tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
+                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
+                        [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
+                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]])
+            
+            if i == len(self._DesignParameter['_Met7LayerVRX']['_XYCoordinates']) - 1 :
+                tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] + 
+                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
+                        [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] + 
+                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]])
+
+        self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'] = tmp
+
+        # self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
+        #                                                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]],
+        #                                                             [[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY
+        #                                                             - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)],
+        #                                                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY
+        #                                                             - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)]]]
+
+        _ViaVCMMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
+        _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+        _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+
+        self._DesignParameter['_ViaMet62Met7OnVCM'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVCMIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet62Met7OnVCM']['_DesignObj']._CalculateViaMet62Met7DesignParameter(**_ViaVCMMet62Met7)
+
+        tmp = []
+        for i in range (0, len(self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'])) :
+            for j in range (0, len(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'])) :
+                tmp.append([self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'][i][0][0],
+                            self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][j][0][1]])
+        self._DesignParameter['_ViaMet62Met7OnVCM']['_XYCoordinates'] = tmp
+
+        del tmp
+
+        _TopBotleft = ((_YRBNum * _ResistorSpaceY) - (self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][-1][0][1] - self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][1]) - \
+            self._DesignParameter['_Met7LayerVRX']['_Width'] - 4 * _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met7LayerVCM']['_Width'] * 2) // 2
 
         if _PowerLine == True :
             self._DesignParameter['_Met3LayerVDD'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
@@ -355,7 +420,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             self._DesignParameter['_Met4LayerVDD']['_Width'] = self._DesignParameter['_Met3LayerVDD']['_Width'] * 2
             tmp = []
             
-            for i in range (0, _XRBNum) :
+            for i in range (0, _XRBNum + 1) :
                 if i % 2 == 1 :
                     tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + i * _ResistorSpaceX,
                                 _ResistorBankOrigin[0][1] + _GapbtwOriginY],
@@ -471,12 +536,23 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
             del tmp
 
+            # self._DesignParameter['_Met7LayerVDD'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
+            # self._DesignParameter['_Met7LayerVDD']['_Width'] = _ResistorSpaceY // 2
+            # self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+            #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY - self._DesignParameter['_Met7LayerVDD']['_Width'] // 2],
+            #                                                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX ,
+            #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY - self._DesignParameter['_Met7LayerVDD']['_Width'] // 2]]]
+
             self._DesignParameter['_Met7LayerVDD'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
-            self._DesignParameter['_Met7LayerVDD']['_Width'] = _ResistorSpaceY // 2
+            self._DesignParameter['_Met7LayerVDD']['_Width'] = (_TopBotleft - _DRCObj._MetalxMinSpace11) // 2
             self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                                                                        _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY - self._DesignParameter['_Met7LayerVDD']['_Width'] // 2],
-                                                                        [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX ,
-                                                                        _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY - self._DesignParameter['_Met7LayerVDD']['_Width'] // 2]]]
+                                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY - self._DesignParameter['_Met7LayerVDD']['_Width'] // 2],
+                                                                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX ,
+                                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY - self._DesignParameter['_Met7LayerVDD']['_Width'] // 2]],
+                                                                         [[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+                                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_Met7LayerVDD']['_Width'] * 1.5 + _DRCObj._MetalxMinSpace11],
+                                                                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+                                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_Met7LayerVDD']['_Width'] * 1.5 + _DRCObj._MetalxMinSpace11]]]
 
 
             _ViaVDDMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
@@ -505,22 +581,26 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
             self._DesignParameter['_Met2LayerVSS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
-            self._DesignParameter['_Met2LayerVSS']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] * 2
+            self._DesignParameter['_Met2LayerVSS']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth']
             
-            # tmp = []
-            # for i in range (0, 2) :
-            #     #if i % 2 == 0 :
-            #     tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX + i * _ResistorSpaceX, _ResistorBankOrigin[0][1] + _GapbtwOriginY - self._DesignParameter['_Met2LayerVSS']['_Width'] // 2],
-            #                     [_ResistorBankOrigin[0][0] + _GapbtwOriginX + i * _ResistorSpaceX, _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY + self._DesignParameter['_Met2LayerVSS']['_Width'] // 2]])
+            tmp = []
+            for i in range (0, _XRBNum + 1) :
+                #if i % 2 == 0 :
+                tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX + i * _ResistorSpaceX, _ResistorBankOrigin[0][1] + _GapbtwOriginY - self._DesignParameter['_Met2LayerVSS']['_Width'] // 2],
+                                [_ResistorBankOrigin[0][0] + _GapbtwOriginX + i * _ResistorSpaceX, _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY + self._DesignParameter['_Met2LayerVSS']['_Width'] * 1.5]])
             
-            self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2,
-                                                                    _ResistorBankOrigin[0][1] + _GapbtwOriginY - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2],
-                                                                    [_ResistorBankOrigin[0][0] + _GapbtwOriginX - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2,
-                                                                    _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + _YRBNum * _ResistorSpaceY]],
-                                                                    [[_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + _XRBNum * _ResistorSpaceX,
-                                                                    _ResistorBankOrigin[0][1] + _GapbtwOriginY - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2],
-                                                                    [_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + _XRBNum * _ResistorSpaceX,
-                                                                    _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + _YRBNum * _ResistorSpaceY]]]
+            self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'] = tmp
+
+            del tmp
+            
+            # [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2,
+            #                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2],
+            #                                                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2,
+            #                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + _YRBNum * _ResistorSpaceY]],
+            #                                                         [[_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + _XRBNum * _ResistorSpaceX,
+            #                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2],
+            #                                                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + _XRBNum * _ResistorSpaceX,
+            #                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + _YRBNum * _ResistorSpaceY]]]
 
 
             _ViaVSSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -536,7 +616,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
             tmp = []
             for i in range (0, len(self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'])) :
-                    tmp.append([_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+                    tmp.append([_ResistorBankOrigin[0][0] + _GapbtwOriginX + i * _ResistorSpaceX,
                                 _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_ViaMet12Met2OnVSS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2])
             self._DesignParameter['_ViaMet12Met2OnVSS']['_XYCoordinates'] = tmp
 
@@ -545,29 +625,31 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
             self._DesignParameter['_Met3LayerVSS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-            self._DesignParameter['_Met3LayerVSS']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth']
+            self._DesignParameter['_Met3LayerVSS']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] * 2
 
             tmp = []
             for i in range (0, _YRBNum + 1) :
-                tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX - self._DesignParameter['_Met2LayerVSS']['_Width'] // 2 - self._DesignParameter['_Met3LayerVSS']['_Width'] // 2,
-                            _ResistorBankOrigin[0][1] + _GapbtwOriginY + i * _ResistorSpaceY],
-                            [_ResistorBankOrigin[0][0] + _GapbtwOriginX - self._DesignParameter['_Met2LayerVSS']['_Width'] // 2 + _XRBNum * _ResistorSpaceX + self._DesignParameter['_Met2LayerVSS']['_Width'] + self._DesignParameter['_Met3LayerVSS']['_Width'] // 2,
-                            _ResistorBankOrigin[0][1] + _GapbtwOriginY + i * _ResistorSpaceY]])
+                tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX - self._DesignParameter['_Met2LayerVSS']['_Width'] // 2,
+                            _ResistorBankOrigin[0][1] + _GapbtwOriginY + i * _ResistorSpaceY + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2],
+                            [_ResistorBankOrigin[0][0] + _GapbtwOriginX - self._DesignParameter['_Met2LayerVSS']['_Width'] // 2 + _XRBNum * _ResistorSpaceX + self._DesignParameter['_Met2LayerVSS']['_Width'],
+                            _ResistorBankOrigin[0][1] + _GapbtwOriginY + i * _ResistorSpaceY + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2]])
 
             self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = tmp
 
             del tmp
 
             _ViaVSSMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = int(self._DesignParameter['_Met2LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
-            if _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] < 1 :
-                _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = 1
+            _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = int(self._DesignParameter['_Met2LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
             _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] = int(self._DesignParameter['_Met3LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] < 1 :
+            if _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] <= 1 :
+                _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = 1
+                _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] = int(self._DesignParameter['_Met3LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            if _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] <= 1 :
                 _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOY'] = 1
+                _ViaVSSMet22Met3['_ViaMet22Met3NumberOfCOX'] = int(self._DesignParameter['_Met2LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet22Met3OnVSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name = 'ViaMet22Met3OnVSSIn{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet22Met3OnVSS']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_ViaVSSMet22Met3)
+            self._DesignParameter['_ViaMet22Met3OnVSS']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaVSSMet22Met3)
 
             tmp = []
             for i in range (0, len(self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'])) :
@@ -580,11 +662,20 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             del tmp
             
             self._DesignParameter['_Met4LayerVSS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _Width=100)
-            self._DesignParameter['_Met4LayerVSS']['_Width'] = self._DesignParameter['_Met2LayerVSS']['_Width']
-            self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'] = self._DesignParameter['_Met2LayerVSS']['_XYCoordinates']
+            self._DesignParameter['_Met4LayerVSS']['_Width'] = self._DesignParameter['_Met2LayerVSS']['_Width'] * 2
+
+            tmp = []
+            for i in range (0, _XRBNum + 1) :
+                if i % 2 == 0 :
+                    tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + i * _ResistorSpaceX,
+                                _ResistorBankOrigin[0][1] + _GapbtwOriginY - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2],
+                                [_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 + i * _ResistorSpaceX,
+                                _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] * 1.5]])
+
+            self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'] = tmp
 
             _ViaVSSMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-            _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] = int(self._DesignParameter['_Met2LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] = int(self._DesignParameter['_Met4LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
             if _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] < 1 :
                 _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] = 1
             _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] = int(self._DesignParameter['_Met3LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
@@ -592,12 +683,12 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                 _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] = 1
 
             self._DesignParameter['_ViaMet32Met4OnVSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met4OnVSSIn{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet32Met4OnVSS']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_ViaVSSMet32Met4)
+            self._DesignParameter['_ViaMet32Met4OnVSS']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVSSMet32Met4)
 
             tmp = []
-            for i in range (0, len(self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'])) :
+            for i in range (0, len(self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'])) :
                 for j in range (0, len(self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'])) :
-                    tmp.append([self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'][i][0][0],
+                    tmp.append([self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'][i][0][0],
                                 self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'][j][0][1]])
             
             self._DesignParameter['_ViaMet32Met4OnVSS']['_XYCoordinates'] = tmp
@@ -697,12 +788,23 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             del tmp
 
 
+            # self._DesignParameter['_Met7LayerVSS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
+            # self._DesignParameter['_Met7LayerVSS']['_Width'] = _ResistorSpaceY// 2
+            # self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+            #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_Met7LayerVSS']['_Width'] // 2],
+            #                                                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX ,
+            #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_Met7LayerVSS']['_Width'] // 2]]]
+
             self._DesignParameter['_Met7LayerVSS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
-            self._DesignParameter['_Met7LayerVSS']['_Width'] = _ResistorSpaceY// 2
+            self._DesignParameter['_Met7LayerVSS']['_Width'] = (_TopBotleft - _DRCObj._MetalxMinSpace11) // 2
             self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                                                                        _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_Met7LayerVSS']['_Width'] // 2],
-                                                                        [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX ,
-                                                                        _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_Met7LayerVSS']['_Width'] // 2]]]
+                                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_Met7LayerVSS']['_Width'] // 2],
+                                                                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX ,
+                                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + self._DesignParameter['_Met7LayerVSS']['_Width'] // 2]],
+                                                                         [[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+                                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY - self._DesignParameter['_Met7LayerVSS']['_Width'] * 1.5 - _DRCObj._MetalxMinSpace11],
+                                                                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+                                                                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY - self._DesignParameter['_Met7LayerVSS']['_Width'] * 1.5 - _DRCObj._MetalxMinSpace11]]]
 
 
             _ViaVSSMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
@@ -916,17 +1018,29 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         del tmp
 
+        tmp = []
+        for i in range (len(self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'])) :
+            tmp.append([(self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'][i][1][0] - self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'][i][0][0]) // 2,
+                                        self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'][i][0][1]])
+
         self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1],
                         _Presentation=[0,1,2], _Reflect=[0,0,0], 
-                        _XYCoordinates=[[(self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'][0][1][0] - self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'][0][0][0]) // 2,
-                                        self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'][0][0][1]]],
+                        _XYCoordinates=tmp,
                         _Mag = 0.5, _Angle=0, _TEXT='VDD')
+
+        del tmp
+
+        tmp = []
+        for i in range (len(self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'])) :
+            tmp.append([(self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'][i][1][0] - self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'][i][0][0]) // 2,
+                                        self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'][i][0][1]])
 
         self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1],
                         _Presentation=[0,1,2], _Reflect=[0,0,0], 
-                        _XYCoordinates=[[(self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'][0][1][0] - self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'][0][0][0]) // 2,
-                                        self._DesignParameter['_Met7LayerVSS']['_XYCoordinates'][0][0][1]]],
+                        _XYCoordinates=tmp,
                         _Mag = 0.5, _Angle=0, _TEXT='VSS')
+
+        del tmp
 
         tmp = []
         for i in range (len(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'])) :

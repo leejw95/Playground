@@ -1465,10 +1465,10 @@ class _Slicer(StickDiagram._StickDiagram):
                 # self._DesignParameter['_SupplyLineMet5VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
                 # self._DesignParameter['_SupplyLineMet5VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
-                _ViaNumVSSX12 = int(self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth))
-                _ViaNumVSSX23 = int(self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth))
-                _ViaNumVSSY12 = int(self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth))
-                _ViaNumVSSY23 = int(self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth))
+                _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
                 # _ViaNumVSSX12 = int(self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
                 # _ViaNumVSSX23 = int(self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
@@ -1477,11 +1477,11 @@ class _Slicer(StickDiagram._StickDiagram):
 
                 if _ViaNumVSSX12 <= 1 :
                     _ViaNumVSSX12 = 1
-                    _ViaNumVSSY12 = int(self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                    _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVSSX23 <= 1 :
                     _ViaNumVSSX23 = 1
-                    _ViaNumVSSY23 = int(self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                    _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 # if _ViaNumVSSX34 < 1 :
                 #     _ViaNumVSSX34 = 1
@@ -1496,12 +1496,11 @@ class _Slicer(StickDiagram._StickDiagram):
 
                 if _ViaNumVSSY12 <= 1 :
                     _ViaNumVSSY12 = 1
-                    _ViaNumVSSX12 = int(self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                    _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVSSY23 <= 1 :
                     _ViaNumVSSY23 = 1
-                    _ViaNumVSSX23 = int(self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
-
+                    _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
                 # if _ViaNumVSSY34 < 1 :
                 #     _ViaNumVSSY34 = 1
                 # if _ViaNumVSSY45 < 1 :
@@ -1563,53 +1562,55 @@ class _Slicer(StickDiagram._StickDiagram):
                 # self._DesignParameter['_SupplyLineMet5VDD']['_YWidth'] = _GuardringWidth
                 # self._DesignParameter['_SupplyLineMet5VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
-                _ViaNumVDDX12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
-                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth))
-                _ViaNumVDDX23 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
-                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth))
+                _ViaNumVDDX12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVDDX23 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
                 # _ViaNumVDDX34 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
                 #         _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
                 # _ViaNumVDDX45 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
                 #         _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
 
-                if _ViaNumVDDX12 <= 1:
-                    _ViaNumVDDX12 = 1
-                    _ViaNumVDDX23 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
-                                             '_RingMetal1Layer1']['_XYCoordinates'][0][1][0] -
-                                         self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
-                                             '_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
-                                                _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
-
-                if _ViaNumVDDX23 <= 1:
-                    _ViaNumVDDX23 = 1
-                    _ViaNumVDDX12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
-                                             '_RingMetal1Layer1']['_XYCoordinates'][0][1][0] -
-                                         self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
-                                             '_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
-                                                _DRCObj._VIAxMinSpace2+ _DRCObj._VIAxMinWidth)) + 1
 
                 # if _ViaNumVDDX34 < 1:
                 #     _ViaNumVDDX34 = 1
                 # if _ViaNumVDDX45 < 1:
                 #     _ViaNumVDDX45 = 1
 
-                _ViaNumVDDY12 = int(_GuardringWidth // (
-                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth))
-                _ViaNumVDDY23 = int(_GuardringWidth // (
-                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth))
+                _ViaNumVDDY12 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) // (
+                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVDDY23 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) // (
+                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
                 # _ViaNumVDDY34 = int(_GuardringWidth // (
                 #         _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
                 # _ViaNumVDDY45 = int(_GuardringWidth // (
                 #         _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
 
+                if _ViaNumVDDX12 <= 1:
+                    _ViaNumVDDX12 = 1
+                    _ViaNumVDDY12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
+                                             '_RingMetal1Layer1']['_XYCoordinates'][0][1][0] -
+                                         self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
+                                             '_RingMetal1Layer1']['_XYCoordinates'][0][0][0] - _DRCObj._VIAxMinWidth) // (
+                                                _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+
+                if _ViaNumVDDX23 <= 1:
+                    _ViaNumVDDX23 = 1
+                    _ViaNumVDDY23 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
+                                             '_RingMetal1Layer1']['_XYCoordinates'][0][1][0] -
+                                         self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
+                                             '_RingMetal1Layer1']['_XYCoordinates'][0][0][0] - _DRCObj._VIAxMinWidth) // (
+                                                _DRCObj._VIAxMinSpace+ _DRCObj._VIAxMinWidth)) + 1
+
+
                 if _ViaNumVDDY12 <= 1:
                     _ViaNumVDDY12 = 1
-                    _ViaNumVDDY23 = int(_GuardringWidth // (
+                    _ViaNumVDDX12 = int((_GuardringWidth - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
                             _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVDDY23 <= 1:
                     _ViaNumVDDY23 = 1
-                    _ViaNumVDDY12 = int(_GuardringWidth // (
+                    _ViaNumVDDX23 = int((_GuardringWidth  - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
                             _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 # if _ViaNumVDDY34 < 1:

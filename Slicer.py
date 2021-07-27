@@ -1466,8 +1466,8 @@ class _Slicer(StickDiagram._StickDiagram):
                 # self._DesignParameter['_SupplyLineMet5VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
                 _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
-                _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
                 _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
                 _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
                 # _ViaNumVSSX12 = int(self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 4
@@ -1477,11 +1477,19 @@ class _Slicer(StickDiagram._StickDiagram):
 
                 if _ViaNumVSSX12 <= 1 :
                     _ViaNumVSSX12 = 1
-                    _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+
+                if _ViaNumVSSY12 <= 1:
+                    _ViaNumVSSY12 = 1
+                    _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVSSX23 <= 1 :
                     _ViaNumVSSX23 = 1
-                    _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+
+                if _ViaNumVSSY23 <= 1:
+                    _ViaNumVSSY23 = 1
+                    _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet3VSS'][ '_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 # if _ViaNumVSSX34 < 1 :
                 #     _ViaNumVSSX34 = 1
@@ -1494,13 +1502,7 @@ class _Slicer(StickDiagram._StickDiagram):
                 # _ViaNumVSSY34 = int(self._DesignParameter['_SupplyLineMet4VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
                 # _ViaNumVSSY45 = int(self._DesignParameter['_SupplyLineMet5VSS']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
 
-                if _ViaNumVSSY12 <= 1 :
-                    _ViaNumVSSY12 = 1
-                    _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
-                if _ViaNumVSSY23 <= 1 :
-                    _ViaNumVSSY23 = 1
-                    _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
                 # if _ViaNumVSSY34 < 1 :
                 #     _ViaNumVSSY34 = 1
                 # if _ViaNumVSSY45 < 1 :
@@ -1946,7 +1948,7 @@ if __name__ == '__main__':
     _NumVIAPoly2Met1COY = None
     _NumVIAMet12COX = None
     _NumVIAMet12COY = None
-    _PowerLine = True
+    _PowerLine = False
     SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1=_CLKinputPMOSFinger1, _CLKinputPMOSFinger2=_CLKinputPMOSFinger2, _PMOSFinger=_PMOSFinger,
                                         _PMOSChannelWidth=_PMOSChannelWidth,
                                         _DATAinputNMOSFinger=_DATAinputNMOSFinger, _NMOSFinger=_NMOSFinger, _CLKinputNMOSFinger=_CLKinputNMOSFinger,

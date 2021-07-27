@@ -374,9 +374,9 @@ class _Inverter(StickDiagram._StickDiagram) :
             self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'] = tmp
             del tmp
 
-            self._DesignParameter['_CLKMet3InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],_Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[],_Width=None)
-            self._DesignParameter['_CLKMet3InRouting']['_Width'] = self._DesignParameter['_ViaMet22Met3forInput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']
-            self._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0], self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][-1]]]
+            self._DesignParameter['_Met3InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],_Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[],_Width=None)
+            self._DesignParameter['_Met3InRouting']['_Width'] = self._DesignParameter['_ViaMet22Met3forInput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']
+            self._DesignParameter['_Met3InRouting']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0], self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][-1]]]
 
 
 

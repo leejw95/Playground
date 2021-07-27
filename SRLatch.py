@@ -3403,11 +3403,12 @@ class _SRLatch(StickDiagram._StickDiagram):
 
             ############ Via Generations ##############
             _ViaNumVDDX = int(
-                self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (
-                            _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
             _ViaNumVDDY = int(
-                self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // (
-                            _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+                (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) // (
+                            _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
             # _ViaNumVSSX1forMet2 = int(
             #     self._DesignParameter['_Met2LayerVSS1']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
             # _ViaNumVSSX2forMet2 = int(
@@ -3427,10 +3428,16 @@ class _SRLatch(StickDiagram._StickDiagram):
             # _ViaNumVSSX4 = int(
             #     self._DesignParameter['_Met4LayerVSS4']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
 
-            if _ViaNumVDDX < 1:
+            if _ViaNumVDDX <= 1:
                 _ViaNumVDDX = 1
-            if _ViaNumVDDY < 1:
+                _ViaNumVDDY = int(
+                    (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth)// (
+                            _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+            if _ViaNumVDDY <= 1:
                 _ViaNumVDDY = 1
+                _ViaNumVDDX = int(
+                    (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                            _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
             # if _ViaNumVSSX1 < 1:
             #     self._DesignParameter['_Met4LayerVSS1']['_XYCoordinates'] = []
             # if _ViaNumVSSX2 < 1:
@@ -3454,7 +3461,7 @@ class _SRLatch(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet12Met2VDD'] = self._SrefElementDeclaration(
                 _DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,
                                                       _Name='ViaMet12Met2VDDIn{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet12Met2VDD']['_DesignObj']._CalculateViaMet12Met2DesignParameter(
+            self._DesignParameter['_ViaMet12Met2VDD']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(
                 **_ViaVDDMet12Met2)
             self._DesignParameter['_ViaMet12Met2VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact'][
                 '_XYCoordinates']
@@ -3465,7 +3472,7 @@ class _SRLatch(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet22Met3VDD'] = self._SrefElementDeclaration(
                 _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
                                                       _Name='ViaMet22Met3VDDIn{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet22Met3VDD']['_DesignObj']._CalculateViaMet22Met3DesignParameter(
+            self._DesignParameter['_ViaMet22Met3VDD']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
                 **_ViaVDDMet22Met3)
             self._DesignParameter['_ViaMet22Met3VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact'][
                 '_XYCoordinates']
@@ -3476,7 +3483,7 @@ class _SRLatch(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet32Met4VDD'] = self._SrefElementDeclaration(
                 _DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,
                                                       _Name='ViaMet32Met4VDDIn{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet32Met4VDD']['_DesignObj']._CalculateViaMet32Met4DesignParameter(
+            self._DesignParameter['_ViaMet32Met4VDD']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
                 **_ViaVDDMet32Met4)
             self._DesignParameter['_ViaMet32Met4VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact'][
                 '_XYCoordinates']

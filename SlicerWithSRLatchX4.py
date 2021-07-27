@@ -293,6 +293,10 @@ class SlicerWithSRLatchX4Obj (StickDiagram._StickDiagram) :
                 self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][1]
         self._DesignParameter['_YINp']= {'_Ignore': YINp, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
 
+        XINp = abs(self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0] +\
+                self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][0])
+        self._DesignParameter['_XINp']= {'_Ignore': XINp, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+
         for i in range(0, _NumberofSlicerWithSRLatch) :
             tmp.append([_OriginXYCoordinateOfSlicerWithSRLatch[0][0], _OriginXYCoordinateOfSlicerWithSRLatch[0][1] - i * GuardringHeight])
 
@@ -1167,13 +1171,13 @@ if __name__ == '__main__' :
     myfile.close()
     ftp.close()
 
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    # myfile = open('SlicerWithSRLatch.gds', 'rb')
-    # ftp.storbinary('STOR SlicerWithSRLatch.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('SlicerWithSRLatchx4.gds', 'rb')
+    ftp.storbinary('STOR SlicerWithSRLatchx4.gds', myfile)
+    myfile.close()
+    ftp.close()
     #
     # ftp = ftplib.FTP('141.223.29.61')
     # ftp.login('junung', 'chlwnsdnd1!')

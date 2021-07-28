@@ -167,21 +167,21 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
         self._DesignParameter['_Slicer']['_DesignObj']._CalculateDesignParameter(**_Slicerinputs)
 
         print ('###############################         Inverter Generation        #########################################')
-        _ContactNum = _InvNumSupplyCoX
-        if _ContactNum == None:
-            _ContactNum = int((3 * _DRCObj._PolygateMinSpace +
-                               self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
-                               self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + \
-                               self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
-                               self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + \
-                               3 * _DRCObj._PolygateMinSpace) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
-
-        if _ContactNum < 2 :
-            _ContactNum = 2
-
-        if _InvNumSupplyCoY is None :
-            _InvNumSupplyCoY = _SRNumSupplyCoY
-
+        # _ContactNum = _InvNumSupplyCoX
+        # if _ContactNum == None:
+        #     _ContactNum = int((3 * _DRCObj._PolygateMinSpace +
+        #                        self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
+        #                        self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + \
+        #                        self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
+        #                        self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + \
+        #                        3 * _DRCObj._PolygateMinSpace) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+        #
+        # if _ContactNum < 2 :
+        #     _ContactNum = 2
+        #
+        # if _InvNumSupplyCoY is None :
+        #     _InvNumSupplyCoY = _SRNumSupplyCoY
+        #
 
         _Inverterinputs = copy.deepcopy(Inverter._Inverter._ParametersForDesignCalculation)
         _Inverterinputs['_Finger']= _InvFinger
@@ -894,7 +894,7 @@ if __name__ == '__main__' :
     _SLNumVIAMet12COY = None
     _SLPowerLine = None
     #####################Inverter#######################
-    _InvFinger = 22
+    _InvFinger = 16
     _InvChannelWidth = 200
     _InvChannelLength = 30
     _InvNPRatio = 3

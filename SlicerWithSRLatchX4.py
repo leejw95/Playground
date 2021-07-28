@@ -549,7 +549,8 @@ class SlicerWithSRLatchX4Obj (StickDiagram._StickDiagram) :
             del tmp
 
 
-            _ViaXMet32Met4forVSS = int((2 * (abs(self._DesignParameter['_Met4VDDRouting2']['_XYCoordinates'][0][0][0] + self._DesignParameter['_Met4VDDRouting2']['_Width'] / 2) - _DRCObj._MetalxMinSpace9)) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+            _ViaXMet32Met4forVSS = int((self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0] - self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                               ####int((2 * (abs(self._DesignParameter['_Met4VDDRouting2']['_XYCoordinates'][0][0][0] + self._DesignParameter['_Met4VDDRouting2']['_Width'] / 2) - _DRCObj._MetalxMinSpace9)) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
             _ViaYMet32Met4forVSS = int((self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
             if _ViaXMet32Met4forVSS <= 1:

@@ -43,7 +43,7 @@ class _Inverter(StickDiagram._StickDiagram) :
         _NMOSinputs['_NMOSDummy'] = _Dummy
         _NMOSinputs['_SLVT'] = _SLVT
 
-        self._DesignParameter['_NMOS'] = self._SrefElementDeclaration(_DesignObj = NMOSWithDummy._NMOS(_DesignParameter = None, \
+        self._DesignParameter['_NMOS'] = self._SrefElementDeclaration(_Reflect = [1,0,0], _Angle=0, _DesignObj = NMOSWithDummy._NMOS(_DesignParameter = None, \
                                                                                                            _Name = 'NMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_NMOS']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOSinputs)
 
@@ -69,7 +69,7 @@ class _Inverter(StickDiagram._StickDiagram) :
             _ContactNum = 2
 
         if _NumSupplyCoY is None :
-            _NumSupplyCoY = 1
+            _NumSupplyCoY = 2
 
         _Nbodyinputs = copy.deepcopy(NbodyContact._NbodyContact._ParametersForDesignCalculation)
         _Nbodyinputs['_NumberOfNbodyCOX'] = _ContactNum
@@ -473,14 +473,17 @@ class _Inverter(StickDiagram._StickDiagram) :
             self._DesignParameter['_Met3LayerOnSupply']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates'] + self._DesignParameter['PbodyContact']['_XYCoordinates']
             self._DesignParameter['_Met4LayerOnSupply']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates'] + self._DesignParameter['PbodyContact']['_XYCoordinates']
 
-            _ViaNumSupplyX = int(self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
-            _ViaNumSupplyY = int(self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+            _ViaNumSupplyX = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+            _ViaNumSupplyY = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
 
-            if _ViaNumSupplyX < 1:
+            if _ViaNumSupplyX <= 1:
                 _ViaNumSupplyX = 1
-            if _ViaNumSupplyY < 1:
+                _ViaNumSupplyY = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+            if _ViaNumSupplyY <= 1:
                 _ViaNumSupplyY = 1
+                _ViaNumSupplyX = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+
 
             _ViaVDDMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
             _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumSupplyX
@@ -505,7 +508,7 @@ class _Inverter(StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__':
-    _Finger = 10
+    _Finger = 60
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 2
@@ -515,7 +518,7 @@ if __name__ == '__main__':
     _LVT = False
     _HVT = False
     _NumSupplyCOX = None
-    _NumSupplyCOY = None
+    _NumSupplyCOY = 2
     _SupplyMet1XWidth = None
     _SupplyMet1YWidth = None
     _NumVIAPoly2Met1COX = None

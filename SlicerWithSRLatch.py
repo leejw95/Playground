@@ -190,10 +190,10 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
         _Inverterinputs['_NPRatio'] = _InvNPRatio
         _Inverterinputs['_VDD2VSSHeight'] = _InvVDD2VSSHeight
         _Inverterinputs['_Dummy'] = _InvDummy
-        _Inverterinputs['_NumSupplyCoX'] = _ContactNum
+        _Inverterinputs['_NumSupplyCoX'] = _InvNumSupplyCoX
         _Inverterinputs['_NumSupplyCoY'] = _InvNumSupplyCoY
-        _Inverterinputs['_SupplyMet1XWidth'] = self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
-        _Inverterinputs['_SupplyMet1YWidth'] = self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+        _Inverterinputs['_SupplyMet1XWidth'] = _InvSupplyMet1XWidth###self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        _Inverterinputs['_SupplyMet1YWidth'] = _InvSupplyMet1YWidth####self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
         _Inverterinputs['_NumViaPoly2Met1CoX'] = _InvNumViaPoly2Met1CoX
         _Inverterinputs['_NumViaPoly2Met1CoY'] = _InvNumViaPoly2Met1CoY
         _Inverterinputs['_NumViaPMOSMet12Met2CoX'] = _InvNumViaPMOSMet12Met2CoX
@@ -349,8 +349,8 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
 
         self._DesignParameter['_Inverter']['_XYCoordinates'] = [[_XYCoordinateOfSlicer[0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'][1][0] + \
-                                                                 self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XWidth'] // 2 +
-                                                                 +_DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace +
+                                                            self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XWidth'] // 2
+                                                            +_DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace +
                                                             (self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 -
                                                                  self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][0]), self._DesignParameter['_SRLatch']['_XYCoordinates'][0][1] + \
                                                                  self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][1][1] - VDD2VSSHeightofInverter]]
@@ -894,7 +894,7 @@ if __name__ == '__main__' :
     _SLNumVIAMet12COY = None
     _SLPowerLine = None
     #####################Inverter#######################
-    _InvFinger = 16
+    _InvFinger = 22
     _InvChannelWidth = 200
     _InvChannelLength = 30
     _InvNPRatio = 3

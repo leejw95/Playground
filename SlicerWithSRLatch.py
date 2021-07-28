@@ -190,10 +190,10 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
         _Inverterinputs['_NPRatio'] = _InvNPRatio
         _Inverterinputs['_VDD2VSSHeight'] = _InvVDD2VSSHeight
         _Inverterinputs['_Dummy'] = _InvDummy
-        _Inverterinputs['_NumSupplyCoX'] = _ContactNum
+        _Inverterinputs['_NumSupplyCoX'] = _InvNumSupplyCoX
         _Inverterinputs['_NumSupplyCoY'] = _InvNumSupplyCoY
-        _Inverterinputs['_SupplyMet1XWidth'] = self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
-        _Inverterinputs['_SupplyMet1YWidth'] = self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+        _Inverterinputs['_SupplyMet1XWidth'] = _InvSupplyMet1XWidth###self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        _Inverterinputs['_SupplyMet1YWidth'] = _InvSupplyMet1YWidth####self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
         _Inverterinputs['_NumViaPoly2Met1CoX'] = _InvNumViaPoly2Met1CoX
         _Inverterinputs['_NumViaPoly2Met1CoY'] = _InvNumViaPoly2Met1CoY
         _Inverterinputs['_NumViaPMOSMet12Met2CoX'] = _InvNumViaPMOSMet12Met2CoX

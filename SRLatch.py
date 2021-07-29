@@ -3438,22 +3438,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                 _ViaNumVDDX = int(
                     (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
                             _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
-            # if _ViaNumVSSX1 < 1:
-            #     self._DesignParameter['_Met4LayerVSS1']['_XYCoordinates'] = []
-            # if _ViaNumVSSX2 < 1:
-            #     self._DesignParameter['_Met4LayerVSS2']['_XYCoordinates'] = []
-            # if _ViaNumVSSX3 < 1:
-            #     self._DesignParameter['_Met4LayerVSS3']['_XYCoordinates'] = []
-            # if _ViaNumVSSX4 < 1:
-            #     self._DesignParameter['_Met4LayerVSS4']['_XYCoordinates'] = []
-            # if _ViaNumVSSX1forMet3 < 1:
-            #     self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = []
-            # if _ViaNumVSSX1forMet2 < 1 :
-            #     self._DesignParameter['_Met2LayerVSS1']['_XYCoordinates'] = []
-            # if _ViaNumVSSX2forMet2 < 1 :
-            #     self._DesignParameter['_Met2LayerVSS2']['_XYCoordinates'] = []
-            # if _ViaNumVSSX2forMet3 < 1:
-            #     self._DesignParameter['_Met3LayerVSS']['_XYCoordinates'] = []
+
 
             _ViaVDDMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
             _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVDDX
@@ -3488,193 +3473,42 @@ class _SRLatch(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet32Met4VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact'][
                 '_XYCoordinates']
 
-            # _ViaVDDMet42Met5 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-            # _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] = _ViaNumVDDX
-            # _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet42Met5VDD'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None,
-            #                                           _Name='ViaMet42Met5VDDIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet42Met5VDD']['_DesignObj']._CalculateViaMet42Met5DesignParameter(
-            #     **_ViaVDDMet42Met5)
-            # self._DesignParameter['_ViaMet42Met5VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVDDMet52Met6 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
-            # _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOX'] = _ViaNumVDDX
-            # _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet52Met6VDD'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None,
-            #                                           _Name='ViaMet52Met6VDDIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet52Met6VDD']['_DesignObj']._CalculateViaMet52Met6DesignParameter(
-            #     **_ViaVDDMet52Met6)
-            # self._DesignParameter['_ViaMet52Met6VDD']['_XYCoordinates'] = self._DesignParameter['NbodyContact'][
-            #     '_XYCoordinates']
-
-
-            # _ViaVSSMet12Met21 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
-            # _ViaVSSMet12Met21['_ViaMet12Met2NumberOfCOX'] = _ViaNumVSSX1forMet2
-            # _ViaVSSMet12Met21['_ViaMet12Met2NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet12Met2VSS1'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,
-            #                                           _Name='ViaMet12Met2VSS1In{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet12Met2VSS1']['_DesignObj']._CalculateViaMet12Met2DesignParameter(
-            #     **_ViaVSSMet12Met21)
-            # self._DesignParameter['_ViaMet12Met2VSS1']['_XYCoordinates'] = self._DesignParameter['_Met2LayerVSS1'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet12Met22 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
-            # _ViaVSSMet12Met22['_ViaMet12Met2NumberOfCOX'] = _ViaNumVSSX2forMet2
-            # _ViaVSSMet12Met22['_ViaMet12Met2NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet12Met2VSS2'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,
-            #                                           _Name='ViaMet12Met2VSS2In{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet12Met2VSS2']['_DesignObj']._CalculateViaMet12Met2DesignParameter(
-            #     **_ViaVSSMet12Met22)
-            # self._DesignParameter['_ViaMet12Met2VSS2']['_XYCoordinates'] = self._DesignParameter['_Met2LayerVSS2'][
-            #     '_XYCoordinates']
-            #
-            #
-            # _ViaVSSMet22Met31 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-            # _ViaVSSMet22Met31['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX1forMet3
-            # _ViaVSSMet22Met31['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet22Met3VSS1'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-            #                                           _Name='ViaMet22Met3VSS1In{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet22Met3VSS1']['_DesignObj']._CalculateViaMet22Met3DesignParameter(
-            #     **_ViaVSSMet22Met31)
-            # self._DesignParameter['_ViaMet22Met3VSS1']['_XYCoordinates'] = self._DesignParameter['_Met2LayerVSS1'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet22Met32 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-            # _ViaVSSMet22Met32['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX2forMet3
-            # _ViaVSSMet22Met32['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet22Met3VSS2'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-            #                                           _Name='ViaMet22Met3VSS2In{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet22Met3VSS2']['_DesignObj']._CalculateViaMet22Met3DesignParameter(
-            #     **_ViaVSSMet22Met32)
-            # self._DesignParameter['_ViaMet22Met3VSS2']['_XYCoordinates'] = self._DesignParameter['_Met2LayerVSS2'][
-            #     '_XYCoordinates']
-            #
-            #
-            #
-            # # _ViaVSSMet22Met32 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-            # # _ViaVSSMet22Met32['_ViaMet22Met3NumberOfCOX'] = _ViaNumVSSX2forMet3
-            # # _ViaVSSMet22Met32['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY
-            # # self._DesignParameter['_ViaMet22Met3VSS2'] = self._SrefElementDeclaration(
-            # #     _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-            # #                                           _Name='ViaMet22Met3VSS2In{}'.format(_Name)))[0]
-            # # self._DesignParameter['_ViaMet22Met3VSS2']['_DesignObj']._CalculateViaMet22Met3DesignParameter(
-            # #     **_ViaVSSMet22Met32)
-            # # self._DesignParameter['_ViaMet22Met3VSS2']['_XYCoordinates'] = self._DesignParameter['_Met3LayerVSS2'][
-            # #     '_XYCoordinates']
-            #
-            # _ViaVSSMet32Met41 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-            # _ViaVSSMet32Met41['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX1
-            # _ViaVSSMet32Met41['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet32Met4VSS1'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,
-            #                                           _Name='ViaMet32Met41VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet32Met4VSS1']['_DesignObj']._CalculateViaMet32Met4DesignParameter(
-            #     **_ViaVSSMet32Met41)
-            # self._DesignParameter['_ViaMet32Met4VSS1']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS1'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet32Met42 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-            # _ViaVSSMet32Met42['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX2
-            # _ViaVSSMet32Met42['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet32Met4VSS2'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,
-            #                                           _Name='ViaMet32Met42VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet32Met4VSS2']['_DesignObj']._CalculateViaMet32Met4DesignParameter(
-            #     **_ViaVSSMet32Met42)
-            # self._DesignParameter['_ViaMet32Met4VSS2']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS2'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet32Met43 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-            # _ViaVSSMet32Met43['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX3
-            # _ViaVSSMet32Met43['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet32Met4VSS3'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,
-            #                                           _Name='ViaMet32Met43VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet32Met4VSS3']['_DesignObj']._CalculateViaMet32Met4DesignParameter(
-            #     **_ViaVSSMet32Met43)
-            # self._DesignParameter['_ViaMet32Met4VSS3']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS3'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet32Met44 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-            # _ViaVSSMet32Met44['_ViaMet32Met4NumberOfCOX'] = _ViaNumVSSX4
-            # _ViaVSSMet32Met44['_ViaMet32Met4NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet32Met4VSS4'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,
-            #                                           _Name='ViaMet32Met44VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet32Met4VSS4']['_DesignObj']._CalculateViaMet32Met4DesignParameter(
-            #     **_ViaVSSMet32Met44)
-            # self._DesignParameter['_ViaMet32Met4VSS4']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS4'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet42Met51 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-            # _ViaVSSMet42Met51['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX1
-            # _ViaVSSMet42Met51['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet42Met5VSS1'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None,
-            #                                           _Name='ViaMet42Met51VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet42Met5VSS1']['_DesignObj']._CalculateViaMet42Met5DesignParameter(
-            #     **_ViaVSSMet42Met51)
-            # self._DesignParameter['_ViaMet42Met5VSS1']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS1'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet42Met52 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-            # _ViaVSSMet42Met52['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX2
-            # _ViaVSSMet42Met52['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet42Met5VSS2'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None,
-            #                                           _Name='ViaMet42Met52VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet42Met5VSS2']['_DesignObj']._CalculateViaMet42Met5DesignParameter(
-            #     **_ViaVSSMet42Met52)
-            # self._DesignParameter['_ViaMet42Met5VSS2']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS2'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet42Met53 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-            # _ViaVSSMet42Met53['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX3
-            # _ViaVSSMet42Met53['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet42Met5VSS3'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None,
-            #                                           _Name='ViaMet42Met53VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet42Met5VSS3']['_DesignObj']._CalculateViaMet42Met5DesignParameter(
-            #     **_ViaVSSMet42Met53)
-            # self._DesignParameter['_ViaMet42Met5VSS3']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS3'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet42Met54 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-            # _ViaVSSMet42Met54['_ViaMet42Met5NumberOfCOX'] = _ViaNumVSSX4
-            # _ViaVSSMet42Met54['_ViaMet42Met5NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet42Met5VSS4'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None,
-            #                                           _Name='ViaMet42Met54VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet42Met5VSS4']['_DesignObj']._CalculateViaMet42Met5DesignParameter(
-            #     **_ViaVSSMet42Met54)
-            # self._DesignParameter['_ViaMet42Met5VSS4']['_XYCoordinates'] = self._DesignParameter['_Met4LayerVSS4'][
-            #     '_XYCoordinates']
-            #
-            # _ViaVSSMet52Met6 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
-            # _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOX'] = _ViaNumVDDX
-            # _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOY'] = _ViaNumVDDY
-            # self._DesignParameter['_ViaMet52Met6VSS'] = self._SrefElementDeclaration(
-            #     _DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None,
-            #                                           _Name='ViaMet52Met6VSSIn{}'.format(_Name)))[0]
-            # self._DesignParameter['_ViaMet52Met6VSS']['_DesignObj']._CalculateViaMet52Met6DesignParameter(
-            #     **_ViaVSSMet52Met6)
-            # self._DesignParameter['_ViaMet52Met6VSS']['_XYCoordinates'] = self._DesignParameter['PbodyContact'][
-            #     '_XYCoordinates']
-            #
 
 if __name__ == '__main__':
+    _Finger1 = 5
+    _Finger2 = 1
+    _Finger3 = 2
+    _Finger4 = 2
+    _NMOSChannelWidth1 = 200
+    _PMOSChannelWidth1 = 400
+    _NMOSChannelWidth2 = 200
+    _PMOSChannelWidth2 = 400
+    _NMOSChannelWidth3 = 200
+    _PMOSChannelWidth3 = 400
+    _NMOSChannelWidth4 = 200
+    _PMOSChannelWidth4 = 400
+    _ChannelLength = 30
+    _VDD2VSSHeightAtOneSide = None
+    _Dummy = True
+    _NumSupplyCoX = None
+    _NumSupplyCoY = 2
+    _SupplyMet1XWidth = None
+    _SupplyMet1YWidth = None
+    NumViaPoly2Met1CoX = None
+    NumViaPMOSMet12Met2CoY = None
+    NumViaNMOSMet12Met2CoX = None
+    NumViaNMOSMet12Met2CoY = None
+    NumViaPMOSMet22Met3CoX = None
+    NumViaPMOSMet22Met3CoY = None
+    NumViaNMOSMet22Met3CoX = None
+    NumViaNMOSMet22Met3CoY = None
+    _SLVT = True
+    _PowerLine = True
+
     DesignParameters._Technology = '028nm'
 
     SRLatchObj = _SRLatch(_DesignParameter=None, _Name='SRLatch')
     SRLatchObj._CalculateDesignParameter(_Finger1=5, _Finger2=1, _Finger3=2, _Finger4=2, \
-                                         # _PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \
                                          _NMOSChannelWidth1=200, _PMOSChannelWidth1=400, _NMOSChannelWidth2=200,
                                          _PMOSChannelWidth2=400, _NMOSChannelWidth3=200, _PMOSChannelWidth3=400,
                                          _NMOSChannelWidth4=200, _PMOSChannelWidth4=400, _ChannelLength=30, \

@@ -677,7 +677,7 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
 
 if __name__ == '__main__' :
     
-    _XRBNum = 4
+    _XRBNum = 6
     _YRBNum = 8
 
     ## X axis M7 Length >= 25um : overall m7 density < 80%

@@ -3031,14 +3031,8 @@ class _SRLatch(StickDiagram._StickDiagram):
             _Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],
             _XYCoordinates=[], _Width=None)
         self._DesignParameter['_AdditionalMet4Routing1']['_Width'] = _DRCObj._MetalxMinWidth  #### ??????
-        self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'] = [
-            [self._DesignParameter['_ViaMet32Met4forRoutingoverVSS']['_XYCoordinates'][0],
-             [self._DesignParameter['_ViaMet32Met4forRoutingoverVSS']['_XYCoordinates'][0][0],
-              self._DesignParameter['_AdditionalMet32Met4OnMOS3']['_XYCoordinates'][0][1]], self._DesignParameter['_AdditionalMet32Met4OnMOS3']['_XYCoordinates'][0]], \
-            [[self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
-              self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][0][1]],
-             [self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0],
-              self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][2][1]]]]
+        self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet32Met4forRoutingoverVSS']['_XYCoordinates'][0], [self._DesignParameter['_ViaMet32Met4forRoutingoverVSS']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet32Met4OnMOS3']['_XYCoordinates'][0][1]], self._DesignParameter['_AdditionalMet32Met4OnMOS3']['_XYCoordinates'][0]], \
+                                                                              [[self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][0][1]], [self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][2][1]]]]
 
         ## Right Metal 2 routing
         self._DesignParameter['_AdditionalMet2Routing1'] = self._PathElementDeclaration(
@@ -3476,9 +3470,9 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     _Finger1 = 5
-    _Finger2 = 1
-    _Finger3 = 2
-    _Finger4 = 2
+    _Finger2 = 5
+    _Finger3 = 5
+    _Finger4 = 5
     _NMOSChannelWidth1 = 200
     _PMOSChannelWidth1 = 400
     _NMOSChannelWidth2 = 200

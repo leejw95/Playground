@@ -862,3 +862,12 @@ if __name__ == '__main__' :
     ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     myfile.close()
     ftp.close()
+
+    import ftplib
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    myfile.close()
+    ftp.close()

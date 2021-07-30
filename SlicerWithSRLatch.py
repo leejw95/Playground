@@ -523,7 +523,7 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
 
         if _SLPMOSFinger > 1 :
-            self._DesignParameter['_VIAMet42Met5forSSpRouting']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutput']['_XYCoordinates'][1][0] + 40, \
+            self._DesignParameter['_VIAMet42Met5forSSpRouting']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutput']['_XYCoordinates'][1][0] + self._DesignParameter['_VIAMet42Met5forSSpRouting']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'] / 2 - self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met4PNMOS']['_Width'] / 2, \
                                                                                       _CenterPoint + self._DesignParameter['_Met5RoutingforSRInput']['_Width'] / 2 + _DRCObj._MetalxMinSpace9 / 2]]
 
         elif _SLPMOSFinger == 1 :
@@ -531,11 +531,11 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                                                                     _CenterPoint + self._DesignParameter['_Met5RoutingforSRInput']['_Width'] / 2 + _DRCObj._MetalxMinSpace9 / 2]]
 
         if _SLNMOSFinger > 1:
-             self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutput']['_XYCoordinates'][0][0] - 40, \
+             self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_XYCoordinates'][0][0] - (self._DesignParameter['_VIAMet42Met5forSSpRouting']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'] / 2 - self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met4PNMOS']['_Width'] / 2), \
                                                                                     _CenterPoint - self._DesignParameter['_Met5RoutingforSRInput']['_Width'] / 2 - _DRCObj._MetalxMinSpace9 / 2]]
 
         elif _SLNMOSFinger == 1 :
-             self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutput']['_XYCoordinates'][0][0], \
+             self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_XYCoordinates'][0][0], \
                                                                                     _CenterPoint - self._DesignParameter['_Met5RoutingforSRInput']['_Width'] / 2 - _DRCObj._MetalxMinSpace9 / 2]]
 
 

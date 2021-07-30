@@ -855,11 +855,11 @@ if __name__ == '__main__' :
     _SLCLKinputPMOSFinger1 = 6
     _SLCLKinputPMOSFinger2 = 3
     _SLPMOSFinger = 2
-    _SLPMOSChannelWidth = 1000
+    _SLPMOSChannelWidth = 600
     _SLDATAinputNMOSFinger = 12
     _SLNMOSFinger = 2
     _SLCLKinputNMOSFinger = 8
-    _SLNMOSChannelWidth = 1000
+    _SLNMOSChannelWidth = 600
     _SLChannelLength = 30
     _SLDummy = True
     _SLSLVT = True

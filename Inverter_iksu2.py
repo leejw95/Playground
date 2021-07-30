@@ -366,19 +366,44 @@ class _Inverter(StickDiagram._StickDiagram):
         #####################################Output Met2 Boundary&Routing######################################
         tmpOutputRouting = []
 
-        for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) / 2):
-            tmpOutputRouting.append([[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i][0],
-                                      self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i][1]],
-                                     [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2 * i][0],
-                                      self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2 * i][1]]
+        if _Finger == 3:
+            tmpOutputRouting.append([[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] +
+                                      self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[
+                                          '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][1][0],  # 2 * 0
+                                      self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] +
+                                      self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[
+                                          '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][1][1]],
+                                     [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] +
+                                      self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[
+                                          '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][1][0],
+                                      self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] +
+                                      self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[
+                                          '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][1][1]]
                                      ])
+        else:
+            for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) / 2):
+                tmpOutputRouting.append([[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i][0],
+                                          self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i][1]],
+                                         [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2 * i][0],
+                                          self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2 * i][1]]
+                                         ])
 
-        for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) / 2):
+
+        if _Finger == 3:
             tmpOutputRouting.append([CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
-                                                        self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i]),
+                                                        self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][1]),
                                      CoordinateCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
-                                                        self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2 * i])
+                                                        self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][1])
                                      ])
+        else:
+            for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) / 2):
+                tmpOutputRouting.append([CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
+                                                            self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i]),
+                                         CoordinateCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
+                                                            self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2 * i])
+                                         ])
+
+
 
         self._DesignParameter['_OutputRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],
                                                                                _Datatype=DesignParameters._LayerMapping['METAL2'][1],
@@ -403,7 +428,28 @@ class _Inverter(StickDiagram._StickDiagram):
         ]  # row line on PMOS, NMOS
 
         # # #
-        if _VDD2VSSHeight == _VDD2VSSMinHeight and _Finger in (3, 4):
+        if _VDD2VSSHeight == _VDD2VSSMinHeight and _Finger == 3:
+
+            _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+            _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = 2
+            _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOY'] = 1
+            self._DesignParameter['_ViaMet12Met2forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInputIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput)
+
+            tmpXWidth = self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            tmpYWidth = self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+
+
+            tmpXCoordinate = self._DesignParameter['_OutputRouting']['_XYCoordinates'][1][0][0] \
+                             - self._DesignParameter['_OutputRouting']['_Width']/2 \
+                             - _DRCObj._MetalxMinSpaceAtCorner \
+                             - tmpXWidth/2
+            tmpYCoordinate = self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][0][1]
+            self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'] = [[tmpXCoordinate, tmpYCoordinate]]
+            self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = \
+                self._DesignParameter['_VIAPMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+
+        if _VDD2VSSHeight == _VDD2VSSMinHeight and _Finger == 4:
 
             _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
             _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = 2
@@ -608,7 +654,7 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     # User-Defined Parameters
-    _Finger = 2
+    _Finger = 3
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 2
@@ -647,7 +693,7 @@ if __name__ == '__main__':
                                           )
 
     InverterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=InverterObj._DesignParameter)
-    _fileName = 'Inverter0728.gds'                                    # Need to get current date / time
+    _fileName = 'Inverter0729.gds'                                    # Need to get current date / time
     testStreamFile = open('./{}'.format(_fileName), 'wb')
     tmp = InverterObj._CreateGDSStream(InverterObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)

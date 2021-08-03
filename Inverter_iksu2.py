@@ -541,10 +541,7 @@ class _Inverter(StickDiagram._StickDiagram):
             if tmpCount_GateViaLayer > 1:  #
                 # M1V1M2
                 # (1) Normal width
-                _LengthM1_VIAPMOSPoly2Met1 = self._DesignParameter['_OutputRouting']['_XYCoordinates'][1][0][0] \
-                                             - self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][0] \
-                                             - self._DesignParameter['_OutputRouting']['_Width'] \
-                                             - 2 * _DRCObj._Metal1MinSpaceAtCorner
+                _LengthM1_VIAPMOSPoly2Met1 = self._DesignParameter['_VIAPMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
                 _NumViaInputM12 = int((_LengthM1_VIAPMOSPoly2Met1 - _DRCObj._VIAxMinWidth - 2*_DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide)
                                       // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
@@ -554,23 +551,8 @@ class _Inverter(StickDiagram._StickDiagram):
                 self._DesignParameter['_ViaMet12Met2forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInputIn{}'.format(_Name)))[0]
                 self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput)
 
-                # (2) Wide width
-                if flag_exception_f6:
-                    _LengthM1_VIAPMOSPoly2Met1_Wide = self._DesignParameter['_OutputRouting']['_XYCoordinates'][-1][0][0] \
-                                                      - self._DesignParameter['_OutputRouting']['_XYCoordinates'][-2][0][0] \
-                                                      - self._DesignParameter['_OutputRouting']['_Width'] \
-                                                      - 2 * _DRCObj._Metal1MinSpaceAtCorner
-                    _NumViaInputM12_Wide = int((_LengthM1_VIAPMOSPoly2Met1_Wide - _DRCObj._VIAxMinWidth - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide)
-                                               // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
-
-                    _ViaMet12Met2forInput2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
-                    _ViaMet12Met2forInput2['_ViaMet12Met2NumberOfCOX'] = _NumViaInputM12_Wide
-                    _ViaMet12Met2forInput2['_ViaMet12Met2NumberOfCOY'] = 1
-                    self._DesignParameter['_ViaMet12Met2forInput2'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInput2In{}'.format(_Name)))[0]
-                    self._DesignParameter['_ViaMet12Met2forInput2']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput2)
-
-                # (3) RightMost
-                elif flag_exception_rightmost:
+                # (2) RightMost
+                if flag_exception_rightmost:
                     _LengthM1_VIAPMOSPoly2Met1_RightMost = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
                     _NumViaInputM12_RightMost = int((_LengthM1_VIAPMOSPoly2Met1_RightMost - _DRCObj._VIAxMinWidth - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide)
                                                     // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
@@ -584,30 +566,25 @@ class _Inverter(StickDiagram._StickDiagram):
 
                 tmp = []
                 for i in range(0, len(self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'])):
-                    tmp.append([self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2*i + 1][0],
-                                self._DesignParameter['PolyRouteXOnNMOS']['_XYCoordinates'][0][1]])
+                    tmp.append([self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][i][0],
+                                self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][0][1]])
                 self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'] = tmp
                 del tmp
 
-                # M2V2M3
-                _NumViaInputM23 = _NumViaInputM12
-                _ViaMet22Met3forInput = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-                _ViaMet22Met3forInput['_ViaMet22Met3NumberOfCOX'] = _NumViaInputM23
-                _ViaMet22Met3forInput['_ViaMet22Met3NumberOfCOY'] = 1
-                self._DesignParameter['_ViaMet22Met3forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3forInputIn{}'.format(_Name)))[0]
-                self._DesignParameter['_ViaMet22Met3forInput']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaMet22Met3forInput)
+                if flag_exception_rightmost:
+                    self._DesignParameter['_ViaMet12Met2forInput2']['_XYCoordinates'] = \
+                        [[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_XYCoordinates'][0][0],
+                         self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][0][1]]]
 
-                tmp = []
-                for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) // 2 - 1):
-                    tmp.append([self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i + 1][0],
-                                self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'][0][1]])
-                self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'] = tmp
-                del tmp
+                self._DesignParameter['_CLKMet2InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=None)
+                self._DesignParameter['_CLKMet2InRouting']['_Width'] = self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']
+                self._DesignParameter['_CLKMet2InRouting']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][0],
+                                                                                 self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][-1]]]
+                if flag_exception_rightmost:
+                    self._DesignParameter['_CLKMet2InRouting']['_XYCoordinates'] = [
+                        [self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][0],
+                         self._DesignParameter['_ViaMet12Met2forInput2']['_XYCoordinates'][0]]]
 
-                self._DesignParameter['_CLKMet3InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=None)
-                self._DesignParameter['_CLKMet3InRouting']['_Width'] = self._DesignParameter['_ViaMet22Met3forInput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']
-                self._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0],
-                                                                                 self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][-1]]]
         # end of 'if _VDD2VSSHeight == _VDD2VSSMinHeight:'
 
         # Input Met1 Routing -------------------------------------------------------------------------------------------
@@ -780,7 +757,7 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     # User-Defined Parameters
-    _Finger = 5
+    _Finger = 15
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 2

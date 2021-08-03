@@ -427,8 +427,8 @@ class SlicerWithSRLatchX4Obj (StickDiagram._StickDiagram) :
 
             self._DesignParameter['_Met4VDDRouting2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _Width=400)
             self._DesignParameter['_Met4VDDRouting2']['_Width'] = 2 * _SLGuardringWidth
-            self._DesignParameter['_Met4VDDRouting2']['_XYCoordinates'] = [[[Guardring_left + _SLGuardringWidth / 2, Guardring_top + _SLGuardringWidth / 2], [Guardring_left + _SLGuardringWidth / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + Guardring_bottom - self._DesignParameter['_Met5VDDRouting']['_Width'] / 2]],\
-                                                                           [[Guardring_right - _SLGuardringWidth / 2, Guardring_top + _SLGuardringWidth / 2], [Guardring_right - _SLGuardringWidth / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + Guardring_bottom - self._DesignParameter['_Met5VDDRouting']['_Width'] / 2]]]
+            self._DesignParameter['_Met4VDDRouting2']['_XYCoordinates'] = [[[Guardring_left + _SLGuardringWidth / 2, Guardring_top + _SLGuardringWidth / 2 + self._DesignParameter['_Met6VDDRouting']['_Width'] / 2], [Guardring_left + _SLGuardringWidth / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + Guardring_bottom - self._DesignParameter['_Met5VDDRouting']['_Width'] / 2]],\
+                                                                           [[Guardring_right - _SLGuardringWidth / 2, Guardring_top + _SLGuardringWidth / 2 + self._DesignParameter['_Met6VDDRouting']['_Width'] / 2], [Guardring_right - _SLGuardringWidth / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + Guardring_bottom - self._DesignParameter['_Met5VDDRouting']['_Width'] / 2]]]
 
             self._DesignParameter['_Met5VSSRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _Width=400)
             self._DesignParameter['_Met5VSSRouting']['_Width'] = 4 * _SLGuardringWidth
@@ -781,6 +781,13 @@ class SlicerWithSRLatchX4Obj (StickDiagram._StickDiagram) :
             del tmp
 
 
+            self._DesignParameter['_AdditionalMet2forVDDinSL'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=400)
+            self._DesignParameter['_AdditionalMet2forVDDinSL']['_Width'] = _SLGuardringWidth * 3 / 2
+
+            self._DesignParameter['_AdditionalMet2forVDDinSL']['_XYCoordinates'] = [[[Guardring_left + self._DesignParameter['_AdditionalMet2forVDDinSL']['_Width'] / 2 - _SLGuardringWidth / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][1][1]], [Guardring_left + self._DesignParameter['_AdditionalMet2forVDDinSL']['_Width'] / 2 - _SLGuardringWidth / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][1][1]]], \
+                                                                                    [[Guardring_right - self._DesignParameter['_AdditionalMet2forVDDinSL']['_Width'] / 2 + _SLGuardringWidth / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][1][1]], [Guardring_right - self._DesignParameter['_AdditionalMet2forVDDinSL']['_Width'] / 2 + _SLGuardringWidth / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][1][1]]]]
+
+
 
 
         print ('#################################       Clock Distribution Routing      #########################################')
@@ -919,14 +926,14 @@ if __name__ == '__main__' :
     _SRSLVT = True
     _SRPowerLine = None
     #####################Slicer#######################
-    _SLCLKinputPMOSFinger1 = 9
-    _SLCLKinputPMOSFinger2 = 1
-    _SLPMOSFinger = 5
+    _SLCLKinputPMOSFinger1 = 6
+    _SLCLKinputPMOSFinger2 = 3
+    _SLPMOSFinger = 2
     _SLPMOSChannelWidth = 1000
-    _SLDATAinputNMOSFinger = 6
+    _SLDATAinputNMOSFinger = 12
     _SLNMOSFinger = 2
-    _SLCLKinputNMOSFinger = 5
-    _SLNMOSChannelWidth = 1000
+    _SLCLKinputNMOSFinger = 8
+    _SLNMOSChannelWidth = 400
     _SLChannelLength = 30
     _SLDummy = True
     _SLSLVT = True

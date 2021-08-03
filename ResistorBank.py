@@ -1193,7 +1193,7 @@ if __name__ == '__main__' :
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2398 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2426 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _PowerLine = True

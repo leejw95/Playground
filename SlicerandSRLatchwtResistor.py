@@ -678,11 +678,13 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
     
     _XRBNum = 4
-    _YRBNum = 100
+    _YRBNum = 8
+
+    ##_YRBNum should be under 99
 
     ## X axis M7 Length >= 25um : overall m7 density < 80%
 
-    _TransmissionGateFinger = 10
+    _TransmissionGateFinger = 6
     _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
@@ -710,7 +712,7 @@ if __name__ == '__main__' :
     _TotalSubringType = True ## FIXED
     _TotalSubringXWidth = None ## FIXED
     _TotalSubringYWidth = None ## FIXED
-    _TotalSubringWidth = 200
+    _TotalSubringWidth = 170
 
     _SRFinger1 = 5
     _SRFinger2 = 1

@@ -357,6 +357,9 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         tmp = []
         for i in range (0, len(self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'])) :
+            if i == 0 :
+                continue
+
             if i == len(self._DesignParameter['_Met7LayerVRX']['_XYCoordinates']) - 1 :
                 tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
                         _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
@@ -365,12 +368,12 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                         _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
                         self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]])
                 
-                tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] + 
-                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
-                        [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] + 
-                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]])
+                # tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
+                #         _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] + 
+                #         self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
+                #         [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
+                #         _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] + 
+                #         self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]])
                 
             # elif i % 4 == 2 :
             #     continue
@@ -425,7 +428,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         # _TopBotleft = ((_YRBNum * _ResistorSpaceY) - (self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][-1][0][1] - self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][1]) - \
         #     self._DesignParameter['_Met7LayerVRX']['_Width'] - 4 * _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met7LayerVCM']['_Width'] * 2) // 2
 
-        _TopBotleft = abs(_GapbtwOriginY) + self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][0][0][1] - self._DesignParameter['_Met7LayerVCM']['_Width'] // 2 - _DRCObj._MetalxMinSpace11
+        _TopBotleft = abs(_GapbtwOriginY) + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][1] - self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11
 
         if _PowerLine == True :
             self._DesignParameter['_Met3LayerVDD'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)

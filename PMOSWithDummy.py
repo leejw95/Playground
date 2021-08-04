@@ -94,11 +94,43 @@ class _PMOS(StickDiagram._StickDiagram):
                                    [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate - 1) / 2 *  _LengthPMOSBtwPO + (_PMOSNumberofGate -1) *  _LengthPMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfPMOS[0][1]]
                                    ]
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
-        else:
-            self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = []
 
             if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
                 self._DesignParameter['_PODummyLayer']['_YWidth'] = float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']) + 2
+
+
+        else:
+
+            self._DesignParameter['_PODummyLayer']['_XWidth']= 0
+            self._DesignParameter['_PODummyLayer']['_YWidth']= 0
+
+
+            _LengthPMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
+                               self._DesignParameter['_POLayer']['_XWidth']
+            if (_PMOSNumberofGate % 2) == 0:  # When the number of finger is even
+                _xycoordinatetmp_dummy = [
+                    [_XYCoordinateOfPMOS[0][0] - (
+                                _PMOSNumberofGate / 2 - 0.5) * _LengthPMOSBtwPO + 0 * _LengthPMOSBtwPO - _DRCObj.DRCPolygateMinSpace(
+                        _DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) - (
+                                 float(self._DesignParameter['_PODummyLayer']['_XWidth']) / 2 + float(
+                             self._DesignParameter['_POLayer']['_XWidth']) / 2), _XYCoordinateOfPMOS[0][1]],
+                    [_XYCoordinateOfPMOS[0][0] - (_PMOSNumberofGate / 2 - 0.5) * _LengthPMOSBtwPO + (
+                                _PMOSNumberofGate - 1) * _LengthPMOSBtwPO + _DRCObj.DRCPolygateMinSpace(
+                        _DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) + float(
+                        self._DesignParameter['_PODummyLayer']['_XWidth']) / 2 + float(
+                        self._DesignParameter['_POLayer']['_XWidth']) / 2, _XYCoordinateOfPMOS[0][1]]
+                ]
+            elif (_PMOSNumberofGate % 2) == 1:  # When the number of finger is odd
+                _xycoordinatetmp_dummy = [
+                    [_XYCoordinateOfPMOS[0][0] - (_PMOSNumberofGate - 1) / 2 * _LengthPMOSBtwPO + 0 * _LengthPMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) - (float(self._DesignParameter['_PODummyLayer']['_XWidth']) / 2 + float(self._DesignParameter['_POLayer']['_XWidth']) / 2), _XYCoordinateOfPMOS[0][1]],
+                    [_XYCoordinateOfPMOS[0][0] - (_PMOSNumberofGate - 1) / 2 * _LengthPMOSBtwPO + (_PMOSNumberofGate - 1) * _LengthPMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) + (float(self._DesignParameter['_PODummyLayer']['_XWidth']) / 2 + float(self._DesignParameter['_POLayer']['_XWidth']) / 2), _XYCoordinateOfPMOS[0][1]]
+                ]
+            self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
+
+
+
+
+
 
         print ('#############################     METAL1 Layer Calcuation    ##############################################')
         # METAL1 Layer XWidth and YWidth Setting
@@ -294,7 +326,7 @@ if __name__=='__main__':
     _PMOSWidth = 200
     _PMOSChannelLength = 30
     # _GuardringWidth = 1000
-    _PMOSDummy = True
+    _PMOSDummy = False
     _SLVT = True
 
     # _Guardring = True

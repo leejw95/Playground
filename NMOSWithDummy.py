@@ -125,7 +125,22 @@ class _NMOS(StickDiagram._StickDiagram):
                 self._DesignParameter['_PODummyLayer']['_YWidth'] = float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']) + 2
 
         else:
-            self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = []
+            self._DesignParameter['_PODummyLayer']['_XWidth'] = 0
+            self._DesignParameter['_PODummyLayer']['_YWidth'] = 0
+
+            _LengthNMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_POLayer']['_XWidth']
+            if (_NMOSNumberofGate % 2) == 0: # When the number of finger is even
+                _xycoordinatetmp_dummy = [
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate / 2 - 0.5) *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2) ,  _XYCoordinateOfNMOS[0][1]],
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate / 2 - 0.5) *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2,  _XYCoordinateOfNMOS[0][1]]
+                                   ]
+            elif (_NMOSNumberofGate % 2) == 1: # When the number of finger is odd
+                _xycoordinatetmp_dummy = [
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) / 2 *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfNMOS[0][1]],
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) / 2 *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth +  _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfNMOS[0][1]]
+                                   ]
+            self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
+
 
 
 
@@ -379,7 +394,7 @@ if __name__ == '__main__':
     _NMOSFinger = 10
     _NMOSWidth = 200
     _NMOSChannelLength = 30
-    _NMOSDummy = True
+    _NMOSDummy = False
     _SLVT = True
 
     DesignParameters._Technology = '028nm'

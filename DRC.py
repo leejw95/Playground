@@ -1912,12 +1912,17 @@ class DRCSLVT:
             self._SlvtMinExtensionOnOD=56
             self._SlvtMinArea=95 ##????
             self._SlvtMinArea2 = 160000 ## SLVT (BH) Minimum Area 0.16um^2, junung
+
+
+
     def DRCSLVTMinSpace(self, _Width=None, _ParallelLength=None):
         if DesignParameters._Technology=='028nm':
             if _Width==None  and _ParallelLength==None:
                 return self._SlvtMinSpace
             else :
                 return self._SlvtMinSpace
+
+
 
 class DRC(DRCMultiplicantForMinEdgeWidth, DRCOD, DRCPOLYGATE, DRCPP, DRCNP, DRCCO, DRCMETAL1, DRCMETALy, DRCVIAy, DRCMETALz, DRCVIAz, DRCMETALr, DRCVIAr, DRCNW, DRCVIAx,DRCMETALx, DRCMinSnapSpacing, DRCRPO, DRCSLVT):
     def __init__(self ):

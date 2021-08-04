@@ -3498,7 +3498,7 @@ if __name__ == '__main__':
     NumViaPMOSMet22Met3CoY = None
     NumViaNMOSMet22Met3CoX = None
     NumViaNMOSMet22Met3CoY = None
-    _SLVT = True
+    _SLVT = False
     _PowerLine = True
 
     DesignParameters._Technology = '028nm'

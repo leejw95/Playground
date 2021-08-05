@@ -22,7 +22,8 @@ class _Inverter(StickDiagram._StickDiagram):
                                            _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NumViaPoly2Met1CoX=None,
                                            _NumViaPoly2Met1CoY=None, _NumViaPMOSMet12Met2CoX=None,
                                            _NumViaPMOSMet12Met2CoY=None, _NumViaNMOSMet12Met2CoX=None,
-                                           _NumViaNMOSMet12Met2CoY=None, _SLVT=None, _SupplyLine=None)
+                                           _NumViaNMOSMet12Met2CoY=None, _SLVT=None, _SupplyLine=None,
+                                           _StandAlone_DRCFREE=None)
 
     def __init__(self, _DesignParameter=None, _Name='Inverter'):
         if _DesignParameter != None:
@@ -36,7 +37,8 @@ class _Inverter(StickDiagram._StickDiagram):
                                   _VDD2VSSHeight=None, _Dummy=None, _NumSupplyCoX=None, _NumSupplyCoY=None,
                                   _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NumViaPoly2Met1CoX=None,
                                   _NumViaPoly2Met1CoY=None, _NumViaPMOSMet12Met2CoX=None, _NumViaPMOSMet12Met2CoY=None,
-                                  _NumViaNMOSMet12Met2CoX=None, _NumViaNMOSMet12Met2CoY=None, _SLVT=None, _SupplyLine=None):
+                                  _NumViaNMOSMet12Met2CoX=None, _NumViaNMOSMet12Met2CoY=None, _SLVT=None, _SupplyLine=None,
+                                  _StandAlone_DRCFREE=None):
 
         _DRCObj = DRC.DRC()
         _Name = 'Inverter'
@@ -150,19 +152,19 @@ class _Inverter(StickDiagram._StickDiagram):
         del VIANMOSMet12
         del NumViaYNMOS
 
-        # VIA Generation for Finger=1
+        # VIA Generation for Finger=1 / or calculate input poly-M1 contact YWidth
         if _Finger == 1:
             _VIAMOSPoly2Met1_F1 = copy.deepcopy(ViaPoly2Met1._ViaPoly2Met1._ParametersForDesignCalculation)
-            _VIAMOSPoly2Met1_F1['_ViaPoly2Met1NumberOfCOX'] = 1
-            _VIAMOSPoly2Met1_F1['_ViaPoly2Met1NumberOfCOY'] = 1
+            _VIAMOSPoly2Met1_F1['_ViaPoly2Met1NumberOfCOX'] = 1  # Need to Modify (by calculation for wide channel length)
+            _VIAMOSPoly2Met1_F1['_ViaPoly2Met1NumberOfCOY'] = 1  # Need to Modify (by user input parameter)
             self._DesignParameter['_VIANMOSPoly2Met1_F1'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None, _Name='ViaPoly2Met1_F1OnNMOSGateIn{}'.format(_Name)))[0]
             self._DesignParameter['_VIANMOSPoly2Met1_F1']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_VIAMOSPoly2Met1_F1)
             self._DesignParameter['_VIAPMOSPoly2Met1_F1'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None, _Name='ViaPoly2Met1_F1OnPMOSGateIn{}'.format(_Name)))[0]
             self._DesignParameter['_VIAPMOSPoly2Met1_F1']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_VIAMOSPoly2Met1_F1)
+        else:
+            WidthOfInputXM1 = _DRCObj._CoMinWidth + 2 * _DRCObj._Metal1MinEnclosureCO2  # how?? you have to choose / Need to Modify (by user input parameter) / ambiguous name
 
         # Coordinates setting ------------------------------------------------------------------------------------------
-        WidthOfInputXM1 = _DRCObj._CoMinWidth + 2 * _DRCObj._Metal1MinEnclosureCO2  # how?? you have to choose
-
         DistanceBtwVSS2NMOS = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
                              + 0.5 * max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
                                          self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
@@ -186,11 +188,23 @@ class _Inverter(StickDiagram._StickDiagram):
                                         + _DRCObj._Metal1MinSpace2
 
         else:  # assumption (same finger on PMOS NMOS)
+
+            XCoordinateOfViaF1 = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0] \
+                                 + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] * 0.5 \
+                                 + _DRCObj._Metal1MinSpaceAtCorner \
+                                 + self._DesignParameter['_VIAPMOSPoly2Met1_F1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] * 0.5
+
+            _LengthBtwPolyDummyEdge2PolyEdge = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] \
+                                               - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth'] * 0.5 \
+                                               - XCoordinateOfViaF1 \
+                                               - self._DesignParameter['_VIANMOSPoly2Met1_F1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] * 0.5 \
+
+            ''' Prev. Design
             _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
 
-            _LengthBtwPolyDummyEdge2PolyEdge = (_LengthBtwPoly2Poly * (_Finger / 2 + 0.5) - _ChannelLength / 2) \
+            _LengthBtwPolyDummyEdge2PolyEdge = (_LengthBtwPoly2Poly * (_Finger * 0.5 + 0.5) - _ChannelLength / 2) \
                                                - self._DesignParameter['_VIANMOSPoly2Met1_F1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] / 2
-
+            '''
             _LengthNPolyDummytoGoUp_Finger2 = math.sqrt(
                 _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthBtwPolyDummyEdge2PolyEdge * _LengthBtwPolyDummyEdge2PolyEdge) + 1
             _LengthPPolyDummytoGoUp_Finger2 = math.sqrt(
@@ -239,26 +253,42 @@ class _Inverter(StickDiagram._StickDiagram):
         del tmpPMOSOutputRouting
         del tmpNMOSOutputRouting
 
-        # Poly Boundary Generation for PMOS Gate -----------------------------------------------------------------------
+        #####################################VIA re-Coordinates for Poly Dummy######################################
+        # Need to Modify
+        if _Finger == 1:
+            self._DesignParameter['_VIANMOSPoly2Met1_F1']['_XYCoordinates'] = [
+                [XCoordinateOfViaF1,  # self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
+                 self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] +
+                 self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                 self._DesignParameter['_VIANMOSPoly2Met1_F1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyDummytoGoUp_Finger2]]
+            self._DesignParameter['_VIAPMOSPoly2Met1_F1']['_XYCoordinates'] = [
+                [XCoordinateOfViaF1,  # self._DesignParameter['_PMOS']['_XYCoordinates'][0][0],
+                 self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
+                 self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                 self._DesignParameter['_VIAPMOSPoly2Met1_F1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthPPolyDummytoGoUp_Finger2]]
+
+        # Poly Boundary Generation MOS Gate -----------------------------------------------------------------------
         '''
         Require : PMOS, NMOS
         '''
-        _LenBtwPMOSGates = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][-1][0] \
-                           - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][0][0] \
-                           + _ChannelLength
+        if _Finger != 1:
+            _LenBtwPMOSGates = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][-1][0] \
+                               - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][0][0] \
+                               + _ChannelLength
+            _LenBtwNMOSGates = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] \
+                               - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][0][0] \
+                               + _ChannelLength
+        else:
+            _LenBtwPMOSGates = self._DesignParameter['_VIAPMOSPoly2Met1_F1']['_XYCoordinates'][0][0] \
+                               - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][0][0]
+            _LenBtwNMOSGates = self._DesignParameter['_VIANMOSPoly2Met1_F1']['_XYCoordinates'][0][0] \
+                               - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][0][0]
 
         self._DesignParameter['_PolyRouteXOnPMOS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0], _Datatype=DesignParameters._LayerMapping['POLY'][1], _XYCoordinates=[], _XWidth=None, _YWidth=None, _ElementName=None, )
-        self._DesignParameter['_PolyRouteXOnPMOS']['_XWidth'] = _LenBtwPMOSGates
-        self._DesignParameter['_PolyRouteXOnPMOS']['_YWidth'] = _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByPOAtLeastTwoSide  # calculated when only one row -> should be changed
-
-        # Poly Boundary Generation for NMOS Gate -----------------------------------------------------------------------
-
-        _LenBtwNMOSGates = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] \
-                           - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][0][0] \
-                           + _ChannelLength
-
         self._DesignParameter['_PolyRouteXOnNMOS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0], _Datatype=DesignParameters._LayerMapping['POLY'][1], _XYCoordinates=[], _XWidth=None, _YWidth=None, _ElementName=None, )
-        self._DesignParameter['_PolyRouteXOnNMOS']['_XWidth'] = _LenBtwPMOSGates
+        self._DesignParameter['_PolyRouteXOnPMOS']['_XWidth'] = _LenBtwPMOSGates
+        self._DesignParameter['_PolyRouteXOnNMOS']['_XWidth'] = _LenBtwNMOSGates
+        self._DesignParameter['_PolyRouteXOnPMOS']['_YWidth'] = _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByPOAtLeastTwoSide  # calculated when only one row -> should be changed
         self._DesignParameter['_PolyRouteXOnNMOS']['_YWidth'] = _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByPOAtLeastTwoSide
 
         # Additional Poly Routing --------------------------------------------------------------------------------------
@@ -268,15 +298,26 @@ class _Inverter(StickDiagram._StickDiagram):
         Require  : NMOS, PMOS (XYCoordinates)
         '''
         # Row Line (Only setting Coordinates)
-        self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'] = [
-            [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + DistanceBtwNMOS2PolyInput]
-        ]
+        if _Finger != 1:
+            self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'] = [
+                [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
+                 self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + DistanceBtwNMOS2PolyInput]
+            ]
 
-        self._DesignParameter['_PolyRouteXOnPMOS']['_XYCoordinates'] = [
-            [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - DistanceBtwPMOS2PolyInput]
-        ]
+            self._DesignParameter['_PolyRouteXOnPMOS']['_XYCoordinates'] = [
+                [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0],
+                 self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - DistanceBtwPMOS2PolyInput]
+            ]
+        else:
+            self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'] = [
+                [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] + _LenBtwPMOSGates*0.5,
+                 self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + DistanceBtwNMOS2PolyInput]
+            ]
+
+            self._DesignParameter['_PolyRouteXOnPMOS']['_XYCoordinates'] = [
+                [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + _LenBtwPMOSGates*0.5,
+                 self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - DistanceBtwPMOS2PolyInput]
+            ]
 
         # Column Line
         self._DesignParameter['_PolyRouteYOnPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0], _Datatype=DesignParameters._LayerMapping['POLY'][1], _XYCoordinates=[], _Width=None)
@@ -304,19 +345,7 @@ class _Inverter(StickDiagram._StickDiagram):
         del tmpPolyRouteYOnNMOS
 
 
-        #####################################VIA re-Coordinates for Poly Dummy######################################
-        # Need to Modify
-        if _Finger == 1:
-            self._DesignParameter['_VIANMOSPoly2Met1_F1']['_XYCoordinates'] = [
-                [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIANMOSPoly2Met1_F1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyDummytoGoUp_Finger2]]
-            self._DesignParameter['_VIAPMOSPoly2Met1_F1']['_XYCoordinates'] = [
-                [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOSPoly2Met1_F1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthPPolyDummytoGoUp_Finger2]]
+
 
 
         # VSS & VDD Supply Routing (Metal1) ----------------------------------------------------------------------------
@@ -367,12 +396,15 @@ class _Inverter(StickDiagram._StickDiagram):
                                         ])  #
 
         if (_Finger % 4 == 2) and (_Finger != 2):  # exception case (6, 10, 14, 18, ...)
+            flag_exception_f6 = True
             del tmpOutputRoutingM1Y[-1]
             tmpOutputRoutingM1Y.append(
                 [CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
                                     self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1]),
                  CoordinateCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
                                     self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1])])
+        else:
+            flag_exception_f6 = False
 
         self._DesignParameter['_OutputRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
         self._DesignParameter['_OutputRouting']['_Width'] = _DRCObj._Metal1MinWidth
@@ -458,7 +490,7 @@ class _Inverter(StickDiagram._StickDiagram):
                                 - _DRCObj._Metal1MinSpaceAtCorner
             tmpLeftCoBoundary = tmpLeftM1Boundary + _DRCObj._Metal1MinEnclosureCO                # Calculate by M1-CO
             tmpRightCoBoundary = tmpRightM1Boundary - _DRCObj._Metal1MinEnclosureCO              # Calculate by M1-CO
-        else:
+        elif _Finger != 1:
             tmpLeftM1Boundary = self._DesignParameter['_OutputRouting']['_XYCoordinates'][-1][0][0] \
                                 + 0.5 * self._DesignParameter['_OutputRouting']['_Width'] \
                                 + _DRCObj._Metal1MinSpaceAtCorner
@@ -466,6 +498,9 @@ class _Inverter(StickDiagram._StickDiagram):
                                  + 0.5 * _ChannelLength
             tmpLeftCoBoundary = tmpLeftM1Boundary + _DRCObj._Metal1MinEnclosureCO                # Calculate by M1-CO
             tmpRightCoBoundary = tmpRightPOBoundary - _DRCObj._CoMinEnclosureByPOAtLeastTwoSide  # Calculate by PO-CO
+        else:  # Finger == 1
+            tmpLeftCoBoundary = 0
+            tmpRightCoBoundary = 0
 
         NumCoRightMost = int((tmpRightCoBoundary - tmpLeftCoBoundary - _DRCObj._CoMinWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1
 
@@ -482,95 +517,75 @@ class _Inverter(StickDiagram._StickDiagram):
                 [(tmpLeftCoBoundary + tmpRightCoBoundary)/2, self._DesignParameter['_PolyRouteXOnPMOS']['_XYCoordinates'][0][1]]
             ]  # both NMOS & PMOS
 
-        # if '_VIAPMOSPoly2Met1_F1' in self._DesignParameter:
-        #     self._DesignParameter['_VIANMOSPoly2Met1'] = self._DesignParameter['_VIANMOSPoly2Met1_F1']
-        #     self._DesignParameter['_VIAPMOSPoly2Met1'] = self._DesignParameter['_VIAPMOSPoly2Met1_F1']
+        if '_VIAPMOSPoly2Met1_F1' in self._DesignParameter:
+            self._DesignParameter['_VIANMOSPoly2Met1'] = self._DesignParameter['_VIANMOSPoly2Met1_F1']
+            self._DesignParameter['_VIAPMOSPoly2Met1'] = self._DesignParameter['_VIAPMOSPoly2Met1_F1']
+            del self._DesignParameter['_VIANMOSPoly2Met1_F1']
+            del self._DesignParameter['_VIAPMOSPoly2Met1_F1']
 
-        # # # Input M1 Route up tp M2 or M3 -> pass, later
-        # if _VDD2VSSHeight == _VDD2VSSMinHeight:
-        #     if _Finger == 3:
-        #         _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
-        #         _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = 2
-        #         _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOY'] = 1
-        #         self._DesignParameter['_ViaMet12Met2forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInputIn{}'.format(_Name)))[0]
-        #         self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput)
-        #
-        #         tmpXWidth = self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
-        #         tmpYWidth = self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        #
-        #
-        #         tmpXCoordinate = self._DesignParameter['_OutputRouting']['_XYCoordinates'][1][0][0] \
-        #                          - self._DesignParameter['_OutputRouting']['_Width']/2 \
-        #                          - _DRCObj._MetalxMinSpaceAtCorner \
-        #                          - tmpXWidth/2
-        #         tmpYCoordinate = self._DesignParameter['_PolyRouteXOnPMOS']['_XYCoordinates'][0][1]
-        #         self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'] = [[tmpXCoordinate, tmpYCoordinate]]
-        #         self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = \
-        #             self._DesignParameter['_PolyRouteXOnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        #
-        #     elif _Finger == 4:
-        #         _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
-        #         _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = 2
-        #         _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOY'] = 1
-        #         self._DesignParameter['_ViaMet12Met2forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInputIn{}'.format(_Name)))[0]
-        #         self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput)
-        #
-        #         tmpXWidth = self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
-        #         tmpYWidth = self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        #
-        #
-        #         tmpXCoordinate = self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][0] \
-        #                          + self._DesignParameter['_OutputRouting']['_Width']/2 \
-        #                          + _DRCObj._MetalxMinSpaceAtCorner \
-        #                          + tmpXWidth/2
-        #         tmpYCoordinate = self._DesignParameter['_PolyRouteXOnPMOS']['_XYCoordinates'][0][1]
-        #         self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'] = [[tmpXCoordinate, tmpYCoordinate]]
-        #         self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = \
-        #             self._DesignParameter['_PolyRouteXOnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        #
-        #     elif _Finger > 4:  #
-        #         # M1V1M2
-        #         _MaxLengthofM2 = int(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2][0] \
-        #                              - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0] \
-        #                              - _DRCObj._MetalxMinWidth - 2*_DRCObj._MetalxMinSpaceAtCorner)
-        #
-        #         _NumViaInputM12 = (_MaxLengthofM2 - 2*_DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) \
-        #                           // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) + 1   # calculate based on M2
-        #
-        #         _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
-        #         _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = _NumViaInputM12
-        #         _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOY'] = 1
-        #         self._DesignParameter['_ViaMet12Met2forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInputIn{}'.format(_Name)))[0]
-        #         self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput)
-        #
-        #         tmp = []
-        #         for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) // 2 - 1):
-        #             tmp.append([self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2*i + 1][0],
-        #                         self._DesignParameter['PolyRouteXOnNMOS']['_XYCoordinates'][0][1]])
-        #         self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'] = tmp
-        #         del tmp
-        #
-        #         # M2V2M3
-        #         _NumViaInputM23 = _NumViaInputM12
-        #         _ViaMet22Met3forInput = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-        #         _ViaMet22Met3forInput['_ViaMet22Met3NumberOfCOX'] = _NumViaInputM23
-        #         _ViaMet22Met3forInput['_ViaMet22Met3NumberOfCOY'] = 1
-        #         self._DesignParameter['_ViaMet22Met3forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3forInputIn{}'.format(_Name)))[0]
-        #         self._DesignParameter['_ViaMet22Met3forInput']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaMet22Met3forInput)
-        #
-        #         tmp = []
-        #         for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) // 2 - 1):
-        #             tmp.append([self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i + 1][0],
-        #                         self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'][0][1]])
-        #         self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'] = tmp
-        #         del tmp
-        #
-        #         self._DesignParameter['_CLKMet3InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=None)
-        #         self._DesignParameter['_CLKMet3InRouting']['_Width'] = self._DesignParameter['_ViaMet22Met3forInput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']
-        #         self._DesignParameter['_CLKMet3InRouting']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0],
-        #                                                                          self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][-1]]]
-        #     # Need when finger == (1,2)
-        # # end of 'if _VDD2VSSHeight == _VDD2VSSMinHeight:'
+        ################################################################################################################
+        # # Input M1 Route up tp M2 or M3 -> pass, later
+        if _VDD2VSSHeight == _VDD2VSSMinHeight:
+            tmpCount_GateViaLayer = 0
+
+            if '_VIAMOSPoly2Met1RightMost' in self._DesignParameter:
+                tmpCount_GateViaLayer += 1
+                flag_exception_rightmost = True
+            else:
+                flag_exception_rightmost = False
+
+            if '_VIAPMOSPoly2Met1' in self._DesignParameter:
+                tmpCount_GateViaLayer += len(self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'])
+
+
+            if tmpCount_GateViaLayer > 1:  #
+                # M1V1M2
+                # (1) Normal width
+                _LengthM1_VIAPMOSPoly2Met1 = self._DesignParameter['_VIAPMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+                _NumViaInputM12 = int((_LengthM1_VIAPMOSPoly2Met1 - _DRCObj._VIAxMinWidth - 2*_DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide)
+                                      // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
+                _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+                _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = _NumViaInputM12
+                _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOY'] = 1
+                self._DesignParameter['_ViaMet12Met2forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInputIn{}'.format(_Name)))[0]
+                self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput)
+
+                # (2) RightMost
+                if flag_exception_rightmost:
+                    _LengthM1_VIAPMOSPoly2Met1_RightMost = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+                    _NumViaInputM12_RightMost = int((_LengthM1_VIAPMOSPoly2Met1_RightMost - _DRCObj._VIAxMinWidth - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide)
+                                                    // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
+                    _ViaMet12Met2forInput2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+                    _ViaMet12Met2forInput2['_ViaMet12Met2NumberOfCOX'] = _NumViaInputM12_RightMost
+                    _ViaMet12Met2forInput2['_ViaMet12Met2NumberOfCOY'] = 1
+                    self._DesignParameter['_ViaMet12Met2forInput2'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInput2In{}'.format(_Name)))[0]
+                    self._DesignParameter['_ViaMet12Met2forInput2']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput2)
+
+
+                tmp = []
+                for i in range(0, len(self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'])):
+                    tmp.append([self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][i][0],
+                                self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][0][1]])
+                self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'] = tmp
+                del tmp
+
+                if flag_exception_rightmost:
+                    self._DesignParameter['_ViaMet12Met2forInput2']['_XYCoordinates'] = \
+                        [[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_XYCoordinates'][0][0],
+                         self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][0][1]]]
+
+                self._DesignParameter['_CLKMet2InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=None)
+                self._DesignParameter['_CLKMet2InRouting']['_Width'] = self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']
+                self._DesignParameter['_CLKMet2InRouting']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][0],
+                                                                                 self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][-1]]]
+                if flag_exception_rightmost:
+                    self._DesignParameter['_CLKMet2InRouting']['_XYCoordinates'] = [
+                        [self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][0],
+                         self._DesignParameter['_ViaMet12Met2forInput2']['_XYCoordinates'][0]]]
+
+        # end of 'if _VDD2VSSHeight == _VDD2VSSMinHeight:'
 
         # Input Met1 Routing -------------------------------------------------------------------------------------------
         '''
@@ -586,16 +601,38 @@ class _Inverter(StickDiagram._StickDiagram):
                                         self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][i]])
         if '_VIAMOSPoly2Met1RightMost' in self._DesignParameter:
             tmpInputRouting.append(self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_XYCoordinates'])
-        if '_VIANMOSPoly2Met1_F1' in self._DesignParameter:  # Need to Modify.
-            print('testetstsfdasfasdfasd')
-            tmpInputRouting.append([self._DesignParameter['_VIANMOSPoly2Met1_F1']['_XYCoordinates'][0],
-                                    self._DesignParameter['_VIAPMOSPoly2Met1_F1']['_XYCoordinates'][0]])
 
         self._DesignParameter['_InputRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
         self._DesignParameter['_InputRouting']['_Width'] = _DRCObj._Metal1MinWidth
         self._DesignParameter['_InputRouting']['_XYCoordinates'] = tmpInputRouting
 
         del tmpInputRouting
+
+        # exception case... Need to Modify later
+        _DRC_Metal1MinimumArea = 10000
+        _DRC_M1MinWidth_WhenCalcMinArea = 130
+
+        if (_Finger == 1) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
+            tmpX = self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            tmpY = self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            if (tmpX * tmpY) < _DRC_Metal1MinimumArea:
+                tmpY_calc = _DRC_Metal1MinimumArea / tmpX
+                if tmpY_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE
+                    tmpY_calc = _DRC_M1MinWidth_WhenCalcMinArea
+
+                self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = tmpY_calc
+
+        elif (_Finger == 2) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
+            tmpX = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            tmpY = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+            if (tmpX * tmpY) < _DRC_Metal1MinimumArea:
+                tmpX_calc = _DRC_Metal1MinimumArea / tmpY
+                if tmpX_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE
+                    tmpX_calc = _DRC_M1MinWidth_WhenCalcMinArea
+                self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = tmpX_calc
+                self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] = \
+                    self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] \
+                    + tmpX_calc/2 - tmpX/2
 
         # NWELL & SLVT Generation & Coordinates ------------------------------------------------------------------------
         '''
@@ -633,6 +670,25 @@ class _Inverter(StickDiagram._StickDiagram):
                 self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
                 self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
                                                                           (self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]) / 2]]
+
+            elif (_VDD2VSSHeight != _VDD2VSSMinHeight) and (_StandAlone_DRCFREE == True) :   # Need to Modify : Should check by another way (SLVT's area)
+                slvtY_calc = math.ceil(_DRCObj._SlvtMinArea2 / self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth']) + 1
+
+                self._DesignParameter['_SLVTLayer'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1])
+                self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth']
+                self._DesignParameter['_SLVTLayer']['_YWidth'] = slvtY_calc
+                self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
+                                                                          (self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + slvtY_calc *0.5 - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']*0.5)]]
+
+                slvtPMOS_bot = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth'] / 2
+                slvtNMOS_top = self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth'] / 2 + slvtY_calc
+
+                if (slvtPMOS_bot - slvtNMOS_top) < _DRCObj._SlvtMinSpace:
+                    self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth']
+                    self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
+                    self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = [
+                        [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
+                         (self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]) / 2]]
 
         # Pin Generation & Coordinates ---------------------------------------------------------------------------------
         self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], _XYCoordinates=[[0,0]], _Mag=0.05, _Angle=0, _TEXT='VSS')
@@ -701,11 +757,11 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     # User-Defined Parameters
-    _Finger = 7
+    _Finger = 15
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 2
-    _VDD2VSSHeight = None   # None / 2000
+    _VDD2VSSHeight = None   # None / 1750
     _Dummy = True
     _SLVT = True
     _LVT = False
@@ -723,6 +779,7 @@ if __name__ == '__main__':
     _NumVIAMet12COX = None
     _NumVIAMet12COY = None
     _SupplyLine = False
+    _StandAlone_DRCFREE = True
 
     # Generate Inverter Layout Object
     InverterObj = _Inverter(_DesignParameter=None, _Name='Inverter')
@@ -737,10 +794,11 @@ if __name__ == '__main__':
                                           _NumViaPMOSMet12Met2CoY=_NumViaPMOSMet12Met2CoY,
                                           _NumViaNMOSMet12Met2CoX=_NumViaNMOSMet12Met2CoX,
                                           _NumViaNMOSMet12Met2CoY=_NumViaNMOSMet12Met2CoY,
+                                          _StandAlone_DRCFREE=_StandAlone_DRCFREE
                                           )
 
     InverterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=InverterObj._DesignParameter)
-    _fileName = 'Inverter0802.gds'                                    # Need to get current date / time
+    _fileName = 'Inverter0803.gds'                                    # Need to get current date / time
     testStreamFile = open('./{}'.format(_fileName), 'wb')
     tmp = InverterObj._CreateGDSStream(InverterObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)

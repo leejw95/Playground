@@ -3483,12 +3483,14 @@ if __name__ == '__main__':
     _PMOSChannelWidth4 = 400
     _ChannelLength = 30
     _VDD2VSSHeightAtOneSide = None
-    _Dummy = True
+    _Dummy = False
     _NumSupplyCoX = None
     _NumSupplyCoY = 2
     _SupplyMet1XWidth = None
     _SupplyMet1YWidth = None
     NumViaPoly2Met1CoX = None
+    NumViaPoly2Met1CoY = None
+    NumViaPMOSMet12Met2CoX = None
     NumViaPMOSMet12Met2CoY = None
     NumViaNMOSMet12Met2CoX = None
     NumViaNMOSMet12Met2CoY = None
@@ -3496,24 +3498,24 @@ if __name__ == '__main__':
     NumViaPMOSMet22Met3CoY = None
     NumViaNMOSMet22Met3CoX = None
     NumViaNMOSMet22Met3CoY = None
-    _SLVT = True
+    _SLVT = False
     _PowerLine = True
 
     DesignParameters._Technology = '028nm'
 
     SRLatchObj = _SRLatch(_DesignParameter=None, _Name='SRLatch')
-    SRLatchObj._CalculateDesignParameter(_Finger1=5, _Finger2=1, _Finger3=2, _Finger4=2, \
-                                         _NMOSChannelWidth1=200, _PMOSChannelWidth1=400, _NMOSChannelWidth2=200,
-                                         _PMOSChannelWidth2=400, _NMOSChannelWidth3=200, _PMOSChannelWidth3=400,
-                                         _NMOSChannelWidth4=200, _PMOSChannelWidth4=400, _ChannelLength=30, \
-                                         _VDD2VSSHeightAtOneSide=None, _Dummy=True, _NumSupplyCoX=None, _NumSupplyCoY=2, \
-                                         _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, NumViaPoly2Met1CoX=None, \
-                                         NumViaPoly2Met1CoY=None, NumViaPMOSMet12Met2CoX=None,
-                                         NumViaPMOSMet12Met2CoY=None, \
-                                         NumViaNMOSMet12Met2CoX=None, NumViaNMOSMet12Met2CoY=None,
-                                         NumViaPMOSMet22Met3CoX=None, NumViaPMOSMet22Met3CoY=None, \
-                                         NumViaNMOSMet22Met3CoX=None, NumViaNMOSMet22Met3CoY=None, _SLVT=True,
-                                         _PowerLine=True)
+    SRLatchObj._CalculateDesignParameter(_Finger1=_Finger1, _Finger2=_Finger2, _Finger3=_Finger3, _Finger4=_Finger4, \
+                                         _NMOSChannelWidth1=_NMOSChannelWidth1, _PMOSChannelWidth1=_PMOSChannelWidth1, _NMOSChannelWidth2=_NMOSChannelWidth2,
+                                         _PMOSChannelWidth2=_PMOSChannelWidth2, _NMOSChannelWidth3=_NMOSChannelWidth3, _PMOSChannelWidth3=_PMOSChannelWidth3,
+                                         _NMOSChannelWidth4=_NMOSChannelWidth4, _PMOSChannelWidth4=_PMOSChannelWidth4, _ChannelLength=_ChannelLength, \
+                                         _VDD2VSSHeightAtOneSide=_VDD2VSSHeightAtOneSide, _Dummy=_Dummy, _NumSupplyCoX=_NumSupplyCoX, _NumSupplyCoY=_NumSupplyCoY, \
+                                         _SupplyMet1XWidth=_SupplyMet1XWidth, _SupplyMet1YWidth=_SupplyMet1YWidth, NumViaPoly2Met1CoX=NumViaPoly2Met1CoX, \
+                                         NumViaPoly2Met1CoY=NumViaPoly2Met1CoY, NumViaPMOSMet12Met2CoX=NumViaPMOSMet12Met2CoX,
+                                         NumViaPMOSMet12Met2CoY=NumViaPMOSMet12Met2CoY, \
+                                         NumViaNMOSMet12Met2CoX=NumViaNMOSMet12Met2CoX, NumViaNMOSMet12Met2CoY=NumViaNMOSMet12Met2CoY,
+                                         NumViaPMOSMet22Met3CoX=NumViaPMOSMet22Met3CoX, NumViaPMOSMet22Met3CoY=NumViaPMOSMet22Met3CoY, \
+                                         NumViaNMOSMet22Met3CoX=NumViaNMOSMet22Met3CoX, NumViaNMOSMet22Met3CoY=NumViaNMOSMet22Met3CoY, _SLVT=_SLVT,
+                                         _PowerLine=_PowerLine)
 
     # SRLatchObj._CalculateDesignParameter(_Finger1 = 3, _Finger2 =3, _Finger3 = 3, _Finger4 = 3, \
     #                               #_PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \

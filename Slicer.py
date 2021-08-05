@@ -20,6 +20,7 @@ import user_define_exceptions
 
 import copy
 import DRC
+import random
 
 import ftplib
 import os
@@ -1934,10 +1935,6 @@ class _Slicer(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    DesignParameters._Technology = '028nm'
-
-
-    SlicerObj = _Slicer(_DesignParameter=None, _Name='Slicer')
     # SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1 = 6, _CLKinputPMOSFinger2 = 3, _PMOSFinger = 2, _PMOSChannelWidth = 1000,
     #                                     _DATAinputNMOSFinger = 12, _NMOSFinger = 2, _CLKinputNMOSFinger = 8, _NMOSChannelWidth = 1000,
     #                                     _ChannelLength = 30, _Dummy = True, _SLVT = True, _GuardringWidth = 200, _Guardring = True,
@@ -1951,66 +1948,138 @@ if __name__ == '__main__':
     #                                     _SlicerGuardringWidth=200, _SlicerGuardring= None,
     #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
     #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
-    _CLKinputPMOSFinger1 = 6
-    _CLKinputPMOSFinger2 = 3
-    _PMOSFinger = 8
-    _PMOSChannelWidth = 400
-    _DATAinputNMOSFinger = 12
-    _NMOSFinger = 2
-    _CLKinputNMOSFinger = 8
-    _NMOSChannelWidth = 400
-    _ChannelLength = 30
-    _Dummy = True
-    _SLVT = True
-    _GuardringWidth = 200
-    _Guardring = True
-    _SlicerGuardringWidth = 200
-    _SlicerGuardring = None
-    _NumSupplyCOY = None
-    _NumSupplyCOX = None
-    _SupplyMet1XWidth = None
-    _SupplyMet1YWidth = None
-    _VDD2VSSHeight = None
-    _NumVIAPoly2Met1COX = None
-    _NumVIAPoly2Met1COY = None
-    _NumVIAMet12COX = None
-    _NumVIAMet12COY = None
-    _PowerLine = False
-    SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1=_CLKinputPMOSFinger1, _CLKinputPMOSFinger2=_CLKinputPMOSFinger2, _PMOSFinger=_PMOSFinger,
-                                        _PMOSChannelWidth=_PMOSChannelWidth,
-                                        _DATAinputNMOSFinger=_DATAinputNMOSFinger, _NMOSFinger=_NMOSFinger, _CLKinputNMOSFinger=_CLKinputNMOSFinger,
-                                        _NMOSChannelWidth=_NMOSChannelWidth,
-                                        _ChannelLength=_ChannelLength, _Dummy=_Dummy, _SLVT=_SLVT, _GuardringWidth=_GuardringWidth,
-                                        _Guardring=_Guardring,
-                                        _SlicerGuardringWidth=_SlicerGuardringWidth, _SlicerGuardring=_SlicerGuardring,
-                                        _NumSupplyCOY=_NumSupplyCOY, _NumSupplyCOX=_NumSupplyCOX, _SupplyMet1XWidth=_SupplyMet1XWidth,
-                                        _SupplyMet1YWidth=_SupplyMet1YWidth, _VDD2VSSHeight=_VDD2VSSHeight,
-                                        _NumVIAPoly2Met1COX=_NumVIAPoly2Met1COX, _NumVIAPoly2Met1COY=_NumVIAPoly2Met1COY, _NumVIAMet12COX=_NumVIAMet12COX,
-                                        _NumVIAMet12COY=_NumVIAMet12COY, _PowerLine=_PowerLine)
+
+    for _tries in range(1, 101) :
 
 
-    SlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerObj._DesignParameter)
-    _fileName = 'Slicer.gds'
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-    tmp = SlicerObj._CreateGDSStream(SlicerObj._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
+        _CLKinputPMOSFinger1 = random.randint(1, 16)
+        _CLKinputPMOSFinger2 = random.randint(1, 16)
+        _PMOSFinger = random.randint(1, 16)
+        _PMOSChannelWidth = random.randrange(400, 1050, 50)
+        _DATAinputNMOSFinger = random.randint(1, 16)
+        _NMOSFinger = random.randint(1, 16)
+        _CLKinputNMOSFinger = random.randint(1, 16)
+        _NMOSChannelWidth = random.randrange(400, 1050, 50)
+        _ChannelLength = 30
+        _Dummy = True
+        _SLVT = True
+        _GuardringWidth = 200
+        _Guardring = True
+        _SlicerGuardringWidth = 200
+        _SlicerGuardring = None
+        _NumSupplyCOY = None
+        _NumSupplyCOX = None
+        _SupplyMet1XWidth = None
+        _SupplyMet1YWidth = None
+        _VDD2VSSHeight = None
+        _NumVIAPoly2Met1COX = None
+        _NumVIAPoly2Met1COY = None
+        _NumVIAMet12COX = None
+        _NumVIAMet12COY = None
+        _PowerLine = False
 
 
 
-    import ftplib
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('Slicer.gds', 'rb')
-    ftp.storbinary('STOR Slicer.gds', myfile)
-    myfile.close()
-    ftp.close()
+        DesignParameters._Technology = '028nm'
 
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    # myfile = open('Slicer.gds', 'rb')
-    # ftp.storbinary('STOR Slicer.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        SlicerObj = _Slicer(_DesignParameter=None, _Name='Slicer')
+
+        SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1=_CLKinputPMOSFinger1, _CLKinputPMOSFinger2=_CLKinputPMOSFinger2, _PMOSFinger=_PMOSFinger,
+                                            _PMOSChannelWidth=_PMOSChannelWidth,
+                                            _DATAinputNMOSFinger=_DATAinputNMOSFinger, _NMOSFinger=_NMOSFinger, _CLKinputNMOSFinger=_CLKinputNMOSFinger,
+                                            _NMOSChannelWidth=_NMOSChannelWidth,
+                                            _ChannelLength=_ChannelLength, _Dummy=_Dummy, _SLVT=_SLVT, _GuardringWidth=_GuardringWidth,
+                                            _Guardring=_Guardring,
+                                            _SlicerGuardringWidth=_SlicerGuardringWidth, _SlicerGuardring=_SlicerGuardring,
+                                            _NumSupplyCOY=_NumSupplyCOY, _NumSupplyCOX=_NumSupplyCOX, _SupplyMet1XWidth=_SupplyMet1XWidth,
+                                            _SupplyMet1YWidth=_SupplyMet1YWidth, _VDD2VSSHeight=_VDD2VSSHeight,
+                                            _NumVIAPoly2Met1COX=_NumVIAPoly2Met1COX, _NumVIAPoly2Met1COY=_NumVIAPoly2Met1COY, _NumVIAMet12COX=_NumVIAMet12COX,
+                                            _NumVIAMet12COY=_NumVIAMet12COY, _PowerLine=_PowerLine)
+
+
+        SlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerObj._DesignParameter)
+        _fileName = 'Slicer.gds'
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = SlicerObj._CreateGDSStream(SlicerObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
+
+
+
+        import ftplib
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        myfile = open('Slicer.gds', 'rb')
+        ftp.storbinary('STOR Slicer.gds', myfile)
+        myfile.close()
+        ftp.close()
+
+        # ftp = ftplib.FTP('141.223.22.156')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        # myfile = open('Slicer.gds', 'rb')
+        # ftp.storbinary('STOR Slicer.gds', myfile)
+        # myfile.close()
+        # ftp.close()
+
+    ################################## DRC Checker ##################################
+
+        import paramiko
+        import sys
+        import os
+
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        print ("############ Connecting to Server... ############")
+        ssh.connect('141.223.22.156', port='22', username='jicho0927', password='cho89140616!!')
+
+        commandlines1 = "cd OPUS/SAMSUNG28n; source setup.cshrc; strmin -library 'Slicer_test' -strmFile '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/Slicer.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
+        stdin, stdout, stderr = ssh.exec_command(commandlines1)
+        print (''.join(stdout.read()))
+
+        commandlines2 = "cd OPUS/SAMSUNG28n; source setup.cshrc; strmout -library 'Slicer_test' -strmFile '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/Slicer.calibre.db' -topCell 'Slicer' -view layout -runDir '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/' -logFile 'PIPO.LOG.Slicer' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
+        stdin, stdout, stderr = ssh.exec_command(commandlines2)
+        print (''.join(stdout.read()))
+
+        commandlines4 = "cd OPUS/SAMSUNG28n/DRC/run; pwd; sed -i '9s,.*,LAYOUT PATH  \"/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/Slicer.calibre.db\",' _cmos28lp.drc.cal_"
+        stdin, stdout, stderr = ssh.exec_command(commandlines4)
+        print (''.join(stdout.read()))
+
+
+        print('_Tries = ', _tries)
+        print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
+        print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
+        print('_PMOSFinger = ', _PMOSFinger)
+        print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
+        print('_NMOSFinger = ', _NMOSFinger)
+        print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
+        print('_NMOSChanneWidth = ', _NMOSChannelWidth)
+        print('_PMOSChanneWidth = ', _PMOSChannelWidth)
+
+
+        commandlines3 = "cd OPUS/SAMSUNG28n; source setup.cshrc; calibre -drc -hier -nowait /mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/_cmos28lp.drc.cal_"
+        stdin, stdout, stderr = ssh.exec_command(commandlines3)
+        print (''.join(stdout.read()))
+
+        readfile = ssh.open_sftp()
+        file = readfile.open('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/Slicer.drc.summary')
+        for line in (file.readlines()[-2:-1]):
+            print (line)
+            if "0" not in line:
+                break
+                raise Exception("DRC error in : ", _tries)
+
+            else:
+                commandlines6 = "cd OPUS/SAMSUNG28n/; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"Slicer_test\" \"\" \"\" \"\")),' Skillcode.il"
+                stdin, stdout, stderr = ssh.exec_command(commandlines6)
+                print (''.join(stdout.read()))
+                commandlines5 = "cd OPUS/SAMSUNG28n; source setup.cshrc; virtuoso -nograph -restore Skillcode.il"
+                stdin, stdout, stderr = ssh.exec_command(commandlines5)
+
+
+        ssh.close
+
+
+    print ("DRC Clean!!!")
+

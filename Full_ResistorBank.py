@@ -165,13 +165,20 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         del tmp
 
         _ViaVCMMet42Met5 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-        _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOX'] = int(self._DesignParameter['_Met4LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-        if _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOX'] < 1 :
+        _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+        _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+        
+        
+        if _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOX'] <= 1 :
             _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOX'] = 1
-        _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOY'] = int(self._DesignParameter['_Met5LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+            _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+        if _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOY'] <= 1 :
+            _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOY'] = 1
+            _ViaVCMMet42Met5['_ViaMet42Met5NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
         self._DesignParameter['_ViaMet42Met5OnVCM'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met5OnVCMIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet42Met5OnVCM']['_DesignObj']._CalculateViaMet42Met5DesignParameter(**_ViaVCMMet42Met5)
+        self._DesignParameter['_ViaMet42Met5OnVCM']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureX(**_ViaVCMMet42Met5)
 
         tmp = []
         for i in range (0, _XRBNum) :
@@ -206,11 +213,19 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         del tmp
 
         _ViaVCMMet52Met6 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
-        _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-        _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOY'] = int(self._DesignParameter['_Met5LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+        _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+        _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+
+        if _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOX'] <= 1 :
+            _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOX'] = 1
+            _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
+        if _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOY'] <= 1 :
+            _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOY'] = 1
+            _ViaVCMMet52Met6['_ViaMet52Met6NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
         self._DesignParameter['_ViaMet52Met6OnVCM'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None, _Name = 'ViaMet52Met6OnVCMIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet52Met6OnVCM']['_DesignObj']._CalculateViaMet52Met6DesignParameter(**_ViaVCMMet52Met6)
+        self._DesignParameter['_ViaMet52Met6OnVCM']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureX(**_ViaVCMMet52Met6)
 
         tmp = []
         for i in range (0, len(self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'])) :
@@ -329,11 +344,20 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'] = tmp
 
         _ViaVRXMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-        _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVRX']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-        _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVRX']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+        _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVRX']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+        _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVRX']['_Width']- _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+
+        if _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOX'] <= 1 :
+            _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOX'] = 1
+            _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVRX']['_Width']- _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
+        if _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOY'] <= 1 :
+            _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOY'] = 1
+            _ViaVRXMet62Met7['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVRX']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
 
         self._DesignParameter['_ViaMet62Met7OnVRX'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVRXIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet62Met7OnVRX']['_DesignObj']._CalculateViaMet62Met7DesignParameter(**_ViaVRXMet62Met7)
+        self._DesignParameter['_ViaMet62Met7OnVRX']['_DesignObj']._CalculateViaMet62Met7DesignParameterMinimumEnclosureX(**_ViaVRXMet62Met7)
 
         tmp = []
         for i in range (0, len(self._DesignParameter['_Met6LayerVRX']['_XYCoordinates'])) :
@@ -403,8 +427,8 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         #                                                             - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)]]]
 
         _ViaVCMMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-        _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-        _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+        _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+        _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
         if _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOX'] <= 1 :
             _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOX'] = 1
             _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVCM']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
@@ -469,10 +493,17 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             del tmp
 
             _ViaVDDMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-            _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOX'] = int(self._DesignParameter['_Met4LayerVDD']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
-            _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOY'] = int(self._DesignParameter['_Met3LayerVDD']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
-            if _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOY'] < 1 :
+            _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOY'] = int((self._DesignParameter['_Met3LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            
+            if _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOX'] <= 1 :
+                _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOX'] = 1
+                _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOY'] = int((self._DesignParameter['_Met3LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
+            if _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOY'] <= 1 :
                 _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOY'] = 1
+                _ViaVDDMet32Met4['_ViaMet32Met4NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
             self._DesignParameter['_ViaMet32Met4OnVDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met4OnVDDIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet32Met4OnVDD']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_ViaVDDMet32Met4)
 
@@ -510,14 +541,14 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             del tmp
 
             _ViaVDDMet42Met5 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-            _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+            _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
             if _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] <= 1 :
                 _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] = 1
-                _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+                _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
             if _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOY'] <= 1 :
                 _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOY'] = 1
-                _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+                _ViaVDDMet42Met5['_ViaMet42Met5NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet42Met5OnVDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met5OnVDDIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet42Met5OnVDD']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureX(**_ViaVDDMet42Met5)
@@ -557,14 +588,14 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
             _ViaVDDMet52Met6 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
-            _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+            _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
             if _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOX'] <= 1 :
                 _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOX'] = 1
-                _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+                _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - 2 * _DRCObj._MetalxMinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
             if _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOY'] <= 1 :
                 _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOY'] = 1
-                _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+                _ViaVDDMet52Met6['_ViaMet52Met6NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet52Met6OnVDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None, _Name = 'ViaMet52Met6OnVDDIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet52Met6OnVDD']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureX(**_ViaVDDMet52Met6)
@@ -620,12 +651,16 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             
 
             _ViaVDDMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-            _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVDD']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOX'] < 1 :
+            _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+
+            if _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOX'] <= 1 :
                 _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOX'] = 1
-            _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVDD']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOY'] < 1 :
+                _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+            if _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOY'] <= 1 :
                 _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOY'] = 1
+                _ViaVDDMet62Met7['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet62Met7OnVDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVDDIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet62Met7OnVDD']['_DesignObj']._CalculateViaMet62Met7DesignParameterMinimumEnclosureX(**_ViaVDDMet62Met7)
@@ -642,12 +677,16 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
             _ViaVDDMet62Met72 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-            _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVDD']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOX'] < 1 :
+            _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVDD2']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            
+            if _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOX'] <= 1 :
                 _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOX'] = 1
-            _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVDD2']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOY'] < 1 :
+                _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVDD2']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+            if _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOY'] <= 1 :
                 _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOY'] = 1
+                _ViaVDDMet62Met72['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVDD']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet62Met7OnVDD2'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVDD2In{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet62Met7OnVDD2']['_DesignObj']._CalculateViaMet62Met7DesignParameterMinimumEnclosureX(**_ViaVDDMet62Met72)
@@ -691,15 +730,20 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
             _ViaVSSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
-            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] = int(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
+            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] = int((self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = int((_ResistorSpaceY * _YRBNum - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            
             if _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] <= 1 :
                 _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] = 1
-                _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = (_ResistorSpaceY * _YRBNum) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)
-            else :
-                _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = (_ResistorSpaceY * _YRBNum) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)
+                _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = int((_ResistorSpaceY * _YRBNum - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+            if _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] <= 1 :
+                _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOY'] = 1
+                _ViaVSSMet12Met2['_ViaMet12Met2NumberOfCOX'] = int((self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
 
             self._DesignParameter['_ViaMet12Met2OnVSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name = 'ViaMet12Met2OnVSSIn{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet12Met2OnVSS']['_DesignObj']._CalculateViaMet12Met2DesignParameter(**_ViaVSSMet12Met2)
+            self._DesignParameter['_ViaMet12Met2OnVSS']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**_ViaVSSMet12Met2)
 
             tmp = []
             for i in range (0, len(self._DesignParameter['_Met2LayerVSS']['_XYCoordinates'])) :
@@ -762,15 +806,19 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'] = tmp
 
             _ViaVSSMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-            _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] = int(self._DesignParameter['_Met4LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] < 1 :
+            _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] = int((self._DesignParameter['_Met3LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            
+            if _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] <= 1 :
                 _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] = 1
-            _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] = int(self._DesignParameter['_Met3LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] < 1 :
+                _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] = int((self._DesignParameter['_Met3LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+            if _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] <= 1 :
                 _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOY'] = 1
+                _ViaVSSMet32Met4['_ViaMet32Met4NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet32Met4OnVSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name = 'ViaMet32Met4OnVSSIn{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet32Met4OnVSS']['_DesignObj']._CalculateViaMet32Met4DesignParameter(**_ViaVSSMet32Met4)
+            self._DesignParameter['_ViaMet32Met4OnVSS']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**_ViaVSSMet32Met4)
 
             tmp = []
             for i in range (0, len(self._DesignParameter['_Met4LayerVSS']['_XYCoordinates'])) :
@@ -807,12 +855,16 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
             _ViaVSSMet42Met5 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-            _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOX'] = int(self._DesignParameter['_Met4LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOX'] < 1 :
+            _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            
+            if _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOX'] <= 1 :
                 _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOX'] = 1
-            _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOY'] = int(self._DesignParameter['_Met5LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOY'] < 1 :
+                _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+            if _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOY'] <= 1 :
                 _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOY'] = 1
+                _ViaVSSMet42Met5['_ViaMet42Met5NumberOfCOX'] = int((self._DesignParameter['_Met4LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet42Met5OnVSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name = 'ViaMet42Met5OnVSSIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet42Met5OnVSS']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureX(**_ViaVSSMet42Met5)
@@ -854,12 +906,15 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
             _ViaVSSMet52Met6 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
-            _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOX'] < 1 :
+            _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            if _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOX'] <= 1 :
                 _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOX'] = 1
-            _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOY'] = int(self._DesignParameter['_Met5LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOY'] < 1 :
+                _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOY'] = int((self._DesignParameter['_Met5LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+            if _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOY'] <= 1 :
                 _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOY'] = 1
+                _ViaVSSMet52Met6['_ViaMet52Met6NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet52Met6OnVSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None, _Name = 'ViaMet52Met6OnVSSIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet52Met6OnVSS']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureX(**_ViaVSSMet52Met6)
@@ -915,12 +970,16 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             del tmp
 
             _ViaVSSMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-            _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOX'] < 1 :
+            _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+
+            if _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOX'] <= 1 :
                 _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOX'] = 1
-            _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOY'] < 1 :
+                _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+            if _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOY'] <= 1 :
                 _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOY'] = 1
+                _ViaVSSMet62Met7['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet62Met7OnVSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVSSIn{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet62Met7OnVSS']['_DesignObj']._CalculateViaMet62Met7DesignParameterMinimumEnclosureX(**_ViaVSSMet62Met7)
@@ -937,12 +996,16 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 
             _ViaVSSMet62Met72 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-            _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVSS']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOX'] < 1 :
+            _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+            _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVSS2']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2)) + 1
+
+            if _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOX'] <= 1 :
                 _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOX'] = 1
-            _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVSS2']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-            if _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOY'] < 1 :
+                _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOY'] = int((self._DesignParameter['_Met7LayerVSS2']['_Width'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            
+            if _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOY'] <= 1 :
                 _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOY'] = 1
+                _ViaVSSMet62Met72['_ViaMet62Met7NumberOfCOX'] = int((self._DesignParameter['_Met6LayerVSS']['_Width'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             self._DesignParameter['_ViaMet62Met7OnVSS2'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVSS2In{}'.format(_Name)))[0]
             self._DesignParameter['_ViaMet62Met7OnVSS2']['_DesignObj']._CalculateViaMet62Met7DesignParameterMinimumEnclosureX(**_ViaVSSMet62Met72)

@@ -1265,7 +1265,7 @@ if __name__ == '__main__' :
     import random
 
     for tries in range (0, 100) :
-        i = random.randint(4,80)
+        i = random.randint(4,50)
         j = random.randint(4,80)
         k = random.randint(2,15)
         l = random.randint(1250, 4000)
@@ -1356,17 +1356,18 @@ if __name__ == '__main__' :
         myfile.close()
         ftp.close()
 
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        myfile = open('FullResistorBank.gds', 'rb')
-        ftp.storbinary('STOR FullResistorBank.gds', myfile)
-        myfile.close()
-        ftp.close()
+        # ftp = ftplib.FTP('141.223.22.156')
+        # ftp.login('jicho0927', 'cho89140616!!')
+        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        # myfile = open('FullResistorBank.gds', 'rb')
+        # ftp.storbinary('STOR FullResistorBank.gds', myfile)
+        # myfile.close()
+        # ftp.close()
 
         import DRCchecker
+        print ("**************************   DRC checking..... {}/100   **************************".format(tries+1))
         a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','FRB_tst','FullResistorBank')
         a.DRCchecker()
-        print ("DRC checking..... {}/100".format(tries))
+        
     
     print ("DRCclean!!")

@@ -13,6 +13,7 @@ import ViaMet32Met4
 import ViaMet42Met5
 import ViaMet52Met6
 import math
+import random
 
 
 class _SRLatch(StickDiagram._StickDiagram):
@@ -928,233 +929,237 @@ class _SRLatch(StickDiagram._StickDiagram):
                  '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2]]
 
         ############################
-        if _Finger1 == 1:
-            _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
-            _LengthNPolyDummyEdge2OriginX = (int(_Finger1 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-            self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-            _LengthPPolyDummyEdge2OriginX = (int(_Finger1 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-            self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+        if _Dummy == True :
+            if _Finger1 == 1:
+                _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
+                _LengthNPolyDummyEdge2OriginX = (int(_Finger1 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                _LengthPPolyDummyEdge2OriginX = (int(_Finger1 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
 
-            _LengthNPolyVIAtoGoUp = math.sqrt(
-                _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + 1
-            _LengthPPolyVIAtoGoDown = math.sqrt(
-                _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
-            self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'] = [
-                [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown],
-                [self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 + _LengthPPolyVIAtoGoDown],
-                [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
-                [self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 - _LengthNPolyVIAtoGoUp]]
+                _LengthNPolyVIAtoGoUp = math.sqrt(
+                    _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + 1
+                _LengthPPolyVIAtoGoDown = math.sqrt(
+                    _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
+                self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'] = [
+                    [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] -
+                     self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                     self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown],
+                    [self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1] +
+                     self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                     self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 + _LengthPPolyVIAtoGoDown],
+                    [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] +
+                     self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                     self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                    [self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1] -
+                     self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                     self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 - _LengthNPolyVIAtoGoUp]]
 
-        #####################################_VIAPMOS2Poly2Met1#####################################
+            #####################################_VIAPMOS2Poly2Met1#####################################
         self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'] = [
-            [self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] - max(
-                 self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth']) / 2 -
-             self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1] + max(
-                 self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth']) / 2 +
-             self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] + max(
-                 self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth']) / 2 +
-             self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1] - max(
-                 self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth']) / 2 -
-             self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2]]
-
-        ############################
-        if _Finger2 == 1:
-            _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
-            _LengthNPolyDummyEdge2OriginX = (int(_Finger2 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-            self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-            _LengthPPolyDummyEdge2OriginX = (int(_Finger2 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-            self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-
-            _LengthNPolyVIAtoGoUp = math.sqrt(
-                _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + 1
-            _LengthPPolyVIAtoGoDown = math.sqrt(
-                _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
-            self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'] = [
                 [self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown],
+                 self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] - max(
+                     self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth']) / 2 -
+                 self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                 self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1] + max(
+                     self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth']) / 2 +
+                 self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                 self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] + max(
+                     self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth']) / 2 +
+                 self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown]]
+                 self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1] - max(
+                     self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth']) / 2 -
+                 self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2]]
 
-        #####################################_VIAPMOS3Poly2Met1#####################################
+            ############################
+        if _Dummy == True :
+            if _Finger2 == 1:
+                _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
+                _LengthNPolyDummyEdge2OriginX = (int(_Finger2 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                _LengthPPolyDummyEdge2OriginX = (int(_Finger2 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+
+                _LengthNPolyVIAtoGoUp = math.sqrt(
+                    _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + 1
+                _LengthPPolyVIAtoGoDown = math.sqrt(
+                    _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
+                self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'] = [
+                    [self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] -
+                     self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                     self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown],
+                    [self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1] +
+                     self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                     self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                    [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] +
+                     self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                     self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                    [self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1] -
+                     self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                     self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown]]
+
+            #####################################_VIAPMOS3Poly2Met1#####################################
         self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'] = [
-            [self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - max(
-                 self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 -
-             self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] + max(
-                 self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 +
-             self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + max(
-                 self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 +
-             self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] - max(
-                 self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 -
-             self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2]]
-
-        ############################
-        if _Finger3 == 1:
-            _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
-            _LengthNPolyDummyEdge2OriginX = (int(_Finger3 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-            self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-            _LengthPPolyDummyEdge2OriginX = (int(_Finger3 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-            self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-
-            _LengthNPolyVIAtoGoUp = math.sqrt(
-                _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + 1
-            _LengthPPolyVIAtoGoDown = math.sqrt(
-                _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
-            self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'] = [
                 [self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown],
+                 self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - max(
+                     self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 -
+                 self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 + _LengthPPolyVIAtoGoDown],
+                 self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] + max(
+                     self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 +
+                 self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                 self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + max(
+                     self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 +
+                 self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 - _LengthNPolyVIAtoGoUp]]
+                 self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] - max(
+                     self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 -
+                 self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2]]
 
-        #####################################_VIAPMOS4Poly2Met1#####################################
+            ############################
+        if _Dummy == True :
+            if _Finger3 == 1:
+                _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
+                _LengthNPolyDummyEdge2OriginX = (int(_Finger3 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                _LengthPPolyDummyEdge2OriginX = (int(_Finger3 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+
+                _LengthNPolyVIAtoGoUp = math.sqrt(
+                    _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + 1
+                _LengthPPolyVIAtoGoDown = math.sqrt(
+                    _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
+                self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'] = [
+                    [self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] -
+                     self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                     self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown],
+                    [self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] +
+                     self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                     self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 + _LengthPPolyVIAtoGoDown],
+                    [self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] +
+                     self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                     self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                    [self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] -
+                     self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                     self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 - _LengthNPolyVIAtoGoUp]]
+
+            #####################################_VIAPMOS4Poly2Met1#####################################
         self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'] = [
-            [self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - max(
-                 self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth']) / 2 -
-             self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1] + max(
-                 self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth']) / 2 +
-             self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + max(
-                 self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth']) / 2 +
-             self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
-            [self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1] - max(
-                 self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                 self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_YWidth']) / 2 -
-             self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                 '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2]]
-
-        ############################
-        if _Finger4 == 1:
-            _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
-            _LengthNPolyDummyEdge2OriginX = (int(_Finger4 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-            self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-            _LengthPPolyDummyEdge2OriginX = (int(_Finger4 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-            self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-
-            _LengthNPolyVIAtoGoUp = math.sqrt(
-                _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + 1
-            _LengthPPolyVIAtoGoDown = math.sqrt(
-                _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
-            self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'] = [
                 [self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown],
+                 self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - max(
+                     self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth']) / 2 -
+                 self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                 self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1] + max(
+                     self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth']) / 2 +
+                 self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] +
-                 self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
-                 self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                 self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + max(
+                     self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth']) / 2 +
+                 self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 + _DRCObj._Metal1MinSpace2],
                 [self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1] -
-                 self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
-                 self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
-                     '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown]]
+                 self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1] - max(
+                     self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                     self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer'][
+                         '_YWidth']) / 2 -
+                 self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer'][
+                     '_YWidth'] / 2 - _DRCObj._Metal1MinSpace2]]
+
+            ############################
+        if _Dummy == True :
+            if _Finger4 == 1:
+                _LengthBtwPoly2Poly = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
+                _LengthNPolyDummyEdge2OriginX = (int(_Finger4 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                _LengthPPolyDummyEdge2OriginX = (int(_Finger4 / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+
+                _LengthNPolyVIAtoGoUp = math.sqrt(
+                    _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + 1
+                _LengthPPolyVIAtoGoDown = math.sqrt(
+                    _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
+                self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'] = [
+                    [self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] -
+                     self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                     self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown],
+                    [self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1] +
+                     self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                     self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                    [self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] +
+                     self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 +
+                     self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 + _LengthNPolyVIAtoGoUp],
+                    [self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][0],
+                     self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1] -
+                     self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 -
+                     self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer'][
+                         '_YWidth'] / 2 - _LengthPPolyVIAtoGoDown]]
 
         #####################################################Routing###############################################################
         #####################################VSS&VDD Met1 Routing######################################
@@ -3469,100 +3474,163 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    _Finger1 = 5
-    _Finger2 = 5
-    _Finger3 = 5
-    _Finger4 = 5
-    _NMOSChannelWidth1 = 200
-    _PMOSChannelWidth1 = 400
-    _NMOSChannelWidth2 = 200
-    _PMOSChannelWidth2 = 400
-    _NMOSChannelWidth3 = 200
-    _PMOSChannelWidth3 = 400
-    _NMOSChannelWidth4 = 200
-    _PMOSChannelWidth4 = 400
-    _ChannelLength = 30
-    _VDD2VSSHeightAtOneSide = None
-    _Dummy = False
-    _NumSupplyCoX = None
-    _NumSupplyCoY = 2
-    _SupplyMet1XWidth = None
-    _SupplyMet1YWidth = None
-    NumViaPoly2Met1CoX = None
-    NumViaPoly2Met1CoY = None
-    NumViaPMOSMet12Met2CoX = None
-    NumViaPMOSMet12Met2CoY = None
-    NumViaNMOSMet12Met2CoX = None
-    NumViaNMOSMet12Met2CoY = None
-    NumViaPMOSMet22Met3CoX = None
-    NumViaPMOSMet22Met3CoY = None
-    NumViaNMOSMet22Met3CoX = None
-    NumViaNMOSMet22Met3CoY = None
-    _SLVT = False
-    _PowerLine = True
 
-    DesignParameters._Technology = '028nm'
+    for _tries in range(1, 2) :
 
-    SRLatchObj = _SRLatch(_DesignParameter=None, _Name='SRLatch')
-    SRLatchObj._CalculateDesignParameter(_Finger1=_Finger1, _Finger2=_Finger2, _Finger3=_Finger3, _Finger4=_Finger4, \
-                                         _NMOSChannelWidth1=_NMOSChannelWidth1, _PMOSChannelWidth1=_PMOSChannelWidth1, _NMOSChannelWidth2=_NMOSChannelWidth2,
-                                         _PMOSChannelWidth2=_PMOSChannelWidth2, _NMOSChannelWidth3=_NMOSChannelWidth3, _PMOSChannelWidth3=_PMOSChannelWidth3,
-                                         _NMOSChannelWidth4=_NMOSChannelWidth4, _PMOSChannelWidth4=_PMOSChannelWidth4, _ChannelLength=_ChannelLength, \
-                                         _VDD2VSSHeightAtOneSide=_VDD2VSSHeightAtOneSide, _Dummy=_Dummy, _NumSupplyCoX=_NumSupplyCoX, _NumSupplyCoY=_NumSupplyCoY, \
-                                         _SupplyMet1XWidth=_SupplyMet1XWidth, _SupplyMet1YWidth=_SupplyMet1YWidth, NumViaPoly2Met1CoX=NumViaPoly2Met1CoX, \
-                                         NumViaPoly2Met1CoY=NumViaPoly2Met1CoY, NumViaPMOSMet12Met2CoX=NumViaPMOSMet12Met2CoX,
-                                         NumViaPMOSMet12Met2CoY=NumViaPMOSMet12Met2CoY, \
-                                         NumViaNMOSMet12Met2CoX=NumViaNMOSMet12Met2CoX, NumViaNMOSMet12Met2CoY=NumViaNMOSMet12Met2CoY,
-                                         NumViaPMOSMet22Met3CoX=NumViaPMOSMet22Met3CoX, NumViaPMOSMet22Met3CoY=NumViaPMOSMet22Met3CoY, \
-                                         NumViaNMOSMet22Met3CoX=NumViaNMOSMet22Met3CoX, NumViaNMOSMet22Met3CoY=NumViaNMOSMet22Met3CoY, _SLVT=_SLVT,
-                                         _PowerLine=_PowerLine)
+        _Finger1 = random.randint(1, 16)
+        _Finger2 = random.randint(1, 16)
+        _Finger3 = random.randint(1, 16)
+        _Finger4 = random.randint(1, 16)
 
-    # SRLatchObj._CalculateDesignParameter(_Finger1 = 3, _Finger2 =3, _Finger3 = 3, _Finger4 = 3, \
-    #                               #_PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \
-    #                               _NMOSChannelWidth1 = 200, _PMOSChannelWidth1 = 400, _NMOSChannelWidth2 = 200, _PMOSChannelWidth2 = 400, _NMOSChannelWidth3 = 200, _PMOSChannelWidth3 = 400, _NMOSChannelWidth4 = 200, _PMOSChannelWidth4 = 400, _ChannelLength = 30,\
-    #                               _VDD2VSSHeightAtOneSide = None, _Dummy = True, _NumSupplyCoX = None, _NumSupplyCoY = 2, \
-    #                               _SupplyMet1XWidth = None, _SupplyMet1YWidth = None, NumViaPoly2Met1CoX = None, \
-    #                               NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None, \
-    #                               NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None, \
-    #                               NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = True,
-    #                               _PowerLine = True)
+        _NMOSChannelWidth = random.randrange(200, 550, 50)
+
+        _NMOSChannelWidth1 = _NMOSChannelWidth
+        _PMOSChannelWidth1 = 2 * _NMOSChannelWidth
+        _NMOSChannelWidth2 = _NMOSChannelWidth
+        _PMOSChannelWidth2 = 2 * _NMOSChannelWidth
+        _NMOSChannelWidth3 = _NMOSChannelWidth
+        _PMOSChannelWidth3 = 2 * _NMOSChannelWidth
+        _NMOSChannelWidth4 = _NMOSChannelWidth
+        _PMOSChannelWidth4 = 2 * _NMOSChannelWidth
+        _ChannelLength = 30
+        _VDD2VSSHeightAtOneSide = None
+        _Dummy = False
+        _NumSupplyCoX = None
+        _NumSupplyCoY = 2
+        _SupplyMet1XWidth = None
+        _SupplyMet1YWidth = None
+        NumViaPoly2Met1CoX = None
+        NumViaPoly2Met1CoY = None
+        NumViaPMOSMet12Met2CoX = None
+        NumViaPMOSMet12Met2CoY = None
+        NumViaNMOSMet12Met2CoX = None
+        NumViaNMOSMet12Met2CoY = None
+        NumViaPMOSMet22Met3CoX = None
+        NumViaPMOSMet22Met3CoY = None
+        NumViaNMOSMet22Met3CoX = None
+        NumViaNMOSMet22Met3CoY = None
+        _SLVT = True
+        _PowerLine = True
+
+        DesignParameters._Technology = '028nm'
+
+        SRLatchObj = _SRLatch(_DesignParameter=None, _Name='SRLatch')
+        SRLatchObj._CalculateDesignParameter(_Finger1=_Finger1, _Finger2=_Finger2, _Finger3=_Finger3, _Finger4=_Finger4, \
+                                             _NMOSChannelWidth1=_NMOSChannelWidth1, _PMOSChannelWidth1=_PMOSChannelWidth1, _NMOSChannelWidth2=_NMOSChannelWidth2,
+                                             _PMOSChannelWidth2=_PMOSChannelWidth2, _NMOSChannelWidth3=_NMOSChannelWidth3, _PMOSChannelWidth3=_PMOSChannelWidth3,
+                                             _NMOSChannelWidth4=_NMOSChannelWidth4, _PMOSChannelWidth4=_PMOSChannelWidth4, _ChannelLength=_ChannelLength, \
+                                             _VDD2VSSHeightAtOneSide=_VDD2VSSHeightAtOneSide, _Dummy=_Dummy, _NumSupplyCoX=_NumSupplyCoX, _NumSupplyCoY=_NumSupplyCoY, \
+                                             _SupplyMet1XWidth=_SupplyMet1XWidth, _SupplyMet1YWidth=_SupplyMet1YWidth, NumViaPoly2Met1CoX=NumViaPoly2Met1CoX, \
+                                             NumViaPoly2Met1CoY=NumViaPoly2Met1CoY, NumViaPMOSMet12Met2CoX=NumViaPMOSMet12Met2CoX,
+                                             NumViaPMOSMet12Met2CoY=NumViaPMOSMet12Met2CoY, \
+                                             NumViaNMOSMet12Met2CoX=NumViaNMOSMet12Met2CoX, NumViaNMOSMet12Met2CoY=NumViaNMOSMet12Met2CoY,
+                                             NumViaPMOSMet22Met3CoX=NumViaPMOSMet22Met3CoX, NumViaPMOSMet22Met3CoY=NumViaPMOSMet22Met3CoY, \
+                                             NumViaNMOSMet22Met3CoX=NumViaNMOSMet22Met3CoX, NumViaNMOSMet22Met3CoY=NumViaNMOSMet22Met3CoY, _SLVT=_SLVT,
+                                             _PowerLine=_PowerLine)
+
+        # SRLatchObj._CalculateDesignParameter(_Finger1 = 3, _Finger2 =3, _Finger3 = 3, _Finger4 = 3, \
+        #                               #_PMOSFinger1 = 1, _PMOSFinger2 = 3, _PMOSFinger3 = 3, _PMOSFinger4 = 3, \
+        #                               _NMOSChannelWidth1 = 200, _PMOSChannelWidth1 = 400, _NMOSChannelWidth2 = 200, _PMOSChannelWidth2 = 400, _NMOSChannelWidth3 = 200, _PMOSChannelWidth3 = 400, _NMOSChannelWidth4 = 200, _PMOSChannelWidth4 = 400, _ChannelLength = 30,\
+        #                               _VDD2VSSHeightAtOneSide = None, _Dummy = True, _NumSupplyCoX = None, _NumSupplyCoY = 2, \
+        #                               _SupplyMet1XWidth = None, _SupplyMet1YWidth = None, NumViaPoly2Met1CoX = None, \
+        #                               NumViaPoly2Met1CoY = None, NumViaPMOSMet12Met2CoX = None, NumViaPMOSMet12Met2CoY = None, \
+        #                               NumViaNMOSMet12Met2CoX = None, NumViaNMOSMet12Met2CoY = None, NumViaPMOSMet22Met3CoX = None, NumViaPMOSMet22Met3CoY = None, \
+        #                               NumViaNMOSMet22Met3CoX = None, NumViaNMOSMet22Met3CoY = None, _SLVT = True,
+        #                               _PowerLine = True)
 
 
-    SRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SRLatchObj._DesignParameter)
-    _fileName = 'SRLatch.gds'
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
+        SRLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SRLatchObj._DesignParameter)
+        _fileName = 'SRLatch.gds'
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    tmp = SRLatchObj._CreateGDSStream(SRLatchObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp = SRLatchObj._CreateGDSStream(SRLatchObj._DesignParameter['_GDSFile']['_GDSFile'])
 
-    tmp.write_binary_gds_stream(testStreamFile)
+        tmp.write_binary_gds_stream(testStreamFile)
 
-    testStreamFile.close()
+        testStreamFile.close()
 
-    import ftplib
+        import ftplib
 
-    # ftp = ftplib.FTP('141.223.29.61')
-    # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('/mnt/sda/jicho0927/OPUS/SAMSUNG28n')
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('SRLatch.gds', 'rb')
-    ftp.storbinary('STOR SRLatch.gds', myfile)
-    myfile.close()
-    ftp.close()
+        # ftp = ftplib.FTP('141.223.29.61')
+        # ftp.login('jicho0927', 'cho89140616!!')
+        # ftp.cwd('/mnt/sda/jicho0927/OPUS/SAMSUNG28n')
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        myfile = open('SRLatch.gds', 'rb')
+        ftp.storbinary('STOR SRLatch.gds', myfile)
+        myfile.close()
+        ftp.close()
 
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    # myfile = open('SRLatch.gds', 'rb')
-    # ftp.storbinary('STOR SRLatch.gds', myfile)
-    # myfile.close()
-    # ftp.close()
-    #
-    # ftp = ftplib.FTP('141.223.29.61')
-    # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-    # myfile = open('SRLatch.gds', 'rb')
-    # ftp.storbinary('STOR SRLatch.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        # ftp = ftplib.FTP('141.223.22.156')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        # myfile = open('SRLatch.gds', 'rb')
+        # ftp.storbinary('STOR SRLatch.gds', myfile)
+        # myfile.close()
+        # ftp.close()
+        #
+        # ftp = ftplib.FTP('141.223.29.61')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
+        # myfile = open('SRLatch.gds', 'rb')
+        # ftp.storbinary('STOR SRLatch.gds', myfile)
+        # myfile.close()
+        # ftp.close()
+
+
+################################## DRC Checker ##################################
+
+        import paramiko
+        import sys
+        import os
+
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        print ("############ Connecting to Server... ############")
+        ssh.connect('141.223.22.156', port='22', username='jicho0927', password='cho89140616!!')
+
+        commandlines1 = "cd OPUS/SAMSUNG28n; source setup.cshrc; strmin -library 'SRLatch_test' -strmFile '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/SRLatch.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
+        stdin, stdout, stderr = ssh.exec_command(commandlines1)
+        print (''.join(stdout.read()))
+
+        commandlines2 = "cd OPUS/SAMSUNG28n; source setup.cshrc; strmout -library 'SRLatch_test' -strmFile '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/SRLatch.calibre.db' -topCell 'SRLatch' -view layout -runDir '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/' -logFile 'PIPO.LOG.SRLatch' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
+        stdin, stdout, stderr = ssh.exec_command(commandlines2)
+        print (''.join(stdout.read()))
+
+        commandlines4 = "cd OPUS/SAMSUNG28n/DRC/run; sed -i '9s,.*,LAYOUT PATH  \"/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/SRLatch.calibre.db\",' _cmos28lp.drc.cal_"
+        stdin, stdout, stderr = ssh.exec_command(commandlines4)
+        print (''.join(stdout.read()))
+
+
+        print('_Tries = ', _tries)
+        print('_Finger1 = ', _Finger1)
+        print('_Finger2 = ', _Finger2)
+        print('_Finger3 = ', _Finger3)
+        print('_Finger4 = ', _Finger4)
+        print('_NMOSChanneWidth = ', _NMOSChannelWidth)
+
+
+        commandlines3 = "cd OPUS/SAMSUNG28n; source setup.cshrc; calibre -drc -hier -nowait /mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/_cmos28lp.drc.cal_"
+        stdin, stdout, stderr = ssh.exec_command(commandlines3)
+        print (''.join(stdout.read()))
+
+        readfile = ssh.open_sftp()
+        file = readfile.open('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/SRLatch.drc.summary')
+        for line in (file.readlines()[-2:-1]):
+            print (line)
+            if "0" not in line:
+                raise Exception("DRC error in : ", _tries)
+
+            else:
+                commandlines6 = "cd OPUS/SAMSUNG28n/; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"SRLatch_test\" \"\" \"\" \"\")),' Skillcode.il"
+                stdin, stdout, stderr = ssh.exec_command(commandlines6)
+                print (''.join(stdout.read()))
+                commandlines5 = "cd OPUS/SAMSUNG28n; source setup.cshrc; virtuoso -nograph -restore Skillcode.il"
+                stdin, stdout, stderr = ssh.exec_command(commandlines5)
+                print ("Sipal")
+
+        ssh.close
+
+
+    print ("DRC Clean!!!")

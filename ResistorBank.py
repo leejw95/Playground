@@ -266,7 +266,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         print ('@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@# SET MINIMUM HEIGHT VALUE FOR RESISTOR BANK : ', _VDD2VSSMinHeight)
 
-        if _TransmissionGateVDD2VSSHeight != _VDD2VSSMinHeight :
+        if _TransmissionGateVDD2VSSHeight < _VDD2VSSMinHeight :
             raise NotImplementedError
 
         if _TransmissionGateVDD2VSSHeight == None :
@@ -283,7 +283,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         ## MOS  SUBRING  Settings
         #if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
         self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] - _GapBtwRL // 2,
-                                                                      self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight - (_PMOSSubringinputs['_YWidth'])//2 - (_PMOSSubringinputs['_Width']) // 2]]
+                                                                      self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight - int(round(_PMOSSubringinputs['_YWidth'] + 0.5))//2 - int(round((_PMOSSubringinputs['_Width'] + 0.5))) // 2]]
 
         # else : 
         #     self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] ,
@@ -292,20 +292,20 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         #if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
         self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] - _GapBtwRL // 2,
-                                                                    self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + int(round(_NMOSSubringinputs['_YWidth'] + 0.5)) // 2 + _NMOSSubringinputs['_Width'] // 2]]
+                                                                    self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + int(round(_NMOSSubringinputs['_YWidth'] + 0.5)) // 2 + int(round(_NMOSSubringinputs['_Width'] +0.5))// 2]]
 
         # else :
         #     self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0],
         #                                                             self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + (_NMOSSubringinputs['_YWidth']) // 2 + _NMOSSubringinputs['_Width'] // 2 - (_DRCObj._MetalxMinSpace8 - _DRCObj._Metal1MinSpace3 - 1)//2 + 1]]
 
         ##Total Guardring Settings
-        self._DesignParameter['_TotalSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] + _TotalSubringinputs['_XWidth'] // 2 - _GapBtwRL // 2 -
-                                                                        (_PMOSSubringinputs['_XWidth']//2 +
+        self._DesignParameter['_TotalSubringRB']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] + int(round(_TotalSubringinputs['_XWidth'] + 0.5))// 2 - int(round(_GapBtwRL + 0.5)) // 2 -
+                                                                        int(round((_PMOSSubringinputs['_XWidth'] + 0.5))//2 +
                                                                         # + _TotalSubringinputs['_Width'] +
                                                                         max(_PMOSSubringinputs['_Width'] + _DRCObj._NwMinEnclosurePactive ,_NMOSSubringinputs['_Width'] + _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace)),
                                                                        min(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2,
                                                                            self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + int(round(_TotalSubringinputs['_YWidth'] + 0.5)) // 2 -
-                                                                           (_NMOSSubringinputs['_Width']//2 + _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace))]]
+                                                                           int(round((_NMOSSubringinputs['_Width']+0.5))//2 + _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace))]]
 
         ## Resistor Settings
         self._DesignParameter['_OpppcresRB']['_XYCoordinates'] = [

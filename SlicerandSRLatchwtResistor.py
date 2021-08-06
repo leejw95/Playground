@@ -681,7 +681,7 @@ if __name__ == '__main__' :
     ##_YRBNum should be under 99
 
     ## X axis M7 Length >= 25um : overall m7 density < 80%
-    for i in range (2, 10) :
+    for i in range (2, 3):
         print (i)
         _XRBNum = 4
         _YRBNum = 8
@@ -886,7 +886,7 @@ if __name__ == '__main__' :
         stdin, stdout, stderr = ssh.exec_command(commandlines2)
         print (''.join(stdout.read()))
 
-        commandlines4 = "cd OPUS/Samsung28n/DRC/run; sed -i '9s,.*,LAYOUT PATH  \"/mnt/sdc/junung/OPUS/Samsung28n/DRC/run/SlicerandSRLatchwtResistor.calibre.db\",' _cmos28lp.drc.cal_"
+        commandlines4 = "cd OPUS/Samsung28n/DRC/run; sed -i '9s,.*,LAYOUT PATH  \"/mnt/sdc/junung/OPUS/Samsung28n/DRC/run/SlicerandSRLatchwtResistor.calibre.db\"\nLAYOUT PRIMARY  \"_SlicerandSRLatchwtResistor\",' _cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines4)
         print (''.join(stdout.read()))
 

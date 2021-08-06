@@ -1367,6 +1367,5 @@ if __name__ == '__main__' :
         import DRCchecker
         a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','FRB_tst','FullResistorBank')
         a.DRCchecker()
-        print ("DRC checking..... {}/100".format(tries))
     
     print ("DRCclean!!")

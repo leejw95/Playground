@@ -853,15 +853,15 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_RingODLayer2']['_Width'] = _GuardringWidth
                 self._DesignParameter['_RingODLayer3']['_Width'] = _GuardringWidth
                 self._DesignParameter['_RingODLayer4']['_Width'] = _GuardringWidth
-                self._DesignParameter['_RingPpLayer1']['_Width'] = 21*2 + _GuardringWidth
-                self._DesignParameter['_RingPpLayer2']['_Width'] = 21*2 + _GuardringWidth
-                self._DesignParameter['_RingPpLayer3']['_Width'] = 21*2 + _GuardringWidth
-                self._DesignParameter['_RingPpLayer4']['_Width'] = 21*2 + _GuardringWidth
+                self._DesignParameter['_RingPpLayer1']['_Width'] = 2 * _DRCObj._PpMinExtensiononPactive2 + _GuardringWidth
+                self._DesignParameter['_RingPpLayer2']['_Width'] = 2 * _DRCObj._PpMinExtensiononPactive2 + _GuardringWidth
+                self._DesignParameter['_RingPpLayer3']['_Width'] = 2 * _DRCObj._PpMinExtensiononPactive2 + _GuardringWidth
+                self._DesignParameter['_RingPpLayer4']['_Width'] = 2 * _DRCObj._PpMinExtensiononPactive2 + _GuardringWidth
 
-                if _NMOSChannelWidth < 400 :
-                    toptmp = self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (2 * _DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-                else :
-                    toptmp = self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                # if _NMOSChannelWidth < 400 :
+                #     toptmp = self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (2 * _DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                # else :
+                toptmp = self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace3 + self._DesignParameter['_RingMetal1Layer1']['_Width'] / 2#####self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 2*_DRCObj._Metal1MinEnclosureCO2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
                 bottomtmp = self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) - 10
                     # self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._NMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) \
                     #         - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - SpaceBtwNMOS - 10
@@ -901,9 +901,9 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_CONT2']['_YWidth'] = _DRCObj._CoMinWidth
 
                 _XNumberOfCO1 = int((righttmp - lefttmp - self._DesignParameter['_RingMetal1Layer1']['_Width']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) # Horizontal Ring
-                _YNumberOfCO1 = self._DesignParameter['_RingMetal1Layer1']['_Width'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)
-                _XNumberOfCO2 = self._DesignParameter['_RingMetal1Layer1']['_Width'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)
-                _YNumberOfCO2 = (toptmp - bottomtmp - self._DesignParameter['_RingMetal1Layer1']['_Width']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)  # Verical Ring
+                _YNumberOfCO1 = int(self._DesignParameter['_RingMetal1Layer1']['_Width'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+                _XNumberOfCO2 = int(self._DesignParameter['_RingMetal1Layer1']['_Width'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+                _YNumberOfCO2 = int((toptmp - bottomtmp - self._DesignParameter['_RingMetal1Layer1']['_Width']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))  # Verical Ring
 
             ############################################################### CONT Coordinate Setting ##############################################################
             _LengthRingBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth

@@ -28,14 +28,12 @@ class DRCchecker :
         self.DRCrunDir = DRCrunDir
         self.libname = libname
         self.cellname = cellname
-        self.tries = 0
         
 
     def DRCchecker(self) :
-        self.tries += 1
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        print ("############ Connecting to Server..., try {} ############".format(self.tries))
+        print ("############ Connecting to Server for DRC checking... ############")
         ssh.connect(self.server, port = self.port, username=self.username, password=self.password)
 
 

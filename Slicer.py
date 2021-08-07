@@ -2013,14 +2013,14 @@ if __name__ == '__main__':
     for _tries in range(1, 2) :
 
 
-        _CLKinputPMOSFinger1 = 3###random.randint(1, 16)
-        _CLKinputPMOSFinger2 = 6###random.randint(1, 16)
-        _PMOSFinger = 2###random.randint(1, 16)
-        _PMOSChannelWidth = 1000###random.randrange(200, 1050, 50)
-        _DATAinputNMOSFinger = 12###random.randint(2, 16)
+        _CLKinputPMOSFinger1 = 1###random.randint(1, 16)
+        _CLKinputPMOSFinger2 = 1###random.randint(1, 16)
+        _PMOSFinger = 1###random.randint(1, 16)
+        _PMOSChannelWidth = 200###random.randrange(200, 1050, 50)
+        _DATAinputNMOSFinger = 1###random.randint(2, 16)
         _NMOSFinger = 2###random.randint(1, 16)
-        _CLKinputNMOSFinger = 8###random.randint(1, 16)
-        _NMOSChannelWidth = 1000####random.randrange(200, 1050, 50)
+        _CLKinputNMOSFinger = 2###random.randint(1, 16)
+        _NMOSChannelWidth = 200###random.randrange(200, 1050, 50)
         _ChannelLength = 30
         _Dummy = True
         _SLVT = True
@@ -2099,17 +2099,20 @@ if __name__ == '__main__':
     ################################## DRC Checker #################################
 
     #     import DRCchecker
-    #
-    #
-    #
+    # 
+    # 
+    # 
     #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
-    #
-    #
+    # 
+    # 
     #     a.DRCchecker()
-    #
-    #
-    #
-    #
-    #
-    #
+    # 
+    # 
+    # 
+    # 
+    # 
+    # 
     # print ("DRCclean!!")
+
+
+

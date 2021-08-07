@@ -555,7 +555,8 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ############################################################### VIA Generation for CLK NMOS Drain ##############################################################
             _VIACLKNMOSMet12 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
 
-            _tmpNumCOY = self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)
+            _tmpNumCOY = int((_NMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
             _VIACLKNMOSMet12['_ViaMet12Met2NumberOfCOX'] = 1
             _VIACLKNMOSMet12['_ViaMet12Met2NumberOfCOY'] = _tmpNumCOY
 
@@ -580,7 +581,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             _VIACLKNMOSMet23 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
 
-            _tmpNumCOY = self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)
+            _tmpNumCOY = int((_NMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
             _VIACLKNMOSMet23['_ViaMet22Met3NumberOfCOX'] = 1
             _VIACLKNMOSMet23['_ViaMet22Met3NumberOfCOY'] = _tmpNumCOY
 
@@ -603,7 +604,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             _VIACLKNMOSMet34 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
 
-            _tmpNumCOY = self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)
+            _tmpNumCOY = int((_NMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
             _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOX'] = 1
             _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOY'] = _tmpNumCOY
 
@@ -646,56 +647,56 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ##+ _DRCObj._Metal1MinSpacetoGate
 
 
+            if _Dummy == True :
+                if _DATAinputNMOSFinger == 1:
+                    _LengthBtwPoly2Poly1 = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
+                    _LengthNPolyDummyEdge2OriginX1 = (int(_DATAinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly1 - _ChannelLength / 2 - (
+                    self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                    # _LengthPPolyDummyEdge2OriginX = (int(_DATAinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                    # self._DesignParameter['_NMOSFinger']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
 
-            if _DATAinputNMOSFinger == 1:
-                _LengthBtwPoly2Poly1 = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
-                _LengthNPolyDummyEdge2OriginX1 = (int(_DATAinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly1 - _ChannelLength / 2 - (
-                self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-                # _LengthPPolyDummyEdge2OriginX = (int(_DATAinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-                # self._DesignParameter['_NMOSFinger']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                    _LengthNPolyVIAtoGoUp1 = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX1 * _LengthNPolyDummyEdge2OriginX1) + 1
+                    # _LengthPPolyVIAtoGoDown = math.sqrt(
+                    #     _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
+                    self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'] = [
+                        [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthNPolyVIAtoGoUp1],
+                        ]
+                    self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'] = [
+                    [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthNPolyVIAtoGoUp1]
+                       ]
 
-                _LengthNPolyVIAtoGoUp1 = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX1 * _LengthNPolyDummyEdge2OriginX1) + 1
-                # _LengthPPolyVIAtoGoDown = math.sqrt(
-                #     _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
-                self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'] = [
-                    [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthNPolyVIAtoGoUp1],
-                    ]
-                self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'] = [
-                [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthNPolyVIAtoGoUp1]
-                   ]
+                if _NMOSFinger == 1 :
+                    _LengthBtwPoly2Poly2 = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
+                    _LengthNPolyDummyEdge2OriginX2 = (int(_NMOSFinger / 2) + 1) * _LengthBtwPoly2Poly2 - _ChannelLength / 2 - (
+                    self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                    # _LengthPPolyDummyEdge2OriginX = (int(_DATAinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                    # self._DesignParameter['_NMOSFinger']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
 
-            if _NMOSFinger == 1 :
-                _LengthBtwPoly2Poly2 = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
-                _LengthNPolyDummyEdge2OriginX2 = (int(_NMOSFinger / 2) + 1) * _LengthBtwPoly2Poly2 - _ChannelLength / 2 - (
-                self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-                # _LengthPPolyDummyEdge2OriginX = (int(_DATAinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-                # self._DesignParameter['_NMOSFinger']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                    _LengthNPolyVIAtoGoUp2 = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX2 * _LengthNPolyDummyEdge2OriginX2) + 1
+                    # _LengthPPolyVIAtoGoDown = math.sqrt(
+                    #     _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
+                    self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'] = [
+                      #  [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp2],
+                        [self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp2], \
+                        ]
+                    self._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_XYCoordinates'] = [
+                        [self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp2]
+                       ]
+                #
+                if _CLKinputNMOSFinger == 1 :
+                    _LengthBtwPoly2Poly3 = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
+                    _LengthNPolyDummyEdge2OriginX3 = (int(_CLKinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly3 - _ChannelLength / 2 - (
+                    self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                    # _LengthPPolyDummyEdge2OriginX = (int(_DATAinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
+                    # self._DesignParameter['_NMOSFinger']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
 
-                _LengthNPolyVIAtoGoUp2 = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX2 * _LengthNPolyDummyEdge2OriginX2) + 1
-                # _LengthPPolyVIAtoGoDown = math.sqrt(
-                #     _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
-                self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'] = [
-                  #  [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp2],
-                    [self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp2], \
-                    ]
-                self._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_XYCoordinates'] = [
-                    [self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS4']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp2]
-                   ]
-            #
-            if _CLKinputNMOSFinger == 1 :
-                _LengthBtwPoly2Poly3 = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
-                _LengthNPolyDummyEdge2OriginX3 = (int(_CLKinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly3 - _ChannelLength / 2 - (
-                self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-                # _LengthPPolyDummyEdge2OriginX = (int(_DATAinputNMOSFinger / 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (
-                # self._DesignParameter['_NMOSFinger']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
-
-                _LengthNPolyVIAtoGoUp3 = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX3 * _LengthNPolyDummyEdge2OriginX3) + 1
-                # _LengthPPolyVIAtoGoDown = math.sqrt(
-                #     _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
-                self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_XYCoordinates'] = [
-                  #  [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp2],
-                    [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp3]
-                   ]
+                    _LengthNPolyVIAtoGoUp3 = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX3 * _LengthNPolyDummyEdge2OriginX3) + 1
+                    # _LengthPPolyVIAtoGoDown = math.sqrt(
+                    #     _DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + 1
+                    self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_XYCoordinates'] = [
+                      #  [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp2],
+                        [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp3]
+                       ]
 
 
 

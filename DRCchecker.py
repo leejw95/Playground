@@ -39,11 +39,18 @@ class DRCchecker :
 
         commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{0}/{2}.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname))
-        print (''.join(stdout.read()))
+        result1 = ''.join(stdout.read())
+        print (result1)
+        if (result1.split()[-6]) != "'0'" :
+            raise Exception ("Library name already Existing or XStream ERROR!!")
+
 
         commandlines2 = "cd {0}; source setup.cshrc; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
         stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
-        print (''.join(stdout.read()))
+        result2 = ''.join(stdout.read())
+        print (result2)
+        if (result2.split()[-6]) != "'0'" :
+            raise Exception ("XstreamOut ERROR")
 
         commandlines3 = "cd {0}; sed -i '9s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' _cmos28lp.drc.cal_; sed -i '10s,.*,LAYOUT PRIMARY \"{1}\",' _cmos28lp.drc.cal_; sed -i '13s,.*,DRC RESULTS DATABASE \"{1}.drc.results\" ASCII,' _cmos28lp.drc.cal_; sed -i '18s,.*,DRC SUMMARY REPORT \"{1}.drc.summary\" REPLACE HIER,' _cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.DRCrunDir, self.cellname))
@@ -57,7 +64,7 @@ class DRCchecker :
         file = readfile.open('{0}/{1}.drc.summary'.format(self.WorkDir, self.cellname))
         for line in (file.readlines() [-2:-1]) :
             print (line)
-            if "0" not in line :
+            if line.split()[4] != u'0' :
                 raise Exception("DRC ERROR!!!")
 
             else :

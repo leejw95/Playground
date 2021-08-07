@@ -2010,11 +2010,11 @@ if __name__ == '__main__':
     #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
     #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
 
-    for _tries in range(1, 2) :
+    for _tries in range(1, 101) :
 
 
         _CLKinputPMOSFinger1 = random.randint(1, 16)
-        _CLKinputPMOSFinger2 = random.randint(1, 16)
+        _CLKinputPMOSFinger2 =random.randint(1, 16)
         _PMOSFinger = random.randint(1, 16)
         _PMOSChannelWidth = random.randrange(200, 1050, 50)
         _DATAinputNMOSFinger = random.randint(2, 16)
@@ -2088,7 +2088,6 @@ if __name__ == '__main__':
         # ftp.close()
 
     ################################## DRC Checker #################################
-        import paramiko
         import DRCchecker
 
 

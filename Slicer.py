@@ -2066,15 +2066,15 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print('_tries = ', _tries)
-        print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
-        print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
-        print('_PMOSFinger = ', _PMOSFinger)
-        print('_PMOSChannelWidth = ', _PMOSChannelWidth)
-        print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
-        print('_NMOSFinger = ', _NMOSFinger)
-        print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
-        print('_NMOSChannelWidth = ', _NMOSChannelWidth)
+        # print('_tries = ', _tries)
+        # print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
+        # print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
+        # print('_PMOSFinger = ', _PMOSFinger)
+        # print('_PMOSChannelWidth = ', _PMOSChannelWidth)
+        # print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
+        # print('_NMOSFinger = ', _NMOSFinger)
+        # print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
+        # print('_NMOSChannelWidth = ', _NMOSChannelWidth)
 
 
 
@@ -2098,21 +2098,22 @@ if __name__ == '__main__':
 
     ################################## DRC Checker #################################
 
-        import DRCchecker
-
-
-
-        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
-
-
-        a.DRCchecker()
-
-
-
-
-
-
-    print ("DRCclean!!")
-
+    #     import DRCchecker
+    #
+    #
+    #
+    #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
+    #
+    #
+    #     a.DRCchecker()
+    #
+    #
+    #
+    #
+    #
+    #
+    # print ("DRCclean!!")
+    #
+    #
 
 

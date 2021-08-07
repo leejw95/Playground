@@ -351,7 +351,7 @@ class _Inverter(StickDiagram._StickDiagram) :
                                                                       [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0], \
                                                                        self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1]]]]
 
-        if _VDD2VSSHeight == _VDD2VSSMinHeight and _Finger > 2 :
+        if _VDD2VSSHeight == _VDD2VSSMinHeight and _Finger > 4 :
             _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
             _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = int((self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2][0] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0] - _DRCObj._MetalxMinWidth - _DRCObj._MetalxMinSpace) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) - 1
             _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOY'] = 1
@@ -515,7 +515,7 @@ class _Inverter(StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__':
-    _Finger = 60
+    _Finger = 1
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 2

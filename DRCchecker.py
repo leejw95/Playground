@@ -41,7 +41,7 @@ class DRCchecker :
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname))
         result1 = ''.join(stdout.read())
         print (result1)
-        if (result1.split()[-6]) != '0' :
+        if (result1.split()[-6]) != "'0'" :
             raise Exception ("Library name already Existing or XStream ERROR!!")
 
 
@@ -49,8 +49,8 @@ class DRCchecker :
         stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
         result2 = ''.join(stdout.read())
         print (result2)
-        if (result2.split()[-6]) != '0' :
-            raise Exception ("Library name already Existing or XStream ERROR!!")
+        if (result2.split()[-6]) != "'0'" :
+            raise Exception ("XstreamOut ERROR")
 
         commandlines3 = "cd {0}; sed -i '9s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' _cmos28lp.drc.cal_; sed -i '10s,.*,LAYOUT PRIMARY \"{1}\",' _cmos28lp.drc.cal_; sed -i '13s,.*,DRC RESULTS DATABASE \"{1}.drc.results\" ASCII,' _cmos28lp.drc.cal_; sed -i '18s,.*,DRC SUMMARY REPORT \"{1}.drc.summary\" REPLACE HIER,' _cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.DRCrunDir, self.cellname))
@@ -66,7 +66,7 @@ class DRCchecker :
         readfile = ssh.open_sftp()
         file = readfile.open('{0}/{1}.drc.summary'.format(self.WorkDir, self.cellname))
         for line in (file.readlines() [-2:-1]) :
-            print (type(line.split()[4]))
+            print (line)
             if line.split()[4] != u'0' :
                 raise Exception("DRC ERROR!!!")
 

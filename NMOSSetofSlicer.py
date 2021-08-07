@@ -937,16 +937,16 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                     for k in tmp2:
                         if (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 0:
                             _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                (toptmp + bottomtmp + 1) / 2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+                                                (toptmp + bottomtmp) / 2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
                         elif (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 1:
                             _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                (toptmp + bottomtmp + 1) / 2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+                                                (toptmp + bottomtmp) / 2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
                         elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 0:
                             _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                (toptmp + bottomtmp + 1) / 2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+                                                (toptmp + bottomtmp) / 2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
                         elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 1:
                             _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                (toptmp + bottomtmp + 1) / 2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+                                                (toptmp + bottomtmp) / 2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
                         tmp.append(_xycoordinatetmp)
             self._DesignParameter['_CONT2']['_XYCoordinates'] = tmp
 

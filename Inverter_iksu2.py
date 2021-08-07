@@ -756,57 +756,75 @@ class _Inverter(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    # User-Defined Parameters
-    _Finger = 15
-    _ChannelWidth = 200
-    _ChannelLength = 30
-    _NPRatio = 2
-    _VDD2VSSHeight = None   # None / 1750
-    _Dummy = True
-    _SLVT = True
-    _LVT = False
-    _HVT = False
-    _NumSupplyCOX = None  #
-    _NumSupplyCOY = 2
-    _SupplyMet1XWidth = None
-    _SupplyMet1YWidth = None
-    _NumVIAPoly2Met1COX = None
-    _NumVIAPoly2Met1COY = None
-    _NumViaPMOSMet12Met2CoX = None
-    _NumViaPMOSMet12Met2CoY = None
-    _NumViaNMOSMet12Met2CoX = None
-    _NumViaNMOSMet12Met2CoY = None
-    _NumVIAMet12COX = None
-    _NumVIAMet12COY = None
-    _SupplyLine = False
-    _StandAlone_DRCFREE = True
+    import random
+    for tries in range (0, 10) :
+        i = random.randint(2, 10)
 
-    # Generate Inverter Layout Object
-    InverterObj = _Inverter(_DesignParameter=None, _Name='Inverter')
-    InverterObj._CalculateDesignParameter(_NPRatio=_NPRatio, _Dummy=_Dummy, _SLVT=_SLVT, _Finger=_Finger,
-                                          _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength,
-                                          _VDD2VSSHeight=_VDD2VSSHeight, _SupplyLine=_SupplyLine,
-                                          _NumSupplyCoX=_NumSupplyCOX, _NumSupplyCoY=_NumSupplyCOY,
-                                          _SupplyMet1XWidth=_SupplyMet1XWidth, _SupplyMet1YWidth=_SupplyMet1YWidth,
-                                          _NumViaPoly2Met1CoX=_NumVIAPoly2Met1COX,
-                                          _NumViaPoly2Met1CoY=_NumVIAPoly2Met1COY,
-                                          _NumViaPMOSMet12Met2CoX=_NumViaPMOSMet12Met2CoX,
-                                          _NumViaPMOSMet12Met2CoY=_NumViaPMOSMet12Met2CoY,
-                                          _NumViaNMOSMet12Met2CoX=_NumViaNMOSMet12Met2CoX,
-                                          _NumViaNMOSMet12Met2CoY=_NumViaNMOSMet12Met2CoY,
-                                          _StandAlone_DRCFREE=_StandAlone_DRCFREE
-                                          )
+        _Finger = 5
+        _ChannelWidth = 200
+        _ChannelLength = 30
+        _NPRatio = 2
+        _VDD2VSSHeight = None   # None / 1750
+        _Dummy = True
+        _SLVT = True
+        _LVT = False
+        _HVT = False
+        _NumSupplyCOX = None  #
+        _NumSupplyCOY = 2
+        _SupplyMet1XWidth = None
+        _SupplyMet1YWidth = None
+        _NumVIAPoly2Met1COX = None
+        _NumVIAPoly2Met1COY = None
+        _NumViaPMOSMet12Met2CoX = None
+        _NumViaPMOSMet12Met2CoY = None
+        _NumViaNMOSMet12Met2CoX = None
+        _NumViaNMOSMet12Met2CoY = None
+        _NumVIAMet12COX = None
+        _NumVIAMet12COY = None
+        _SupplyLine = False
+        _StandAlone_DRCFREE = True
 
-    InverterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=InverterObj._DesignParameter)
-    _fileName = 'Inverter0803.gds'                                    # Need to get current date / time
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-    tmp = InverterObj._CreateGDSStream(InverterObj._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
+        # Generate Inverter Layout Object
+        InverterObj = _Inverter(_DesignParameter=None, _Name='Inverter')
+        InverterObj._CalculateDesignParameter(_NPRatio=_NPRatio, _Dummy=_Dummy, _SLVT=_SLVT, _Finger=_Finger,
+                                              _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength,
+                                              _VDD2VSSHeight=_VDD2VSSHeight, _SupplyLine=_SupplyLine,
+                                              _NumSupplyCoX=_NumSupplyCOX, _NumSupplyCoY=_NumSupplyCOY,
+                                              _SupplyMet1XWidth=_SupplyMet1XWidth, _SupplyMet1YWidth=_SupplyMet1YWidth,
+                                              _NumViaPoly2Met1CoX=_NumVIAPoly2Met1COX,
+                                              _NumViaPoly2Met1CoY=_NumVIAPoly2Met1COY,
+                                              _NumViaPMOSMet12Met2CoX=_NumViaPMOSMet12Met2CoX,
+                                              _NumViaPMOSMet12Met2CoY=_NumViaPMOSMet12Met2CoY,
+                                              _NumViaNMOSMet12Met2CoX=_NumViaNMOSMet12Met2CoX,
+                                              _NumViaNMOSMet12Met2CoY=_NumViaNMOSMet12Met2CoY,
+                                              _StandAlone_DRCFREE=_StandAlone_DRCFREE
+                                              )
 
-    print ('###############      Sending to FTP Server...      ##################')
-    FileManage.Upload2FTP(_fileName=_fileName)
+        InverterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=InverterObj._DesignParameter)
+        _fileName = 'Inverter.gds'                                    # Need to get current date / time
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = InverterObj._CreateGDSStream(InverterObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
+
+        print ('###############      Sending to FTP Server...      ##################')
+        # FileManage.Upload2FTP(_fileName=_fileName)
+
+        import ftplib
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('isjang', 'dlrtn1359')
+        ftp.cwd('/mnt/sdc/isjang/OPUS/CAD_S28nm_Workspace')
+        myfile = open('Inverter.gds', 'rb')
+        ftp.storbinary('STOR Inverter.gds', myfile)
+        myfile.close()
+        ftp.close()
+
+        import DRCchecker
+
+        a = DRCchecker.DRCchecker('isjang', 'dlrtn1359', '/mnt/sdc/isjang/OPUS/CAD_S28nm_Workspace','/mnt/sdc/isjang/OPUS/CAD_S28nm_Workspace/DRC/DRC_run', 'Inv_tst', 'Inverter')
+        a.DRCchecker()
+        print ("DRC checking..... {}/100".format(tries))
 
     print ('###############      Finished      ##################')  # Need to get project name(inverter_iksu2.py)
-
+    print ("DRCclean!!")
 # end of 'main():' ---------------------------------------------------------------------------------------------

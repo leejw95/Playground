@@ -476,7 +476,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                                                                                   ]]
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'] = [[self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
-                                                                            self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] -- max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,  self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2) - \
+                                                                            self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,  self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2) - \
                                                                            self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2
                                                                                   ]]
 

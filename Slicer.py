@@ -2088,7 +2088,7 @@ if __name__ == '__main__':
         # ftp.close()
 
     ################################## DRC Checker #################################
-
+        import paramiko
         import DRCchecker
 
 

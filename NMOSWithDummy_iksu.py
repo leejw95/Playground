@@ -9,7 +9,7 @@ from Private import FileManage
 
 class _NMOS(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(_NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None,
-                                           _NMOSDummy=False, _SLVT=False)
+                                           _NMOSDummy=False, _XVT=None)
 
     def __init__(self, _DesignParameter=None, _Name=None):
 
@@ -71,14 +71,22 @@ class _NMOS(StickDiagram._StickDiagram):
         if _Name != None:
             self._DesignParameter['_Name']['_Name'] = _Name
 
-    def _CalculateNMOSDesignParameter(self, _NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None,
-                                      _NMOSDummy=False, _SLVT=False):
+    def _CalculateNMOSDesignParameter(self, _NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None, _NMOSDummy=False, _XVT=None):
+        """
+
+        :param _NMOSNumberofGate:
+        :param _NMOSChannelWidth:
+        :param _NMOSChannellength:
+        :param _NMOSDummy:
+        :param _XVT:
+        :return:
+        """
+
         print ('#########################################################################################################')
         print ('                                    {}  NMOSContact Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
         _DRCObj = DRC.DRC()
         _XYCoordinateOfNMOS = [[0, 0]]
-
 
         #
         print ('#############################     POLY Layer Calculation    ##############################################')
@@ -210,44 +218,36 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
         if DesignParameters._Technology == '028nm':
-            if (_SLVT == True) or (_SLVT == 'SLVT'):
-                print ('#############################     SLVT Layer Calculation    ##############################################')
-                # SLVT Dummy Layer XWidth and YWidth Setting
-                self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD
-                self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
-
-                # SLVT Layer Coordinate Setting
-                self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
+            if _XVT == 'SLVT':
+                _XVTLayer = '_SLVTLayer'
+            elif _XVT == 'LVT':
+                _XVTLayer = '_LVTLayer'
+            elif _XVT == 'HVT':
+                _XVTLayer = '_HVTLayer'
             else:
-                self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = []
+                raise NotImplementedError  # Need Appropriate Error Sign
 
-            if _SLVT == 'LVT':
-                print (
-                    '#############################     LVT Layer Calculation    ##############################################')
-                # SLVT Dummy Layer XWidth and YWidth Setting
-                self._DesignParameter['_LVTLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD
-                self._DesignParameter['_LVTLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
+            print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
+            self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD
+            self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
+            self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
 
-                # SLVT Layer Coordinate Setting
-                self._DesignParameter['_LVTLayer']['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
-            else:
-                self._DesignParameter['_LVTLayer']['_XYCoordinates'] = []
-
-            if _SLVT == 'HVT':
-                print (
-                    '#############################     HVT Layer Calculation    ##############################################')
-                # SLVT Dummy Layer XWidth and YWidth Setting
-                self._DesignParameter['_HVTLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD
-                self._DesignParameter['_HVTLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
-
-                # SLVT Layer Coordinate Setting
-                self._DesignParameter['_HVTLayer']['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
-            else:
-                self._DesignParameter['_HVTLayer']['_XYCoordinates'] = []
+        elif DesignParameters._Technology == '065nm':
+            if _XVT == 'LVT':
+                _XVTLayer = '_NLVTLayer'
+            elif _XVT == 'HVT':
+                _XVTLayer = '_NHVTLayer'
+            # else:
+            #     # break  # ??? Not verified
 
 
+            print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
+            self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD  # !!!!
+            self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
+            self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
 
-
+        else:
+            raise NotImplementedError  # Need Appropriate Error Sign
 
 
         if DesignParameters._Technology == '028nm':
@@ -337,7 +337,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
         print ('##################################################### POLayer Pin Generation & Coordinates ####################################################')
         self._DesignParameter['_POLayerPINDrawing']['_XWidth'] = self._DesignParameter['_POLayer']['_XWidth']
-        self._DesignParameter['_POLayerPINDrawing']['_YWidth'] = (self._DesignParameter['_SLVTLayer']['_YWidth'] - self._DesignParameter['_ODLayer']['_YWidth']) / 2
+        self._DesignParameter['_POLayerPINDrawing']['_YWidth'] = (self._DesignParameter[_XVTLayer]['_YWidth'] - self._DesignParameter['_ODLayer']['_YWidth']) / 2
         tmp1 = []
         tmp2 = []
         for i in range(0, len(self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'])):
@@ -357,7 +357,7 @@ if __name__ == '__main__':
     _NMOSWidth = 200
     _NMOSChannelLength = 30
     _NMOSDummy = False
-    _SLVT = 'HVT'            # 'SLVT' 'LVT' 'HVT'
+    _XVT = 'HVT'            # 'SLVT' 'LVT' 'HVT'
 
     _fileName = 'NMOSWithDummy_iksu.gds'
     libname = 'TEST_NMOS'
@@ -365,7 +365,7 @@ if __name__ == '__main__':
     DesignParameters._Technology = '028nm'
     NMOSObj = _NMOS(_DesignParameter=None, _Name='NMOS')
     NMOSObj._CalculateNMOSDesignParameter(_NMOSNumberofGate=_NMOSFinger, _NMOSChannelWidth=_NMOSWidth,
-                                          _NMOSChannellength=_NMOSChannelLength, _NMOSDummy=_NMOSDummy, _SLVT=_SLVT)
+                                          _NMOSChannellength=_NMOSChannelLength, _NMOSDummy=_NMOSDummy, _XVT=_XVT)
     NMOSObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NMOSObj._DesignParameter)
     testStreamFile = open('./{}'.format(_fileName), 'wb')
     tmp = NMOSObj._CreateGDSStream(NMOSObj._DesignParameter['_GDSFile']['_GDSFile'])

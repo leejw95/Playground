@@ -342,6 +342,7 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
         NMOS_Guardringtop = self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_toptmp
         VDD2VSSHeightofInverter = self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]
 
+
         self._DesignParameter['_SRLatch']['_XYCoordinates'] = [[_XYCoordinateOfSlicer[0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'][1][0] +
                                                             self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XWidth'] // 2
                                                             +_DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace +
@@ -874,7 +875,7 @@ if __name__ == '__main__' :
 
     SlicerWithSRLatchObj = _SlicerWithSRLatch(_DesignParameter=None, _Name='SlicerWithSRLatch')
 
-    for _tries in range(1, 2) :
+    for _tries in range(1, 101) :
         #####################SRLatch#######################
         _SRFinger1 = random.randint(1, 16)
         _SRFinger2 = random.randint(1, 16)
@@ -913,7 +914,7 @@ if __name__ == '__main__' :
         _SLCLKinputPMOSFinger2 = random.randint(1, 16)
         _SLPMOSFinger = random.randint(1, 16)
         _SLPMOSChannelWidth = random.randrange(200, 1050, 50)
-        _SLDATAinputNMOSFinger = random.randint(1, 16)
+        _SLDATAinputNMOSFinger = random.randint(2, 16)
         _SLNMOSFinger = random.randint(1, 16)
         _SLCLKinputNMOSFinger = random.randint(1, 16)
         _SLNMOSChannelWidth = random.randrange(200, 1050, 50)
@@ -1037,6 +1038,13 @@ if __name__ == '__main__' :
         myfile.close()
         ftp.close()
 
+        import DRCchecker
+
+        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatch_test', 'SlicerWithSRLatch')
+
+        a.DRCchecker()
+
+
         print('_tries = ', _tries)
         print('_SRFinger1 = ', _SRFinger1)
         print('_SRFinger2 = ', _SRFinger2)
@@ -1056,7 +1064,9 @@ if __name__ == '__main__' :
 
         print('_InvFinger = ', _InvFinger)
 
+    print ("DRCclean!!")
 
+### DRC Error : 102, 86
 
         # ftp = ftplib.FTP('141.223.22.156')
         # ftp.login('junung', 'chlwnsdnd1!')

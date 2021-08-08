@@ -228,7 +228,7 @@ class _NMOS(StickDiagram._StickDiagram):
                 raise NotImplementedError  # Need Appropriate Error Sign
 
             print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
-            self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD
+            self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinExtensionOnOD
             self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
             self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
 
@@ -242,7 +242,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
             print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
-            self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD  # !!!!
+            self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinExtensionOnOD  # !!!!
             self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
             self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
 

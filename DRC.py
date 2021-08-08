@@ -1922,6 +1922,15 @@ class DRCSLVT:
             else :
                 return self._SlvtMinSpace
 
+class DRCXVT:
+    # XVT means {SLVT, LVT, HVT}. So far, all XVT's DRC rules are all the same. If different rules are found, it should be changed.
+    def __init__(self):
+        if DesignParameters._Technology == '028nm':
+            self._XvtMinWidth = 170
+            self._XvtMinSpace = 170
+            self._XvtMinExtensionOnOD = 56  # need to check
+            self._XvtMinArea = 95000
+            self._XvtMinArea2 = 160000
 
 
 class DRC(DRCMultiplicantForMinEdgeWidth, DRCOD, DRCPOLYGATE, DRCPP, DRCNP, DRCCO, DRCMETAL1, DRCMETALy, DRCVIAy, DRCMETALz, DRCVIAz, DRCMETALr, DRCVIAr, DRCNW, DRCVIAx,DRCMETALx, DRCMinSnapSpacing, DRCRPO, DRCSLVT):

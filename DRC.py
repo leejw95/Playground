@@ -1906,11 +1906,11 @@ class DRCRPO:
 
 class DRCSLVT:
     def __init__(self):
-        if DesignParameters._Technology=='028nm':
-            self._SlvtMinWidth=170
-            self._SlvtMinSpace=170
-            self._SlvtMinExtensionOnOD=56
-            self._SlvtMinArea=95 ##????
+        if DesignParameters._Technology == '028nm':
+            self._SlvtMinWidth = 170
+            self._SlvtMinSpace = 170
+            self._SlvtMinExtensionOnOD = 56
+            self._SlvtMinArea = 95000
             self._SlvtMinArea2 = 160000 ## SLVT (BH) Minimum Area 0.16um^2, junung
 
 

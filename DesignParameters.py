@@ -995,14 +995,19 @@ print ('#########################   LVT Layer Mapping    #######################
 
 if _Technology == '065nm':
     _LayerMapping.update({'NLVT': _LayerMappingTmp[('VTL_N', 'drawing')]})
+    _LayerMapping.update({'PLVT': _LayerMappingTmp[('VTL_P', 'drawing')]})
+if _Technology == '065nm':
+    _LayerMapping.update({'NHVT': _LayerMappingTmp[('VTH_N', 'drawing')]})
+    _LayerMapping.update({'PHVT': _LayerMappingTmp[('VTH_P', 'drawing')]})
+
 if _Technology == '028nm':
     _LayerMapping.update({'LVT': _LayerMappingTmp[('LVT', 'drawing')]})
 if _Technology == '028nm':
     _LayerMapping.update({'HVT': _LayerMappingTmp[('HVT', 'drawing')]})
-if _Technology == '065nm' :
-    _LayerMapping.update({'PLVT': _LayerMappingTmp[('VTL_P', 'drawing')]})
 if _Technology == '028nm':
     _LayerMapping.update({'SLVT':_LayerMappingTmp[('SLVT', 'drawing')]})
+else:
+    _LayerMapping.update({'SLVT': (None,None)})  # Is it ok?
 
 print ('#########################   RXPIN Layer Mapping    #################################')
 

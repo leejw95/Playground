@@ -1904,6 +1904,7 @@ class DRCRPO:
         if DesignParameters._Technology=='180nm':
             return self._RPOMinExtensionOnPO
 
+
 class DRCSLVT:
     def __init__(self):
         if DesignParameters._Technology == '028nm':
@@ -1923,8 +1924,18 @@ class DRCSLVT:
                 return self._SlvtMinSpace
 
 
+class DRCXVT:
+    # XVT means {SLVT, LVT, HVT}. So far, all XVT's DRC rules are all the same. If different rules are found, it should be changed.
+    def __init__(self):
+        if DesignParameters._Technology == '028nm':
+            self._XvtMinWidth = 170
+            self._XvtMinSpace = 170
+            self._XvtMinExtensionOnOD = 56  # need to check
+            self._XvtMinArea = 95000
+            self._XvtMinArea2 = 160000
 
-class DRC(DRCMultiplicantForMinEdgeWidth, DRCOD, DRCPOLYGATE, DRCPP, DRCNP, DRCCO, DRCMETAL1, DRCMETALy, DRCVIAy, DRCMETALz, DRCVIAz, DRCMETALr, DRCVIAr, DRCNW, DRCVIAx,DRCMETALx, DRCMinSnapSpacing, DRCRPO, DRCSLVT):
+
+class DRC(DRCMultiplicantForMinEdgeWidth, DRCOD, DRCPOLYGATE, DRCPP, DRCNP, DRCCO, DRCMETAL1, DRCMETALy, DRCVIAy, DRCMETALz, DRCVIAz, DRCMETALr, DRCVIAr, DRCNW, DRCVIAx,DRCMETALx, DRCMinSnapSpacing, DRCRPO, DRCSLVT, DRCXVT):
     def __init__(self ):
         DRCNW.__init__(self)
         DRCOD.__init__(self)
@@ -1944,6 +1955,7 @@ class DRC(DRCMultiplicantForMinEdgeWidth, DRCOD, DRCPOLYGATE, DRCPP, DRCNP, DRCC
         DRCMinSnapSpacing.__init__(self)
         DRCRPO.__init__(self)
         DRCSLVT.__init__(self)
+        DRCXVT.__init__(self)
     # def CalculateMinimumDistanceBtwElements(self, _Element1 = None, _Element2 = None):
     #     if _Element1 == None or _Element2 == None:
     #         raise user_define_exceptions.IncorrectInputError('_Element1 & Element2 should not be None')

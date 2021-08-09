@@ -995,34 +995,62 @@ print ('#########################   LVT Layer Mapping    #######################
 
 if _Technology == '065nm':
     _LayerMapping.update({'NLVT': _LayerMappingTmp[('VTL_N', 'drawing')]})
-if _Technology == '028nm':
-    _LayerMapping.update({'LVT': _LayerMappingTmp[('LVT', 'drawing')]})
-if _Technology == '028nm':
-    _LayerMapping.update({'HVT': _LayerMappingTmp[('HVT', 'drawing')]})
-if _Technology == '065nm' :
     _LayerMapping.update({'PLVT': _LayerMappingTmp[('VTL_P', 'drawing')]})
+
+if _Technology == '065nm':
+    _LayerMapping.update({'NHVT': _LayerMappingTmp[('VTH_N', 'drawing')]})
+    _LayerMapping.update({'PHVT': _LayerMappingTmp[('VTH_P', 'drawing')]})
+
+
 if _Technology == '028nm':
     _LayerMapping.update({'SLVT':_LayerMappingTmp[('SLVT', 'drawing')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'SLVT': (None,None)})
+
+if _Technology == '028nm':
+    _LayerMapping.update({'LVT': _LayerMappingTmp[('LVT', 'drawing')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'LVT': (None, None)})
+
+if _Technology == '028nm':
+    _LayerMapping.update({'RVT': _LayerMappingTmp[('RVT', 'drawing')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'RVT': (None, None)})
+
+if _Technology == '028nm':
+    _LayerMapping.update({'HVT': _LayerMappingTmp[('HVT', 'drawing')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'HVT': (None, None)})
+
+
 
 print ('#########################   RXPIN Layer Mapping    #################################')
 
 if _Technology == '028nm':
     _LayerMapping.update({'RXPIN':_LayerMappingTmp[('RX', 'pin')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'RXPIN': (None,None)})
 
 print ('#########################   PCPIN Layer Mapping    #################################')
 
 if _Technology == '028nm':
     _LayerMapping.update({'PCPIN':_LayerMappingTmp[('PC', 'pin')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'PCPIN': (None, None)})
 
 print ('#########################   PCCRIT Layer Mapping    #################################')
 
 if _Technology == '028nm':
     _LayerMapping.update({'PCCRIT':_LayerMappingTmp[('PC', 'crit')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'PCCRIT': (None, None)})
 
 print ('#########################   M1PIN Layer Mapping    #################################')
 
 if _Technology == '028nm':
     _LayerMapping.update({'M1PIN':_LayerMappingTmp[('M1', 'pin')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'M1PIN': (None, None)})
 
 _LayerMapFile.close()
 ########################################################################################

@@ -2079,38 +2079,38 @@ if __name__ == '__main__':
         myfile.close()
         ftp.close()
 
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('junung', 'chlwnsdnd1!')
-        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        # myfile = open('Slicer.gds', 'rb')
-        # ftp.storbinary('STOR Slicer.gds', myfile)
-        # myfile.close()
-        # ftp.close()
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('junung', 'chlwnsdnd1!')
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        myfile = open('Slicer.gds', 'rb')
+        ftp.storbinary('STOR Slicer.gds', myfile)
+        myfile.close()
+        ftp.close()
 
     ################################## DRC Checker #################################
-        import DRCchecker
+    #     import DRCchecker
 
 
 
-        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
-        print('_tries = ', _tries)
-        print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
-        print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
-        print('_PMOSFinger = ', _PMOSFinger)
-        print('_PMOSChannelWidth = ', _PMOSChannelWidth)
-        print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
-        print('_NMOSFinger = ', _NMOSFinger)
-        print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
-        print('_NMOSChannelWidth = ', _NMOSChannelWidth)
+    #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
+    #     print('_tries = ', _tries)
+    #     print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
+    #     print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
+    #     print('_PMOSFinger = ', _PMOSFinger)
+    #     print('_PMOSChannelWidth = ', _PMOSChannelWidth)
+    #     print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
+    #     print('_NMOSFinger = ', _NMOSFinger)
+    #     print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
+    #     print('_NMOSChannelWidth = ', _NMOSChannelWidth)
 
-        a.DRCchecker()
-
-
+    #     a.DRCchecker()
 
 
 
 
-    print ("DRCclean!!")
+
+
+    # print ("DRCclean!!")
 
 
 

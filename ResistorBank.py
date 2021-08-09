@@ -235,9 +235,13 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         _TotalSubringinputs = copy.deepcopy(psubring._PSubring._ParametersForDesignCalculation)
         _TotalSubringinputs['_PType'] = True
-        _TotalSubringinputs['_XWidth'] = _NMOSSubringinputs['_XWidth'] + _NMOSSubringinputs['_Width'] * 2 + _DRCObj._PpMinExtensiononPactive2 * 2+ \
+        _TotalSubringinputs['_XWidth'] = _NMOSSubringinputs['_XWidth'] + (_NMOSSubringinputs['_Width']+1) * 2 + _DRCObj._PpMinExtensiononPactive2 * 2+ \
                                         self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + \
                                         _DRCObj._RXMinSpacetoPRES * 2 + _DRCObj._PpMinSpace
+
+        if _TotalSubringinputs['_XWidth'] % 2 == 1 :
+            _TotalSubringinputs['_XWidth'] += 1
+
         #if (_TransmissionGateChannelWidth * _TransmissionGateNPRatio <= 700) :
         _TotalSubringinputs['_YWidth'] = max(_TransmissionGateVDD2VSSHeight + _NMOSSubringinputs['_Width']//2 + _PMOSSubringinputs['_Width']//2 + _DRCObj._Metal1MinSpace3 + _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace,
                                              self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_YWidth'] + _DRCObj._RXMinSpacetoPRES * 2)
@@ -803,7 +807,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         self._DesignParameter['_Met2LayerResYX']['_Width'] = _PMOSSubringinputs['_Width']
         self._DesignParameter['_Met2LayerResYX']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - _GapBtwRL // 2,
                                                                     self._DesignParameter['_Met3LayerPMOSResAX']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Met3LayerPMOSResAX']['_Width'] // 2],
-                                                                    [self._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - _GapBtwRL // 2,
+                                                                    [self._DesignParameter['_PMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0] - _GapBtwRL // 2,
                                                                     self._DesignParameter['_Met3LayerNMOSResAX']['_XYCoordinates'][0][0][1] - self._DesignParameter['_Met3LayerNMOSResAX']['_Width'] // 2]]]
 
         
@@ -1213,7 +1217,7 @@ if __name__ == '__main__' :
     # _InverterVDD2VSSHeight = 2252 ## SHOULD BE FIXED OVER MIN VALUE
     # _InverterSLVT = True     #T/F?
 
-    _TransmissionGateFinger = 12
+    _TransmissionGateFinger = 6
     _TransmissionGateChannelWidth = 275
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2

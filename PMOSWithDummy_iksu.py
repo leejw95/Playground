@@ -23,6 +23,9 @@ class _PMOS(StickDiagram._StickDiagram):
                 _PPLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0],_Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
                 _COLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0],_Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
 
+                _PLVTLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PLVT'][0], _Datatype=DesignParameters._LayerMapping['PLVT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                _PHVTLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PHVT'][0], _Datatype=DesignParameters._LayerMapping['PHVT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400),
+
                 _ODLayerPINDrawing=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['RXPIN'][0], _Datatype=DesignParameters._LayerMapping['RXPIN'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400),
                 _SLVTLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0],_Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400),
                 _LVTLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['LVT'][0], _Datatype=DesignParameters._LayerMapping['LVT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400),
@@ -42,13 +45,14 @@ class _PMOS(StickDiagram._StickDiagram):
     # Input Variable
     def _CalculatePMOSDesignParameter(self, _PMOSNumberofGate=None, _PMOSChannelWidth=None, _PMOSChannellength=None, _PMOSDummy=False, _XVT=None):
         print ('#########################################################################################################')
-        print ('                                    {}  PMOSContact Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('                                    {}  PMOS Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
         _DRCObj = DRC.DRC()
         _XYCoordinateOfPMOS = [[0,0]]
 
         _LengthPMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _PMOSChannellength
+        _LengthPMOSBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
 
         print ('#############################     POLY (PO/PC) Layer Calculation    ##############################################')
         # POLY Layer Coordinate Calc
@@ -100,7 +104,7 @@ class _PMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_PODummyLayer']['_YWidth'] = 0
 
 
-        print ('#############################     METAL1 Layer Calcuation    ##############################################')
+        print ('#############################     METAL1 Layer Calculation    ##############################################')
         # METAL1 Layer Coordinate Setting
         _LengthPMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_POLayer']['_XWidth']
 
@@ -132,13 +136,11 @@ class _PMOS(StickDiagram._StickDiagram):
 
         # Check the number of CO On PMOS TR
         if (_XNumberOfCOInPMOS == 0) or (_YNumberOfCOInPMOS == 0):
-            print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
+            print ('************************* Error occurred in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
             if DesignParameters._DebugMode == 0:
                 return 0
 
         # CONT XY coordinates Calculation
-        _LengthPMOSBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
-
         tmpXYs = []
         for i in range(0, _XNumberOfCOInPMOS):
             for j in range(0, _YNumberOfCOInPMOS):
@@ -180,7 +182,7 @@ class _PMOS(StickDiagram._StickDiagram):
                                                            + 2 * _DRCObj._PpMinExtensiononPactive
 
 
-        if DesignParameters._Technology == '028nm':  # Need to Modify : Delete unUsed two layers
+        if DesignParameters._Technology == '028nm':  # Can the two cases be Merged? (28nm and 65nm)
             if _XVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
                 _XVTLayer = '_' + _XVT + 'Layer'
                 print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
@@ -190,16 +192,20 @@ class _PMOS(StickDiagram._StickDiagram):
             else:
                 raise NotImplementedError  # Need Appropriate Error Sign
 
-        # elif DesignParameters._Technology == '065nm':
-        #     # raise NotImplementedError
-        #     # if _XVT == 'LVT':
-        #     #     _XVTLayer = '_NLVTLayer'
-        #     # elif _XVT == 'HVT':
-        #     #     _XVTLayer = '_NHVTLayer'
-        #     # # else:
-        #     # #     # break  # ??? Not verified
-        # else:
-        #     raise NotImplementedError  # Need Appropriate Error Sign
+        elif DesignParameters._Technology == '065nm':
+            if _XVT in ('LVT', 'HVT'):
+                _XVTLayer = '_P' + _XVT + 'Layer'
+                print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
+                self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX
+                self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODY
+                self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
+            elif _XVT == None:
+                pass
+            else:
+                raise NotImplementedError  # Need Appropriate Error Sign / Invalid '_XVT' argument
+
+        else:
+            raise NotImplementedError  # Need Appropriate Error Sign / Invalid 'tech' argument
 
         # ?
         if DesignParameters._Technology == '028nm':  # ?
@@ -254,10 +260,6 @@ class _PMOS(StickDiagram._StickDiagram):
 
         self._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'] = tmpXYs
 
-        del _DRCObj
-        print ('#########################################################################################################')
-        print ('                                    {}  PMOSContact Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))
-        print ('#########################################################################################################')
 
         if DesignParameters._Technology == '028nm':  # ?
             print ('##################################################### Diff Pin Generation & Coordinates ####################################################')
@@ -285,29 +287,21 @@ class _PMOS(StickDiagram._StickDiagram):
                 self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1
 
 
-
-        # del self._DesignParameter['_ODLayerPINDrawing']
-        # del self._DesignParameter['_SLVTLayer']
-        # del self._DesignParameter['_LVTLayer']
-        # del self._DesignParameter['_HVTLayer']
-        # del self._DesignParameter['_PODummyLayer']
-        # del self._DesignParameter['_POLayerPINDrawing']
-        # del self._DesignParameter['_METAL1PINDrawing']
-        # del self._DesignParameter['_PCCRITLayer']
-
-
-
+        del _DRCObj
+        print ('#########################################################################################################')
+        print ('                                    {}  PMOS Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 if __name__ == '__main__':
     _PMOSFinger = 6
-    _PMOSWidth = 200    # 200 (samsung) / 800 (65nm)
-    _PMOSChannelLength = 30  # 30 (samsung) / 60 (65nm)
-    _PMOSDummy = True
+    _PMOSWidth = 400    # ? (samsung) / 200 (65nm)
+    _PMOSChannelLength = 60  # 30 (samsung) / 60 (65nm)
+    _PMOSDummy = False
     _XVT = 'HVT'            # 'SLVT' 'LVT' 'HVT'
 
     _fileName = 'PMOSWithDummy_iksu.gds'
-    libname = 'TEST_NMOS'
+    libname = 'TEST_MOS'
 
     print ('Technology Process', DesignParameters._Technology)
     PMOSObj = _PMOS(_DesignParameter=None, _Name='PMOS')
@@ -319,7 +313,7 @@ if __name__ == '__main__':
     testStreamFile.close()
 
     print ('###############      Sending to FTP Server...      ##################')
-    My = MyInfo.USER()
+    My = MyInfo.USER(DesignParameters._Technology)
 
     FileManage.Upload2FTP(
         server=My.server,
@@ -337,7 +331,8 @@ if __name__ == '__main__':
         Dir_Work=My.Dir_Work,
         Dir_GDS=My.Dir_GDS,
         libname=libname,
-        filename=_fileName
+        filename=_fileName,
+        tech=DesignParameters._Technology
     )
 
     print ('###############      Finished      ##################')

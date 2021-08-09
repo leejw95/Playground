@@ -595,7 +595,7 @@ class _PSubring(StickDiagram._StickDiagram):
         print ('##############################     CONT Layer Calcuation    ##############################################')
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
-        _COXNumMin1 = int((self._DesignParameter['_Met1Layerx']['_XWidth'] - _DRCObj._CoMinWidth -_DRCObj._Metal1MinEnclosureCO2 * 2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1 
+        _COXNumMin1 = int((self._DesignParameter['_Met1Layerx']['_XWidth'] - _DRCObj._CoMinWidth -_DRCObj._Metal1MinEnclosureCO2 * 2 - 2 * self._DesignParameter['_Met1Layery']['_XWidth']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1 
         if _COXNumMin1 == 0 :
             _COXNumMin1 = 1
         _COYNumMin1 = int((self._DesignParameter['_Met1Layerx']['_YWidth'] - _DRCObj._CoMinWidth -_DRCObj._Metal1MinEnclosureCO2 * 2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1
@@ -609,7 +609,7 @@ class _PSubring(StickDiagram._StickDiagram):
             _COYNumMin2 = 1
         tmp = []
 
-        for i in range (1, _COXNumMin1 -1) :
+        for i in range (0, _COXNumMin1) :
             for j in range (0,_COYNumMin1) :
                 if _COXNumMin1 % 2 == 0 and _COYNumMin1 % 2 == 0 :
                     tmp.append([self._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][0] - (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) * (_COXNumMin1 // 2 - 0.5) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),

@@ -211,13 +211,13 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_CONT2']['_XWidth'] = _DRCObj._CoMinWidth
             self._DesignParameter['_CONT2']['_YWidth'] = _DRCObj._CoMinWidth
 
-            _XNumberOfCO1 = int((self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) # Horizontal Ring
+            _XNumberOfCO1 = int((self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) - 1# Horizontal Ring
             _YNumberOfCO1 = _SlicerGuardringWidth // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)
             _XNumberOfCO2 = _SlicerGuardringWidth // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)
-            _YNumberOfCO2 = int(self._DesignParameter['_SlicerGuardringMet2']['_YWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)  # Verical Ring
+            _YNumberOfCO2 = int(self._DesignParameter['_SlicerGuardringMet2']['_YWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) - 1 # Verical Ring
 
             # CONT Coordinate Setting
-            _LengthRingBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
+            _LengthRingBtwCO = _DRCObj._CoMinSpace + 1 + _DRCObj._CoMinWidth
             tmp = []
             tmp2=[GuardringMet1Coordinate[0][1], GuardringMet1Coordinate1[0][1]]
             tmp3=GuardringMet1Coordinate3[0][0]+GuardringMet1Coordinate2[0][0]
@@ -2010,17 +2010,17 @@ if __name__ == '__main__':
     #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
     #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
 
-    for _tries in range(1, 101) :
+    for _tries in range(1, 2) :
 
 
-        _CLKinputPMOSFinger1 = random.randint(1, 16)
-        _CLKinputPMOSFinger2 =random.randint(1, 16)
-        _PMOSFinger = random.randint(1, 16)
-        _PMOSChannelWidth = random.randrange(200, 1050, 50)
-        _DATAinputNMOSFinger = random.randint(2, 16)
-        _NMOSFinger = random.randint(1, 16)
-        _CLKinputNMOSFinger = random.randint(1, 16)
-        _NMOSChannelWidth = random.randrange(200, 1050, 50)
+        _CLKinputPMOSFinger1 = 6 ##random.randint(1, 16)
+        _CLKinputPMOSFinger2 = 3##andom.randint(1, 16)
+        _PMOSFinger = 2##random.randint(1, 16)
+        _PMOSChannelWidth = 1000###random.randrange(200, 1050, 50)
+        _DATAinputNMOSFinger = 12##random.randint(2, 16)
+        _NMOSFinger = 2##random.randint(1, 16)
+        _CLKinputNMOSFinger = 8##random.randint(1, 16)
+        _NMOSChannelWidth = 1000##random.randrange(200, 1050, 50)
         _ChannelLength = 30
         _Dummy = True
         _SLVT = True

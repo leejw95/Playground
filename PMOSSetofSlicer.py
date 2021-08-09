@@ -14,7 +14,8 @@ import user_define_exceptions
 
 import copy
 import DRC
-
+import psubring
+import random
 import ftplib
 from ftplib import FTP
 import base64
@@ -485,7 +486,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
                 if _PMOSFinger == 1 :
                     _LengthBtwPoly2Poly2 = _ChannelLength + 2 * _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinWidth
-                    _LengthNPolyDummyEdge2OriginX2 = (int(_PMOSFinger / 2) + 1) * _LengthBtwPoly2Poly2 - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                    _LengthNPolyDummyEdge2OriginX2 = int(round((int(_PMOSFinger / 2) + 1) * _LengthBtwPoly2Poly2 - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) + 0.5)) // 2
                     _LengthNPolyGateEdge2OriginY2 = (self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2) - (self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2)
                     _LengthBtwPolyEdge1 = math.sqrt(_LengthNPolyDummyEdge2OriginX2 * _LengthNPolyDummyEdge2OriginX2 + _LengthNPolyGateEdge2OriginY2 * _LengthNPolyGateEdge2OriginY2)
 
@@ -626,109 +627,139 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ############################################### Guardring Generation ####################################################################
             #########################################################################################################################################
             if _Guardring == True:
-                print ('#################################     Guardring Layer Generation ###########################################')
-                self._DesignParameter['_RingMetal1Layer1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[],_Width=400)
-                self._DesignParameter['_RingMetal1Layer2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[],_Width=400)
-                self._DesignParameter['_RingMetal1Layer3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=400)
-                self._DesignParameter['_RingMetal1Layer4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=400)
-                self._DesignParameter['_RingODLayer1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
-                self._DesignParameter['_RingODLayer2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
-                self._DesignParameter['_RingODLayer3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
-                self._DesignParameter['_RingODLayer4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
+                # print ('#################################     Guardring Layer Generation ###########################################')
+                # self._DesignParameter['_RingMetal1Layer1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[],_Width=400)
+                # self._DesignParameter['_RingMetal1Layer2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[],_Width=400)
+                # self._DesignParameter['_RingMetal1Layer3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=400)
+                # self._DesignParameter['_RingMetal1Layer4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=400)
+                # self._DesignParameter['_RingODLayer1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
+                # self._DesignParameter['_RingODLayer2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
+                # self._DesignParameter['_RingODLayer3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
+                # self._DesignParameter['_RingODLayer4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
+                #
+                # self._DesignParameter['_RingMetal1Layer1']['_Width'] = _GuardringWidth
+                # self._DesignParameter['_RingMetal1Layer2']['_Width'] = _GuardringWidth
+                # self._DesignParameter['_RingMetal1Layer3']['_Width'] = _GuardringWidth
+                # self._DesignParameter['_RingMetal1Layer4']['_Width'] = _GuardringWidth
+                # self._DesignParameter['_RingODLayer1']['_Width'] = _GuardringWidth
+                # self._DesignParameter['_RingODLayer2']['_Width'] = _GuardringWidth
+                # self._DesignParameter['_RingODLayer3']['_Width'] = _GuardringWidth
+                # self._DesignParameter['_RingODLayer4']['_Width'] = _GuardringWidth
 
-                self._DesignParameter['_RingMetal1Layer1']['_Width'] = _GuardringWidth
-                self._DesignParameter['_RingMetal1Layer2']['_Width'] = _GuardringWidth
-                self._DesignParameter['_RingMetal1Layer3']['_Width'] = _GuardringWidth
-                self._DesignParameter['_RingMetal1Layer4']['_Width'] = _GuardringWidth
-                self._DesignParameter['_RingODLayer1']['_Width'] = _GuardringWidth
-                self._DesignParameter['_RingODLayer2']['_Width'] = _GuardringWidth
-                self._DesignParameter['_RingODLayer3']['_Width'] = _GuardringWidth
-                self._DesignParameter['_RingODLayer4']['_Width'] = _GuardringWidth
+                toptmp = self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._PMOS2GuardringMinSpace + _GuardringWidth/2) + 10
+                bottomtmp = min(self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][1]) - self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace3 - _GuardringWidth / 2####self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) - 2*_DRCObj._Metal1MinEnclosureCO2 - self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                lefttmp = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] - (_DRCObj._PMOS2GuardringMinSpace + _GuardringWidth/2) + self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - 35
+                righttmp = self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] + (_DRCObj._PMOS2GuardringMinSpace + _GuardringWidth/2) + self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] + 35
 
-                toptmp = self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + 10
-                bottomtmp = min(self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][1]) - self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace3 - self._DesignParameter['_RingMetal1Layer1']['_Width'] / 2####self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) - 2*_DRCObj._Metal1MinEnclosureCO2 - self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-                lefttmp = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - 35
-                righttmp = self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] + (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']/2) + self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] + 35
 
-                tmp5 = [[[lefttmp-self._DesignParameter['_RingMetal1Layer1']['_Width']/2, toptmp],[righttmp+self._DesignParameter['_RingMetal1Layer1']['_Width']/2, toptmp]]] # top
-                tmp6 = [[[lefttmp-self._DesignParameter['_RingMetal1Layer1']['_Width']/2, bottomtmp],[righttmp+self._DesignParameter['_RingMetal1Layer1']['_Width']/2, bottomtmp]]] # bottom
-                tmp7 = [[[lefttmp, toptmp+self._DesignParameter['_RingMetal1Layer1']['_Width']/2], [lefttmp, bottomtmp-self._DesignParameter['_RingMetal1Layer1']['_Width']/2]]] # left
-                tmp8 = [[[righttmp, toptmp+self._DesignParameter['_RingMetal1Layer1']['_Width']/2], [righttmp, bottomtmp-self._DesignParameter['_RingMetal1Layer1']['_Width']/2]]] #right
+                _GuardringCetPointX = int(round(lefttmp + righttmp + 0.5)) // 2
+                _GuardringCetPointY = int(round(toptmp + bottomtmp + 0.5)) // 2
+                _GuardringXWidth = int(righttmp - lefttmp - _GuardringWidth)
+                _GuardringYWidth = int(toptmp - bottomtmp - _GuardringWidth)
+                if _GuardringXWidth % 2 == 1 :
+                    _GuardringXWidth = _GuardringXWidth + 1
+                if _GuardringYWidth % 2 == 1 :
+                    _GuardringYWidth = _GuardringYWidth + 1
+                if _GuardringCetPointX % 2 == 1 :
+                    _GuardringCetPointX = _GuardringCetPointX + 1
+                if _GuardringCetPointY % 2 == 1 :
+                    _GuardringCetPointY = _GuardringCetPointY + 1
 
-                self._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'] = tmp5
-                self._DesignParameter['_RingMetal1Layer2']['_XYCoordinates'] = tmp6
-                self._DesignParameter['_RingMetal1Layer3']['_XYCoordinates'] = tmp7
-                self._DesignParameter['_RingMetal1Layer4']['_XYCoordinates'] = tmp8
 
-                self._DesignParameter['_RingODLayer1']['_XYCoordinates'] = tmp5
-                self._DesignParameter['_RingODLayer2']['_XYCoordinates'] = tmp6
-                self._DesignParameter['_RingODLayer3']['_XYCoordinates'] = tmp7
-                self._DesignParameter['_RingODLayer4']['_XYCoordinates'] = tmp8
 
+                _NMOSSubringinputs = copy.deepcopy(psubring._PSubring._ParametersForDesignCalculation)
+                _NMOSSubringinputs['_PType'] = False
+                _NMOSSubringinputs['_XWidth'] = _GuardringXWidth
+                _NMOSSubringinputs['_YWidth'] = _GuardringYWidth
+                _NMOSSubringinputs['_Width'] = _GuardringWidth
+
+                self._DesignParameter['_Guardring'] = self._SrefElementDeclaration(_DesignObj=psubring._PSubring(_DesignParameter=None, _Name='GuardringIn{}'.format(_Name)))[0]
+                self._DesignParameter['_Guardring']['_DesignObj']._CalculatePSubring(**_NMOSSubringinputs)
+
+                self._DesignParameter['_Guardring']['_XYCoordinates'] = [[_GuardringCetPointX, _GuardringCetPointY]]
+
+
+
+
+                # tmp5 = [[[lefttmp-self._DesignParameter['_RingMetal1Layer1']['_Width']/2, toptmp],[righttmp+self._DesignParameter['_RingMetal1Layer1']['_Width']/2, toptmp]]] # top
+                # tmp6 = [[[lefttmp-self._DesignParameter['_RingMetal1Layer1']['_Width']/2, bottomtmp],[righttmp+self._DesignParameter['_RingMetal1Layer1']['_Width']/2, bottomtmp]]] # bottom
+                # tmp7 = [[[lefttmp, toptmp+self._DesignParameter['_RingMetal1Layer1']['_Width']/2], [lefttmp, bottomtmp-self._DesignParameter['_RingMetal1Layer1']['_Width']/2]]] # left
+                # tmp8 = [[[righttmp, toptmp+self._DesignParameter['_RingMetal1Layer1']['_Width']/2], [righttmp, bottomtmp-self._DesignParameter['_RingMetal1Layer1']['_Width']/2]]] #right
+                #
+                # self._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'] = tmp5
+                # self._DesignParameter['_RingMetal1Layer2']['_XYCoordinates'] = tmp6
+                # self._DesignParameter['_RingMetal1Layer3']['_XYCoordinates'] = tmp7
+                # self._DesignParameter['_RingMetal1Layer4']['_XYCoordinates'] = tmp8
+                #
+                # self._DesignParameter['_RingODLayer1']['_XYCoordinates'] = tmp5
+                # self._DesignParameter['_RingODLayer2']['_XYCoordinates'] = tmp6
+                # self._DesignParameter['_RingODLayer3']['_XYCoordinates'] = tmp7
+                # self._DesignParameter['_RingODLayer4']['_XYCoordinates'] = tmp8
+                #
 
             # CONT Generation for Guardring
-                self._DesignParameter['_CONT1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0], _Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-                self._DesignParameter['_CONT2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0], _Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-
-                self._DesignParameter['_CONT1']['_XWidth'] = _DRCObj._CoMinWidth
-                self._DesignParameter['_CONT1']['_YWidth'] = _DRCObj._CoMinWidth
-                self._DesignParameter['_CONT2']['_XWidth'] = _DRCObj._CoMinWidth
-                self._DesignParameter['_CONT2']['_YWidth'] = _DRCObj._CoMinWidth
-
-                _XNumberOfCO1 = int((righttmp - lefttmp - self._DesignParameter['_RingMetal1Layer1']['_Width']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) # Horizontal Ring
-                _YNumberOfCO1 = int(self._DesignParameter['_RingMetal1Layer1']['_Width'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
-                _XNumberOfCO2 = int(self._DesignParameter['_RingMetal1Layer1']['_Width'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
-                _YNumberOfCO2 = int((toptmp - bottomtmp - self._DesignParameter['_RingMetal1Layer1']['_Width']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))   # Verical Ring
-
-            # CONT Coordinate Setting
-            _LengthRingBtwCO = _DRCObj._CoMinSpace + 1 + _DRCObj._CoMinWidth
-            tmp = []
-            tmp2=[toptmp, bottomtmp]
-
-            for i in range(0, _XNumberOfCO1):
-                for j in range(0, _YNumberOfCO1):
-                    for k in tmp2:
-                        if (_XNumberOfCO1 % 2) == 1 and (_YNumberOfCO1 % 2) == 0:
-                            _xycoordinatetmp = [(righttmp+lefttmp)/2 - (_XNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                k - (_YNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO1 % 2) == 1 and (_YNumberOfCO1 % 2) == 1:
-                            _xycoordinatetmp = [(righttmp+lefttmp)/2 - (_XNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                k - (_YNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO1 % 2) == 0 and (_YNumberOfCO1 % 2) == 0:
-                            _xycoordinatetmp = [(righttmp+lefttmp)/2 - (_XNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                k - (_YNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO1 % 2) == 0 and (_YNumberOfCO1 % 2) == 1:
-                            _xycoordinatetmp = [(righttmp+lefttmp)/2 - (_XNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                k - (_YNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        tmp.append(_xycoordinatetmp)
-            self._DesignParameter['_CONT1']['_XYCoordinates'] = tmp
-
-            tmp = []
-            tmp2 = [-1, 1]
-            for i in range(0, _XNumberOfCO2):
-                for j in range(0, _YNumberOfCO2):
-                    for k in tmp2:
-                        if (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 0:
-                            _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                (toptmp+bottomtmp)/2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 1:
-                            _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                (toptmp+bottomtmp)/2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 0:
-                            _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                (toptmp+bottomtmp)/2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 1:
-                            _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                (toptmp+bottomtmp)/2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        tmp.append(_xycoordinatetmp)
-            self._DesignParameter['_CONT2']['_XYCoordinates'] = tmp
+            #     self._DesignParameter['_CONT1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0], _Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            #     self._DesignParameter['_CONT2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0], _Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            #
+            #     self._DesignParameter['_CONT1']['_XWidth'] = _DRCObj._CoMinWidth
+            #     self._DesignParameter['_CONT1']['_YWidth'] = _DRCObj._CoMinWidth
+            #     self._DesignParameter['_CONT2']['_XWidth'] = _DRCObj._CoMinWidth
+            #     self._DesignParameter['_CONT2']['_YWidth'] = _DRCObj._CoMinWidth
+            #
+            #     _XNumberOfCO1 = int((righttmp - lefttmp - self._DesignParameter['_RingMetal1Layer1']['_Width'] - 2 * _DRCObj._Metal1MinEnclosureCO2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) # Horizontal Ring
+            #     _YNumberOfCO1 = int((self._DesignParameter['_RingMetal1Layer1']['_Width'] - 2 * _DRCObj._Metal1MinEnclosureCO)// (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+            #     _XNumberOfCO2 = int((self._DesignParameter['_RingMetal1Layer1']['_Width'] - 2 * _DRCObj._Metal1MinEnclosureCO)// (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+            #     _YNumberOfCO2 = int((toptmp - bottomtmp - self._DesignParameter['_RingMetal1Layer1']['_Width'] - 2 * _DRCObj._Metal1MinEnclosureCO2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))   # Verical Ring
+            #
+            # # CONT Coordinate Setting
+            # _LengthRingBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
+            # tmp = []
+            # tmp2=[toptmp, bottomtmp]
+            #
+            # for i in range(0, _XNumberOfCO1):
+            #     for j in range(0, _YNumberOfCO1):
+            #         for k in tmp2:
+            #             if (_XNumberOfCO1 % 2) == 1 and (_YNumberOfCO1 % 2) == 0:
+            #                 _xycoordinatetmp = [(righttmp+lefttmp)/2 - (_XNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     k - (_YNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO1 % 2) == 1 and (_YNumberOfCO1 % 2) == 1:
+            #                 _xycoordinatetmp = [(righttmp+lefttmp)/2 - (_XNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     k - (_YNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO1 % 2) == 0 and (_YNumberOfCO1 % 2) == 0:
+            #                 _xycoordinatetmp = [(righttmp+lefttmp)/2 - (_XNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     k - (_YNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO1 % 2) == 0 and (_YNumberOfCO1 % 2) == 1:
+            #                 _xycoordinatetmp = [(righttmp+lefttmp)/2 - (_XNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     k - (_YNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             tmp.append(_xycoordinatetmp)
+            # self._DesignParameter['_CONT1']['_XYCoordinates'] = tmp
+            #
+            # tmp = []
+            # tmp2 = [-1, 1]
+            # for i in range(0, _XNumberOfCO2):
+            #     for j in range(0, _YNumberOfCO2):
+            #         for k in tmp2:
+            #             if (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 0:
+            #                 _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     (toptmp+bottomtmp)/2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 1:
+            #                 _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     (toptmp+bottomtmp)/2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 0:
+            #                 _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     (toptmp+bottomtmp)/2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 1:
+            #                 _xycoordinatetmp = [tmp7[0][0][0]*k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     (toptmp+bottomtmp)/2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             tmp.append(_xycoordinatetmp)
+            # self._DesignParameter['_CONT2']['_XYCoordinates'] = tmp
 
             #########################################################################################################################################
             ############################################### NW layer Generation #####################################################################
             #########################################################################################################################################
             self._DesignParameter['_NWLayer'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0],_Datatype=DesignParameters._LayerMapping['NWELL'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400)
-            self._DesignParameter['_NWLayer']['_XWidth'] = righttmp - lefttmp + self._DesignParameter['_RingMetal1Layer1']['_Width'] + 2*_DRCObj._NwMinSpacetoRX
-            self._DesignParameter['_NWLayer']['_YWidth'] = toptmp - bottomtmp + self._DesignParameter['_RingMetal1Layer1']['_Width'] + 2*_DRCObj._NwMinSpacetoRX
+            self._DesignParameter['_NWLayer']['_XWidth'] = righttmp - lefttmp + _GuardringWidth + 2*_DRCObj._NwMinSpacetoRX
+            self._DesignParameter['_NWLayer']['_YWidth'] = toptmp - bottomtmp + _GuardringWidth + 2*_DRCObj._NwMinSpacetoRX
             self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[(righttmp+lefttmp)/2, (toptmp+bottomtmp)/2]]
 
             ###########################################################################################################################################
@@ -847,12 +878,19 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             pass
 if __name__ == '__main__':
     PMOSSetofSlicerObj = _PMOSWithDummyOfSlicer(_DesignParameter=None, _Name='PMOSSetofSlicer')
+
+    _CLKinputPMOSFinger1 = 1  ##random.randint(1, 16)
+    _CLKinputPMOSFinger2 = 1  ##andom.randint(1, 16)
+    _PMOSFinger = 1  ##random.randint(1, 16)
+    _PMOSChannelWidth = 200  ###random.randrange(200, 1050, 50)
+    _GuardringWidth = 200
+
     PMOSSetofSlicerObj._CalculateDesignParameter(_ChannelLength=30, _VDD2VSSHeight=None, _Dummy=True, _SLVT=True,
-                                                       _GuardringWidth=100, _Guardring=True,
-                                                       _PMOSFinger=2, _CLKinputPMOSFinger1=2, _CLKinputPMOSFinger2=2, _PMOSChannelWidth=1000)
+                                                       _GuardringWidth=_GuardringWidth, _Guardring=True,
+                                                       _PMOSFinger=_PMOSFinger, _CLKinputPMOSFinger1=_CLKinputPMOSFinger1, _CLKinputPMOSFinger2=_CLKinputPMOSFinger2, _PMOSChannelWidth=_PMOSChannelWidth)
 
     PMOSSetofSlicerObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=PMOSSetofSlicerObj._DesignParameter)
-    _fileName = 'autoInverter_HeightCal2.gds'
+    _fileName = 'PMOSSetofSlicer.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
     tmp = PMOSSetofSlicerObj._CreateGDSStream(PMOSSetofSlicerObj._DesignParameter['_GDSFile']['_GDSFile'])
@@ -860,3 +898,14 @@ if __name__ == '__main__':
     tmp.write_binary_gds_stream(testStreamFile)
 
     testStreamFile.close()
+
+
+
+    import ftplib
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('PMOSSetofSlicer.gds', 'rb')
+    ftp.storbinary('STOR PMOSSetofSlicer.gds', myfile)
+    myfile.close()
+    ftp.close()

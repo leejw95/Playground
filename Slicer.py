@@ -20,6 +20,7 @@ import user_define_exceptions
 
 import copy
 import DRC
+import psubring
 import random
 
 import ftplib
@@ -59,6 +60,11 @@ class _Slicer(StickDiagram._StickDiagram):
             _PODummyWidth = 30
             _Name = 'Slicer'
             _CLKinputPMOSFinger = _CLKinputPMOSFinger1 + _CLKinputPMOSFinger2
+
+
+
+
+
             ##############################################################################################################################################################
             ################################################################### PMOS SET Generation  #########################################################################
             ##############################################################################################################################################################
@@ -75,8 +81,8 @@ class _Slicer(StickDiagram._StickDiagram):
             _PMOSSETinputs['_Guardring'] = _Guardring
             self._DesignParameter['_PMOSSET'] = self._SrefElementDeclaration(_DesignObj=PMOSSetofSlicer._PMOSWithDummyOfSlicer(_DesignParameter=None, _Name='PMOSSETIn{}'.format(_Name)))[0]
             self._DesignParameter['_PMOSSET']['_DesignObj']._CalculateDesignParameter(**_PMOSSETinputs)
-            self._DesignParameter['_PMOSSET']['_XYCoordinates'] = [[0, 0+abs(self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_bottomtmp']['_Ignore']) \
-                                                                       + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_Width'] +_DRCObj._NwMinSpacetoNactive]]
+            self._DesignParameter['_PMOSSET']['_XYCoordinates'] = [[0, 0+abs(self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_bottomtmp']['_Ignore']) + \
+                                                                       _GuardringWidth +_DRCObj._NwMinSpacetoNactive ]]#### + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_Width'] +_DRCObj._NwMinSpacetoNactive]]
 
             ##############################################################################################################################################################
             ################################################################### NMOS SET Generation  #########################################################################
@@ -95,12 +101,7 @@ class _Slicer(StickDiagram._StickDiagram):
 
             self._DesignParameter['_NMOSSET'] = self._SrefElementDeclaration(_DesignObj=NMOSSetofSlicer._NMOSWithDummyOfSlicer(_DesignParameter=None, _Name='NMOSSETIn{}'.format(_Name)))[0]
             self._DesignParameter['_NMOSSET']['_DesignObj']._CalculateDesignParameter(**_NMOSSETinputs)
-            self._DesignParameter['_NMOSSET']['_XYCoordinates'] = [[0, 0-abs(self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_toptmp']['_Ignore']) \
-                                                                        -_DRCObj._PpMinWidth/2]]
 
-            #########################################################################################################################################
-            ############################################### Guardring Generation for Slicer #########################################################
-            #########################################################################################################################################
             PMOS_toptmp=self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_toptmp']['_Ignore']
             PMOS_bottomtmp=self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_bottomtmp']['_Ignore']
             PMOS_righttmp=self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_righttmp']['_Ignore']
@@ -109,168 +110,211 @@ class _Slicer(StickDiagram._StickDiagram):
             NMOS_bottomtmp=self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_bottomtmp']['_Ignore']
             NMOS_righttmp=self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_righttmp']['_Ignore']
             NMOS_lefttmp=self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_lefttmp']['_Ignore']
+            _NMOSGuardringY=self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_GuardringY']['_Ignore']
+
+            NMOS_GuardringHeight = NMOS_toptmp - NMOS_bottomtmp
+            tmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_bottomtmp
+            self._DesignParameter['_NMOSSET']['_XYCoordinates'] = [[0, tmp - (int(round(NMOS_GuardringHeight + 0.5)) // 2 + _NMOSGuardringY) - _DRCObj._Metal1MinSpace3 - _GuardringWidth]]###0-abs(self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_toptmp']['_Ignore']) \
+                                                                        ###-_DRCObj._PpMinWidth/2]]
+
+            #########################################################################################################################################
+            ############################################### Guardring Generation for Slicer #########################################################
+            #########################################################################################################################################
             print('x')
             _GuardRingRX2RXSpace = _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace
 
             # Horizontal Met1
-            self._DesignParameter['_SlicerGuardringMet1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            tmp=[]
-            GuardringMet1Coordinate= [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0],\
-                                       self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth/2 \
-                                       + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2]]
-            GuardringMet1Coordinate1 = [[self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0],\
-                                        self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _GuardringWidth/2 \
-                                       - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2]]
-            print('x')
+            # self._DesignParameter['_SlicerGuardringMet1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            # tmp=[]
+            # GuardringMet1Coordinate= [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0],\
+            #                            self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth/2 \
+            #                            + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2]]
+            # GuardringMet1Coordinate1 = [[self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0],\
+            #                             self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _GuardringWidth/2 \
+            #                            - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2]]
+            # print('x')
+
+            toptmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth/2 + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2
+            bottomtmp = self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _GuardringWidth/2 - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2
 
             # Vertical Met1
-            self._DesignParameter['_SlicerGuardringMet2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            self._DesignParameter['_SlicerGuardringMet2']['_XWidth'] = _SlicerGuardringWidth
-            self._DesignParameter['_SlicerGuardringMet2']['_YWidth'] = GuardringMet1Coordinate[0][1] - GuardringMet1Coordinate1[0][1] + _SlicerGuardringWidth
-            GuardringMet1Coordinate2= [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth/2 - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2, \
-                                        (GuardringMet1Coordinate[0][1]+GuardringMet1Coordinate1[0][1])/2
-                                      ]]
-            GuardringMet1Coordinate3 = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth/2 + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2, \
-                                         (GuardringMet1Coordinate[0][1] + GuardringMet1Coordinate1[0][1]) / 2
-                                         ]]
+            # self._DesignParameter['_SlicerGuardringMet2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            # self._DesignParameter['_SlicerGuardringMet2']['_XWidth'] = _SlicerGuardringWidth
+            # self._DesignParameter['_SlicerGuardringMet2']['_YWidth'] = GuardringMet1Coordinate[0][1] - GuardringMet1Coordinate1[0][1] + _SlicerGuardringWidth
+            # GuardringMet1Coordinate2= [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth/2 - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2, \
+            #                             (GuardringMet1Coordinate[0][1]+GuardringMet1Coordinate1[0][1])/2
+            #                           ]]
+            # GuardringMet1Coordinate3 = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth/2 + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2, \
+            #                              (GuardringMet1Coordinate[0][1] + GuardringMet1Coordinate1[0][1]) / 2
+            #                              ]]
 
-            self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] = GuardringMet1Coordinate3[0][0] - GuardringMet1Coordinate2[0][0] + _SlicerGuardringWidth
-            self._DesignParameter['_SlicerGuardringMet1']['_YWidth'] = _SlicerGuardringWidth
+            lefttmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth/2 - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2
+            righttmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth/2 + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2
 
-            tmp=GuardringMet1Coordinate + GuardringMet1Coordinate1
-            tmp2=GuardringMet1Coordinate2 + GuardringMet1Coordinate3
-            self._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'] = tmp
-            self._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'] = tmp2
-            del tmp
+            _GuardringCetPointX = int(round(lefttmp + righttmp + 0.5)) // 2
+            _GuardringCetPointY = int(round(toptmp + bottomtmp + 0.5)) // 2
+            _GuardringXWidth = int(righttmp - lefttmp - _SlicerGuardringWidth) + 2
+            _GuardringYWidth = int(toptmp - bottomtmp - _SlicerGuardringWidth) + 2
+            if _GuardringXWidth % 2 == 1:
+                _GuardringXWidth = _GuardringXWidth + 1
+            if _GuardringYWidth % 2 == 1:
+                _GuardringYWidth = _GuardringYWidth + 1
+            if _GuardringCetPointX % 2 == 1 :
+                _GuardringCetPointX = _GuardringCetPointX
+            if _GuardringCetPointY % 2 == 1 :
+                _GuardringCetPointY = _GuardringCetPointY
+
+
+
+            _NMOSSubringinputs = copy.deepcopy(psubring._PSubring._ParametersForDesignCalculation)
+            _NMOSSubringinputs['_PType'] = True
+            _NMOSSubringinputs['_XWidth'] = _GuardringXWidth
+            _NMOSSubringinputs['_YWidth'] = _GuardringYWidth
+            _NMOSSubringinputs['_Width'] = _SlicerGuardringWidth
+
+            self._DesignParameter['_Guardring'] = self._SrefElementDeclaration(
+                _DesignObj=psubring._PSubring(_DesignParameter=None, _Name='GuardringIn{}'.format(_Name)))[0]
+            self._DesignParameter['_Guardring']['_DesignObj']._CalculatePSubring(**_NMOSSubringinputs)
+
+            self._DesignParameter['_Guardring']['_XYCoordinates'] = [[_GuardringCetPointX, _GuardringCetPointY]]
+
+            # self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] = GuardringMet1Coordinate3[0][0] - GuardringMet1Coordinate2[0][0] + _SlicerGuardringWidth
+            # self._DesignParameter['_SlicerGuardringMet1']['_YWidth'] = _SlicerGuardringWidth
+            #
+            # tmp=GuardringMet1Coordinate + GuardringMet1Coordinate1
+            # tmp2=GuardringMet1Coordinate2 + GuardringMet1Coordinate3
+            # self._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'] = tmp
+            # self._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'] = tmp2
+            # del tmp
 
             # Guardring OD Layer
             tmp=[]
             # Horizontal OD
-            self._DesignParameter['_SlicerGuardringOD1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            GuardringODCoordinate = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0],\
-                                      self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth/2 \
-                                      + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2]]
-            GuardringODCoordinate1 = [[self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0],\
-                                       self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _GuardringWidth/2 \
-                                       - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2]]
-            tmp=GuardringODCoordinate + GuardringODCoordinate1
-            self._DesignParameter['_SlicerGuardringOD1']['_XYCoordinates'] = tmp
-
-            # Vertical OD
-            self._DesignParameter['_SlicerGuardringOD2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            self._DesignParameter['_SlicerGuardringOD2']['_XWidth'] = _SlicerGuardringWidth
-            self._DesignParameter['_SlicerGuardringOD2']['_YWidth'] = GuardringMet1Coordinate[0][1] - GuardringMet1Coordinate1[0][1] + _SlicerGuardringWidth
-            GuardringMet1Coordinate2= [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth/2 - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2, \
-                                        (GuardringMet1Coordinate[0][1]+GuardringMet1Coordinate1[0][1])/2
-                                      ]]
-            GuardringMet1Coordinate3 = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth/2 + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2, \
-                                         (GuardringMet1Coordinate[0][1] + GuardringMet1Coordinate1[0][1]) / 2
-                                         ]]
-            tmp2=GuardringMet1Coordinate2 + GuardringMet1Coordinate3
-            self._DesignParameter['_SlicerGuardringOD2']['_XYCoordinates'] = tmp2
-            del tmp
-
-            self._DesignParameter['_SlicerGuardringOD1']['_XWidth'] = GuardringMet1Coordinate3[0][0] - GuardringMet1Coordinate2[0][0] + _SlicerGuardringWidth
-            self._DesignParameter['_SlicerGuardringOD1']['_YWidth'] = _SlicerGuardringWidth
-
-            # Guardring Pp Layer
-            # Horizontal Pp Layer
-            self._DesignParameter['_SlicerGuardringBP1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            GuardringPpCoordinate = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0],\
-                                      self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth/2 \
-                                      + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2]]
-            GuardringPpCoordinate1 = [[self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0],\
-                                       self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _GuardringWidth/2 \
-                                       - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2]]
-            tmp = GuardringPpCoordinate + GuardringPpCoordinate1
-
-            self._DesignParameter['_SlicerGuardringBP1']['_XWidth'] = GuardringMet1Coordinate3[0][0] - GuardringMet1Coordinate2[0][0] + _SlicerGuardringWidth + 2*_DRCObj._PpMinExtensiononPactive2
-            self._DesignParameter['_SlicerGuardringBP1']['_YWidth'] = _SlicerGuardringWidth + 2*_DRCObj._PpMinExtensiononPactive2
-            self._DesignParameter['_SlicerGuardringBP1']['_XYCoordinates'] = tmp
-
-            # Vertical Pp Layer
-            self._DesignParameter['_SlicerGuardringBP2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            GuardringPpCoordinate2= [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth/2 - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2, \
-                                        (GuardringMet1Coordinate[0][1]+GuardringMet1Coordinate1[0][1])/2
-                                      ]]
-            GuardringPpCoordinate3 = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth/2 + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2, \
-                                         (GuardringMet1Coordinate[0][1] + GuardringMet1Coordinate1[0][1]) / 2
-                                         ]]
-            tmp2 = GuardringPpCoordinate2 + GuardringPpCoordinate3
-
-            self._DesignParameter['_SlicerGuardringBP2']['_XWidth'] = _SlicerGuardringWidth + 2*_DRCObj._PpMinExtensiononPactive2
-            self._DesignParameter['_SlicerGuardringBP2']['_YWidth'] = GuardringMet1Coordinate[0][1] - GuardringMet1Coordinate1[0][1] + _SlicerGuardringWidth + 2*_DRCObj._PpMinExtensiononPactive2
-            self._DesignParameter['_SlicerGuardringBP2']['_XYCoordinates'] = tmp2
-
-            # CONT Generation for Guardring
-            self._DesignParameter['_CONT1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0], _Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            self._DesignParameter['_CONT2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0], _Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-
-            self._DesignParameter['_CONT1']['_XWidth'] = _DRCObj._CoMinWidth
-            self._DesignParameter['_CONT1']['_YWidth'] = _DRCObj._CoMinWidth
-            self._DesignParameter['_CONT2']['_XWidth'] = _DRCObj._CoMinWidth
-            self._DesignParameter['_CONT2']['_YWidth'] = _DRCObj._CoMinWidth
-
-            _XNumberOfCO1 = int((self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) # Horizontal Ring
-            _YNumberOfCO1 = _SlicerGuardringWidth // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)
-            _XNumberOfCO2 = _SlicerGuardringWidth // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)
-            _YNumberOfCO2 = int(self._DesignParameter['_SlicerGuardringMet2']['_YWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)  # Verical Ring
-
-            # CONT Coordinate Setting
-            _LengthRingBtwCO = _DRCObj._CoMinSpace + 1 + _DRCObj._CoMinWidth
-            tmp = []
-            tmp2=[GuardringMet1Coordinate[0][1], GuardringMet1Coordinate1[0][1]]
-            tmp3=GuardringMet1Coordinate3[0][0]+GuardringMet1Coordinate2[0][0]
-
-            for i in range(0, _XNumberOfCO1):
-                for j in range(0, _YNumberOfCO1):
-                    for k in tmp2:
-                        if (_XNumberOfCO1 % 2) == 1 and (_YNumberOfCO1 % 2) == 0:
-                            _xycoordinatetmp = [(tmp3)/2 - (_XNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                k - (_YNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO1 % 2) == 1 and (_YNumberOfCO1 % 2) == 1:
-                            _xycoordinatetmp = [(tmp3)/2 - (_XNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                k - (_YNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO1 % 2) == 0 and (_YNumberOfCO1 % 2) == 0:
-                            _xycoordinatetmp = [(tmp3)/2 - (_XNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                k - (_YNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        elif (_XNumberOfCO1 % 2) == 0 and (_YNumberOfCO1 % 2) == 1:
-                            _xycoordinatetmp = [(tmp3)/2 - (_XNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
-                                                k - (_YNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        tmp.append(_xycoordinatetmp)
-            self._DesignParameter['_CONT1']['_XYCoordinates'] = tmp
-
-            tmp = []
-            tmp2 = [-1, 1]
-            tmp3 = GuardringMet1Coordinate[0][1]+GuardringMet1Coordinate1[0][1]
-            print('x')
-
-            for i in range(0, _XNumberOfCO2):
-                for j in range(0, _YNumberOfCO2):
-                    for k in tmp2:
-                        if (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 0:
-                            _xycoordinatetmp = [GuardringMet1Coordinate2[0][0] * k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO, \
-                                                tmp3/2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
-
-                        elif (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 1:
-                            _xycoordinatetmp = [GuardringMet1Coordinate2[0][0] * k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO, \
-                                                tmp3/2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
-
-                        elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 0:
-                            _xycoordinatetmp = [GuardringMet1Coordinate2[0][0] * k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO, \
-                                                tmp3/2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
-
-                        elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 1:
-                            _xycoordinatetmp = [GuardringMet1Coordinate2[0][0] * k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO, \
-                                                tmp3/2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
-                        tmp.append(_xycoordinatetmp)
-            self._DesignParameter['_CONT2']['_XYCoordinates'] = tmp
+            # self._DesignParameter['_SlicerGuardringOD1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            # GuardringODCoordinate = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0],\
+            #                           self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth/2 \
+            #                           + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2]]
+            # GuardringODCoordinate1 = [[self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0],\
+            #                            self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _GuardringWidth/2 \
+            #                            - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2]]
+            # tmp=GuardringODCoordinate + GuardringODCoordinate1
+            # self._DesignParameter['_SlicerGuardringOD1']['_XYCoordinates'] = tmp
+            #
+            # # Vertical OD
+            # self._DesignParameter['_SlicerGuardringOD2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            # self._DesignParameter['_SlicerGuardringOD2']['_XWidth'] = _SlicerGuardringWidth
+            # self._DesignParameter['_SlicerGuardringOD2']['_YWidth'] = GuardringMet1Coordinate[0][1] - GuardringMet1Coordinate1[0][1] + _SlicerGuardringWidth
+            # GuardringMet1Coordinate2= [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth/2 - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2, \
+            #                             (GuardringMet1Coordinate[0][1]+GuardringMet1Coordinate1[0][1])/2
+            #                           ]]
+            # GuardringMet1Coordinate3 = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth/2 + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2, \
+            #                              (GuardringMet1Coordinate[0][1] + GuardringMet1Coordinate1[0][1]) / 2
+            #                              ]]
+            # tmp2=GuardringMet1Coordinate2 + GuardringMet1Coordinate3
+            # self._DesignParameter['_SlicerGuardringOD2']['_XYCoordinates'] = tmp2
+            # del tmp
+            #
+            # self._DesignParameter['_SlicerGuardringOD1']['_XWidth'] = GuardringMet1Coordinate3[0][0] - GuardringMet1Coordinate2[0][0] + _SlicerGuardringWidth
+            # self._DesignParameter['_SlicerGuardringOD1']['_YWidth'] = _SlicerGuardringWidth
+            #
+            # # Guardring Pp Layer
+            # # Horizontal Pp Layer
+            # self._DesignParameter['_SlicerGuardringBP1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            # GuardringPpCoordinate = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0],\
+            #                           self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth/2 \
+            #                           + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2]]
+            # GuardringPpCoordinate1 = [[self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0],\
+            #                            self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - _GuardringWidth/2 \
+            #                            - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2]]
+            # tmp = GuardringPpCoordinate + GuardringPpCoordinate1
+            #
+            # self._DesignParameter['_SlicerGuardringBP1']['_XWidth'] = GuardringMet1Coordinate3[0][0] - GuardringMet1Coordinate2[0][0] + _SlicerGuardringWidth + 2*_DRCObj._PpMinExtensiononPactive2
+            # self._DesignParameter['_SlicerGuardringBP1']['_YWidth'] = _SlicerGuardringWidth + 2*_DRCObj._PpMinExtensiononPactive2
+            # self._DesignParameter['_SlicerGuardringBP1']['_XYCoordinates'] = tmp
+            #
+            # # Vertical Pp Layer
+            # self._DesignParameter['_SlicerGuardringBP2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            # GuardringPpCoordinate2= [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth/2 - _GuardRingRX2RXSpace - _SlicerGuardringWidth/2, \
+            #                             (GuardringMet1Coordinate[0][1]+GuardringMet1Coordinate1[0][1])/2
+            #                           ]]
+            # GuardringPpCoordinate3 = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth/2 + _GuardRingRX2RXSpace + _SlicerGuardringWidth/2, \
+            #                              (GuardringMet1Coordinate[0][1] + GuardringMet1Coordinate1[0][1]) / 2
+            #                              ]]
+            # tmp2 = GuardringPpCoordinate2 + GuardringPpCoordinate3
+            #
+            # self._DesignParameter['_SlicerGuardringBP2']['_XWidth'] = _SlicerGuardringWidth + 2*_DRCObj._PpMinExtensiononPactive2
+            # self._DesignParameter['_SlicerGuardringBP2']['_YWidth'] = GuardringMet1Coordinate[0][1] - GuardringMet1Coordinate1[0][1] + _SlicerGuardringWidth + 2*_DRCObj._PpMinExtensiononPactive2
+            # self._DesignParameter['_SlicerGuardringBP2']['_XYCoordinates'] = tmp2
+            #
+            # # CONT Generation for Guardring
+            # self._DesignParameter['_CONT1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0], _Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            # self._DesignParameter['_CONT2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0], _Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            #
+            # self._DesignParameter['_CONT1']['_XWidth'] = _DRCObj._CoMinWidth
+            # self._DesignParameter['_CONT1']['_YWidth'] = _DRCObj._CoMinWidth
+            # self._DesignParameter['_CONT2']['_XWidth'] = _DRCObj._CoMinWidth
+            # self._DesignParameter['_CONT2']['_YWidth'] = _DRCObj._CoMinWidth
+            #
+            # _XNumberOfCO1 = int((self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] - 2*_SlicerGuardringWidth - 2 * _DRCObj._Metal1MinEnclosureCO2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) # Horizontal Ring
+            # _YNumberOfCO1 = int((_SlicerGuardringWidth- 2 * _DRCObj._Metal1MinEnclosureCO) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+            # _XNumberOfCO2 = int((_SlicerGuardringWidth- 2 * _DRCObj._Metal1MinEnclosureCO) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+            # _YNumberOfCO2 = int((self._DesignParameter['_SlicerGuardringMet2']['_YWidth'] - 2*_SlicerGuardringWidth - 2 * _DRCObj._Metal1MinEnclosureCO2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))  # Verical Ring
+            #
+            # # CONT Coordinate Setting
+            # _LengthRingBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
+            # tmp = []
+            # tmp2=[GuardringMet1Coordinate[0][1], GuardringMet1Coordinate1[0][1]]
+            # tmp3=GuardringMet1Coordinate3[0][0]+GuardringMet1Coordinate2[0][0]
+            #
+            # for i in range(0, _XNumberOfCO1):
+            #     for j in range(0, _YNumberOfCO1):
+            #         for k in tmp2:
+            #             if (_XNumberOfCO1 % 2) == 1 and (_YNumberOfCO1 % 2) == 0:
+            #                 _xycoordinatetmp = [(tmp3)/2 - (_XNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     k - (_YNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO1 % 2) == 1 and (_YNumberOfCO1 % 2) == 1:
+            #                 _xycoordinatetmp = [(tmp3)/2 - (_XNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     k - (_YNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO1 % 2) == 0 and (_YNumberOfCO1 % 2) == 0:
+            #                 _xycoordinatetmp = [(tmp3)/2 - (_XNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     k - (_YNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             elif (_XNumberOfCO1 % 2) == 0 and (_YNumberOfCO1 % 2) == 1:
+            #                 _xycoordinatetmp = [(tmp3)/2 - (_XNumberOfCO1 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO,
+            #                                     k - (_YNumberOfCO1 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             tmp.append(_xycoordinatetmp)
+            # self._DesignParameter['_CONT1']['_XYCoordinates'] = tmp
+            #
+            # tmp = []
+            # tmp2 = [-1, 1]
+            # tmp3 = GuardringMet1Coordinate[0][1]+GuardringMet1Coordinate1[0][1]
+            # print('x')
+            #
+            # for i in range(0, _XNumberOfCO2):
+            #     for j in range(0, _YNumberOfCO2):
+            #         for k in tmp2:
+            #             if (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 0:
+            #                 _xycoordinatetmp = [GuardringMet1Coordinate2[0][0] * k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO, \
+            #                                     tmp3/2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #
+            #             elif (_XNumberOfCO2 % 2) == 1 and (_YNumberOfCO2 % 2) == 1:
+            #                 _xycoordinatetmp = [GuardringMet1Coordinate2[0][0] * k - (_XNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + i * _LengthRingBtwCO, \
+            #                                     tmp3/2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #
+            #             elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 0:
+            #                 _xycoordinatetmp = [GuardringMet1Coordinate2[0][0] * k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO, \
+            #                                     tmp3/2 - (_YNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #
+            #             elif (_XNumberOfCO2 % 2) == 0 and (_YNumberOfCO2 % 2) == 1:
+            #                 _xycoordinatetmp = [GuardringMet1Coordinate2[0][0] * k - (_XNumberOfCO2 / 2 - 0.5) * _LengthRingBtwCO + i * _LengthRingBtwCO, \
+            #                                     tmp3/2 - (_YNumberOfCO2 - 1) / 2 * _LengthRingBtwCO + j * _LengthRingBtwCO]
+            #             tmp.append(_xycoordinatetmp)
+            # self._DesignParameter['_CONT2']['_XYCoordinates'] = tmp
 
             ################################################################ Guadring VSS Generation ########################################################################################
             self._DesignParameter['_GuardringVSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
-            self._DesignParameter['_GuardringVSS']['_XWidth'] = self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] ###NMOS_righttmp - NMOS_lefttmp + _GuardringWidth
-            self._DesignParameter['_GuardringVSS']['_YWidth'] = (NMOS_bottomtmp+self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]) - GuardringMet1Coordinate1[0][1] + _GuardringWidth
-            self._DesignParameter['_GuardringVSS']['_XYCoordinates'] = [[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth']/2 - _GuardringWidth / 2]]
+            self._DesignParameter['_GuardringVSS']['_XWidth'] = _GuardringXWidth + 2 * _GuardringWidth ####self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] ###NMOS_righttmp - NMOS_lefttmp + _GuardringWidth
+            self._DesignParameter['_GuardringVSS']['_YWidth'] = (self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1]) - (self._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1]) + _GuardringWidth ####(NMOS_bottomtmp+self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]) - GuardringMet1Coordinate1[0][1] + _GuardringWidth
+            self._DesignParameter['_GuardringVSS']['_XYCoordinates'] = [[0, ((self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]+ self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1]) + (self._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1])) / 2]]###GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth']/2 - _GuardringWidth / 2]]
             print('x')
 
             _LengthbtwViaCentertoViaCenter = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
@@ -1534,8 +1578,8 @@ class _Slicer(StickDiagram._StickDiagram):
 
 
             if _PowerLine == True :
-                Ptoptmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][1]
-                Gtoptmp = self._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][0][1]
+                Ptoptmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1]
+                Gtoptmp = self._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1] ### self._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][0][1]
 
                 self._DesignParameter['_SupplyLineMet2VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
                 self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
@@ -1633,7 +1677,7 @@ class _Slicer(StickDiagram._StickDiagram):
 
 
 
-                _LengthofSupplyLine = self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]
+                _LengthofSupplyLine = self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth']
 
 
                 self._DesignParameter['_SupplyLineMet2VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
@@ -1656,9 +1700,9 @@ class _Slicer(StickDiagram._StickDiagram):
                 # self._DesignParameter['_SupplyLineMet5VDD']['_YWidth'] = _GuardringWidth
                 # self._DesignParameter['_SupplyLineMet5VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] / 2]]
 
-                _ViaNumVDDX12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                _ViaNumVDDX12 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
                         _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
-                _ViaNumVDDX23 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                _ViaNumVDDX23 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
                         _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
                 # _ViaNumVDDX34 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_RingMetal1Layer1']['_XYCoordinates'][0][0][0]) // (
                 #         _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) - 2
@@ -1682,29 +1726,23 @@ class _Slicer(StickDiagram._StickDiagram):
 
                 if _ViaNumVDDX12 <= 1:
                     _ViaNumVDDX12 = 1
-                    _ViaNumVDDY12 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
-                                             '_RingMetal1Layer1']['_XYCoordinates'][0][1][0] -
-                                         self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
-                                             '_RingMetal1Layer1']['_XYCoordinates'][0][0][0] - _DRCObj._VIAxMinWidth) // (
+                    _ViaNumVDDY12 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) // (
                                                 _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVDDX23 <= 1:
                     _ViaNumVDDX23 = 1
-                    _ViaNumVDDY23 = int((self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
-                                             '_RingMetal1Layer1']['_XYCoordinates'][0][1][0] -
-                                         self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter[
-                                             '_RingMetal1Layer1']['_XYCoordinates'][0][0][0] - _DRCObj._VIAxMinWidth) // (
+                    _ViaNumVDDY23 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) // (
                                                 _DRCObj._VIAxMinSpace+ _DRCObj._VIAxMinWidth)) + 1
 
 
                 if _ViaNumVDDY12 <= 1:
                     _ViaNumVDDY12 = 1
-                    _ViaNumVDDX12 = int((_GuardringWidth - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                    _ViaNumVDDX12 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
                             _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVDDY23 <= 1:
                     _ViaNumVDDY23 = 1
-                    _ViaNumVDDX23 = int((_GuardringWidth  - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                    _ViaNumVDDX23 = int((_LengthofSupplyLine  - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
                             _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 # if _ViaNumVDDY34 < 1:
@@ -2010,17 +2048,17 @@ if __name__ == '__main__':
     #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
     #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
 
-    for _tries in range(1, 2) :
+    for _tries in range(1, 101) :
 
 
-        _CLKinputPMOSFinger1 = 6 ##random.randint(1, 16)
-        _CLKinputPMOSFinger2 = 3##andom.randint(1, 16)
-        _PMOSFinger = 2##random.randint(1, 16)
-        _PMOSChannelWidth = 1000###random.randrange(200, 1050, 50)
-        _DATAinputNMOSFinger = 12##random.randint(2, 16)
-        _NMOSFinger = 2##random.randint(1, 16)
-        _CLKinputNMOSFinger = 8##random.randint(1, 16)
-        _NMOSChannelWidth = 1000##random.randrange(200, 1050, 50)
+        _CLKinputPMOSFinger1 = random.randint(1, 16)
+        _CLKinputPMOSFinger2 = random.randint(1, 16)
+        _PMOSFinger = random.randint(1, 16)
+        _PMOSChannelWidth = random.randrange(200, 1050, 50)
+        _DATAinputNMOSFinger = random.randint(2, 16)
+        _NMOSFinger = random.randint(1, 16)
+        _CLKinputNMOSFinger = random.randint(1, 16)
+        _NMOSChannelWidth = random.randrange(200, 1050, 50)
         _ChannelLength = 30
         _Dummy = True
         _SLVT = True
@@ -2037,7 +2075,7 @@ if __name__ == '__main__':
         _NumVIAPoly2Met1COY = None
         _NumVIAMet12COX = None
         _NumVIAMet12COY = None
-        _PowerLine = False
+        _PowerLine = True
 
 
 
@@ -2088,29 +2126,29 @@ if __name__ == '__main__':
         ftp.close()
 
     ################################## DRC Checker #################################
-    #     import DRCchecker
+        import DRCchecker
 
 
 
-    #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
-    #     print('_tries = ', _tries)
-    #     print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
-    #     print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
-    #     print('_PMOSFinger = ', _PMOSFinger)
-    #     print('_PMOSChannelWidth = ', _PMOSChannelWidth)
-    #     print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
-    #     print('_NMOSFinger = ', _NMOSFinger)
-    #     print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
-    #     print('_NMOSChannelWidth = ', _NMOSChannelWidth)
+        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
+        print('_tries = ', _tries)
+        print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
+        print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
+        print('_PMOSFinger = ', _PMOSFinger)
+        print('_PMOSChannelWidth = ', _PMOSChannelWidth)
+        print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
+        print('_NMOSFinger = ', _NMOSFinger)
+        print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
+        print('_NMOSChannelWidth = ', _NMOSChannelWidth)
 
-    #     a.DRCchecker()
-
-
+        a.DRCchecker()
 
 
 
 
-    # print ("DRCclean!!")
+
+
+    print ("DRCclean!!")
 
 
 

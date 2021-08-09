@@ -996,10 +996,16 @@ print ('#########################   LVT Layer Mapping    #######################
 if _Technology == '065nm':
     _LayerMapping.update({'NLVT': _LayerMappingTmp[('VTL_N', 'drawing')]})
     _LayerMapping.update({'PLVT': _LayerMappingTmp[('VTL_P', 'drawing')]})
+elif _Technology == '028nm':
+    _LayerMapping.update({'NLVT': (None, None)})
+    _LayerMapping.update({'PLVT': (None, None)})
 
 if _Technology == '065nm':
     _LayerMapping.update({'NHVT': _LayerMappingTmp[('VTH_N', 'drawing')]})
     _LayerMapping.update({'PHVT': _LayerMappingTmp[('VTH_P', 'drawing')]})
+elif _Technology == '028nm':
+    _LayerMapping.update({'NHVT': (None, None)})
+    _LayerMapping.update({'PHVT': (None, None)})
 
 
 if _Technology == '028nm':

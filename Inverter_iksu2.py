@@ -1,18 +1,15 @@
 import math
 import copy
-import ftplib
 import random
-
-import paramiko
 
 #
 import StickDiagram
 import DesignParameters
 import DRC
-import NMOSWithDummy
-import PMOSWithDummy
-import NbodyContact
-import PbodyContact
+import NMOSWithDummy_iksu
+import PMOSWithDummy_iksu
+import NbodyContact_iksu
+import PbodyContact_iksu
 import ViaPoly2Met1
 import ViaMet12Met2
 import ViaMet22Met3
@@ -31,7 +28,7 @@ class _Inverter(StickDiagram._StickDiagram):
                                            _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NumViaPoly2Met1CoX=None,
                                            _NumViaPoly2Met1CoY=None, _NumViaPMOSMet12Met2CoX=None,
                                            _NumViaPMOSMet12Met2CoY=None, _NumViaNMOSMet12Met2CoX=None,
-                                           _NumViaNMOSMet12Met2CoY=None, _SLVT=None, _SupplyLine=None,
+                                           _NumViaNMOSMet12Met2CoY=None, _XVT=None, _SupplyLine=None,
                                            _StandAlone_DRCFREE=None)
 
     def __init__(self, _DesignParameter=None, _Name='Inverter'):
@@ -46,21 +43,21 @@ class _Inverter(StickDiagram._StickDiagram):
                                   _VDD2VSSHeight=None, _Dummy=None, _NumSupplyCoX=None, _NumSupplyCoY=None,
                                   _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NumViaPoly2Met1CoX=None,
                                   _NumViaPoly2Met1CoY=None, _NumViaPMOSMet12Met2CoX=None, _NumViaPMOSMet12Met2CoY=None,
-                                  _NumViaNMOSMet12Met2CoX=None, _NumViaNMOSMet12Met2CoY=None, _SLVT=None, _SupplyLine=None,
+                                  _NumViaNMOSMet12Met2CoX=None, _NumViaNMOSMet12Met2CoY=None, _XVT=None, _SupplyLine=None,
                                   _StandAlone_DRCFREE=None):
 
         _DRCObj = DRC.DRC()
         _Name = 'Inverter'
 
         # _NMOS Generation ---------------------------------------------------------------------------------------------
-        NMOSparameters = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
+        NMOSparameters = copy.deepcopy(NMOSWithDummy_iksu._NMOS._ParametersForDesignCalculation)
         NMOSparameters['_NMOSNumberofGate'] = _Finger
         NMOSparameters['_NMOSChannelWidth'] = _ChannelWidth
         NMOSparameters['_NMOSChannellength'] = _ChannelLength
         NMOSparameters['_NMOSDummy'] = _Dummy
-        NMOSparameters['_SLVT'] = _SLVT
+        NMOSparameters['_XVT'] = _XVT
 
-        self._DesignParameter['_NMOS'] = self._SrefElementDeclaration(_Reflect=[1,0,0], _Angle=0, _DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOSIn{}'.format(_Name)))[0]
+        self._DesignParameter['_NMOS'] = self._SrefElementDeclaration(_Reflect=[1,0,0], _Angle=0, _DesignObj=NMOSWithDummy_iksu._NMOS(_DesignParameter=None, _Name='NMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_NMOS']['_DesignObj']._CalculateNMOSDesignParameter(**NMOSparameters)
         self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting'], self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting'] \
             = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting'], self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']  # swap source-drain
@@ -68,14 +65,14 @@ class _Inverter(StickDiagram._StickDiagram):
         del NMOSparameters
 
         # _PMOS Generation ---------------------------------------------------------------------------------------------
-        PMOSparameters = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
+        PMOSparameters = copy.deepcopy(PMOSWithDummy_iksu._PMOS._ParametersForDesignCalculation)
         PMOSparameters['_PMOSNumberofGate'] = _Finger
         PMOSparameters['_PMOSChannelWidth'] = round(_ChannelWidth * _NPRatio)
         PMOSparameters['_PMOSChannellength'] = _ChannelLength
         PMOSparameters['_PMOSDummy'] = _Dummy
-        PMOSparameters['_SLVT'] = _SLVT
+        PMOSparameters['_XVT'] = _XVT
 
-        self._DesignParameter['_PMOS'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOSIn{}'.format(_Name)))[0]
+        self._DesignParameter['_PMOS'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_iksu._PMOS(_DesignParameter=None, _Name='PMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_PMOS']['_DesignObj']._CalculatePMOSDesignParameter(**PMOSparameters)
         self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting'], self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting'] \
             = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting'], self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']  # swap source-drain
@@ -96,26 +93,26 @@ class _Inverter(StickDiagram._StickDiagram):
         else:
             NumSupplyCoXOnVDDVSS = _NumSupplyCoX
 
-        NbodyParameters = copy.deepcopy(NbodyContact._NbodyContact._ParametersForDesignCalculation)
+        NbodyParameters = copy.deepcopy(NbodyContact_iksu._NbodyContact._ParametersForDesignCalculation)
         NbodyParameters['_NumberOfNbodyCOX'] = NumSupplyCoXOnVDDVSS if (NumSupplyCoXOnVDDVSS > 2) else 2
         NbodyParameters['_NumberOfNbodyCOY'] = _NumSupplyCoY if (_NumSupplyCoY != None) else 1
         NbodyParameters['_Met1XWidth'] = _SupplyMet1XWidth
         NbodyParameters['_Met1YWidth'] = _SupplyMet1YWidth
 
-        self._DesignParameter['NbodyContact'] = self._SrefElementDeclaration(_DesignObj=NbodyContact._NbodyContact(_DesignParameter=None, _Name='NbodyContactIn{}'.format(_Name)))[0]
+        self._DesignParameter['NbodyContact'] = self._SrefElementDeclaration(_DesignObj=NbodyContact_iksu._NbodyContact(_DesignParameter=None, _Name='NbodyContactIn{}'.format(_Name)))[0]
         self._DesignParameter['NbodyContact']['_DesignObj']._CalculateNbodyContactDesignParameter(**NbodyParameters)
 
         del NbodyParameters
         del XWidthOfPMOS
 
         # VSS Generation -----------------------------------------------------------------------------------------------
-        PbodyParameters = copy.deepcopy(PbodyContact._PbodyContact._ParametersForDesignCalculation)
+        PbodyParameters = copy.deepcopy(PbodyContact_iksu._PbodyContact._ParametersForDesignCalculation)
         PbodyParameters['_NumberOfPbodyCOX'] = NumSupplyCoXOnVDDVSS if (NumSupplyCoXOnVDDVSS > 2) else 2
         PbodyParameters['_NumberOfPbodyCOY'] = _NumSupplyCoY if (_NumSupplyCoY != None) else 1
         PbodyParameters['_Met1XWidth'] = _SupplyMet1XWidth
         PbodyParameters['_Met1YWidth'] = _SupplyMet1YWidth
 
-        self._DesignParameter['PbodyContact'] = self._SrefElementDeclaration(_DesignObj=PbodyContact._PbodyContact(_DesignParameter=None, _Name='PbodyContactIn{}'.format(_Name)))[0]
+        self._DesignParameter['PbodyContact'] = self._SrefElementDeclaration(_DesignObj=PbodyContact_iksu._PbodyContact(_DesignParameter=None, _Name='PbodyContactIn{}'.format(_Name)))[0]
         self._DesignParameter['PbodyContact']['_DesignObj']._CalculatePbodyContactDesignParameter(**PbodyParameters)
 
         del PbodyParameters
@@ -643,7 +640,7 @@ class _Inverter(StickDiagram._StickDiagram):
                     self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] \
                     + tmpX_calc/2 - tmpX/2
 
-        # NWELL & SLVT Generation & Coordinates ------------------------------------------------------------------------
+        # NWELL & XVT Generation & Coordinates ------------------------------------------------------------------------
         '''
         Function    : Generate NWELL by PathElementDeclaration (column line)
         Requirement : NbodyContact(ODLayer), _PMOS(ODLayer)
@@ -663,10 +660,15 @@ class _Inverter(StickDiagram._StickDiagram):
         self._DesignParameter['_NWLayer']['_Width'] = NWLayerXWidth
         self._DesignParameter['_NWLayer']['_XYCoordinates'] = [XYCoordinatesOfNW_top, XYCoordinatesOfNW_bot]
 
-        if _SLVT == True:   # Need to check
+
+
+        if _XVT != None:   # Need to check
+            assert _XVT in ('SLVT', 'LVT', 'RVT', 'HVT')
+            _XVTLayer = '_' + _XVT + 'Layer'
+
             self._DesignParameter['_NWLayer']['_Width'] = max(self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive,
                                                               self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NwMinSpacetoRX,
-                                                              self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] + 2 * _DRCObj._NwMinSpacetoSLVT)
+                                                              self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth'] + 2 * _DRCObj._NwMinSpacetoSLVT)
             self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0],
                                                                      self._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + _SupplyRailYWidth / 2 + _DRCObj._NwMinEnclosurePactive],
                                                                     [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0],
@@ -674,30 +676,31 @@ class _Inverter(StickDiagram._StickDiagram):
                                                                     ]]
 
             if _VDD2VSSHeight == _VDD2VSSMinHeight:  # why use this condition?
-                self._DesignParameter['_SLVTLayer'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1])
-                self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth']
-                self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
-                self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
+                self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVT][0], _Datatype=DesignParameters._LayerMapping[_XVT][1])
+                self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
+                self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
+                self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
                                                                           (self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]) / 2]]
 
-            elif (_VDD2VSSHeight != _VDD2VSSMinHeight) and (_StandAlone_DRCFREE == True) :   # Need to Modify : Should check by another way (SLVT's area)
-                slvtY_calc = math.ceil(_DRCObj._SlvtMinArea2 / self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth']) + 1
+            elif (_VDD2VSSHeight != _VDD2VSSMinHeight) and (_StandAlone_DRCFREE == True) :   # Need to Modify : Should check by another way (XVT's area)
+                xvtY_calc = math.ceil(_DRCObj._XvtMinArea2 / self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']) + 1
 
-                self._DesignParameter['_SLVTLayer'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1])
-                self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth']
-                self._DesignParameter['_SLVTLayer']['_YWidth'] = slvtY_calc
-                self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
-                                                                          (self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + slvtY_calc *0.5 - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']*0.5)]]
+                self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVT][0], _Datatype=DesignParameters._LayerMapping[_XVT][1])
+                self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
+                self._DesignParameter[_XVTLayer]['_YWidth'] = xvtY_calc
+                self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
+                                                                          (self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + xvtY_calc *0.5 - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']*0.5)]]
 
-                slvtPMOS_bot = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth'] / 2
-                slvtNMOS_top = self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth'] / 2 + slvtY_calc
+                xvtPMOS_bot = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2
+                xvtNMOS_top = self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2 + xvtY_calc
 
-                if (slvtPMOS_bot - slvtNMOS_top) < _DRCObj._SlvtMinSpace:
-                    self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth']
-                    self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
-                    self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = [
+                if (xvtPMOS_bot - xvtNMOS_top) < _DRCObj._XvtMinSpace:
+                    self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
+                    self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
+                    self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [
                         [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
                          (self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]) / 2]]
+
 
         # Pin Generation & Coordinates ---------------------------------------------------------------------------------
         self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], _XYCoordinates=[[0,0]], _Mag=0.05, _Angle=0, _TEXT='VSS')
@@ -766,20 +769,17 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    # for tries in range (0, 3) :
-    #     i = random.randint(2, 10)
-
-    _Finger = 10
+    _Finger = 6
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 2
-    _VDD2VSSHeight = None   # None / 1750
     _Dummy = True
-    _SLVT = True
-    _LVT = False
-    _HVT = False
+    _XVT = 'HVT'
+
+    _VDD2VSSHeight = None  # None / 1750
     _NumSupplyCOX = None  #
-    _NumSupplyCOY = 2
+    _NumSupplyCOY = 1
+
     _SupplyMet1XWidth = None
     _SupplyMet1YWidth = None
     _NumVIAPoly2Met1COX = None
@@ -794,11 +794,12 @@ if __name__ == '__main__':
     _StandAlone_DRCFREE = True
 
     _fileName = 'Inverter.gds'
-    libname = 'Inv_tst1'
+    libname = 'TEST_INV1'
 
     # Generate Inverter Layout Object
+    print ('Technology Process', DesignParameters._Technology)
     InverterObj = _Inverter(_DesignParameter=None, _Name='Inverter')
-    InverterObj._CalculateDesignParameter(_NPRatio=_NPRatio, _Dummy=_Dummy, _SLVT=_SLVT, _Finger=_Finger,
+    InverterObj._CalculateDesignParameter(_NPRatio=_NPRatio, _Dummy=_Dummy, _XVT=_XVT, _Finger=_Finger,
                                           _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength,
                                           _VDD2VSSHeight=_VDD2VSSHeight, _SupplyLine=_SupplyLine,
                                           _NumSupplyCoX=_NumSupplyCOX, _NumSupplyCoY=_NumSupplyCOY,
@@ -811,7 +812,6 @@ if __name__ == '__main__':
                                           _NumViaNMOSMet12Met2CoY=_NumViaNMOSMet12Met2CoY,
                                           _StandAlone_DRCFREE=_StandAlone_DRCFREE
                                           )
-    #
     InverterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=InverterObj._DesignParameter)
     testStreamFile = open('./{}'.format(_fileName), 'wb')
     tmp = InverterObj._CreateGDSStream(InverterObj._DesignParameter['_GDSFile']['_GDSFile'])
@@ -819,7 +819,7 @@ if __name__ == '__main__':
     testStreamFile.close()
 
     print ('###############      Sending to FTP Server...      ##################')
-    My = MyInfo.USER()
+    My = MyInfo.USER(DesignParameters._Technology)
 
     FileManage.Upload2FTP(
         server=My.server,
@@ -837,10 +837,9 @@ if __name__ == '__main__':
         Dir_Work=My.Dir_Work,
         Dir_GDS=My.Dir_GDS,
         libname=libname,
-        filename=_fileName
+        filename=_fileName,
+        tech = DesignParameters._Technology
     )
 
-
-    print ('###############      Finished      ##################')  # Need to get project name(inverter_iksu2.py)
-
-# end of 'main():' ---------------------------------------------------------------------------------------------
+    print ('###############      Finished      ##################')
+    # end of 'main():' ---------------------------------------------------------------------------------------------

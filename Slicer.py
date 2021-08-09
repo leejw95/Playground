@@ -211,10 +211,10 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_CONT2']['_XWidth'] = _DRCObj._CoMinWidth
             self._DesignParameter['_CONT2']['_YWidth'] = _DRCObj._CoMinWidth
 
-            _XNumberOfCO1 = int((self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) - 1# Horizontal Ring
+            _XNumberOfCO1 = int((self._DesignParameter['_SlicerGuardringMet1']['_XWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) # Horizontal Ring
             _YNumberOfCO1 = _SlicerGuardringWidth // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)
             _XNumberOfCO2 = _SlicerGuardringWidth // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)
-            _YNumberOfCO2 = int(self._DesignParameter['_SlicerGuardringMet2']['_YWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) - 1 # Verical Ring
+            _YNumberOfCO2 = int(self._DesignParameter['_SlicerGuardringMet2']['_YWidth'] - 2*_SlicerGuardringWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)  # Verical Ring
 
             # CONT Coordinate Setting
             _LengthRingBtwCO = _DRCObj._CoMinSpace + 1 + _DRCObj._CoMinWidth

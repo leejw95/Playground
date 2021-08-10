@@ -781,7 +781,7 @@ class _Inverter(StickDiagram._StickDiagram):
 
 
 
-        if _XVT != None:   # Need to check
+        if (DesignParameters._Technology == '028nm') and (_XVT != None):   # Need to check
             assert _XVT in ('SLVT', 'LVT', 'RVT', 'HVT')
             _XVTLayer = '_' + _XVT + 'Layer'
 
@@ -808,7 +808,7 @@ class _Inverter(StickDiagram._StickDiagram):
                 self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
                 self._DesignParameter[_XVTLayer]['_YWidth'] = xvtY_calc
                 self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
-                                                                          (self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + xvtY_calc *0.5 - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']*0.5)]]
+                                                                          (self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + xvtY_calc * 0.5 - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']*0.5)]]
 
                 xvtPMOS_bot = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2
                 xvtNMOS_top = self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2 + xvtY_calc
@@ -888,16 +888,16 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger = 4
+    _Finger = 14
     _ChannelWidth = 400
     _ChannelLength = 60
     _NPRatio = 1
     _Dummy = False
-    _XVT = None
+    _XVT = 'HVT'
 
     _VDD2VSSHeight = None  # None / 1750
     _NumSupplyCOX = None  #
-    _NumSupplyCOY = 1
+    _NumSupplyCOY = 2
 
     _SupplyMet1XWidth = None
     _SupplyMet1YWidth = None

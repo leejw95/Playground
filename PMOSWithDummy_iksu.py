@@ -181,31 +181,31 @@ class _PMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_PPLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] \
                                                            + 2 * _DRCObj._PpMinExtensiononPactive
 
-
-        if DesignParameters._Technology == '028nm':  # Can the two cases be Merged? (28nm and 65nm)
-            if _XVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
+        # XVT Layer Calculation
+        try:
+            if (DesignParameters._Technology == '028nm') and _XVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
                 _XVTLayer = '_' + _XVT + 'Layer'
-                print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
-                self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinExtensionOnOD
-                self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
-                self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
-            else:
-                raise NotImplementedError  # Need Appropriate Error Sign
-
-        elif DesignParameters._Technology == '065nm':
-            if _XVT in ('LVT', 'HVT'):
+            elif (DesignParameters._Technology == '065nm') and _XVT in ('LVT', 'HVT'):
                 _XVTLayer = '_P' + _XVT + 'Layer'
+            elif (DesignParameters._Technology == '065nm') and (_XVT == None):
+                _XVTLayer = None
+
+            elif DesignParameters._Technology == '028nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
+            elif DesignParameters._Technology == '065nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
+            else:
+                raise NotImplementedError("Not Implemented in other technology : {}".format(DesignParameters._Technology))
+
+            if _XVTLayer != None:
                 print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
                 self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX
                 self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODY
                 self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
-            elif _XVT == None:
-                pass
-            else:
-                raise NotImplementedError  # Need Appropriate Error Sign / Invalid '_XVT' argument
 
-        else:
-            raise NotImplementedError  # Need Appropriate Error Sign / Invalid 'tech' argument
+        except Exception as e:
+            print('Error Occurred', e)
+            raise NotImplementedError
 
         # ?
         if DesignParameters._Technology == '028nm':  # ?
@@ -296,9 +296,9 @@ class _PMOS(StickDiagram._StickDiagram):
 if __name__ == '__main__':
     _PMOSFinger = 6
     _PMOSWidth = 400    # ? (samsung) / 200 (65nm)
-    _PMOSChannelLength = 60  # 30 (samsung) / 60 (65nm)
+    _PMOSChannelLength = 30  # 30 (samsung) / 60 (65nm)
     _PMOSDummy = False
-    _XVT = 'HVT'            # 'SLVT' 'LVT' 'HVT'
+    _XVT = 'SLVT'            # 'SLVT' 'LVT' 'HVT'
 
     _fileName = 'PMOSWithDummy_iksu.gds'
     libname = 'TEST_MOS'

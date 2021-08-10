@@ -200,7 +200,7 @@ class DRCPOLYGATE:
             self._PolygateMinSpace2Co=28
             self._PolygateMinSpace2OD=20
             self._PolygateMinSpace2PolygateInSameRPO=96
-            self._PolygateMinExtensionOnOD=56  # ##??
+            self._PolygateMinExtensionOnOD=56  # ##?? -> Check GRSLVT9b
             self._PolygateMinSpaceAtCorner=96
             self._PMOS2GuardringMinSpace=90
             self._NMOS2GuardringMinSpace=90
@@ -1930,7 +1930,9 @@ class DRCXVT:
         if DesignParameters._Technology == '028nm':
             self._XvtMinWidth = 170
             self._XvtMinSpace = 170
-            self._XvtMinExtensionOnOD = 56  # need to check
+            self._XvtMinExtensionOnOD = 56   # GRSLVT9b
+            self._XvtMinEnclosureOfODX = 35  # This value is calculated by GRSLVT9a(horizontal direction)
+            self._XvtMinEnclosureOfODY = 56  # GRSLVT9b (vertical direction,  same with _XvtMinExtensionOnOD)
             self._XvtMinArea = 95000
             self._XvtMinArea2 = 160000
 

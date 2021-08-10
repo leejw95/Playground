@@ -148,7 +148,7 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
         print ('###########################      SlicerWithSRLatch Generation     ####################################')
 
 
-        _SlicerWithSRLatchEdgeinputs = copy.deepcopy(SlicerWithSRLatchX4.SlicerWithSRLatchX4Obj._ParametersForDesignCalculation)
+        _SlicerWithSRLatchEdgeinputs = copy.deepcopy(SlicerWithSRLatchX4._SlicerWithSRLatchX4._ParametersForDesignCalculation)
         _SlicerWithSRLatchEdgeinputs['_SRFinger1'] = _SRFinger1
         _SlicerWithSRLatchEdgeinputs['_SRFinger2'] = _SRFinger2
         _SlicerWithSRLatchEdgeinputs['_SRFinger3'] = _SRFinger3
@@ -231,7 +231,7 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
 
 
 
-        self._DesignParameter['_Slicer'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatchX4.SlicerWithSRLatchX4Obj(_DesignParameter=None, _Name = "SlicerWithSRLatchIn{}".format(_Name)))[0]
+        self._DesignParameter['_Slicer'] = self._SrefElementDeclaration(_DesignObj = SlicerWithSRLatchX4._SlicerWithSRLatchX4(_DesignParameter=None, _Name = "SlicerWithSRLatchIn{}".format(_Name)))[0]
         self._DesignParameter['_Slicer']['_DesignObj']._CalculateDesignParameter(**_SlicerWithSRLatchEdgeinputs)
 
 
@@ -259,7 +259,7 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
                                                                 # self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] + _DRCObj._MetalxMinSpace11 
                                                                 # + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met6LayerVRX']['_XYCoordinates'][-1][0][0] + 
                                                                 # self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_XINp']['_Ignore'] + self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] // 2,
-                                                                abs(self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerGuardringMet2']['_XYCoordinates'][1][0]) + 
+                                                                abs(self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0]) +
                                                                 _SLGuardringWidth // 2,
                                                                 _ResistorBankOrigin[0][1] - self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_YINp']['_Ignore']
                                                                 + (self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore'] * (_NumberofSlicerWithSRLatch - 1) / 2)
@@ -798,7 +798,7 @@ if __name__ == '__main__' :
     _SLNumVIAMet12COX = None
     _SLNumVIAMet12COY = None
     _SLPowerLine = True
-    _N = 4
+    _N = 64
     _InvFinger = 16
     _InvChannelWidth = 200
     _InvChannelLength = 30

@@ -652,11 +652,11 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
             self._DesignParameter['_VSSMet2Supply']['_XYCoordinates'] = [[[_XYCoordinateOfSlicer[0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0], Inverter_vsstmp], self._DesignParameter['_Inverter']['_XYCoordinates'][0]]]
 
-            self._DesignParameter['_Met2forVSSforInvandSlicer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=400)
-            self._DesignParameter['_Met2forVSSforInvandSlicer']['_Width'] = _SLGuardringWidth
-            self._DesignParameter['_Met2forVSSforInvandSlicer']['_XYCoordinates'] = [[[Slicer_righttmp, self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates'][0][1]], [Slicer_righttmp, Inverter_vsstmp - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2]], \
-                                                                                     [[Slicer_lefttmp, self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates'][0][1]], [Slicer_lefttmp, Inverter_vsstmp - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2]]]
-
+            # self._DesignParameter['_Met2forVSSforInvandSlicer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=400)
+            # self._DesignParameter['_Met2forVSSforInvandSlicer']['_Width'] = _SLGuardringWidth
+            # self._DesignParameter['_Met2forVSSforInvandSlicer']['_XYCoordinates'] = [[[Slicer_righttmp, self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates'][0][1]], [Slicer_righttmp, Inverter_vsstmp - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2]], \
+            #                                                                          [[Slicer_lefttmp, self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates'][0][1]], [Slicer_lefttmp, Inverter_vsstmp - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2]]]
+            #
 
         if _InvFinger < 5 :
             print('Finger of Inverter should be larger than 4!')

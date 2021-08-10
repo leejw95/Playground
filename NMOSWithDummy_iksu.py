@@ -230,31 +230,32 @@ class _NMOS(StickDiagram._StickDiagram):
                 self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] \
                                                                + 2 * _DRCObj._NpMinExtensiononNactive
 
-
-        if DesignParameters._Technology == '028nm':  # Can the two cases be Merged? (28nm and 65nm)
-            if _XVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
+        # XVT Layer Calculation
+        try:
+            if (DesignParameters._Technology == '028nm') and _XVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
                 _XVTLayer = '_' + _XVT + 'Layer'
-                print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
-                self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinExtensionOnOD
-                self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
-                self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
-            else:
-                raise NotImplementedError  # Need Appropriate Error Sign / Invalid '_XVT' argument
-
-        elif DesignParameters._Technology == '065nm':
-            if _XVT in ('LVT', 'HVT'):
+            elif (DesignParameters._Technology == '065nm') and _XVT in ('LVT', 'HVT'):
                 _XVTLayer = '_N' + _XVT + 'Layer'
+            elif (DesignParameters._Technology == '065nm') and (_XVT == None):
+                _XVTLayer = None
+
+            elif DesignParameters._Technology == '028nm':
+                _XVT = _XVT if _XVT else "None"
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
+            elif DesignParameters._Technology == '065nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
+            else:
+                raise NotImplementedError("Not Yet Implemented in other technology : {}".format(DesignParameters._Technology))
+
+            if _XVTLayer != None:
                 print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
                 self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX
                 self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODY
                 self._DesignParameter[_XVTLayer]['_XYCoordinates'] = self._DesignParameter['_ODLayer']['_XYCoordinates']
-            elif _XVT == None:
-                pass
-            else:
-                raise NotImplementedError  # Need Appropriate Error Sign / Invalid '_XVT' argument
 
-        else:
-            raise NotImplementedError  # Need Appropriate Error Sign / Invalid 'tech' argument
+        except Exception as e:
+            print('Error Occurred', e)
+            raise NotImplementedError
 
         # ?
         if DesignParameters._Technology == '028nm':  # ?
@@ -356,7 +357,7 @@ if __name__ == '__main__':
     _NMOSFinger = 6
     _NMOSWidth = 400            # Minimum value : 200 (samsung) / 200 (65nm)
     _NMOSChannelLength = 60     # Minimum value : 30 (samsung) / 60 (65nm)
-    _NMOSDummy = False          #
+    _NMOSDummy = False           #
     _XVT = None                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
 
     _fileName = 'NMOSWithDummy_iksu.gds'

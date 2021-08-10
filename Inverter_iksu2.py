@@ -615,9 +615,31 @@ class _Inverter(StickDiagram._StickDiagram):
             del self._DesignParameter['_VIANMOSPoly2Met1_F1']
             del self._DesignParameter['_VIAPMOSPoly2Met1_F1']
 
+
+        # Input Met1 Routing -------------------------------------------------------------------------------------------
+        '''
+        When there is a gap between (routed) poly gates, route them by Met1 (column line)
+        Strategy : Route Input M1 on the same YCoordinates as the SupplyRouting M1
+                   (Supply M1 outside the poly gate route is ignored)
+        '''
+        tmpInputRouting = []  # if list is appended twice, tmp=[ [[1,2],[3,4]], [[5,6],[7,8]] ]
+
+        if '_VIANMOSPoly2Met1' in self._DesignParameter:
+            for i in range(0, len(self._DesignParameter['_VIANMOSPoly2Met1']['_XYCoordinates'])):
+                tmpInputRouting.append([self._DesignParameter['_VIANMOSPoly2Met1']['_XYCoordinates'][i],
+                                        self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][i]])
+        if '_VIAMOSPoly2Met1RightMost' in self._DesignParameter:
+            tmpInputRouting.append(self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_XYCoordinates'])
+
+        self._DesignParameter['_InputRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
+        self._DesignParameter['_InputRouting']['_Width'] = _DRCObj._Metal1MinWidth
+        self._DesignParameter['_InputRouting']['_XYCoordinates'] = tmpInputRouting
+
+
         ################################################################################################################
-        # # Input M1 Route up tp M2 or M3 -> pass, later
-        if _VDD2VSSHeight == _VDD2VSSMinHeight:
+        # # Input M1 Route up tp M2
+        if DesignParameters._Technology in ('028nm', '065nm'):
+            # count input M1 segement
             tmpCount_GateViaLayer = 0
 
             if '_VIAMOSPoly2Met1RightMost' in self._DesignParameter:
@@ -625,12 +647,10 @@ class _Inverter(StickDiagram._StickDiagram):
                 flag_exception_rightmost = True
             else:
                 flag_exception_rightmost = False
-
             if '_VIAPMOSPoly2Met1' in self._DesignParameter:
                 tmpCount_GateViaLayer += len(self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'])
 
-
-            if tmpCount_GateViaLayer > 1:  #
+            if (DesignParameters._Technology == '028nm') and (tmpCount_GateViaLayer > 1) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
                 # M1V1M2
                 # (1) Normal width
                 _LengthM1_VIAPMOSPoly2Met1 = self._DesignParameter['_VIAPMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
@@ -677,26 +697,35 @@ class _Inverter(StickDiagram._StickDiagram):
                         [self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][0],
                          self._DesignParameter['_ViaMet12Met2forInput2']['_XYCoordinates'][0]]]
 
+            elif (DesignParameters._Technology in ('028nm', '065nm')) and (tmpCount_GateViaLayer > 1):
+                # M1V1M2
+                # (1) Normal width
+                _LengthM1Y_VIAMOSPoly2Met1 = self._DesignParameter['_VIAPMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
+                                              + abs(self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][1]-self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][1])
+                _NumViaInputM12 = int((_LengthM1Y_VIAMOSPoly2Met1 - _DRCObj._VIAxMinWidth - 2*_DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide)
+                                      // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+
+                _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+                _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = 1
+                _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOY'] = _NumViaInputM12 if _NumViaInputM12 < 3 else 3
+                self._DesignParameter['_ViaMet12Met2forInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2forInputIn{}'.format(_Name)))[0]
+                self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**_ViaMet12Met2forInput)
+
+                tmpXYs = []
+                for i in range(0, len(self._DesignParameter['_InputRouting']['_XYCoordinates'])):
+                    tmpXYs.append([self._DesignParameter['_InputRouting']['_XYCoordinates'][i][0][0],
+                                   (self._DesignParameter['_InputRouting']['_XYCoordinates'][i][0][1]+self._DesignParameter['_InputRouting']['_XYCoordinates'][i][1][1])/2 ])
+                self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'] = tmpXYs
+
+                self._DesignParameter['_CLKMet2InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=None)
+                self._DesignParameter['_CLKMet2InRouting']['_Width'] = _DRCObj._MetalxMinWidth
+                self._DesignParameter['_CLKMet2InRouting']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][0],
+                                                                                 self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'][-1]]]
+
+
         # end of 'if _VDD2VSSHeight == _VDD2VSSMinHeight:'
 
-        # Input Met1 Routing -------------------------------------------------------------------------------------------
-        '''
-        When there is a gap between (routed) poly gates, route them by Met1 (column line)
-        Strategy : Route Input M1 on the same YCoordinates as the SupplyRouting M1
-                   (Supply M1 outside the poly gate route is ignored)
-        '''
-        tmpInputRouting = []  # if list is appended twice, tmp=[ [[1,2],[3,4]], [[5,6],[7,8]] ]
 
-        if '_VIANMOSPoly2Met1' in self._DesignParameter:
-            for i in range(0, len(self._DesignParameter['_VIANMOSPoly2Met1']['_XYCoordinates'])):
-                tmpInputRouting.append([self._DesignParameter['_VIANMOSPoly2Met1']['_XYCoordinates'][i],
-                                        self._DesignParameter['_VIAPMOSPoly2Met1']['_XYCoordinates'][i]])
-        if '_VIAMOSPoly2Met1RightMost' in self._DesignParameter:
-            tmpInputRouting.append(self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_XYCoordinates'])
-
-        self._DesignParameter['_InputRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
-        self._DesignParameter['_InputRouting']['_Width'] = _DRCObj._Metal1MinWidth
-        self._DesignParameter['_InputRouting']['_XYCoordinates'] = tmpInputRouting
 
 
         # exception case... Need to Modify later
@@ -888,16 +917,16 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger = 14
+    _Finger = 17
     _ChannelWidth = 400
-    _ChannelLength = 60
+    _ChannelLength = 30
     _NPRatio = 1
-    _Dummy = False
+    _Dummy = True
     _XVT = 'HVT'
 
-    _VDD2VSSHeight = None  # None / 1750
+    _VDD2VSSHeight = 1650  # None / 1750
     _NumSupplyCOX = None  #
-    _NumSupplyCOY = 2
+    _NumSupplyCOY = 1
 
     _SupplyMet1XWidth = None
     _SupplyMet1YWidth = None

@@ -171,6 +171,7 @@ class _Inverter(StickDiagram._StickDiagram):
             WidthOfInputXM1 = _DRCObj._CoMinWidth + 2 * _DRCObj._Metal1MinEnclosureCO2  # how?? you have to choose / Need to Modify (by user input parameter) / ambiguous name
 
         # Coordinates setting ------------------------------------------------------------------------------------------
+        ''' Prev. Design
         DistanceBtwVSS2NMOS = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
                              + 0.5 * max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
                                          self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
@@ -180,18 +181,48 @@ class _Inverter(StickDiagram._StickDiagram):
                              + 0.5 * max(self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'],
                                          self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
                              + _DRCObj._OdMinSpace  # need to check, ambiguous
+        '''
+        if DesignParameters._Technology == '028nm':
+            tempDRC_OdMinSpace = 80
+            DistanceBtwVSS2NMOS = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] \
+                                 + 0.5 * self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
+
+            DistanceBtwVDD2PMOS = 0.5 * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
+                                 + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
+                                 + tempDRC_OdMinSpace
+
+        elif DesignParameters._Technology == '065nm':
+            DistanceBtwVSS2NMOS = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] \
+                                  + 0.5 * self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth']
+
+            DistanceBtwVDD2PMOS = 0.5 * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] \
+                                  + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth']
+
 
         # Calculate Minimum Height of VDD to VSS
         if _Finger != 1:
-            DistanceBtwNMOS2PolyInput = 0.5 * max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                                                  self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
-                                        + 0.5 * WidthOfInputXM1 \
-                                        + _DRCObj._Metal1MinSpace2
+            if DesignParameters._Technology == '028nm':  # Need to Merge
+                DistanceBtwNMOS2PolyInput = 0.5 * max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                                                      self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
+                                            + 0.5 * WidthOfInputXM1 \
+                                            + _DRCObj._Metal1MinSpace2
 
-            DistanceBtwPMOS2PolyInput = 0.5 * max(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
-                                                  self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
-                                        + 0.5 * WidthOfInputXM1 \
-                                        + _DRCObj._Metal1MinSpace2
+                DistanceBtwPMOS2PolyInput = 0.5 * max(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                                                      self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
+                                            + 0.5 * WidthOfInputXM1 \
+                                            + _DRCObj._Metal1MinSpace2
+
+            elif DesignParameters._Technology == '065nm':    # Need to check
+                DistanceBtwNMOS2PolyInput = 0.5 * max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                                                      self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
+                                            + 0.5 * WidthOfInputXM1 \
+                                            + _DRCObj._Metal1MinSpace
+
+                DistanceBtwPMOS2PolyInput = 0.5 * max(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                                                      self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
+                                            + 0.5 * WidthOfInputXM1 \
+                                            + _DRCObj._Metal1MinSpace
+
 
         else:  # assumption (same finger on PMOS NMOS)
 
@@ -223,8 +254,12 @@ class _Inverter(StickDiagram._StickDiagram):
                                         + _LengthPPolyDummytoGoUp_Finger2 \
                                         + 0.5 * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth']
 
-        _VDD2VSSMinHeight = DistanceBtwVSS2NMOS + DistanceBtwNMOS2PolyInput \
-                            + DistanceBtwPMOS2PolyInput + DistanceBtwVDD2PMOS
+        if DesignParameters._Technology == '028nm':
+            _VDD2VSSMinHeight = DistanceBtwVSS2NMOS + DistanceBtwNMOS2PolyInput + DistanceBtwPMOS2PolyInput + DistanceBtwVDD2PMOS
+        elif DesignParameters._Technology == '065nm':  # Need to consider NP PP Layer overlapped
+            _VDD2VSSMinHeight = DistanceBtwVSS2NMOS + DistanceBtwNMOS2PolyInput + DistanceBtwPMOS2PolyInput + DistanceBtwVDD2PMOS \
+                                + WidthOfInputXM1 + _DRCObj._PolygateMinSpace2  # Need to check
+
 
         if _VDD2VSSHeight == None:
             _VDD2VSSHeight = _VDD2VSSMinHeight
@@ -494,15 +529,15 @@ class _Inverter(StickDiagram._StickDiagram):
             tmpRightM1Boundary = self._DesignParameter['_OutputRouting']['_XYCoordinates'][-1][0][0] \
                                 - 0.5 * self._DesignParameter['_OutputRouting']['_Width'] \
                                 - _DRCObj._Metal1MinSpaceAtCorner
-            tmpLeftCoBoundary = tmpLeftM1Boundary + _DRCObj._Metal1MinEnclosureCO                # Calculate by M1-CO
-            tmpRightCoBoundary = tmpRightM1Boundary - _DRCObj._Metal1MinEnclosureCO              # Calculate by M1-CO
+            tmpLeftCoBoundary = tmpLeftM1Boundary + _DRCObj._Metal1MinEnclosureCO2                # Calculate by M1-CO
+            tmpRightCoBoundary = tmpRightM1Boundary - _DRCObj._Metal1MinEnclosureCO2              # Calculate by M1-CO
         elif _Finger != 1:
             tmpLeftM1Boundary = self._DesignParameter['_OutputRouting']['_XYCoordinates'][-1][0][0] \
                                 + 0.5 * self._DesignParameter['_OutputRouting']['_Width'] \
                                 + _DRCObj._Metal1MinSpaceAtCorner
             tmpRightPOBoundary = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][-1][0] \
                                  + 0.5 * _ChannelLength
-            tmpLeftCoBoundary = tmpLeftM1Boundary + _DRCObj._Metal1MinEnclosureCO                # Calculate by M1-CO
+            tmpLeftCoBoundary = tmpLeftM1Boundary + _DRCObj._Metal1MinEnclosureCO2                # Calculate by M1-CO
             tmpRightCoBoundary = tmpRightPOBoundary - _DRCObj._CoMinEnclosureByPOAtLeastTwoSide  # Calculate by PO-CO
         else:  # Finger == 1
             tmpLeftCoBoundary = 0
@@ -649,16 +684,16 @@ class _Inverter(StickDiagram._StickDiagram):
         _SupplyRailYWidth = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth']
 
         NWLayerXWidth = max(self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive,
-                            self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NwMinSpacetoRX)
+                            self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive)
 
         XYCoordinatesOfNW_top = CoordinateCalc.Add(self._DesignParameter['NbodyContact']['_XYCoordinates'][0],
                                                    [0, _SupplyRailYWidth / 2 + _DRCObj._NwMinEnclosurePactive])
         XYCoordinatesOfNW_bot = CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
-                                                   [0, - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2])
+                                                   [0, - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2 - _DRCObj._NwMinEnclosurePactive])
 
         self._DesignParameter['_NWLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1])
         self._DesignParameter['_NWLayer']['_Width'] = NWLayerXWidth
-        self._DesignParameter['_NWLayer']['_XYCoordinates'] = [XYCoordinatesOfNW_top, XYCoordinatesOfNW_bot]
+        self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[XYCoordinatesOfNW_top, XYCoordinatesOfNW_bot]]
 
 
 
@@ -769,12 +804,12 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger = 6
-    _ChannelWidth = 200
-    _ChannelLength = 30
+    _Finger = 2
+    _ChannelWidth = 800
+    _ChannelLength = 60
     _NPRatio = 2
-    _Dummy = True
-    _XVT = 'HVT'
+    _Dummy = False
+    _XVT = None
 
     _VDD2VSSHeight = None  # None / 1750
     _NumSupplyCOX = None  #
@@ -838,7 +873,7 @@ if __name__ == '__main__':
         Dir_GDS=My.Dir_GDS,
         libname=libname,
         filename=_fileName,
-        tech = DesignParameters._Technology
+        tech=DesignParameters._Technology
     )
 
     print ('###############      Finished      ##################')

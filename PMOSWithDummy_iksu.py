@@ -191,11 +191,11 @@ class _PMOS(StickDiagram._StickDiagram):
                 _XVTLayer = None
 
             elif DesignParameters._Technology == '028nm':
-                raise NotImplementedError("Invalid '_XVT' argument at 028nm : " + _XVT)
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
             elif DesignParameters._Technology == '065nm':
-                raise NotImplementedError("Invalid '_XVT' argument at 065nm : " + _XVT)
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
             else:
-                raise NotImplementedError("Not Implemented in other technology : " + DesignParameters._Technology)
+                raise NotImplementedError("Not Implemented in other technology : {}".format(DesignParameters._Technology))
 
             if _XVTLayer != None:
                 print ('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))

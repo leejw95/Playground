@@ -1574,6 +1574,11 @@ class _Slicer(StickDiagram._StickDiagram):
                                                                                 [self._DesignParameter['_ViaMet324PNMOSDrain']['_XYCoordinates'][-1][0], self._DesignParameter['_ViaMet22Met3OnNMOSInput']['_XYCoordinates'][0][1]]]
                                                                                ]
 
+            self._DesignParameter['_AdditionalMet3Layer2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
+            self._DesignParameter['_AdditionalMet3Layer2']['_XWidth'] = self._DesignParameter['_ViaMet22Met3OnNMOSCLKInput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
+            self._DesignParameter['_AdditionalMet3Layer2']['_YWidth'] = self._DesignParameter['_Met3CLKinput']['_Width']
+            self._DesignParameter['_AdditionalMet3Layer2']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet22Met3OnNMOSCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_ViaMet22Met3OnNMOSCLKInput']['_XYCoordinates'][0][1] + self._DesignParameter['_AdditionalMet3Layer2']['_YWidth'] / 2 - self._DesignParameter['_ViaMet22Met3OnNMOSCLKInput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] / 2]]
+
 
 
 
@@ -2048,17 +2053,17 @@ if __name__ == '__main__':
     #                                     _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
     #                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _PowerLine=True)
 
-    for _tries in range(1, 101) :
+    for _tries in range(1, 2) :
 
 
-        _CLKinputPMOSFinger1 = random.randint(1, 16)
-        _CLKinputPMOSFinger2 = random.randint(1, 16)
-        _PMOSFinger = random.randint(1, 16)
-        _PMOSChannelWidth = random.randrange(200, 1050, 50)
-        _DATAinputNMOSFinger = random.randint(2, 16)
-        _NMOSFinger = random.randint(1, 16)
-        _CLKinputNMOSFinger = random.randint(1, 16)
-        _NMOSChannelWidth = random.randrange(200, 1050, 50)
+        _CLKinputPMOSFinger1 = 1###random.randint(1, 16)
+        _CLKinputPMOSFinger2 = 1###random.randint(1, 16)
+        _PMOSFinger = 1###random.randint(1, 16)
+        _PMOSChannelWidth = 200###random.randrange(200, 1050, 50)
+        _DATAinputNMOSFinger = 1###random.randint(2, 16)
+        _NMOSFinger = 1###random.randint(1, 16)
+        _CLKinputNMOSFinger = 1##random.randint(1, 16)
+        _NMOSChannelWidth = 200###random.randrange(200, 1050, 50)
         _ChannelLength = 30
         _Dummy = True
         _SLVT = True
@@ -2126,29 +2131,29 @@ if __name__ == '__main__':
         ftp.close()
 
     ################################## DRC Checker #################################
-        import DRCchecker
-
-
-
-        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
-        print('_tries = ', _tries)
-        print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
-        print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
-        print('_PMOSFinger = ', _PMOSFinger)
-        print('_PMOSChannelWidth = ', _PMOSChannelWidth)
-        print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
-        print('_NMOSFinger = ', _NMOSFinger)
-        print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
-        print('_NMOSChannelWidth = ', _NMOSChannelWidth)
-
-        a.DRCchecker()
-
-
-
-
-
-
-    print ("DRCclean!!")
+    #     import DRCchecker
+    #
+    #
+    #
+    #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'Slicer_test', 'Slicer')
+    #     print('_tries = ', _tries)
+    #     print('_CLKinputPMOSFinger1 = ', _CLKinputPMOSFinger1)
+    #     print('_CLKinputPMOSFinger2 = ', _CLKinputPMOSFinger2)
+    #     print('_PMOSFinger = ', _PMOSFinger)
+    #     print('_PMOSChannelWidth = ', _PMOSChannelWidth)
+    #     print('_DATAinputNMOSFinger = ', _DATAinputNMOSFinger)
+    #     print('_NMOSFinger = ', _NMOSFinger)
+    #     print('_CLKinputNMOSFinger = ', _CLKinputNMOSFinger)
+    #     print('_NMOSChannelWidth = ', _NMOSChannelWidth)
+    #
+    #     a.DRCchecker()
+    #
+    #
+    #
+    #
+    #
+    #
+    # print ("DRCclean!!")
 
 
 

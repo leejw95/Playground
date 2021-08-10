@@ -790,7 +790,7 @@ if __name__ == '__main__' :
         _SLCLKinputPMOSFinger2 = random.randint(1,16)
         _SLPMOSFinger = random.randint(1,16)
         _SLPMOSChannelWidth = random.randrange(200,1050,50)
-        _SLDATAinputNMOSFinger = random.randint(2,16)
+        _SLDATAinputNMOSFinger = random.randint(3,16)
         _SLNMOSFinger = random.randint(1,16)
         _SLCLKinputNMOSFinger = random.randint(1,16)
         _SLNMOSChannelWidth = random.randrange(200,1050,50)
@@ -811,7 +811,7 @@ if __name__ == '__main__' :
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = 4
+        _N = 2**(random.randint(1, 7))
         _InvFinger = random.randint(5, 16)
         _InvChannelWidth = 200
         _InvChannelLength = 30
@@ -889,14 +889,14 @@ if __name__ == '__main__' :
 
         print ('###############      Sending to FTP Server...      ##################')
 
-        import base64
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        myfile.close()
-        ftp.close()
+        # import base64
+        # ftp = ftplib.FTP('141.223.22.156')
+        # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        # myfile.close()
+        # ftp.close()
 
         import ftplib
         ftp = ftplib.FTP('141.223.22.156')
@@ -909,10 +909,13 @@ if __name__ == '__main__' :
 
         print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
 
+        # import DRCchecker
+        # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
+        # a.DRCchecker()
+        #
         import DRCchecker
-        a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
         a.DRCchecker()
-    
-        
+
 
     print ("DRC Clean!!!")

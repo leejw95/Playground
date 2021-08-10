@@ -1264,110 +1264,114 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
     import random
 
-    for tries in range (0, 100) :
-        i = random.randint(4,8)
-        j = random.randint(4,30)
-        k = random.randint(2,15)
-        l = random.randint(1250, 4000)
-        m = random.randint(170,200)
-        if m % 2 == 1 :
-            m += 1
-
-        _XRBNum = i
-        _YRBNum = j
-        
-        _TransmissionGateFinger = k
-        _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
-        _TransmissionGateChannelLength = 30
-        _TransmissionGateNPRatio = 2  ##Default = 2
-        _TransmissionGateDummy = True     #T/F?
-        _TransmissionGateVDD2VSSHeight = 2600 ## FIXED
-        _TransmissionGateSLVT = True     #T/F?
-
-        _PowerLine = True # T/F?
-
-        _ResistorWidth = l
-        _ResistorLength = 1234    ## minimum : 400
-        _ResistorMetXCO = None
-        _ResistorMetYCO = None
-
-        _PMOSSubringType = False ## FIXED
-        _PMOSSubringXWidth = None ## FIXED
-        _PMOSSubringYWidth = None ## FIXED
-        _PMOSSubringWidth = m
-
-        _NMOSSubringType = True ## FIXED
-        _NMOSSubringXWidth = None ## FIXED
-        _NMOSSubringYWidth = None ## FIXED
-        _NMOSSubringWidth = _PMOSSubringWidth
-
-        _TotalSubringType = True ## FIXED
-        _TotalSubringXWidth = None ## FIXED
-        _TotalSubringYWidth = None ## FIXED
-        _TotalSubringWidth = _PMOSSubringWidth
-
-        DesignParameters._Technology = '028nm'
-
-        FullResistorBankObj = _FullResistorBank(_DesignParameter=None, _Name='FullResistorBank')
-        #print ("A!!")
-        FullResistorBankObj._CalculateFullResistorBank(
-                                #  _InverterFinger=_InverterFinger, _InverterChannelWidth=_InverterChannelWidth, _InverterChannelLength=_InverterChannelLength, _InverterNPRatio=_InverterNPRatio, _InverterDummy = _InverterDummy,
-                                # _InverterVDD2VSSHeight=_InverterVDD2VSSHeight, _InverterSLVT = _InverterSLVT,
-                                # _InverterNumSupplyCOX = None, _InverterNumSupplyCOY = None,
-                                # _InverterSupplyMet1XWidth = None, _InverterSupplMet1YWidth = None, _InverterNumVIAPoly2Met1COX = None, _InverterNumVIAPoly2Met1COY = None,
-                                # _InverterNumVIAMet12COX = None, _InverterNumVIAMet12COY = None,
-                                    _XRBNum=_XRBNum, _YRBNum=_YRBNum,
-                                _TransmissionGateFinger =_TransmissionGateFinger, _TransmissionGateChannelWidth = _TransmissionGateChannelWidth, _TransmissionGateChannelLength = _TransmissionGateChannelLength, _TransmissionGateNPRatio =_TransmissionGateNPRatio,
-                                _TransmissionGateDummy = _TransmissionGateDummy , _TransmissionGateVDD2VSSHeight = _TransmissionGateVDD2VSSHeight, _TransmissionGateSLVT = _TransmissionGateSLVT,
-                                _PowerLine = _PowerLine,
-                                # _TransmissionGateNumSupplyCOX = None, _TransmissionGateNumSupplyCOY = None, _TransmissionGateSupplyMet1XWidth = None, _TransmissionGateSupplyMet1YWidth = None,
-                                # _TransmissionGateNumVIAPoly2Met1COX = None, _TransmissionGateNumVIAPoly2Met1COY = None, _TransmissionGateNumVIAMet12COX = None, _TransmissionGateNumVIAMet12COY = None,
-                                _ResistorWidth=_ResistorWidth, _ResistorLength=_ResistorLength, _ResistorMetXCO = _ResistorMetXCO, _ResistorMetYCO = _ResistorMetYCO,
-                                    _PMOSSubringType=_PMOSSubringType, _PMOSSubringXWidth=_PMOSSubringXWidth, _PMOSSubringYWidth=_PMOSSubringYWidth,_PMOSSubringWidth=_PMOSSubringWidth,
-                                    _NMOSSubringType=_NMOSSubringType, _NMOSSubringXWidth=_NMOSSubringXWidth, _NMOSSubringYWidth=_NMOSSubringYWidth,_NMOSSubringWidth=_NMOSSubringWidth,
-                                    _TotalSubringType=_TotalSubringType, _TotalSubringXWidth=_TotalSubringXWidth, _TotalSubringYWidth=_TotalSubringYWidth,_TotalSubringWidth=_TotalSubringWidth)
-
-
-        FullResistorBankObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=FullResistorBankObj._DesignParameter)
-        _fileName = 'FullResistorBank.gds'
-        testStreamFile = open('./{}'.format(_fileName), 'wb')
-
-        tmp = FullResistorBankObj._CreateGDSStream(FullResistorBankObj._DesignParameter['_GDSFile']['_GDSFile'])
-
-        tmp.write_binary_gds_stream(testStreamFile)
-
-        testStreamFile.close()
-
-        print ('###############      Sending to FTP Server...      ##################')
-
-
-        ftp = ftplib.FTP('141.223.29.61')
-        ftp.login('junung', 'chlwnsdnd1!')
-        ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-        myfile = open('FullResistorBank.gds', 'rb')
-        ftp.storbinary('STOR FullResistorBank.gds', myfile)
-        myfile.close()
-        ftp.close()
-
-        import base64
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        myfile = open('FullResistorBank.gds', 'rb')
-        ftp.storbinary('STOR FullResistorBank.gds', myfile)
-        myfile.close()
-        ftp.close()
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        myfile = open('FullResistorBank.gds', 'rb')
-        ftp.storbinary('STOR FullResistorBank.gds', myfile)
-        myfile.close()
-        ftp.close()
-
-        import DRCchecker
-        a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','FRB_tst','FullResistorBank')
-        a.DRCchecker()
+    # for tries in range (0, 100) :
+    #     i = random.randint(4,50)
+    #     j = random.randint(4,80)
+    #     k = random.randint(2,15)
+    #     l = random.randint(1250, 4000)
+    #     m = random.randint(170,200)
+    #     n = random.randint(500,2000)
+    #     o = random.randint(200,500)
+    #     if m % 2 == 1 :
+    #         m += 1
+    #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
+    _XRBNum = 4
+    _YRBNum = 8
     
-    print ("DRCclean!!")
+    _TransmissionGateFinger = 6
+    _TransmissionGateChannelWidth = 275 ##200nm ~ 500nm range
+    _TransmissionGateChannelLength = 30
+    _TransmissionGateNPRatio = 2  ##Default = 2
+    _TransmissionGateDummy = True     #T/F?
+    _TransmissionGateVDD2VSSHeight = 2426 ## FIXED
+    _TransmissionGateSLVT = True     #T/F?
+
+    _PowerLine = True # T/F?
+
+    _ResistorWidth = 1250
+    _ResistorLength = 1234    ## minimum : 400 1234
+    _ResistorMetXCO = None
+    _ResistorMetYCO = None
+
+    _PMOSSubringType = False ## FIXED
+    _PMOSSubringXWidth = None ## FIXED
+    _PMOSSubringYWidth = None ## FIXED
+    _PMOSSubringWidth = 170 ## def : 170, 170~200
+
+    _NMOSSubringType = True ## FIXED
+    _NMOSSubringXWidth = None ## FIXED
+    _NMOSSubringYWidth = None ## FIXED
+    _NMOSSubringWidth = _PMOSSubringWidth
+
+    _TotalSubringType = True ## FIXED
+    _TotalSubringXWidth = None ## FIXED
+    _TotalSubringYWidth = None ## FIXED
+    _TotalSubringWidth = _PMOSSubringWidth
+
+    DesignParameters._Technology = '028nm'
+
+    FullResistorBankObj = _FullResistorBank(_DesignParameter=None, _Name='FullResistorBank')
+    #print ("A!!")
+    FullResistorBankObj._CalculateFullResistorBank(
+                            #  _InverterFinger=_InverterFinger, _InverterChannelWidth=_InverterChannelWidth, _InverterChannelLength=_InverterChannelLength, _InverterNPRatio=_InverterNPRatio, _InverterDummy = _InverterDummy,
+                            # _InverterVDD2VSSHeight=_InverterVDD2VSSHeight, _InverterSLVT = _InverterSLVT,
+                            # _InverterNumSupplyCOX = None, _InverterNumSupplyCOY = None,
+                            # _InverterSupplyMet1XWidth = None, _InverterSupplMet1YWidth = None, _InverterNumVIAPoly2Met1COX = None, _InverterNumVIAPoly2Met1COY = None,
+                            # _InverterNumVIAMet12COX = None, _InverterNumVIAMet12COY = None,
+                                _XRBNum=_XRBNum, _YRBNum=_YRBNum,
+                            _TransmissionGateFinger =_TransmissionGateFinger, _TransmissionGateChannelWidth = _TransmissionGateChannelWidth, _TransmissionGateChannelLength = _TransmissionGateChannelLength, _TransmissionGateNPRatio =_TransmissionGateNPRatio,
+                            _TransmissionGateDummy = _TransmissionGateDummy , _TransmissionGateVDD2VSSHeight = _TransmissionGateVDD2VSSHeight, _TransmissionGateSLVT = _TransmissionGateSLVT,
+                            _PowerLine = _PowerLine,
+                            # _TransmissionGateNumSupplyCOX = None, _TransmissionGateNumSupplyCOY = None, _TransmissionGateSupplyMet1XWidth = None, _TransmissionGateSupplyMet1YWidth = None,
+                            # _TransmissionGateNumVIAPoly2Met1COX = None, _TransmissionGateNumVIAPoly2Met1COY = None, _TransmissionGateNumVIAMet12COX = None, _TransmissionGateNumVIAMet12COY = None,
+                            _ResistorWidth=_ResistorWidth, _ResistorLength=_ResistorLength, _ResistorMetXCO = _ResistorMetXCO, _ResistorMetYCO = _ResistorMetYCO,
+                                _PMOSSubringType=_PMOSSubringType, _PMOSSubringXWidth=_PMOSSubringXWidth, _PMOSSubringYWidth=_PMOSSubringYWidth,_PMOSSubringWidth=_PMOSSubringWidth,
+                                _NMOSSubringType=_NMOSSubringType, _NMOSSubringXWidth=_NMOSSubringXWidth, _NMOSSubringYWidth=_NMOSSubringYWidth,_NMOSSubringWidth=_NMOSSubringWidth,
+                                _TotalSubringType=_TotalSubringType, _TotalSubringXWidth=_TotalSubringXWidth, _TotalSubringYWidth=_TotalSubringYWidth,_TotalSubringWidth=_TotalSubringWidth)
+
+
+    FullResistorBankObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=FullResistorBankObj._DesignParameter)
+    _fileName = 'FullResistorBank.gds'
+    testStreamFile = open('./{}'.format(_fileName), 'wb')
+
+    tmp = FullResistorBankObj._CreateGDSStream(FullResistorBankObj._DesignParameter['_GDSFile']['_GDSFile'])
+
+    tmp.write_binary_gds_stream(testStreamFile)
+
+    testStreamFile.close()
+
+    print ('###############      Sending to FTP Server...      ##################')
+
+
+    ftp = ftplib.FTP('141.223.29.61')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
+    myfile = open('FullResistorBank.gds', 'rb')
+    ftp.storbinary('STOR FullResistorBank.gds', myfile)
+    myfile.close()
+    ftp.close()
+
+    import base64
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('FullResistorBank.gds', 'rb')
+    ftp.storbinary('STOR FullResistorBank.gds', myfile)
+    myfile.close()
+    ftp.close()
+
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('FullResistorBank.gds', 'rb')
+    ftp.storbinary('STOR FullResistorBank.gds', myfile)
+    myfile.close()
+    ftp.close()
+
+#     print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
+
+#     import DRCchecker
+#     a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','FRB_tst','FullResistorBank')
+#     a.DRCchecker()
+
+# print ("DRCclean!!")

@@ -790,7 +790,7 @@ if __name__ == '__main__' :
         _SLCLKinputPMOSFinger2 = random.randint(1,16)
         _SLPMOSFinger = random.randint(1,16)
         _SLPMOSChannelWidth = random.randrange(200,1050,50)
-        _SLDATAinputNMOSFinger = random.randint(3,16)
+        _SLDATAinputNMOSFinger = random.randint(5,16)
         _SLNMOSFinger = random.randint(1,16)
         _SLCLKinputNMOSFinger = random.randint(1,16)
         _SLNMOSChannelWidth = random.randrange(200,1050,50)
@@ -889,14 +889,14 @@ if __name__ == '__main__' :
 
         print ('###############      Sending to FTP Server...      ##################')
 
-        # import base64
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        # myfile.close()
-        # ftp.close()
+        import base64
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        myfile.close()
+        ftp.close()
 
         import ftplib
         ftp = ftplib.FTP('141.223.22.156')

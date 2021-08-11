@@ -270,6 +270,15 @@ class _NMOS(StickDiagram._StickDiagram):
 
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmp
 
+        _CoArrXWidth = (_XNumberOfCOInNMOS - 1) * _LengthNMOSBtwMet1 + self._DesignParameter['_COLayer']['_XWidth']
+        _CoArrYWidth = (_YNumberOfCOInNMOS - 1) * _LengthNMOSBtwCO + self._DesignParameter['_COLayer']['_YWidth']
+
+        if min(_CoArrXWidth, _CoArrYWidth) > _DRCObj._CoArrayMaxWidth :
+            print('CA Array Maximum Width should be smaller than 1211n.')
+            raise NotImplementedError
+
+
+
         print ('#############################     NIMP Layer Calculation    ####################')
         self._DesignParameter['_NPLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
         self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer'][
@@ -429,8 +438,8 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    _NMOSFinger = 10
-    _NMOSWidth = 200
+    _NMOSFinger = 30
+    _NMOSWidth = 1500
     _NMOSChannelLength = 30
     _NMOSDummy = False
     _SLVT = True

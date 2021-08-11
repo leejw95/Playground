@@ -199,6 +199,14 @@ class _PMOS(StickDiagram._StickDiagram):
         self._DesignParameter['_COLayer']['_XYCoordinates']=tmp
 
 
+        _CoArrXWidth = (_XNumberOfCOInPMOS - 1) * _LengthPMOSBtwMet1 + self._DesignParameter['_COLayer']['_XWidth']
+        _CoArrYWidth = (_YNumberOfCOInPMOS - 1) * _LengthPMOSBtwCO + self._DesignParameter['_COLayer']['_YWidth']
+
+        if min(_CoArrXWidth, _CoArrYWidth) > _DRCObj._CoArrayMaxWidth :
+            print('CA Array Maximum Width should be smaller than 1211n.')
+            raise NotImplementedError
+
+
         print ('#############################     PIMP Layer Calculation    ####################')
         self._DesignParameter['_PPLayer']['_XYCoordinates']=_XYCoordinateOfPMOS
         if DesignParameters._Technology == '028nm':
@@ -359,8 +367,8 @@ class _PMOS(StickDiagram._StickDiagram):
 
 
 if __name__=='__main__':
-    _PMOSFinger = 6
-    _PMOSWidth = 200
+    _PMOSFinger = 12
+    _PMOSWidth = 1500
     _PMOSChannelLength = 30
     # _GuardringWidth = 1000
     _PMOSDummy = False

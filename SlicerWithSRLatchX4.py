@@ -945,7 +945,7 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
     DesignParameters._Technology = '028nm'
     #####################SRLatch#######################
-    for _tries in range(1, 101) :
+    for _tries in range(1, 2) :
         _SRFinger1 = random.randint(1, 16)
         _SRFinger2 = random.randint(1, 16)
         _SRFinger3 = random.randint(1, 16)
@@ -982,11 +982,11 @@ if __name__ == '__main__' :
         _SLCLKinputPMOSFinger1 = random.randint(1, 16)
         _SLCLKinputPMOSFinger2 = random.randint(1, 16)
         _SLPMOSFinger = random.randint(1, 16)
-        _SLPMOSChannelWidth = random.randrange(200, 1050, 50)
+        _SLPMOSChannelWidth = 1500 ### random.randrange(200, 1050)
         _SLDATAinputNMOSFinger = random.randint(2, 16)
         _SLNMOSFinger = random.randint(1, 16)
-        _SLCLKinputNMOSFinger = random.randint(1, 16)
-        _SLNMOSChannelWidth = random.randrange(200, 1050, 50)
+        _SLCLKinputNMOSFinger = 13 ## random.randint(1, 16)
+        _SLNMOSChannelWidth = 1100 ### random.randrange(200, 1050)
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True

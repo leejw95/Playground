@@ -990,7 +990,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__' :
-    ans = [6, 275, 30, 2, None, True, True, 4, 2, None, None, None, None, None, None, True]
+    ans = [6, 275, 30, 2, None, True, True, 4, 2, None, None, None, None, None, None, False]
     # for i in range (17) :
     #     if i == 5 or i==6 or i==7 or i==8 :
     #         print (lst[i]+'?'+'(True/False)')

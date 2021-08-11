@@ -3477,12 +3477,12 @@ if __name__ == '__main__':
 
     for _tries in range(1, 2) :
 
-        _Finger1 = random.randint(1, 16)
-        _Finger2 = random.randint(1, 16)
-        _Finger3 = random.randint(1, 16)
-        _Finger4 = random.randint(1, 16)
+        _Finger1 = 5###random.randint(1, 16)
+        _Finger2 = 1###random.randint(1, 16)
+        _Finger3 = 2###random.randint(1, 16)
+        _Finger4 = 2###random.randint(1, 16)
 
-        _NMOSChannelWidth = random.randrange(200, 550, 50)
+        _NMOSChannelWidth = 200 ###random.randrange(200, 550, 50)
 
         _NMOSChannelWidth1 = _NMOSChannelWidth
         _PMOSChannelWidth1 = 2 * _NMOSChannelWidth
@@ -3581,56 +3581,56 @@ if __name__ == '__main__':
 
 ################################## DRC Checker ##################################
 
-        import paramiko
-        import sys
-        import os
-
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        print ("############ Connecting to Server... ############")
-        ssh.connect('141.223.22.156', port='22', username='jicho0927', password='cho89140616!!')
-
-        commandlines1 = "cd OPUS/SAMSUNG28n; source setup.cshrc; strmin -library 'SRLatch_test' -strmFile '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/SRLatch.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
-        stdin, stdout, stderr = ssh.exec_command(commandlines1)
-        print (''.join(stdout.read()))
-
-        commandlines2 = "cd OPUS/SAMSUNG28n; source setup.cshrc; strmout -library 'SRLatch_test' -strmFile '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/SRLatch.calibre.db' -topCell 'SRLatch' -view layout -runDir '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/' -logFile 'PIPO.LOG.SRLatch' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
-        stdin, stdout, stderr = ssh.exec_command(commandlines2)
-        print (''.join(stdout.read()))
-
-        commandlines4 = "cd OPUS/SAMSUNG28n/DRC/run; sed -i '9s,.*,LAYOUT PATH  \"/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/SRLatch.calibre.db\",' _cmos28lp.drc.cal_"
-        stdin, stdout, stderr = ssh.exec_command(commandlines4)
-        print (''.join(stdout.read()))
-
-
-        print('_Tries = ', _tries)
-        print('_Finger1 = ', _Finger1)
-        print('_Finger2 = ', _Finger2)
-        print('_Finger3 = ', _Finger3)
-        print('_Finger4 = ', _Finger4)
-        print('_NMOSChanneWidth = ', _NMOSChannelWidth)
-
-
-        commandlines3 = "cd OPUS/SAMSUNG28n; source setup.cshrc; calibre -drc -hier -nowait /mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/_cmos28lp.drc.cal_"
-        stdin, stdout, stderr = ssh.exec_command(commandlines3)
-        print (''.join(stdout.read()))
-
-        readfile = ssh.open_sftp()
-        file = readfile.open('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/SRLatch.drc.summary')
-        for line in (file.readlines()[-2:-1]):
-            print (line)
-            if "0" not in line:
-                raise Exception("DRC error in : ", _tries)
-
-            else:
-                commandlines6 = "cd OPUS/SAMSUNG28n/; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"SRLatch_test\" \"\" \"\" \"\")),' Skillcode.il"
-                stdin, stdout, stderr = ssh.exec_command(commandlines6)
-                print (''.join(stdout.read()))
-                commandlines5 = "cd OPUS/SAMSUNG28n; source setup.cshrc; virtuoso -nograph -restore Skillcode.il"
-                stdin, stdout, stderr = ssh.exec_command(commandlines5)
-                print ("Sipal")
-
-        ssh.close
-
-
-    print ("DRC Clean!!!")
+    #     import paramiko
+    #     import sys
+    #     import os
+    #
+    #     ssh = paramiko.SSHClient()
+    #     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    #     print ("############ Connecting to Server... ############")
+    #     ssh.connect('141.223.22.156', port='22', username='jicho0927', password='cho89140616!!')
+    #
+    #     commandlines1 = "cd OPUS/SAMSUNG28n; source setup.cshrc; strmin -library 'SRLatch_test' -strmFile '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/SRLatch.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
+    #     stdin, stdout, stderr = ssh.exec_command(commandlines1)
+    #     print (''.join(stdout.read()))
+    #
+    #     commandlines2 = "cd OPUS/SAMSUNG28n; source setup.cshrc; strmout -library 'SRLatch_test' -strmFile '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/SRLatch.calibre.db' -topCell 'SRLatch' -view layout -runDir '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/' -logFile 'PIPO.LOG.SRLatch' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
+    #     stdin, stdout, stderr = ssh.exec_command(commandlines2)
+    #     print (''.join(stdout.read()))
+    #
+    #     commandlines4 = "cd OPUS/SAMSUNG28n/DRC/run; sed -i '9s,.*,LAYOUT PATH  \"/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/SRLatch.calibre.db\",' _cmos28lp.drc.cal_"
+    #     stdin, stdout, stderr = ssh.exec_command(commandlines4)
+    #     print (''.join(stdout.read()))
+    #
+    #
+    #     print('_Tries = ', _tries)
+    #     print('_Finger1 = ', _Finger1)
+    #     print('_Finger2 = ', _Finger2)
+    #     print('_Finger3 = ', _Finger3)
+    #     print('_Finger4 = ', _Finger4)
+    #     print('_NMOSChanneWidth = ', _NMOSChannelWidth)
+    #
+    #
+    #     commandlines3 = "cd OPUS/SAMSUNG28n; source setup.cshrc; calibre -drc -hier -nowait /mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run/_cmos28lp.drc.cal_"
+    #     stdin, stdout, stderr = ssh.exec_command(commandlines3)
+    #     print (''.join(stdout.read()))
+    #
+    #     readfile = ssh.open_sftp()
+    #     file = readfile.open('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/SRLatch.drc.summary')
+    #     for line in (file.readlines()[-2:-1]):
+    #         print (line)
+    #         if "0" not in line:
+    #             raise Exception("DRC error in : ", _tries)
+    #
+    #         else:
+    #             commandlines6 = "cd OPUS/SAMSUNG28n/; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"SRLatch_test\" \"\" \"\" \"\")),' Skillcode.il"
+    #             stdin, stdout, stderr = ssh.exec_command(commandlines6)
+    #             print (''.join(stdout.read()))
+    #             commandlines5 = "cd OPUS/SAMSUNG28n; source setup.cshrc; virtuoso -nograph -restore Skillcode.il"
+    #             stdin, stdout, stderr = ssh.exec_command(commandlines5)
+    #             print ("Sipal")
+    #
+    #     ssh.close
+    #
+    #
+    # print ("DRC Clean!!!")

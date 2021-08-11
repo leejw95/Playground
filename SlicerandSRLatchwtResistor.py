@@ -706,12 +706,12 @@ if __name__ == '__main__' :
     import random
 
     for tries in range (0, 100) :
-        i = random.randint(4,50)
-        j = random.randint(4,80)
+        i = random.randint(4,30)
+        j = random.randint(4,60)
         k = random.randint(2,15)
-        l = random.randint(1250, 3000)
+        l = random.randint(1250, 2000)
         m = random.randint(170,200)
-        n = random.randint(500,2000)
+        n = random.randint(500,1500)
         o = random.randint(200,500)
         if m % 2 == 1 :
             m += 1
@@ -754,10 +754,10 @@ if __name__ == '__main__' :
         _TotalSubringXWidth = None ## FIXED
         _TotalSubringYWidth = None ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
-        _SRFinger1 = 5
-        _SRFinger2 = 1
-        _SRFinger3 = 2
-        _SRFinger4 = 2
+        _SRFinger1 = random.randint(1,16)
+        _SRFinger2 = random.randint(1,16)
+        _SRFinger3 = random.randint(1,16)
+        _SRFinger4 = random.randint(1,16)
         _SRNMOSChannelWidth1 = 200
         _SRPMOSChannelWidth1 = 400
         _SRNMOSChannelWidth2 = 200
@@ -786,20 +786,20 @@ if __name__ == '__main__' :
         _SRNumViaNMOSMet22Met3CoY = None
         _SRSLVT = True
         _SRPowerLine = True
-        _SLCLKinputPMOSFinger1 = 6
-        _SLCLKinputPMOSFinger2 = 3
-        _SLPMOSFinger = 2
-        _SLPMOSChannelWidth = 1000
-        _SLDATAinputNMOSFinger = 12
-        _SLNMOSFinger = 2
-        _SLCLKinputNMOSFinger = 8
-        _SLNMOSChannelWidth = 1000
+        _SLCLKinputPMOSFinger1 = random.randint(1,16)
+        _SLCLKinputPMOSFinger2 = random.randint(1,16)
+        _SLPMOSFinger = random.randint(1,16)
+        _SLPMOSChannelWidth = random.randrange(200,1050,50)
+        _SLDATAinputNMOSFinger = random.randint(3,16)
+        _SLNMOSFinger = random.randint(1,16)
+        _SLCLKinputNMOSFinger = random.randint(1,16)
+        _SLNMOSChannelWidth = random.randrange(200,1050,50)
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True
-        _SLGuardringWidth = 200
+        _SLGuardringWidth = random.randrange(170, 200, 2)
         _SLGuardring = True
-        _SLSlicerGuardringWidth = 200
+        _SLSlicerGuardringWidth = random.randrange(170, 200, 2)
         _SLSlicerGuardring = None
         _SLNumSupplyCOY = None
         _SLNumSupplyCOX = None
@@ -811,8 +811,8 @@ if __name__ == '__main__' :
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = 4
-        _InvFinger = 16
+        _N = 2**(random.randint(1, 7))
+        _InvFinger = random.randint(5, 16)
         _InvChannelWidth = 200
         _InvChannelLength = 30
         _InvNPRatio = 3
@@ -889,14 +889,14 @@ if __name__ == '__main__' :
 
         print ('###############      Sending to FTP Server...      ##################')
 
-        import base64
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        myfile.close()
-        ftp.close()
+        # import base64
+        # ftp = ftplib.FTP('141.223.22.156')
+        # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        # myfile.close()
+        # ftp.close()
 
         import ftplib
         ftp = ftplib.FTP('141.223.22.156')
@@ -910,9 +910,12 @@ if __name__ == '__main__' :
         print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
 
         import DRCchecker
-        a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','FRB_tst','FullResistorBank')
+        a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
         a.DRCchecker()
-    
-        
+        #
+        # import DRCchecker
+        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        # a.DRCchecker()
+
 
     print ("DRC Clean!!!")

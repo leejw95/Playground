@@ -348,6 +348,7 @@ class DRCCO:
             ##Created By junung for OPLayer rules
             self._CoMinSpace2OP = 200
             self._CoMinEnclosureByPO2 = 12 ##only in poly for resistor? Created by junung
+            self._CoArrayMaxWidth = 1211 ## Added by jicho
 
 
         if DesignParameters._Technology=='065nm':

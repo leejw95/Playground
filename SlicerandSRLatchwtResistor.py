@@ -706,10 +706,10 @@ if __name__ == '__main__' :
     import random
 
     for tries in range (0, 100) :
-        i = random.randint(4,50)
-        j = random.randint(4,80)
+        i = random.randint(4,30)
+        j = random.randint(4,60)
         k = random.randint(2,15)
-        l = random.randint(1250, 2500)
+        l = random.randint(1250, 2000)
         m = random.randint(170,200)
         n = random.randint(500,1500)
         o = random.randint(200,500)
@@ -909,13 +909,13 @@ if __name__ == '__main__' :
 
         print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
 
-        # import DRCchecker
-        # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
-        # a.DRCchecker()
-        #
         import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
         a.DRCchecker()
+        #
+        # import DRCchecker
+        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        # a.DRCchecker()
 
 
     print ("DRC Clean!!!")

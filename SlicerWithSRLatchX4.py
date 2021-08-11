@@ -359,7 +359,7 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
         print ('#################################       Supply Line Routing      #########################################')
         if _SLSRInvSupplyLineX4 == True :
             self._DesignParameter['_Met3VDDRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=400)
-            self._DesignParameter['_Met3VDDRouting']['_Width'] = self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_YWidth']
+            self._DesignParameter['_Met3VDDRouting']['_Width'] = _SLGuardringWidth
 
       
             self._DesignParameter['_Met5VDDRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[], _Width=400)

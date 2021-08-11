@@ -789,11 +789,11 @@ if __name__ == '__main__' :
         _SLCLKinputPMOSFinger1 = random.randint(1,16)
         _SLCLKinputPMOSFinger2 = random.randint(1,16)
         _SLPMOSFinger = random.randint(1,16)
-        _SLPMOSChannelWidth = random.randrange(200,1050,50)
-        _SLDATAinputNMOSFinger = random.randint(3,16)
+        _SLPMOSChannelWidth = random.randrange(200,1051)
+        _SLDATAinputNMOSFinger = random.randint(5,16)
         _SLNMOSFinger = random.randint(1,16)
         _SLCLKinputNMOSFinger = random.randint(1,16)
-        _SLNMOSChannelWidth = random.randrange(200,1050,50)
+        _SLNMOSChannelWidth = random.randrange(200,1051)
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True
@@ -909,13 +909,13 @@ if __name__ == '__main__' :
 
         print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
 
-        import DRCchecker
-        a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
-        a.DRCchecker()
-        #
         # import DRCchecker
-        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
         # a.DRCchecker()
+        #
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        a.DRCchecker()
 
 
     print ("DRC Clean!!!")

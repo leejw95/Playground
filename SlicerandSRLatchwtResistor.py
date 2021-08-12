@@ -483,6 +483,94 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
         
 
 
+        self._DesignParameter['_PinCLK0'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK0')
+        self._DesignParameter['_PinCLK90'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK90')
+        self._DesignParameter['_PinCLK180'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK180')
+        self._DesignParameter['_PinCLK270'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK270')
+
+        self._DesignParameter['_PinCK0'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK0')
+        self._DesignParameter['_PinCK90'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK90')
+        self._DesignParameter['_PinCK180'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK180')
+        self._DesignParameter['_PinCK270'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK270')
+
+
+        self._DesignParameter['_OUT1pin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.1, _Angle = 0, _TEXT = 'OUT1')
+        self._DesignParameter['_OUTb1pin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.1, _Angle = 0, _TEXT = 'OUTb1')
+        self._DesignParameter['_OUT2pin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.1, _Angle = 0, _TEXT = 'OUT2')
+        self._DesignParameter['_OUTb2pin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.1, _Angle = 0, _TEXT = 'OUTb2')
+        self._DesignParameter['_OUT3pin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.1, _Angle = 0, _TEXT = 'OUT3')
+        self._DesignParameter['_OUTb3pin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.1, _Angle = 0, _TEXT = 'OUTb3')
+        self._DesignParameter['_OUT4pin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.1, _Angle = 0, _TEXT = 'OUT4')
+        self._DesignParameter['_OUTb4pin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.1, _Angle = 0, _TEXT = 'OUTb4')
+
+
+        self._DesignParameter['_OUT1pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUT1pin']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUT1pin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_OUTb1pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb1pin']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb1pin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_OUT2pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUT2pin']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUT2pin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_OUTb2pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb2pin']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb2pin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_OUT3pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUT3pin']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUT3pin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_OUTb3pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb3pin']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb3pin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_OUT4pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUT4pin']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUT4pin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_OUTb4pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb4pin']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb4pin']['_XYCoordinates'][0][1]]]
+
+        self._DesignParameter['_PinCLK0']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK0']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK0']['_XYCoordinates'][0][1]]]
+
+        self._DesignParameter['_PinCLK90']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK90']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK90']['_XYCoordinates'][0][1]]]
+
+        self._DesignParameter['_PinCLK180']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK180']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK180']['_XYCoordinates'][0][1]]]
+
+        self._DesignParameter['_PinCLK270']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK270']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK270']['_XYCoordinates'][0][1]]]
+
+
+        self._DesignParameter['_PinCK0']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK0']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK0']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_PinCK90']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK90']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK90']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_PinCK180']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK180']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK180']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_PinCK270']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK270']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK270']['_XYCoordinates'][0][1]]]
+
+        self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[], _Mag=0.5, _Angle=0, _TEXT='VDD')
+
+        self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], _XYCoordinates=[], _Mag = 0.5, _Angle=0, _TEXT='VSS')
+
+        self._DesignParameter['_VCMpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], _XYCoordinates=[], _Mag = 0.5, _Angle=0, _TEXT='VCM')
+
+        self._DesignParameter['_VRXpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], _XYCoordinates=[], _Mag = 0.5, _Angle=0, _TEXT='VRX')
+
+        self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[self._DesignParameter['_FRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates'][0][0], self._DesignParameter['_FRB']['_XYCoordinates'][0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_VSSpin']['_XYCoordinates'] = [[self._DesignParameter['_FRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VSSpin']['_XYCoordinates'][0][0], self._DesignParameter['_FRB']['_XYCoordinates'][0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VSSpin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_VCMpin']['_XYCoordinates'] = [[self._DesignParameter['_FRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VCMpin']['_XYCoordinates'][0][0], self._DesignParameter['_FRB']['_XYCoordinates'][0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VCMpin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_VRXpin']['_XYCoordinates'] = [[self._DesignParameter['_FRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VRXpin']['_XYCoordinates'][0][0], self._DesignParameter['_FRB']['_XYCoordinates'][0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VRXpin']['_XYCoordinates'][0][1]]]
+
+        for i in range(0, _XRBNum):
+            for j in range(0, _YRBNum):
+                for k in range(0, 2):  ## for nmos 0 and pmos 1
+                    if k == 0:
+                        self._DesignParameter['_S<{0}>pin'.format(i + _XRBNum * j)] = self._TextElementDeclaration(
+                            _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
+                            _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
+                            _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+                            _XYCoordinates=[[_ResistorBankOrigin[0][
+                                                 0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_GapbtwOriginX']['_Ignore'] - _TotalSubringWidth // 2 - _DRCObj._MetalxMinSpace5 - (
+                                                         _DRCObj._VIAxMinSpaceFor3neighboring +
+                                                         self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met5LayerInput']['_Width']) * (
+                                                         _YRBNum * (_YRBNum - j) - (i + 1)) -
+                                             self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met6LayerInput']['_Width'] // 2,
+                                             _ResistorBankOrigin[0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_GapbtwOriginY']['_Ignore'] + _YRBNum * self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorSpaceY']['_Ignore']]],
+                            _Mag=0.02, _Angle=0, _TEXT='S<{0}>'.format(i + _XRBNum * j))
+
+                    else:
+                        self._DesignParameter['_SB<{0}>pin'.format(i + _XRBNum * j)] = self._TextElementDeclaration(
+                            _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
+                            _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
+                            _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+                            _XYCoordinates=[[_ResistorBankOrigin[0][
+                                                 0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_GapbtwOriginX']['_Ignore'] - _TotalSubringWidth // 2 - _DRCObj._MetalxMinSpace5 - (
+                                                         _DRCObj._VIAxMinSpaceFor3neighboring +
+                                                         self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met5LayerInput']['_Width']) * (
+                                                         _YRBNum * (_YRBNum - (j + 1)) + i) -
+                                             self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met6LayerInput']['_Width'] // 2,
+                                             _ResistorBankOrigin[0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_GapbtwOriginY']['_Ignore'] + _YRBNum * self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorSpaceY']['_Ignore']]],
+                            _Mag=0.02, _Angle=0, _TEXT='SB<{0}>'.format(i + _XRBNum * j))
+
         # self._DesignParameter['_Met7LayerSli2Res'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
         # self._DesignParameter['_Met7LayerSli2Res']['_Width'] = self._DesignParameter['_Met6LayerbtwSlicer']['_Width']
         
@@ -705,45 +793,45 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
     import random
 
-    for tries in range (0, 100) :
-        i = random.randint(4,30)
-        j = random.randint(4,60)
-        k = random.randint(2,15)
-        l = random.randint(1250, 2000)
-        m = random.randint(170,200)
-        n = random.randint(500,1500)
-        o = random.randint(200,500)
-        if m % 2 == 1 :
-            m += 1
-        print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
-    
-        ##_YRBNum should be under 99
-
-        ## X axis M7 Length >= 25um : overall m7 density < 80%
-        # for i in range (2, 3):
-        #     print (i)
-        _XRBNum = i
-        _YRBNum = j
-        _TransmissionGateFinger = k
-        _TransmissionGateChannelWidth = o  ##200nm ~ 500nm range
+    for tries in range (0, 1) :
+        # i = ###random.randint(4,30)
+        # j = ###random.randint(4,60)
+        # k = ###random.randint(2,15)
+        # l = ###random.randint(1250, 2000)
+        # m = ##random.randint(170,200)
+        # n = ###random.randint(500,1500)
+        # o = ###random.randint(200,500)
+        # if m % 2 == 1 :
+        #     m += 1
+        # print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
+        #
+        # ##_YRBNum should be under 99
+        #
+        # ## X axis M7 Length >= 25um : overall m7 density < 80%
+        # # for i in range (2, 3):
+        # #     print (i)
+        _XRBNum = 4
+        _YRBNum = 8
+        _TransmissionGateFinger = 6
+        _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30
         _TransmissionGateNPRatio = 2  ##Default = 2
         _TransmissionGateDummy = True     #T/F?
-        _TransmissionGateVDD2VSSHeight = 3800 ## FIXED
+        _TransmissionGateVDD2VSSHeight = 2426 ## FIXED
         _TransmissionGateSLVT = True     #T/F?
 
         _PowerLine = True # T/F?
-        _InputLine = False
+        _InputLine = True
 
-        _ResistorWidth = l
-        _ResistorLength = n  ## minimum : 400
+        _ResistorWidth = 1250
+        _ResistorLength = 1234  ## minimum : 400
         _ResistorMetXCO = None
         _ResistorMetYCO = None
 
         _PMOSSubringType = False ## FIXED
         _PMOSSubringXWidth = None ## FIXED
         _PMOSSubringYWidth = None ## FIXED
-        _PMOSSubringWidth = m
+        _PMOSSubringWidth = 170
 
         _NMOSSubringType = True ## FIXED
         _NMOSSubringXWidth = None ## FIXED
@@ -754,10 +842,12 @@ if __name__ == '__main__' :
         _TotalSubringXWidth = None ## FIXED
         _TotalSubringYWidth = None ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
-        _SRFinger1 = random.randint(1,16)
-        _SRFinger2 = random.randint(1,16)
-        _SRFinger3 = random.randint(1,16)
-        _SRFinger4 = random.randint(1,16)
+
+
+        _SRFinger1 = 5###random.randint(1,16)
+        _SRFinger2 = 1###random.randint(1,16)
+        _SRFinger3 = 2###random.randint(1,16)
+        _SRFinger4 = 2###random.randint(1,16)
         _SRNMOSChannelWidth1 = 200
         _SRPMOSChannelWidth1 = 400
         _SRNMOSChannelWidth2 = 200
@@ -786,20 +876,22 @@ if __name__ == '__main__' :
         _SRNumViaNMOSMet22Met3CoY = None
         _SRSLVT = True
         _SRPowerLine = True
-        _SLCLKinputPMOSFinger1 = random.randint(1,16)
-        _SLCLKinputPMOSFinger2 = random.randint(1,16)
-        _SLPMOSFinger = random.randint(1,16)
-        _SLPMOSChannelWidth = random.randrange(200,1051)
-        _SLDATAinputNMOSFinger = random.randint(5,16)
-        _SLNMOSFinger = random.randint(1,16)
-        _SLCLKinputNMOSFinger = random.randint(1,16)
-        _SLNMOSChannelWidth = random.randrange(200,1051)
+
+
+        _SLCLKinputPMOSFinger1 = 6####random.randint(1,16)
+        _SLCLKinputPMOSFinger2 = 3####random.randint(1,16)
+        _SLPMOSFinger = 2####random.randint(1,16)
+        _SLPMOSChannelWidth = 1000####random.randrange(200,1051)
+        _SLDATAinputNMOSFinger = 12####random.randint(5,16)
+        _SLNMOSFinger = 2###random.randint(1,16)
+        _SLCLKinputNMOSFinger = 8####random.randint(1,16)
+        _SLNMOSChannelWidth = 1000####random.randrange(200,1051)
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True
-        _SLGuardringWidth = random.randrange(170, 200, 2)
+        _SLGuardringWidth = 200####random.randrange(170, 200, 2)
         _SLGuardring = True
-        _SLSlicerGuardringWidth = random.randrange(170, 200, 2)
+        _SLSlicerGuardringWidth = 200####random.randrange(170, 200, 2)
         _SLSlicerGuardring = None
         _SLNumSupplyCOY = None
         _SLNumSupplyCOX = None
@@ -811,8 +903,12 @@ if __name__ == '__main__' :
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = 2**(random.randint(1, 7))
-        _InvFinger = random.randint(5, 16)
+
+
+        _N = 4###2**(random.randint(1, 7))
+
+
+        _InvFinger = 16####random.randint(5, 16)
         _InvChannelWidth = 200
         _InvChannelLength = 30
         _InvNPRatio = 3
@@ -907,15 +1003,15 @@ if __name__ == '__main__' :
         myfile.close()
         ftp.close()
 
-        print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
-
-        # import DRCchecker
-        # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
-        # a.DRCchecker()
-        #
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-        a.DRCchecker()
-
-
-    print ("DRC Clean!!!")
+    #     print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
+    #
+    #     # import DRCchecker
+    #     # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
+    #     # a.DRCchecker()
+    #     #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+    #     a.DRCchecker()
+    #
+    #
+    # print ("DRC Clean!!!")

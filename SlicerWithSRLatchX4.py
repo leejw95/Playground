@@ -755,8 +755,6 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
         self._DesignParameter['_PinInputP4'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp4')
         self._DesignParameter['_PinInputN4'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn4')
 
-        # self._DesignParameter['_PinOutputP1'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='SSp')
-        # self._DesignParameter['_PinOutputN1'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],_Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='SSn')
         self._DesignParameter['_PinCLK0'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK0')
         self._DesignParameter['_PinCLK90'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK90')
         self._DesignParameter['_PinCLK180'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK180')
@@ -820,14 +818,14 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
                                                             ]
 
 
-        # self._DesignParameter['_PinCK0']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
-        #
-        # self._DesignParameter['_PinCK90']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
-        #
-        # self._DesignParameter['_PinCK180']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
-        #
-        # self._DesignParameter['_PinCK270']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
-        #
+        self._DesignParameter['_PinCK0']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
+
+        self._DesignParameter['_PinCK90']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
+
+        self._DesignParameter['_PinCK180']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
+
+        self._DesignParameter['_PinCK270']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
+
 
 
 
@@ -945,11 +943,11 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
     DesignParameters._Technology = '028nm'
     #####################SRLatch#######################
-    for _tries in range(1, 101) :
-        _SRFinger1 = random.randint(1, 16)
-        _SRFinger2 = random.randint(1, 16)
-        _SRFinger3 = random.randint(1, 16)
-        _SRFinger4 = random.randint(1, 16)
+    for _tries in range(1, 2) :
+        _SRFinger1 = 5##random.randint(1, 16)
+        _SRFinger2 = 1##random.randint(1, 16)
+        _SRFinger3 = 2##random.randint(1, 16)
+        _SRFinger4 = 2##random.randint(1, 16)
         _SRNMOSChannelWidth1 = 200
         _SRPMOSChannelWidth1 = 400
         _SRNMOSChannelWidth2 = 200
@@ -979,20 +977,20 @@ if __name__ == '__main__' :
         _SRSLVT = True
         _SRPowerLine = None
         #####################Slicer#######################
-        _SLCLKinputPMOSFinger1 = random.randint(1, 16)
-        _SLCLKinputPMOSFinger2 = random.randint(1, 16)
-        _SLPMOSFinger = random.randint(1, 16)
-        _SLPMOSChannelWidth = random.randrange(200, 1050)
-        _SLDATAinputNMOSFinger = random.randint(2, 16)
-        _SLNMOSFinger = random.randint(1, 16)
-        _SLCLKinputNMOSFinger = random.randint(1, 16)
-        _SLNMOSChannelWidth = random.randrange(200, 1050)
+        _SLCLKinputPMOSFinger1 = 6##random.randint(1, 16)
+        _SLCLKinputPMOSFinger2 = 3##random.randint(1, 16)
+        _SLPMOSFinger = 2##random.randint(1, 16)
+        _SLPMOSChannelWidth = 1000##random.randrange(200, 1050)
+        _SLDATAinputNMOSFinger = 12##random.randint(2, 16)
+        _SLNMOSFinger = 2##random.randint(1, 16)
+        _SLCLKinputNMOSFinger = 8##random.randint(1, 16)
+        _SLNMOSChannelWidth = 1000##random.randrange(200, 1050)
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True
-        _SLGuardringWidth = random.randrange(170, 202, 2)
+        _SLGuardringWidth = 200##random.randrange(170, 202, 2)
         _SLGuardring = True
-        _SLSlicerGuardringWidth = random.randrange(170, 202, 2)
+        _SLSlicerGuardringWidth = 200##random.randrange(170, 202, 2)
         _SLSlicerGuardring = None
         _SLNumSupplyCOY = None
         _SLNumSupplyCOX = None
@@ -1004,9 +1002,9 @@ if __name__ == '__main__' :
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = None
-        _EVENNumber = 2**(random.randint(1, 7))
+        _EVENNumber = 4##2**(random.randint(1, 7))
         #####################Inverter#######################
-        _InvFinger = random.randint(5, 16)
+        _InvFinger = 16##random.randint(5, 16)
         _InvChannelWidth = 200
         _InvChannelLength = 30
         _InvNPRatio = 3
@@ -1133,12 +1131,12 @@ if __name__ == '__main__' :
         # ftp.close()
 
 
-        import DRCchecker
-
-        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatchX4_test', 'SlicerWithSRLatchX4')
-
-        a.DRCchecker()
-
+        # import DRCchecker
+        #
+        # a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatchX4_test', 'SlicerWithSRLatchX4')
+        #
+        # a.DRCchecker()
+        #
 
         print('_tries = ', _tries)
         print('_SRFinger1 = ', _SRFinger1)

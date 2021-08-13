@@ -41,8 +41,8 @@ class DRCOD:
             self._OdMinSpace=80
             self._OdMinSpace3=100
         if DesignParameters._Technology=='028nm':
-            self._OdMinWidth=140
-            self._OdMinSpace=70
+            self._OdMinWidth=78
+            self._OdMinSpace=80
             self._OdMinSpace3=100
         if DesignParameters._Technology=='065nm':
             self._OdMinWidth=150

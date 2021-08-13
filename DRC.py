@@ -196,11 +196,13 @@ class DRCPOLYGATE:
         if DesignParameters._Technology=='028nm':
             self._PolygateMinWidth=30
             self._PolygateMinSpace=96
-            self._PolygateMinSpace2=96
+            self._PolygateMinSpace2=114
             self._PolygateMinSpace2Co=28
             self._PolygateMinSpace2OD=20
             self._PolygateMinSpace2PolygateInSameRPO=96
-            self._PolygateMinExtensionOnOD=56  # ##?? -> Check GRSLVT9b
+            self._PolygateMinExtensionOnOD=57  # ##?? -> Check GRSLVT9b
+            self._PolygateMinExtensionOnOD2=70
+            self._PolygateMinExtensionOnOD3=105
             self._PolygateMinSpaceAtCorner=96
             self._PMOS2GuardringMinSpace=90
             self._NMOS2GuardringMinSpace=90
@@ -215,7 +217,8 @@ class DRCPOLYGATE:
             self._PCCRITMinLengthofPOLayer = 35  #### ADDED(by JiCho) !
             self._PODummyMinArea = 11000  ### ADDED(by JiCho)!
             self._PoDummyLengthToMove = 50  ### ADDED(by JiCho)!
-
+            # self._PODummyMinSpace1 = 96
+            # self._PODummyMinSpace2 = 222
 
         if DesignParameters._Technology=='065nm':
             self._PolygateMinWidth=60 #A
@@ -256,6 +259,16 @@ class DRCPOLYGATE:
             self._PolygateMinExtensionOnOD=220
             self._PolygateMinSpaceAtCorner=375
 
+    def DRCPolygateMinExtensionOnOD(self, _ChannelLength) :
+        if DesignParameters._Technology == '028nm':
+            if _ChannelLength < 70 :
+                return self._PolygateMinExtensionOnOD
+            elif 70 <= _ChannelLength < 90 :
+                return self._PolygateMinExtensionOnOD2
+            elif _ChannelLength >= 90 :
+                return self._PolygateMinExtensionOnOD3
+
+
     def DRCPolygateMinSpace(self, _TmpLengthBtwPolyEdge = None):
         if DesignParameters._Technology=='045nm':
             if _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth1:
@@ -266,6 +279,7 @@ class DRCPOLYGATE:
                 return self._PolygateOnODMinWidth3
 
         if DesignParameters._Technology=='028nm':
+            
             return _TmpLengthBtwPolyEdge
         if DesignParameters._Technology=='065nm':
             return _TmpLengthBtwPolyEdge
@@ -276,6 +290,12 @@ class DRCPOLYGATE:
         if DesignParameters._Technology=='180nm':
             return _TmpLengthBtwPolyEdge
 
+    # def DRCPolyDummyMinSpace(self, _Width=None, _ParallelLength=None):
+    #     if DesignParameters._Technology=='028nm':
+    #         if _Width==None  and _ParallelLength < 48:
+    #             return self._PolygateMinSpace1
+    #         else:
+    #             return self._PolygateMinSpace2
 
     def DRCPolyMinSpace(self, _Width=None, _ParallelLength=None):
         if DesignParameters._Technology=='045nm':
@@ -287,7 +307,7 @@ class DRCPOLYGATE:
                 return self._PolygateMinSpace
 
         if DesignParameters._Technology=='028nm':
-            if _Width==None  and _ParallelLength==None:
+            if _ParallelLength < 48:
                 return self._PolygateMinSpace
             else:
                 return self._PolygateMinSpace2

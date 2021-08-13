@@ -739,9 +739,7 @@ class _Inverter(StickDiagram._StickDiagram):
 
 
         ''' ---------------------------------------- PP/NP Additional Layer ---------------------------------------- '''
-        if DesignParameters._Technology == '028nm':
-            pass
-        elif DesignParameters._Technology == '065nm':
+        if DesignParameters._Technology == '065nm':
             Ybot_PolyRouteXOnPMOS = self._DesignParameter['_PolyRouteXOnPMOS']['_XYCoordinates'][0][1] - 0.5 * self._DesignParameter['_PolyRouteXOnPMOS']['_YWidth']
             Ytop_PolyRouteXOnNMOS = self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'][0][1] + 0.5 * self._DesignParameter['_PolyRouteXOnNMOS']['_YWidth']
 
@@ -766,11 +764,13 @@ class _Inverter(StickDiagram._StickDiagram):
                 self._DesignParameter['_NIMPforGatePoly']['_Width'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_NPLayer']['_XWidth']
                 self._DesignParameter['_NIMPforGatePoly']['_XYCoordinates'] = [[[self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'][0][0], Ybot_PPLayerOnPMOS],
                                                                                 [self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'][0][0], Ytop_NPLayerOnNMOS]]]
+        elif DesignParameters._Technology == '028nm':
+            pass
         else:
             raise NotImplementedError
 
 
-        ''' --------------------------------- NWELL & XVT Generation & Coordinates --------------------------------- '''
+        ''' ------------------------------------------- NWELL Generation ------------------------------------------- '''
         '''
         Function    : Generate NWELL by PathElementDeclaration (column line)
         Requirement : NbodyContact(ODLayer), _PMOS(ODLayer)
@@ -786,7 +786,7 @@ class _Inverter(StickDiagram._StickDiagram):
         XWidth_NWLayer = max(XWidth1_NWLayer, XWidth2_NWLayer)
 
         XYCoordinatesOfNW_top = CoordinateCalc.Add(self._DesignParameter['NbodyContact']['_XYCoordinates'][0],
-                                                   [0, _SupplyRailYWidth / 2 + _DRCObj._NwMinEnclosurePactive])
+                                                   [0, self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2 + _DRCObj._NwMinEnclosurePactive])
         XYCoordinatesOfNW_bot = CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
                                                    [0, - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2 - _DRCObj._NwMinEnclosurePactive])
         YWidth_NWLayer = abs(XYCoordinatesOfNW_top[1] - XYCoordinatesOfNW_bot[1])
@@ -799,6 +799,7 @@ class _Inverter(StickDiagram._StickDiagram):
         self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[XYCoordinatesOfNW_top, XYCoordinatesOfNW_bot]]
 
 
+        ''' ----------------------------------------  XVT Layer Modification --------------------------------------- '''
         if DesignParameters._Technology == '028nm':
             assert _XVT in ('SLVT', 'LVT', 'RVT', 'HVT')
             _XVTLayer = '_' + _XVT + 'Layer'
@@ -828,6 +829,11 @@ class _Inverter(StickDiagram._StickDiagram):
                     self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [
                         [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
                          (self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]) / 2]]
+
+        elif DesignParameters._Technology == '065nm':
+            pass        # No Need to Modify XVT Layer
+        else:
+            raise NotImplementedError
 
 
         # Pin Generation & Coordinates ---------------------------------------------------------------------------------

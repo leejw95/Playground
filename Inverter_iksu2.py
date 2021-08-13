@@ -804,31 +804,24 @@ class _Inverter(StickDiagram._StickDiagram):
             assert _XVT in ('SLVT', 'LVT', 'RVT', 'HVT')
             _XVTLayer = '_' + _XVT + 'Layer'
 
-            if _VDD2VSSHeight == _VDD2VSSMinHeight:  # why use this condition? -> Need to Modify
-                self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVT][0], _Datatype=DesignParameters._LayerMapping[_XVT][1])
-                self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
-                self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
-                self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
-                                                                          (self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]) / 2]]
+            # XVY (over NWELL) Area check
+            Ymin_NW = XYCoordinatesOfNW_bot[1]
+            Ymax_XVT = CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
+                                          [0, self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']/2])[1]
+            Area_XVToverNW = abs(Ymax_XVT - Ymin_NW) * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
+            if Area_XVToverNW < _DRCObj._XvtMinArea:
+                XWidth_XVT = self.CeilMinSnapSpacing(_DRCObj._XvtMinArea / abs(Ymax_XVT - Ymin_NW), 2*MinSnapSpacing)
+            else:
+                XWidth_XVT = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
 
-            elif (_VDD2VSSHeight != _VDD2VSSMinHeight) and (_StandAlone_DRCFREE == True):   # Need to Modify : Should check by another way (XVT's area)
-                xvtY_calc = math.ceil(_DRCObj._XvtMinArea2 / self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']) + 1
+            xy1 = CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
+                                     [0, self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2])
+            xy2 = CoordinateCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
+                                     [0, -self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2])
 
-                self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVT][0], _Datatype=DesignParameters._LayerMapping[_XVT][1])
-                self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
-                self._DesignParameter[_XVTLayer]['_YWidth'] = xvtY_calc
-                self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
-                                                                          (self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + xvtY_calc * 0.5 - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']*0.5)]]
-
-                xvtPMOS_bot = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2
-                xvtNMOS_top = self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2 + xvtY_calc
-
-                if (xvtPMOS_bot - xvtNMOS_top) < _DRCObj._XvtMinSpace:
-                    self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
-                    self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
-                    self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [
-                        [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0],
-                         (self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]) / 2]]
+            self._DesignParameter[_XVTLayer] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVT][0], _Datatype=DesignParameters._LayerMapping[_XVT][1])
+            self._DesignParameter[_XVTLayer]['_Width'] = XWidth_XVT
+            self._DesignParameter[_XVTLayer]['_XYCoordinates'] = [[xy1, xy2]]
 
         elif DesignParameters._Technology == '065nm':
             pass        # No Need to Modify XVT Layer
@@ -903,16 +896,16 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger = 2
+    _Finger = 1
     _ChannelWidth = 200
     _ChannelLength = 30
     _NPRatio = 1
     _Dummy = True
-    _XVT = 'HVT'
+    _XVT = 'SLVT'
 
     _VDD2VSSHeight = None  # None / 1750
     _NumSupplyCOX = None  # None
-    _NumSupplyCOY = 1
+    _NumSupplyCOY = 2
 
     _SupplyMet1XWidth = None
     _SupplyMet1YWidth = None

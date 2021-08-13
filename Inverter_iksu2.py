@@ -188,12 +188,11 @@ class _Inverter(StickDiagram._StickDiagram):
         ''' ------------------------------------------ Coordinates setting ----------------------------------------- '''
         # 1) Calculate Distance Between 'Supply rail' and 'MOSFET'  : concern (028nm, 065nm) and (Dummy T/F)
         if DesignParameters._Technology == '028nm':
-            tempDRC_OdMinSpace = 80
             DistanceBtwVSS2NMOS1 = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] \
                                    + 0.5 * self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
             DistanceBtwVSS2NMOS2 = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
                                    + 0.5 * self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
-                                   + tempDRC_OdMinSpace     # OD Layer(for Pbody) - OD Layer (for NMOS)     OD=RX
+                                   + _DRCObj._OdMinSpace     # OD Layer(for Pbody) - OD Layer (for NMOS)     OD=RX
             if '_PODummyLayer' in self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter:
                 DistanceBtwVSS2NMOS3 = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
                                        + 0.5 * self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] \
@@ -204,10 +203,10 @@ class _Inverter(StickDiagram._StickDiagram):
 
             DistanceBtwVDD2PMOS1 = 0.5 * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
                                    + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
-                                   + tempDRC_OdMinSpace
+                                   + _DRCObj._OdMinSpace
             DistanceBtwVD2PMOS2 = 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
                                    + 0.5 * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
-                                   + tempDRC_OdMinSpace  # OD Layer(for Nbody) - OD Layer (for PMOS)     OD=RX
+                                   + _DRCObj._OdMinSpace  # OD Layer(for Nbody) - OD Layer (for PMOS)     OD=RX
             if '_PODummyLayer' in self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter:
                 DistanceBtwVDD2PMOS3 = 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
                                        + 0.5 * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] \

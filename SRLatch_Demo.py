@@ -3587,7 +3587,7 @@ if __name__ == '__main__':
         _PMOSChannelWidth3 = _NPRatio * _NMOSChannelWidth
         _NMOSChannelWidth4 = _NMOSChannelWidth
         _PMOSChannelWidth4 = _NPRatio * _NMOSChannelWidth
-        _ChannelLength = 90
+        _ChannelLength = random.randint(30, 90)
         _VDD2VSSHeightAtOneSide = None
         _Dummy = True
         _NumSupplyCoX = None

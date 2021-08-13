@@ -2337,6 +2337,10 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 
 
+        if _Finger3 != 1 :
+            _tmpLengthbtwViaCentertoViaCenter = _LengthbtwViaCentertoViaCenter / 4
+        else :
+            _tmpLengthbtwViaCentertoViaCenter = _LengthbtwViaCentertoViaCenter / 2
 
 
         _NMOSViaNumX = 2
@@ -2352,7 +2356,7 @@ class _SRLatch(StickDiagram._StickDiagram):
         self._DesignParameter['_AdditionalMet22Met3'][
             '_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_VIANMOSMet23)
         self._DesignParameter['_AdditionalMet22Met3']['_XYCoordinates'] = [
-            [self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][0][0], (
+            [self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][0][0] - _tmpLengthbtwViaCentertoViaCenter, (
                         self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][1][1] +
                         self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][1]) / 2]]
 
@@ -2380,10 +2384,6 @@ class _SRLatch(StickDiagram._StickDiagram):
         #     _NMOSViaNumY = 1
 
 
-        if _Finger3 != 1 :
-            _tmpLengthbtwViaCentertoViaCenter = _LengthbtwViaCentertoViaCenter / 4
-        else :
-            _tmpLengthbtwViaCentertoViaCenter = _LengthbtwViaCentertoViaCenter / 2
 
         _VIANMOSMet12 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
         _VIANMOSMet12['_ViaMet12Met2NumberOfCOX'] = _NMOSViaNumX

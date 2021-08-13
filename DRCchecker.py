@@ -59,7 +59,7 @@ class DRCchecker :
 
         commandlines4 = "cd {0}; source setup.cshrc; calibre -drc -hier -nowait {1}/_cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines4.format(self.WorkDir, self.DRCrunDir))
-        print (''.join(stdout.read()))
+        a = (''.join(stdout.read()))
 
         readfile = ssh.open_sftp()
         file = readfile.open('{0}/{1}.drc.summary'.format(self.WorkDir, self.cellname))

@@ -623,7 +623,7 @@ class _Inverter(StickDiagram._StickDiagram):
         ################################################################################################################
         # # Input M1 Route up tp M2
         if DesignParameters._Technology in ('028nm', '065nm'):
-            # count input M1 segement
+            # count input M1 segment
             tmpCount_GateViaLayer = 0
 
             if '_VIAMOSPoly2Met1RightMost' in self._DesignParameter:
@@ -712,16 +712,15 @@ class _Inverter(StickDiagram._StickDiagram):
 
 
 
-        # exception case... Need to Modify later
-        _DRC_Metal1MinimumArea = 10000
+        # exception case... Need to Modify later...... Not tested in 65nm
         _DRC_M1MinWidth_WhenCalcMinArea = 130
 
         if (_Finger == 1) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
             tmpX = self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
             tmpY = self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-            if (tmpX * tmpY) < _DRC_Metal1MinimumArea:
-                tmpY_calc = _DRC_Metal1MinimumArea / tmpX
-                if tmpY_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE
+            if (tmpX * tmpY) < _DRCObj._Metal1MinArea:
+                tmpY_calc = self.RoundupMinSnapSpacing(_DRCObj._Metal1MinArea / tmpX, MinSnapSpacing)
+                if tmpY_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE only for 28nm...
                     tmpY_calc = _DRC_M1MinWidth_WhenCalcMinArea
 
                 self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = tmpY_calc
@@ -729,9 +728,9 @@ class _Inverter(StickDiagram._StickDiagram):
         elif (_Finger == 2) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
             tmpX = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
             tmpY = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-            if (tmpX * tmpY) < _DRC_Metal1MinimumArea:
-                tmpX_calc = _DRC_Metal1MinimumArea / tmpY
-                if tmpX_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE
+            if (tmpX * tmpY) < _DRCObj._Metal1MinArea:
+                tmpX_calc = self.RoundupMinSnapSpacing(_DRCObj._Metal1MinArea / tmpY, MinSnapSpacing)
+                if tmpX_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE only for 28nm...
                     tmpX_calc = _DRC_M1MinWidth_WhenCalcMinArea
                 self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = tmpX_calc
                 self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] = \
@@ -776,40 +775,35 @@ class _Inverter(StickDiagram._StickDiagram):
         Function    : Generate NWELL by PathElementDeclaration (column line)
         Requirement : NbodyContact(ODLayer), _PMOS(ODLayer)
         '''
-        tempDRC_NwMinEnclosurePONotDummy = 167  # GR270
-        tempDRC_NwMinEnclosurePactive2 = 112  # GR260a
+
         _SupplyRailYWidth = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth']
         XWidth1_NWLayer = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive
-        XWidth2_NWLayer = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * tempDRC_NwMinEnclosurePactive2
-        XWidth3_NWLayer = abs(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][-1][0]) \
-                          + _ChannelLength + 2 * tempDRC_NwMinEnclosurePONotDummy
+        XWidth2_NWLayer = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive2
+        # tempDRC_NwMinEnclosurePONotDummy = 167  # GR270
+        # XWidth3_NWLayer = abs(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][-1][0]) \
+        #                   + _ChannelLength + 2 * tempDRC_NwMinEnclosurePONotDummy
 
-        XWidth_NWLayer = max(XWidth1_NWLayer, XWidth2_NWLayer, XWidth3_NWLayer)  # Need to Modify for 65nm
+        XWidth_NWLayer = max(XWidth1_NWLayer, XWidth2_NWLayer)
 
         XYCoordinatesOfNW_top = CoordinateCalc.Add(self._DesignParameter['NbodyContact']['_XYCoordinates'][0],
                                                    [0, _SupplyRailYWidth / 2 + _DRCObj._NwMinEnclosurePactive])
         XYCoordinatesOfNW_bot = CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
                                                    [0, - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2 - _DRCObj._NwMinEnclosurePactive])
+        YWidth_NWLayer = abs(XYCoordinatesOfNW_top[1] - XYCoordinatesOfNW_bot[1])
+
+        if (XWidth_NWLayer * YWidth_NWLayer) < _DRCObj._NwMinArea:
+            XWidth_NWLayer = self.RoundupMinSnapSpacing(_DRCObj._NwMinArea / YWidth_NWLayer, 2 * MinSnapSpacing)
 
         self._DesignParameter['_NWLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1])
         self._DesignParameter['_NWLayer']['_Width'] = XWidth_NWLayer
         self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[XYCoordinatesOfNW_top, XYCoordinatesOfNW_bot]]
 
 
-        if (DesignParameters._Technology == '028nm') and (_XVT != None):   # Need to check
+        if DesignParameters._Technology == '028nm':
             assert _XVT in ('SLVT', 'LVT', 'RVT', 'HVT')
             _XVTLayer = '_' + _XVT + 'Layer'
 
-            # self._DesignParameter['_NWLayer']['_Width'] = max(self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive,
-            #                                                   self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NwMinSpacetoRX,
-            #                                                   self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth'] + 2 * _DRCObj._NwMinSpacetoSLVT)
-            # self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0],
-            #                                                          self._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + _SupplyRailYWidth / 2 + _DRCObj._NwMinEnclosurePactive],
-            #                                                         [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0],
-            #                                                          self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2]
-            #                                                         ]]
-
-            if _VDD2VSSHeight == _VDD2VSSMinHeight:  # why use this condition?
+            if _VDD2VSSHeight == _VDD2VSSMinHeight:  # why use this condition? -> Need to Modify
                 self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVT][0], _Datatype=DesignParameters._LayerMapping[_XVT][1])
                 self._DesignParameter[_XVTLayer]['_XWidth'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
                 self._DesignParameter[_XVTLayer]['_YWidth'] = self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS']['_XYCoordinates'][0][1]
@@ -903,15 +897,15 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger = 6
+    _Finger = 2
     _ChannelWidth = 200
     _ChannelLength = 30
-    _NPRatio = 2
+    _NPRatio = 1
     _Dummy = True
     _XVT = 'HVT'
 
     _VDD2VSSHeight = None  # None / 1750
-    _NumSupplyCOX = 8  # None
+    _NumSupplyCOX = None  # None
     _NumSupplyCOY = 1
 
     _SupplyMet1XWidth = None
@@ -925,7 +919,7 @@ if __name__ == '__main__':
     _NumVIAMet12COX = None
     _NumVIAMet12COY = None
     _SupplyLine = False
-    _StandAlone_DRCFREE = True
+    _StandAlone_DRCFREE = False
 
     _fileName = 'Inverter.gds'
     libname = 'TEST_INV1'

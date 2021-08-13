@@ -772,6 +772,7 @@ class DRCNW:
             self._NwMinSpacetoNactive=56 #
             self._NwMinSpacetoRX=60
             self._NwMinSpacetoSLVT = 170  # ADDED! (by JiCho)
+            self._NwMinArea = 500000
 
         if DesignParameters._Technology=='065nm':
             self._NwMinWidth=470

@@ -41,8 +41,8 @@ class DRCOD:
             self._OdMinSpace=80
             self._OdMinSpace3=100
         if DesignParameters._Technology=='028nm':
-            self._OdMinWidth=140
-            self._OdMinSpace=70
+            self._OdMinWidth=78
+            self._OdMinSpace=80
             self._OdMinSpace3=100
         if DesignParameters._Technology=='065nm':
             self._OdMinWidth=150
@@ -592,7 +592,7 @@ class DRCMETAL1:
             self._Metal1MinEnclosureCO3 = 12 ##FOR PRES, By junung
             self._Metal1MinEnclosureVia1=0
             self._Metal1MinEnclosureVia12=32
-            self._Metal1MinArea=10
+            self._Metal1MinArea = 10000
             self._Metal1MinEnclosureArea = 48000 # ADDED!(by JiCho)
 
         if DesignParameters._Technology=='065nm':
@@ -761,35 +761,42 @@ class DRCNW:
             self._NwMinWidth=340
             self._NwMinSpace=340
             self._NwMinEnclosurePactive=80
+            self._NwMinEnclosurePactive2 = 80
             self._NwMinSpacetoNactive=80
 
         if DesignParameters._Technology == '028nm':
             self._NwMinWidth=260 #A
             self._NwMinSpace=260 #C
             self._NwMinEnclosurePactive=56 #H
+            self._NwMinEnclosurePactive2 = 112  # GR260a
             self._NwMinSpacetoNactive=56 #
             self._NwMinSpacetoRX=60
             self._NwMinSpacetoSLVT = 170  # ADDED! (by JiCho)
+            self._NwMinArea = 500000
 
         if DesignParameters._Technology=='065nm':
             self._NwMinWidth=470
             self._NwMinSpace=470
             self._NwMinEnclosurePactive=160
+            self._NwMinEnclosurePactive2 = 160
             self._NwMinSpacetoNactive=160
         if DesignParameters._Technology=='090nm':
             self._NwMinWidth=620
             self._NwMinSpace=620
             self._NwMinEnclosurePactive=220
+            self._NwMinEnclosurePactive2 = 220
             self._NwMinSpacetoNactive=220
         if DesignParameters._Technology=='130nm':
             self._NwMinWidth=620
             self._NwMinSpace=620
             self._NwMinEnclosurePactive=310
+            self._NwMinEnclosurePactive2 = 310
             self._NwMinSpacetoNactive=310
         if DesignParameters._Technology=='180nm':
             self._NwMinWidth=860
             self._NwMinSpace=1400
             self._NwMinEnclosurePactive=430
+            self._NwMinEnclosurePactive2 = 430
             self._NwMinSpacetoNactive=430
 
 class DRCVIAx:

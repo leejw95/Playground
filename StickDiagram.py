@@ -8,6 +8,7 @@ import user_define_exceptions
 
 import DesignParameters
 import copy
+import math
 
 class _StickDiagram:
     def __init__(self):
@@ -21,6 +22,20 @@ class _StickDiagram:
         if _DesignParameter ==None or _MinSnapSpacing ==None:
             raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
         return int(_DesignParameter /_MinSnapSpacing ) *_MinSnapSpacing
+    def CeilMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
+        if _DesignParameter ==None or _MinSnapSpacing ==None:
+            raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
+        return int(math.ceil(_DesignParameter /_MinSnapSpacing ))*_MinSnapSpacing
+    def FloorMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
+        if _DesignParameter ==None or _MinSnapSpacing ==None:
+            raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
+        return int(math.floor(_DesignParameter /_MinSnapSpacing ))*_MinSnapSpacing
+    def TruncMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
+        if _DesignParameter ==None or _MinSnapSpacing ==None:
+            raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
+        return math.trunc(_DesignParameter /_MinSnapSpacing )*_MinSnapSpacing
+
+
     def XYCoordinate2MinMaxXY(self, _XYCoordinates):
         x_list = []
         y_list = []

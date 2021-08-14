@@ -3571,42 +3571,23 @@ if __name__ == '__main__':
 
     for _tries in range(1, 2) :
 
-        _Finger1 = 2##random.randint(2, 16)
-        _Finger2 = 2##random.randint(2, 16)
-        _Finger3 = 2##random.randint(2, 16)
-        _Finger4 = 2##random.randint(2, 16)
+        _Finger1 = 4
+        _Finger2 = 8
+        _Finger3 = 8
+        _Finger4 = 5
 
-        _NMOSChannelWidth = 300###random.randrange(200, 330)
-        _NPRatio = 2 ###random.uniform(2.0, 3.0)
+        _NMOSChannelWidth = 300
+        _NPRatio = 3
         _PMOSChannelWidth = _NPRatio * _NMOSChannelWidth
-        _ChannelLength = 30  ##random.randrange(30, 92, 2)
+        _ChannelLength = 60
 
         _VDD2VSSHeightAtOneSide = None
-        _NumSupplyCoX = None
-        _NumSupplyCoY = 2
+        _NumSupplyCoX = 80
+        _NumSupplyCoY = 5
 
 
 
-        _LibraryName = 'SR_Latch'
-
-
-
-
-
-
-
-
-
-
-
-        _NMOSChannelWidth1 = _NMOSChannelWidth
-        _PMOSChannelWidth1 = _PMOSChannelWidth
-        _NMOSChannelWidth2 = _NMOSChannelWidth
-        _PMOSChannelWidth2 = _PMOSChannelWidth
-        _NMOSChannelWidth3 = _NMOSChannelWidth
-        _PMOSChannelWidth3 = _PMOSChannelWidth
-        _NMOSChannelWidth4 = _NMOSChannelWidth
-        _PMOSChannelWidth4 = _PMOSChannelWidth
+        _LibraryName = 'SR_Latch_Demo6'
 
 
         _Dummy = True
@@ -3614,19 +3595,13 @@ if __name__ == '__main__':
         _PowerLine = False
 
         DesignParameters._Technology = '028nm'
-        print('_tries = ', _tries)
-        print('_SRFinger1 = ', _Finger1)
-        print('_SRFinger2 = ', _Finger2)
-        print('_SRFinger3 = ', _Finger3)
-        print('_SRFinger4 = ', _Finger4)
-        print('_NMOSChannelWidth = ', _NMOSChannelWidth)
-        print('_PMOSChannelWidth1 = ', _PMOSChannelWidth1)
+
 
         SRLatchObj = _SRLatch(_DesignParameter=None, _Name='SR_Latch')
         SRLatchObj._CalculateDesignParameter(_Finger1=_Finger1, _Finger2=_Finger2, _Finger3=_Finger3, _Finger4=_Finger4, \
-                                             _NMOSChannelWidth1=_NMOSChannelWidth1, _PMOSChannelWidth1=_PMOSChannelWidth1, _NMOSChannelWidth2=_NMOSChannelWidth2,
-                                             _PMOSChannelWidth2=_PMOSChannelWidth2, _NMOSChannelWidth3=_NMOSChannelWidth3, _PMOSChannelWidth3=_PMOSChannelWidth3,
-                                             _NMOSChannelWidth4=_NMOSChannelWidth4, _PMOSChannelWidth4=_PMOSChannelWidth4, _ChannelLength=_ChannelLength, \
+                                             _NMOSChannelWidth1=_NMOSChannelWidth, _PMOSChannelWidth1=_PMOSChannelWidth, _NMOSChannelWidth2=_NMOSChannelWidth,
+                                             _PMOSChannelWidth2=_PMOSChannelWidth, _NMOSChannelWidth3=_NMOSChannelWidth, _PMOSChannelWidth3=_PMOSChannelWidth,
+                                             _NMOSChannelWidth4=_NMOSChannelWidth, _PMOSChannelWidth4=_PMOSChannelWidth, _ChannelLength=_ChannelLength, \
                                              _VDD2VSSHeightAtOneSide=_VDD2VSSHeightAtOneSide, _Dummy=_Dummy, _NumSupplyCoX=_NumSupplyCoX, _NumSupplyCoY=_NumSupplyCoY, \
                                              _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, NumViaPoly2Met1CoX=None, \
                                              NumViaPoly2Met1CoY=None, NumViaPMOSMet12Met2CoX=None,
@@ -3699,12 +3674,12 @@ if __name__ == '__main__':
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', _LibraryName, 'SR_Latch'))
         result1 = ''.join(stdout.read())
         #print (result1)
-        if (result1.split()[-6]) != "'0'":
-            commandlines0 = "cd {0}; rm -r {1}"
-            stdin, stdout, stderr = ssh.exec_command(commandlines0.format('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', _LibraryName))
-            print ("############ Library deleting... ############")
-            commandlines2 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{0}/{2}.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
-            stdin, stdout, stderr = ssh.exec_command(commandlines2.format('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', _LibraryName, 'SR_Latch'))
+        # if (result1.split()[-6]) != "'0'":
+        #     commandlines0 = "cd {0}; rm -r {1}"
+        #     stdin, stdout, stderr = ssh.exec_command(commandlines0.format('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', _LibraryName))
+        #     print ("############ Library deleting... ############")
+        #     commandlines2 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{0}/{2}.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
+        #     stdin, stdout, stderr = ssh.exec_command(commandlines2.format('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', _LibraryName, 'SR_Latch'))
 
         print ("############ XStream in is done... ############")
 

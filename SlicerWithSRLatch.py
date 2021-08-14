@@ -875,12 +875,12 @@ if __name__ == '__main__' :
 
     SlicerWithSRLatchObj = _SlicerWithSRLatch(_DesignParameter=None, _Name='SlicerWithSRLatch')
 
-    for _tries in range(1, 101) :
+    for _tries in range(1, 2) :
         #####################SRLatch#######################
-        _SRFinger1 = random.randint(1, 16)
-        _SRFinger2 = random.randint(1, 16)
-        _SRFinger3 = random.randint(1, 16)
-        _SRFinger4 = random.randint(1, 16)
+        _SRFinger1 = 5##random.randint(1, 16)
+        _SRFinger2 = 1##random.randint(1, 16)
+        _SRFinger3 = 2##random.randint(1, 16)
+        _SRFinger4 = 2##random.randint(1, 16)
         _SRNMOSChannelWidth1 = 200
         _SRPMOSChannelWidth1 = 400
         _SRNMOSChannelWidth2 = 200
@@ -910,14 +910,14 @@ if __name__ == '__main__' :
         _SRSLVT = True
         _SRPowerLine = None
         #####################Slicer#######################
-        _SLCLKinputPMOSFinger1 = random.randint(1, 16)
-        _SLCLKinputPMOSFinger2 = random.randint(1, 16)
-        _SLPMOSFinger = random.randint(1, 16)
-        _SLPMOSChannelWidth = random.randrange(200, 1050, 50)
-        _SLDATAinputNMOSFinger = random.randint(2, 16)
-        _SLNMOSFinger = random.randint(1, 16)
-        _SLCLKinputNMOSFinger = random.randint(1, 16)
-        _SLNMOSChannelWidth = random.randrange(200, 1050, 50)
+        _SLCLKinputPMOSFinger1 = 6##random.randint(1, 16)
+        _SLCLKinputPMOSFinger2 = 3##random.randint(1, 16)
+        _SLPMOSFinger = 2##random.randint(1, 16)
+        _SLPMOSChannelWidth = 1000##random.randrange(200, 1050, 50)
+        _SLDATAinputNMOSFinger = 12##random.randint(2, 16)
+        _SLNMOSFinger = 2##random.randint(1, 16)
+        _SLCLKinputNMOSFinger = 8##random.randint(1, 16)
+        _SLNMOSChannelWidth = 1000##random.randrange(200, 1050, 50)
 
         _SLChannelLength = 30
         _SLDummy = True
@@ -937,7 +937,7 @@ if __name__ == '__main__' :
         _SLNumVIAMet12COY = None
         _SLPowerLine = None
         #####################Inverter#######################
-        _InvFinger = random.randint(5, 16)
+        _InvFinger = 16##random.randint(5, 16)
         _InvChannelWidth = 200
         _InvChannelLength = 30
         _InvNPRatio = 3
@@ -1038,48 +1038,37 @@ if __name__ == '__main__' :
         myfile.close()
         ftp.close()
 
-        import DRCchecker
+    #     import DRCchecker
+    #
+    #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatch_test', 'SlicerWithSRLatch')
+    #
+    #     a.DRCchecker()
+    #
+    #
+    #     print('_tries = ', _tries)
+    #     print('_SRFinger1 = ', _SRFinger1)
+    #     print('_SRFinger2 = ', _SRFinger2)
+    #     print('_SRFinger3 = ', _SRFinger3)
+    #     print('_SRFinger4 = ', _SRFinger4)
+    #
+    #
+    #     print('_CLKinputPMOSFinger1 = ', _SLCLKinputPMOSFinger1)
+    #     print('_CLKinputPMOSFinger2 = ', _SLCLKinputPMOSFinger2)
+    #     print('_PMOSFinger = ', _SLPMOSFinger)
+    #     print('_PMOSChannelWidth = ', _SLPMOSChannelWidth)
+    #     print('_DATAinputNMOSFinger = ', _SLDATAinputNMOSFinger)
+    #     print('_NMOSFinger = ', _SLNMOSFinger)
+    #     print('_CLKinputNMOSFinger = ', _SLCLKinputNMOSFinger)
+    #     print('_NMOSChannelWidth = ', _SLNMOSChannelWidth)
+    #
+    #
+    #     print('_InvFinger = ', _InvFinger)
+    #
+    # print ("DRCclean!!")
 
-        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatch_test', 'SlicerWithSRLatch')
-
-        a.DRCchecker()
 
 
-        print('_tries = ', _tries)
-        print('_SRFinger1 = ', _SRFinger1)
-        print('_SRFinger2 = ', _SRFinger2)
-        print('_SRFinger3 = ', _SRFinger3)
-        print('_SRFinger4 = ', _SRFinger4)
 
 
-        print('_CLKinputPMOSFinger1 = ', _SLCLKinputPMOSFinger1)
-        print('_CLKinputPMOSFinger2 = ', _SLCLKinputPMOSFinger2)
-        print('_PMOSFinger = ', _SLPMOSFinger)
-        print('_PMOSChannelWidth = ', _SLPMOSChannelWidth)
-        print('_DATAinputNMOSFinger = ', _SLDATAinputNMOSFinger)
-        print('_NMOSFinger = ', _SLNMOSFinger)
-        print('_CLKinputNMOSFinger = ', _SLCLKinputNMOSFinger)
-        print('_NMOSChannelWidth = ', _SLNMOSChannelWidth)
 
 
-        print('_InvFinger = ', _InvFinger)
-
-    print ("DRCclean!!")
-
-### DRC Error : 102, 86
-
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('junung', 'chlwnsdnd1!')
-        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        # myfile = open('SlicerWithSRLatch.gds', 'rb')
-        # ftp.storbinary('STOR SlicerWithSRLatch.gds', myfile)
-        # myfile.close()
-        # ftp.close()
-        #
-        # ftp = ftplib.FTP('141.223.29.61')
-        # ftp.login('junung', 'chlwnsdnd1!')
-        # ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-        # myfile = open('SlicerWithSRLatch.gds', 'rb')
-        # ftp.storbinary('STOR SlicerWithSRLatch.gds', myfile)
-        # myfile.close()
-        # ftp.close()

@@ -527,7 +527,7 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
         self._DesignParameter['_PinCK180']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK180']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK180']['_XYCoordinates'][0][1]]]
         self._DesignParameter['_PinCK270']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK270']['_XYCoordinates'][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK270']['_XYCoordinates'][0][1]]]
 
-        self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[], _Mag=0.5, _Angle=0, _TEXT='VDD')
+        self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1], _Presentation=[0,1,2], _Reflect=[0, 0, 0], _XYCoordinates=[], _Mag=0.5, _Angle=0, _TEXT='VDD')
 
         self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], _XYCoordinates=[], _Mag = 0.5, _Angle=0, _TEXT='VSS')
 
@@ -535,10 +535,10 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
 
         self._DesignParameter['_VRXpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL7PIN'][1], _Presentation=[0,1,2], _Reflect=[0,0,0], _XYCoordinates=[], _Mag = 0.5, _Angle=0, _TEXT='VRX')
 
-        self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[self._DesignParameter['_FRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates'][0][0], self._DesignParameter['_FRB']['_XYCoordinates'][0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates'][0][1]]]
-        self._DesignParameter['_VSSpin']['_XYCoordinates'] = [[self._DesignParameter['_FRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VSSpin']['_XYCoordinates'][0][0], self._DesignParameter['_FRB']['_XYCoordinates'][0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VSSpin']['_XYCoordinates'][0][1]]]
-        self._DesignParameter['_VCMpin']['_XYCoordinates'] = [[self._DesignParameter['_FRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VCMpin']['_XYCoordinates'][0][0], self._DesignParameter['_FRB']['_XYCoordinates'][0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VCMpin']['_XYCoordinates'][0][1]]]
-        self._DesignParameter['_VRXpin']['_XYCoordinates'] = [[self._DesignParameter['_FRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VRXpin']['_XYCoordinates'][0][0], self._DesignParameter['_FRB']['_XYCoordinates'][0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VRXpin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_VDDpin']['_XYCoordinates'] = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates']
+        self._DesignParameter['_VSSpin']['_XYCoordinates'] = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VSSpin']['_XYCoordinates']
+        self._DesignParameter['_VCMpin']['_XYCoordinates'] = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VCMpin']['_XYCoordinates']
+        self._DesignParameter['_VRXpin']['_XYCoordinates'] = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VRXpin']['_XYCoordinates']
 
         for i in range(0, _XRBNum):
             for j in range(0, _YRBNum):
@@ -548,13 +548,7 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
                             _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
                             _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
                             _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-                            _XYCoordinates=[[_ResistorBankOrigin[0][
-                                                 0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_GapbtwOriginX']['_Ignore'] - _TotalSubringWidth // 2 - _DRCObj._MetalxMinSpace5 - (
-                                                         _DRCObj._VIAxMinSpaceFor3neighboring +
-                                                         self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met5LayerInput']['_Width']) * (
-                                                         _YRBNum * (_YRBNum - j) - (i + 1)) -
-                                             self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met6LayerInput']['_Width'] // 2,
-                                             _ResistorBankOrigin[0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_GapbtwOriginY']['_Ignore'] + _YRBNum * self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorSpaceY']['_Ignore']]],
+                            _XYCoordinates= self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_S<{0}>pin'.format(i + _XRBNum * j)]['_XYCoordinates'],
                             _Mag=0.02, _Angle=0, _TEXT='S<{0}>'.format(i + _XRBNum * j))
 
                     else:
@@ -562,13 +556,7 @@ class _SlicerandSRLatchwtResistor (StickDiagram._StickDiagram) :
                             _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
                             _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
                             _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-                            _XYCoordinates=[[_ResistorBankOrigin[0][
-                                                 0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_GapbtwOriginX']['_Ignore'] - _TotalSubringWidth // 2 - _DRCObj._MetalxMinSpace5 - (
-                                                         _DRCObj._VIAxMinSpaceFor3neighboring +
-                                                         self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met5LayerInput']['_Width']) * (
-                                                         _YRBNum * (_YRBNum - (j + 1)) + i) -
-                                             self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met6LayerInput']['_Width'] // 2,
-                                             _ResistorBankOrigin[0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_GapbtwOriginY']['_Ignore'] + _YRBNum * self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorSpaceY']['_Ignore']]],
+                            _XYCoordinates= self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_SB<{0}>pin'.format(i + _XRBNum * j)]['_XYCoordinates'],
                             _Mag=0.02, _Angle=0, _TEXT='SB<{0}>'.format(i + _XRBNum * j))
 
         # self._DesignParameter['_Met7LayerSli2Res'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)

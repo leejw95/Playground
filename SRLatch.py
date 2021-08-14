@@ -538,7 +538,7 @@ class _SRLatch(StickDiagram._StickDiagram):
             _ContactNum = 2
 
         if _NumSupplyCoY == None:
-            _NumSupplyCoY = 1
+            _NumSupplyCoY = 2
 
         _Pbodyinputs = copy.deepcopy(PbodyContact._PbodyContact._ParametersForDesignCalculation)
         _Pbodyinputs['_NumberOfPbodyCOX'] = _ContactNum
@@ -3496,7 +3496,7 @@ if __name__ == '__main__':
         _VDD2VSSHeightAtOneSide = None
         _Dummy = True
         _NumSupplyCoX = None
-        _NumSupplyCoY = 5
+        _NumSupplyCoY = 2
         _SupplyMet1XWidth = None
         _SupplyMet1YWidth = None
         NumViaPoly2Met1CoX = None

@@ -280,7 +280,7 @@ class _PMOS(StickDiagram._StickDiagram):
 
         if DesignParameters._Technology=='028nm':
             print ('#############################     PCCRIT Layer Calculation    ##############################################')
-            if self._DesignParameter['_POLayer']['_XWidth'] < 34:
+            if self._DesignParameter['_POLayer']['_XWidth'] == 30 or self._DesignParameter['_POLayer']['_XWidth'] == 34:
                 self._DesignParameter['_PCCRITLayer'][
                     '_XWidth'] = _PMOSNumberofGate * _LengthPMOSBtwMet1 + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD + 2 * _DRCObj._PCCRITExtension
                 self._DesignParameter['_PCCRITLayer']['_YWidth'] = self._DesignParameter['_ODLayer'][

@@ -29,7 +29,7 @@ class _Inverter(StickDiagram._StickDiagram):
                                            _NumViaPoly2Met1CoY=None, _NumViaPMOSMet12Met2CoX=None,
                                            _NumViaPMOSMet12Met2CoY=None, _NumViaNMOSMet12Met2CoX=None,
                                            _NumViaNMOSMet12Met2CoY=None, _XVT=None, _SupplyLine=None,
-                                           _StandAlone_DRCFREE=None)
+                                           _StandAlone=None)
 
     def __init__(self, _DesignParameter=None, _Name='Inverter'):
         if _DesignParameter != None:
@@ -44,7 +44,7 @@ class _Inverter(StickDiagram._StickDiagram):
                                   _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NumViaPoly2Met1CoX=None,
                                   _NumViaPoly2Met1CoY=None, _NumViaPMOSMet12Met2CoX=None, _NumViaPMOSMet12Met2CoY=None,
                                   _NumViaNMOSMet12Met2CoX=None, _NumViaNMOSMet12Met2CoY=None, _XVT=None, _SupplyLine=None,
-                                  _StandAlone_DRCFREE=None):
+                                  _StandAlone=None):
 
         _DRCObj = DRC.DRC()
         _Name = 'Inverter'
@@ -84,12 +84,31 @@ class _Inverter(StickDiagram._StickDiagram):
         ''' ---------------------------------------- Supply Rail Generation ---------------------------------------- '''
         '''
         Need : PMOS(for NbodyContact), NMOS(for PbodyContact)
-        Input : _NumSupplyCoX     (optional, default 2)
+        Input : _NumSupplyCoX     (optional, minimum 2)
                 _NumSupplyCoY     (optional, default 1)
                 _SupplyMet1XWidth (optional)
                 _SupplyMet1YWidth (optional)
         '''
         # 1) VDD Generation --------------------------------------------------------------------------------------------
+        # NumSupplyCoYOnVDDVSS = _NumSupplyCoX if _NumSupplyCoY != None else 1
+        # if _NumSupplyCoX == None:
+        #     XWidthOfPMOS = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']
+        #     NumSupplyCoXOnVDDVSS = int(XWidthOfPMOS / (_DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOX=_NumberOfNbodyCOX, NumOfCOY=NumSupplyCoYOnVDDVSS))) + 1
+        # else:
+        #     NumSupplyCoXOnVDDVSS = _NumSupplyCoX
+        #
+        #
+        #
+        # NbodyParameters = copy.deepcopy(NbodyContact_iksu._NbodyContact._ParametersForDesignCalculation)
+        # NbodyParameters['_NumberOfNbodyCOX'] = NumSupplyCoXOnVDDVSS if (NumSupplyCoXOnVDDVSS > 2) else 2
+        # NbodyParameters['_NumberOfNbodyCOY'] = NumSupplyCoYOnVDDVSS
+        # NbodyParameters['_Met1XWidth'] = _SupplyMet1XWidth
+        # NbodyParameters['_Met1YWidth'] = _SupplyMet1YWidth
+        #
+        # self._DesignParameter['NbodyContact'] = self._SrefElementDeclaration(_DesignObj=NbodyContact_iksu._NbodyContact(_DesignParameter=None, _Name='NbodyContactIn{}'.format(_Name)))[0]
+        # self._DesignParameter['NbodyContact']['_DesignObj']._CalculateNbodyContactDesignParameter(**NbodyParameters)
+
+
         if _NumSupplyCoX == None:
             XWidthOfPMOS = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']
             NumSupplyCoXOnVDDVSS = int(XWidthOfPMOS // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2)) + 1
@@ -117,7 +136,7 @@ class _Inverter(StickDiagram._StickDiagram):
         self._DesignParameter['PbodyContact']['_DesignObj']._CalculatePbodyContactDesignParameter(**PbodyParameters)
 
 
-        ''' ---------------------------------------- Supply Rail Generation ---------------------------------------- '''
+        ''' -------------------------------------------- Via Generation -------------------------------------------- '''
         '''
         Need : PMOS, NMOS
         Input : _NumViaPMOSMet12Met2CoX (optional) / default : 1 / if not 1, it won't work properly(Not Tested).
@@ -231,12 +250,12 @@ class _Inverter(StickDiagram._StickDiagram):
                 DistanceBtwNMOS2PolyInput = 0.5 * max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
                                                       self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
                                             + 0.5 * WidthOfInputXM1 \
-                                            + _DRCObj._Metal1MinSpace2
+                                            + _DRCObj._Metal1MinSpaceAtCorner  # Indeed, you have to consider polydummy and M2
 
                 DistanceBtwPMOS2PolyInput = 0.5 * max(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
                                                       self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
                                             + 0.5 * WidthOfInputXM1 \
-                                            + _DRCObj._Metal1MinSpace2
+                                            + _DRCObj._Metal1MinSpaceAtCorner
 
             elif DesignParameters._Technology == '065nm':    # Need to check
                 DistanceBtwNMOS2PolyInput = 0.5 * max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
@@ -248,7 +267,6 @@ class _Inverter(StickDiagram._StickDiagram):
                                                       self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
                                             + 0.5 * WidthOfInputXM1 \
                                             + _DRCObj._Metal1MinSpace
-
 
         elif (_Finger == 1) and (DesignParameters._Technology == '028nm'):  # assumption (same finger on PMOS NMOS)
 
@@ -295,7 +313,7 @@ class _Inverter(StickDiagram._StickDiagram):
                                  + 0.5 * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] \
                                  + DistanceBtwVDD2PMOS
             # 3)  two independant poly gates and gap by '_PolygateMinSpace2'
-            _VDD2VSSMinHeight3 = DistanceBtwVSS2NMOS + DistanceBtwNMOS2PolyInput + DistanceBtwPMOS2PolyInput + DistanceBtwVDD2PMOS + WidthOfInputXM1 + _DRCObj._PolygateMinSpace2  # originally spacing to_DRCObj._PolygateMinSpace
+            _VDD2VSSMinHeight3 = DistanceBtwVSS2NMOS + DistanceBtwNMOS2PolyInput + DistanceBtwPMOS2PolyInput + DistanceBtwVDD2PMOS + WidthOfInputXM1 + _DRCObj._PolygateMinSpace2  # Need to Modify by using 'DRCPolyMinSpace' later
 
             _VDD2VSSMinHeight = max(_VDD2VSSMinHeight1, _VDD2VSSMinHeight2, _VDD2VSSMinHeight3)
         else:
@@ -896,16 +914,16 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger = 1
-    _ChannelWidth = 200
-    _ChannelLength = 30
+    _Finger = 9
+    _ChannelWidth = 400
+    _ChannelLength = 60
     _NPRatio = 1
-    _Dummy = True
-    _XVT = 'SLVT'
+    _Dummy = False
+    _XVT = 'LVT'
 
     _VDD2VSSHeight = None  # None / 1750
     _NumSupplyCOX = None  # None
-    _NumSupplyCOY = 2
+    _NumSupplyCOY = 1
 
     _SupplyMet1XWidth = None
     _SupplyMet1YWidth = None
@@ -918,7 +936,7 @@ if __name__ == '__main__':
     _NumVIAMet12COX = None
     _NumVIAMet12COY = None
     _SupplyLine = False
-    _StandAlone_DRCFREE = False
+    _StandAlone = False
 
     _fileName = 'Inverter.gds'
     libname = 'TEST_INV1'
@@ -937,7 +955,7 @@ if __name__ == '__main__':
                                           _NumViaPMOSMet12Met2CoY=_NumViaPMOSMet12Met2CoY,
                                           _NumViaNMOSMet12Met2CoX=_NumViaNMOSMet12Met2CoX,
                                           _NumViaNMOSMet12Met2CoY=_NumViaNMOSMet12Met2CoY,
-                                          _StandAlone_DRCFREE=_StandAlone_DRCFREE
+                                          _StandAlone=_StandAlone
                                           )
     InverterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=InverterObj._DesignParameter)
     testStreamFile = open('./{}'.format(_fileName), 'wb')

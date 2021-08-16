@@ -146,7 +146,7 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _tmpXY_Dummy
 
             if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
-                self._DesignParameter['_PODummyLayer']['_YWidth'] = int(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']) + 2)
+                self._DesignParameter['_PODummyLayer']['_YWidth'] = self.RoundupMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
 
         else:
             self._DesignParameter['_PODummyLayer']['_XWidth'] = 0
@@ -354,10 +354,10 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    _NMOSFinger = 6
+    _NMOSFinger = 9
     _NMOSWidth = 400            # Minimum value : 200 (samsung) / 200 (65nm)
     _NMOSChannelLength = 60     # Minimum value : 30 (samsung) / 60 (65nm)
-    _NMOSDummy = False           #
+    _NMOSDummy = True           #
     _XVT = None                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
 
     _fileName = 'NMOSWithDummy_iksu.gds'

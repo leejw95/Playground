@@ -97,7 +97,7 @@ class _PMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
 
             if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:  # Should check at TSMC
-                self._DesignParameter['_PODummyLayer']['_YWidth'] = int(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']) + 2)
+                self._DesignParameter['_PODummyLayer']['_YWidth'] = self.RoundupMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
 
         else:
             self._DesignParameter['_PODummyLayer']['_XWidth'] = 0

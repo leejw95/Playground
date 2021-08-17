@@ -123,6 +123,7 @@ class DRCPP:
             self._PpMinWidth=180
             self._PpMinSpace=180
             self._PpMinExtensiononPactive=130
+            self._PpMinExtensiononPactive2 = 20  # PP.EX.2  Pactive2 -> for suppy rail (PW STRAP)
             self._PpMinEnclosureOfPo=150
             self._PpMinEnclosureOfPtypePoRes=200
         if DesignParameters._Technology=='090nm':
@@ -160,6 +161,7 @@ class DRCNP:
             self._NpMinWidth=180
             self._NpMinSpace=180
             self._NpMinExtensiononNactive=130
+            self._NpMinExtensiononNactive2 = 20  # Nactive2 -> for supply rail
             self._NpMinEnclosureOfPo=150
         if DesignParameters._Technology=='090nm':
             self._NpMinWidth=240
@@ -223,7 +225,7 @@ class DRCPOLYGATE:
         if DesignParameters._Technology=='065nm':
             self._PolygateMinWidth=60 #A
             self._PolygateMinSpace=120 #F
-            self._PolygateMinSpace2=180 #L
+            self._PolygateMinSpace2=180 #L PO.S.7
             self._PolygateMinSpace2Co=55 #???????????????
             self._PolygateMinSpace2OD=50 #???????????????
             self._PolygateMinSpace2PolygateInSameRPO=250 #N
@@ -358,7 +360,7 @@ class DRCCO:
             self._CoMinWidth = 40
             self._CoMinSpace = 60
             self._CoMinSpace2 = 60
-            self._CoMinSpaceDifferentNet = 92
+            self._CoMinSpaceDifferentNet = 78
             self._CoMinSpaceFor3neighboring = 92
             self._CoMinEnclosureByOD = 8
             self._CoMinEnclosureByODAtLeastTwoSide = 30
@@ -556,188 +558,188 @@ class DRCCO:
                 _NumberOfCOY =  int(YWidth  - 2 * self._CoMinEnclosureByPOAtLeastTwoSide + self.DRCCOMinSpace(NumOfCOX=XWidth,NumOfCOY=YWidth ))/ (self.DRCCOMinSpace(NumOfCOX=XWidth,NumOfCOY=YWidth ) + self._CoMinWidth )if NumOfCOY == None else NumOfCOY
             return (_NumberOfCOX, _NumberOfCOY)
 
+
 class DRCMETAL1:
     def __init__(self):
-        if DesignParameters._Technology=='045nm':
-            self._Metal1MinWidth=70
-            self._Metal1MinSpace=70
-            self._Metal1MinSpace2=80
-            self._Metal1MinSpace21=120
-            self._Metal1MinSpace22=140
-            self._Metal1MinSpace23=210
-            self._Metal1MinSpace3=500
+        if DesignParameters._Technology == '045nm':
+            self._Metal1MinWidth = 70
+            self._Metal1MinSpace = 70
+            self._Metal1MinSpace2 = 80
+            self._Metal1MinSpace21 = 120
+            self._Metal1MinSpace22 = 140
+            self._Metal1MinSpace23 = 210
+            self._Metal1MinSpace3 = 500
             self._Metal1MinSpaceAtCorner = 80
             #045nm DRC rule metal1minEnclosureCO & metal1minEnclosureCO2 are valid in both below cases.
             # self._Metal1MinEnclosureCO=0
             # self._Metal1MinEnclosureCO2=30
-            self._Metal1MinEnclosureCO=5
-            self._Metal1MinEnclosureCO2=30
-            self._Metal1MinEnclosureVia1=0
-            self._Metal1MinEnclosureVia12=30
-            self._Metal1MinArea=21500
+            self._Metal1MinEnclosureCO = 5
+            self._Metal1MinEnclosureCO2 = 30
+            self._Metal1MinEnclosureVia1 = 0
+            self._Metal1MinEnclosureVia12 = 30
+            self._Metal1MinArea = 21500
 
         if DesignParameters._Technology=='028nm':
-            self._Metal1MinWidth=50 #A
-            self._Metal1MinSpace=50 #D
-            self._Metal1MinSpacetoGate=20
-            self._Metal1MinSpace2=66 #E (by JiCho)
-            self._Metal1MinSpace21=82 #E1k
-            self._Metal1MinSpace22=74  # G
-            self._Metal1MinSpace3=140 #F
+            self._Metal1MinWidth = 50  #A
+            self._Metal1MinSpace = 50  #D
+            self._Metal1MinSpacetoGate = 20
+            self._Metal1MinSpace2 = 66  #E (by JiCho)
+            self._Metal1MinSpace21 = 82  #E1k
+            self._Metal1MinSpace22 = 74  # G
+            self._Metal1MinSpace3 = 140  #F
 
-            self._Metal1MinSpaceAtCorner = 60 #S1/S2
+            self._Metal1MinSpaceAtCorner = 60  #S1/S2
 
-            self._Metal1MinEnclosureCO=5 #I
-            self._Metal1MinEnclosureCO2=21 #J
-            self._Metal1MinEnclosureCO3 = 12 ##FOR PRES, By junung
-            self._Metal1MinEnclosureVia1=0
-            self._Metal1MinEnclosureVia12=32
+            self._Metal1MinEnclosureCO = 5  #I
+            self._Metal1MinEnclosureCO2 = 21  #J
+            self._Metal1MinEnclosureCO3 = 12  ##FOR PRES, By junung
+            self._Metal1MinEnclosureVia1 = 0
+            self._Metal1MinEnclosureVia12 = 32
             self._Metal1MinArea = 10000
-            self._Metal1MinEnclosureArea = 48000 # ADDED!(by JiCho)
+            self._Metal1MinEnclosureArea = 48000  # ADDED!(by JiCho)
 
-        if DesignParameters._Technology=='065nm':
-            self._Metal1MinWidth=90
-            self._Metal1MinSpace=90
-            self._Metal1MinSpace2=110
-            self._Metal1MinSpace21=160
-            self._Metal1MinSpace3=500
-            self._Metal1MinSpace4=1500
+        if DesignParameters._Technology == '065nm':
+            self._Metal1MinWidth = 90
+            self._Metal1MinSpace = 90
+            self._Metal1MinSpace2 = 110
+            self._Metal1MinSpace21 = 160
+            self._Metal1MinSpace3 = 500
+            self._Metal1MinSpace4 = 1500
 
             self._Metal1MinSpaceAtCorner = 110
 
-            self._Metal1MinEnclosureCO=0
-            self._Metal1MinEnclosureCO2=40
-            self._Metal1MinEnclosureVia1=0
-            self._Metal1MinEnclosureVia12=40
-            self._Metal1MinArea=42000
-        if DesignParameters._Technology=='090nm':
-            self._Metal1MinWidth=120
-            self._Metal1MinSpace=120
+            self._Metal1MinEnclosureCO = 0
+            self._Metal1MinEnclosureCO2 = 40
+            self._Metal1MinEnclosureVia1 = 0
+            self._Metal1MinEnclosureVia12 = 40
+            self._Metal1MinArea = 42000
 
-            self._Metal1MinSpace2=170
-            self._Metal1MinSpace3=500
-            self._Metal1MinSpace4=1500
+        if DesignParameters._Technology == '090nm':
+            self._Metal1MinWidth = 120
+            self._Metal1MinSpace = 120
 
-            self._Metal1MinSpaceAtCorner = None
-
-            self._Metal1MinEnclosureCO=0
-            self._Metal1MinEnclosureCO2=50
-            self._Metal1MinEnclosureVia1=5
-            self._Metal1MinEnclosureVia12=50
-            self._Metal1MinArea=58000
-        if DesignParameters._Technology=='130nm':
-            self._Metal1MinWidth=160
-            self._Metal1MinSpace=180
-            self._Metal1MinSpace2=220
-            self._Metal1MinSpace3=600
+            self._Metal1MinSpace2 = 170
+            self._Metal1MinSpace3 = 500
+            self._Metal1MinSpace4 = 1500
 
             self._Metal1MinSpaceAtCorner = None
 
-            self._Metal1MinEnclosureCO=0
-            self._Metal1MinEnclosureCO2=50
-            self._Metal1MinEnclosureVia1=10
-            self._Metal1MinEnclosureVia12=50
-            self._Metal1MinArea=122000
-        if DesignParameters._Technology=='180nm':
-            self._Metal1MinWidth=230
-            self._Metal1MinSpace=230
-            self._Metal1MinSpace2=600
+            self._Metal1MinEnclosureCO = 0
+            self._Metal1MinEnclosureCO2 = 50
+            self._Metal1MinEnclosureVia1 = 5
+            self._Metal1MinEnclosureVia12 = 50
+            self._Metal1MinArea = 58000
+        if DesignParameters._Technology == '130nm':
+            self._Metal1MinWidth = 160
+            self._Metal1MinSpace = 180
+            self._Metal1MinSpace2 = 220
+            self._Metal1MinSpace3 = 600
 
             self._Metal1MinSpaceAtCorner = None
 
+            self._Metal1MinEnclosureCO = 0
+            self._Metal1MinEnclosureCO2 = 50
+            self._Metal1MinEnclosureVia1 = 10
+            self._Metal1MinEnclosureVia12 = 50
+            self._Metal1MinArea = 122000
+        if DesignParameters._Technology == '180nm':
+            self._Metal1MinWidth = 230
+            self._Metal1MinSpace = 230
+            self._Metal1MinSpace2 = 600
 
-            self._Metal1MinEnclosureCO=5
-            self._Metal1MinEnclosureCO2=60
-            self._Metal1MinEnclosureVia1=5
-            self._Metal1MinEnclosureVia12=60
+            self._Metal1MinSpaceAtCorner = None
 
+            self._Metal1MinEnclosureCO = 5
+            self._Metal1MinEnclosureCO2 = 60
+            self._Metal1MinEnclosureVia1 = 5
+            self._Metal1MinEnclosureVia12 = 60
 
-            self._Metal1MinArea=202000
+            self._Metal1MinArea = 202000
+
 
     def DRCMETAL1MinSpace(self, _Width=None, _ParallelLength=None):
-        if DesignParameters._Technology=='045nm':
-            if _Width==None  and _ParallelLength==None:
+        if DesignParameters._Technology == '045nm':
+            if _Width == None and _ParallelLength == None:
                 return self._Metal1MinSpace
-            elif 170<_Width  and 270<_ParallelLength:
-                if 240<_Width and 270< _ParallelLength:
-                    if 310<_Width and 400< _ParallelLength:
-                        if 620<_Width and 620< _ParallelLength:
-                            if 1500<_Width and 1500<_ParallelLength:
+            elif 170 < _Width and 270 < _ParallelLength:
+                if 240 < _Width and 270 < _ParallelLength:
+                    if 310 < _Width and 400 < _ParallelLength:
+                        if 620 < _Width and 620 < _ParallelLength:
+                            if 1500 < _Width and 1500 < _ParallelLength:
                                 return self._Metal1MinSpace3
                             else:
-                                return  self._Metal1MinSpace23
+                                return self._Metal1MinSpace23
                         else:
-                            return  self._Metal1MinSpace22
+                            return self._Metal1MinSpace22
                     else:
                         return self._Metal1MinSpace21
                 else:
                     return self._Metal1MinSpace2
-            else :
+            else:
                 return self._Metal1MinSpace
 
-        def DRCMETAL1MinSpace(self, _Width=None, _ParallelLength=None):
-            if DesignParameters._Technology == '028nm':
-                if _Width == None and _ParallelLength == None:
-                    return self._Metal1MinSpace
-                elif 72 < _Width and 104 < _ParallelLength: #a
-                    if 156 < _Width and 104 < _ParallelLength: #b
-                        if 208 < _Width and 104 < _ParallelLength: #c
-                            if 208 < _Width and 300 < _ParallelLength:
-                                return self._Metal1MinSpace3 #140
-                            else:
-                                return self._Metal1MinSpace22 #c 74
+        if DesignParameters._Technology == '028nm':
+            if _Width == None and _ParallelLength == None:
+                return self._Metal1MinSpace
+            elif 72 < _Width and 104 < _ParallelLength:  # a
+                if 156 < _Width and 104 < _ParallelLength:  # b
+                    if 208 < _Width and 104 < _ParallelLength:  # c
+                        if 208 < _Width and 300 < _ParallelLength:
+                            return self._Metal1MinSpace3  # 140
                         else:
-                            return self._Metal1MinSpace21 #b 82
+                            return self._Metal1MinSpace22  # c 74
                     else:
-                        return self._Metal1MinSpace2 #a 65
+                        return self._Metal1MinSpace21  # b 82
                 else:
-                    return self._Metal1MinSpace #50
+                    return self._Metal1MinSpace2  # a 65
+            else:
+                return self._Metal1MinSpace  # 50
 
-        if DesignParameters._Technology=='065nm':
-            if _Width==None  and _ParallelLength==None:
+        if DesignParameters._Technology == '065nm':
+            if _Width == None and _ParallelLength == None:
                 return self._Metal1MinSpace
-            elif 200<_Width  and 380<_ParallelLength:
-                if 420<_Width and 420< _ParallelLength:
-                    if 1500<_Width and 1500< _ParallelLength:
-                        if 4500<_Width and 4500<_ParallelLength:
+            elif 200 < _Width and 380 < _ParallelLength:
+                if 420 < _Width and 420 < _ParallelLength:
+                    if 1500 < _Width and 1500 < _ParallelLength:
+                        if 4500 < _Width and 4500 < _ParallelLength:
                             return self._Metal1MinSpace4
                         else:
-                            return  self._Metal1MinSpace3
+                            return self._Metal1MinSpace3
                     else:
                         return self._Metal1MinSpace21
                 else:
                     return self._Metal1MinSpace2
-            else :
+            else:
                 return self._Metal1MinSpace
 
-        if DesignParameters._Technology=='090nm':
-            if _Width==None  and _ParallelLength==None:
+        if DesignParameters._Technology == '090nm':
+            if _Width == None and _ParallelLength == None:
                 return self._Metal1MinSpace
-            elif 300<_Width  and 520<_ParallelLength:
-                if 1500<_Width and 1500< _ParallelLength:
-                    if 4500<_Width and 4500< _ParallelLength:
-                        return  self._Metal1MinSpace4
+            elif 300 < _Width and 520 < _ParallelLength:
+                if 1500 < _Width and 1500 < _ParallelLength:
+                    if 4500 < _Width and 4500 < _ParallelLength:
+                        return self._Metal1MinSpace4
                     else:
                         return self._Metal1MinSpace3
                 else:
                     return self._Metal1MinSpace2
-            else :
+            else:
                 return self._Metal1MinSpace
 
-        if DesignParameters._Technology=='130nm':
-            if _Width==None  and _ParallelLength==None:
+        if DesignParameters._Technology == '130nm':
+            if _Width == None and _ParallelLength == None:
                 return self._Metal1MinSpace
-            elif 300<_Width  and 1000<_ParallelLength:
-                if _Width>10000 and _ParallelLength>10000:
+            elif 300 < _Width and 1000 < _ParallelLength:
+                if _Width > 10000 and _ParallelLength > 10000:
                     return self._Metal1MinSpace3
                 else:
                     return self._Metal1MinSpace2
-            else :
+            else:
                 return self._Metal1MinSpace
-        if DesignParameters._Technology=='180nm':
-            if _Width>10000 and _ParallelLength>10000:
+        if DesignParameters._Technology == '180nm':
+            if _Width > 10000 and _ParallelLength > 10000:
                 return self._Metal1MinSpace2
-            else :
+            else:
                 return self._Metal1MinSpace
 
 
@@ -780,6 +782,8 @@ class DRCNW:
             self._NwMinEnclosurePactive=160
             self._NwMinEnclosurePactive2 = 160
             self._NwMinSpacetoNactive=160
+            self._NwMinArea = 640000
+
         if DesignParameters._Technology=='090nm':
             self._NwMinWidth=620
             self._NwMinSpace=620

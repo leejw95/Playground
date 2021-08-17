@@ -800,12 +800,12 @@ if __name__ == '__main__' :
         #     print (i)
     _XRBNum = 5
     _YRBNum = 8
-    _TransmissionGateFinger = 6
-    _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
+    _TransmissionGateFinger = 10
+    _TransmissionGateChannelWidth = 500  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2500 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 3392 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _PowerLine = True # T/F?

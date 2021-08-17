@@ -742,29 +742,30 @@ class _Inverter(StickDiagram._StickDiagram):
 
 
         # exception case... Need to Modify later...... Not tested in 65nm
-        _DRC_M1MinWidth_WhenCalcMinArea = 130
+        if DesignParameters._Technology == '028nm':
+            _DRC_M1MinWidth_WhenCalcMinArea = 130
 
-        if (_Finger == 1) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
-            tmpX = self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
-            tmpY = self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-            if (tmpX * tmpY) < _DRCObj._Metal1MinArea:
-                tmpY_calc = self.CeilMinSnapSpacing(_DRCObj._Metal1MinArea / tmpX, MinSnapSpacing)
-                if tmpY_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE only for 28nm...
-                    tmpY_calc = _DRC_M1MinWidth_WhenCalcMinArea
+            if (_Finger == 1) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
+                tmpX = self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+                tmpY = self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                if (tmpX * tmpY) < _DRCObj._Metal1MinArea:
+                    tmpY_calc = self.CeilMinSnapSpacing(_DRCObj._Metal1MinArea / tmpX, MinSnapSpacing)
+                    if tmpY_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE only for 28nm...
+                        tmpY_calc = _DRC_M1MinWidth_WhenCalcMinArea
 
-                self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = tmpY_calc
+                    self._DesignParameter['_VIANMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = tmpY_calc
 
-        elif (_Finger == 2) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
-            tmpX = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
-            tmpY = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-            if (tmpX * tmpY) < _DRCObj._Metal1MinArea:
-                tmpX_calc = self.CeilMinSnapSpacing(_DRCObj._Metal1MinArea / tmpY, MinSnapSpacing)
-                if tmpX_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE only for 28nm...
-                    tmpX_calc = _DRC_M1MinWidth_WhenCalcMinArea
-                self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = tmpX_calc
-                self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] = \
-                    self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] \
-                    + tmpX_calc/2 - tmpX/2
+            elif (_Finger == 2) and (_VDD2VSSHeight == _VDD2VSSMinHeight):
+                tmpX = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+                tmpY = self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                if (tmpX * tmpY) < _DRCObj._Metal1MinArea:
+                    tmpX_calc = self.CeilMinSnapSpacing(_DRCObj._Metal1MinArea / tmpY, MinSnapSpacing)
+                    if tmpX_calc < _DRC_M1MinWidth_WhenCalcMinArea:  # Rule by samsung28nm GR501aSE only for 28nm...
+                        tmpX_calc = _DRC_M1MinWidth_WhenCalcMinArea
+                    self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = tmpX_calc
+                    self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] = \
+                        self._DesignParameter['_VIAMOSPoly2Met1RightMost']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] \
+                        + tmpX_calc/2 - tmpX/2
 
 
         ''' ---------------------------------------- PP/NP Additional Layer ---------------------------------------- '''
@@ -921,16 +922,16 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger = 9
+    _Finger = 2
     _ChannelWidth = 400
-    _ChannelLength = 48
+    _ChannelLength = 60
     _NPRatio = 1
     _Dummy = True
-    _XVT = 'RVT'
+    _XVT = None
 
-    _VDD2VSSHeight = 2500  # None / 1750
+    _VDD2VSSHeight = None  # None / 1750
     _NumSupplyCOX = None  # None
-    _NumSupplyCOY = 2
+    _NumSupplyCOY = None
 
     _SupplyMet1XWidth = None
     _SupplyMet1YWidth = None

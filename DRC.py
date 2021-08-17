@@ -231,7 +231,9 @@ class DRCPOLYGATE:
             self._PolygateMinSpace2PolygateInSameRPO=250 #N
             #self._PolygateMinEnclosureByNW=1000
             self._PolygateMinExtensionOnOD=140 #O
+            self._PolygateMinExtensionOnODX = 115  # PO.EX.2
             self._PolygateMinSpaceAtCorner=140 #S1/S2
+            self._PODummyMinArea = 51000
         if DesignParameters._Technology=='090nm':
             self._PolygateMinWidth=100
             self._PolygateMinSpace=140
@@ -269,6 +271,8 @@ class DRCPOLYGATE:
                 return self._PolygateMinExtensionOnOD2
             elif _ChannelLength >= 90 :
                 return self._PolygateMinExtensionOnOD3
+        if DesignParameters._Technology == '065nm':
+            return self._PolygateMinExtensionOnOD
 
 
     def DRCPolygateMinSpace(self, _TmpLengthBtwPolyEdge = None):

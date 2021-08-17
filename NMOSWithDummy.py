@@ -449,8 +449,8 @@ class _NMOS(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     _NMOSFinger = 5
-    _NMOSWidth = 200
-    _NMOSChannelLength = 90
+    _NMOSWidth = 366
+    _NMOSChannelLength = 30
     _NMOSDummy = True
     _SLVT = True
     _LVT = False

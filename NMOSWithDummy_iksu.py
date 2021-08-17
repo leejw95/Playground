@@ -1,3 +1,4 @@
+import CoordinateCalc
 import StickDiagram
 import DesignParameters
 import DRC
@@ -97,12 +98,15 @@ class _NMOS(StickDiagram._StickDiagram):
         _DRCObj = DRC.DRC()
         _XYCoordinateOfNMOS = [[0, 0]]
 
-        _LengthNMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _NMOSChannellength
         _LengthNMOSBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
 
-        #
-        print ('#############################     POLY Layer Calculation    ##############################################')
+        if DesignParameters._Technology == '028nm':  # Need to Modify
+            _LengthNMOSBtwPO = _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + _NMOSChannellength
+        else:
+            _LengthNMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _NMOSChannellength
 
+
+        print ('#############################     POLY Layer Calculation    ##############################################')
         # POLY Layer Coordinate Calc
         tmpXY_PO = []
         for i in range(0, _NMOSNumberofGate):
@@ -115,47 +119,42 @@ class _NMOS(StickDiagram._StickDiagram):
             tmpXY_PO.append(_xycoordinatetmp)
 
         self._DesignParameter['_POLayer']['_XWidth'] = _NMOSChannellength
-        self._DesignParameter['_POLayer']['_YWidth'] = _NMOSChannelWidth + 2 * _DRCObj._PolygateMinExtensionOnOD  # 56. check
+        self._DesignParameter['_POLayer']['_YWidth'] = _NMOSChannelWidth + 2 * _DRCObj.DRCPolygateMinExtensionOnOD(_NMOSChannellength)
         self._DesignParameter['_POLayer']['_XYCoordinates'] = tmpXY_PO
 
-        #
-        print ('#############################     DIFF (OD/RX) Layer Calculation    ##############################################')
 
-        self._DesignParameter['_ODLayer']['_XWidth'] = _LengthNMOSBtwPO * _NMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
+        if _NMOSDummy:
+            print ('#############################     POLY Dummy Layer Calculation    ##############################################')
+            self._DesignParameter['_PODummyLayer']['_XWidth'] = _NMOSChannellength
+            self._DesignParameter['_PODummyLayer']['_YWidth'] = _NMOSChannelWidth + 2 * _DRCObj._PolygateMinExtensionOnOD  # ??
+
+            _tmpXY_Dummy = [
+                CoordinateCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][0], [-_LengthNMOSBtwPO, 0]),
+                CoordinateCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthNMOSBtwPO, 0]),
+            ]
+            self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _tmpXY_Dummy
+
+            if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
+                self._DesignParameter['_PODummyLayer']['_YWidth'] = self.CeilMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
+            else:
+                pass
+        else:
+            del self._DesignParameter['_PODummyLayer']
+
+
+        print ('#############################     DIFF (OD/RX) Layer Calculation    ##############################################')
+        if _NMOSDummy and DesignParameters._Technology != '028nm':
+            XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _NMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
+        else:
+            XWidth_OD = _LengthNMOSBtwPO * _NMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
+        self._DesignParameter['_ODLayer']['_XWidth'] = XWidth_OD
         self._DesignParameter['_ODLayer']['_YWidth'] = _NMOSChannelWidth
         self._DesignParameter['_ODLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
 
 
-        #
-        if _NMOSDummy == True:  # need to change when only 28nm
-            print ('#############################     POLY Dummy Layer Calculation    ##############################################')
-            self._DesignParameter['_PODummyLayer']['_XWidth'] = _NMOSChannellength
-            self._DesignParameter['_PODummyLayer']['_YWidth'] = _NMOSChannelWidth + 2 * _DRCObj._PolygateMinExtensionOnOD
-
-            # POLY Dummy Layer Coordinate Setting
-            if (_NMOSNumberofGate % 2) == 0:
-                _tmpXY_Dummy = [
-                                   [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate / 2 - 0.5) * _LengthNMOSBtwPO + 0 * _LengthNMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2) ,  _XYCoordinateOfNMOS[0][1]],
-                                   [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate / 2 - 0.5) * _LengthNMOSBtwPO + (_NMOSNumberofGate - 1) * _LengthNMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2,  _XYCoordinateOfNMOS[0][1]]
-                                   ]
-            else:
-                _tmpXY_Dummy = [
-                                   [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2 * _LengthNMOSBtwPO + 0 * _LengthNMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfNMOS[0][1]],
-                                   [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2 * _LengthNMOSBtwPO + (_NMOSNumberofGate - 1) * _LengthNMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD ) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfNMOS[0][1]]
-                                   ]
-            self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _tmpXY_Dummy
-
-            if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
-                self._DesignParameter['_PODummyLayer']['_YWidth'] = int(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']) + 2)
-
-        else:
-            self._DesignParameter['_PODummyLayer']['_XWidth'] = 0
-            self._DesignParameter['_PODummyLayer']['_YWidth'] = 0
-
-        #
         print ('#############################     METAL1 Layer Calculation    ##############################################')
         # METAL1 Layer Coordinate Setting
-        _LengthNMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_POLayer']['_XWidth']  # same with _LengthNMOSBtwPO  ??
+        _LengthNMOSBtwMet1 = _LengthNMOSBtwPO
 
         tmpXY_M1 = []
         for i in range(0, _NMOSNumberofGate + 1):
@@ -181,7 +180,10 @@ class _NMOS(StickDiagram._StickDiagram):
         print ('#############################     CONT Layer Calculation    ##############################################')
         # CONT XNum/YNum Calculation
         _XNumberOfCOInNMOS = _NMOSNumberofGate + 1
-        _YNumberOfCOInNMOS = int(float(self._DesignParameter['_ODLayer']['_YWidth'] - 2 * max([_DRCObj._CoMinEnclosureByODAtLeastTwoSide, _DRCObj._Metal1MinEnclosureCO2]) + _DRCObj._CoMinSpace) / (_DRCObj._CoMinSpace + _DRCObj._CoMinWidth))
+        _YNumberOfCOInNMOS = int(float(self._DesignParameter['_ODLayer']['_YWidth']
+                                       - 2 * max([_DRCObj._CoMinEnclosureByODAtLeastTwoSide, _DRCObj._Metal1MinEnclosureCO2])
+                                       + _DRCObj._CoMinSpace)
+                                 / (_DRCObj._CoMinSpace + _DRCObj._CoMinWidth))
 
         # Check the number of CO On NMOS TR
         if _XNumberOfCOInNMOS == 0 or _YNumberOfCOInNMOS == 0:
@@ -206,7 +208,7 @@ class _NMOS(StickDiagram._StickDiagram):
                     _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                         _XYCoordinateOfNMOS[0][1] - (_YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
-                elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 1:
+                else:
                     _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                         _XYCoordinateOfNMOS[0][1] - (_YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
                 tmpXYs.append(_xycoordinatetmp)
@@ -218,17 +220,18 @@ class _NMOS(StickDiagram._StickDiagram):
 
         if DesignParameters._Technology != '028nm':  # There is no NIMP(NP) Layer at 28nm
             print ('#############################     NIMP (NP/-) Layer Calculation    ####################')
-
-            self._DesignParameter['_NPLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
-            self._DesignParameter['_NPLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._NpMinEnclosureOfPo
-
-            if _NMOSDummy == True:  # Need to verify @ 65nm
-                self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_PODummyLayer']['_XWidth'] \
-                                                               + (self._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) \
-                                                               + 2 * _DRCObj._NpMinEnclosureOfPo
+            if _NMOSDummy:
+                XWidth_NP_byPO = self._DesignParameter['_PODummyLayer']['_XWidth'] \
+                                 + (self._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) \
+                                 + 2 * _DRCObj._NpMinEnclosureOfPo
             else:
-                self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] \
-                                                               + 2 * _DRCObj._NpMinExtensiononNactive
+                XWidth_NP_byPO = 0
+
+            XWidth_NP_byOD = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
+
+            self._DesignParameter['_NPLayer']['_XWidth'] = max(XWidth_NP_byPO, XWidth_NP_byOD)
+            self._DesignParameter['_NPLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._NpMinEnclosureOfPo
+            self._DesignParameter['_NPLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
 
         # XVT Layer Calculation
         try:
@@ -259,7 +262,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
         # ?
         if DesignParameters._Technology == '028nm':  # ?
-            if self._DesignParameter['_POLayer']['_XWidth'] < 34:
+            if self._DesignParameter['_POLayer']['_XWidth'] in (30, 34):
                 self._DesignParameter['_PCCRITLayer']['_XWidth'] = _LengthNMOSBtwMet1 * _NMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD + 2 * _DRCObj._PCCRITExtension
                 self._DesignParameter['_PCCRITLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._PCCRITExtension
                 self._DesignParameter['_PCCRITLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
@@ -354,10 +357,10 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    _NMOSFinger = 6
+    _NMOSFinger = 9
     _NMOSWidth = 400            # Minimum value : 200 (samsung) / 200 (65nm)
     _NMOSChannelLength = 60     # Minimum value : 30 (samsung) / 60 (65nm)
-    _NMOSDummy = False           #
+    _NMOSDummy = True           #
     _XVT = None                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
 
     _fileName = 'NMOSWithDummy_iksu.gds'

@@ -799,7 +799,7 @@ if __name__ == '__main__' :
         # for i in range (2, 3):
         #     print (i)
     _XRBNum = 5
-    _YRBNum = 8
+    _YRBNum = 7
     _TransmissionGateFinger = 10
     _TransmissionGateChannelWidth = 500  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30

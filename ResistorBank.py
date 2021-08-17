@@ -439,8 +439,10 @@ class _ResistorBank(StickDiagram._StickDiagram) :
             _ResistorMetYCO = _CONUMYmax
 
 
-        _Resport1 = [[self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'][0][i] + 
-                    self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][i] for i in range (len(self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'][0]))]]
+        # _Resport1 = [[self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'][0][i] + 
+        #             self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][i] for i in range (len(self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'][0]))]]
+        _Resport1 = [[self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0],
+                    self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_XYCoordinates'][0][1]]]
         _Resport2 = [[self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0],
                     self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSOutputTG']['_XYCoordinates'][0][1]]]
 
@@ -459,7 +461,24 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         #self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates']
         self._DesignParameter['_ViaMet12Met2OnRes'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name = 'ViaMet12Met2OnResistorIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaResMet12Met2)
-        self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'] = _Resport2 + _Resport1
+        self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'] = _Resport2
+
+
+        _ViaResMet12Met21 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+        _ViaResMet12Met21['_ViaMet12Met2NumberOfCOX'] = int((self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - _DRCObj._VIAxMinWidth - _DRCObj._Metal1MinEnclosureCO2 * 2) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+        _ViaResMet12Met21['_ViaMet12Met2NumberOfCOY'] = int((self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+
+        if _ViaResMet12Met21['_ViaMet12Met2NumberOfCOX'] <= 1 :
+            _ViaResMet12Met21['_ViaMet12Met2NumberOfCOX'] = 1
+            _ViaResMet12Met21['_ViaMet12Met2NumberOfCOY'] = int((self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+        if _ViaResMet12Met21['_ViaMet12Met2NumberOfCOY'] <= 1 :
+            _ViaResMet12Met21['_ViaMet12Met2NumberOfCOY'] = 1
+            _ViaResMet12Met21['_ViaMet12Met2NumberOfCOX'] = int((self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - _DRCObj._VIAxMinWidth - _DRCObj._Metal1MinEnclosureCO2 * 2) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth))
+
+        #self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates']
+        self._DesignParameter['_ViaMet12Met2OnRes1'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name = 'ViaMet12Met2OnResistor1In{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet12Met2OnRes1']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaResMet12Met21)
+        self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'] = _Resport1
         
                                                                         # [[self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0],
                                                                         #   self._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1] - 
@@ -477,11 +496,19 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         self._DesignParameter['_ViaMet22Met3OnRes'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name = 'ViaMet22Met3OnResistorIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet22Met3OnRes']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaResMet22Met3)
-        self._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'] = _Resport2 + _Resport1
+        self._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'] = _Resport2
+        
+        _ViaResMet22Met31 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+        _ViaResMet22Met31['_ViaMet22Met3NumberOfCOX'] = _ViaResMet12Met21['_ViaMet12Met2NumberOfCOX']
+        _ViaResMet22Met31['_ViaMet22Met3NumberOfCOY'] = _ViaResMet12Met21['_ViaMet12Met2NumberOfCOY']
+
+        self._DesignParameter['_ViaMet22Met3OnRes1'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name = 'ViaMet22Met3OnResistor1In{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet22Met3OnRes1']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaResMet22Met31)
+        self._DesignParameter['_ViaMet22Met3OnRes1']['_XYCoordinates'] = _Resport1
 
         _ViaResMet32Met4 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-        _ViaResMet32Met4['_ViaMet32Met4NumberOfCOX'] = _ViaResMet12Met2['_ViaMet12Met2NumberOfCOX']
-        _ViaResMet32Met4['_ViaMet32Met4NumberOfCOY'] = _ViaResMet12Met2['_ViaMet12Met2NumberOfCOY']
+        _ViaResMet32Met4['_ViaMet32Met4NumberOfCOX'] = _ViaResMet12Met21['_ViaMet12Met2NumberOfCOX']
+        _ViaResMet32Met4['_ViaMet32Met4NumberOfCOY'] = _ViaResMet12Met21['_ViaMet12Met2NumberOfCOY']
 
         self._DesignParameter['_ViaMet32Met4OnRes'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,_Name='ViaMet32Met4OnResistorIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet32Met4OnRes']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**_ViaResMet32Met4)
@@ -493,16 +520,16 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                         #   self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2 + _DRCObj._MetalxMinSpace9]]
 
         _ViaResMet42Met5 = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-        _ViaResMet42Met5['_ViaMet42Met5NumberOfCOX'] = _ViaResMet12Met2['_ViaMet12Met2NumberOfCOX']
-        _ViaResMet42Met5['_ViaMet42Met5NumberOfCOY'] = _ViaResMet12Met2['_ViaMet12Met2NumberOfCOY']
+        _ViaResMet42Met5['_ViaMet42Met5NumberOfCOX'] = _ViaResMet12Met21['_ViaMet12Met2NumberOfCOX']
+        _ViaResMet42Met5['_ViaMet42Met5NumberOfCOY'] = _ViaResMet12Met21['_ViaMet12Met2NumberOfCOY']
 
         self._DesignParameter['_ViaMet42Met5OnRes'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None,_Name='ViaMet42Met5OnResistorIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet42Met5OnRes']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureY(**_ViaResMet42Met5)
         self._DesignParameter['_ViaMet42Met5OnRes']['_XYCoordinates'] = _Resport1
 
         _ViaResMet52Met6 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
-        _ViaResMet52Met6['_ViaMet52Met6NumberOfCOX'] = _ViaResMet12Met2['_ViaMet12Met2NumberOfCOX']
-        _ViaResMet52Met6['_ViaMet52Met6NumberOfCOY'] = _ViaResMet12Met2['_ViaMet12Met2NumberOfCOY']
+        _ViaResMet52Met6['_ViaMet52Met6NumberOfCOX'] = _ViaResMet12Met21['_ViaMet12Met2NumberOfCOX']
+        _ViaResMet52Met6['_ViaMet52Met6NumberOfCOY'] = _ViaResMet12Met21['_ViaMet12Met2NumberOfCOY']
 
         self._DesignParameter['_ViaMet52Met6OnRes'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None,_Name='ViaMet52Met6OnResistorIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet52Met6OnRes']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureY(**_ViaResMet52Met6)
@@ -721,12 +748,12 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2,
                                                                     self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][0][1] +
                                                                     self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2)]],
-                                                                    [[self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][1][0],
-                                                                    self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][1][1] + 
-                                                                    self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2],
-                                                                    [self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][1][0],
-                                                                    self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][1][1] -
-                                                                    self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2]]]
+                                                                    [[self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][0],
+                                                                    self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][1] + 
+                                                                    self._DesignParameter['_ViaMet12Met2OnRes1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2],
+                                                                    [self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][0],
+                                                                    self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][1] -
+                                                                    self._DesignParameter['_ViaMet12Met2OnRes1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2]]]
                                                                     
 
         self._DesignParameter['_Met3LayerPMOSResAX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=100)

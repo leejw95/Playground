@@ -3571,22 +3571,22 @@ if __name__ == '__main__':
 
     for _tries in range(1, 2) :
 
-        _Finger1 = 4
-        _Finger2 = 8
-        _Finger3 = 8
-        _Finger4 = 5
+        _Finger1 = 5
+        _Finger2 = 1
+        _Finger3 = 2
+        _Finger4 = 2
 
-        _NMOSChannelWidth = 300
-        _NPRatio = 3
+        _NMOSChannelWidth = 200
+        _NPRatio = 2
         _PMOSChannelWidth = _NPRatio * _NMOSChannelWidth
-        _ChannelLength = 60
+        _ChannelLength = 30
 
         _VDD2VSSHeightAtOneSide = None
-        _NumSupplyCoX = 80
-        _NumSupplyCoY = 5
+        _NumSupplyCoX = None
+        _NumSupplyCoY = None
 
-        _FileName = 'SR_Latch_Demo6'
-        _STOR_FileName = 'STOR SR_Latch_Demo6.gds'
+        _FileName = 'SR_Latch_Demo1'
+        _STOR_FileName = 'STOR SR_Latch_Demo1.gds'
         #_LibraryName = 'SR_Latch_Demo1'
 
 

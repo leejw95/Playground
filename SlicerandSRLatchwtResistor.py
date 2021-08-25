@@ -798,14 +798,14 @@ if __name__ == '__main__' :
         ## X axis M7 Length >= 25um : overall m7 density < 80%
         # for i in range (2, 3):
         #     print (i)
-    _XRBNum = 5
-    _YRBNum = 7
+    _XRBNum = 4
+    _YRBNum = 9
     _TransmissionGateFinger = 10
-    _TransmissionGateChannelWidth = 500  ##200nm ~ 500nm range
+    _TransmissionGateChannelWidth = 300  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 3392 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 2556 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _PowerLine = True # T/F?

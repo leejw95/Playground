@@ -831,10 +831,10 @@ if __name__ == '__main__' :
     _TotalSubringXWidth = None ## FIXED
     _TotalSubringYWidth = None ## FIXED
     _TotalSubringWidth = _PMOSSubringWidth
-    _SRFinger1 = 5
+    _SRFinger1 = 2
     _SRFinger2 = 1
-    _SRFinger3 = 2
-    _SRFinger4 = 2
+    _SRFinger3 = 1
+    _SRFinger4 = 1
     _SRNMOSChannelWidth1 = 200
     _SRPMOSChannelWidth1 = 400
     _SRNMOSChannelWidth2 = 200
@@ -863,15 +863,15 @@ if __name__ == '__main__' :
     _SRNumViaNMOSMet22Met3CoY = None
     _SRSLVT = True
     _SRPowerLine = True
-    _SLCLKinputPMOSFinger1 = 6
-    _SLCLKinputPMOSFinger2 = 3
+    _SLCLKinputPMOSFinger1 = 2
+    _SLCLKinputPMOSFinger2 = 2
     _SLPMOSFinger = 2
-    _SLPMOSChannelWidth = 1000
-    _SLDATAinputNMOSFinger = 12 
-    _SLNMOSFinger =2 
-    _SLCLKinputNMOSFinger = 8 
+    _SLPMOSChannelWidth = 600
+    _SLDATAinputNMOSFinger = 8
+    _SLNMOSFinger = 1
+    _SLCLKinputNMOSFinger = 10
     _SLNMOSChannelWidth = 1000
-    _SLCLKinputNMOSChannelWidth = 1000
+    _SLCLKinputNMOSChannelWidth = 600
     _SLChannelLength = 30
     _SLDummy = True
     _SLSLVT = True
@@ -890,7 +890,7 @@ if __name__ == '__main__' :
     _SLNumVIAMet12COY = None
     _SLPowerLine = True
     _N = 4 
-    _InvFinger =16
+    _InvFinger =15
     _InvChannelWidth = 200
     _InvChannelLength = 30
     _InvNPRatio = 3
@@ -967,19 +967,19 @@ if __name__ == '__main__' :
 
     print ('###############      Sending to FTP Server...      ##################')
 
-    import base64
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    myfile.close()
-    ftp.close()
+    # import base64
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    # myfile.close()
+    # ftp.close()
 
     import ftplib
     ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    ftp.login('myungguk', 'vmfl!225')
+    ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
     myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
     ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     myfile.close()

@@ -23,7 +23,7 @@ import base64
 
 class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation=dict(
-        _DATAinputNMOSFinger = None, _NMOSFinger=None, _CLKinputNMOSFinger=None, _NMOSChannelWidth=None,
+        _DATAinputNMOSFinger = None, _NMOSFinger=None, _CLKinputNMOSFinger=None, _NMOSChannelWidth=None, _CLKinputNMOSChannelWidth=None,
         _ChannelLength=None, _Dummy=False, _SLVT=False, _GuardringWidth=None, _Guardring=False,
         _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NPRatio=None, _VDD2VSSHeight=None,
         _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None)
@@ -37,7 +37,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter = dict(_Name=self._NameDeclaration(_Name=_Name), _GDSFile=self._GDSObjDeclaration(_GDSFile=None))
 
 
-    def _CalculateDesignParameter(self, _DATAinputNMOSFinger = None, _NMOSFinger = None, _CLKinputNMOSFinger = None, _NMOSChannelWidth = None,
+    def _CalculateDesignParameter(self, _DATAinputNMOSFinger = None, _NMOSFinger = None, _CLKinputNMOSFinger = None, _NMOSChannelWidth = None, _CLKinputNMOSChannelWidth=None,
                                       _ChannelLength = None, _Dummy = False, _SLVT = False, _GuardringWidth = None, _Guardring = False,
                                       _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NPRatio = None, _VDD2VSSHeight = None,
                                       _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None
@@ -94,7 +94,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             # NMOS5(CLK input) Generation
             _NMOS5inputs = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
             _NMOS5inputs['_NMOSNumberofGate'] = _CLKinputNMOSFinger
-            _NMOS5inputs['_NMOSChannelWidth'] = _NMOSChannelWidth
+            _NMOS5inputs['_NMOSChannelWidth'] = _CLKinputNMOSChannelWidth
             _NMOS5inputs['_NMOSChannellength'] = _ChannelLength
             _NMOS5inputs['_NMOSDummy'] = _Dummy
             _NMOS5inputs['_SLVT'] = _SLVT
@@ -254,11 +254,11 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             SpaceBtwNMOS = 250
             if (_DATAinputNMOSFinger % 2) == 0:
                 self._DesignParameter['_NMOS5']['_XYCoordinates'] = [[_XYCoordinateOfNMOS[0][0],
-                                                                      _XYCoordinateOfNMOS[0][1] - (_NMOSChannelWidth + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _DRCObj._Metal1MinSpace3 + _DRCObj._Metal1MinSpace3)####(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + SpaceBtwNMOS)
+                                                                      _XYCoordinateOfNMOS[0][1] - (_CLKinputNMOSChannelWidth + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _DRCObj._Metal1MinSpace3 + _DRCObj._Metal1MinSpace3)####(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + SpaceBtwNMOS)
                                                                     ]]
             elif (_DATAinputNMOSFinger % 2) == 1:
                 self._DesignParameter['_NMOS5']['_XYCoordinates'] = [[_XYCoordinateOfNMOS[0][0],
-                                                                      _XYCoordinateOfNMOS[0][1] - (_NMOSChannelWidth + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _DRCObj._Metal1MinSpace3 + _DRCObj._Metal1MinSpace3)####(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + SpaceBtwNMOS)
+                                                                      _XYCoordinateOfNMOS[0][1] - (_CLKinputNMOSChannelWidth + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _DRCObj._Metal1MinSpace3 + _DRCObj._Metal1MinSpace3)####(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']/2 + SpaceBtwNMOS)
                                                                     ]]
 
             if _CLKinputNMOSFinger > 2 * _NMOSFinger + 4 :
@@ -556,7 +556,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ############################################################### VIA Generation for CLK NMOS Drain ##############################################################
             _VIACLKNMOSMet12 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
 
-            _tmpNumCOY = int((_NMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            _tmpNumCOY = int((_CLKinputNMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
 
             _VIACLKNMOSMet12['_ViaMet12Met2NumberOfCOX'] = 1
             _VIACLKNMOSMet12['_ViaMet12Met2NumberOfCOY'] = _tmpNumCOY
@@ -582,7 +582,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             _VIACLKNMOSMet23 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
 
-            _tmpNumCOY = int((_NMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            _tmpNumCOY = int((_CLKinputNMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
             _VIACLKNMOSMet23['_ViaMet22Met3NumberOfCOX'] = 1
             _VIACLKNMOSMet23['_ViaMet22Met3NumberOfCOY'] = _tmpNumCOY
 
@@ -605,7 +605,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             _VIACLKNMOSMet34 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
 
-            _tmpNumCOY = int((_NMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            _tmpNumCOY = int((_CLKinputNMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
             _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOX'] = 1
             _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOY'] = _tmpNumCOY
 
@@ -1156,10 +1156,11 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     NMOSSetofSlicerObj = _NMOSWithDummyOfSlicer(_DesignParameter=None, _Name='NMOSSetofSlicer')
-    _DATAinputNMOSFinger = random.randint(2, 16)
-    _NMOSFinger = random.randint(1, 16)
-    _CLKinputNMOSFinger = random.randint(1, 16)
-    _NMOSChannelWidth = 200###random.randrange(200, 1050, 50)
+    _DATAinputNMOSFinger = 10#random.randint(2, 16)
+    _NMOSFinger = 2#random.randint(1, 16)
+    _CLKinputNMOSFinger = 8#random.randint(1, 16)
+    _NMOSChannelWidth = 600###random.randrange(200, 1050, 50)
+    _CLKinputNMOSChannelWidth = 1000
     _ChannelLength = 30
     _Dummy = True
     _SLVT = True
@@ -1178,7 +1179,7 @@ if __name__ == '__main__':
     _PowerLine = False
     NMOSSetofSlicerObj._CalculateDesignParameter(_ChannelLength=30, _NPRatio=None, _VDD2VSSHeight=None, _Dummy=True, _SLVT=True,
                                                        _GuardringWidth=_GuardringWidth, _Guardring=True,
-                                                       _NMOSFinger=_NMOSFinger, _DATAinputNMOSFinger=_DATAinputNMOSFinger, _CLKinputNMOSFinger=_CLKinputNMOSFinger, _NMOSChannelWidth=_NMOSChannelWidth)
+                                                       _NMOSFinger=_NMOSFinger, _DATAinputNMOSFinger=_DATAinputNMOSFinger, _CLKinputNMOSFinger=_CLKinputNMOSFinger, _NMOSChannelWidth=_NMOSChannelWidth, _CLKinputNMOSChannelWidth=_CLKinputNMOSChannelWidth)
 
 
 

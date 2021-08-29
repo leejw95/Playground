@@ -33,7 +33,7 @@ import base64
 class _Slicer(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation=dict(
                                         _CLKinputPMOSFinger1=None, _CLKinputPMOSFinger2=None, _PMOSFinger=None, _PMOSChannelWidth=None,
-                                        _DATAinputNMOSFinger=None, _NMOSFinger=None, _CLKinputNMOSFinger=None, _NMOSChannelWidth=None,
+                                        _DATAinputNMOSFinger=None, _NMOSFinger=None, _CLKinputNMOSFinger=None, _NMOSChannelWidth=None, _CLKinputNMOSChannelWidth=None,
                                         _ChannelLength=None, _Dummy=False, _SLVT=False, _GuardringWidth=None, _Guardring=False,
                                         _SlicerGuardringWidth=None, _SlicerGuardring=False,
                                         _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight=None,
@@ -47,7 +47,7 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter = dict(_Name=self._NameDeclaration(_Name=_Name), _GDSFile=self._GDSObjDeclaration(_GDSFile=None))
 
     def _CalculateDesignParameter(self, _CLKinputPMOSFinger1 = None, _CLKinputPMOSFinger2 = None, _PMOSFinger = None, _PMOSChannelWidth = None,
-                                        _DATAinputNMOSFinger = None, _NMOSFinger = None, _CLKinputNMOSFinger = None, _NMOSChannelWidth = None,
+                                        _DATAinputNMOSFinger = None, _NMOSFinger = None, _CLKinputNMOSFinger = None, _NMOSChannelWidth = None, _CLKinputNMOSChannelWidth=None,
                                         _ChannelLength = None, _Dummy = False, _SLVT = False, _GuardringWidth = None, _Guardring = False,
                                         _SlicerGuardringWidth=None, _SlicerGuardring=False,
                                         _NumSupplyCOY=None, _NumSupplyCOX=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _VDD2VSSHeight = None,
@@ -93,6 +93,7 @@ class _Slicer(StickDiagram._StickDiagram):
             _NMOSSETinputs['_NMOSFinger'] = _NMOSFinger
             _NMOSSETinputs['_CLKinputNMOSFinger'] = _CLKinputNMOSFinger
             _NMOSSETinputs['_NMOSChannelWidth'] = _NMOSChannelWidth
+            _NMOSSETinputs['_CLKinputNMOSChannelWidth'] = _CLKinputNMOSChannelWidth
             _NMOSSETinputs['_ChannelLength'] = _ChannelLength
             _NMOSSETinputs['_Dummy'] = _Dummy
             _NMOSSETinputs['_SLVT'] = _SLVT
@@ -2056,14 +2057,15 @@ if __name__ == '__main__':
     for _tries in range(1, 2) :
 
 
-        _CLKinputPMOSFinger1 = 1###random.randint(1, 16)
-        _CLKinputPMOSFinger2 = 1###random.randint(1, 16)
-        _PMOSFinger = 1###random.randint(1, 16)
-        _PMOSChannelWidth = 200###random.randrange(200, 1050, 50)
-        _DATAinputNMOSFinger = 1###random.randint(2, 16)
-        _NMOSFinger = 1###random.randint(1, 16)
-        _CLKinputNMOSFinger = 1##random.randint(1, 16)
-        _NMOSChannelWidth = 200###random.randrange(200, 1050, 50)
+        _CLKinputPMOSFinger1 = 6###random.randint(1, 16)
+        _CLKinputPMOSFinger2 = 3###random.randint(1, 16)
+        _PMOSFinger = 2###random.randint(1, 16)
+        _PMOSChannelWidth = 600###random.randrange(200, 1050, 50)
+        _DATAinputNMOSFinger = 10###random.randint(2, 16)
+        _NMOSFinger = 2###random.randint(1, 16)
+        _CLKinputNMOSFinger = 7##random.randint(1, 16)
+        _NMOSChannelWidth = 600###random.randrange(200, 1050, 50)
+        _CLKinputNMOSChannelWidth = 1000
         _ChannelLength = 30
         _Dummy = True
         _SLVT = True
@@ -2092,7 +2094,7 @@ if __name__ == '__main__':
         SlicerObj._CalculateDesignParameter(_CLKinputPMOSFinger1=_CLKinputPMOSFinger1, _CLKinputPMOSFinger2=_CLKinputPMOSFinger2, _PMOSFinger=_PMOSFinger,
                                             _PMOSChannelWidth=_PMOSChannelWidth,
                                             _DATAinputNMOSFinger=_DATAinputNMOSFinger, _NMOSFinger=_NMOSFinger, _CLKinputNMOSFinger=_CLKinputNMOSFinger,
-                                            _NMOSChannelWidth=_NMOSChannelWidth,
+                                            _NMOSChannelWidth=_NMOSChannelWidth, _CLKinputNMOSChannelWidth = _CLKinputNMOSChannelWidth ,
                                             _ChannelLength=_ChannelLength, _Dummy=_Dummy, _SLVT=_SLVT, _GuardringWidth=_GuardringWidth,
                                             _Guardring=_Guardring,
                                             _SlicerGuardringWidth=_SlicerGuardringWidth, _SlicerGuardring=_SlicerGuardring,

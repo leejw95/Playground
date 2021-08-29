@@ -984,7 +984,7 @@ if __name__ == '__main__' :
 
     testStreamFile.close()
 
-    print ('###############      Sending to FTP Server...      ##################')
+    print ('###############      Sending to FTP Server... abc      ##################')
 
     # import base64
     # ftp = ftplib.FTP('141.223.22.156')

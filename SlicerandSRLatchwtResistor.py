@@ -1007,14 +1007,14 @@ if __name__ == '__main__':
 
     print ('###############      Sending to FTP Server... abc      ##################')
 
-    # import base64
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+    import base64
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    myfile.close()
+    ftp.close()
 
     import ftplib
 

@@ -843,7 +843,7 @@ if __name__ == '__main__':
     #     print (i)
     _XRBNum = 4
     _YRBNum = 8
-    _TransmissionGateFinger = 6
+    _TransmissionGateFinger = 8
     _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
@@ -905,15 +905,15 @@ if __name__ == '__main__':
     _SRNumViaNMOSMet22Met3CoY = None
     _SRSLVT = True
     _SRPowerLine = True
-    _SLCLKinputPMOSFinger1 = 2
-    _SLCLKinputPMOSFinger2 = 2
+    _SLCLKinputPMOSFinger1 = 3
+    _SLCLKinputPMOSFinger2 = 3
     _SLPMOSFinger = 2
-    _SLPMOSChannelWidth = 600
+    _SLPMOSChannelWidth = 500
     _SLDATAinputNMOSFinger = 8
     _SLNMOSFinger = 1
-    _SLCLKinputNMOSFinger = 10
+    _SLCLKinputNMOSFinger = 20
     _SLNMOSChannelWidth = 1000
-    _SLCLKinputNMOSChannelWidth = 600
+    _SLCLKinputNMOSChannelWidth = 300
     _SLChannelLength = 30
     _SLDummy = True
     _SLSLVT = True
@@ -1005,7 +1005,7 @@ if __name__ == '__main__':
 
     testStreamFile.close()
 
-    print ('###############      Sending to FTP Server... abc      ##################')
+    print ('###############      Sending to FTP Server...      ##################')
 
     import base64
     ftp = ftplib.FTP('141.223.22.156')

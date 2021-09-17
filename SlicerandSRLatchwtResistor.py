@@ -852,7 +852,7 @@ if __name__ == '__main__':
     _TransmissionGateSLVT = True  # T/F?
 
     _PowerLine = True  # T/F?
-    _InputLine = True
+    _InputLine = False
 
     _ResistorWidth = 1250
     _ResistorLength = 1234  ## minimum : 400
@@ -905,15 +905,15 @@ if __name__ == '__main__':
     _SRNumViaNMOSMet22Met3CoY = None
     _SRSLVT = True
     _SRPowerLine = True
-    _SLCLKinputPMOSFinger1 = 2
-    _SLCLKinputPMOSFinger2 = 2
+    _SLCLKinputPMOSFinger1 = 3
+    _SLCLKinputPMOSFinger2 = 3
     _SLPMOSFinger = 2
-    _SLPMOSChannelWidth = 600
+    _SLPMOSChannelWidth = 500
     _SLDATAinputNMOSFinger = 8
     _SLNMOSFinger = 1
-    _SLCLKinputNMOSFinger = 10
+    _SLCLKinputNMOSFinger = 20
     _SLNMOSChannelWidth = 1000
-    _SLCLKinputNMOSChannelWidth = 600
+    _SLCLKinputNMOSChannelWidth = 300
     _SLChannelLength = 30
     _SLDummy = True
     _SLSLVT = True
@@ -1026,12 +1026,12 @@ if __name__ == '__main__':
     myfile.close()
     ftp.close()
 
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    myfile.close()
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login('jicho0927', 'cho89140616!!')
+    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    # myfile.close()
 
 #     print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
 

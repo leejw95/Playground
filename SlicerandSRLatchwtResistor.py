@@ -589,24 +589,47 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         self._DesignParameter['_VCMpin']['_XYCoordinates'] = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VCMpin']['_XYCoordinates']
         self._DesignParameter['_VRXpin']['_XYCoordinates'] = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_VRXpin']['_XYCoordinates']
 
-        for i in range(0, _XRBNum):
-            for j in range(0, _YRBNum):
-                for k in range(0, 2):  ## for nmos 0 and pmos 1
-                    if k == 0:
-                        self._DesignParameter['_S<{0}>pin'.format(i + _XRBNum * j)] = self._TextElementDeclaration(
-                            _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
-                            _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
-                            _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-                            _XYCoordinates=self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_S<{0}>pin'.format(i + _XRBNum * j)]['_XYCoordinates'],
-                            _Mag=0.02, _Angle=0, _TEXT='S<{0}>'.format(i + _XRBNum * j))
+        if _InputLine == True :
+            for i in range(0, _XRBNum):
+                for j in range(0, _YRBNum):
+                    for k in range(0, 2):  ## for nmos 0 and pmos 1
+                        if k == 0:
+                            self._DesignParameter['_S<{0}>pin'.format(i + _XRBNum * j)] = self._TextElementDeclaration(
+                                _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
+                                _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
+                                _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+                                _XYCoordinates=self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_S<{0}>pin'.format(i + _XRBNum * j)]['_XYCoordinates'],
+                                _Mag=0.02, _Angle=0, _TEXT='S<{0}>'.format(i + _XRBNum * j))
 
-                    else:
-                        self._DesignParameter['_SB<{0}>pin'.format(i + _XRBNum * j)] = self._TextElementDeclaration(
-                            _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
-                            _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
-                            _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-                            _XYCoordinates=self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_SB<{0}>pin'.format(i + _XRBNum * j)]['_XYCoordinates'],
-                            _Mag=0.02, _Angle=0, _TEXT='SB<{0}>'.format(i + _XRBNum * j))
+                        else:
+                            self._DesignParameter['_SB<{0}>pin'.format(i + _XRBNum * j)] = self._TextElementDeclaration(
+                                _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
+                                _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
+                                _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+                                _XYCoordinates=self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_SB<{0}>pin'.format(i + _XRBNum * j)]['_XYCoordinates'],
+                                _Mag=0.02, _Angle=0, _TEXT='SB<{0}>'.format(i + _XRBNum * j))
+
+        else :
+            for i in range (0, _XRBNum) :
+                for j in range (0, _YRBNum) :
+                    for k in range (0, 2) : ## for nmos 0 and pmos 1
+                        if k == 0 :
+                            self._DesignParameter['_S<{0}>pin'.format(i + _XRBNum * j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1],
+                            _Presentation=[0,1,2], _Reflect=[0,0,0], 
+                            _XYCoordinates=[[_ResistorBankOrigin[0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_Met5LayerInput']['_XYCoordinates'][1][1][0] +
+                                            i * self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorSpaceX']['_Ignore'],
+                                            _ResistorBankOrigin[0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_Met5LayerInput']['_XYCoordinates'][1][1][1] +
+                                            j * self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorSpaceY']['_Ignore']]],
+                            _Mag = 0.5, _Angle=0, _TEXT='S<{0}>'.format(i + _XRBNum * j))
+
+                        else :
+                            self._DesignParameter['_SB<{0}>pin'.format(i + _XRBNum * j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1],
+                            _Presentation=[0,1,2], _Reflect=[0,0,0], 
+                            _XYCoordinates=[[_ResistorBankOrigin[0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_Met5LayerInput']['_XYCoordinates'][0][1][0] +
+                                            i * self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorSpaceX']['_Ignore'],
+                                            _ResistorBankOrigin[0][1] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_Met5LayerInput']['_XYCoordinates'][0][1][1] +
+                                            j * self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorSpaceY']['_Ignore']]],
+                            _Mag = 0.5, _Angle=0, _TEXT='SB<{0}>'.format(i + _XRBNum * j))
 
         # self._DesignParameter['_Met7LayerSli2Res'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
         # self._DesignParameter['_Met7LayerSli2Res']['_Width'] = self._DesignParameter['_Met6LayerbtwSlicer']['_Width']

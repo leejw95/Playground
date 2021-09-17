@@ -555,17 +555,17 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         self._DesignParameter['_OUTb4pin']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb4pin']['_XYCoordinates'][0][0],
                                                                  self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_OUTb4pin']['_XYCoordinates'][0][1]]]
 
-        self._DesignParameter['_PinCLK0']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK0']['_XYCoordinates'][0][0],
-                                                                self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK0']['_XYCoordinates'][0][1]]]
-
-        self._DesignParameter['_PinCLK90']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK90']['_XYCoordinates'][0][0],
-                                                                 self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK90']['_XYCoordinates'][0][1]]]
-
-        self._DesignParameter['_PinCLK180']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK180']['_XYCoordinates'][0][0],
-                                                                  self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK180']['_XYCoordinates'][0][1]]]
-
-        self._DesignParameter['_PinCLK270']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK270']['_XYCoordinates'][0][0],
-                                                                  self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK270']['_XYCoordinates'][0][1]]]
+        # self._DesignParameter['_PinCLK0']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK0']['_XYCoordinates'][0][0],
+        #                                                         self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK0']['_XYCoordinates'][0][1]]]
+        #
+        # self._DesignParameter['_PinCLK90']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK90']['_XYCoordinates'][0][0],
+        #                                                          self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK90']['_XYCoordinates'][0][1]]]
+        #
+        # self._DesignParameter['_PinCLK180']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK180']['_XYCoordinates'][0][0],
+        #                                                           self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK180']['_XYCoordinates'][0][1]]]
+        #
+        # self._DesignParameter['_PinCLK270']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK270']['_XYCoordinates'][0][0],
+        #                                                           self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCLK270']['_XYCoordinates'][0][1]]]
 
         self._DesignParameter['_PinCK0']['_XYCoordinates'] = [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK0']['_XYCoordinates'][0][0],
                                                                self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK0']['_XYCoordinates'][0][1]]]

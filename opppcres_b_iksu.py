@@ -10,7 +10,7 @@ from Private import FileManage
 from Private import MyInfo
 
 
-class ResistorSet(StickDiagram._StickDiagram):
+class Resistor_OPPPC(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(_ResWidth=None, _ResLength=None, _NumCOY=None, _NumStripes=None, _RoutingWidth=None, _Series=False, _Parallel=False, _Dummy=False)
     '''
     # Input Variables
@@ -23,7 +23,7 @@ class ResistorSet(StickDiagram._StickDiagram):
         _Dummy            : True or False
     '''
 
-    def __init__(self, _DesignParameter=None, _Name='ResistorSet'):
+    def __init__(self, _DesignParameter=None, _Name='Resistor_OPPPC'):
         if _DesignParameter != None:
             self._DesignParameter = _DesignParameter
         else:
@@ -42,8 +42,9 @@ class ResistorSet(StickDiagram._StickDiagram):
 
     def _CalculateDesignParameter(self, _ResWidth=None, _ResLength=None, _NumCOY=None, _NumStripes=None, _RoutingWidth=None, _Series=False, _Parallel=False, _Dummy=False):
         _DRCObj = DRC.DRC()
-        _Name = 'ResistorSet'
+        _Name = 'Resistor_OPPPC'
         _XYCoordinateOfOPRES = [[0, 0]]
+        MinSnapSpacing = _DRCObj._MinSnapSpacing
 
         print ('#########################################################################################################')
         print ('                                    {}  Opppcres Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name']))
@@ -147,20 +148,20 @@ class ResistorSet(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _ResWidth = 500
-    _ResLength = 1000
-    _NumCOY = 3
-    _NumStripes = 3
+    _ResWidth = 3000
+    _ResLength = 2300
+    _NumCOY = 4
+    _NumStripes = 5
     _RoutingWidth = None
     _Series = False
     _Parallel = True
     _Dummy = True
 
-    _fileName = 'Opppcres_set.gds'
+    _fileName = 'Resistor_OPPPC.gds'
     libname = 'TEST_OPPPCRES'
 
     # Generate Layout Object
-    OpppcresObj = ResistorSet(_DesignParameter=None, _Name='Opppcres_set')
+    OpppcresObj = Resistor_OPPPC(_DesignParameter=None, _Name='Resistor_OPPPC')
     OpppcresObj._CalculateDesignParameter(_ResWidth=_ResWidth, _ResLength=_ResLength,
                                           _NumCOY=_NumCOY, _NumStripes=_NumStripes, _RoutingWidth=_RoutingWidth,
                                           _Series=_Series, _Parallel=_Parallel, _Dummy=_Dummy)

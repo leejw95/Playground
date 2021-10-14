@@ -93,14 +93,14 @@ class Resistor_OPPPC(StickDiagram._StickDiagram):
                 for j in range(0, _NumCOY):
                     if _NumCOX % 2 == 0:
                         tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - (_NumCOX/2 - 0.5) * _DistanceBtwCO + i * _DistanceBtwCO,
-                                       self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] + (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * _DistanceBtwCO])
+                                       self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] - (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * _DistanceBtwCO])
                         tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - (_NumCOX/2 - 0.5) * _DistanceBtwCO + i * _DistanceBtwCO,
-                                       self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] - (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * _DistanceBtwCO])
+                                       self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] + (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * _DistanceBtwCO])
                     else:
                         tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - (_NumCOX/2) * _DistanceBtwCO + i * _DistanceBtwCO,
-                                       self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] + (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * _DistanceBtwCO])
+                                       self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] - (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * _DistanceBtwCO])
                         tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - (_NumCOX/2) * _DistanceBtwCO + i * _DistanceBtwCO,
-                                       self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] - (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * _DistanceBtwCO])
+                                       self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] + (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * _DistanceBtwCO])
 
 
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmpXYs
@@ -111,9 +111,9 @@ class Resistor_OPPPC(StickDiagram._StickDiagram):
         tmpXYs = []
         for i in range(0, _NumPC):
             tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][i][0],
-                           self._DesignParameter['_POLayer']['_XYCoordinates'][i][1] + (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + (_NumCOY-1) * _DistanceBtwCO/2 + _DRCObj._CoMinWidth/2)])
-            tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][i][0],
                            self._DesignParameter['_POLayer']['_XYCoordinates'][i][1] - (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + (_NumCOY-1) * _DistanceBtwCO/2 + _DRCObj._CoMinWidth/2)])
+            tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][i][0],
+                           self._DesignParameter['_POLayer']['_XYCoordinates'][i][1] + (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + (_NumCOY-1) * _DistanceBtwCO/2 + _DRCObj._CoMinWidth/2)])
         self._DesignParameter['_Met1Layer']['_XYCoordinates'] = tmpXYs
 
 
@@ -133,8 +133,8 @@ class Resistor_OPPPC(StickDiagram._StickDiagram):
             self._DesignParameter['_Met1Port'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PINDrawing'][0], _Datatype=DesignParameters._LayerMapping['METAL1PINDrawing'][1])
             self._DesignParameter['_Met1Port']['_XWidth'] = self._DesignParameter['_Met1Layer']['_XWidth'] + (_NumRes-1) * (_DistanceBtwPC + _ResWidth)
             self._DesignParameter['_Met1Port']['_YWidth'] = self._DesignParameter['_Met1Layer']['_YWidth']
-            self._DesignParameter['_Met1Port']['_XYCoordinates'] = [[_XYCoordinateOfOPRES[0][0], +self._DesignParameter['_Met1Layer']['_XYCoordinates'][0][1]],
-                                                                    [_XYCoordinateOfOPRES[0][0], -self._DesignParameter['_Met1Layer']['_XYCoordinates'][0][1]]]
+            self._DesignParameter['_Met1Port']['_XYCoordinates'] = [[_XYCoordinateOfOPRES[0][0], -self._DesignParameter['_Met1Layer']['_XYCoordinates'][0][1]],
+                                                                    [_XYCoordinateOfOPRES[0][0], +self._DesignParameter['_Met1Layer']['_XYCoordinates'][0][1]]]
         elif _Series:
             print('Series')
 

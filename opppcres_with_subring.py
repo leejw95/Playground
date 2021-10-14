@@ -51,28 +51,28 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         _OPPPCRES_inputs['_Series'] = False
         _OPPPCRES_inputs['_Parallel'] = True
         _OPPPCRES_inputs['_Dummy'] = _Dummy
-        self._DesignParameter['OPPCRES'] = self._SrefElementDeclaration(_DesignObj=opppcres_b_iksu.Resistor_OPPPC(_DesignParameter=None, _Name='OpppcresIn{}'.format(_Name)))[0]
-        self._DesignParameter['OPPCRES']['_DesignObj']._CalculateDesignParameter(**_OPPPCRES_inputs)
+        self._DesignParameter['OPPPCRES'] = self._SrefElementDeclaration(_DesignObj=opppcres_b_iksu.Resistor_OPPPC(_DesignParameter=None, _Name='OpppcresIn{}'.format(_Name)))[0]
+        self._DesignParameter['OPPPCRES']['_DesignObj']._CalculateDesignParameter(**_OPPPCRES_inputs)
 
-        distanceBtwM1Port = abs(self._DesignParameter['OPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_XYCoordinates'][0][1]
-                                - self._DesignParameter['OPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_XYCoordinates'][1][1])
+        distanceBtwM1Port = abs(self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_XYCoordinates'][0][1]
+                                - self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_XYCoordinates'][1][1])
 
 
         print('##############################     SubRing Generation    ########################################')
-        XWidthOfSubring1 = self._DesignParameter['OPPCRES']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + 2*_DRCObj._RXMinSpacetoPRES
-        XWidthOfSubring2 = self._DesignParameter['OPPCRES']['_DesignObj']._DesignParameter['_OPLayer']['_XWidth'] + 2*_DRCObj._RXMinSpacetoOP
+        XWidthOfSubring1 = self.CeilMinSnapSpacing(self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + 2*_DRCObj._RXMinSpacetoPRES, MinSnapSpacing*2)
+        XWidthOfSubring2 = self.CeilMinSnapSpacing(self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_OPLayer']['_XWidth'] + 2*_DRCObj._RXMinSpacetoOP, MinSnapSpacing*2)
         XWidthOfSubring = max(XWidthOfSubring1, XWidthOfSubring2)
-        YWidthOfSubring = self._DesignParameter['OPPCRES']['_DesignObj']._DesignParameter['_PRESLayer']['_YWidth'] * _NumRows \
-                          - (self._DesignParameter['OPPCRES']['_DesignObj']._DesignParameter['_PRESLayer']['_YWidth'] - distanceBtwM1Port) * (_NumRows-1) \
-                          + 2*_DRCObj._RXMinSpacetoPRES
+        YWidthOfSubring = self.CeilMinSnapSpacing(self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_PRESLayer']['_YWidth'] * _NumRows
+                                                  - (self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_PRESLayer']['_YWidth'] - distanceBtwM1Port) * (_NumRows-1)
+                                                  + 2*_DRCObj._RXMinSpacetoPRES, MinSnapSpacing*2)
 
-        _PMOSSubringinputs = copy.deepcopy(psubring._PSubring._ParametersForDesignCalculation)
-        _PMOSSubringinputs['_PType'] = True
-        _PMOSSubringinputs['_XWidth'] = XWidthOfSubring
-        _PMOSSubringinputs['_YWidth'] = YWidthOfSubring
-        _PMOSSubringinputs['_Width'] = _SubringWidth
+        PSubringInputs = copy.deepcopy(psubring._PSubring._ParametersForDesignCalculation)
+        PSubringInputs['_PType'] = True
+        PSubringInputs['_XWidth'] = XWidthOfSubring
+        PSubringInputs['_YWidth'] = YWidthOfSubring
+        PSubringInputs['_Width'] = _SubringWidth
         self._DesignParameter['_Subring'] = self._SrefElementDeclaration(_DesignObj=psubring._PSubring(_DesignParameter=None, _Name='SubringIn{}'.format(_Name)))[0]
-        self._DesignParameter['_Subring']['_DesignObj']._CalculatePSubring(**_PMOSSubringinputs)
+        self._DesignParameter['_Subring']['_DesignObj']._CalculatePSubring(**PSubringInputs)
 
 
         ''' Coordinates Settings '''
@@ -85,10 +85,16 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
                 tmpXYs.append([+(XWidthOfSubring + _SubringWidth)/2, distanceBtwM1Port * (i - (_NumRows - 1) / 2)])
                 tmpXYs.append([-(XWidthOfSubring + _SubringWidth)/2, distanceBtwM1Port * (i - (_NumRows - 1) / 2)])
 
-        self._DesignParameter['OPPCRES']['_XYCoordinates'] = tmpXYs
+        self._DesignParameter['OPPPCRES']['_XYCoordinates'] = tmpXYs
         self._DesignParameter['_Subring']['_XYCoordinates'] = [[-(XWidthOfSubring + _SubringWidth)/2, 0],
                                                                [+(XWidthOfSubring + _SubringWidth)/2, 0]]
 
+
+
+        M1PortXYs = []  # For internal calculation
+        for i in range(0, _NumRows+1):
+            M1PortXYs.append([+(XWidthOfSubring + _SubringWidth)/2, distanceBtwM1Port * (i - _NumRows/2.0)])
+            M1PortXYs.append([-(XWidthOfSubring + _SubringWidth)/2, distanceBtwM1Port * (i - _NumRows/2.0)])
 
         '''    
         Next Work...
@@ -98,14 +104,32 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         
         '''
 
+        ''' Connect VSS - horizontal '''
+        tmpXYs = []
+        for i in range(0, (_NumRows//2 + 1)):
+            tmpXYs.append([0, distanceBtwM1Port * (_NumRows/2.0 - i*2)])
+
+        self._DesignParameter['_VSSRoutingH'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1])
+        self._DesignParameter['_VSSRoutingH']['_XWidth'] = _SubringWidth + XWidthOfSubring * 2
+        self._DesignParameter['_VSSRoutingH']['_YWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth']
+        self._DesignParameter['_VSSRoutingH']['_XYCoordinates'] = tmpXYs
+
+
+        self._DesignParameter['_VSSRoutingH2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1])
+        self._DesignParameter['_VSSRoutingH2']['_XWidth'] = _SubringWidth + XWidthOfSubring * 2
+        self._DesignParameter['_VSSRoutingH2']['_YWidth'] = (YWidthOfSubring + _SubringWidth - distanceBtwM1Port * _NumRows)/2
+        self._DesignParameter['_VSSRoutingH2']['_XYCoordinates'] = [[0, ((YWidthOfSubring + _SubringWidth)/2 + abs(M1PortXYs[0][1]))/2]]   # Need MinSnapSpacing and lower one when even odd
+
+
+
 
 if __name__ == '__main__':
 
     _ResWidth = 3000
-    _ResLength = 2300
+    _ResLength = 1000
     _NumCOY = 3
-    _NumRows = 2
-    _NumStripes = 5
+    _NumRows = 4
+    _NumStripes = 4
     _RoutingWidth = None
     _Dummy = True
     _SubringWidth = 1000

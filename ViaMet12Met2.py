@@ -228,6 +228,39 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         print ('                                    {}  ViaMet12Met2 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
+    @staticmethod
+    def _CalculateNumViaByXYWidth(XWidth=None, YWidth=None):
+        '''
+        :param XWidth:
+        :param YWidth:
+        :return:
+        '''
+
+        _DRCObj = DRC.DRC()
+
+        LengthBtwVias_case1 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
+        LengthBtwVias_case2 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2
+
+        NumViaX_case1 = int((XWidth - 2*_DRCObj._Metal1MinEnclosureVia12 - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
+        NumViaY_case1 = int((YWidth - 2*_DRCObj._Metal1MinEnclosureVia12 - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
+        NumViaX_case2 = int((XWidth - 2*_DRCObj._Metal1MinEnclosureVia12 - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
+        NumViaY_case2 = int((YWidth - 2*_DRCObj._Metal1MinEnclosureVia12 - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
+
+
+        '''  Error Check  '''
+
+        print('NumViaX_case1', NumViaX_case1, 'NumViaY_case1', NumViaY_case1, 'NumViaX_case2', NumViaX_case2, 'NumViaY_case2', NumViaY_case2)
+
+        if (NumViaX_case1 > 2) or (NumViaY_case1 > 2):
+            NumViaX = NumViaX_case2
+            NumViaY = NumViaY_case2
+        else:
+            NumViaX = NumViaX_case1
+            NumViaY = NumViaY_case1
+
+        return NumViaX, NumViaY
+
+
 if __name__=='__main__':
     ViaMet12Met2Obj1=_ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2test1')
     ViaMet12Met2Obj1._CalculateViaMet12Met2DesignParameter(_ViaMet12Met2NumberOfCOX=3, _ViaMet12Met2NumberOfCOY=4 )

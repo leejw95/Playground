@@ -11,6 +11,8 @@ from Private import MyInfo
 #
 import opppcres_b_iksu
 import psubring
+import ViaMet12Met2
+import ViaMet22Met3
 
 
 class OpppcresWithSubring(StickDiagram._StickDiagram):
@@ -89,47 +91,109 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         self._DesignParameter['_Subring']['_XYCoordinates'] = [[-(XWidthOfSubring + _SubringWidth)/2, 0],
                                                                [+(XWidthOfSubring + _SubringWidth)/2, 0]]
 
-
-
-        M1PortXYs = []  # For internal calculation
+        # For internal calculation
+        M1APortXYs = []
+        M1BPortXYs = []  # VSS
         for i in range(0, _NumRows+1):
-            M1PortXYs.append([+(XWidthOfSubring + _SubringWidth)/2, distanceBtwM1Port * (i - _NumRows/2.0)])
-            M1PortXYs.append([-(XWidthOfSubring + _SubringWidth)/2, distanceBtwM1Port * (i - _NumRows/2.0)])
+            if (i % 2) == 1:
+                M1APortXYs.append([+(XWidthOfSubring + _SubringWidth) / 2, distanceBtwM1Port * (_NumRows / 2.0 - i)])
+                M1APortXYs.append([-(XWidthOfSubring + _SubringWidth) / 2, distanceBtwM1Port * (_NumRows / 2.0 - i)])
+            else:
+                M1BPortXYs.append([+(XWidthOfSubring + _SubringWidth) / 2, distanceBtwM1Port * (_NumRows / 2.0 - i)])
+                M1BPortXYs.append([-(XWidthOfSubring + _SubringWidth) / 2, distanceBtwM1Port * (_NumRows / 2.0 - i)])
 
-        '''    
-        Next Work...
-        Connect VSS
-        Connect Port when multiple rows
-        Outline coordinates or XYWidth
-        
-        '''
 
         ''' Connect VSS - horizontal '''
         tmpXYs = []
         for i in range(0, (_NumRows//2 + 1)):
             tmpXYs.append([0, distanceBtwM1Port * (_NumRows/2.0 - i*2)])
+        self._DesignParameter['_VSSRoutingH1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1])
+        self._DesignParameter['_VSSRoutingH1']['_XWidth'] = _SubringWidth + XWidthOfSubring * 2
+        self._DesignParameter['_VSSRoutingH1']['_YWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth']
+        self._DesignParameter['_VSSRoutingH1']['_XYCoordinates'] = tmpXYs
 
-        self._DesignParameter['_VSSRoutingH'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1])
-        self._DesignParameter['_VSSRoutingH']['_XWidth'] = _SubringWidth + XWidthOfSubring * 2
-        self._DesignParameter['_VSSRoutingH']['_YWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth']
-        self._DesignParameter['_VSSRoutingH']['_XYCoordinates'] = tmpXYs
-
-
+        YofVSSRoutingH2 = self.CeilMinSnapSpacing(((YWidthOfSubring + _SubringWidth) / 2 + abs(M1BPortXYs[0][1])) / 2, MinSnapSpacing)
         self._DesignParameter['_VSSRoutingH2'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1])
         self._DesignParameter['_VSSRoutingH2']['_XWidth'] = _SubringWidth + XWidthOfSubring * 2
         self._DesignParameter['_VSSRoutingH2']['_YWidth'] = (YWidthOfSubring + _SubringWidth - distanceBtwM1Port * _NumRows)/2
-        self._DesignParameter['_VSSRoutingH2']['_XYCoordinates'] = [[0, ((YWidthOfSubring + _SubringWidth)/2 + abs(M1PortXYs[0][1]))/2]]   # Need MinSnapSpacing and lower one when even odd
+        self._DesignParameter['_VSSRoutingH2']['_XYCoordinates'] = [[0, YofVSSRoutingH2]]   # Need MinSnapSpacing and lower one when even odd
+        if (_NumRows % 2) == 0:
+            self._DesignParameter['_VSSRoutingH2']['_XYCoordinates'].append([0, -YofVSSRoutingH2])
 
 
+        ''' Connect M1-V1-M2 for VSS and Input '''
+        NumViaX, NumViaY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(_ResWidth/2, self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth'])
+        print(NumViaX, NumViaY)
+
+        tmpXYs_A, tmpXYs_B = [], []
+        dummy = 1 if _Dummy else 0
+        for i in range(0, _NumRows+1):
+            for j in range(0, _NumStripes + dummy * 2):
+                if ((i % 2) == 1) and ((j+dummy) % 2 == 0):
+                    tmpXYs_A.append([+(XWidthOfSubring + _SubringWidth) / 2 + self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
+                                     distanceBtwM1Port * (_NumRows / 2.0 - i)])
+                    tmpXYs_A.append([-(XWidthOfSubring + _SubringWidth) / 2 - self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
+                                     distanceBtwM1Port * (_NumRows / 2.0 - i)])
+                elif ((i % 2) == 0) and ((j+dummy) % 2 == 1):
+                    tmpXYs_B.append([+(XWidthOfSubring + _SubringWidth) / 2 + self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
+                                     distanceBtwM1Port * (_NumRows / 2.0 - i)])
+                    tmpXYs_B.append([-(XWidthOfSubring + _SubringWidth) / 2 - self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
+                                     distanceBtwM1Port * (_NumRows / 2.0 - i)])
+
+        Via1Inputs = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+        Via1Inputs.update({'_ViaMet12Met2NumberOfCOX':NumViaX, '_ViaMet12Met2NumberOfCOY':NumViaY})
+        self._DesignParameter['_ViaMet12Met2forResistor'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='ViaMet12Met2forResistorIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet12Met2forResistor']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**Via1Inputs)
+        self._DesignParameter['_ViaMet12Met2forResistor']['_XYCoordinates'] = tmpXYs_A + tmpXYs_B
+
+
+        ''' Connect Vertical M2 for VSS and Input '''
+        tmpList = self.XYCoordinate2MinMaxXY(tmpXYs_A)
+        tmpXYs = []
+        for i in range(0, len(tmpList[0])):
+            tmpXYs.append([tmpList[0][i], (max(tmpList[1]) + min(tmpList[1])) / 2])
+        self._DesignParameter['_Met2AforResistor'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1])
+        self._DesignParameter['_Met2AforResistor']['_XWidth'] = self._DesignParameter['_ViaMet12Met2forResistor']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        self._DesignParameter['_Met2AforResistor']['_YWidth'] = self.CeilMinSnapSpacing(max(tmpList[1]) - min(tmpList[1]), 2 * MinSnapSpacing)
+        self._DesignParameter['_Met2AforResistor']['_XYCoordinates'] = tmpXYs
+
+        tmpList = self.XYCoordinate2MinMaxXY(tmpXYs_B)
+        tmpXYs = []
+        for i in range(0, len(tmpList[0])):
+            tmpXYs.append([tmpList[0][i], (max(tmpList[1]) + min(tmpList[1])) / 2])
+        self._DesignParameter['_Met2BforResistor'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1])
+        self._DesignParameter['_Met2BforResistor']['_XWidth'] = self._DesignParameter['_ViaMet12Met2forResistor']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        self._DesignParameter['_Met2BforResistor']['_YWidth'] = self.CeilMinSnapSpacing(max(tmpList[1]) - min(tmpList[1]), 2 * MinSnapSpacing)
+        self._DesignParameter['_Met2BforResistor']['_XYCoordinates'] = tmpXYs
+
+
+        ''' M2V2M3 for Input '''
+        Via2Inputs = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+        Via2Inputs.update({'_ViaMet22Met3NumberOfCOX': NumViaX, '_ViaMet22Met3NumberOfCOY': NumViaY})
+        self._DesignParameter['_ViaMet22Met3forResistorInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='ViaMet22Met3forResistorIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet22Met3forResistorInput']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**Via2Inputs)
+        self._DesignParameter['_ViaMet22Met3forResistorInput']['_XYCoordinates'] = tmpXYs_A  # Also Add B ??
+
+        ''' M3 horizontal for Input '''
+        self._DesignParameter['_Met3AforResistor'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1])
+        self._DesignParameter['_Met3AforResistor']['_XWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_XWidth']
+        self._DesignParameter['_Met3AforResistor']['_YWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth']
+        self._DesignParameter['_Met3AforResistor']['_XYCoordinates'] = M1APortXYs  # Also Add B ??
+
+        '''    
+        Next Work...
+        Connect Port V2 M3 V3 M4(only Input, not VSS
+        Outline coordinates or XYWidth
+        '''
 
 
 if __name__ == '__main__':
 
     _ResWidth = 3000
-    _ResLength = 1000
-    _NumCOY = 3
-    _NumRows = 4
-    _NumStripes = 4
+    _ResLength = 2300
+    _NumCOY = 4
+    _NumRows = 3
+    _NumStripes = 5
     _RoutingWidth = None
     _Dummy = True
     _SubringWidth = 1000

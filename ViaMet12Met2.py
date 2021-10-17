@@ -228,28 +228,28 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         print ('                                    {}  ViaMet12Met2 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
-    @staticmethod
-    def _CalculateNumViaByXYWidth(XWidth=None, YWidth=None):
+
+    @classmethod
+    def _CalculateNumViaByXYWidth(cls, XWidth=None, YWidth=None, Mode=None):
         '''
         :param XWidth:
         :param YWidth:
+        :param Mode:    None or 'MinEnclosureX' or 'MinEnclosureY'
         :return:
         '''
 
         _DRCObj = DRC.DRC()
 
         LengthBtwVias_case1 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
-        LengthBtwVias_case2 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2
+        LengthBtwVias_case2 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2  # when exceeding 2x2 array (3x2 or 2x3, ...)
 
-        NumViaX_case1 = int((XWidth - 2*_DRCObj._Metal1MinEnclosureVia12 - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
-        NumViaY_case1 = int((YWidth - 2*_DRCObj._Metal1MinEnclosureVia12 - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
-        NumViaX_case2 = int((XWidth - 2*_DRCObj._Metal1MinEnclosureVia12 - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
-        NumViaY_case2 = int((YWidth - 2*_DRCObj._Metal1MinEnclosureVia12 - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
+        MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia1 if (Mode is 'MinEnclosureX') else _DRCObj._Metal1MinEnclosureVia12
+        MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia1 if (Mode is 'MinEnclosureY') else _DRCObj._Metal1MinEnclosureVia12
 
-
-        '''  Error Check  '''
-
-        print('NumViaX_case1', NumViaX_case1, 'NumViaY_case1', NumViaY_case1, 'NumViaX_case2', NumViaX_case2, 'NumViaY_case2', NumViaY_case2)
+        NumViaX_case1 = int((XWidth - 2*MetMinEnclosureX - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
+        NumViaY_case1 = int((YWidth - 2*MetMinEnclosureY - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
+        NumViaX_case2 = int((XWidth - 2*MetMinEnclosureX - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
+        NumViaY_case2 = int((YWidth - 2*MetMinEnclosureY - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
 
         if (NumViaX_case1 > 2) or (NumViaY_case1 > 2):
             NumViaX = NumViaX_case2
@@ -258,7 +258,26 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
             NumViaX = NumViaX_case1
             NumViaY = NumViaY_case1
 
+        if (NumViaX < 1) or (NumViaY < 1):
+            raise NotImplementedError
+
+        # print('NumViaX_case1', NumViaX_case1, 'NumViaY_case1', NumViaY_case1, 'NumViaX_case2', NumViaX_case2, 'NumViaY_case2', NumViaY_case2)
+
         return NumViaX, NumViaY
+
+    @classmethod
+    def CalcNumVia(cls, XWidth=None, YWidth=None):
+        return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode=None)
+
+    @classmethod
+    def CalcNumViaMinEnclosureX(cls, XWidth=None, YWidth=None):
+        return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode='MinEnclosureX')
+
+    @classmethod
+    def CalcNumViaMinEnclosureY(cls, XWidth=None, YWidth=None):
+        return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode='MinEnclosureY')
+
+
 
 
 if __name__=='__main__':

@@ -18,7 +18,7 @@ import ViaMet32Met4
 #
 from Private import FileManage
 from Private import MyInfo
-import CoordinateCalc
+import CoordCalc
 import DRCchecker
 
 
@@ -327,10 +327,10 @@ class _Inverter(StickDiagram._StickDiagram):
         # 6) Setting Coordinates of 'Output Routing Via (M1V1M2)'
         tmpNMOSOutputRouting, tmpPMOSOutputRouting = [], []
         for i in range(0, len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'])):  # Assumption : same MOSFETs' fingers
-            tmpPMOSOutputRouting.append(CoordinateCalc.Add(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i],
-                                                           self._DesignParameter['_PMOS']['_XYCoordinates'][0]))
-            tmpNMOSOutputRouting.append(CoordinateCalc.Add(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i],
-                                                           self._DesignParameter['_NMOS']['_XYCoordinates'][0]))
+            tmpPMOSOutputRouting.append(CoordCalc.Add(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i],
+                                                      self._DesignParameter['_PMOS']['_XYCoordinates'][0]))
+            tmpNMOSOutputRouting.append(CoordCalc.Add(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i],
+                                                      self._DesignParameter['_NMOS']['_XYCoordinates'][0]))
 
         self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'] = tmpPMOSOutputRouting
         self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'] = tmpNMOSOutputRouting
@@ -471,19 +471,19 @@ class _Inverter(StickDiagram._StickDiagram):
         # Output M1 Routing (Column Line)
         tmpOutputRoutingM1Y = []
         for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) / 2):
-            tmpOutputRoutingM1Y.append([CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
-                                                           self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i]),
-                                        CoordinateCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
-                                                           self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2 * i])
+            tmpOutputRoutingM1Y.append([CoordCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
+                                                      self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i]),
+                                        CoordCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
+                                                      self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2 * i])
                                         ])  #
 
         if (_Finger % 4 == 2) and (_Finger != 2):  # exception case (6, 10, 14, 18, ...)
             del tmpOutputRoutingM1Y[-1]
             tmpOutputRoutingM1Y.append(
-                [CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
-                                    self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1]),
-                 CoordinateCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
-                                    self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1])])
+                [CoordCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
+                               self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1]),
+                 CoordCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
+                               self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1])])
         else:
             pass
 
@@ -542,8 +542,8 @@ class _Inverter(StickDiagram._StickDiagram):
             self._DesignParameter['_PolyRouteXOnMOS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0], _Datatype=DesignParameters._LayerMapping['POLY'][1])
             self._DesignParameter['_PolyRouteXOnMOS']['_XWidth'] = self._DesignParameter['_PolyRouteXOnPMOS']['_XWidth']
             self._DesignParameter['_PolyRouteXOnMOS']['_YWidth'] = self.RounddownMinSnapSpacing(distance_input + self._DesignParameter['_PolyRouteXOnPMOS']['_YWidth'], 2*_DRCObj._MinSnapSpacing)
-            self._DesignParameter['_PolyRouteXOnMOS']['_XYCoordinates'] = [CoordinateCalc.Add(self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'][0],
-                                                                                              [0, Average2Up])]
+            self._DesignParameter['_PolyRouteXOnMOS']['_XYCoordinates'] = [CoordCalc.Add(self._DesignParameter['_PolyRouteXOnNMOS']['_XYCoordinates'][0],
+                                                                                         [0, Average2Up])]
 
 
         # (1) surrounded by output metal  /  of Input Contact (Poly to M1)
@@ -809,10 +809,10 @@ class _Inverter(StickDiagram._StickDiagram):
         XWidth2_NWLayer = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive2
         XWidth_NWLayer = max(XWidth1_NWLayer, XWidth2_NWLayer)
 
-        XYCoordinatesOfNW_top = CoordinateCalc.Add(self._DesignParameter['NbodyContact']['_XYCoordinates'][0],
-                                                   [0, self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2 + _DRCObj._NwMinEnclosurePactive])
-        XYCoordinatesOfNW_bot = CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
-                                                   [0, - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2 - _DRCObj._NwMinEnclosurePactive])
+        XYCoordinatesOfNW_top = CoordCalc.Add(self._DesignParameter['NbodyContact']['_XYCoordinates'][0],
+                                              [0, self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2 + _DRCObj._NwMinEnclosurePactive])
+        XYCoordinatesOfNW_bot = CoordCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
+                                              [0, - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2 - _DRCObj._NwMinEnclosurePactive])
         YWidth_NWLayer = abs(XYCoordinatesOfNW_top[1] - XYCoordinatesOfNW_bot[1])
 
         if (XWidth_NWLayer * YWidth_NWLayer) < _DRCObj._NwMinArea:
@@ -832,18 +832,18 @@ class _Inverter(StickDiagram._StickDiagram):
 
             # XVY (over NWELL) Area check
             Ymin_NW = XYCoordinatesOfNW_bot[1]
-            Ymax_XVT = CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
-                                          [0, self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']/2])[1]
+            Ymax_XVT = CoordCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
+                                     [0, self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']/2])[1]
             Area_XVToverNW = abs(Ymax_XVT - Ymin_NW) * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
             if Area_XVToverNW < _DRCObj._XvtMinArea:
                 XWidth_XVT = self.CeilMinSnapSpacing(_DRCObj._XvtMinArea / abs(Ymax_XVT - Ymin_NW), 2*MinSnapSpacing)
             else:
                 XWidth_XVT = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth']
 
-            xy1 = CoordinateCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
-                                     [0, self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2])
-            xy2 = CoordinateCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
-                                     [0, -self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2])
+            xy1 = CoordCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
+                                [0, self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2])
+            xy2 = CoordCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
+                                [0, -self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth'] / 2])
 
             self._DesignParameter[_XVTLayer] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVT][0], _Datatype=DesignParameters._LayerMapping[_XVT][1])
             self._DesignParameter[_XVTLayer]['_Width'] = XWidth_XVT

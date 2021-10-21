@@ -1,4 +1,4 @@
-import CoordinateCalc
+import CoordCalc
 import StickDiagram
 import DesignParameters
 import DRC
@@ -87,8 +87,8 @@ class _PMOS(StickDiagram._StickDiagram):
 
             # POLY Dummy Layer Coordinate Setting
             _xycoordinatetmp_dummy = [
-                CoordinateCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][0], [-_LengthPMOSBtwPO, 0]),
-                CoordinateCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthPMOSBtwPO, 0]),
+                CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][0], [-_LengthPMOSBtwPO, 0]),
+                CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthPMOSBtwPO, 0]),
             ]
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
 

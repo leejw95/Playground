@@ -1,4 +1,4 @@
-import CoordinateCalc
+import CoordCalc
 import StickDiagram
 import DesignParameters
 import DRC
@@ -129,8 +129,8 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_PODummyLayer']['_YWidth'] = _NMOSChannelWidth + 2 * _DRCObj._PolygateMinExtensionOnOD  # ??
 
             _tmpXY_Dummy = [
-                CoordinateCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][0], [-_LengthNMOSBtwPO, 0]),
-                CoordinateCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthNMOSBtwPO, 0]),
+                CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][0], [-_LengthNMOSBtwPO, 0]),
+                CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthNMOSBtwPO, 0]),
             ]
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _tmpXY_Dummy
 

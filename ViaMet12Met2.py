@@ -251,7 +251,7 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         NumViaX_case2 = int((XWidth - 2*MetMinEnclosureX - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
         NumViaY_case2 = int((YWidth - 2*MetMinEnclosureY - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
 
-        if (NumViaX_case1 > 2) or (NumViaY_case1 > 2):
+        if (NumViaX_case1 > 2) and (NumViaY_case1 > 2):
             NumViaX = NumViaX_case2
             NumViaY = NumViaY_case2
         else:

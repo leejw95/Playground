@@ -695,7 +695,7 @@ class DRCMETAL1:
                     else:
                         return self._Metal1MinSpace21  # b 82
                 else:
-                    return self._Metal1MinSpace2  # a 65
+                    return self._Metal1MinSpace2  # a 66
             else:
                 return self._Metal1MinSpace  # 50
 

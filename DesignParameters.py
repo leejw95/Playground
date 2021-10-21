@@ -1058,6 +1058,14 @@ if _Technology == '028nm':
 elif _Technology == '065nm':
     _LayerMapping.update({'M1PIN': (None, None)})
 
+
+print ('#########################   text Layer Mapping    #################################')
+
+if _Technology == '028nm':
+    _LayerMapping.update({'text':_LayerMappingTmp[('text', 'drawing')]})
+
+
+
 _LayerMapFile.close()
 ########################################################################################
 

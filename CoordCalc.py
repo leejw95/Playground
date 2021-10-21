@@ -1,4 +1,4 @@
-# CoordinateCalc.py
+# CoordCalc.py
 
 def Add(Coordinate1, Coordinate2):
 
@@ -20,6 +20,21 @@ def Subtract(Coordinate1, Coordinate2):     # another def named distance and exa
 
     return [x, y]
     # end of def Subtract():
+
+
+def FlipX(Coordinate):
+    __isCoordinate(Coordinate)
+    return [-Coordinate[0], Coordinate[1]]
+
+
+def FlipY(Coordinate):
+    __isCoordinate(Coordinate)
+    return [Coordinate[0], -Coordinate[1]]
+
+
+def FlipXY(Coordinate):
+    __isCoordinate(Coordinate)
+    return [-Coordinate[0], -Coordinate[1]]
 
 
 def __isCoordinate(ListOfCoordinates):

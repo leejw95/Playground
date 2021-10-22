@@ -581,6 +581,7 @@ class DRCMETAL1:
             self._Metal1MinEnclosureCO2 = 30
             self._Metal1MinEnclosureVia1 = 0
             self._Metal1MinEnclosureVia12 = 30
+            self._Metal1MinEnclosureVia3 = 30
             self._Metal1MinArea = 21500
 
         if DesignParameters._Technology=='028nm':
@@ -599,6 +600,7 @@ class DRCMETAL1:
             self._Metal1MinEnclosureCO3 = 12  ##FOR PRES, By junung
             self._Metal1MinEnclosureVia1 = 0
             self._Metal1MinEnclosureVia12 = 32
+            self._Metal1MinEnclosureVia3 = 8  # iksu
             self._Metal1MinArea = 10000
             self._Metal1MinEnclosureArea = 48000  # ADDED!(by JiCho)
 
@@ -616,6 +618,7 @@ class DRCMETAL1:
             self._Metal1MinEnclosureCO2 = 40
             self._Metal1MinEnclosureVia1 = 0
             self._Metal1MinEnclosureVia12 = 40
+            self._Metal1MinEnclosureVia3 = 40
             self._Metal1MinArea = 42000
 
         if DesignParameters._Technology == '090nm':
@@ -632,6 +635,7 @@ class DRCMETAL1:
             self._Metal1MinEnclosureCO2 = 50
             self._Metal1MinEnclosureVia1 = 5
             self._Metal1MinEnclosureVia12 = 50
+            self._Metal1MinEnclosureVia3 = 50
             self._Metal1MinArea = 58000
         if DesignParameters._Technology == '130nm':
             self._Metal1MinWidth = 160
@@ -645,6 +649,7 @@ class DRCMETAL1:
             self._Metal1MinEnclosureCO2 = 50
             self._Metal1MinEnclosureVia1 = 10
             self._Metal1MinEnclosureVia12 = 50
+            self._Metal1MinEnclosureVia3 = 50
             self._Metal1MinArea = 122000
         if DesignParameters._Technology == '180nm':
             self._Metal1MinWidth = 230
@@ -657,6 +662,7 @@ class DRCMETAL1:
             self._Metal1MinEnclosureCO2 = 60
             self._Metal1MinEnclosureVia1 = 5
             self._Metal1MinEnclosureVia12 = 60
+            self._Metal1MinEnclosureVia3 = 60
 
             self._Metal1MinArea = 202000
 
@@ -1335,6 +1341,7 @@ class DRCMETALx:
 
             self._MetalxMinEnclosureCO=0
             self._MetalxMinEnclosureCO2=30
+            self._MetalxMinEnclosureVia3=30
             self._MetalxMinArea=27000
 
         if DesignParameters._Technology=='028nm':
@@ -1358,6 +1365,7 @@ class DRCMETALx:
 
             self._MetalxMinEnclosureCO=0 #I
             self._MetalxMinEnclosureCO2=32 #J
+            self._MetalxMinEnclosureVia3=8 # iksu
             self._MetalxMinArea=11000 #K
 
             self._MetalxMaxWidth = 4500 # M7 not over MOB maximum width <= 4.5 , junung
@@ -1374,6 +1382,7 @@ class DRCMETALx:
 
             self._MetalxMinEnclosureCO=0
             self._MetalxMinEnclosureCO2=40
+            self._MetalxMinEnclosureVia3=40
             self._MetalxMinArea=52000
         if DesignParameters._Technology=='090nm':
             self._MetalxMinWidth=140
@@ -1386,6 +1395,7 @@ class DRCMETALx:
 
             self._MetalxMinEnclosureCO=5
             self._MetalxMinEnclosureCO2=50
+            self._MetalxMinEnclosureVia3=50
             self._MetalxMinArea=70000
         if DesignParameters._Technology=='130nm':
             self._MetalxMinWidth=200
@@ -1398,6 +1408,7 @@ class DRCMETALx:
 
             self._MetalxMinEnclosureCO=5
             self._MetalxMinEnclosureCO2=50
+            self._MetalxMinEnclosureVia3=50
             self._MetalxMinArea=144000
 
         if DesignParameters._Technology=='180nm':
@@ -1412,6 +1423,7 @@ class DRCMETALx:
 
             self._MetalxMinEnclosureCO=10
             self._MetalxMinEnclosureCO2=60
+            self._MetalxMinEnclosureVia3=60
             self._MetalxMinArea=202000
 
     def DRCMETALxMinSpace(self, _Width=None, _ParallelLength=None):

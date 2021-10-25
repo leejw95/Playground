@@ -229,6 +229,63 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         print ('#########################################################################################################')
 
 
+    def _CalculateDesignParameterSameEnclosure(self, _ViaMet12Met2NumberOfCOX=None, _ViaMet12Met2NumberOfCOY=None):
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet12Met2 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
+
+        ###############################################Check the number of CO On Via Contact###########################################################################################
+        if _ViaMet12Met2NumberOfCOX == 0 or _ViaMet12Met2NumberOfCOY == 0:
+            print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
+            if DesignParameters._DebugMode == 0:
+                return 0
+        ###############################################################################################################################################################################
+        _DRCObj = DRC.DRC()
+        _XYCoordinateOfViaMet12Met2 = [[0,0]]
+
+        print ('#############################     Met1 Layer Calculation   ##############################################')
+        _LengthViaMet12Met2BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet12Met2NumberOfCOX,NumOfVIAxY=_ViaMet12Met2NumberOfCOY)
+        self._DesignParameter['_Met1Layer']['_XYCoordinates'] = _XYCoordinateOfViaMet12Met2
+        self._DesignParameter['_Met1Layer']['_XWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet12Met2NumberOfCOX - 1) * _LengthViaMet12Met2BtwCO + 2 * max([_DRCObj._Metal1MinEnclosureVia3,_DRCObj._MetalxMinEnclosureVia3])
+        self._DesignParameter['_Met1Layer']['_YWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet12Met2NumberOfCOY - 1) * _LengthViaMet12Met2BtwCO + 2 * max([_DRCObj._Metal1MinEnclosureVia3,_DRCObj._MetalxMinEnclosureVia3])
+
+        print ('#############################     Met2 Layer Calculation   ##############################################')
+        _LengthViaMet12Met2BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet12Met2NumberOfCOX,NumOfVIAxY=_ViaMet12Met2NumberOfCOY)
+        self._DesignParameter['_Met2Layer']['_XYCoordinates'] = _XYCoordinateOfViaMet12Met2
+        self._DesignParameter['_Met2Layer']['_XWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet12Met2NumberOfCOX - 1) * _LengthViaMet12Met2BtwCO + 2 * max([_DRCObj._Metal1MinEnclosureVia3,_DRCObj._MetalxMinEnclosureVia3])
+        self._DesignParameter['_Met2Layer']['_YWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet12Met2NumberOfCOY - 1) * _LengthViaMet12Met2BtwCO + 2 * max([_DRCObj._Metal1MinEnclosureVia3,_DRCObj._MetalxMinEnclosureVia3])
+
+        print ('#############################     Cont Layer Calculation   ##############################################')
+        self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._VIAxMinWidth
+        self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._VIAxMinWidth
+        _LengthViaMet12Met2BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet12Met2NumberOfCOX,NumOfVIAxY=_ViaMet12Met2NumberOfCOY)
+        tmp = []
+        for i in range(0, _ViaMet12Met2NumberOfCOX):
+            for j in range(0, _ViaMet12Met2NumberOfCOY):
+                if (_ViaMet12Met2NumberOfCOX % 2) == 0 and (_ViaMet12Met2NumberOfCOY % 2) == 0:
+                    _xycoordinatetmp = [_XYCoordinateOfViaMet12Met2[0][0] - (_ViaMet12Met2NumberOfCOX / 2 - 0.5) * _LengthViaMet12Met2BtwCO + i * _LengthViaMet12Met2BtwCO,
+                                        _XYCoordinateOfViaMet12Met2[0][1] - (_ViaMet12Met2NumberOfCOY / 2 - 0.5) * _LengthViaMet12Met2BtwCO + j * _LengthViaMet12Met2BtwCO]
+
+                elif (_ViaMet12Met2NumberOfCOX % 2) == 0 and (_ViaMet12Met2NumberOfCOY % 2) == 1:
+                    _xycoordinatetmp = [_XYCoordinateOfViaMet12Met2[0][0] - (_ViaMet12Met2NumberOfCOX / 2 - 0.5) * _LengthViaMet12Met2BtwCO + i * _LengthViaMet12Met2BtwCO,
+                                        _XYCoordinateOfViaMet12Met2[0][1] - (_ViaMet12Met2NumberOfCOY - 1) / 2 * _LengthViaMet12Met2BtwCO + j * _LengthViaMet12Met2BtwCO]
+
+                elif (_ViaMet12Met2NumberOfCOX % 2) == 1 and (_ViaMet12Met2NumberOfCOY % 2) == 0:
+                    _xycoordinatetmp = [_XYCoordinateOfViaMet12Met2[0][0] - (_ViaMet12Met2NumberOfCOX - 1) / 2 * _LengthViaMet12Met2BtwCO + i * _LengthViaMet12Met2BtwCO,
+                                        _XYCoordinateOfViaMet12Met2[0][1] - (_ViaMet12Met2NumberOfCOY / 2 - 0.5) * _LengthViaMet12Met2BtwCO + j * _LengthViaMet12Met2BtwCO]
+
+                elif (_ViaMet12Met2NumberOfCOX % 2) == 1 and (_ViaMet12Met2NumberOfCOY % 2) == 1:
+                    _xycoordinatetmp = [_XYCoordinateOfViaMet12Met2[0][0] - (_ViaMet12Met2NumberOfCOX - 1) / 2 * _LengthViaMet12Met2BtwCO + i * _LengthViaMet12Met2BtwCO,
+                                        _XYCoordinateOfViaMet12Met2[0][1] - (_ViaMet12Met2NumberOfCOY - 1) / 2 * _LengthViaMet12Met2BtwCO + j * _LengthViaMet12Met2BtwCO]
+                tmp.append(_xycoordinatetmp)
+
+        self._DesignParameter['_COLayer']['_XYCoordinates'] = tmp
+
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet12Met2 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
+
+
     @classmethod
     def _CalculateNumViaByXYWidth(cls, XWidth=None, YWidth=None, Mode=None):
         '''
@@ -243,8 +300,21 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         LengthBtwVias_case1 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
         LengthBtwVias_case2 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2  # when exceeding 2x2 array (3x2 or 2x3, ...)
 
-        MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia1 if (Mode is 'MinEnclosureX') else _DRCObj._Metal1MinEnclosureVia12
-        MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia1 if (Mode is 'MinEnclosureY') else _DRCObj._Metal1MinEnclosureVia12
+        if Mode is 'MinEnclosureX':
+            MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia1
+            MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia12
+        elif Mode is 'MinEnclosureY':
+            MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia12
+            MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia1
+        elif Mode is 'SameEnclosure':
+            MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia3
+            MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia3
+        else:
+            MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia12
+            MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia12
+
+        # MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia1 if (Mode is 'MinEnclosureX') else _DRCObj._Metal1MinEnclosureVia12
+        # MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia1 if (Mode is 'MinEnclosureY') else _DRCObj._Metal1MinEnclosureVia12
 
         NumViaX_case1 = int((XWidth - 2*MetMinEnclosureX - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
         NumViaY_case1 = int((YWidth - 2*MetMinEnclosureY - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
@@ -276,6 +346,10 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
     @classmethod
     def CalcNumViaMinEnclosureY(cls, XWidth=None, YWidth=None):
         return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode='MinEnclosureY')
+
+    @classmethod
+    def CalcNumViaSameEnclosure(cls, XWidth=None, YWidth=None):
+        return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode='SameEnclosure')
 
 
 

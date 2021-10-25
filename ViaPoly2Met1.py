@@ -93,6 +93,40 @@ class _ViaPoly2Met1(StickDiagram._StickDiagram):
         print ('                                    {}  ViaPoly2Met1 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
+    @classmethod
+    def CalculateNumContact(cls, XWidth=None, YWidth=None):  # !!! Need to Modify.
+        """
+        :param XWidth:
+        :param YWidth:
+        :return:
+        """
+
+        _DRCObj = DRC.DRC()
+        MinEnclosure = max(_DRCObj._Metal1MinEnclosureCO2, _DRCObj._CoMinEnclosureByPOAtLeastTwoSide)
+
+        LengthBtwContacts_case1 = _DRCObj._CoMinWidth + _DRCObj._CoMinSpace
+        LengthBtwContacts_case2 = _DRCObj._CoMinWidth + _DRCObj._CoMinSpace2  # when exceeding 2x2 array (3x2 or 2x3, ...)
+
+        NumContactX_case1 = int((XWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case1) + 1
+        NumContactY_case1 = int((YWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case1) + 1
+        NumContactX_case2 = int((XWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case2) + 1
+        NumContactY_case2 = int((YWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case2) + 1
+
+        if (NumContactX_case1 > 2 and NumContactY_case1 >= 2) or (NumContactX_case1 >= 2 and NumContactY_case1 > 2):
+            NumContactX = NumContactX_case2
+            NumContactY = NumContactY_case2
+        else:
+            NumContactX = NumContactX_case1
+            NumContactY = NumContactY_case1
+
+        if (NumContactX < 1) or (NumContactY < 1):
+            raise NotImplementedError
+
+        # print('NumViaX_case1', NumViaX_case1, 'NumViaY_case1', NumViaY_case1, 'NumViaX_case2', NumViaX_case2, 'NumViaY_case2', NumViaY_case2)
+
+        return NumContactX, NumContactY
+
+
 if __name__=='__main__':
     ViaPoly2Met1Obj=_ViaPoly2Met1(_DesignParameter=None, _Name='ViaPoly2Met1')
     ViaPoly2Met1Obj._CalculateViaPoly2Met1DesignParameter(_ViaPoly2Met1NumberOfCOX=2, _ViaPoly2Met1NumberOfCOY=2)

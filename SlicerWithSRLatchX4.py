@@ -614,7 +614,7 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
 
 
             tmp = []
-            for i in range(0, _NumberofSlicerWithSRLatch // 2) :
+            for i in range(0, (_NumberofSlicerWithSRLatch + 1) // 2) :
                 tmp.append([[self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][0], max(self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][1] + self._DesignParameter['_ViaMet32Met4forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2, self._DesignParameter['_ViaMet42Met5forVSS']['_XYCoordinates'][i][1] + self._DesignParameter['_ViaMet42Met5forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2)], [self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][0], min(self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][1] - self._DesignParameter['_ViaMet32Met4forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2, self._DesignParameter['_ViaMet42Met5forVSS']['_XYCoordinates'][i][1] - self._DesignParameter['_ViaMet42Met5forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2)]]) \
 
             self._DesignParameter['_Met4VSSRouting']['_XYCoordinates'] = tmp

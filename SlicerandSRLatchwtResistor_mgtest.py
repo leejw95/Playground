@@ -871,7 +871,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 if __name__ == '__main__':
     import random
 
-    for tries in range (0, 1) :
+    for tries in range (0, 101) :
     #     i = random.randint(4,30)
     #     j = random.randint(4,60)
     #     k = random.randint(2,15)
@@ -974,7 +974,7 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = 1###random.randint(1,16)
+        _N = random.randint(1,16)
         _InvFinger = 16
         _InvChannelWidth = 200
         _InvChannelLength = 30
@@ -1085,9 +1085,9 @@ if __name__ == '__main__':
         # import DRCchecker
         # a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
         # a.DRCchecker()
-        # import DRCchecker
-        #
-        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-        # a.DRCchecker()
 
-   # print ("DRC Clean!!!")
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        a.DRCchecker()
+
+    print ("DRC Clean!!!")

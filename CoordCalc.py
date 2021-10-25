@@ -66,6 +66,15 @@ def FlipXYs(Coordinates):
     return tmpXYs
 
 
+def MinMaxXY(Coordinates):
+    x_list, y_list = [], []
+    for XY in Coordinates:
+        x_list.append(XY[0])
+        y_list.append(XY[1])
+
+    return min(x_list), min(y_list), max(x_list), max(y_list)
+
+
 # testbench
 if __name__ == '__main__':
 

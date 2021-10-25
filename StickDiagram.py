@@ -423,10 +423,10 @@ class _StickDiagram:
     def _XYCoordinateInfoDeclaration(self,_XYCoordinateInfo=[] ):
 
         return dict(_DesignParametertype=7,_XYCoordinates=_XYCoordinateInfo)
-    def _BitInfoDeclaraion(self, _BitNumber = None):
+    def _BitInfoDeclaration(self, _BitNumber = None):
         return  dict(_DesignParametertype=7,_BitNumber = _BitNumber)
 
-    def _SizeInfoDeclaraion(self, _DesignSizesInList = None):
+    def _SizeInfoDeclaration(self, _DesignSizesInList = None):
         return  dict(_DesignParametertype=7,_DesignSizesInList = _DesignSizesInList)
 
     def _SupplyRailDeclaration(self, _HorizontalSupplyRailArea=[], _VerticalSupplyRailArea=[],  _ViaArrays = [], _Rails = [], _SupplyNodeName=None):

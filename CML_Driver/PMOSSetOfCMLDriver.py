@@ -39,8 +39,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
                 _POforCS=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],
                                                           _Datatype=DesignParameters._LayerMapping['POLY'][1]),
-                # _POforCSLayerV=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],
-                #                                                 _Datatype=DesignParameters._LayerMapping['POLY'][1]),
+                _POforCSLayerV=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],
+                                                                _Datatype=DesignParameters._LayerMapping['POLY'][1]),
                 M1forCSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],
                                                              _Datatype=DesignParameters._LayerMapping['METAL1'][1]),
                 # M3forCSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],
@@ -51,6 +51,10 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
                 _M3HforIPSource=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],
                                                                  _Datatype=DesignParameters._LayerMapping['METAL3'][1]),
                 _M3HforIPDrain=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],
+                                                                _Datatype=DesignParameters._LayerMapping['METAL3'][1]),
+                _M3HforCSSource=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],
+                                                                 _Datatype=DesignParameters._LayerMapping['METAL3'][1]),
+                _M3HforCSDrain=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],
                                                                 _Datatype=DesignParameters._LayerMapping['METAL3'][1]),
                 _PPLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0],
                                                           _Datatype=DesignParameters._LayerMapping['PIMP'][1]),
@@ -243,7 +247,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['_M2V2M3OnPMOSIP']['_XYCoordinates'] = tmpXYs
 
 
-        ''' horizontal routing M3 '''
+        ''' horizontal routing M3 for PMOS Input Pair '''
         self._DesignParameter['_M3HforIPSource']['_XWidth'] = CoordCalc.MinMaxXY(self._DesignParameter['_M2V2M3OnPMOSIP']['_XYCoordinates'])[2] \
                                                              - CoordCalc.MinMaxXY(self._DesignParameter['_M2V2M3OnPMOSIP']['_XYCoordinates'])[0] \
                                                              + self._DesignParameter['_M2V2M3OnPMOSIP']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
@@ -332,13 +336,15 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['NbodyContact']['_DesignObj']._CalculateNbodyContactDesignParameter(**NbodyParameters)
 
         # Calculate Distance between PMOS and Nbody
-        DistanceBtwVD2PMOS = 0.5 * self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
-                             + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
-                             + _DRCObj._OdMinSpace  # OD Layer(for Nbody) - OD Layer (for PMOS)     OD=RX
-        self._DesignParameter['NbodyContact']['_XYCoordinates'] = [[0, DistanceYBtwMidRouting2IP + DistanceBtwVD2PMOS]]
+        DistanceYBtwNbody2PMOSIP = 0.5 * self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
+                                  + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
+                                  + _DRCObj._OdMinSpace  # OD Layer(for Nbody) - OD Layer (for PMOS)     OD=RX
+        self._DesignParameter['NbodyContact']['_XYCoordinates'] = [[0, DistanceYBtwMidRouting2IP + DistanceYBtwNbody2PMOSIP]]
 
 
-        ''' PMOS for Current Source '''
+        """ ======================================================================================================= """
+        """ --------------------------------------- PMOS for Current Source --------------------------------------- """
+        """ ======================================================================================================= """
         ''' PMOS Generation '''
         PMOSParam_CurrentSource = copy.deepcopy(PMOSWithDummy_iksu._PMOS._ParametersForDesignCalculation)
         PMOSParam_CurrentSource['_PMOSNumberofGate'] = NumFingerOfCS
@@ -374,16 +380,147 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
 
         ''' Coordinates setting '''
+        # 0: CenterSource, 1: ShiftRight, 2: FlipS&D 3: ShiftLeft -> I want to put Source to Center(XCoordinate).
+        CaseOfCSFingers = (NumFingerOfCS % 4)
+        if CaseOfCSFingers is 1:
+            OffsetXforCenterSourceOfCS = +0.5 * self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList']
+        elif CaseOfCSFingers is 2:  # swap source-drain
+            OffsetXforCenterSourceOfCS = 0
+            self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting'], self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting'] \
+                = self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting'], self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']
+        elif CaseOfCSFingers is 3:
+            OffsetXforCenterSourceOfCS = -0.5 * self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList']
+        else:  # CaseOfCSFingers is 0
+            OffsetXforCenterSourceOfCS = 0
+
+        DistanceYBtwNbody2PMOSCS = 0.5 * self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
+                                  + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
+                                  + _DRCObj._OdMinSpace  # OD Layer(for Nbody) - OD Layer (for PMOS)     OD=RX
         DistanceYBtwMidRouting2CS = self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] * 0.5 \
                                     + self._DesignParameter['M1forCSGate']['_YWidth'] * 0.5 \
                                     + max(_DRCObj._Metal1MinSpaceAtCorner, _DRCObj._Metal1MinSpace2)  # Need2Modify
-        XYs_PMOSCS = [[0, 10000+DistanceYBtwMidRouting2CS], [0, 10000-DistanceYBtwMidRouting2CS]]
 
-        self._DesignParameter['PMOS_CS']['_XYCoordinates'] = XYs_PMOSCS
-        self._DesignParameter['_POforCS']['_XYCoordinates'] = [[(XYs_PMOSCS[0][0] + XYs_PMOSCS[1][0])/2.0, (XYs_PMOSCS[0][1] + XYs_PMOSCS[1][1])/2.0]]
+        self._DesignParameter['_POforCS']['_XYCoordinates'] = \
+            [CoordCalc.Add(self._DesignParameter['NbodyContact']['_XYCoordinates'][0],
+                           [OffsetXforCenterSourceOfCS, DistanceYBtwNbody2PMOSCS+DistanceYBtwMidRouting2CS])]
+        self._DesignParameter['PMOS_CS']['_XYCoordinates'] = \
+            [CoordCalc.Add(self._DesignParameter['_POforCS']['_XYCoordinates'][0], [0, -DistanceYBtwMidRouting2CS]),
+             CoordCalc.Add(self._DesignParameter['_POforCS']['_XYCoordinates'][0], [0, +DistanceYBtwMidRouting2CS])]
         self._DesignParameter['M1forCSGate']['_XYCoordinates'] = self._DesignParameter['_POforCS']['_XYCoordinates']
         self._DesignParameter['_PolyContactOnPMOSCSGate']['_XYCoordinates'] = self._DesignParameter['_POforCS']['_XYCoordinates']
 
+
+        ''' Vertical Gate for Current Source'''
+        self._DesignParameter['_POforCSLayerV']['_XWidth'] = _FingerLengthOfCurrentSource
+        self._DesignParameter['_POforCSLayerV']['_YWidth'] = DistanceYBtwMidRouting2CS * 2 \
+                                                             - self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
+        for XYs_PO1 in self._DesignParameter['_POforCS']['_XYCoordinates']:
+            for XYs_PO2 in self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates']:
+                self._DesignParameter['_POforCSLayerV']['_XYCoordinates'].append(CoordCalc.Add(XYs_PO1, XYs_PO2))
+
+
+        ''' Text for PMOS_CS source/drain '''
+        self._DesignParameter['PMOS_CS_Source'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['text'][0], _Datatype=DesignParameters._LayerMapping['text'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Mag=0.1, _Angle=0, _TEXT='S', _XYCoordinates=[])
+        self._DesignParameter['PMOS_CS_Drain'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['text'][0], _Datatype=DesignParameters._LayerMapping['text'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Mag=0.1, _Angle=0, _TEXT='D', _XYCoordinates=[])
+        for XYs_PMOS in self._DesignParameter['PMOS_CS']['_XYCoordinates']:
+            for XYs_Source in self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates']:
+                self._DesignParameter['PMOS_CS_Source']['_XYCoordinates'].append(CoordCalc.Add(XYs_PMOS, XYs_Source))
+            for XYs_Drain in self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']:
+                self._DesignParameter['PMOS_CS_Drain']['_XYCoordinates'].append(CoordCalc.Add(XYs_PMOS, XYs_Drain))
+
+
+        ''' M1V1M2 for Current Source'''
+        NumViaX, NumViaY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureX(
+            XWidth=self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
+            YWidth=self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                   - 0.5 * (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+        assert NumViaY >= 2, 'FingerWidth should be longer.'
+
+        Via1Params = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+        Via1Params['_ViaMet12Met2NumberOfCOX'] = NumViaX
+        Via1Params['_ViaMet12Met2NumberOfCOY'] = NumViaY
+        self._DesignParameter['_Via1OnPMOSCS'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='ViaMet12Met2OnPMOSCS_In{}'.format(_Name)))[0]
+        self._DesignParameter['_Via1OnPMOSCS']['_DesignObj']._CalculateDesignParameterSameEnclosure(**Via1Params)
+
+        for XYs in self._DesignParameter['PMOS_CS_Source']['_XYCoordinates']:
+            self._DesignParameter['_Via1OnPMOSCS']['_XYCoordinates'].append(
+                CoordCalc.Add(XYs, [0, +self.CeilMinSnapSpacing(0.25 * (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace), MinSnapSpacing)]))
+        for XYs in self._DesignParameter['PMOS_CS_Drain']['_XYCoordinates']:
+            self._DesignParameter['_Via1OnPMOSCS']['_XYCoordinates'].append(
+                CoordCalc.Add(XYs, [0, -self.CeilMinSnapSpacing(0.25 * (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace), MinSnapSpacing)]))
+
+        self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_Via1OnPMOSCS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+
+
+        """    """
+        ''' M2V2M3 on PMOSCS Source / Drain Generate & Place '''
+        M2V2M3Params_CS = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+        M2V2M3Params_CS['_ViaMet22Met3NumberOfCOX'] = 1
+        M2V2M3Params_CS['_ViaMet22Met3NumberOfCOY'] = 2
+        self._DesignParameter['_M2V2M3OnPMOSCS'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='ViaMet22Met3OnPMOSCS_In{}'.format(_Name)))[0]
+        self._DesignParameter['_M2V2M3OnPMOSCS']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M2V2M3Params_CS)
+
+        DistanceYBtwM3H_CS = self._DesignParameter['_M2V2M3OnPMOSCS']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] \
+                          + _DRCObj._MetalxMinSpace3  # Bad DRC usage -> Need to check Metal Width
+        NumM3HOnCS = int(round(float(_FingerWidthOfCurrentSource) / (DistanceYBtwM3H_CS * 2)))
+        print('Number of M3H on CS is ', float(_FingerWidthOfCurrentSource) / (DistanceYBtwM3H_CS * 2))
+        assert NumM3HOnCS >= 1, '_FingerWidthOfCurrentSource should be longer.'
+        OffsetVia2_CS = self.FloorMinSnapSpacing(0.5 * (_FingerWidthOfCurrentSource - self._DesignParameter['_M2V2M3OnPMOSCS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']), MinSnapSpacing)
+
+        tmpXYs = []
+        for XYs in self._DesignParameter['PMOS_CS_Source']['_XYCoordinates']:
+            for i in range(0, NumM3HOnCS):
+                if XYs[1] < self._DesignParameter['_POforCS']['_XYCoordinates'][0][1]:
+                    tmpXYs.append(CoordCalc.Add(XYs, [0, +OffsetVia2_CS - DistanceYBtwM3H_CS * (2 * i)]))  # Lower Source
+                else:
+                    tmpXYs.append(CoordCalc.Add(XYs, [0, -OffsetVia2_CS + DistanceYBtwM3H_CS * (2 * i + 1)]))  # Upper Source
+        for XYs in self._DesignParameter['PMOS_CS_Drain']['_XYCoordinates']:
+            for i in range(0, NumM3HOnCS):
+                if XYs[1] > self._DesignParameter['_POforCS']['_XYCoordinates'][0][1]:
+                    tmpXYs.append(CoordCalc.Add(XYs, [0, -OffsetVia2_CS + DistanceYBtwM3H_CS * (2 * i)]))  # Upper Drain
+                else:
+                    tmpXYs.append(CoordCalc.Add(XYs, [0, +OffsetVia2_CS - DistanceYBtwM3H_CS * (2 * i + 1)]))  # Lower Drain
+        self._DesignParameter['_M2V2M3OnPMOSCS']['_XYCoordinates'] = tmpXYs
+
+
+        ''' horizontal routing M3 for PMOS Current Source '''
+        self._DesignParameter['_M3HforCSSource']['_XWidth'] = \
+            CoordCalc.MinMaxXY(self._DesignParameter['_M2V2M3OnPMOSCS']['_XYCoordinates'])[2] \
+            - CoordCalc.MinMaxXY(self._DesignParameter['_M2V2M3OnPMOSCS']['_XYCoordinates'])[0] \
+            + self._DesignParameter['_M2V2M3OnPMOSCS']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
+        self._DesignParameter['_M3HforCSSource']['_YWidth'] = _DRCObj._Metal1MinWidth
+
+        self._DesignParameter['_M3HforCSDrain']['_XWidth'] = \
+            abs(self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0]
+                - self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][-1][0]) \
+            + self._DesignParameter['_M2V2M3OnPMOSCS']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
+        self._DesignParameter['_M3HforCSDrain']['_YWidth'] = _DRCObj._Metal1MinWidth
+
+        tmpXYs = []
+        for i in range(0, NumM3HOnCS):
+            tmpXYs.append(CoordCalc.Add(self._DesignParameter['_POforCS']['_XYCoordinates'][0],
+                                        [0, - DistanceYBtwMidRouting2CS + OffsetVia2_CS - DistanceYBtwM3H_CS * (2 * i)]))
+            tmpXYs.append(CoordCalc.Add(self._DesignParameter['_POforCS']['_XYCoordinates'][0],
+                                        [0, + DistanceYBtwMidRouting2CS - OffsetVia2_CS + DistanceYBtwM3H_CS * (2 * i + 1)]))
+            # tmpXYs.append([0, self._DesignParameter['_POforCS']['_XYCoordinates'][0][1] - DistanceYBtwMidRouting2CS + OffsetVia2_CS - DistanceYBtwM3H_CS * (2 * i)])
+            # tmpXYs.append([0, self._DesignParameter['_POforCS']['_XYCoordinates'][0][1] + DistanceYBtwMidRouting2CS - OffsetVia2_CS + DistanceYBtwM3H_CS * (2 * i + 1)])
+        self._DesignParameter['_M3HforCSSource']['_XYCoordinates'] = tmpXYs
+
+        tmpXYs = []
+        for i in range(0, NumM3HOnCS):
+            tmpXYs.extend(
+                [CoordCalc.Add(self._DesignParameter['_POforCS']['_XYCoordinates'][0],
+                               [0, + DistanceYBtwMidRouting2CS - OffsetVia2_CS + DistanceYBtwM3H_CS * (2 * i)]),
+                 CoordCalc.Add(self._DesignParameter['_POforCS']['_XYCoordinates'][0],
+                               [0, - DistanceYBtwMidRouting2CS + OffsetVia2_CS - DistanceYBtwM3H_CS * (2 * i + 1)])])
+                # [[0, self._DesignParameter['_POforCS']['_XYCoordinates'][0][1] + DistanceYBtwMidRouting2CS - OffsetVia2_CS + DistanceYBtwM3H_CS * (2 * i)],
+                #  [0, self._DesignParameter['_POforCS']['_XYCoordinates'][0][1] - DistanceYBtwMidRouting2CS + OffsetVia2_CS - DistanceYBtwM3H_CS * (2 * i + 1)]])
+        self._DesignParameter['_M3HforCSDrain']['_XYCoordinates'] = tmpXYs
 
 
         print('test')

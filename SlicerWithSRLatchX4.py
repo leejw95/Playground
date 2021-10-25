@@ -704,7 +704,7 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
             self._DesignParameter['_ViaMet52Met6forVDDinSR']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureY(**_ViaMet52Met6forVDDinSR)
 
             tmp = []
-            for i in range(0, _NumberofSlicerWithSRLatch // 2 - 1) :
+            for i in range(0, (_NumberofSlicerWithSRLatch + 1) // 2 - 1) :
                 tmp.append([self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2 * i + 2][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]])
             for i in range(0, _NumberofSlicerWithSRLatch) :
                 #tmp.append([self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][i][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]])

@@ -871,7 +871,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 if __name__ == '__main__':
     import random
 
-    for tries in range (0, 100) :
+    for tries in range (0, 1) :
     #     i = random.randint(4,30)
     #     j = random.randint(4,60)
     #     k = random.randint(2,15)
@@ -974,7 +974,7 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = random.randint(1,16)
+        _N = 7###random.randint(1,16)
         _InvFinger = 16
         _InvChannelWidth = 200
         _InvChannelLength = 30
@@ -1059,22 +1059,22 @@ if __name__ == '__main__':
         # myfile.close()
         # ftp.close()
 
-        import ftplib
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('myungguk', 'vmfl!225')
-        ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
-        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        myfile.close()
-        ftp.close()
- #
+        # import ftplib
+        #
         # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('jicho0927', 'cho89140616!!')
-        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        # ftp.login('myungguk', 'vmfl!225')
+        # ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
         # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         # myfile.close()
+        #ftp.close()
+
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        myfile.close()
 
         print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
 
@@ -1085,9 +1085,9 @@ if __name__ == '__main__':
         # import DRCchecker
         # a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
         # a.DRCchecker()
-        import DRCchecker
-
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-        a.DRCchecker()
-
-    print ("DRC Clean!!!")
+    #     import DRCchecker
+    #
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")

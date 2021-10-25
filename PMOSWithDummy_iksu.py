@@ -37,7 +37,10 @@ class _PMOS(StickDiagram._StickDiagram):
                 _PCCRITLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PCCRIT'][0], _Datatype=DesignParameters._LayerMapping['PCCRIT'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400),
 
                 _Name=self._NameDeclaration(_Name=_Name), _GDSFile=self._GDSObjDeclaration(_GDSFile=None),
-                _XYCoordinatePMOSSupplyRouting=dict(_DesignParametertype=7,_XYCoordinates=[]),_XYCoordinatePMOSOutputRouting=dict(_DesignParametertype=7,_XYCoordinates=[]),_XYCoordinatePMOSGateRouting=dict(_DesignParametertype=7,_XYCoordinates=[]),
+                _XYCoordinatePMOSSupplyRouting=dict(_DesignParametertype=7,_XYCoordinates=[]),
+                _XYCoordinatePMOSOutputRouting=dict(_DesignParametertype=7,_XYCoordinates=[]),
+                _XYCoordinatePMOSGateRouting=dict(_DesignParametertype=7,_XYCoordinates=[]),
+                DistanceXBtwPoly=self._SizeInfoDeclaration(_DesignSizesInList=None)
             )
 
         if _Name != None:
@@ -297,7 +300,7 @@ class _PMOS(StickDiagram._StickDiagram):
             else:
                 self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1
 
-
+        self._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] = _LengthPMOSBtwMet1
         del _DRCObj
         print ('#########################################################################################################')
         print ('                                    {}  PMOS Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))

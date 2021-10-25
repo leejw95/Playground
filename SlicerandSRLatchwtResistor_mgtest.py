@@ -921,7 +921,7 @@ if __name__ == '__main__':
         _SRFinger3 = random.randint(2,15)
         _SRFinger4 = random.randint(2,15)
 
-        _SRrandwidth = random.randrange(200, 1000, 50)
+        _SRrandwidth = random.randrange(200, 400, 50)
         _NPRatio = 2 + random.random()###random.randrange(2,3, 0.1)
 
         _SRNMOSChannelWidth1 = _SRrandwidth

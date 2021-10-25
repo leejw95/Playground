@@ -603,16 +603,15 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
 
             self._DesignParameter['_Met4VSSRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _Width=400)
             self._DesignParameter['_Met4VSSRouting']['_Width'] = max(self._DesignParameter['_ViaMet32Met4forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'], self._DesignParameter['_ViaMet42Met5forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'])
-            #self._DesignParameter['_Met4VSSRouting']['_XYCoordinates'] = self._DesignParameter['_Met5VSSRouting']['_Width']
 
-            tmp = []
-            for i in range(0, _NumberofSlicerWithSRLatch // 2) :
-                tmp.append([[self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][0], max(self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][1] + self._DesignParameter['_ViaMet32Met4forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2, self._DesignParameter['_ViaMet42Met5forVSS']['_XYCoordinates'][i][1] + self._DesignParameter['_ViaMet42Met5forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2)], [self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][0], min(self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][1] - self._DesignParameter['_ViaMet32Met4forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2, self._DesignParameter['_ViaMet42Met5forVSS']['_XYCoordinates'][i][1] - self._DesignParameter['_ViaMet42Met5forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2)]]) \
-                            # [self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][0], self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][1]], [self._DesignParameter['_ViaMet42Met5forVSS']['_XYCoordinates'][i][0], self._DesignParameter['_ViaMet42Met5forVSS']['_XYCoordinates'][i][1] + self._DesignParameter['_ViaMet42Met5forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2]])
 
-            self._DesignParameter['_Met4VSSRouting']['_XYCoordinates'] = tmp
+            # tmp = []
+            # for i in range(0, _NumberofSlicerWithSRLatch // 2) :
+            #     tmp.append([[self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][0], max(self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][1] + self._DesignParameter['_ViaMet32Met4forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2, self._DesignParameter['_ViaMet42Met5forVSS']['_XYCoordinates'][i][1] + self._DesignParameter['_ViaMet42Met5forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2)], [self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][0], min(self._DesignParameter['_ViaMet32Met4forVSS']['_XYCoordinates'][i][1] - self._DesignParameter['_ViaMet32Met4forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2, self._DesignParameter['_ViaMet42Met5forVSS']['_XYCoordinates'][i][1] - self._DesignParameter['_ViaMet42Met5forVSS']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] / 2)]]) \
 
-            del tmp
+            # self._DesignParameter['_Met4VSSRouting']['_XYCoordinates'] = tmp
+            #
+            # del tmp
 
 
 
@@ -821,15 +820,15 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
 
         self._DesignParameter['_PinCK0']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
 
-        self._DesignParameter['_PinCK90']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
-
-        self._DesignParameter['_PinCK180']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
-
-        self._DesignParameter['_PinCK270']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
-
-
-
-
+        # self._DesignParameter['_PinCK90']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
+        #
+        # self._DesignParameter['_PinCK180']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][2][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
+        #
+        # self._DesignParameter['_PinCK270']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0], self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][3][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
+        #
+        #
+        #
+        #
 
 
 

@@ -946,7 +946,7 @@ if __name__ == '__main__':
         # _SRNumViaPoly2Met1CoY = None
         # _SRNumViaPMOSMet12Met2CoX = None
         # _SRNumViaPMOSMet12Met2CoY = None
-        # _SRNumViaNMOSMet12Met2CoX = None##
+        # _SRNumViaNMOSMet12Met2CoX = None
         # _SRNumViaNMOSMet12Met2CoY = None
         # _SRNumViaPMOSMet22Met3CoX = None
         # _SRNumViaPMOSMet22Met3CoY = None
@@ -1033,18 +1033,22 @@ if __name__ == '__main__':
         _TotalSubringXWidth = None  ## FIXED
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
-        _SRFinger1 = 5
-        _SRFinger2 = 1
-        _SRFinger3 = 2
-        _SRFinger4 = 2
-        _SRNMOSChannelWidth1 = 200
-        _SRPMOSChannelWidth1 = 400
-        _SRNMOSChannelWidth2 = 200
-        _SRPMOSChannelWidth2 = 400
-        _SRNMOSChannelWidth3 = 200
-        _SRPMOSChannelWidth3 = 400
-        _SRNMOSChannelWidth4 = 200
-        _SRPMOSChannelWidth4 = 400
+        _SRFinger1 = random.randint(2,15)
+        _SRFinger2 = random.randint(2,15)
+        _SRFinger3 = random.randint(2,15)
+        _SRFinger4 = random.randint(2,15)
+
+        _SRrandwidth = random.randrange(200, 400, 50)
+        _NPRatio = 2 + random.random()###random.randrange(2,3, 0.1)
+
+        _SRNMOSChannelWidth1 = _SRrandwidth
+        _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio
+        _SRNMOSChannelWidth2 = _SRrandwidth
+        _SRPMOSChannelWidth2 = _SRrandwidth * _NPRatio
+        _SRNMOSChannelWidth3 = _SRrandwidth
+        _SRPMOSChannelWidth3 = _SRrandwidth * _NPRatio
+        _SRNMOSChannelWidth4 = _SRrandwidth
+        _SRPMOSChannelWidth4 = _SRrandwidth * _NPRatio
         _SRChannelLength = 30
         _SRNPRatio = None
         _SRVDD2VSSHeightAtOneSide = None

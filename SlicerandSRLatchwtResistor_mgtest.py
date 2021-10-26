@@ -443,29 +443,29 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         # self._DesignParameter['_Met6LayerbtwSlicer']['_XYCoordinates'] = tmp
 
         # del tmp
-        tmp = []
-        for i in range(0, _NumberofSlicerWithSRLatch):
-            tmp.append([[self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][0] - self._DesignParameter['_ViaMet12Met2OnVRX']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2,
-                         self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i * self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']], [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
-                                                                                                                                                                                                     self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4'][
-                                                                                                                                                                                                         '_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET'][
-                                                                                                                                                                                                         '_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][0],
-                                                                                                                                                                                                     self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i *
-                                                                                                                                                                                                     self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']]])
-            tmp.append([[self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][-1][0] + self._DesignParameter['_ViaMet12Met2OnVRX']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2,
-                         self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i * self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']], [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
-                                                                                                                                                                                                     self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4'][
-                                                                                                                                                                                                         '_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET'][
-                                                                                                                                                                                                         '_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][0],
-                                                                                                                                                                                                     self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i *
-                                                                                                                                                                                                     self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']]])
-
-        self._DesignParameter['_AdditionalMet1forSlicerInput'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=100)
-        self._DesignParameter['_AdditionalMet1forSlicerInput']['_Width'] = \
-        self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        self._DesignParameter['_AdditionalMet1forSlicerInput']['_XYCoordinates'] = tmp
-
-        del tmp
+        # tmp = []
+        # for i in range(0, _NumberofSlicerWithSRLatch):
+        #     tmp.append([[self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][0] - self._DesignParameter['_ViaMet12Met2OnVRX']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2,
+        #                  self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i * self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']], [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
+        #                                                                                                                                                                                              self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4'][
+        #                                                                                                                                                                                                  '_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET'][
+        #                                                                                                                                                                                                  '_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][0],
+        #                                                                                                                                                                                              self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i *
+        #                                                                                                                                                                                              self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']]])
+        #     tmp.append([[self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][-1][0] + self._DesignParameter['_ViaMet12Met2OnVRX']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2,
+        #                  self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i * self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']], [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
+        #                                                                                                                                                                                              self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4'][
+        #                                                                                                                                                                                                  '_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET'][
+        #                                                                                                                                                                                                  '_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][0],
+        #                                                                                                                                                                                              self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i *
+        #                                                                                                                                                                                              self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']]])
+        #
+        # self._DesignParameter['_AdditionalMet1forSlicerInput'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=100)
+        # self._DesignParameter['_AdditionalMet1forSlicerInput']['_Width'] = \
+        # self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+        # self._DesignParameter['_AdditionalMet1forSlicerInput']['_XYCoordinates'] = tmp
+        #
+        # del tmp
 
         self._DesignParameter['_Met6LayerbtwSlicer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met6LayerbtwSlicer']['_Width'] = self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth']
@@ -501,14 +501,16 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 
         self._DesignParameter['_Met6LayerVref'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met6LayerVref']['_Width'] = self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth']
-        self._DesignParameter['_Met6LayerVref']['_XYCoordinates'] = [[[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
-                                                                       self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter[
-                                                                           '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][0],
+        self._DesignParameter['_Met6LayerVref']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][-1][0],
+                                                                       #  self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
+                                                                       # self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter[
+                                                                       #     '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][0],
                                                                        self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] +
                                                                        self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_YINp']['_Ignore']],
-                                                                      [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
-                                                                       self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter[
-                                                                           '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][0],
+                                                                      [self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][-1][0],
+                                                                       #    self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
+                                                                       # self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter[
+                                                                       #     '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][0],
                                                                        self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] +
                                                                        self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_YINp']['_Ignore'] -
                                                                        self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore'] * (_NumberofSlicerWithSRLatch - 1)]]]
@@ -956,7 +958,7 @@ if __name__ == '__main__':
         _SLCLKinputPMOSFinger2 = random.randint(1, 15)
         _SLPMOSFinger = random.randint(1, 15)
         _SLPMOSChannelWidth = random.randrange(200, 1050, 50)
-        _SLDATAinputNMOSFinger = random.randint(1, 15)
+        _SLDATAinputNMOSFinger = random.randint(4, 15)
         _SLNMOSFinger = random.randint(1, 15)
         _SLCLKinputNMOSFinger = random.randint(1, 15)
         _SLNMOSChannelWidth = random.randrange(200, 1050, 50)

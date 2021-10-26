@@ -822,7 +822,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                             self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met7LayerVDD2']['_Width'] // 2],
                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
                             _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
-                            self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 * (3 - _XRBNum) - self._DesignParameter['_Met7LayerVDD2']['_Width'] // 2]])
+                            self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met7LayerVDD2']['_Width'] // 2]])
 
                 self._DesignParameter['_Met7LayerVDD2']['_XYCoordinates'] = tmp
 
@@ -1330,8 +1330,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                             - _DRCObj._MetalxMinSpace11 * (3 - _XRBNum) - self._DesignParameter['_Met6LayerVCM']['_Width'] * (3 - _XRBNum),
                             _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
                             self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 * 2 - self._DesignParameter['_Met7LayerVSS2']['_Width'] * 1.5],
-                            [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX
-                            - _DRCObj._MetalxMinSpace11 * (3 - _XRBNum) - self._DesignParameter['_Met6LayerVCM']['_Width'] * (3 - _XRBNum),
+                            [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
                             _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
                             self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 * 2 - self._DesignParameter['_Met7LayerVSS2']['_Width'] * 1.5]])
 
@@ -1743,8 +1742,8 @@ if __name__ == '__main__' :
     #     if m % 2 == 1 :
     #         m += 1
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
-    _XRBNum = 3
-    _YRBNum = 8
+    _XRBNum = 1
+    _YRBNum = 20
     
     _TransmissionGateFinger = 6
     _TransmissionGateChannelWidth = 275 ##200nm ~ 500nm range

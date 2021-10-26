@@ -2738,7 +2738,7 @@ class _SRLatch(StickDiagram._StickDiagram):
             _Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],
             _XYCoordinates=[], _Width=None)
         self._DesignParameter['_AdditionalMet1Routing']['_Width'] = _DRCObj._Metal1MinWidth
-        self._DesignParameter['_AdditionalMet1Routing']['_XYCoordinates'] = [[[self._DesignParameter['_AdditionalMet1GateRouting2']['_XYCoordinates'][0][0][0],
+        self._DesignParameter['_AdditionalMet1Routing']['_XYCoordinates'] = [[[self._DesignParameter['_AdditionalMet1GateRouting2']['_XYCoordinates'][-1][0][0],
                                                                                self._DesignParameter[
                                                                                    '_AdditionalMet32Met4OverGate3'][
                                                                                    '_XYCoordinates'][0][1]], [
@@ -2756,7 +2756,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                                                                                            self._DesignParameter[
                                                                                                '_VIAPMOS1Poly2Met1'][
                                                                                                '_XYCoordinates'][2][
-                                                                                               1]) / 2], [self._DesignParameter['_AdditionalMet1GateRouting2']['_XYCoordinates'][-1][0][0], (
+                                                                                               1]) / 2], [self._DesignParameter['_AdditionalMet1GateRouting2']['_XYCoordinates'][0][0][0], (
                                                                                               self._DesignParameter[
                                                                                                   '_VIAPMOS1Poly2Met1'][
                                                                                                   '_XYCoordinates'][0][

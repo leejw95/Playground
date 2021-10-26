@@ -752,8 +752,9 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                     self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][1] + 
                                                                     self._DesignParameter['_ViaMet12Met2OnRes1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2],
                                                                     [self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][0],
-                                                                    self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][1] -
-                                                                    self._DesignParameter['_ViaMet12Met2OnRes1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2]]]
+                                                                    self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][1] +
+                                                                    self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'][0][1] -
+                                                                    self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2]]]
                                                                     
 
         self._DesignParameter['_Met3LayerPMOSResAX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=100)

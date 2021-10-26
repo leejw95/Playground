@@ -869,7 +869,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    # import random
+    import random
     #
     # for tries in range (0, 100) :
     #     i = random.randint(4,30)
@@ -884,7 +884,7 @@ if __name__ == '__main__':
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
 
     # 20Gb/s Slicer Sizing ##
-    _XRBNum = 4
+    _XRBNum = 1
     _YRBNum = 8
     _TransmissionGateFinger = 8
     _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
@@ -1050,14 +1050,14 @@ if __name__ == '__main__':
 
     print ('###############      Sending to FTP Server...      ##################')
 
-    # import base64
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+    import base64
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    myfile.close()
+    ftp.close()
 
     import ftplib
 

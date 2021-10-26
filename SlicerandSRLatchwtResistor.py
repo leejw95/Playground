@@ -869,7 +869,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    # import random
+    import random
     #
     # for tries in range (0, 100) :
     #     i = random.randint(4,30)

@@ -929,7 +929,7 @@ if __name__ == '__main__':
         # _SRNMOSChannelWidth1 = _SRrandwidth
         # _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio
         # _SRNMOSChannelWidth2 = _SRrandwidth
-        # _SRPMOSChannelWidth2 = _SRrandwidth * _NPRatio
+        # _SRPMOSChannelWidth2 = _SRrandwidth * _NPRatio##
         # _SRNMOSChannelWidth3 = _SRrandwidth
         # _SRPMOSChannelWidth3 = _SRrandwidth * _NPRatio
         # _SRNMOSChannelWidth4 = _SRrandwidth

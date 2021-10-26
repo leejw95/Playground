@@ -946,7 +946,7 @@ if __name__ == '__main__':
         # _SRNumViaPoly2Met1CoY = None
         # _SRNumViaPMOSMet12Met2CoX = None
         # _SRNumViaPMOSMet12Met2CoY = None
-        # _SRNumViaNMOSMet12Met2CoX = None
+        # _SRNumViaNMOSMet12Met2CoX = None##
         # _SRNumViaNMOSMet12Met2CoY = None
         # _SRNumViaPMOSMet22Met3CoX = None
         # _SRNumViaPMOSMet22Met3CoY = None

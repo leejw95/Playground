@@ -261,8 +261,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
                                                                # + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met6LayerVRX']['_XYCoordinates'][-1][0][0] +
                                                                # self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_XINp']['_Ignore'] + self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] // 2,
                                                                abs(self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][0] +
-                                                                   self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layery'][
-                                                                       '_XYCoordinates'][1][0]) +
+                                                                   self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0]) +
                                                                _SLGuardringWidth // 2,
                                                                _ResistorBankOrigin[0][1] - self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_YINp']['_Ignore']
                                                                + (self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore'] * (_NumberofSlicerWithSRLatch - 1) / 2)
@@ -870,6 +869,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         del tmp
 
 
+
 if __name__ == '__main__':
     import random
 
@@ -887,7 +887,7 @@ if __name__ == '__main__':
 
 
         _XRBNum = random.randint(1,5)
-        _YRBNum = 2# random.randint(1,20)
+        _YRBNum = random.randint(1,20)
         _TransmissionGateFinger = random.randint(2,15)
         _TransmissionGateChannelWidth = random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30

@@ -751,6 +751,9 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
             self._DesignParameter['_AdditionalLineVDDMet4']['_Width'] = self._DesignParameter['_Met4VDDRouting']['_Width']
             self._DesignParameter['_AdditionalLineVDDMet4']['_XYCoordinates'] = [[self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][0][0], [self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Met5VDDRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Met5VDDRouting']['_Width'] // 2]], [self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][1][0], [self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][1][0][0], self._DesignParameter['_Met5VDDRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Met5VDDRouting']['_Width'] // 2]]]
 
+            self._DesignParameter['_AdditionalLineVDDMet6'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=400)
+            self._DesignParameter['_AdditionalLineVDDMet6']['_Width'] = self._DesignParameter['_Met6VDDRouting']['_Width']
+            self._DesignParameter['_AdditionalLineVDDMet6']['_XYCoordinates'] = [[self._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0], [self._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Met5VDDRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Met5VDDRouting']['_Width'] // 2]], [self._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0], [self._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Met5VDDRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Met5VDDRouting']['_Width'] // 2]]]
 
 
 

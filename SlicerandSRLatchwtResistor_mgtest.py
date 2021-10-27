@@ -870,6 +870,9 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     import random
+    import sys
+
+    sys.stdout = open('DRCtestresult.txt', 'w')
 
     for tries in range (0, 50) :
     #     i = random.randint(4,30)
@@ -898,7 +901,7 @@ if __name__ == '__main__':
         _PowerLine = True  # T/F?
         _InputLine = False
 
-        _ResistorWidth = random.randrange(950,2000,50)
+        _ResistorWidth = random.randrange(400,2000,50)
         _ResistorLength = random.randrange(400,2000,50)  ## minimum : 400
         _ResistorMetXCO = None
         _ResistorMetYCO = None
@@ -1109,3 +1112,4 @@ if __name__ == '__main__':
     #     a.DRCchecker()
     #
     print ("DRC Clean!!!")
+    sys.stdout.close()

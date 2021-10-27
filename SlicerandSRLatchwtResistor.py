@@ -885,7 +885,7 @@ if __name__ == '__main__':
 
     # 20Gb/s Slicer Sizing ##
     _XRBNum = 1
-    _YRBNum = 8
+    _YRBNum = 4
     _TransmissionGateFinger = 8
     _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
@@ -974,7 +974,7 @@ if __name__ == '__main__':
     _SLNumVIAMet12COX = None
     _SLNumVIAMet12COY = None
     _SLPowerLine = True
-    _N = 5
+    _N = 1
     _InvFinger = 16
     _InvChannelWidth = 200
     _InvChannelLength = 30

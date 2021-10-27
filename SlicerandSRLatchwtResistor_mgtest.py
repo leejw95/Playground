@@ -884,8 +884,8 @@ if __name__ == '__main__':
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
 
 
-        _XRBNum = random.randint(1,5)
-        _YRBNum = 2# random.randint(1,20)
+        _XRBNum = random.randint(1,10)
+        _YRBNum = random.randint(2,20)
         _TransmissionGateFinger = random.randint(2,15)
         _TransmissionGateChannelWidth = random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30

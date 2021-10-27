@@ -261,9 +261,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
                                                                # + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met6LayerVRX']['_XYCoordinates'][-1][0][0] +
                                                                # self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_XINp']['_Ignore'] + self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] // 2,
                                                                abs(self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][0] +
-                                                                   self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layery'][
-                                                                       '_XYCoordinates'][1][0]) +
-                                                               _SLGuardringWidth // 2,
+                                                                   self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0]) + _SLGuardringWidth//2,
                                                                _ResistorBankOrigin[0][1] - self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_YINp']['_Ignore']
                                                                + (self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore'] * (_NumberofSlicerWithSRLatch - 1) / 2)
                                                                + _CenterofVRX]]
@@ -873,7 +871,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 if __name__ == '__main__':
     import random
 
-    for tries in range (0, 101) :
+    for tries in range (0, 50) :
     #     i = random.randint(4,30)
     #     j = random.randint(4,60)
     #     k = random.randint(2,15)
@@ -885,22 +883,23 @@ if __name__ == '__main__':
     #         m += 1
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
 
-        #20Gb/s Slicer Sizing ##
-        _XRBNum = 4
-        _YRBNum = 8
-        _TransmissionGateFinger = 8
-        _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
+
+        _XRBNum = random.randint(1,5)
+        _YRBNum = 2# random.randint(1,20)
+        _TransmissionGateFinger = random.randint(2,15)
+        _TransmissionGateChannelWidth = random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30
         _TransmissionGateNPRatio = 2  ##Default = 2
         _TransmissionGateDummy = True  # T/F?
-        _TransmissionGateVDD2VSSHeight = 2426  ## FIXED
+        _TransmissionGateVDD2VSSHeight = 4000  ## FIXED
         _TransmissionGateSLVT = True  # T/F?
+
 
         _PowerLine = True  # T/F?
         _InputLine = False
 
-        _ResistorWidth = 1250
-        _ResistorLength = 1234  ## minimum : 400
+        _ResistorWidth = random.randrange(400,2000,50)
+        _ResistorLength = random.randrange(400,2000,50)  ## minimum : 400
         _ResistorMetXCO = None
         _ResistorMetYCO = None
 
@@ -924,17 +923,18 @@ if __name__ == '__main__':
         _SRFinger4 = random.randint(2,15)
 
         _SRrandwidth = random.randrange(200, 400, 50)
-        _NPRatio = 2 + random.random() ## 2~3
+        _NPRatio = round(2 + random.random())###random.randrange(2,3, 0.1)
 
         _SRNMOSChannelWidth1 = _SRrandwidth
         _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio
         _SRNMOSChannelWidth2 = _SRrandwidth
-        _SRPMOSChannelWidth2 = _SRrandwidth * _NPRatio##
+        _SRPMOSChannelWidth2 = _SRrandwidth * _NPRatio
         _SRNMOSChannelWidth3 = _SRrandwidth
         _SRPMOSChannelWidth3 = _SRrandwidth * _NPRatio
         _SRNMOSChannelWidth4 = _SRrandwidth
         _SRPMOSChannelWidth4 = _SRrandwidth * _NPRatio
         _SRChannelLength = 30
+
         _SRNPRatio = None
         _SRVDD2VSSHeightAtOneSide = None
         _SRDummy = True
@@ -954,15 +954,16 @@ if __name__ == '__main__':
         _SRNumViaNMOSMet22Met3CoY = None
         _SRSLVT = True
         _SRPowerLine = True
-        _SLCLKinputPMOSFinger1 = random.randint(1, 15)
-        _SLCLKinputPMOSFinger2 = random.randint(1, 15)
-        _SLPMOSFinger = random.randint(1, 15)
-        _SLPMOSChannelWidth = random.randrange(200, 1050, 50)
-        _SLDATAinputNMOSFinger = random.randint(4, 15)
-        _SLNMOSFinger = random.randint(1, 15)
-        _SLCLKinputNMOSFinger = random.randint(1, 15)
-        _SLNMOSChannelWidth = random.randrange(200, 1050, 50)
-        _SLCLKinputNMOSChannelWidth = random.randrange(200, 1050, 50)
+        _SLCLKinputPMOSFinger1 = random.randint(1,15)
+        _SLCLKinputPMOSFinger2 = random.randint(1,15)
+        _SLPMOSFinger = random.randint(1,15)
+        _SLPMOSChannelWidth = random.randrange(200,1050,50)
+        _SLDATAinputNMOSFinger = random.randint(4,15)
+        _SLNMOSFinger = random.randint(1,15)
+        _SLCLKinputNMOSFinger = random.randint(1,15)
+        _SLNMOSChannelWidth = random.randrange(200,1050,50)
+        _SLCLKinputNMOSChannelWidth = random.randrange(200,1050,50)
+
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True
@@ -980,11 +981,19 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = random.randint(1,16)
-        _InvFinger = random.randint(5,16)
+        _N = random.randint(1,20)
+        _InvFinger = random.randint(5,20)
+        print('_XRBNum:',_XRBNum, '_YRBNum:',_YRBNum, '_TransmissionGateFinger:',_TransmissionGateFinger,'_TransmissionGateChannelWidth:',_TransmissionGateChannelWidth)
+        print('_ResistorWidth:',_ResistorWidth, '_ResistorLength:',_ResistorLength)
+        print('_SRFinger1:',_SRFinger1, '_SRFinger2:',_SRFinger2, '_SRFinger3:',_SRFinger3,'_SRFinger4:',_SRFinger4,
+              '_SRrandwidth:',_SRrandwidth, '_NPRatio:',_NPRatio, '_SRNMOSChannelWidth1:',_SRNMOSChannelWidth1, '_SRPMOSChannelWidth1:',_SRPMOSChannelWidth1)
+        print('_SLCLKinputPMOSFinger1:',_SLCLKinputPMOSFinger1, '_SLCLKinputPMOSFinger2:',_SLCLKinputPMOSFinger2, '_SLPMOSFinger:',_SLPMOSFinger)
+        print('_SLPMOSChannelWidth:',_SLPMOSChannelWidth, '_SLDATAinputNMOSFinger:',_SLDATAinputNMOSFinger, '_SLNMOSFinger:',_SLNMOSFinger, '_SLCLKinputNMOSFinger:',_SLCLKinputNMOSFinger,
+              '_SLNMOSChannelWidth:',_SLNMOSChannelWidth, '_SLCLKinputNMOSChannelWidth:',_SLCLKinputNMOSChannelWidth)
+        print('_N:',_N,'_InvFinger:',_InvFinger)
         _InvChannelWidth = 200
         _InvChannelLength = 30
-        _InvNPRatio = 2 + random.random() ## 2~3
+        _InvNPRatio = 3
         _InvVDD2VSSHeight = None
         _InvDummy = True
         _InvNumSupplyCoX = None
@@ -1000,121 +1009,8 @@ if __name__ == '__main__':
         _InvSLVT = True
         _InvPowerLine = None
         _SLSRInvSupplyLineX4 = True
-        #
-        # _XRBNum = 1
-        # _YRBNum = 20
-        # _TransmissionGateFinger = 8
-        # _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
-        # _TransmissionGateChannelLength = 30
-        # _TransmissionGateNPRatio = 2  ##Default = 2
-        # _TransmissionGateDummy = True  # T/F?
-        # _TransmissionGateVDD2VSSHeight = 2426  ## FIXED
-        # _TransmissionGateSLVT = True  # T/F?
-        #
-        # _PowerLine = True  # T/F?
-        # _InputLine = False
-        #
-        # _ResistorWidth = 1250
-        # _ResistorLength = 1234  ## minimum : 400
-        # _ResistorMetXCO = None
-        # _ResistorMetYCO = None
-        #
-        # _PMOSSubringType = False  ## FIXED
-        # _PMOSSubringXWidth = None  ## FIXED
-        # _PMOSSubringYWidth = None  ## FIXED
-        # _PMOSSubringWidth = 170
-        #
-        # _NMOSSubringType = True  ## FIXED
-        # _NMOSSubringXWidth = None  ## FIXED
-        # _NMOSSubringYWidth = None  ## FIXED
-        # _NMOSSubringWidth = _PMOSSubringWidth
-        #
-        # _TotalSubringType = True  ## FIXED
-        # _TotalSubringXWidth = None  ## FIXED
-        # _TotalSubringYWidth = None  ## FIXED
-        # _TotalSubringWidth = _PMOSSubringWidth
-        # _SRFinger1 = random.randint(2,15)
-        # _SRFinger2 = random.randint(2,15)
-        # _SRFinger3 = random.randint(2,15)
-        # _SRFinger4 = random.randint(2,15)
-        #
-        # _SRrandwidth = random.randrange(200, 400, 50)
-        # _NPRatio = 2 + random.random()###random.randrange(2,3, 0.1)
-        #
-        # _SRNMOSChannelWidth1 = _SRrandwidth
-        # _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio
-        # _SRNMOSChannelWidth2 = _SRrandwidth
-        # _SRPMOSChannelWidth2 = _SRrandwidth * _NPRatio
-        # _SRNMOSChannelWidth3 = _SRrandwidth
-        # _SRPMOSChannelWidth3 = _SRrandwidth * _NPRatio
-        # _SRNMOSChannelWidth4 = _SRrandwidth
-        # _SRPMOSChannelWidth4 = _SRrandwidth * _NPRatio
-        # _SRChannelLength = 30
-        # _SRNPRatio = None
-        # _SRVDD2VSSHeightAtOneSide = None
-        # _SRDummy = True
-        # _SRNumSupplyCoX = None
-        # _SRNumSupplyCoY = 2
-        # _SRSupplyMet1XWidth = None
-        # _SRSupplyMet1YWidth = None
-        # _SRNumViaPoly2Met1CoX = None
-        # _SRNumViaPoly2Met1CoY = None
-        # _SRNumViaPMOSMet12Met2CoX = None
-        # _SRNumViaPMOSMet12Met2CoY = None
-        # _SRNumViaNMOSMet12Met2CoX = None
-        # _SRNumViaNMOSMet12Met2CoY = None
-        # _SRNumViaPMOSMet22Met3CoX = None
-        # _SRNumViaPMOSMet22Met3CoY = None
-        # _SRNumViaNMOSMet22Met3CoX = None
-        # _SRNumViaNMOSMet22Met3CoY = None
-        # _SRSLVT = True
-        # _SRPowerLine = True
-        # _SLCLKinputPMOSFinger1 = 6
-        # _SLCLKinputPMOSFinger2 = 3
-        # _SLPMOSFinger = 2
-        # _SLPMOSChannelWidth = 1000
-        # _SLDATAinputNMOSFinger = 12
-        # _SLNMOSFinger = 2
-        # _SLCLKinputNMOSFinger = 8
-        # _SLNMOSChannelWidth = 1000
-        # _SLCLKinputNMOSChannelWidth = 1000
-        # _SLChannelLength = 30
-        # _SLDummy = True
-        # _SLSLVT = True
-        # _SLGuardringWidth = 200
-        # _SLGuardring = True
-        # _SLSlicerGuardringWidth = 200
-        # _SLSlicerGuardring = None
-        # _SLNumSupplyCOY = None
-        # _SLNumSupplyCOX = None
-        # _SLSupplyMet1XWidth = None
-        # _SLSupplyMet1YWidth = None
-        # _SLVDD2VSSHeight = None
-        # _SLNumVIAPoly2Met1COX = None
-        # _SLNumVIAPoly2Met1COY = None
-        # _SLNumVIAMet12COX = None
-        # _SLNumVIAMet12COY = None
-        # _SLPowerLine = True
-        # _N = 11
-        # _InvFinger = 16
-        # _InvChannelWidth = 200
-        # _InvChannelLength = 30
-        # _InvNPRatio = 3
-        # _InvVDD2VSSHeight = None
-        # _InvDummy = True
-        # _InvNumSupplyCoX = None
-        # _InvNumSupplyCoY = None
-        # _InvSupplyMet1XWidth = None
-        # _InvSupplyMet1YWidth = None
-        # _InvNumViaPoly2Met1CoX = None
-        # _InvNumViaPoly2Met1CoY = None
-        # _InvNumViaPMOSMet12Met2CoX = None
-        # _InvNumViaPMOSMet12Met2CoY = None
-        # _InvNumViaNMOSMet12Met2CoX = None
-        # _InvNumViaNMOSMet12Met2CoY = None
-        # _InvSLVT = True
-        # _InvPowerLine = None
-        # _SLSRInvSupplyLineX4 = True
+
+
 
 
         DesignParameters._Technology = '028nm'
@@ -1181,22 +1077,22 @@ if __name__ == '__main__':
         # myfile.close()
         # ftp.close()
 
-        # import ftplib
-        #
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('myungguk', 'vmfl!225')
-        # ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
-        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        # myfile.close()
-        #ftp.close()
+        import ftplib
 
         ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        ftp.login('myungguk', 'vmfl!225')
+        ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
         myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         myfile.close()
+        ftp.close()
+
+        # ftp = ftplib.FTP('141.223.22.156')
+        # ftp.login('jicho0927', 'cho89140616!!')
+        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        # myfile.close()
 
         print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
 
@@ -1204,12 +1100,12 @@ if __name__ == '__main__':
         # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
         # a.DRCchecker()
         #
-        # import DRCchecker
-        # a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-        # a.DRCchecker()
-
         import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
         a.DRCchecker()
 
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+    #     a.DRCchecker()
+    #
     print ("DRC Clean!!!")

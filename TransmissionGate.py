@@ -267,8 +267,13 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             _NumVIAPoly2Met1COX = tmp4X_P
         if _NumVIAPoly2Met1COY == None:
             _NumVIAPoly2Met1COY = 1
-        _ViaPMOSPoly2Met1['_ViaPoly2Met1NumberOfCOX'] = _NumVIAPoly2Met1COX
-        _ViaPMOSPoly2Met1['_ViaPoly2Met1NumberOfCOY'] = _NumVIAPoly2Met1COY
+        
+        if (_Finger == 1) :
+            _ViaPMOSPoly2Met1['_ViaPoly2Met1NumberOfCOX'] = 1
+            _ViaPMOSPoly2Met1['_ViaPoly2Met1NumberOfCOY'] = 1
+        else :
+            _ViaPMOSPoly2Met1['_ViaPoly2Met1NumberOfCOX'] = _NumVIAPoly2Met1COX
+            _ViaPMOSPoly2Met1['_ViaPoly2Met1NumberOfCOY'] = _NumVIAPoly2Met1COY
 
 
         self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnPMOSControlIn{}'.format(_Name)))[0]
@@ -311,8 +316,14 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             _NumVIAPoly2Met1COX = tmp4X
         if _NumVIAPoly2Met1COY == None:
             _NumVIAPoly2Met1COY = 1
-        _ViaNMOSPoly2Met1['_ViaPoly2Met1NumberOfCOX'] = _NumVIAPoly2Met1COX
-        _ViaNMOSPoly2Met1['_ViaPoly2Met1NumberOfCOY'] = _NumVIAPoly2Met1COY
+
+        if (_Finger == 1) :
+            _ViaNMOSPoly2Met1['_ViaPoly2Met1NumberOfCOX'] = 1
+            _ViaNMOSPoly2Met1['_ViaPoly2Met1NumberOfCOY'] = 1
+
+        else :
+            _ViaNMOSPoly2Met1['_ViaPoly2Met1NumberOfCOX'] = _NumVIAPoly2Met1COX
+            _ViaNMOSPoly2Met1['_ViaPoly2Met1NumberOfCOY'] = _NumVIAPoly2Met1COY
 
 
         self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnNMOSControlIn{}'.format(_Name)))[0]
@@ -412,36 +423,36 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
             ## control via coordinate
 
-            if _Finger == 1 :
-                self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                                                                            max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
-                                                                            self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
-                                                                            self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-                                                                            +_DRCObj._Metal1MinSpace3]]
+            # if _Finger == 1 :
+            #     self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+            #                                                                 max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
+            #                                                                 self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
+            #                                                                     (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+            #                                                                 self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
+            #                                                                 +_DRCObj._Metal1MinSpace3]]
 
-                self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
-                                                                                    (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
+            #     self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
+            #                                                                         (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
+            #                                                                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
+            #                                                                             (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+            #                                                                         self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
+            #                                                                         +_DRCObj._Metal1MinSpace3)]]
+            # else : ## Recently editted
+            self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],
+                                                                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+                                                                                max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2 ,
+                                                                                self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2 +
+                                                                                    (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                                                                                self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2+
+                                                                            +_DRCObj._Metal1MinSpace2]]
+
+            self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],
+                                                                        self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
+                                                                                (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
                                                                                     self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-                                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
-                                                                                    self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-                                                                                    +_DRCObj._Metal1MinSpace3)]]
-            else :
-                self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],
-                                                                            self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                                                                                    max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2 ,
-                                                                                    self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2 +
-                                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
-                                                                                    self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2+
-                                                                                +_DRCObj._Metal1MinSpace2]]
-
-                self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],
-                                                                            self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
-                                                                                    (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
-                                                                                        self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-                                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
-                                                                                    self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-                                                                                    +_DRCObj._Metal1MinSpace2)]]
+                                                                                    (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                                                                                self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
+                                                                                +_DRCObj._Metal1MinSpace2)]]
 
 
             # if _Finger == 1 :

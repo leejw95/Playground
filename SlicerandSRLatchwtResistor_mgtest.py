@@ -870,6 +870,16 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         del tmp
 
 
+        self._DesignParameter['_AdditionalLineVDDMet6'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=400)
+        self._DesignParameter['_AdditionalLineVDDMet6']['_Width'] = self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VDDRouting']['_Width']
+        self._DesignParameter['_AdditionalLineVDDMet6']['_XYCoordinates'] = [[[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][1]], \
+                                                                              [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Met7LayerVDD']['_Width'] // 2]],
+                                                                             [[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][1]], \
+                                                                              [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Met7LayerVDD']['_XYCoordinates'][0][0][1] + self._DesignParameter['_Met7LayerVDD']['_Width'] // 2]]]
+
+
+
+
 if __name__ == '__main__':
     import random
 
@@ -1116,6 +1126,20 @@ if __name__ == '__main__':
         # _InvPowerLine = None
         # _SLSRInvSupplyLineX4 = True
 
+        print ("DRC Clean!!!")
+        print('_XRBNum:', _XRBNum, '_YRBNum:', _YRBNum, '_TransmissionGateFinger:', _TransmissionGateFinger,
+              '_TransmissionGateChannelWidth:', _TransmissionGateChannelWidth)
+        print('_ResistorWidth:', _ResistorWidth, '_ResistorLength:', _ResistorLength)
+        print('_SRFinger1:', _SRFinger1, '_SRFinger2:', _SRFinger2, '_SRFinger3:', _SRFinger3, '_SRFinger4:', _SRFinger4,
+              '_SRrandwidth:', _SRrandwidth, '_NPRatio:', _NPRatio, '_SRNMOSChannelWidth1:', _SRNMOSChannelWidth1,
+              '_SRPMOSChannelWidth1:', _SRPMOSChannelWidth1)
+        print('_SLCLKinputPMOSFinger1:', _SLCLKinputPMOSFinger1, '_SLCLKinputPMOSFinger2:', _SLCLKinputPMOSFinger2,
+              '_SLPMOSFinger:', _SLPMOSFinger)
+        print(
+        '_SLPMOSChannelWidth:', _SLPMOSChannelWidth, '_SLDATAinputNMOSFinger:', _SLDATAinputNMOSFinger, '_SLNMOSFinger:',
+        _SLNMOSFinger, '_SLCLKinputNMOSFinger:', _SLCLKinputNMOSFinger,
+        '_SLNMOSChannelWidth:', _SLNMOSChannelWidth, '_SLCLKinputNMOSChannelWidth:', _SLCLKinputNMOSChannelWidth)
+        print('_N:', _N, '_InvFinger:', _InvFinger)
 
         DesignParameters._Technology = '028nm'
 
@@ -1212,4 +1236,3 @@ if __name__ == '__main__':
         a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
         a.DRCchecker()
 
-    print ("DRC Clean!!!")

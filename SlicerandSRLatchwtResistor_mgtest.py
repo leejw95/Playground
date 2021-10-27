@@ -996,7 +996,7 @@ if __name__ == '__main__':
         print('_N:',_N,'_InvFinger:',_InvFinger)
         _InvChannelWidth = 200
         _InvChannelLength = 30
-        _InvNPRatio = 3
+        _InvNPRatio = round(2 + random.random())
         _InvVDD2VSSHeight = None
         _InvDummy = True
         _InvNumSupplyCoX = None

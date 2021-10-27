@@ -886,8 +886,8 @@ if __name__ == '__main__':
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
 
 
-        _XRBNum = random.randint(1,5)
-        _YRBNum = random.randint(1,20)
+        _XRBNum = random.randint(1,10)
+        _YRBNum = random.randint(2,20)
         _TransmissionGateFinger = random.randint(2,15)
         _TransmissionGateChannelWidth = random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30
@@ -918,13 +918,13 @@ if __name__ == '__main__':
         _TotalSubringXWidth = None  ## FIXED
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
-        _SRFinger1 = random.randint(2,15)
-        _SRFinger2 = random.randint(2,15)
-        _SRFinger3 = random.randint(2,15)
-        _SRFinger4 = random.randint(2,15)
+        _SRFinger1 = random.randint(1,15)
+        _SRFinger2 = random.randint(1,15)
+        _SRFinger3 = random.randint(1,15)
+        _SRFinger4 = random.randint(1,15)
 
         _SRrandwidth = random.randrange(200, 400, 50)
-        _NPRatio = 2 + random.random() ## 2~3
+        _NPRatio = round(2 + random.random()) ## 2~3
 
         _SRNMOSChannelWidth1 = _SRrandwidth
         _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio

@@ -873,7 +873,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 if __name__ == '__main__':
     import random
 
-    for tries in range (0, 500) :
+    for tries in range (0, 1) :
     #     i = random.randint(4,30)
     #     j = random.randint(4,60)
     #     k = random.randint(2,15)
@@ -886,8 +886,8 @@ if __name__ == '__main__':
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
 
 
-        _XRBNum = random.randint(1,10)
-        _YRBNum = random.randint(2,20)
+        _XRBNum = random.randint(1,5)
+        _YRBNum = random.randint(4,12)
         _TransmissionGateFinger = random.randint(2,15)
         _TransmissionGateChannelWidth = random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30
@@ -958,9 +958,9 @@ if __name__ == '__main__':
         _SLCLKinputPMOSFinger2 = random.randint(1, 15)
         _SLPMOSFinger = random.randint(1, 15)
         _SLPMOSChannelWidth = random.randrange(200, 1050, 50)
-        _SLDATAinputNMOSFinger = random.randint(4, 15)
-        _SLNMOSFinger = random.randint(1, 15)
-        _SLCLKinputNMOSFinger = random.randint(1, 15)
+        _SLDATAinputNMOSFinger = 3###random.randint(4, 15) # Larger than 3.
+        _SLNMOSFinger = 1###random.randint(1, 15)
+        _SLCLKinputNMOSFinger = 8###random.randint(1, 15)
         _SLNMOSChannelWidth = random.randrange(200, 1050, 50)
         _SLCLKinputNMOSChannelWidth = random.randrange(200, 1050, 50)
         _SLChannelLength = 30
@@ -1198,7 +1198,7 @@ if __name__ == '__main__':
         ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         myfile.close()
 
-        print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
+        print ('###############      DRC checking... {}/500      ##################'.format(tries + 1))
 
         # import DRCchecker
         # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerwtR_tst','SlicerandSRLatchwtResistor')
@@ -1208,8 +1208,8 @@ if __name__ == '__main__':
         # a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
         # a.DRCchecker()
 
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-        a.DRCchecker()
-
-    print ("DRC Clean!!!")
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")

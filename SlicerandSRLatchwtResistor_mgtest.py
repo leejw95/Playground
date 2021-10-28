@@ -478,10 +478,10 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 
         self._DesignParameter['_Met6Layer4VRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met6Layer4VRX']['_Width'] = self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth']
-        self._DesignParameter['_Met6Layer4VRX']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][1][0],
+        self._DesignParameter['_Met6Layer4VRX']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][0][0],
                                                                        self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][-1][0][1] +
                                                                        self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_Width'] // 2],
-                                                                      [self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][1][0],
+                                                                      [self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][0][0],
                                                                        self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][1] -
                                                                        self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_Width'] // 2]]]
 
@@ -980,7 +980,7 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = 8###random.randint(1,16)
+        _N = 1###random.randint(1,16)
         _InvFinger = 15####random.randint(5,16)
         _InvChannelWidth = 200
         _InvChannelLength = 30
@@ -1129,7 +1129,7 @@ if __name__ == '__main__':
         '_SLDATAinputNMOSFinger:', _SLDATAinputNMOSFinger, '_SLNMOSFinger:',
         _SLNMOSFinger, '_SLCLKinputNMOSFinger:', _SLCLKinputNMOSFinger,
         '_SLNMOSChannelWidth:', _SLNMOSChannelWidth, '_SLCLKinputNMOSChannelWidth:', _SLCLKinputNMOSChannelWidth)
-        print('_N:', _N, '_InvFinger:', _InvFinger)
+        print('_N:', _N, '_InvFinger:', _InvFinger, '_InvNMOSChannelWidth:', _InvChannelWidth, '_InvPMOSChannelWidth:', _InvNPRatio * _InvChannelWidth)
 
 
 

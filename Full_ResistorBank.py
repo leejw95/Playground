@@ -530,8 +530,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                     for i in range (0, _YRBNum) :
                         if i % 4 == 3 :
                             tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 -
-                                self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] * 2 
-                                - _DRCObj._MetalxMinSpace11 * (3 - _XRBNum) - self._DesignParameter['_Met6LayerVCM']['_Width'] * (3 - _XRBNum),
+                                self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] * 2,
                                 self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'][0][1] + self._DesignParameter['_Met5LayerVCM']['_Width'] // 2 + i * _ResistorSpaceY],
                                 [_ResistorBankOrigin[0][0] + _GapbtwOriginX  + _XRBNum * _ResistorSpaceX - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 +
                                 self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] * 2,
@@ -1047,8 +1046,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                     for i in range (0, _YRBNum) :
                         if i % 4 == 1 :
                             tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 -
-                                self._DesignParameter['_Met4LayerVSS']['_Width']
-                                 - _DRCObj._MetalxMinSpace11 * (3 - _XRBNum) - self._DesignParameter['_Met6LayerVCM']['_Width'] * (3 - _XRBNum),
+                                self._DesignParameter['_Met4LayerVSS']['_Width'],
                                 self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'][0][1] + self._DesignParameter['_Met5LayerVCM']['_Width'] // 2 + i * _ResistorSpaceY],
                                 [_ResistorBankOrigin[0][0] + _GapbtwOriginX  + _XRBNum * _ResistorSpaceX - self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] // 2 +
                                 self._DesignParameter['_Met4LayerVSS']['_Width'],
@@ -1783,22 +1781,22 @@ if __name__ == '__main__' :
     #     if m % 2 == 1 :
     #         m += 1
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
-    _XRBNum = 1
-    _YRBNum = 4
+    _XRBNum = 6
+    _YRBNum = 6
     
-    _TransmissionGateFinger = 6
-    _TransmissionGateChannelWidth = 275 ##200nm ~ 500nm range
+    _TransmissionGateFinger = 5
+    _TransmissionGateChannelWidth = 500 ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 2426 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 3336 ## FIXED
     _TransmissionGateSLVT = True     #T/F?
 
     _PowerLine = True # T/F?
     _InputLine = False
 
-    _ResistorWidth = 1250
-    _ResistorLength = 1234    ## minimum : 400 1234
+    _ResistorWidth = 2000
+    _ResistorLength = 1000    ## minimum : 400 1234
     _ResistorMetXCO = None
     _ResistorMetYCO = None
 

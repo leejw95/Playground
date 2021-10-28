@@ -254,6 +254,60 @@ class _ViaMet32Met4(StickDiagram._StickDiagram):
         print ('                                    {}  ViaMet32Met4 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
+
+    def _CalculateDesignParameterSameEnclosure(self, _ViaMet32Met4NumberOfCOX=None, _ViaMet32Met4NumberOfCOY=None):
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet32Met4 Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
+
+        ###############################################Check the number of CO On Via Contact###########################################################################################
+        if _ViaMet32Met4NumberOfCOX == 0 or _ViaMet32Met4NumberOfCOY == 0:
+            print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
+            if DesignParameters._DebugMode == 0:
+                return 0
+        ###############################################################################################################################################################################
+        _DRCObj = DRC.DRC()
+        _XYCoordinateOfViaMet32Met4 = [[0, 0]]
+
+        print ('#############################     Met3 Layer Calculation   ##############################################')
+        _LengthViaMet32Met4BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet32Met4NumberOfCOX, NumOfVIAxY=_ViaMet32Met4NumberOfCOY)
+        self._DesignParameter['_Met3Layer']['_XYCoordinates'] = _XYCoordinateOfViaMet32Met4
+        self._DesignParameter['_Met3Layer']['_XWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet32Met4NumberOfCOX - 1) * _LengthViaMet32Met4BtwCO + 2 * max([_DRCObj._Metal1MinEnclosureVia3,_DRCObj._MetalxMinEnclosureVia3])
+        self._DesignParameter['_Met3Layer']['_YWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet32Met4NumberOfCOY - 1) * _LengthViaMet32Met4BtwCO + 2 * max([_DRCObj._Metal1MinEnclosureVia3,_DRCObj._MetalxMinEnclosureVia3])
+
+        print ('#############################     Met2 Layer Calculation   ##############################################')
+        _LengthViaMet32Met4BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet32Met4NumberOfCOX, NumOfVIAxY=_ViaMet32Met4NumberOfCOY)
+        self._DesignParameter['_Met4Layer']['_XYCoordinates'] = _XYCoordinateOfViaMet32Met4
+        self._DesignParameter['_Met4Layer']['_XWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet32Met4NumberOfCOX - 1) * _LengthViaMet32Met4BtwCO + 2 * max([_DRCObj._Metal1MinEnclosureVia3,_DRCObj._MetalxMinEnclosureVia3])
+        self._DesignParameter['_Met4Layer']['_YWidth'] = _DRCObj._VIAxMinWidth + (_ViaMet32Met4NumberOfCOY - 1) * _LengthViaMet32Met4BtwCO + 2 * max([_DRCObj._Metal1MinEnclosureVia3,_DRCObj._MetalxMinEnclosureVia3])
+
+        print ('#############################     Cont Layer Calculation   ##############################################')
+        tmp = []
+        self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._VIAxMinWidth
+        self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._VIAxMinWidth
+        _LengthViaMet32Met4BtwCO = _DRCObj._VIAxMinWidth + _DRCObj.DRCVIAxMinSpace(NumOfVIAxX=_ViaMet32Met4NumberOfCOX, NumOfVIAxY=_ViaMet32Met4NumberOfCOY)
+        for i in range(0, _ViaMet32Met4NumberOfCOX):
+            for j in range(0, _ViaMet32Met4NumberOfCOY):
+                if (_ViaMet32Met4NumberOfCOX % 2) == 0 and (_ViaMet32Met4NumberOfCOY % 2) == 0:
+                    _xycoordinatetmp = [_XYCoordinateOfViaMet32Met4[0][0] - (_ViaMet32Met4NumberOfCOX / 2 - 0.5) * _LengthViaMet32Met4BtwCO + i * _LengthViaMet32Met4BtwCO,
+                                        _XYCoordinateOfViaMet32Met4[0][1] - (_ViaMet32Met4NumberOfCOY / 2 - 0.5) * _LengthViaMet32Met4BtwCO + j * _LengthViaMet32Met4BtwCO]
+                elif (_ViaMet32Met4NumberOfCOX % 2) == 0 and (_ViaMet32Met4NumberOfCOY % 2) == 1:
+                    _xycoordinatetmp = [_XYCoordinateOfViaMet32Met4[0][0] - (_ViaMet32Met4NumberOfCOX / 2 - 0.5) * _LengthViaMet32Met4BtwCO + i * _LengthViaMet32Met4BtwCO,
+                                        _XYCoordinateOfViaMet32Met4[0][1] - (_ViaMet32Met4NumberOfCOY - 1) / 2 * _LengthViaMet32Met4BtwCO + j * _LengthViaMet32Met4BtwCO]
+                elif (_ViaMet32Met4NumberOfCOX % 2) == 1 and (_ViaMet32Met4NumberOfCOY % 2) == 0:
+                    _xycoordinatetmp = [_XYCoordinateOfViaMet32Met4[0][0] - (_ViaMet32Met4NumberOfCOX - 1) / 2 * _LengthViaMet32Met4BtwCO + i * _LengthViaMet32Met4BtwCO,
+                                        _XYCoordinateOfViaMet32Met4[0][1] - (_ViaMet32Met4NumberOfCOY / 2 - 0.5) * _LengthViaMet32Met4BtwCO + j * _LengthViaMet32Met4BtwCO]
+                elif (_ViaMet32Met4NumberOfCOX % 2) == 1 and (_ViaMet32Met4NumberOfCOY % 2) == 1:
+                    _xycoordinatetmp = [_XYCoordinateOfViaMet32Met4[0][0] - (_ViaMet32Met4NumberOfCOX - 1) / 2 * _LengthViaMet32Met4BtwCO + i * _LengthViaMet32Met4BtwCO,
+                                        _XYCoordinateOfViaMet32Met4[0][1] - (_ViaMet32Met4NumberOfCOY - 1) / 2 * _LengthViaMet32Met4BtwCO + j * _LengthViaMet32Met4BtwCO]
+                tmp.append(_xycoordinatetmp)
+        self._DesignParameter['_COLayer']['_XYCoordinates'] = tmp
+
+        print ('#########################################################################################################')
+        print ('                                    {}  ViaMet32Met4 Calculation End                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
+
+
 if __name__=='__main__':
     ViaMet32Met4Obj1=_ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4test1')
     ViaMet32Met4Obj1._CalculateViaMet32Met4DesignParameter(_ViaMet32Met4NumberOfCOX=3, _ViaMet32Met4NumberOfCOY=4 )

@@ -517,7 +517,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         self._DesignParameter['_Vrefpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1],
                                                                          _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
                                                                          _XYCoordinates=[[self._DesignParameter['_Met6LayerVref']['_XYCoordinates'][0][0][0],
-                                                                                          (self._DesignParameter['_Met6LayerVref']['_XYCoordinates'][0][0][1] - abs(self._DesignParameter['_Met6LayerVref']['_XYCoordinates'][0][1][1])) // 2]],
+                                                                                          (self._DesignParameter['_Met6LayerVref']['_XYCoordinates'][0][0][1])]], ###- abs(self._DesignParameter['_Met6LayerVref']['_XYCoordinates'][0][1][1])) // 2]],
                                                                          _Mag=0.5, _Angle=0, _TEXT='Vref')
 
         # self._DesignParameter['_PinCLK0'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK0')
@@ -886,10 +886,10 @@ if __name__ == '__main__':
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
 
 
-        _XRBNum = 3##random.randint(1,5)
-        _YRBNum = 11##random.randint(4,12)
-        _TransmissionGateFinger = 8##random.randint(2,15)
-        _TransmissionGateChannelWidth = 450##random.randrange(200,510,10)  ##200nm ~ 500nm range
+        _XRBNum = 4##random.randint(1,5)
+        _YRBNum = 8##random.randint(4,12)
+        _TransmissionGateFinger = 6##random.randint(2,15)
+        _TransmissionGateChannelWidth = 500##random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30
         _TransmissionGateNPRatio = 2  ##Default = 2
         _TransmissionGateDummy = True  # T/F?
@@ -899,8 +899,8 @@ if __name__ == '__main__':
         _PowerLine = True  # T/F?
         _InputLine = False
 
-        _ResistorWidth = 1500##random.randrange(1000,2000,50)
-        _ResistorLength = 800##random.randrange(400,2000,50)  ## minimum : 400
+        _ResistorWidth = 1300##random.randrange(1000,2000,50)
+        _ResistorLength = 1200##random.randrange(400,2000,50)  ## minimum : 400
         _ResistorMetXCO = None
         _ResistorMetYCO = None
 
@@ -918,13 +918,13 @@ if __name__ == '__main__':
         _TotalSubringXWidth = None  ## FIXED
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
-        _SRFinger1 = 6##random.randint(1,15)
+        _SRFinger1 = 7##random.randint(1,15)
         _SRFinger2 = 1##random.randint(1,15)
         _SRFinger3 = 3##random.randint(1,15)
-        _SRFinger4 = 5##random.randint(1,15)
+        _SRFinger4 = 3##random.randint(1,15)
 
-        _SRrandwidth = 320###random.randrange(200, 400, 50)
-        _NPRatio = 2.7###round(2 + random.random()) ## 2~3
+        _SRrandwidth = 250###random.randrange(200, 400, 50)
+        _NPRatio = 2###round(2 + random.random()) ## 2~3
 
         _SRNMOSChannelWidth1 = _SRrandwidth
         _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio
@@ -954,8 +954,8 @@ if __name__ == '__main__':
         _SRNumViaNMOSMet22Met3CoY = None
         _SRSLVT = True
         _SRPowerLine = True
-        _SLCLKinputPMOSFinger1 = 3##random.randint(1, 15)
-        _SLCLKinputPMOSFinger2 = 2##random.randint(1, 15)
+        _SLCLKinputPMOSFinger1 = 4##random.randint(1, 15)
+        _SLCLKinputPMOSFinger2 = 1##random.randint(1, 15)
         _SLPMOSFinger = 1##random.randint(1, 15)
         _SLPMOSChannelWidth = 1000##random.randrange(200, 1050, 50)
         _SLDATAinputNMOSFinger = 9###random.randint(4, 15) # Larger than 3.
@@ -980,7 +980,7 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = 8###random.randint(1,16)
+        _N = 3###random.randint(1,16)
         _InvFinger = 10####random.randint(5,16)
         _InvChannelWidth = 200
         _InvChannelLength = 30

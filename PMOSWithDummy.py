@@ -48,7 +48,11 @@ class _PMOS(StickDiagram._StickDiagram):
         print ('#########################################################################################################')
 
         _DRCObj=DRC.DRC()
-        _XYCoordinateOfPMOS = [[0,0]]
+
+        if _PMOSChannelWidth % 2 == 0:
+            _XYCoordinateOfPMOS = [[0, 0]]
+        elif _PMOSChannelWidth % 2 == 1:
+            _XYCoordinateOfPMOS = [[0, 0.5]]
 
         print ('#############################     POLY Layer Calculation    ##############################################')
         # POLY Layer XWidth and YWidth Setting
@@ -186,25 +190,48 @@ class _PMOS(StickDiagram._StickDiagram):
             if DesignParameters._DebugMode == 0:
                 return 0
 ##############################################################################################################################################################################
-        for i in range(0, _XNumberOfCOInPMOS):
-            for j in range(0, _YNumberOfCOInPMOS):
 
-                if (_XNumberOfCOInPMOS % 2) == 1 and (_YNumberOfCOInPMOS % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS - 1 ) / 2 * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
-                                        _XYCoordinateOfPMOS[0][1] -(_YNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
+        if _PMOSChannelWidth % 2 == 0:
+            for i in range(0, _XNumberOfCOInPMOS):
+                for j in range(0, _YNumberOfCOInPMOS):
+                    if (_XNumberOfCOInPMOS % 2) == 1 and (_YNumberOfCOInPMOS % 2) == 0:
+                        _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS - 1 ) / 2 * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
+                                            _XYCoordinateOfPMOS[0][1] -(_YNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
 
-                elif (_XNumberOfCOInPMOS % 2) == 1 and (_YNumberOfCOInPMOS% 2) == 1:
-                    _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS - 1 ) / 2 * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
-                                        _XYCoordinateOfPMOS[0][1] -(_YNumberOfCOInPMOS - 1) / 2 * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
+                    elif (_XNumberOfCOInPMOS % 2) == 1 and (_YNumberOfCOInPMOS% 2) == 1:
+                        _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS - 1 ) / 2 * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
+                                            _XYCoordinateOfPMOS[0][1] -(_YNumberOfCOInPMOS - 1) / 2 * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
 
-                elif (_XNumberOfCOInPMOS % 2)  == 0 and (_YNumberOfCOInPMOS % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
-                                        _XYCoordinateOfPMOS[0][1] -(_YNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
+                    elif (_XNumberOfCOInPMOS % 2)  == 0 and (_YNumberOfCOInPMOS % 2) == 0:
+                        _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
+                                            _XYCoordinateOfPMOS[0][1] -(_YNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
 
-                elif (_XNumberOfCOInPMOS % 2)  == 0 and (_YNumberOfCOInPMOS % 2) == 1:
-                    _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
-                                        _XYCoordinateOfPMOS[0][1] -(_YNumberOfCOInPMOS - 1) / 2 * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
-                tmp.append(_xycoordinatetmp)
+                    elif (_XNumberOfCOInPMOS % 2)  == 0 and (_YNumberOfCOInPMOS % 2) == 1:
+                        _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
+                                            _XYCoordinateOfPMOS[0][1] -(_YNumberOfCOInPMOS - 1) / 2 * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
+                    tmp.append(_xycoordinatetmp)
+
+        else:
+            for i in range(0, _XNumberOfCOInPMOS):
+                for j in range(0, _YNumberOfCOInPMOS):
+                    if (_XNumberOfCOInPMOS % 2) == 1 and (_YNumberOfCOInPMOS % 2) == 0:
+                        _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS - 1) / 2 * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
+                                            _XYCoordinateOfPMOS[0][1] + 0.5 - (_YNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
+
+                    elif (_XNumberOfCOInPMOS % 2) == 1 and (_YNumberOfCOInPMOS % 2) == 1:
+                        _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS - 1) / 2 * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
+                                            _XYCoordinateOfPMOS[0][1] - (_YNumberOfCOInPMOS - 1) / 2 * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
+
+                    elif (_XNumberOfCOInPMOS % 2) == 0 and (_YNumberOfCOInPMOS % 2) == 0:
+                        _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
+                                            _XYCoordinateOfPMOS[0][1] + 0.5 - (_YNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
+
+                    elif (_XNumberOfCOInPMOS % 2) == 0 and (_YNumberOfCOInPMOS % 2) == 1:
+                        _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - (_XNumberOfCOInPMOS / 2 - 0.5) * _LengthPMOSBtwMet1 + i * _LengthPMOSBtwMet1,
+                                            _XYCoordinateOfPMOS[0][1] - (_YNumberOfCOInPMOS - 1) / 2 * _LengthPMOSBtwCO + j * _LengthPMOSBtwCO]
+                    tmp.append(_xycoordinatetmp)
+
+
         self._DesignParameter['_COLayer']['_XYCoordinates']=tmp
 
 

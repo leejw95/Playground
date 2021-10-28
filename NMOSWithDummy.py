@@ -76,7 +76,10 @@ class _NMOS(StickDiagram._StickDiagram):
         print ('#########################################################################################################')
         _DRCObj = DRC.DRC()
 
-        _XYCoordinateOfNMOS = [[0, 0]]
+        if _NMOSChannelWidth % 2 == 0:
+            _XYCoordinateOfNMOS = [[0, 0]]
+        elif _NMOSChannelWidth % 2 == 1:
+            _XYCoordinateOfNMOS = [[0, 0.5]]
 
         print ('#############################     POLY Layer Calculation    ##############################################')
 
@@ -250,33 +253,62 @@ class _NMOS(StickDiagram._StickDiagram):
             if DesignParameters._DebugMode == 0:
                 return 0
         ###############################################################################################################################################################################
-        for i in range(0, _XNumberOfCOInNMOS):
-            for j in range(0, _YNumberOfCOInNMOS):
+        if _NMOSChannelWidth % 2 == 0:
+            for i in range(0, _XNumberOfCOInNMOS):
+                for j in range(0, _YNumberOfCOInNMOS):
 
-                if (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
+                    if (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 0:
+                        _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
+                                    _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                            _XYCoordinateOfNMOS[0][1] - (
+                                                        _YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+
+                    elif (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 1:
+                        _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
+                                    _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                            _XYCoordinateOfNMOS[0][1] - (
+                                                        _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+
+                    elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 0:
+                        _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
+                                    _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                            _XYCoordinateOfNMOS[0][1] - (
+                                                        _YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+
+                    elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 1:
+                        _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
+                                    _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                            _XYCoordinateOfNMOS[0][1] - (
+                                                        _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                    tmp.append(_xycoordinatetmp)
+        else:
+            for i in range(0, _XNumberOfCOInNMOS):
+                for j in range(0, _YNumberOfCOInNMOS):
+
+                    if (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 0:
+                        _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
                                 _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                        _XYCoordinateOfNMOS[0][1] - (
+                                            _XYCoordinateOfNMOS[0][1] + 0.5 - (
                                                     _YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
-                elif (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 1:
-                    _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
+                    elif (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 1:
+                        _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
                                 _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                        _XYCoordinateOfNMOS[0][1] - (
+                                            _XYCoordinateOfNMOS[0][1] - (
                                                     _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
-                elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
+                    elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 0:
+                        _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
                                 _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                        _XYCoordinateOfNMOS[0][1] - (
+                                            _XYCoordinateOfNMOS[0][1] + 0.5 - (
                                                     _YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
-                elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 1:
-                    _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
+                    elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 1:
+                        _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
                                 _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                        _XYCoordinateOfNMOS[0][1] - (
+                                            _XYCoordinateOfNMOS[0][1] - (
                                                     _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
-                tmp.append(_xycoordinatetmp)
+                    tmp.append(_xycoordinatetmp)
 
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmp
 
@@ -449,7 +481,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     _NMOSFinger = 5
-    _NMOSWidth = 333
+    _NMOSWidth = 443
     _NMOSChannelLength = 30
     _NMOSDummy = True
     _SLVT = True
@@ -463,7 +495,7 @@ if __name__ == '__main__':
     NMOSObj._CalculateNMOSDesignParameter(_NMOSNumberofGate=_NMOSFinger, _NMOSChannelWidth=_NMOSWidth,
                                           _NMOSChannellength=_NMOSChannelLength, _NMOSDummy=_NMOSDummy, _SLVT=_SLVT, _LVT=False, _HVT=False)
     NMOSObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NMOSObj._DesignParameter)
-    testStreamFile = open('./NMOSWithDummy.gds', 'wb')
+    testStreamFile = open('./NMOSWithDummy_test.gds', 'wb')
     tmp = NMOSObj._CreateGDSStream(NMOSObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
@@ -472,17 +504,18 @@ if __name__ == '__main__':
     import ftplib
 
     ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('NMOSWithDummy.gds', 'rb')
-    ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
+    ftp.login('myungguk', 'vmfl!225')
+    ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
+    myfile = open('NMOSWithDummy_test.gds', 'rb')
+    ftp.storbinary('STOR NMOSWithDummy_test.gds', myfile)
     myfile.close()
     ftp.close()
 
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('NMOSWithDummy.gds', 'rb')
-    ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
-    myfile.close()
-    ftp.close()
+
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login('junung', 'chlwnsdnd1!')
+    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # myfile = open('NMOSWithDummy.gds', 'rb')
+    # ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
+    # myfile.close()
+    # ftp.close()

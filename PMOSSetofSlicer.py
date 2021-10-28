@@ -767,7 +767,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ###########################################################################################################################################
             self._DesignParameter['_SLVTLayer'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0],_Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400)
             self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0]
-            self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
+            self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth'] + _DRCObj._MetalxMinWidth
             self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = [[(righttmp+lefttmp)/2, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]]
 
             ###########################################################################################################################################
@@ -775,7 +775,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ###########################################################################################################################################
             self._DesignParameter['_BPLayer'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0],_Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400)
             self._DesignParameter['_BPLayer']['_XWidth'] = self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0]
-            self._DesignParameter['_BPLayer']['_YWidth'] = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
+            self._DesignParameter['_BPLayer']['_YWidth'] = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth'] + _DRCObj._MetalxMinWidth
             self._DesignParameter['_BPLayer']['_XYCoordinates'] = [[(righttmp+lefttmp)/2, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]]
 
             #########################################################################################################################################

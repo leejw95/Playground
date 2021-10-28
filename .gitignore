@@ -3,4 +3,6 @@
 __pycache__
 *.pyc
 *.gds
+*.txt
+
 Private/

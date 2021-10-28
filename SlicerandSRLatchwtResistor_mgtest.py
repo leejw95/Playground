@@ -889,21 +889,21 @@ if __name__ == '__main__':
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
 
 
-        _XRBNum = 4##random.randint(1,5)
-        _YRBNum = 6##random.randint(4,12)
-        _TransmissionGateFinger = 6##random.randint(2,15)
-        _TransmissionGateChannelWidth = 300##random.randrange(200,510,10)  ##200nm ~ 500nm range
+        _XRBNum = 3##random.randint(1,5)
+        _YRBNum = 11##random.randint(4,12)
+        _TransmissionGateFinger = 12##random.randint(2,15)
+        _TransmissionGateChannelWidth = 320##random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30
         _TransmissionGateNPRatio = 2  ##Default = 2
         _TransmissionGateDummy = True  # T/F?
-        _TransmissionGateVDD2VSSHeight = 2556  ## FIXED
+        _TransmissionGateVDD2VSSHeight = 2566  ## FIXED
         _TransmissionGateSLVT = True  # T/F?
 
         _PowerLine = True  # T/F?
         _InputLine = False
 
-        _ResistorWidth = 1200##random.randrange(1000,2000,50)
-        _ResistorLength = 1000##random.randrange(400,2000,50)  ## minimum : 400
+        _ResistorWidth = 1890##random.randrange(1000,2000,50)
+        _ResistorLength = 1220##random.randrange(400,2000,50)  ## minimum : 400
         _ResistorMetXCO = None
         _ResistorMetYCO = None
 
@@ -921,12 +921,12 @@ if __name__ == '__main__':
         _TotalSubringXWidth = None  ## FIXED
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
-        _SRFinger1 = 6##random.randint(1,15)
-        _SRFinger2 = 5##random.randint(1,15)
+        _SRFinger1 = 4##random.randint(1,15)
+        _SRFinger2 = 2##random.randint(1,15)
         _SRFinger3 = 2##random.randint(1,15)
         _SRFinger4 = 8##random.randint(1,15)
 
-        _SRrandwidth = 210###random.randrange(200, 400, 50)
+        _SRrandwidth = 330###random.randrange(200, 400, 50)
         _NPRatio = 2###round(2 + random.random()) ## 2~3
 
         _SRNMOSChannelWidth1 = _SRrandwidth
@@ -957,15 +957,15 @@ if __name__ == '__main__':
         _SRNumViaNMOSMet22Met3CoY = None
         _SRSLVT = True
         _SRPowerLine = True
-        _SLCLKinputPMOSFinger1 = 7##random.randint(1, 15)
-        _SLCLKinputPMOSFinger2 = 3##random.randint(1, 15)
+        _SLCLKinputPMOSFinger1 = 4##random.randint(1, 15)
+        _SLCLKinputPMOSFinger2 = 4##random.randint(1, 15)
         _SLPMOSFinger = 8##random.randint(1, 15)
-        _SLPMOSChannelWidth = 400##random.randrange(200, 1050, 50)
-        _SLDATAinputNMOSFinger = 6###random.randint(4, 15) # Larger than 3.
-        _SLNMOSFinger = 5###random.randint(1, 15)
-        _SLCLKinputNMOSFinger = 3###random.randint(1, 15)
-        _SLNMOSChannelWidth = 800##random.randrange(200, 1050, 50)
-        _SLCLKinputNMOSChannelWidth = 380##random.randrange(200, 1050, 50)
+        _SLPMOSChannelWidth = 800##random.randrange(200, 1050, 50)
+        _SLDATAinputNMOSFinger = 4###random.randint(4, 15) # Larger than 3.
+        _SLNMOSFinger = 6###random.randint(1, 15)
+        _SLCLKinputNMOSFinger = 10###random.randint(1, 15)
+        _SLNMOSChannelWidth = 410##random.randrange(200, 1050, 50)
+        _SLCLKinputNMOSChannelWidth = 600##random.randrange(200, 1050, 50)
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True
@@ -983,8 +983,8 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = 12###random.randint(1,16)
-        _InvFinger = 15####random.randint(5,16)
+        _N = 14###random.randint(1,16)
+        _InvFinger = 12####random.randint(5,16)
         _InvChannelWidth = 200
         _InvChannelLength = 30
         _InvNPRatio = 2###round(2 + random.random())

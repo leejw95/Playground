@@ -1128,10 +1128,11 @@ if __name__ == '__main__':
         print('_SLCLKinputPMOSFinger1:', _SLCLKinputPMOSFinger1, '_SLCLKinputPMOSFinger2:', _SLCLKinputPMOSFinger2,
               '_SLPMOSFinger:', _SLPMOSFinger)
         print(
-        '_SLPMOSChannelWidth:', _SLPMOSChannelWidth, '_SLDATAinputNMOSFinger:', _SLDATAinputNMOSFinger, '_SLNMOSFinger:',
+        '_SLPMOSChannelWidth:', _SLPMOSChannelWidth, \
+        '_SLDATAinputNMOSFinger:', _SLDATAinputNMOSFinger, '_SLNMOSFinger:',
         _SLNMOSFinger, '_SLCLKinputNMOSFinger:', _SLCLKinputNMOSFinger,
         '_SLNMOSChannelWidth:', _SLNMOSChannelWidth, '_SLCLKinputNMOSChannelWidth:', _SLCLKinputNMOSChannelWidth)
-        print('_N:', _N, '_InvFinger:', _InvFinger)
+        print('_N:', _N, '_InvFinger:', _InvFinger, '_InvNMOSChannelWidth:', _InvChannelWidth, '_InvPMOSChannelWidth:', _InvNPRatio * _InvChannelWidth)
 
 
 

@@ -75,6 +75,86 @@ def MinMaxXY(Coordinates):
     return min(x_list), min(y_list), max(x_list), max(y_list)
 
 
+def getXYCoords_MinY(Coordinates):
+
+    XYList = []
+    referenceMinY = None
+
+    for XY in Coordinates:
+        if referenceMinY is None:         # initial
+            referenceMinY = XY[1]
+            XYList.append(XY)
+        else:
+            if XY[1] < referenceMinY:     # New MinimumY
+                referenceMinY = XY[1]
+                XYList = [XY]
+            elif XY[1] == referenceMinY:  # Same with MinimumY
+                XYList.append(XY)
+            else:                         # bigger than MinimumY
+                pass
+    return XYList
+
+
+def getXYCoords_MinX(Coordinates):
+
+    XYList = []
+    referenceMinX = None
+
+    for XY in Coordinates:
+        if referenceMinX is None:         # initial
+            referenceMinX = XY[0]
+            XYList.append(XY)
+        else:
+            if XY[0] < referenceMinX:     # New MinimumX
+                referenceMinX = XY[0]
+                XYList = [XY]
+            elif XY[0] == referenceMinX:  # Same with MinimumX
+                XYList.append(XY)
+            else:                         # bigger than MinimumX
+                pass
+    return XYList
+
+
+def getXYCoords_MaxX(Coordinates):
+
+    XYList = []
+    referenceMaxX = None
+
+    for XY in Coordinates:
+        if referenceMaxX is None:         # initial
+            referenceMaxX = XY[0]
+            XYList.append(XY)
+        else:
+            if XY[0] > referenceMaxX:     # New MaximumX
+                referenceMaxX = XY[0]
+                XYList = [XY]
+            elif XY[0] == referenceMaxX:  # Same with MaximumX
+                XYList.append(XY)
+            else:                         # smaller than MaximumX
+                pass
+    return XYList
+
+
+def getXYCoords_MaxY(Coordinates):
+
+    XYList = []
+    referenceMaxY = None
+
+    for XY in Coordinates:
+        if referenceMaxY is None:         # initial
+            referenceMaxY = XY[1]
+            XYList.append(XY)
+        else:
+            if XY[1] > referenceMaxY:     # New MaximumY
+                referenceMaxY = XY[1]
+                XYList = [XY]
+            elif XY[1] == referenceMaxY:  # Same with MaximumY
+                XYList.append(XY)
+            else:                         # smaller than MaximumY
+                pass
+    return XYList
+
+
 # testbench
 if __name__ == '__main__':
 
@@ -83,7 +163,7 @@ if __name__ == '__main__':
     #
     # results = Add(value1, value2)
 
-    XYCoordinates = [[3,5], [1,5], [-1,5], [4,5]]
-    results = FlipXs(XYCoordinates)
+    XYCoordinates = [[3,5], [1,5], [-1,5], [4,5], [0,-1], [0,-1], [-3,-1]]
+    results = getXYCoords_MinY(XYCoordinates)
 
     print(results)

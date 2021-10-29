@@ -328,14 +328,14 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         if _ResistorWidth % 2 == 1 and _ResistorLength % 2 == 0 :
             self._DesignParameter['_OpppcresRB']['_XYCoordinates'] = [
-                [self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] + 1 +self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
+                [self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] +self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
                 _NMOSSubringinputs['_Width'] + int(round(_NMOSSubringinputs['_XWidth'] + 0.5)) // 2 + _DRCObj._RXMinSpacetoPRES +
                 int(round(self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + 0.5)) // 2 - 1,
                 min(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2, self._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1])]]
 
         if _ResistorWidth % 2 == 1 and _ResistorLength % 2 == 1 :
             self._DesignParameter['_OpppcresRB']['_XYCoordinates'] = [
-                [self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] + 1 +self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
+                [self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] +self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
                 _NMOSSubringinputs['_Width'] + int(round(_NMOSSubringinputs['_XWidth'] + 0.5)) // 2 + _DRCObj._RXMinSpacetoPRES +
                 int(round(self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + 0.5)) // 2 - 1,
                 min(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2, self._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1])]]

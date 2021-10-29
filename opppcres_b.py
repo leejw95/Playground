@@ -153,11 +153,11 @@ class _Opppcres(StickDiagram._StickDiagram) :
                                                                               (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)//2 + _DRCObj._CoMinWidth//2)])
         
         if _ResWidth % 2 == 1 and _ResLength % 2 == 0 :
-            tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5, _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
+            tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
                                                                               (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)//2 + _DRCObj._CoMinWidth//2)])
 
         if _ResWidth % 2 == 1 and _ResLength % 2 == 1 :
-            tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5, _XYCoordinateOfOPRES[0][1] + 0.5 - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
+            tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] + 0.5 - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
                                                                               (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)//2 + _DRCObj._CoMinWidth//2)])
         self._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'] = tmp
         del tmp
@@ -171,7 +171,7 @@ class _Opppcres(StickDiagram._StickDiagram) :
                     (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
 
         if _ResWidth % 2 == 1 and _ResLength % 2 == 0 :
-            tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5, _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
+            tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
                     (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
 
         if _ResWidth % 2 == 0 and _ResLength % 2 == 1 :
@@ -179,7 +179,7 @@ class _Opppcres(StickDiagram._StickDiagram) :
                     (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
 
         if _ResWidth % 2 == 1 and _ResLength % 2 == 1 :
-            tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5 , _XYCoordinateOfOPRES[0][1] + 0.5 + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
+            tmp.append([_XYCoordinateOfOPRES[0][0] , _XYCoordinateOfOPRES[0][1] + 0.5 + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
                     (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
         self._DesignParameter['_XYCoordinatePort2Routing']['_XYCoordinates'] = tmp
         del tmp

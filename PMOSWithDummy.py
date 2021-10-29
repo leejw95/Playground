@@ -51,7 +51,7 @@ class _PMOS(StickDiagram._StickDiagram):
 
         if _PMOSChannelWidth % 2 == 0:
             _XYCoordinateOfPMOS = [[0, 0]]
-        elif _PMOSChannelWidth % 2 == 1:
+        else :
             _XYCoordinateOfPMOS = [[0, 0.5]]
 
         print ('#############################     POLY Layer Calculation    ##############################################')

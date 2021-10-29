@@ -35,7 +35,14 @@ class _Opppcres(StickDiagram._StickDiagram) :
         print ('#########################################################################################################')
 
         _DRCObj = DRC.DRC()
-        _XYCoordinateOfOPRES = [[0,0]]
+        if _ResWidth % 2 == 0 and _ResLength % 2 == 0 :
+            _XYCoordinateOfOPRES = [[0,0]]
+        elif _ResWidth % 2 == 0 and _ResLength % 2 == 1 :
+            _XYCoordinateOfOPRES = [[0,0.5]]
+        elif _ResWidth % 2 == 1 and _ResLength % 2 == 0 :
+            _XYCoordinateOfOPRES = [[0.5,0]]
+        elif _ResWidth % 2 == 1 and _ResLength % 2 == 1 :
+            _XYCoordinateOfOPRES = [[0.5,0.5]]    
 
         print ('#############################     OP Layer Calculation    ################################################')
         self._DesignParameter['_OPLayer']['_XWidth'] = _ResWidth + _DRCObj._OPlayeroverPoly * 2
@@ -74,18 +81,62 @@ class _Opppcres(StickDiagram._StickDiagram) :
         if _CONUMX > _CONUMXmax or _CONUMY > _CONUMYmax :
             raise NotImplementedError
 
-        for i in range (0, _CONUMX) :
-            for j in range (0, _CONUMY) :
-                if (_CONUMX % 2 == 0) :
-                    tmp.append([_XYCoordinateOfOPRES[0][0]-(_CONUMX//2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                _XYCoordinateOfOPRES[0][1]-(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                    tmp.append([_XYCoordinateOfOPRES[0][0]-(_CONUMX // 2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                _XYCoordinateOfOPRES[0][1]+(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                else :
-                    tmp.append([_XYCoordinateOfOPRES[0][0] - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
-                    tmp.append([_XYCoordinateOfOPRES[0][0] - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
-                                _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+        if _ResWidth % 2 == 0 and _ResLength % 2 == 0 :
+            for i in range (0, _CONUMX) :
+                for j in range (0, _CONUMY) :
+                    if (_CONUMX % 2 == 0) :
+                        tmp.append([_XYCoordinateOfOPRES[0][0]-(_CONUMX//2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1]-(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                        tmp.append([_XYCoordinateOfOPRES[0][0]-(_CONUMX // 2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1]+(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    else :
+                        tmp.append([_XYCoordinateOfOPRES[0][0] - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                        tmp.append([_XYCoordinateOfOPRES[0][0] - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+
+        elif _ResWidth % 2 == 0 and _ResLength % 2 == 1 :
+            for i in range (0, _CONUMX) :
+                for j in range (0, _CONUMY) :
+                    if (_CONUMX % 2 == 0) :
+                        tmp.append([_XYCoordinateOfOPRES[0][0]-(_CONUMX//2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] - 0.5 -(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                        tmp.append([_XYCoordinateOfOPRES[0][0]-(_CONUMX // 2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] + 0.5 +(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    else :
+                        tmp.append([_XYCoordinateOfOPRES[0][0] - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] - 0.5 - (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                        tmp.append([_XYCoordinateOfOPRES[0][0] - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] + 0.5 + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+        
+        if _ResWidth % 2 == 1 and _ResLength % 2 == 0 :
+            for i in range (0, _CONUMX) :
+                for j in range (0, _CONUMY) :
+                    if (_CONUMX % 2 == 0) :
+                        tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5 -(_CONUMX//2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1]-(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                        tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5-(_CONUMX // 2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1]+(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    else :
+                        tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5 - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                        tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5 - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+        
+        if _ResWidth % 2 == 1 and _ResLength % 2 == 1 :
+            for i in range (0, _CONUMX) :
+                for j in range (0, _CONUMY) :
+                    if (_CONUMX % 2 == 0) :
+                        tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5-(_CONUMX//2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] - 0.5 -(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                        tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5 -(_CONUMX // 2 - 0.5) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] + 0.5 +(self._DesignParameter['_OPLayer']['_YWidth']//2 +_DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                    else :
+                        tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5 - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] - 0.5 - (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+                        tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5 - (_CONUMX // 2) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + i * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace),
+                                    _XYCoordinateOfOPRES[0][1] + 0.5 + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)])
+        
 
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmp
 
@@ -93,7 +144,20 @@ class _Opppcres(StickDiagram._StickDiagram) :
 
         print ('#########################     Port1 Routing Coordinates Calculation    ####################################')
         tmp = []
-        tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
+        if _ResWidth % 2 == 0 and _ResLength % 2 == 0 :
+            tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
+                                                                              (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)//2 + _DRCObj._CoMinWidth//2)])
+                                                                              
+        if _ResWidth % 2 == 0 and _ResLength % 2 == 1 :
+            tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] + 0.5 - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
+                                                                              (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)//2 + _DRCObj._CoMinWidth//2)])
+        
+        if _ResWidth % 2 == 1 and _ResLength % 2 == 0 :
+            tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5, _XYCoordinateOfOPRES[0][1] - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
+                                                                              (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)//2 + _DRCObj._CoMinWidth//2)])
+
+        if _ResWidth % 2 == 1 and _ResLength % 2 == 1 :
+            tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5, _XYCoordinateOfOPRES[0][1] + 0.5 - (self._DesignParameter['_OPLayer']['_YWidth']//2 + _DRCObj._CoMinSpace2OP +
                                                                               (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)//2 + _DRCObj._CoMinWidth//2)])
         self._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'] = tmp
         del tmp
@@ -102,7 +166,20 @@ class _Opppcres(StickDiagram._StickDiagram) :
 
         print ('#########################     Port2 Routing Coordinates Calculation    ####################################')
         tmp = []
-        tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
+        if _ResWidth % 2 == 0 and _ResLength % 2 == 0 :
+            tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
+                    (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
+
+        if _ResWidth % 2 == 1 and _ResLength % 2 == 0 :
+            tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5, _XYCoordinateOfOPRES[0][1] + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
+                    (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
+
+        if _ResWidth % 2 == 0 and _ResLength % 2 == 1 :
+            tmp.append([_XYCoordinateOfOPRES[0][0], _XYCoordinateOfOPRES[0][1] + 0.5 + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
+                    (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
+
+        if _ResWidth % 2 == 1 and _ResLength % 2 == 1 :
+            tmp.append([_XYCoordinateOfOPRES[0][0] + 0.5 , _XYCoordinateOfOPRES[0][1] + 0.5 + (self._DesignParameter['_OPLayer']['_YWidth'] // 2 + _DRCObj._CoMinSpace2OP +
                     (_CONUMY - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) // 2 + _DRCObj._CoMinWidth // 2)])
         self._DesignParameter['_XYCoordinatePort2Routing']['_XYCoordinates'] = tmp
         del tmp
@@ -118,10 +195,10 @@ class _Opppcres(StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__' :
-    _ResWidth = 1250
-    _ResLength = 1234
-    _CONUMX = None
-    _CONUMY = None
+    _ResWidth = 1254
+    _ResLength = 1235
+    _CONUMX = 4
+    _CONUMY = 1
 
     DesignParameters._Technology = '028nm'
     #    print 'Technology Process', DesignParameters._Technology
@@ -134,9 +211,9 @@ if __name__ == '__main__' :
     testStreamFile.close()
 
     print ('###############################    Transporting to FTP server    ########################################')
-    ftp = ftplib.FTP('141.223.29.61')
+    ftp = ftplib.FTP('141.223.22.156')
     ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
     myfile = open('Opppcres_b.gds', 'rb')
     ftp.storbinary('STOR Opppcres_b.gds', myfile)
     myfile.close()

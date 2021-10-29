@@ -879,13 +879,13 @@ if __name__ == '__main__':
     # Fixed Parameter for DRC
     _XRBNum = 2
     _YRBNum = 18
-    _TransmissionGateFinger = 6
+    _TransmissionGateFinger = 1
     _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
-    _ResistorWidth = 1300
-    _ResistorLength = 1300  ## minimum : 400
-    _TransmissionGateVDD2VSSHeight = 200  ## FIXED
+    _ResistorWidth = 1805
+    _ResistorLength = 2000  ## minimum : 400
+    _TransmissionGateVDD2VSSHeight = 3498  ## FIXED
 
     _TransmissionGateDummy = True  # T/F?
     _TransmissionGateSLVT = True  # T/F?
@@ -906,17 +906,17 @@ if __name__ == '__main__':
     _TotalSubringYWidth = None  ## FIXED
     _TotalSubringWidth = _PMOSSubringWidth
 
-    _SRFinger1 = 8
-    _SRPMOSChannelWidth1 = 1000
+    _SRFinger1 = 4
+    _SRPMOSChannelWidth1 = 920
     _SRNMOSChannelWidth1 = _SRPMOSChannelWidth1//2
-    _SRFinger2 = 3
-    _SRPMOSChannelWidth2 = 400 # Inverter
+    _SRFinger2 = 6
+    _SRPMOSChannelWidth2 = 920 # Inverter
     _SRNMOSChannelWidth2 = _SRPMOSChannelWidth2//2 # Inverter
-    _SRFinger3 = 6
-    _SRPMOSChannelWidth3 = 400
+    _SRFinger3 = 3
+    _SRPMOSChannelWidth3 = 920
     _SRNMOSChannelWidth3 = _SRPMOSChannelWidth3//2
-    _SRFinger4 = 5
-    _SRPMOSChannelWidth4 = 400
+    _SRFinger4 = 7
+    _SRPMOSChannelWidth4 = 920
     _SRNMOSChannelWidth4 = _SRPMOSChannelWidth4//2
     _SRChannelLength = 30
 
@@ -967,7 +967,7 @@ if __name__ == '__main__':
     _SLNumVIAMet12COX = None
     _SLNumVIAMet12COY = None
     _SLPowerLine = True
-    _N = 1
+    _N = 15
     _InvChannelWidth = 200
     _InvChannelLength = 30
     _InvFinger = 8
@@ -1046,7 +1046,7 @@ if __name__ == '__main__':
     _InvSLVT=_InvSLVT, _InvPowerLine=_InvPowerLine, _SLSRInvSupplyLineX4=_SLSRInvSupplyLineX4)
 
     SlicerandSRLatchwtResistorObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerandSRLatchwtResistorObj._DesignParameter)
-    _fileName = 'SlicerandSRLatchwtResistor2.gds'
+    _fileName = 'SlicerandSRLatchwtResistor.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
     tmp = SlicerandSRLatchwtResistorObj._CreateGDSStream(SlicerandSRLatchwtResistorObj._DesignParameter['_GDSFile']['_GDSFile'])

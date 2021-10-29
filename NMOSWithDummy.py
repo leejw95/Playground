@@ -294,7 +294,7 @@ class _NMOS(StickDiagram._StickDiagram):
                     elif (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 1:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
                                 _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                            _XYCoordinateOfNMOS[0][1] - (
+                                            _XYCoordinateOfNMOS[0][1] + 0.5  - (
                                                     _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
                     elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 0:
@@ -306,7 +306,7 @@ class _NMOS(StickDiagram._StickDiagram):
                     elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 1:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
                                 _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                            _XYCoordinateOfNMOS[0][1] - (
+                                            _XYCoordinateOfNMOS[0][1] + 0.5  - (
                                                     _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
                     tmp.append(_xycoordinatetmp)
 

@@ -876,11 +876,11 @@ if __name__ == '__main__':
     #
     # sys.stdout = open('DRCtestresult.txt', 'w')
 
-    for tries in range (0, 500) :
-        _XRBNum = ##random.randint(1,5)
-        _YRBNum = ##random.randint(4,12)
-        _TransmissionGateFinger = ##random.randint(2,15)
-        _TransmissionGateChannelWidth = ##random.randrange(200,510,10)  ##200nm ~ 500nm range
+    for tries in range (0, 1) :
+        _XRBNum = 3##random.randint(1,5)
+        _YRBNum = 11##random.randint(4,12)
+        _TransmissionGateFinger = 4##random.randint(2,15)
+        _TransmissionGateChannelWidth = 250##random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30
         _TransmissionGateNPRatio = 2  ##Default = 2
         _TransmissionGateDummy = True  # T/F?
@@ -890,8 +890,8 @@ if __name__ == '__main__':
         _PowerLine = True  # T/F?
         _InputLine = False
 
-        _ResistorWidth = ##random.randrange(1000,2000,50)
-        _ResistorLength = ##random.randrange(400,2000,50)  ## minimum : 400
+        _ResistorWidth = 1200##random.randrange(1000,2000,50)
+        _ResistorLength = 800##random.randrange(400,2000,50)  ## minimum : 400
         _ResistorMetXCO = None
         _ResistorMetYCO = None
 
@@ -909,13 +909,13 @@ if __name__ == '__main__':
         _TotalSubringXWidth = None  ## FIXED
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
-        _SRFinger1 = ##random.randint(1,15)
-        _SRFinger2 = ##random.randint(1,15)
-        _SRFinger3 = ##random.randint(1,15)
-        _SRFinger4 = ##random.randint(1,15)
+        _SRFinger1 = 8##random.randint(1,15)
+        _SRFinger2 = 6##random.randint(1,15)
+        _SRFinger3 = 2##random.randint(1,15)
+        _SRFinger4 = 9##random.randint(1,15)
 
-        _SRrandwidth = ###random.randrange(200, 400, 50)
-        _NPRatio = ##round(2 + random.random()) ## 2~3
+        _SRrandwidth = 250###random.randrange(200, 400, 50)
+        _NPRatio = 2.7##round(2 + random.random()) ## 2~3
 
         _SRNMOSChannelWidth1 = _SRrandwidth
         _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio
@@ -945,15 +945,15 @@ if __name__ == '__main__':
         _SRNumViaNMOSMet22Met3CoY = None
         _SRSLVT = True
         _SRPowerLine = True
-        _SLCLKinputPMOSFinger1 = ##random.randint(1, 15)
-        _SLCLKinputPMOSFinger2 = ##random.randint(1, 15)
-        _SLPMOSFinger = ##random.randint(1, 15)
-        _SLPMOSChannelWidth = ###random.randrange(200, 1050, 50)
-        _SLDATAinputNMOSFinger = ###random.randint(4, 15) # Larger than 3.
-        _SLNMOSFinger = ###random.randint(1, 15)
-        _SLCLKinputNMOSFinger = ###random.randint(1, 15)
-        _SLNMOSChannelWidth = ##random.randrange(200, 1050, 50)
-        _SLCLKinputNMOSChannelWidth = ###random.randrange(200, 1050, 50)
+        _SLCLKinputPMOSFinger1 = 6##random.randint(1, 15)
+        _SLCLKinputPMOSFinger2 = 6##random.randint(1, 15)
+        _SLPMOSFinger = 2##random.randint(1, 15)
+        _SLPMOSChannelWidth = 950###random.randrange(200, 1050, 50)
+        _SLDATAinputNMOSFinger = 15###random.randint(4, 15) # Larger than 3.
+        _SLNMOSFinger = 13###random.randint(1, 15)
+        _SLCLKinputNMOSFinger = 13###random.randint(1, 15)
+        _SLNMOSChannelWidth = 650##random.randrange(200, 1050, 50)
+        _SLCLKinputNMOSChannelWidth = 400###random.randrange(200, 1050, 50)
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True
@@ -971,11 +971,11 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = ###random.randint(1,16)
-        _InvFinger = ###random.randint(5,16)
-        _InvChannelWidth = ###random.randrange(200,300,50)
+        _N = 11###random.randint(1,16)
+        _InvFinger = 8###random.randint(5,16)
+        _InvChannelWidth = 250###random.randrange(200,300,50)
         _InvChannelLength = 30
-        _InvNPRatio = ###round(2 + random.random())
+        _InvNPRatio = 2.9###round(2 + random.random())
         _InvVDD2VSSHeight = None
         _InvDummy = True
         _InvNumSupplyCoX = None
@@ -1007,7 +1007,7 @@ if __name__ == '__main__':
             '_SLPMOSChannelWidth:', _SLPMOSChannelWidth, '_SLDATAinputNMOSFinger:', _SLDATAinputNMOSFinger, '_SLNMOSFinger:',
             _SLNMOSFinger, '_SLCLKinputNMOSFinger:', _SLCLKinputNMOSFinger,
             '_SLNMOSChannelWidth:', _SLNMOSChannelWidth, '_SLCLKinputNMOSChannelWidth:', _SLCLKinputNMOSChannelWidth)
-        print('_N:', _N, '_InvFinger:', _InvFinger, '_InvChannelWidth:',_InvChannelWidth, '_InvNPRatio:',_InvNPRatio )
+        print('_N:', _N, '_InvFinger:', _InvFinger, '_InvNMOSChannelWidth:',_InvChannelWidth, '_InvPMOSChannelWidth:',int(_InvChannelWidth*_InvNPRatio ))
 
         SlicerandSRLatchwtResistorObj = _SlicerandSRLatchwtResistor(_DesignParameter=None, _Name='SlicerandSRLatchwtResistor')
         SlicerandSRLatchwtResistorObj._CalculateDesignParameter(
@@ -1097,9 +1097,9 @@ if __name__ == '__main__':
         # a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
         # a.DRCchecker()
 
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-        a.DRCchecker()
-    
-    print ("DRC Clean!!!")
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
     # sys.stdout.close()

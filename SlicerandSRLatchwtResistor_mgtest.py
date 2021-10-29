@@ -877,15 +877,15 @@ if __name__ == '__main__':
     # sys.stdout = open('DRCtestresult.txt', 'w')
 
     # Fixed Parameter for DRC
-    _XRBNum = 2
-    _YRBNum = 18
-    _TransmissionGateFinger = 6
-    _TransmissionGateChannelWidth = 275  ##200nm ~ 500nm range
+    _XRBNum = 4
+    _YRBNum = 11
+    _TransmissionGateFinger = 4
+    _TransmissionGateChannelWidth = 250  ##200nm ~ 500nm range
     _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2  ##Default = 2
-    _ResistorWidth = 1300
-    _ResistorLength = 1300  ## minimum : 400
-    _TransmissionGateVDD2VSSHeight = 200  ## FIXED
+    _ResistorWidth = 1200
+    _ResistorLength = 800  ## minimum : 400
+    _TransmissionGateVDD2VSSHeight = 4000  ## FIXED
 
     _TransmissionGateDummy = True  # T/F?
     _TransmissionGateSLVT = True  # T/F?
@@ -906,18 +906,20 @@ if __name__ == '__main__':
     _TotalSubringYWidth = None  ## FIXED
     _TotalSubringWidth = _PMOSSubringWidth
 
+    _SRRandWidth = 250
+    _SRNPRatio = 2.9
     _SRFinger1 = 8
-    _SRPMOSChannelWidth1 = 1000
-    _SRNMOSChannelWidth1 = _SRPMOSChannelWidth1//2
-    _SRFinger2 = 3
-    _SRPMOSChannelWidth2 = 400 # Inverter
-    _SRNMOSChannelWidth2 = _SRPMOSChannelWidth2//2 # Inverter
-    _SRFinger3 = 6
-    _SRPMOSChannelWidth3 = 400
-    _SRNMOSChannelWidth3 = _SRPMOSChannelWidth3//2
-    _SRFinger4 = 5
-    _SRPMOSChannelWidth4 = 400
-    _SRNMOSChannelWidth4 = _SRPMOSChannelWidth4//2
+    _SRPMOSChannelWidth1 = int(_SRRandWidth * _SRNPRatio)
+    _SRNMOSChannelWidth1 = _SRRandWidth
+    _SRFinger2 = 6
+    _SRPMOSChannelWidth2 = int(_SRRandWidth * _SRNPRatio)
+    _SRNMOSChannelWidth2 = _SRRandWidth
+    _SRFinger3 = 2
+    _SRPMOSChannelWidth3 = int(_SRRandWidth * _SRNPRatio)
+    _SRNMOSChannelWidth3 = _SRRandWidth
+    _SRFinger4 = 9
+    _SRPMOSChannelWidth4 = int(_SRRandWidth * _SRNPRatio)
+    _SRNMOSChannelWidth4 = _SRRandWidth
     _SRChannelLength = 30
 
     _SRNPRatio = None
@@ -940,15 +942,15 @@ if __name__ == '__main__':
     _SRSLVT = True
     _SRPowerLine = True
 
-    _SLCLKinputPMOSFinger1 = 4
-    _SLCLKinputPMOSFinger2 = 2
+    _SLCLKinputPMOSFinger1 = 6
+    _SLCLKinputPMOSFinger2 = 6
     _SLPMOSFinger = 2
-    _SLPMOSChannelWidth = 805
-    _SLNMOSFinger = 1
-    _SLDATAinputNMOSFinger = 9
-    _SLCLKinputNMOSFinger = 5
-    _SLNMOSChannelWidth = 805
-    _SLCLKinputNMOSChannelWidth = 1000
+    _SLPMOSChannelWidth = 950
+    _SLNMOSFinger = 13
+    _SLDATAinputNMOSFinger = 15
+    _SLCLKinputNMOSFinger = 13
+    _SLNMOSChannelWidth = 650
+    _SLCLKinputNMOSChannelWidth = 400
     _SLChannelLength = 30
 
     _SLDummy = True
@@ -967,11 +969,11 @@ if __name__ == '__main__':
     _SLNumVIAMet12COX = None
     _SLNumVIAMet12COY = None
     _SLPowerLine = True
-    _N = 1
-    _InvChannelWidth = 200
+    _N = 11
+    _InvChannelWidth = 250
     _InvChannelLength = 30
     _InvFinger = 8
-    _InvNPRatio = 3
+    _InvNPRatio = 2.9
     _InvVDD2VSSHeight = None
     _InvDummy = True
     _InvNumSupplyCoX = None
@@ -1046,7 +1048,7 @@ if __name__ == '__main__':
     _InvSLVT=_InvSLVT, _InvPowerLine=_InvPowerLine, _SLSRInvSupplyLineX4=_SLSRInvSupplyLineX4)
 
     SlicerandSRLatchwtResistorObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerandSRLatchwtResistorObj._DesignParameter)
-    _fileName = 'SlicerandSRLatchwtResistor2.gds'
+    _fileName = 'SlicerandSRLatchwtResistor.gds'
     testStreamFile = open('./{}'.format(_fileName), 'wb')
 
     tmp = SlicerandSRLatchwtResistorObj._CreateGDSStream(SlicerandSRLatchwtResistorObj._DesignParameter['_GDSFile']['_GDSFile'])
@@ -1057,14 +1059,14 @@ if __name__ == '__main__':
 
     print ('###############      Sending to FTP Server...      ##################')
 
-    import base64
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    myfile.close()
-    ftp.close()
+    # import base64
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    # myfile.close()
+    # ftp.close()
 
     # import ftplib
 
@@ -1076,12 +1078,12 @@ if __name__ == '__main__':
     # myfile.close()
     # ftp.close()
 
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    # myfile.close()
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    myfile.close()
 
 
 
@@ -1192,9 +1194,9 @@ if __name__ == '__main__':
     # a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
     # a.DRCchecker()
 
-#     import DRCchecker
-#     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-#     a.DRCchecker()
-#
-# print ("DRC Clean!!!")
-# sys.stdout.close()
+    import DRCchecker
+    a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+    a.DRCchecker()
+
+    print ("DRC Clean!!!")
+#sys.stdout.close()

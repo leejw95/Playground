@@ -81,6 +81,7 @@ class _NMOS(StickDiagram._StickDiagram):
         else:
             _XYCoordinateOfNMOS = [[0, 0.5]]
 
+
         print ('#############################     POLY Layer Calculation    ##############################################')
 
         self._DesignParameter['_POLayer']['_XWidth'] = _NMOSChannellength

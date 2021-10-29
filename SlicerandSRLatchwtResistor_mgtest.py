@@ -906,6 +906,7 @@ if __name__ == '__main__':
     _TotalSubringYWidth = None  ## FIXED
     _TotalSubringWidth = _PMOSSubringWidth
 
+<<<<<<< HEAD
     _SRFinger1 = 4
     _SRPMOSChannelWidth1 = 920
     _SRNMOSChannelWidth1 = _SRPMOSChannelWidth1//2
@@ -918,6 +919,22 @@ if __name__ == '__main__':
     _SRFinger4 = 7
     _SRPMOSChannelWidth4 = 920
     _SRNMOSChannelWidth4 = _SRPMOSChannelWidth4//2
+=======
+    _SRRandWidth = 250
+    _SRNPRatio = 2.9
+    _SRFinger1 = 8
+    _SRPMOSChannelWidth1 = int(_SRRandWidth * _SRNPRatio)
+    _SRNMOSChannelWidth1 = _SRRandWidth
+    _SRFinger2 = 6
+    _SRPMOSChannelWidth2 = int(_SRRandWidth * _SRNPRatio)
+    _SRNMOSChannelWidth2 = _SRRandWidth
+    _SRFinger3 = 2
+    _SRPMOSChannelWidth3 = int(_SRRandWidth * _SRNPRatio)
+    _SRNMOSChannelWidth3 = _SRRandWidth
+    _SRFinger4 = 9
+    _SRPMOSChannelWidth4 = int(_SRRandWidth * _SRNPRatio)
+    _SRNMOSChannelWidth4 = _SRRandWidth
+>>>>>>> ed604e258c6db13b1f85021bd638197ddac74358
     _SRChannelLength = 30
 
     _SRNPRatio = None
@@ -940,15 +957,15 @@ if __name__ == '__main__':
     _SRSLVT = True
     _SRPowerLine = True
 
-    _SLCLKinputPMOSFinger1 = 4
-    _SLCLKinputPMOSFinger2 = 2
+    _SLCLKinputPMOSFinger1 = 6
+    _SLCLKinputPMOSFinger2 = 6
     _SLPMOSFinger = 2
-    _SLPMOSChannelWidth = 805
-    _SLNMOSFinger = 1
-    _SLDATAinputNMOSFinger = 9
-    _SLCLKinputNMOSFinger = 5
-    _SLNMOSChannelWidth = 805
-    _SLCLKinputNMOSChannelWidth = 1000
+    _SLPMOSChannelWidth = 950
+    _SLNMOSFinger = 13
+    _SLDATAinputNMOSFinger = 15
+    _SLCLKinputNMOSFinger = 13
+    _SLNMOSChannelWidth = 650
+    _SLCLKinputNMOSChannelWidth = 400
     _SLChannelLength = 30
 
     _SLDummy = True
@@ -967,11 +984,16 @@ if __name__ == '__main__':
     _SLNumVIAMet12COX = None
     _SLNumVIAMet12COY = None
     _SLPowerLine = True
+<<<<<<< HEAD
     _N = 15
     _InvChannelWidth = 200
+=======
+    _N = 11
+    _InvChannelWidth = 250
+>>>>>>> ed604e258c6db13b1f85021bd638197ddac74358
     _InvChannelLength = 30
     _InvFinger = 8
-    _InvNPRatio = 3
+    _InvNPRatio = 2.9
     _InvVDD2VSSHeight = None
     _InvDummy = True
     _InvNumSupplyCoX = None
@@ -1057,14 +1079,14 @@ if __name__ == '__main__':
 
     print ('###############      Sending to FTP Server...      ##################')
 
-    import base64
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    myfile.close()
-    ftp.close()
+    # import base64
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    # myfile.close()
+    # ftp.close()
 
     # import ftplib
 
@@ -1076,12 +1098,12 @@ if __name__ == '__main__':
     # myfile.close()
     # ftp.close()
 
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    # myfile.close()
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    myfile.close()
 
 
 
@@ -1192,9 +1214,9 @@ if __name__ == '__main__':
     # a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
     # a.DRCchecker()
 
-#     import DRCchecker
-#     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-#     a.DRCchecker()
-#
-# print ("DRC Clean!!!")
-# sys.stdout.close()
+    import DRCchecker
+    a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+    a.DRCchecker()
+
+    print ("DRC Clean!!!")
+#sys.stdout.close()

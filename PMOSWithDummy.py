@@ -54,6 +54,7 @@ class _PMOS(StickDiagram._StickDiagram):
         else:
             _XYCoordinateOfPMOS = [[0, 0.5]]
 
+
         print ('#############################     POLY Layer Calculation    ##############################################')
         # POLY Layer XWidth and YWidth Setting
         self._DesignParameter['_POLayer']['_XWidth']= _PMOSChannellength

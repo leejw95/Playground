@@ -78,7 +78,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
         if _NMOSChannelWidth % 2 == 0:
             _XYCoordinateOfNMOS = [[0, 0]]
-        elif _NMOSChannelWidth % 2 == 1:
+        else:
             _XYCoordinateOfNMOS = [[0, 0.5]]
 
         print ('#############################     POLY Layer Calculation    ##############################################')

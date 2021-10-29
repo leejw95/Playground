@@ -877,10 +877,126 @@ if __name__ == '__main__':
     # sys.stdout = open('DRCtestresult.txt', 'w')
 
     for tries in range (0, 1) :
-        _XRBNum = 3##random.randint(1,5)
-        _YRBNum = 11##random.randint(4,12)
-        _TransmissionGateFinger = 4##random.randint(2,15)
-        _TransmissionGateChannelWidth = 250##random.randrange(200,510,10)  ##200nm ~ 500nm range
+        # _XRBNum = random.randint(1,5)
+        # _YRBNum = random.randint(4,12)
+        # _TransmissionGateFinger = random.randint(2,15)
+        # _TransmissionGateChannelWidth = random.randrange(200,510,10)  ##200nm ~ 500nm range
+        # _TransmissionGateChannelLength = 30
+        # _TransmissionGateNPRatio = 2  ##Default = 2
+        # _TransmissionGateDummy = True  # T/F?
+        # _TransmissionGateVDD2VSSHeight = 4000  ## FIXED
+        # _TransmissionGateSLVT = True  # T/F?
+        #
+        # _PowerLine = True  # T/F?
+        # _InputLine = False
+        #
+        # _ResistorWidth = random.randrange(1000,2000,50)
+        # _ResistorLength = random.randrange(400,2000,50)  ## minimum : 400
+        # _ResistorMetXCO = None
+        # _ResistorMetYCO = None
+        #
+        # _PMOSSubringType = False  ## FIXED
+        # _PMOSSubringXWidth = None  ## FIXED
+        # _PMOSSubringYWidth = None  ## FIXED
+        # _PMOSSubringWidth = 170
+        #
+        # _NMOSSubringType = True  ## FIXED
+        # _NMOSSubringXWidth = None  ## FIXED
+        # _NMOSSubringYWidth = None  ## FIXED
+        # _NMOSSubringWidth = _PMOSSubringWidth
+        #
+        # _TotalSubringType = True  ## FIXED
+        # _TotalSubringXWidth = None  ## FIXED
+        # _TotalSubringYWidth = None  ## FIXED
+        # _TotalSubringWidth = _PMOSSubringWidth
+        # _SRFinger1 = random.randint(1,15)
+        # _SRFinger2 = random.randint(1,15)
+        # _SRFinger3 = random.randint(1,15)
+        # _SRFinger4 = random.randint(1,15)
+        #
+        # _SRrandwidth = random.randrange(200, 400, 5)
+        # _NPRatio = round(2 + random.random()) ## 2~3
+        #
+        # _SRNMOSChannelWidth1 = _SRrandwidth
+        # _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio
+        # _SRNMOSChannelWidth2 = _SRrandwidth
+        # _SRPMOSChannelWidth2 = _SRrandwidth * _NPRatio##
+        # _SRNMOSChannelWidth3 = _SRrandwidth
+        # _SRPMOSChannelWidth3 = _SRrandwidth * _NPRatio
+        # _SRNMOSChannelWidth4 = _SRrandwidth
+        # _SRPMOSChannelWidth4 = _SRrandwidth * _NPRatio
+        # _SRChannelLength = 30
+        # _SRNPRatio = None
+        # _SRVDD2VSSHeightAtOneSide = None
+        # _SRDummy = True
+        # _SRNumSupplyCoX = None
+        # _SRNumSupplyCoY = 2
+        # _SRSupplyMet1XWidth = None
+        # _SRSupplyMet1YWidth = None
+        # _SRNumViaPoly2Met1CoX = None
+        # _SRNumViaPoly2Met1CoY = None
+        # _SRNumViaPMOSMet12Met2CoX = None
+        # _SRNumViaPMOSMet12Met2CoY = None
+        # _SRNumViaNMOSMet12Met2CoX = None
+        # _SRNumViaNMOSMet12Met2CoY = None
+        # _SRNumViaPMOSMet22Met3CoX = None
+        # _SRNumViaPMOSMet22Met3CoY = None
+        # _SRNumViaNMOSMet22Met3CoX = None
+        # _SRNumViaNMOSMet22Met3CoY = None
+        # _SRSLVT = True
+        # _SRPowerLine = True
+        # _SLCLKinputPMOSFinger1 = random.randint(1, 15)
+        # _SLCLKinputPMOSFinger2 = random.randint(1, 15)
+        # _SLPMOSFinger = random.randint(1, 15)
+        # _SLPMOSChannelWidth = random.randrange(200, 1050, 5)
+        # _SLDATAinputNMOSFinger = random.randint(4, 15) # Larger than 3.
+        # _SLNMOSFinger = random.randint(1, 15)
+        # _SLCLKinputNMOSFinger = random.randint(1, 15)
+        # _SLNMOSChannelWidth = random.randrange(200, 1050, 5)
+        # _SLCLKinputNMOSChannelWidth = random.randrange(200, 1050, 5)
+        # _SLChannelLength = 30
+        # _SLDummy = True
+        # _SLSLVT = True
+        # _SLGuardringWidth = 200
+        # _SLGuardring = True
+        # _SLSlicerGuardringWidth = 200
+        # _SLSlicerGuardring = None
+        # _SLNumSupplyCOY = None
+        # _SLNumSupplyCOX = None
+        # _SLSupplyMet1XWidth = None
+        # _SLSupplyMet1YWidth = None
+        # _SLVDD2VSSHeight = None
+        # _SLNumVIAPoly2Met1COX = None
+        # _SLNumVIAPoly2Met1COY = None
+        # _SLNumVIAMet12COX = None
+        # _SLNumVIAMet12COY = None
+        # _SLPowerLine = True
+        # _N = random.randint(1,16)
+        # _InvFinger = random.randint(5,16)
+        # _InvChannelWidth = random.randrange(200,300,5)
+        # _InvChannelLength = 30
+        # _InvNPRatio = round(2 + random.random())
+        # _InvVDD2VSSHeight = None
+        # _InvDummy = True
+        # _InvNumSupplyCoX = None
+        # _InvNumSupplyCoY = None
+        # _InvSupplyMet1XWidth = None
+        # _InvSupplyMet1YWidth = None
+        # _InvNumViaPoly2Met1CoX = None
+        # _InvNumViaPoly2Met1CoY = None
+        # _InvNumViaPMOSMet12Met2CoX = None
+        # _InvNumViaPMOSMet12Met2CoY = None
+        # _InvNumViaNMOSMet12Met2CoX = None
+        # _InvNumViaNMOSMet12Met2CoY = None
+        # _InvSLVT = True
+        # _InvPowerLine = None
+        # _SLSRInvSupplyLineX4 = True
+
+
+        _XRBNum = 4###random.randint(1,5)
+        _YRBNum = 11###random.randint(4,12)
+        _TransmissionGateFinger = 4###random.randint(2,15)
+        _TransmissionGateChannelWidth = 250###random.randrange(200,510,10)  ##200nm ~ 500nm range
         _TransmissionGateChannelLength = 30
         _TransmissionGateNPRatio = 2  ##Default = 2
         _TransmissionGateDummy = True  # T/F?
@@ -890,8 +1006,8 @@ if __name__ == '__main__':
         _PowerLine = True  # T/F?
         _InputLine = False
 
-        _ResistorWidth = 1200##random.randrange(1000,2000,50)
-        _ResistorLength = 800##random.randrange(400,2000,50)  ## minimum : 400
+        _ResistorWidth = 1200###random.randrange(1000,2000,50)
+        _ResistorLength = 800###random.randrange(400,2000,50)  ## minimum : 400
         _ResistorMetXCO = None
         _ResistorMetYCO = None
 
@@ -909,13 +1025,13 @@ if __name__ == '__main__':
         _TotalSubringXWidth = None  ## FIXED
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
-        _SRFinger1 = 8##random.randint(1,15)
-        _SRFinger2 = 6##random.randint(1,15)
-        _SRFinger3 = 2##random.randint(1,15)
-        _SRFinger4 = 9##random.randint(1,15)
+        _SRFinger1 = 8###random.randint(1,15)
+        _SRFinger2 = 6###random.randint(1,15)
+        _SRFinger3 = 2###random.randint(1,15)
+        _SRFinger4 = 9###random.randint(1,15)
 
-        _SRrandwidth = 250###random.randrange(200, 400, 50)
-        _NPRatio = 2.7##round(2 + random.random()) ## 2~3
+        _SRrandwidth = 675###random.randrange(200, 400, 5)
+        _NPRatio = 2.8###round(2 + random.random()) ## 2~3
 
         _SRNMOSChannelWidth1 = _SRrandwidth
         _SRPMOSChannelWidth1 = _SRrandwidth * _NPRatio
@@ -945,15 +1061,15 @@ if __name__ == '__main__':
         _SRNumViaNMOSMet22Met3CoY = None
         _SRSLVT = True
         _SRPowerLine = True
-        _SLCLKinputPMOSFinger1 = 6##random.randint(1, 15)
-        _SLCLKinputPMOSFinger2 = 6##random.randint(1, 15)
-        _SLPMOSFinger = 2##random.randint(1, 15)
-        _SLPMOSChannelWidth = 950###random.randrange(200, 1050, 50)
+        _SLCLKinputPMOSFinger1 = 6###random.randint(1, 15)
+        _SLCLKinputPMOSFinger2 = 6###random.randint(1, 15)
+        _SLPMOSFinger = 2###random.randint(1, 15)
+        _SLPMOSChannelWidth = 950###random.randrange(200, 1050, 5)
         _SLDATAinputNMOSFinger = 15###random.randint(4, 15) # Larger than 3.
         _SLNMOSFinger = 13###random.randint(1, 15)
         _SLCLKinputNMOSFinger = 13###random.randint(1, 15)
-        _SLNMOSChannelWidth = 650##random.randrange(200, 1050, 50)
-        _SLCLKinputNMOSChannelWidth = 400###random.randrange(200, 1050, 50)
+        _SLNMOSChannelWidth = 650###random.randrange(200, 1050, 5)
+        _SLCLKinputNMOSChannelWidth = 400###random.randrange(200, 1050, 5)
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True
@@ -973,7 +1089,7 @@ if __name__ == '__main__':
         _SLPowerLine = True
         _N = 11###random.randint(1,16)
         _InvFinger = 8###random.randint(5,16)
-        _InvChannelWidth = 250###random.randrange(200,300,50)
+        _InvChannelWidth = 250###random.randrange(200,300,5)
         _InvChannelLength = 30
         _InvNPRatio = 2.9###round(2 + random.random())
         _InvVDD2VSSHeight = None
@@ -991,6 +1107,11 @@ if __name__ == '__main__':
         _InvSLVT = True
         _InvPowerLine = None
         _SLSRInvSupplyLineX4 = True
+
+
+
+
+
 
         DesignParameters._Technology = '028nm'
 

@@ -971,8 +971,8 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = random.randint(1,16)
-        _InvChannelWidth = random.randrange(200,400,3)
+        _N = random.randint(1,15)
+        _InvChannelWidth = random.randrange(200,300,3)
         _InvChannelLength = 30
         _InvFinger = random.randint(5,16)
         _InvNPRatio = round(2+random.random())

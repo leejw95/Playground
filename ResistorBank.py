@@ -758,25 +758,25 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         self._DesignParameter['_Met1LayerRes'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met1LayerRes']['_Width'] = max(self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'], 
                                                             self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])
-        self._DesignParameter['_Met1LayerRes']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][0][0],
+        self._DesignParameter['_Met1LayerRes']['_XYCoordinates'] = [[[self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0],
                                                                     min(self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][0][1] - 
                                                                     self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
                                                                     self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][1] +
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort2Routing']['_XYCoordinates'][0][1] -
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2)],
-                                                                    [self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][0][0],
+                                                                    [self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0],
                                                                     max(self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][1] +
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort2Routing']['_XYCoordinates'][0][1] +
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2,
                                                                     self._DesignParameter['_ViaMet12Met2OnRes']['_XYCoordinates'][0][1] +
                                                                     self._DesignParameter['_ViaMet12Met2OnRes']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2)]],
-                                                                    [[self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][0],
+                                                                    [[self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0],
                                                                     max(self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][1] + 
                                                                     self._DesignParameter['_ViaMet12Met2OnRes1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
                                                                     self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][1] +
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'][0][1] +
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2)],
-                                                                    [self._DesignParameter['_ViaMet12Met2OnRes1']['_XYCoordinates'][0][0],
+                                                                    [self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][0],
                                                                     min(self._DesignParameter['_OpppcresRB']['_XYCoordinates'][0][1] +
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'][0][1] -
                                                                     self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2,

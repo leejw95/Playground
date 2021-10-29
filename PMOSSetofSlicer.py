@@ -461,24 +461,24 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             # PMOS Gate Coordinate Setting
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
                                                                            self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,  self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2) - \
-                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2
+                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace21
 
                                                                                   ]]
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'] = [[self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0],
                                                                            self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,  self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2) - \
-                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2
+                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace21
                                                                                   ]]
 
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'] = [[self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,  self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2) - \
-                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2
+                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace21
                                                                                   ]]
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'] = [[self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,  self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2) - \
-                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2
+                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace21
                                                                                   ]]
 
 

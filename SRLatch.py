@@ -3180,7 +3180,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                                                                  self._DesignParameter['_PMOS1']['_XYCoordinates'][0][
                                                                      1] - self._DesignParameter['_PMOS1'][
                                                                      '_DesignObj']._DesignParameter['_POLayer'][
-                                                                     '_YWidth'] / 2]], \
+                                                                     '_YWidth'] / 2 - 1]], \
                                                                [[self._DesignParameter['NbodyContact'][
                                                                      '_XYCoordinates'][1][0],
                                                                  self._DesignParameter['NbodyContact'][
@@ -3191,7 +3191,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                                                                  self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][
                                                                      1] + self._DesignParameter['_PMOS1'][
                                                                      '_DesignObj']._DesignParameter['_POLayer'][
-                                                                     '_YWidth'] / 2]]]
+                                                                     '_YWidth'] / 2 + 1]]]
 
         #####################################SLVT Generation & Coordinates#######################################
         if _SLVT == True:
@@ -3199,7 +3199,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                 _Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1],
                 _XYCoordinates=[], _Width=None)
             self._DesignParameter['_SLVTPMOSLayer']['_Width'] = \
-            self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
+            self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] + 1
             self._DesignParameter['_SLVTPMOSLayer']['_XYCoordinates'] = [[[self._DesignParameter['_PMOS1'][
                                                                                '_XYCoordinates'][0][0] -
                                                                            self._DesignParameter['_PMOS1'][
@@ -3233,7 +3233,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                 _Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1],
                 _XYCoordinates=[], _Width=None)
             self._DesignParameter['_SLVTNMOSLayer']['_Width'] = \
-            self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
+            self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] + 1
             self._DesignParameter['_SLVTNMOSLayer']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS1'][
                                                                                '_XYCoordinates'][0][0] -
                                                                            self._DesignParameter['_NMOS1'][
@@ -3268,7 +3268,7 @@ class _SRLatch(StickDiagram._StickDiagram):
             _Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1],
             _XYCoordinates=[], _Width=None)
         self._DesignParameter['_PPLayer']['_Width'] = \
-        self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']
+        self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] + 1
         self._DesignParameter['_PPLayer']['_XYCoordinates'] = [[[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][
                                                                      0] - self._DesignParameter['_PMOS1'][
                                                                      '_DesignObj']._DesignParameter['_PPLayer'][

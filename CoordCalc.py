@@ -43,7 +43,6 @@ def FlipXs(Coordinates):
 
     tmpXYs = []
     for XY in Coordinates:
-        print XY
         tmpXYs.append([-XY[0], XY[1]])
     return tmpXYs
 
@@ -52,7 +51,6 @@ def FlipYs(Coordinates):
 
     tmpXYs = []
     for XY in Coordinates:
-        print XY
         tmpXYs.append([XY[0], -XY[1]])
     return tmpXYs
 
@@ -61,7 +59,6 @@ def FlipXYs(Coordinates):
 
     tmpXYs = []
     for XY in Coordinates:
-        print XY
         tmpXYs.append([-XY[0], -XY[1]])
     return tmpXYs
 

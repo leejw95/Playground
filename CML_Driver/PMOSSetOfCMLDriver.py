@@ -1,5 +1,6 @@
 import math
 import copy
+import random
 
 #
 import StickDiagram
@@ -206,7 +207,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         DistanceYBtwM3H = self._DesignParameter['M2V2M3OnPMOSIP']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] \
                           + _DRCObj._MetalxMinSpace3  # Bad DRC usage -> Need to check Metal Width
         NumM3HOnIP = int(round(float(_FingerWidthOfInputPair) / (DistanceYBtwM3H * 2)))
-        print('Number of M3H on IP is ', float(_FingerWidthOfInputPair) / (DistanceYBtwM3H * 2))
+        # print('Number of M3H on IP is ', float(_FingerWidthOfInputPair) / (DistanceYBtwM3H * 2))
         assert NumM3HOnIP >= 1, '_FingerWidthOfInputPair should be longer.'
         OffsetVia2 = self.FloorMinSnapSpacing(0.5 * (_FingerWidthOfInputPair - self._DesignParameter['M2V2M3OnPMOSIP']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']), MinSnapSpacing)
 
@@ -440,7 +441,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         DistanceYBtwM3H_CS = self._DesignParameter['M2V2M3OnPMOSCS']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] \
                              + _DRCObj._MetalxMinSpace3  # Bad DRC usage -> Need to check Metal Width
         NumM3HOnCS = int(round(float(_FingerWidthOfCurrentSource) / (DistanceYBtwM3H_CS * 2)))
-        print('Number of M3H on CS is ', float(_FingerWidthOfCurrentSource) / (DistanceYBtwM3H_CS * 2))
+        # print('Number of M3H on CS is ', float(_FingerWidthOfCurrentSource) / (DistanceYBtwM3H_CS * 2))
         assert NumM3HOnCS >= 1, '_FingerWidthOfCurrentSource should be longer.'
         OffsetVia2_CS = self.FloorMinSnapSpacing(0.5 * (_FingerWidthOfCurrentSource - self._DesignParameter['M2V2M3OnPMOSCS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']), MinSnapSpacing)
 
@@ -783,60 +784,99 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    # Input Parameters for Layout Object
-    _FingerWidthOfInputPair = 400
-    _FingerLengthOfInputPair = 30
-    _NumFingerOfInputPair = 200
-    _WidthOfMiddleRoutingIP = 200
-
-    _FingerWidthOfCurrentSource = 400
-    _FingerLengthOfCurrentSource = 30
-    _NumFingerOfCurrentSource = 320
-    _WidthOfMiddleRoutingCS = 350
-
-    _XVT = 'SLVT'
-    _SubringWidth = 1000
-
-    _fileName = 'PMOSSetOfCML.gds'
     libname = 'TEST_PMOSSet'
+    cellname = 'PMOSSetOfCML'
+    _fileName = cellname + '.gds'
 
-    # Generate Layout Object
-    LayoutObj = PMOSSetOfCMLDriver(_Name='PMOSSetOfCML')
-    LayoutObj._CalculateDesignParameter(_FingerWidthOfInputPair=_FingerWidthOfInputPair,
-                                        _FingerLengthOfInputPair=_FingerLengthOfInputPair,
-                                        _NumFingerOfInputPair=_NumFingerOfInputPair,
-                                        _FingerWidthOfCurrentSource=_FingerWidthOfCurrentSource,
-                                        _FingerLengthOfCurrentSource=_FingerLengthOfCurrentSource,
-                                        _NumFingerOfCurrentSource=_NumFingerOfCurrentSource,
-                                        _WidthOfMiddleRoutingIP=_WidthOfMiddleRoutingIP,
-                                        _WidthOfMiddleRoutingCS=_WidthOfMiddleRoutingCS,
-                                        _XVT=_XVT, _SubringWidth=_SubringWidth)
-    LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+    # ''' Input Parameters for Layout Object '''
+    # _FingerWidthOfInputPair = 400
+    # _FingerLengthOfInputPair = 30
+    # _NumFingerOfInputPair = 200
+    # _WidthOfMiddleRoutingIP = 200
+    #
+    # _FingerWidthOfCurrentSource = 400
+    # _FingerLengthOfCurrentSource = 30
+    # _NumFingerOfCurrentSource = 320
+    # _WidthOfMiddleRoutingCS = 350
+    #
+    # _XVT = 'SLVT'
+    # _SubringWidth = 1000
 
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-    tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
+    for tries in range(0, 100):
+        ''' Input Parameters for Layout Object '''
+        _FingerWidthOfInputPair = FileManage.RandomParam(start=400, stop=1000, step=100)
+        _FingerLengthOfInputPair = FileManage.RandomParam(start=30, stop=60, step=10)
+        _NumFingerOfInputPair = FileManage.RandomParam(start=30, stop=300, step=2)
+        _WidthOfMiddleRoutingIP = FileManage.RandomParam(start=100, stop=500, step=10)
 
-    print ('###############      Sending to FTP Server...      ##################')
-    My = MyInfo.USER(DesignParameters._Technology)
-    FileManage.Upload2FTP(
-        server=My.server,
-        user=My.ID,
-        password=My.PW,
-        directory=My.Dir_GDS,
-        filename=_fileName
-    )
-    FileManage.StreamIn(
-        server=My.server,
-        port=22,
-        ID=My.ID,
-        PW=My.PW,
-        Dir_Work=My.Dir_Work,
-        Dir_GDS=My.Dir_GDS,
-        libname=libname,
-        filename=_fileName,
-        tech=DesignParameters._Technology
-    )
+        _FingerWidthOfCurrentSource = FileManage.RandomParam(start=400, stop=1000, step=100)
+        _FingerLengthOfCurrentSource = FileManage.RandomParam(start=30, stop=60, step=10)
+        _NumFingerOfCurrentSource = FileManage.RandomParam(start=30, stop=500, step=2)
+        _WidthOfMiddleRoutingCS = FileManage.RandomParam(start=100, stop=500, step=10)
+
+        _XVT = 'SLVT'
+        _SubringWidth = 1000
+
+        print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
+        print ('_FingerWidthOfInputPair : {}',format(_FingerWidthOfInputPair))
+        print ('_FingerLengthOfInputPair : {}',format(_FingerLengthOfInputPair))
+        print ('_NumFingerOfInputPair : {}',format(_NumFingerOfInputPair))
+        print ('_WidthOfMiddleRoutingIP : {}',format(_WidthOfMiddleRoutingIP))
+        print ('_FingerWidthOfCurrentSource : {}',format(_FingerWidthOfCurrentSource))
+        print ('_FingerLengthOfCurrentSource : {}',format(_FingerLengthOfCurrentSource))
+        print ('_NumFingerOfCurrentSource : {}',format(_NumFingerOfCurrentSource))
+        print ('_WidthOfMiddleRoutingCS : {}',format(_WidthOfMiddleRoutingCS))
+
+        # Generate Layout Object
+        LayoutObj = PMOSSetOfCMLDriver(_Name=cellname)
+        LayoutObj._CalculateDesignParameter(_FingerWidthOfInputPair=_FingerWidthOfInputPair,
+                                            _FingerLengthOfInputPair=_FingerLengthOfInputPair,
+                                            _NumFingerOfInputPair=_NumFingerOfInputPair,
+                                            _FingerWidthOfCurrentSource=_FingerWidthOfCurrentSource,
+                                            _FingerLengthOfCurrentSource=_FingerLengthOfCurrentSource,
+                                            _NumFingerOfCurrentSource=_NumFingerOfCurrentSource,
+                                            _WidthOfMiddleRoutingIP=_WidthOfMiddleRoutingIP,
+                                            _WidthOfMiddleRoutingCS=_WidthOfMiddleRoutingCS,
+                                            _XVT=_XVT, _SubringWidth=_SubringWidth)
+        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
+
+        print ('###############      Sending to FTP Server...      ##################')
+        My = MyInfo.USER(DesignParameters._Technology)
+        FileManage.Upload2FTP(
+            server=My.server,
+            user=My.ID,
+            password=My.PW,
+            # directory=My.Dir_GDS,
+            directory=My.Dir_Work,
+            filename=_fileName
+        )
+        # FileManage.StreamIn(
+        #     server=My.server,
+        #     port=22,
+        #     ID=My.ID,
+        #     PW=My.PW,
+        #     Dir_Work=My.Dir_Work,
+        #     Dir_GDS=My.Dir_GDS,
+        #     libname=libname,
+        #     filename=_fileName,
+        #     tech=DesignParameters._Technology
+        # )
+        print ('###############      Checking DRC...      ##################')
+        import DRCchecker
+        a = DRCchecker.DRCchecker(
+            username=My.ID,
+            password=My.PW,
+            WorkDir=My.Dir_Work,
+            DRCrunDir=My.Dir_DRCrun,
+            libname=libname,
+            cellname=cellname,
+        )
+        a.DRCchecker()
+
     print ('###############      Finished      ##################')
 # end of 'main():' ---------------------------------------------------------------------------------------------

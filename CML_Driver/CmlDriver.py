@@ -1,7 +1,7 @@
 import math
 import copy
 import random
-
+import warnings
 #
 import StickDiagram
 import DesignParameters
@@ -134,7 +134,7 @@ class CmlLDriver(StickDiagram._StickDiagram):
             ResistorParam_TerminationR['_SubringWidth'] = _SubringWidth_TerminationR
             self._DesignParameter['TerminationResistors'] = self._SrefElementDeclaration(_DesignObj=opppcres_with_subring.OpppcresWithSubring(_DesignParameter=None, _Name='TerminationResistors_In{}'.format(_Name)))[0]
             self._DesignParameter['TerminationResistors']['_DesignObj']._CalculateDesignParameter(**ResistorParam_TerminationR)
-            self._DesignParameter['TerminationResistors']['_XYCoordinates'] = [[0, 10000]]
+            self._DesignParameter['TerminationResistors']['_XYCoordinates'] = [[0, 15000]]
         else:
             pass
         print('test')
@@ -145,15 +145,15 @@ if __name__ == '__main__':
     libname = 'TEST_CmlDriver'
     cellname = 'CmlDriver'
     _fileName = cellname + '.gds'
-
+    warnings.warn('fff')
     ''' Input Parameters for Layout Object '''
-    _FingerWidthOfInputPair = 400
+    _FingerWidthOfInputPair = 1000
     _FingerLengthOfInputPair = 30
     _NumFingerOfInputPair = 200
     _WidthOfMiddleRoutingIP = 200
 
-    _FingerWidthOfCurrentSource = 400
-    _FingerLengthOfCurrentSource = 30
+    _FingerWidthOfCurrentSource = 1000
+    _FingerLengthOfCurrentSource = 40
     _NumFingerOfCurrentSource = 320
     _WidthOfMiddleRoutingCS = 350
 

@@ -43,6 +43,7 @@ class _NMOS(StickDiagram._StickDiagram):
                 _XYCoordinateNMOSSupplyRouting=dict(_DesignParametertype=7, _XYCoordinates=[]),
                 _XYCoordinateNMOSOutputRouting=dict(_DesignParametertype=7, _XYCoordinates=[]),
                 _XYCoordinateNMOSGateRouting=dict(_DesignParametertype=7, _XYCoordinates=[]),
+                DistanceXBtwPoly=self._SizeInfoDeclaration(_DesignSizesInList=None)
             )
 
         if _Name != None:
@@ -60,11 +61,13 @@ class _NMOS(StickDiagram._StickDiagram):
         :return:
         """
 
+        _DRCObj = DRC.DRC()
         print ('#########################################################################################################')
         print ('                                    {}  NMOS Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
-        _DRCObj = DRC.DRC()
-        _XYCoordinateOfNMOS = [[0, 0]]
+
+        flag_EvenChannelWidth = True if (_NMOSChannelWidth % 2 == 0) else False
+        _XYCoordinateOfNMOS = [[0, 0]] if flag_EvenChannelWidth else [[0, 0.5]]
 
         _LengthNMOSBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
 
@@ -165,7 +168,6 @@ class _NMOS(StickDiagram._StickDiagram):
         tmpXYs = []
         for i in range(0, _XNumberOfCOInNMOS):
             for j in range(0, _YNumberOfCOInNMOS):
-
                 if (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 0:
                     _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                         _XYCoordinateOfNMOS[0][1] - (_YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
@@ -183,6 +185,14 @@ class _NMOS(StickDiagram._StickDiagram):
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmpXYs
+
+        # if flag_EvenChannelWidth:
+        #     pass
+        # else:
+        #     tmpXYs = []
+        #     for XY in self._DesignParameter['_COLayer']['_XYCoordinates']:
+        #         tmpXYs.append(CoordCalc.Add(XY, [0, 0.5]))
+        #     self._DesignParameter['_COLayer']['_XYCoordinates'] = tmpXYs
 
 
         if DesignParameters._Technology != '028nm':  # There is no NIMP(NP) Layer at 28nm
@@ -334,6 +344,7 @@ class _NMOS(StickDiagram._StickDiagram):
         else:
             self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1
 
+        self._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] = _LengthNMOSBtwMet1
 
         print ('#########################################################################################################')
         print ('                                    {}  NMOS Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))
@@ -348,7 +359,7 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     _NMOSFinger = 9
-    _NMOSWidth = 400            # Minimum value : 200 (samsung) / 200 (65nm)
+    _NMOSWidth = 401            # Minimum value : 200 (samsung) / 200 (65nm)
     _NMOSChannelLength = 30     # Minimum value : 30 (samsung) / 60 (65nm)
     _NMOSDummy = True           #
     _XVT = 'SLVT'               # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None

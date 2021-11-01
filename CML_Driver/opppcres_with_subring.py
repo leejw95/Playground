@@ -39,7 +39,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
 
     def _CalculateDesignParameter(self, _ResWidth=None, _ResLength=None, _NumCOY=None, _NumRows=None, _NumStripes=None, _RoutingWidth=None, _Dummy=False, _SubringWidth=None):
         _DRCObj = DRC.DRC()
-        _Name = 'OpppcresWithSubring'
+        _Name = self._DesignParameter['_Name']['_Name']
         _XYCoordinateOfOPRES = [[0, 0]]
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
@@ -53,7 +53,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         _OPPPCRES_inputs['_Series'] = False
         _OPPPCRES_inputs['_Parallel'] = True
         _OPPPCRES_inputs['_Dummy'] = _Dummy
-        self._DesignParameter['OPPPCRES'] = self._SrefElementDeclaration(_DesignObj=opppcres_b_iksu.Resistor_OPPPC(_DesignParameter=None, _Name='OpppcresIn{}'.format(_Name)))[0]
+        self._DesignParameter['OPPPCRES'] = self._SrefElementDeclaration(_DesignObj=opppcres_b_iksu.Resistor_OPPPC(_DesignParameter=None, _Name='Opppcres_In{}'.format(_Name)))[0]
         self._DesignParameter['OPPPCRES']['_DesignObj']._CalculateDesignParameter(**_OPPPCRES_inputs)
 
         distanceBtwM1Port = abs(self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_XYCoordinates'][0][1]
@@ -73,7 +73,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         PSubringInputs['_XWidth'] = XWidthOfSubring
         PSubringInputs['_YWidth'] = YWidthOfSubring
         PSubringInputs['_Width'] = _SubringWidth
-        self._DesignParameter['_Subring'] = self._SrefElementDeclaration(_DesignObj=psubring._PSubring(_DesignParameter=None, _Name='SubringIn{}'.format(_Name)))[0]
+        self._DesignParameter['_Subring'] = self._SrefElementDeclaration(_DesignObj=psubring._PSubring(_DesignParameter=None, _Name='Subring_In{}'.format(_Name)))[0]
         self._DesignParameter['_Subring']['_DesignObj']._CalculatePSubring(**PSubringInputs)
 
 
@@ -142,7 +142,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
 
         Via1Inputs = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
         Via1Inputs.update({'_ViaMet12Met2NumberOfCOX':NumViaX, '_ViaMet12Met2NumberOfCOY':NumViaY})
-        self._DesignParameter['_ViaMet12Met2forResistor'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='ViaMet12Met2forResistorIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet12Met2forResistor'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='ViaMet12Met2forResistor_In{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet12Met2forResistor']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**Via1Inputs)
         self._DesignParameter['_ViaMet12Met2forResistor']['_XYCoordinates'] = tmpXYs_A + tmpXYs_B
 
@@ -170,7 +170,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         ''' M2V2M3 for Input '''
         Via2Inputs = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
         Via2Inputs.update({'_ViaMet22Met3NumberOfCOX': NumViaX, '_ViaMet22Met3NumberOfCOY': NumViaY})
-        self._DesignParameter['_ViaMet22Met3forResistorInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='ViaMet22Met3forResistorIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet22Met3forResistorInput'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='ViaMet22Met3forResistor_In{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet22Met3forResistorInput']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**Via2Inputs)
         self._DesignParameter['_ViaMet22Met3forResistorInput']['_XYCoordinates'] = tmpXYs_A  # Also Add B ??
 

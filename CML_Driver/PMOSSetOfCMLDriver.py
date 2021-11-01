@@ -69,7 +69,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
     def _CalculateDesignParameterInputPair(self, _FingerWidthOfInputPair=None, _FingerLengthOfInputPair=None, _NumFingerOfInputPair=None,
                                            _WidthOfMiddleRoutingIP=None, _XVT=None):
         _DRCObj = DRC.DRC()
-        _Name = 'PMOSSet'
+        _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
         print ('#########################################################################################################')
@@ -322,7 +322,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
                                                _NumFingerOfCurrentSource=None, _WidthOfMiddleRoutingCS=None, _XVT=None):
 
         _DRCObj = DRC.DRC()
-        _Name = 'PMOSSet'
+        _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
         NumFingerOfCS = _NumFingerOfCurrentSource / 2
 
@@ -572,7 +572,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
                                   _SubringWidth=None):
 
         _DRCObj = DRC.DRC()
-        _Name = 'PMOSSet'
+        _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
         NumFingerOfIP = _NumFingerOfInputPair / 2

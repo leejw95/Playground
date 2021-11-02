@@ -5,7 +5,7 @@ import DRC
 
 #
 from Private import MyInfo
-from Private import FileManage
+import DRCchecker
 
 
 class _NMOS(StickDiagram._StickDiagram):
@@ -51,43 +51,29 @@ class _NMOS(StickDiagram._StickDiagram):
 
     def _CalculateNMOSDesignParameter(self, _NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None,
                                       _NMOSDummy=False, _XVT=None):
-        """
-
-        :param _NMOSNumberofGate:
-        :param _NMOSChannelWidth:
-        :param _NMOSChannellength:
-        :param _NMOSDummy:
-        :param _XVT:
-        :return:
-        """
 
         _DRCObj = DRC.DRC()
+        MinSnapSpacing = _DRCObj._MinSnapSpacing
         print ('#########################################################################################################')
         print ('                                    {}  NMOS Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')
 
         flag_EvenChannelWidth = True if (_NMOSChannelWidth % 2 == 0) else False
-        _XYCoordinateOfNMOS = [[0, 0]] if flag_EvenChannelWidth else [[0, 0.5]]
+        _XYCoordinateOfNMOS = [[0, 0]] if flag_EvenChannelWidth else [[0, MinSnapSpacing/2.0]]
 
         _LengthNMOSBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
 
-        if DesignParameters._Technology == '028nm':  # Need to Modify
+        if DesignParameters._Technology == '028nm':
             _LengthNMOSBtwPO = _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + _NMOSChannellength
         else:
             _LengthNMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _NMOSChannellength
 
 
-        print ('#############################     POLY Layer Calculation    ##############################################')
-        # POLY Layer Coordinate Calc
+        print ('#############################     POLY (PO/PC) Layer Calculation    ##############################################')
         tmpXYs = []
         for i in range(0, _NMOSNumberofGate):
-            if (_NMOSNumberofGate % 2) == 0:
-                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate / 2 - 0.5) * _LengthNMOSBtwPO + i * _LengthNMOSBtwPO,
-                                    _XYCoordinateOfNMOS[0][1]]
-            else:
-                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2 * _LengthNMOSBtwPO + i * _LengthNMOSBtwPO,
-                                    _XYCoordinateOfNMOS[0][1]]
-            tmpXYs.append(_xycoordinatetmp)
+            tmpXYs.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2.0 * _LengthNMOSBtwPO + i * _LengthNMOSBtwPO,
+                           _XYCoordinateOfNMOS[0][1]])
 
         self._DesignParameter['_POLayer']['_XWidth'] = _NMOSChannellength
         self._DesignParameter['_POLayer']['_YWidth'] = _NMOSChannelWidth + 2 * _DRCObj.DRCPolygateMinExtensionOnOD(_NMOSChannellength)
@@ -106,7 +92,7 @@ class _NMOS(StickDiagram._StickDiagram):
                     CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthNMOSBtwPO, 0])
                 ])
 
-            if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
+            if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:  # Should check this DRC at TSMC
                 self._DesignParameter['_PODummyLayer']['_YWidth'] = self.CeilMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
                 if DesignParameters._Technology != '028nm':  ## Need?
                     self._DesignParameter['_POLayer']['_YWidth'] = self._DesignParameter['_PODummyLayer']['_YWidth']
@@ -129,16 +115,12 @@ class _NMOS(StickDiagram._StickDiagram):
         print ('#############################     METAL1 Layer Calculation    ##############################################')
         # METAL1 Layer Coordinate Setting
         _LengthNMOSBtwMet1 = _LengthNMOSBtwPO
+        self._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] = _LengthNMOSBtwMet1
 
         tmpXYs = []
         for i in range(0, _NMOSNumberofGate + 1):
-            if (_NMOSNumberofGate % 2) == 0:
-                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                    _XYCoordinateOfNMOS[0][1]]
-            else:
-                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                    _XYCoordinateOfNMOS[0][1]]
-            tmpXYs.append(_xycoordinatetmp)
+            tmpXYs.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2.0 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                           _XYCoordinateOfNMOS[0][1]])
 
         self._DesignParameter['_Met1Layer']['_XWidth'] = _DRCObj._CoMinWidth + 2 * _DRCObj._Metal1MinEnclosureCO
         self._DesignParameter['_Met1Layer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
@@ -149,7 +131,7 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_METAL1PINDrawing']['_YWidth'] = self._DesignParameter['_Met1Layer']['_YWidth']
             self._DesignParameter['_METAL1PINDrawing']['_XYCoordinates'] = self._DesignParameter['_Met1Layer']['_XYCoordinates']
 
-        #
+
         print ('#############################     CONT Layer Calculation    ##############################################')
         # CONT XNum/YNum Calculation
         _XNumberOfCOInNMOS = _NMOSNumberofGate + 1
@@ -168,31 +150,30 @@ class _NMOS(StickDiagram._StickDiagram):
         tmpXYs = []
         for i in range(0, _XNumberOfCOInNMOS):
             for j in range(0, _YNumberOfCOInNMOS):
-                if (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                        _XYCoordinateOfNMOS[0][1] - (_YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
-                elif (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 1:
-                    _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                        _XYCoordinateOfNMOS[0][1] - (_YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
-                elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                        _XYCoordinateOfNMOS[0][1] - (_YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
-                else:
-                    _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                                        _XYCoordinateOfNMOS[0][1] - (_YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
-                tmpXYs.append(_xycoordinatetmp)
+                tmpXYs.append([_XYCoordinateOfNMOS[0][0] - (_XNumberOfCOInNMOS - 1) / 2.0 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                               _XYCoordinateOfNMOS[0][1] - (_YNumberOfCOInNMOS - 1) / 2.0 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO])
 
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmpXYs
 
-        # if flag_EvenChannelWidth:
-        #     pass
-        # else:
-        #     tmpXYs = []
-        #     for XY in self._DesignParameter['_COLayer']['_XYCoordinates']:
-        #         tmpXYs.append(CoordCalc.Add(XY, [0, 0.5]))
-        #     self._DesignParameter['_COLayer']['_XYCoordinates'] = tmpXYs
+        if flag_EvenChannelWidth:
+            pass
+        else:                # when finger width is odd number
+            tmpXYs = []
+            for XY in self._DesignParameter['_COLayer']['_XYCoordinates']:
+                tmpXYs.append(CoordCalc.Add(XY, [0, MinSnapSpacing/2.0]))
+            self._DesignParameter['_COLayer']['_XYCoordinates'] = tmpXYs
+
+        #
+        if DesignParameters._Technology == '028nm':
+            _CoArrXWidth = (_XNumberOfCOInNMOS - 1) * _LengthNMOSBtwMet1 + self._DesignParameter['_COLayer']['_XWidth']
+            _CoArrYWidth = (_YNumberOfCOInNMOS - 1) * _LengthNMOSBtwCO + self._DesignParameter['_COLayer']['_YWidth']
+            if min(_CoArrXWidth, _CoArrYWidth) > _DRCObj._CoArrayMaxWidth:
+                print('CA Array Maximum Width should be smaller than 1211n.')
+                raise NotImplementedError
+        else:
+            pass
 
 
         if DesignParameters._Technology != '028nm':  # There is no NIMP(NP) Layer at 28nm
@@ -226,7 +207,7 @@ class _NMOS(StickDiagram._StickDiagram):
                 _XVTLayerMappingName = None
 
             elif DesignParameters._Technology == '028nm':
-                # _XVT = _XVT if _XVT else "None"
+                _XVT = _XVT if _XVT else "None"  # just for Error Message
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
             elif DesignParameters._Technology == '065nm':
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
@@ -258,7 +239,8 @@ class _NMOS(StickDiagram._StickDiagram):
                 )
             else:
                 pass
-
+        else:
+            pass
 
         if DesignParameters._Technology == '180nm':
             print ('#############################     WELLBODY Layer Calculation    #########################################')
@@ -313,38 +295,34 @@ class _NMOS(StickDiagram._StickDiagram):
         print ('#########################     Gate Routing Coordinates Calculation   ##################################')
         tmpXYs = []
         for i in range(0, _NMOSNumberofGate):
-            if (_NMOSNumberofGate % 2) == 0:
-                tmpXYs.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                               _XYCoordinateOfNMOS[0][1]])
-            else:
-                tmpXYs.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
-                               _XYCoordinateOfNMOS[0][1]])
+            tmpXYs.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2.0 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                           _XYCoordinateOfNMOS[0][1]])
 
         self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'] = tmpXYs
 
+        if DesignParameters._Technology == '028nm':  # ?
+            print ('##################################################### Diff Pin Generation & Coordinates ####################################################')
+            self._DesignParameter['_ODLayerPINDrawing']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] / 2 - (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)
+            self._DesignParameter['_ODLayerPINDrawing']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
+            self._DesignParameter['_ODLayerPINDrawing']['_XYCoordinates'] = [[(self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]],
+                                                                             [0 - (self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]]]
 
-        print ('##################################################### Diff Pin Generation & Coordinates ####################################################')
-        self._DesignParameter['_ODLayerPINDrawing']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] / 2 - (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)
-        self._DesignParameter['_ODLayerPINDrawing']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
-        self._DesignParameter['_ODLayerPINDrawing']['_XYCoordinates'] = [[(self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]],
-                                                                         [0 - (self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]]]
 
+            print ('##################################################### POLayer Pin Generation & Coordinates ####################################################')
+            self._DesignParameter['_POLayerPINDrawing']['_XWidth'] = self._DesignParameter['_POLayer']['_XWidth']
+            self._DesignParameter['_POLayerPINDrawing']['_YWidth'] = (self._DesignParameter['_POLayer']['_YWidth'] - self._DesignParameter['_ODLayer']['_YWidth']) / 2
+            tmp1 = []
+            tmp2 = []
+            for i in range(0, len(self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'])):
+                tmp1.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], - (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
+                tmp2.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
 
-        print ('##################################################### POLayer Pin Generation & Coordinates ####################################################')
-        self._DesignParameter['_POLayerPINDrawing']['_XWidth'] = self._DesignParameter['_POLayer']['_XWidth']
-        self._DesignParameter['_POLayerPINDrawing']['_YWidth'] = (self._DesignParameter['_POLayer']['_YWidth'] - self._DesignParameter['_ODLayer']['_YWidth']) / 2
-        tmp1 = []
-        tmp2 = []
-        for i in range(0, len(self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'])):
-            tmp1.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], - (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
-            tmp2.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
-
-        if _NMOSNumberofGate == 1:
-            self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1 + tmp2
+            if _NMOSNumberofGate == 1:
+                self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1 + tmp2
+            else:
+                self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1
         else:
-            self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1
-
-        self._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] = _LengthNMOSBtwMet1
+            pass
 
         print ('#########################################################################################################')
         print ('                                    {}  NMOS Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))
@@ -358,15 +336,17 @@ if __name__ == '__main__':
     _fileName = cellname + '.gds'
 
     ''' Input Parameters for Layout Object '''
-    _NMOSFinger = 9
-    _NMOSWidth = 401            # Minimum value : 200 (samsung) / 200 (65nm)
-    _NMOSChannelLength = 30     # Minimum value : 30 (samsung) / 60 (65nm)
-    _NMOSDummy = True           #
-    _XVT = 'SLVT'               # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
+    InputParams = dict(
+        _NMOSNumberofGate=9,
+        _NMOSChannelWidth=401,      # Minimum value : 200 (samsung) / 200 (65nm)
+        _NMOSChannellength=30,      # Minimum value : 30 (samsung) / 60 (65nm)
+        _NMOSDummy=True,
+        _XVT='SLVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
+    )
 
+    ''' Generate Layout Object '''
     LayoutObj = _NMOS(_DesignParameter=None, _Name=cellname)
-    LayoutObj._CalculateNMOSDesignParameter(_NMOSNumberofGate=_NMOSFinger, _NMOSChannelWidth=_NMOSWidth,
-                                            _NMOSChannellength=_NMOSChannelLength, _NMOSDummy=_NMOSDummy, _XVT=_XVT)
+    LayoutObj._CalculateNMOSDesignParameter(**InputParams)
     LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
     testStreamFile = open('./{}'.format(_fileName), 'wb')
     tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
@@ -375,24 +355,15 @@ if __name__ == '__main__':
 
     print ('###############      Sending to FTP Server...      ##################')
     My = MyInfo.USER(DesignParameters._Technology)
-    FileManage.Upload2FTP(
-        server=My.server,
-        user=My.ID,
+    Checker = DRCchecker.DRCchecker(
+        username=My.ID,
         password=My.PW,
-        directory=My.Dir_GDS,
-        filename=_fileName
-    )
-    FileManage.StreamIn(
-        server=My.server,
-        port=22,
-        ID=My.ID,
-        PW=My.PW,
-        Dir_Work=My.Dir_Work,
-        Dir_GDS=My.Dir_GDS,
+        WorkDir=My.Dir_Work,
+        DRCrunDir=My.Dir_DRCrun,
         libname=libname,
-        filename=_fileName,
-        tech=DesignParameters._Technology
+        cellname=cellname,
     )
-
-    print ('###############      Finished      ##################')
+    Checker.Upload2FTP()
+    Checker.StreamIn(tech=DesignParameters._Technology)
+    print ('#############################      Finished      ################################')
     # end of 'main():' ---------------------------------------------------------------------------------------------

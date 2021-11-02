@@ -1,6 +1,5 @@
 import math
 import copy
-import random
 
 #
 import StickDiagram
@@ -16,7 +15,6 @@ import ViaMet22Met3
 import ViaMet32Met4
 
 #
-from Private import FileManage
 from Private import MyInfo
 import CoordCalc
 import DRCchecker
@@ -28,8 +26,7 @@ class _Inverter(StickDiagram._StickDiagram):
                                            _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NumViaPoly2Met1CoX=None,
                                            _NumViaPoly2Met1CoY=None, _NumViaPMOSMet12Met2CoX=None,
                                            _NumViaPMOSMet12Met2CoY=None, _NumViaNMOSMet12Met2CoX=None,
-                                           _NumViaNMOSMet12Met2CoY=None, _XVT=None, _SupplyLine=None,
-                                           _StandAlone=None)
+                                           _NumViaNMOSMet12Met2CoY=None, _XVT=None, _SupplyLine=None)
 
     def __init__(self, _DesignParameter=None, _Name='Inverter'):
         if _DesignParameter != None:
@@ -43,12 +40,11 @@ class _Inverter(StickDiagram._StickDiagram):
                                   _VDD2VSSHeight=None, _Dummy=None, _NumSupplyCoX=None, _NumSupplyCoY=None,
                                   _SupplyMet1XWidth=None, _SupplyMet1YWidth=None, _NumViaPoly2Met1CoX=None,
                                   _NumViaPoly2Met1CoY=None, _NumViaPMOSMet12Met2CoX=None, _NumViaPMOSMet12Met2CoY=None,
-                                  _NumViaNMOSMet12Met2CoX=None, _NumViaNMOSMet12Met2CoY=None, _XVT=None, _SupplyLine=None,
-                                  _StandAlone=None):
+                                  _NumViaNMOSMet12Met2CoX=None, _NumViaNMOSMet12Met2CoY=None, _XVT=None, _SupplyLine=None
+                                  ):
 
         _DRCObj = DRC.DRC()
-        _Name = 'Inverter'
-
+        _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
 
@@ -209,7 +205,11 @@ class _Inverter(StickDiagram._StickDiagram):
                                        + _DRCObj._PolygateMinSpace2OD  # OD Layer(for Pbody) - PO Dummy Layer (for NMOS)     OD=RX
             else:
                 DistanceBtwVSS2NMOS3 = 0
-            DistanceBtwVSS2NMOS = max(DistanceBtwVSS2NMOS1, DistanceBtwVSS2NMOS2, DistanceBtwVSS2NMOS3)
+            DistanceBtwVSS2NMOS4 = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
+                                   + 0.5 * max(self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                                               self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
+                                   + _DRCObj._Metal1MinSpace2  # Need to Modify
+            DistanceBtwVSS2NMOS = max(DistanceBtwVSS2NMOS1, DistanceBtwVSS2NMOS2, DistanceBtwVSS2NMOS3, DistanceBtwVSS2NMOS4)
 
             DistanceBtwVDD2PMOS1 = 0.5 * self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
                                    + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
@@ -223,7 +223,11 @@ class _Inverter(StickDiagram._StickDiagram):
                                        + _DRCObj._PolygateMinSpace2OD  # OD Layer(for Nbody) - PO Dummy Layer (for PMOS)     OD=RX
             else:
                 DistanceBtwVDD2PMOS3 = 0
-            DistanceBtwVDD2PMOS = max(DistanceBtwVDD2PMOS1, DistanceBtwVD2PMOS2, DistanceBtwVDD2PMOS3)
+            DistanceBtwVDD2PMOS4 = 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
+                                   + 0.5 * max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
+                                               self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) \
+                                   + _DRCObj._Metal1MinSpace2  # Need to Modify
+            DistanceBtwVDD2PMOS = max(DistanceBtwVDD2PMOS1, DistanceBtwVD2PMOS2, DistanceBtwVDD2PMOS3, DistanceBtwVDD2PMOS4)
 
         elif DesignParameters._Technology == '065nm':
             DistanceBtwVSS2NMOS = 0.5 * self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] \
@@ -548,11 +552,18 @@ class _Inverter(StickDiagram._StickDiagram):
 
         # (1) surrounded by output metal  /  of Input Contact (Poly to M1)
         if _Finger > 3:             # No Need else statement (when finger is 1, 2, 3, it covers on (2))
+            ''' ************************ temporal DRC... Need 2 Modify Later ************************ '''
+            if DesignParameters._Technology == '028nm':
+                _tmpDRC_Metal1MinSpaceAtCorner = 70
+                # _tmpDRC_Metal1MinSpaceAtCorner = _DRCObj._Metal1MinSpaceAtCorner
+            else:
+                _tmpDRC_Metal1MinSpaceAtCorner = _DRCObj._Metal1MinSpaceAtCorner
+
             # Calculate Number of Contact_X 'tmpNumCOX'
             lengthM1BtwOutputRouting = self._DesignParameter['_OutputRouting']['_XYCoordinates'][1][0][0] \
                                        - self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][0] \
                                        - self._DesignParameter['_OutputRouting']['_Width'] \
-                                       - 2 * _DRCObj._Metal1MinSpaceAtCorner
+                                       - 2 * _tmpDRC_Metal1MinSpaceAtCorner
 
             unitLengthBtwCOX = _DRCObj._CoMinWidth + _DRCObj._CoMinSpace
             tmpNumCOX = int((lengthM1BtwOutputRouting - _DRCObj._CoMinWidth - 2*_DRCObj._Metal1MinEnclosureCO2) // unitLengthBtwCOX) + 1
@@ -922,77 +933,76 @@ class _Inverter(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger = 2
-    _ChannelWidth = 400
-    _ChannelLength = 60
-    _NPRatio = 1
-    _Dummy = True
-    _XVT = None
+    libname = 'TEST_INVERTER'
+    cellname = 'Inverter'
+    _fileName = cellname + '.gds'
 
-    _VDD2VSSHeight = None  # None / 1750
-    _NumSupplyCOX = None  # None
-    _NumSupplyCOY = None
+    ''' Input Parameters for Layout Object '''
+    InputParams = dict(
+        _Finger=4,
+        _ChannelWidth=400,
+        _ChannelLength=30,
+        _NPRatio=1,
+        _Dummy=True,          # True / False
+        _XVT='SLVT',          # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
 
-    _SupplyMet1XWidth = None
-    _SupplyMet1YWidth = None
-    _NumVIAPoly2Met1COX = None
-    _NumVIAPoly2Met1COY = None
-    _NumViaPMOSMet12Met2CoX = None
-    _NumViaPMOSMet12Met2CoY = None
-    _NumViaNMOSMet12Met2CoX = None
-    _NumViaNMOSMet12Met2CoY = None
-    _NumVIAMet12COX = None
-    _NumVIAMet12COY = None
-    _SupplyLine = False
-    _StandAlone = False
+        _VDD2VSSHeight=None,
+        _NumSupplyCoX=None,
+        _NumSupplyCoY=2,
 
-    _fileName = 'Inverter.gds'
-    libname = 'TEST_INV1'
-
-    # Generate Inverter Layout Object
-    print ('Technology Process', DesignParameters._Technology)
-    InverterObj = _Inverter(_DesignParameter=None, _Name='Inverter')
-    InverterObj._CalculateDesignParameter(_NPRatio=_NPRatio, _Dummy=_Dummy, _XVT=_XVT, _Finger=_Finger,
-                                          _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength,
-                                          _VDD2VSSHeight=_VDD2VSSHeight, _SupplyLine=_SupplyLine,
-                                          _NumSupplyCoX=_NumSupplyCOX, _NumSupplyCoY=_NumSupplyCOY,
-                                          _SupplyMet1XWidth=_SupplyMet1XWidth, _SupplyMet1YWidth=_SupplyMet1YWidth,
-                                          _NumViaPoly2Met1CoX=_NumVIAPoly2Met1COX,
-                                          _NumViaPoly2Met1CoY=_NumVIAPoly2Met1COY,
-                                          _NumViaPMOSMet12Met2CoX=_NumViaPMOSMet12Met2CoX,
-                                          _NumViaPMOSMet12Met2CoY=_NumViaPMOSMet12Met2CoY,
-                                          _NumViaNMOSMet12Met2CoX=_NumViaNMOSMet12Met2CoX,
-                                          _NumViaNMOSMet12Met2CoY=_NumViaNMOSMet12Met2CoY,
-                                          _StandAlone=_StandAlone
-                                          )
-    InverterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=InverterObj._DesignParameter)
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-    tmp = InverterObj._CreateGDSStream(InverterObj._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
-
-    print ('###############      Sending to FTP Server...      ##################')
-    My = MyInfo.USER(DesignParameters._Technology)
-
-    FileManage.Upload2FTP(
-        server=My.server,
-        user=My.ID,
-        password=My.PW,
-        directory=My.Dir_GDS,
-        filename=_fileName
+        _SupplyMet1XWidth=None,
+        _SupplyMet1YWidth=None,
+        _NumViaPoly2Met1CoX=None,
+        _NumViaPoly2Met1CoY=None,
+        _NumViaPMOSMet12Met2CoX=None,
+        _NumViaPMOSMet12Met2CoY=None,
+        _NumViaNMOSMet12Met2CoX=None,
+        _NumViaNMOSMet12Met2CoY=None,
+        _SupplyLine=None,
     )
 
-    FileManage.StreamIn(
-        server=My.server,
-        port=22,
-        ID=My.ID,
-        PW=My.PW,
-        Dir_Work=My.Dir_Work,
-        Dir_GDS=My.Dir_GDS,
-        libname=libname,
-        filename=_fileName,
-        tech=DesignParameters._Technology
-    )
 
-    print ('###############      Finished      ##################')
-    # end of 'main():' ---------------------------------------------------------------------------------------------
+    Mode_DRCCheck = True            # True | False
+    Num_DRCCheck = 100
+
+    for i in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
+        if Mode_DRCCheck:
+            ''' Input Parameters for Layout Object '''
+            InputParams['_Finger'] = DRCchecker.RandomParam(start=2, stop=20, step=1)
+            InputParams['_ChannelWidth'] = DRCchecker.RandomParam(start=200, stop=1000, step=2)
+            InputParams['_ChannelLength'] = DRCchecker.RandomParam(start=30, stop=60, step=2)
+        else:
+            pass
+
+        ''' Generate Inverter Layout Object '''
+        LayoutObj = _Inverter(_DesignParameter=None, _Name=cellname)
+        LayoutObj._CalculateDesignParameter(**InputParams)
+        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
+
+        print ('###############      Sending to FTP Server...      ##################')
+        My = MyInfo.USER(DesignParameters._Technology)
+        Checker = DRCchecker.DRCchecker(
+            username=My.ID,
+            password=My.PW,
+            WorkDir=My.Dir_Work,
+            DRCrunDir=My.Dir_DRCrun,
+            libname=libname,
+            cellname=cellname,
+        )
+        Checker.Upload2FTP()
+
+        if Mode_DRCCheck:
+            print ('###############      DRC checking... {0}/{1}      ##################'.format(i + 1, Num_DRCCheck))
+            for key, value in InputParams.items():
+                print(key, ":", value)
+            Checker.DRCchecker()
+        else:
+            Checker.StreamIn(tech=DesignParameters._Technology)
+
+    print ('#############################      Finished      ################################')
+# end of 'main():' ---------------------------------------------------------------------------------------------

@@ -43,7 +43,6 @@ def FlipXs(Coordinates):
 
     tmpXYs = []
     for XY in Coordinates:
-        print XY
         tmpXYs.append([-XY[0], XY[1]])
     return tmpXYs
 
@@ -52,7 +51,6 @@ def FlipYs(Coordinates):
 
     tmpXYs = []
     for XY in Coordinates:
-        print XY
         tmpXYs.append([XY[0], -XY[1]])
     return tmpXYs
 
@@ -61,7 +59,6 @@ def FlipXYs(Coordinates):
 
     tmpXYs = []
     for XY in Coordinates:
-        print XY
         tmpXYs.append([-XY[0], -XY[1]])
     return tmpXYs
 
@@ -155,6 +152,20 @@ def getXYCoords_MaxY(Coordinates):
     return XYList
 
 
+def getSortedList_ascending(Coordinates):
+
+    xList = []
+    yList = []
+    for XY in Coordinates:
+        xList.append(XY[0])
+        yList.append(XY[1])
+
+    xList = sorted(set(xList))
+    yList = sorted(set(yList))
+
+    return xList, yList
+
+
 # testbench
 if __name__ == '__main__':
 
@@ -163,7 +174,7 @@ if __name__ == '__main__':
     #
     # results = Add(value1, value2)
 
-    XYCoordinates = [[3,5], [1,5], [-1,5], [4,5], [0,-1], [0,-1], [-3,-1]]
-    results = getXYCoords_MinY(XYCoordinates)
+    XYCoordinatesqq = [[3,5], [1,5], [-1,5], [4,5], [0,-1], [0,-1], [-3,-1]]
+    results = getXYCoords_MinY(XYCoordinatesqq)
 
     print(results)

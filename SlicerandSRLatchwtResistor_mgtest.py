@@ -1302,7 +1302,7 @@ if __name__ == '__main__':
     # import DRCchecker
     # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
     # a.DRCchecker()
-    # #
+    #
 #     import DRCchecker
 #     a = DRCchecker.DRCchecker(base64.b64decode('bXl1bmdndWs='), base64.b64decode('dm1mbCEyMjU='),'/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
 #     a.DRCchecker()

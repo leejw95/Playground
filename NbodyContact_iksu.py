@@ -45,7 +45,6 @@ class _NbodyContact(StickDiagram._StickDiagram):
 
         _DRCObj = DRC.DRC()
         _XYCoordinateOfNbodyContact = [[0, 0]]
-
         _LengthNbodyBtwCO = _DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOX=_NumberOfNbodyCOX, NumOfCOY=_NumberOfNbodyCOY)
 
 
@@ -70,28 +69,12 @@ class _NbodyContact(StickDiagram._StickDiagram):
         self._DesignParameter['_Met1Layer']['_XYCoordinates'] = _XYCoordinateOfNbodyContact
 
 
-        print ('#############################     CONT Layer Caculation    ##############################################')
+        print ('#############################     CONT Layer Calculation    ##############################################')
         tmpXYs = []
         for i in range(0, _NumberOfNbodyCOX):
             for j in range(0, _NumberOfNbodyCOY):
-
-                if (_NumberOfNbodyCOX % 2) == 0 and (_NumberOfNbodyCOY % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfNbodyContact[0][0] - (_NumberOfNbodyCOX / 2 - 0.5) * _LengthNbodyBtwCO + i * _LengthNbodyBtwCO,
-                                        _XYCoordinateOfNbodyContact[0][1] - (_NumberOfNbodyCOY / 2 - 0.5) * _LengthNbodyBtwCO + j * _LengthNbodyBtwCO]
-
-                elif (_NumberOfNbodyCOX % 2) == 0 and (_NumberOfNbodyCOY % 2) == 1:
-                    _xycoordinatetmp = [_XYCoordinateOfNbodyContact[0][0] - (_NumberOfNbodyCOX / 2 - 0.5) * _LengthNbodyBtwCO + i * _LengthNbodyBtwCO,
-                                        _XYCoordinateOfNbodyContact[0][1] - (_NumberOfNbodyCOY - 1) / 2 * _LengthNbodyBtwCO + j * _LengthNbodyBtwCO]
-
-                elif (_NumberOfNbodyCOX % 2) == 1 and (_NumberOfNbodyCOY % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfNbodyContact[0][0] - (_NumberOfNbodyCOX - 1) / 2 * _LengthNbodyBtwCO + i * _LengthNbodyBtwCO,
-                                        _XYCoordinateOfNbodyContact[0][1] - (_NumberOfNbodyCOY / 2 - 0.5) * _LengthNbodyBtwCO + j * _LengthNbodyBtwCO]
-
-                else:
-                    _xycoordinatetmp = [_XYCoordinateOfNbodyContact[0][0] - (_NumberOfNbodyCOX - 1) / 2 * _LengthNbodyBtwCO + i * _LengthNbodyBtwCO,
-                                        _XYCoordinateOfNbodyContact[0][1] - (_NumberOfNbodyCOY - 1) / 2 * _LengthNbodyBtwCO + j * _LengthNbodyBtwCO]
-
-                tmpXYs.append(_xycoordinatetmp)
+                tmpXYs.append([_XYCoordinateOfNbodyContact[0][0] - (_NumberOfNbodyCOX - 1) / 2.0 * _LengthNbodyBtwCO + i * _LengthNbodyBtwCO,
+                               _XYCoordinateOfNbodyContact[0][1] - (_NumberOfNbodyCOY - 1) / 2.0 * _LengthNbodyBtwCO + j * _LengthNbodyBtwCO])
 
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth

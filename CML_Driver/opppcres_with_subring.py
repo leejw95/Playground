@@ -5,7 +5,7 @@ import copy
 import StickDiagram
 import DesignParameters
 import DRC
-from Private import FileManage
+import DRCchecker
 from Private import MyInfo
 
 #
@@ -189,50 +189,72 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _ResWidth = 3000
-    _ResLength = 2300
-    _NumCOY = 4
-    _NumRows = 3
-    _NumStripes = 5
-    _RoutingWidth = None
-    _Dummy = True
-    _SubringWidth = 1000
-
-    _fileName = 'OpppcresWithSubring.gds'
     libname = 'TEST_OPPPCRES'
+    cellname = 'OpppcresWithSubring'
+    _fileName = cellname + '.gds'
 
-    # Generate Layout Object
-    OpppcresObj = OpppcresWithSubring(_DesignParameter=None, _Name='OpppcresWithSubring')
-    OpppcresObj._CalculateDesignParameter(_ResWidth=_ResWidth, _ResLength=_ResLength,
-                                          _NumCOY=_NumCOY, _NumRows=_NumRows, _NumStripes=_NumStripes,
-                                          _RoutingWidth=_RoutingWidth,
-                                          _Dummy=_Dummy, _SubringWidth=_SubringWidth)
-    OpppcresObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=OpppcresObj._DesignParameter)
-
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-    tmp = OpppcresObj._CreateGDSStream(OpppcresObj._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
-
-    print ('###############      Sending to FTP Server...      ##################')
-    My = MyInfo.USER(DesignParameters._Technology)
-    FileManage.Upload2FTP(
-        server=My.server,
-        user=My.ID,
-        password=My.PW,
-        directory=My.Dir_GDS,
-        filename=_fileName
+    ''' Input Parameters for Layout Object '''
+    InputParams = dict(
+        _ResWidth=1200,     # 3000
+        _ResLength=4600,    # 2300
+        _NumCOY=9,          # 4
+        _NumRows=9,
+        _NumStripes=9,
+        _RoutingWidth=None,
+        _Dummy=True,
+        _SubringWidth=1000,
     )
-    FileManage.StreamIn(
-        server=My.server,
-        port=22,
-        ID=My.ID,
-        PW=My.PW,
-        Dir_Work=My.Dir_Work,
-        Dir_GDS=My.Dir_GDS,
-        libname=libname,
-        filename=_fileName,
-        tech=DesignParameters._Technology
-    )
-    print ('###############      Finished      ##################')
+
+    Mode_DRCCheck = True            # True | False
+    Num_DRCCheck = 10
+
+    for i in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
+        if Mode_DRCCheck:
+            ''' Random Parameters for Layout Object '''
+            InputParams['_ResWidth'] = DRCchecker.RandomParam(start=1000, stop=5000, step=100)
+            InputParams['_ResLength'] = DRCchecker.RandomParam(start=400, stop=5000, step=100)
+            InputParams['_NumCOY'] = DRCchecker.RandomParam(start=1, stop=5, step=1)
+            InputParams['_NumRows'] = DRCchecker.RandomParam(start=1, stop=10, step=1)
+            InputParams['_NumStripes'] = DRCchecker.RandomParam(start=1, stop=10, step=1)
+        else:
+            pass
+
+        ''' Generate Layout Object '''
+        LayoutObj = OpppcresWithSubring(_DesignParameter=None, _Name=cellname)
+        LayoutObj._CalculateDesignParameter(**InputParams)
+        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
+
+        print ('###############      Sending to FTP Server...      ##################')
+        My = MyInfo.USER(DesignParameters._Technology)
+        Checker = DRCchecker.DRCchecker(
+            username=My.ID,
+            password=My.PW,
+            WorkDir=My.Dir_Work,
+            DRCrunDir=My.Dir_DRCrun,
+            libname=libname,
+            cellname=cellname,
+        )
+        Checker.Upload2FTP()
+
+        if Mode_DRCCheck:
+            print ('###############      DRC checking... {0}/{1}      ##################'.format(i + 1, Num_DRCCheck))
+            try:
+                err = Checker.DRCchecker()
+            except Exception as e:
+                print('Error Occurred', e)
+                print("------------------------ Last Layout Object's Input Parameters are ------------------------")
+                for key, value in InputParams.items():
+                    print(key, ":", value)
+                print("-------------------------------------------------------------------------------------------")
+                raise Exception("Something ERROR with DRCchecker !!!")
+            else:
+                pass
+        else:
+            Checker.StreamIn(tech=DesignParameters._Technology)
+
+    print ('#############################      Finished      ################################')
 # end of 'main():' ---------------------------------------------------------------------------------------------

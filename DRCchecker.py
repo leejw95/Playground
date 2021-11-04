@@ -84,6 +84,24 @@ class DRCchecker :
         ssh.close
 
 
+    def DRCchecker_PrintInputParams(self, InputParams):
+
+        try:
+            self.DRCchecker()
+        except Exception as e:
+            print('Error Occurred', e)
+            print("=============================   Last Layout Object's Input Parameters are   =============================")
+            for key, value in InputParams.items():
+                print(key, ":", value)
+            print("=========================================================================================================")
+            raise Exception("Something ERROR with DRCchecker !!!")
+        else:
+            print("=============================   Last Layout Object's Input Parameters are   =============================")
+            for key, value in InputParams.items():
+                print(key, ":", value)
+            print("=========================================================================================================")
+
+
     def Upload2FTP(self):
         """
         Upload GDS file to Working Directory

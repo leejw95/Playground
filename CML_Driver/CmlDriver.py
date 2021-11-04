@@ -1,12 +1,12 @@
 import math
 import copy
-import random
 import warnings
+
 #
 import StickDiagram
 import DesignParameters
 import DRC
-from Private import FileManage
+import DRCchecker
 from Private import MyInfo
 import CoordCalc
 
@@ -145,137 +145,82 @@ if __name__ == '__main__':
     libname = 'TEST_CmlDriver'
     cellname = 'CmlDriver'
     _fileName = cellname + '.gds'
-    warnings.warn('fff')
+
     ''' Input Parameters for Layout Object '''
-    _FingerWidthOfInputPair = 1000
-    _FingerLengthOfInputPair = 30
-    _NumFingerOfInputPair = 200
-    _WidthOfMiddleRoutingIP = 200
+    InputParams = dict(
+        _FingerWidthOfInputPair=1000,           # ''' Input Pair '''
+        _FingerLengthOfInputPair=30,
+        _NumFingerOfInputPair=200,
+        _WidthOfMiddleRoutingIP=200,
+        _FingerWidthOfCurrentSource=1000,       # ''' Current Source '''
+        _FingerLengthOfCurrentSource=30,
+        _NumFingerOfCurrentSource=320,
+        _WidthOfMiddleRoutingCS=350,
 
-    _FingerWidthOfCurrentSource = 1000
-    _FingerLengthOfCurrentSource = 40
-    _NumFingerOfCurrentSource = 320
-    _WidthOfMiddleRoutingCS = 350
+        _XVT='SLVT',
+        _SubringWidth=1000,
 
-    _XVT = 'SLVT'
-    _SubringWidth = 1000
+        _ResWidth_LoadR=3000,                   # ''' Load R '''
+        _ResLength_LoadR=2300,
+        _NumCOY_LoadR=4,
+        _NumRows_LoadR=2,
+        _NumStripes_LoadR=5,
+        _RoutingWidth_LoadR=None,
+        _Dummy_LoadR=True,
+        _SubringWidth_LoadR=1000,
 
-    ''' Load R  '''
-    _ResWidth_LoadR = 3000
-    _ResLength_LoadR = 2300
-    _NumCOY_LoadR = 4
-    _NumRows_LoadR = 2
-    _NumStripes_LoadR = 5
-    _RoutingWidth_LoadR = None
-    _Dummy_LoadR = True
-    _SubringWidth_LoadR = 1000
-
-    ''' Termination R  '''
-    _TerminationR = True
-    _ResWidth_TerminationR = 3000
-    _ResLength_TerminationR = 2300
-    _NumCOY_TerminationR = 4
-    _NumRows_TerminationR = 2
-    _NumStripes_TerminationR = 5
-    _RoutingWidth_TerminationR = None
-    _Dummy_TerminationR = True
-    _SubringWidth_TerminationR = 1000
-
-
-    # for tries in range(0, 100):
-    #     ''' Input Parameters for Layout Object '''
-    #     _FingerWidthOfInputPair = FileManage.RandomParam(start=400, stop=1000, step=100)
-    #     _FingerLengthOfInputPair = FileManage.RandomParam(start=30, stop=60, step=10)
-    #     _NumFingerOfInputPair = FileManage.RandomParam(start=30, stop=300, step=2)
-    #     _WidthOfMiddleRoutingIP = FileManage.RandomParam(start=100, stop=500, step=10)
-    #
-    #     _FingerWidthOfCurrentSource = FileManage.RandomParam(start=400, stop=1000, step=100)
-    #     _FingerLengthOfCurrentSource = FileManage.RandomParam(start=30, stop=60, step=10)
-    #     _NumFingerOfCurrentSource = FileManage.RandomParam(start=30, stop=500, step=2)
-    #     _WidthOfMiddleRoutingCS = FileManage.RandomParam(start=100, stop=500, step=10)
-    #
-    #     _XVT = 'SLVT'
-    #     _SubringWidth = 1000
-    #
-    #     print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
-    #     print ('_FingerWidthOfInputPair : {}',format(_FingerWidthOfInputPair))
-    #     print ('_FingerLengthOfInputPair : {}',format(_FingerLengthOfInputPair))
-    #     print ('_NumFingerOfInputPair : {}',format(_NumFingerOfInputPair))
-    #     print ('_WidthOfMiddleRoutingIP : {}',format(_WidthOfMiddleRoutingIP))
-    #     print ('_FingerWidthOfCurrentSource : {}',format(_FingerWidthOfCurrentSource))
-    #     print ('_FingerLengthOfCurrentSource : {}',format(_FingerLengthOfCurrentSource))
-    #     print ('_NumFingerOfCurrentSource : {}',format(_NumFingerOfCurrentSource))
-    #     print ('_WidthOfMiddleRoutingCS : {}',format(_WidthOfMiddleRoutingCS))
-
-    # Generate Layout Object
-    LayoutObj = CmlLDriver(_Name=cellname)
-    LayoutObj._CalculateDesignParameter(_FingerWidthOfInputPair=_FingerWidthOfInputPair,
-                                        _FingerLengthOfInputPair=_FingerLengthOfInputPair,
-                                        _NumFingerOfInputPair=_NumFingerOfInputPair,
-                                        _FingerWidthOfCurrentSource=_FingerWidthOfCurrentSource,
-                                        _FingerLengthOfCurrentSource=_FingerLengthOfCurrentSource,
-                                        _NumFingerOfCurrentSource=_NumFingerOfCurrentSource,
-                                        _WidthOfMiddleRoutingIP=_WidthOfMiddleRoutingIP,
-                                        _WidthOfMiddleRoutingCS=_WidthOfMiddleRoutingCS,
-                                        _XVT=_XVT,
-                                        _SubringWidth=_SubringWidth,
-                                        _ResWidth_LoadR=_ResWidth_LoadR,
-                                        _ResLength_LoadR=_ResLength_LoadR,
-                                        _NumCOY_LoadR=_NumCOY_LoadR,
-                                        _NumRows_LoadR=_NumRows_LoadR,
-                                        _NumStripes_LoadR=_NumStripes_LoadR,
-                                        _RoutingWidth_LoadR=_RoutingWidth_LoadR,
-                                        _Dummy_LoadR=_Dummy_LoadR,
-                                        _SubringWidth_LoadR=_SubringWidth_LoadR,
-                                        _TerminationR=_TerminationR,
-                                        _ResWidth_TerminationR=_ResWidth_TerminationR,
-                                        _ResLength_TerminationR=_ResLength_TerminationR,
-                                        _NumCOY_TerminationR=_NumCOY_TerminationR,
-                                        _NumRows_TerminationR=_NumRows_TerminationR,
-                                        _NumStripes_TerminationR=_NumStripes_TerminationR,
-                                        _RoutingWidth_TerminationR=_RoutingWidth_TerminationR,
-                                        _Dummy_TerminationR=_Dummy_TerminationR,
-                                        _SubringWidth_TerminationR=_SubringWidth_TerminationR,
-                                        )
-    LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
-
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-    tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
-
-    print ('###############      Sending to FTP Server...      ##################')
-    My = MyInfo.USER(DesignParameters._Technology)
-    FileManage.Upload2FTP(
-        server=My.server,
-        user=My.ID,
-        password=My.PW,
-        directory=My.Dir_GDS,
-        # directory=My.Dir_Work,
-        filename=_fileName
+        _TerminationR=True,                     # ''' Termination R  '''
+        _ResWidth_TerminationR=3000,
+        _ResLength_TerminationR=2300,
+        _NumCOY_TerminationR=4,
+        _NumRows_TerminationR=2,
+        _NumStripes_TerminationR=5,
+        _RoutingWidth_TerminationR=None,
+        _Dummy_TerminationR=True,
+        _SubringWidth_TerminationR=1000,
     )
-    FileManage.StreamIn(
-        server=My.server,
-        port=22,
-        ID=My.ID,
-        PW=My.PW,
-        Dir_Work=My.Dir_Work,
-        Dir_GDS=My.Dir_GDS,
-        libname=libname,
-        filename=_fileName,
-        tech=DesignParameters._Technology
-    )
-    # print ('###############      Checking DRC...      ##################')
-    # import DRCchecker
-    # a = DRCchecker.DRCchecker(
-    #     username=My.ID,
-    #     password=My.PW,
-    #     WorkDir=My.Dir_Work,
-    #     DRCrunDir=My.Dir_DRCrun,
-    #     libname=libname,
-    #     cellname=cellname,
-    # )
-    # a.DRCchecker()
 
-    print ('###############      Finished      ##################')
+
+    Mode_DRCCheck = False            # True | False
+    Num_DRCCheck = 10
+
+    for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
+        if Mode_DRCCheck:
+            ''' Random Parameters for Layout Object '''
+            InputParams['_ResWidth_LoadR'] = DRCchecker.RandomParam(start=1000, stop=5000, step=100)
+            InputParams['_ResLength_LoadR'] = DRCchecker.RandomParam(start=400, stop=5000, step=100)
+            InputParams['_NumCOY_LoadR'] = DRCchecker.RandomParam(start=1, stop=5, step=1)
+            InputParams['_NumRows_LoadR'] = DRCchecker.RandomParam(start=1, stop=5, step=1)
+            InputParams['_NumStripes_LoadR'] = DRCchecker.RandomParam(start=1, stop=10, step=1)
+        else:
+            pass
+
+        ''' Generate Layout Object '''
+        LayoutObj = CmlLDriver(_Name=cellname)
+        LayoutObj._CalculateDesignParameter(**InputParams)
+        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
+
+        print ('##################################      Sending to FTP Server...      ##################################')
+        My = MyInfo.USER(DesignParameters._Technology)
+        Checker = DRCchecker.DRCchecker(
+            username=My.ID,
+            password=My.PW,
+            WorkDir=My.Dir_Work,
+            DRCrunDir=My.Dir_DRCrun,
+            libname=libname,
+            cellname=cellname,
+        )
+        Checker.Upload2FTP()
+
+        if Mode_DRCCheck:
+            print ('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
+            Checker.DRCchecker_PrintInputParams(InputParams)
+        else:
+            Checker.StreamIn(tech=DesignParameters._Technology)
+
+    print ('########################################      Finished       ###########################################')
 # end of 'main():' ---------------------------------------------------------------------------------------------

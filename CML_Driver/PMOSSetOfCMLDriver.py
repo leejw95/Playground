@@ -59,6 +59,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
                 ODforNbodyExtention=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0],_Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[]),
                 M1forCSSupplyRouting=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[]),
                 _NWLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0],_Datatype=DesignParameters._LayerMapping['NWELL'][1], _XYCoordinates=[]),
+                _Met1BoundaryOfSubring=dict(_DesignParametertype=7, _XWidth=None, _YWidth=None, _XYCoordinates=[]),
                 _Name=self._NameDeclaration(_Name=_Name), _GDSFile=self._GDSObjDeclaration(_GDSFile=None)
             )
 
@@ -756,6 +757,18 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M1forCSSupplyRouting']['_XYCoordinates'] = tmpXYs
         self._DesignParameter['M1forCSSupplyRouting']['_Width'] = self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
 
+        ''' Metal1 Boundary(Outline) of Subring  '''
+        RightXCoord_M1 = None
+        LeftXCoord_M1 = None
+
+
+
+        self._DesignParameter['_Met1BoundaryOfSubring']['_XWidth'] = RightXCoord_M1 - LeftXCoord_M1
+        self._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] = upperYCoord_M1 - lowerYCoord_M1
+        self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
+                                                                             (upperYCoord_M1 + lowerYCoord_M1) / 2.0]
+
+
 
     def YShiftUp(self, DesignObj, OffsetY):
 
@@ -789,12 +802,12 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        _FingerWidthOfInputPair=400,
+        _FingerWidthOfInputPair=400,            # ''' Input Pair '''
         _FingerLengthOfInputPair=30,
         _NumFingerOfInputPair=200,
         _WidthOfMiddleRoutingIP=200,
 
-        _FingerWidthOfCurrentSource=400,
+        _FingerWidthOfCurrentSource=400,        # ''' Current Source '''
         _FingerLengthOfCurrentSource=30,
         _NumFingerOfCurrentSource=320,
         _WidthOfMiddleRoutingCS=350,
@@ -806,7 +819,7 @@ if __name__ == '__main__':
     Mode_DRCCheck = True            # True | False
     Num_DRCCheck = 10
 
-    for i in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
+    for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
         if Mode_DRCCheck:
             ''' Random Parameters for Layout Object '''
             InputParams['_FingerWidthOfInputPair'] = DRCchecker.RandomParam(start=400, stop=1000, step=100)
@@ -830,7 +843,7 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print ('###############      Sending to FTP Server...      ##################')
+        print ('##################################      Sending to FTP Server...      ##################################')
         My = MyInfo.USER(DesignParameters._Technology)
         Checker = DRCchecker.DRCchecker(
             username=My.ID,
@@ -843,20 +856,11 @@ if __name__ == '__main__':
         Checker.Upload2FTP()
 
         if Mode_DRCCheck:
-            print ('###############      DRC checking... {0}/{1}      ##################'.format(i + 1, Num_DRCCheck))
-            try:
-                err = Checker.DRCchecker()
-            except Exception as e:
-                print('Error Occurred', e)
-                print("------------------------ Last Layout Object's Input Parameters are ------------------------")
-                for key, value in InputParams.items():
-                    print(key, ":", value)
-                print("-------------------------------------------------------------------------------------------")
-                raise Exception("Something ERROR with DRCchecker !!!")
-            else:
-                pass
+            print ('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
+            Checker.DRCchecker_PrintInputParams(InputParams)
         else:
             Checker.StreamIn(tech=DesignParameters._Technology)
 
-    print ('#############################      Finished      ################################')
+    print ('########################################      Finished       ###########################################')
+
 # end of 'main():' ---------------------------------------------------------------------------------------------

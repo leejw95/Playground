@@ -7,6 +7,7 @@ import DesignParameters
 import DRC
 import DRCchecker
 from Private import MyInfo
+import CoordCalc
 
 #
 import opppcres_b_iksu
@@ -26,18 +27,6 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
             self._DesignParameter = _DesignParameter
         else:
             self._DesignParameter = dict(
-                _POLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],
-                                                          _Datatype=DesignParameters._LayerMapping['POLY'][1]),
-                _OPLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['OP'][0],
-                                                          _Datatype=DesignParameters._LayerMapping['OP'][1]),
-                _PRESLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PRES'][0],
-                                                            _Datatype=DesignParameters._LayerMapping['PRES'][1]),
-                _PPLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0],
-                                                          _Datatype=DesignParameters._LayerMapping['PIMP'][1]),
-                _Met1Layer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],
-                                                            _Datatype=DesignParameters._LayerMapping['METAL1'][1]),
-                _COLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0],
-                                                          _Datatype=DesignParameters._LayerMapping['CONT'][1]),
                 _VSSRoutingH1=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],
                                                                _Datatype=DesignParameters._LayerMapping['METAL1'][1]),
                 _VSSRoutingH2=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],
@@ -53,6 +42,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
                 _Met5A=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0],
                                                         _Datatype=DesignParameters._LayerMapping['METAL5'][1]),
                 _Name=self._NameDeclaration(_Name=_Name), _GDSFile=self._GDSObjDeclaration(_GDSFile=None),
+                _Met1BoundaryOfSubring=dict(_DesignParametertype=7, _XWidth=None, _YWidth=None, _XYCoordinates=[]),
             )
 
         if _Name == None:
@@ -174,7 +164,8 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         for i in range(0, len(tmpList[0])):
             tmpXYs.append([tmpList[0][i], (max(tmpList[1]) + min(tmpList[1])) / 2])
         self._DesignParameter['_Met2A']['_XWidth'] = self._DesignParameter['_ViaMet12Met2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-        self._DesignParameter['_Met2A']['_YWidth'] = self.CeilMinSnapSpacing(max(tmpList[1]) - min(tmpList[1]), 2 * MinSnapSpacing)
+        self._DesignParameter['_Met2A']['_YWidth'] = self.CeilMinSnapSpacing(max(tmpList[1]) - min(tmpList[1]), 2 * MinSnapSpacing) \
+                                                     + self._DesignParameter['_ViaMet12Met2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']
         self._DesignParameter['_Met2A']['_XYCoordinates'] = tmpXYs
 
         tmpList = self.XYCoordinate2MinMaxXY(tmpXYs_B)
@@ -182,7 +173,8 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         for i in range(0, len(tmpList[0])):
             tmpXYs.append([tmpList[0][i], (max(tmpList[1]) + min(tmpList[1])) / 2])
         self._DesignParameter['_Met2B']['_XWidth'] = self._DesignParameter['_ViaMet12Met2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-        self._DesignParameter['_Met2B']['_YWidth'] = self.CeilMinSnapSpacing(max(tmpList[1]) - min(tmpList[1]), 2 * MinSnapSpacing)
+        self._DesignParameter['_Met2B']['_YWidth'] = self.CeilMinSnapSpacing(max(tmpList[1]) - min(tmpList[1]), 2 * MinSnapSpacing) \
+                                                     + self._DesignParameter['_ViaMet12Met2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']
         self._DesignParameter['_Met2B']['_XYCoordinates'] = tmpXYs
 
 
@@ -229,6 +221,28 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         2) Outline of BP
         '''
 
+        ''' Metal1 Boundary(Outline) of Subring  '''
+        upperYCoord_M1 = self._DesignParameter['_Subring']['_XYCoordinates'][0][1] \
+                         + CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'])[1][-1] \
+                         + self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layerx']['_YWidth'] / 2.0
+        lowerYCoord_M1 = self._DesignParameter['_Subring']['_XYCoordinates'][0][1] \
+                         + CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'])[1][0] \
+                         - self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layerx']['_YWidth'] / 2.0
+
+        RightXCoord_M1 = CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_XYCoordinates'])[0][-1] \
+                         + CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'])[0][-1] \
+                         + self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] / 2.0
+        LeftXCoord_M1 = CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_XYCoordinates'])[0][0] \
+                        + CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'])[0][0] \
+                        - self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] / 2.0
+
+        self._DesignParameter['_Met1BoundaryOfSubring']['_XWidth'] = RightXCoord_M1 - LeftXCoord_M1
+        self._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] = upperYCoord_M1 - lowerYCoord_M1
+        self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
+                                                                             (upperYCoord_M1 + lowerYCoord_M1) / 2.0]
+
+
+        print('test')
 
 if __name__ == '__main__':
 
@@ -240,8 +254,8 @@ if __name__ == '__main__':
     InputParams = dict(
         _ResWidth=3000,     # 3000
         _ResLength=2300,    # 2300
-        _NumCOY=3,          # 4
-        _NumRows=5,
+        _NumCOY=4,          # 4
+        _NumRows=2,
         _NumStripes=5,
         _RoutingWidth=None,
         _Dummy=True,
@@ -271,7 +285,7 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print ('###############      Sending to FTP Server...      ##################')
+        print ('##################################      Sending to FTP Server...      ##################################')
         My = MyInfo.USER(DesignParameters._Technology)
         Checker = DRCchecker.DRCchecker(
             username=My.ID,
@@ -285,19 +299,9 @@ if __name__ == '__main__':
 
         if Mode_DRCCheck:
             print ('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
-            try:
-                err = Checker.DRCchecker()
-            except Exception as e:
-                print('Error Occurred', e)
-                print("------------------------ Last Layout Object's Input Parameters are ------------------------")
-                for key, value in InputParams.items():
-                    print(key, ":", value)
-                print("-------------------------------------------------------------------------------------------")
-                raise Exception("Something ERROR with DRCchecker !!!")
-            else:
-                pass
+            Checker.DRCchecker_PrintInputParams(InputParams)
         else:
             Checker.StreamIn(tech=DesignParameters._Technology)
 
-    print ('#############################      Finished      ################################')
+    print ('########################################      Finished       ###########################################')
 # end of 'main():' ---------------------------------------------------------------------------------------------

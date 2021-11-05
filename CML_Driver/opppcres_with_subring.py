@@ -136,8 +136,23 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
 
         tmpXYs_A, tmpXYs_B = [], []
         dummy = 1 if _Dummy else 0
+        # for i in range(0, _NumRows+1):
+        #     for j in range(0, _NumStripes + dummy * 2):
+        #         if ((i % 2) == 1) and ((j+dummy) % 2 == 0):
+        #             tmpXYs_A.append([+(XWidthOfSubring + _SubringWidth) / 2 + self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
+        #                              distanceBtwM1Port * (_NumRows / 2.0 - i)])
+        #             tmpXYs_A.append([-(XWidthOfSubring + _SubringWidth) / 2 - self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
+        #                              distanceBtwM1Port * (_NumRows / 2.0 - i)])
+        #         elif ((i % 2) == 0) and ((j+dummy) % 2 == 1):
+        #             tmpXYs_B.append([+(XWidthOfSubring + _SubringWidth) / 2 + self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
+        #                              distanceBtwM1Port * (_NumRows / 2.0 - i)])
+        #             tmpXYs_B.append([-(XWidthOfSubring + _SubringWidth) / 2 - self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
+        #                              distanceBtwM1Port * (_NumRows / 2.0 - i)])
+        #         else:
+        #             pass
+
         for i in range(0, _NumRows+1):
-            for j in range(0, _NumStripes + dummy * 2):
+            for j in range(dummy, _NumStripes + dummy):
                 if ((i % 2) == 1) and ((j+dummy) % 2 == 0):
                     tmpXYs_A.append([+(XWidthOfSubring + _SubringWidth) / 2 + self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
                                      distanceBtwM1Port * (_NumRows / 2.0 - i)])
@@ -202,7 +217,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         self._DesignParameter['_Met4A']['_YWidth'] = self._DesignParameter['_Met2A']['_YWidth']
         self._DesignParameter['_Met4A']['_XYCoordinates'] = self._DesignParameter['_Met2A']['_XYCoordinates']
 
-        ''' V3 '''
+        ''' V4 '''
         Via4Inputs = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
         Via4Inputs.update({'_ViaMet42Met5NumberOfCOX': NumViaX, '_ViaMet42Met5NumberOfCOY': NumViaY})
         self._DesignParameter['_ViaMet42Met5'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_Name='M4V4M5_In{}'.format(_Name)))[0]

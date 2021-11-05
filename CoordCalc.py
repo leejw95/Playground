@@ -8,10 +8,26 @@ def Add(Coordinate1, Coordinate2):
     return [x, y]
 
 
+def Add3(Coordinate1, Coordinate2, Coordinate3):
+
+    x = Coordinate1[0] + Coordinate2[0] + Coordinate3[0]
+    y = Coordinate1[1] + Coordinate2[1] + Coordinate3[1]
+
+    return [x, y]
+
+
 def Subtract(Coordinate1, Coordinate2):     # another def named distance and exactly same functionality?
 
     x = Coordinate1[0] - Coordinate2[0]
     y = Coordinate1[1] - Coordinate2[1]
+
+    return [x, y]
+
+
+def CenterBtw2Coords(Coordinate1, Coordinate2):
+
+    x = (Coordinate1[0] + Coordinate2[0]) / 2.0
+    y = (Coordinate1[1] + Coordinate2[1]) / 2.0
 
     return [x, y]
 

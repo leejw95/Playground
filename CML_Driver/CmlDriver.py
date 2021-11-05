@@ -118,8 +118,15 @@ class CmlLDriver(StickDiagram._StickDiagram):
         ResistorParam_LoadR['_SubringWidth'] = _SubringWidth_LoadR
         self._DesignParameter['LoadResistors'] = self._SrefElementDeclaration(_DesignObj=opppcres_with_subring.OpppcresWithSubring(_DesignParameter=None, _Name='LoadResistors_In{}'.format(_Name)))[0]
         self._DesignParameter['LoadResistors']['_DesignObj']._CalculateDesignParameter(**ResistorParam_LoadR)
-        self._DesignParameter['LoadResistors']['_XYCoordinates'] = [[0, -10000]]
 
+        DistanceBtwSubrings_PMOSSetAndLoadR = \
+            self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] / 2.0 \
+            + _DRCObj._Metal1MinSpace4 \
+            + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] / 2.0
+        self._DesignParameter['LoadResistors']['_XYCoordinates'] = \
+            [[0, (self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][1]
+                  - DistanceBtwSubrings_PMOSSetAndLoadR
+                  - self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][1])]]
 
         ''' Termination Resistor Set Generation '''
         if _TerminationR:
@@ -134,15 +141,97 @@ class CmlLDriver(StickDiagram._StickDiagram):
             ResistorParam_TerminationR['_SubringWidth'] = _SubringWidth_TerminationR
             self._DesignParameter['TerminationResistors'] = self._SrefElementDeclaration(_DesignObj=opppcres_with_subring.OpppcresWithSubring(_DesignParameter=None, _Name='TerminationResistors_In{}'.format(_Name)))[0]
             self._DesignParameter['TerminationResistors']['_DesignObj']._CalculateDesignParameter(**ResistorParam_TerminationR)
-            self._DesignParameter['TerminationResistors']['_XYCoordinates'] = [[0, 15000]]
+
+            DistanceBtwSubrings_PMOSSetAndTerminationR = \
+                self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] / 2.0 \
+                + _DRCObj._Metal1MinSpace4 \
+                + self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] / 2.0
+            self._DesignParameter['TerminationResistors']['_XYCoordinates'] = \
+                [[0, (self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][1]
+                      + DistanceBtwSubrings_PMOSSetAndTerminationR
+                      - self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][1])]]
+
         else:
             pass
+
+
+        ''' M2V for InputPair Drain - LoadR '''
+        self._DesignParameter['M2VForIPDrain2LoadR'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1])
+        self._DesignParameter['M2VForIPDrain2LoadR']['_Width'] = self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M2VforIP']['_XWidth']
+
+        UpperYBoundaryOfLoadRSubring = \
+            self._DesignParameter['LoadResistors']['_XYCoordinates'][0][1] \
+            + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][1] \
+            + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] / 2.0
+
+        tmpXYs = []
+        for XYs in CoordCalc.getXYCoords_MinY(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M2V2M3OnPMOSIP']['_XYCoordinates']):
+            tmpXYs.append([XYs, [XYs[0], UpperYBoundaryOfLoadRSubring]])
+        self._DesignParameter['M2VForIPDrain2LoadR']['_XYCoordinates'] = tmpXYs
+
+
+        ''' M2H for InputPair Drain - LoadR '''
+        self._DesignParameter['M2HForIPDrain2LoadR'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1])
+
+        # 1) calc. 'RightBoundaryOfM2H2_byLoadR'
+        RightBoundaryOfM2H_Case1ByLoadR = CoordCalc.getSortedList_ascending(self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met2A']['_XYCoordinates'])[0][-1] \
+                                          + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met2A']['_XWidth'] / 2.0
+
+        # 2) Calc 'RightBoundaryOfM2H1_byIP'
+        for i,XYs in enumerate(CoordCalc.getXYCoords_MinY(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M2V2M3OnPMOSIP']['_XYCoordinates'])):
+            if i is 0:      # initialize
+                LowestAbsXCoord = abs(XYs[0])
+                LargestAbsXCoord = abs(XYs[0])
+            else:
+                if LowestAbsXCoord > abs(XYs[0]):
+                    LowestAbsXCoord = abs(XYs[0])
+                else:
+                    pass
+                if LargestAbsXCoord < abs(XYs[0]):
+                    LargestAbsXCoord = abs(XYs[0])
+                else:
+                    pass
+        RightBoundaryOfM2H_Case2ByIP = LargestAbsXCoord + self._DesignParameter['M2VForIPDrain2LoadR']['_Width'] / 2
+
+        RightBoundaryOfM2H = max(RightBoundaryOfM2H_Case1ByLoadR, RightBoundaryOfM2H_Case2ByIP)
+        LeftBoundaryOfM2H = LowestAbsXCoord - self._DesignParameter['M2VForIPDrain2LoadR']['_Width'] / 2
+
+        self._DesignParameter['M2HForIPDrain2LoadR']['_XWidth'] = RightBoundaryOfM2H - LeftBoundaryOfM2H
+        self._DesignParameter['M2HForIPDrain2LoadR']['_YWidth'] = _SubringWidth_LoadR / 2
+        self._DesignParameter['M2HForIPDrain2LoadR']['_XYCoordinates'] = [
+            [+(RightBoundaryOfM2H + LeftBoundaryOfM2H) / 2, UpperYBoundaryOfLoadRSubring - _SubringWidth_LoadR / 4],
+            [-(RightBoundaryOfM2H + LeftBoundaryOfM2H) / 2, UpperYBoundaryOfLoadRSubring - _SubringWidth_LoadR / 4]
+        ]
+
+        ''' M2V_2nd for InputPair Drain - LoadR '''
+        self._DesignParameter['M2V_2ndForIPDrain2LoadR'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1])
+
+
+        LowerYBoundaryOfM2V_2nd = self._DesignParameter['LoadResistors']['_XYCoordinates'][0][1] \
+                                  + CoordCalc.getSortedList_ascending(self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_ViaMet22Met3']['_XYCoordinates'])[1][-1]
+                                  # + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_ViaMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] / 2
+        UpperYBoundaryOfM2V_2nd = self._DesignParameter['M2HForIPDrain2LoadR']['_XYCoordinates'][0][1]
+
+        tmpXYs = []
+        for XYs in CoordCalc.getXYCoords_MaxY(self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_ViaMet22Met3']['_XYCoordinates']):
+            tmpXYs.append(CoordCalc.Add3(self._DesignParameter['LoadResistors']['_XYCoordinates'][0],
+                                         XYs,
+                                         [0, (UpperYBoundaryOfM2V_2nd - LowerYBoundaryOfM2V_2nd) / 2]))
+
+        self._DesignParameter['M2V_2ndForIPDrain2LoadR']['_XWidth'] = self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met2A']['_XWidth']
+        self._DesignParameter['M2V_2ndForIPDrain2LoadR']['_YWidth'] = UpperYBoundaryOfM2V_2nd - LowerYBoundaryOfM2V_2nd
+        self._DesignParameter['M2V_2ndForIPDrain2LoadR']['_XYCoordinates'] = tmpXYs
+
+
+
         print('test')
 
 
 if __name__ == '__main__':
 
-    libname = 'TEST_CmlDriver'
+    libname = 'TEST_CmlDriver_2'
     cellname = 'CmlDriver'
     _fileName = cellname + '.gds'
 
@@ -163,7 +252,7 @@ if __name__ == '__main__':
         _ResWidth_LoadR=3000,                   # ''' Load R '''
         _ResLength_LoadR=2300,
         _NumCOY_LoadR=4,
-        _NumRows_LoadR=2,
+        _NumRows_LoadR=4,
         _NumStripes_LoadR=5,
         _RoutingWidth_LoadR=None,
         _Dummy_LoadR=True,

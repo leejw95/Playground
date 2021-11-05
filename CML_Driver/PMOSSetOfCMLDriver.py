@@ -757,11 +757,21 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M1forCSSupplyRouting']['_XYCoordinates'] = tmpXYs
         self._DesignParameter['M1forCSSupplyRouting']['_Width'] = self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
 
+
         ''' Metal1 Boundary(Outline) of Subring  '''
-        RightXCoord_M1 = None
-        LeftXCoord_M1 = None
+        upperYCoord_M1 = self._DesignParameter['_Subring']['_XYCoordinates'][0][1] \
+                         + CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'])[1][-1] \
+                         + self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layerx']['_YWidth'] / 2.0
+        lowerYCoord_M1 = self._DesignParameter['_Subring']['_XYCoordinates'][0][1] \
+                         + CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'])[1][0] \
+                         - self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layerx']['_YWidth'] / 2.0
 
-
+        RightXCoord_M1 = self._DesignParameter['_Subring']['_XYCoordinates'][0][0] \
+                         + CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'])[0][-1] \
+                         + self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] / 2.0
+        LeftXCoord_M1 = self._DesignParameter['_Subring']['_XYCoordinates'][0][0] \
+                        + CoordCalc.getSortedList_ascending(self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'])[0][0] \
+                        - self._DesignParameter['_Subring']['_DesignObj']._DesignParameter['_Met1Layery']['_XWidth'] / 2.0
 
         self._DesignParameter['_Met1BoundaryOfSubring']['_XWidth'] = RightXCoord_M1 - LeftXCoord_M1
         self._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] = upperYCoord_M1 - lowerYCoord_M1

@@ -8,6 +8,7 @@ import DRC
 import DRCchecker
 from Private import MyInfo
 import CoordCalc
+import PrintStr
 
 #
 import opppcres_b_iksu
@@ -16,6 +17,7 @@ import ViaMet12Met2
 import ViaMet22Met3
 import ViaMet32Met4
 import ViaMet42Met5
+import ViaMet52Met6
 
 
 class OpppcresWithSubring(StickDiagram._StickDiagram):
@@ -39,8 +41,10 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
                                                         _Datatype=DesignParameters._LayerMapping['METAL3'][1]),
                 _Met4A=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0],
                                                         _Datatype=DesignParameters._LayerMapping['METAL4'][1]),
-                _Met5A=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0],
-                                                        _Datatype=DesignParameters._LayerMapping['METAL5'][1]),
+                # _Met5A=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0],
+                #                                         _Datatype=DesignParameters._LayerMapping['METAL5'][1]),
+                # _Met6A=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0],
+                #                                         _Datatype=DesignParameters._LayerMapping['METAL6'][1]),
                 _Name=self._NameDeclaration(_Name=_Name), _GDSFile=self._GDSObjDeclaration(_GDSFile=None),
                 _Met1BoundaryOfSubring=dict(_DesignParametertype=7, _XWidth=None, _YWidth=None, _XYCoordinates=[]),
             )
@@ -55,6 +59,10 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         _Name = self._DesignParameter['_Name']['_Name']
         _XYCoordinateOfOPRES = [[0, 0]]
         MinSnapSpacing = _DRCObj._MinSnapSpacing
+
+        Printer = PrintStr.PrintStr()
+
+        Printer.ThreeLine('{} Calculation Start'.format(_Name))
 
         print('##############################     Resistor_OPPPCRES Generation    ########################################')
         _OPPPCRES_inputs = copy.deepcopy(opppcres_b_iksu.Resistor_OPPPC._ParametersForDesignCalculation)
@@ -132,7 +140,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
 
         ''' Connect M1-V1-M2 for VSS and Input '''
         NumViaX, NumViaY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(_ResWidth/2, self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth'])
-        print(NumViaX, NumViaY)
+        # print(NumViaX, NumViaY)
 
         tmpXYs_A, tmpXYs_B = [], []
         dummy = 1 if _Dummy else 0
@@ -217,17 +225,29 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         self._DesignParameter['_Met4A']['_YWidth'] = self._DesignParameter['_Met2A']['_YWidth']
         self._DesignParameter['_Met4A']['_XYCoordinates'] = self._DesignParameter['_Met2A']['_XYCoordinates']
 
-        ''' V4 '''
-        Via4Inputs = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-        Via4Inputs.update({'_ViaMet42Met5NumberOfCOX': NumViaX, '_ViaMet42Met5NumberOfCOY': NumViaY})
-        self._DesignParameter['_ViaMet42Met5'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_Name='M4V4M5_In{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet42Met5']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureY(**Via4Inputs)
-        self._DesignParameter['_ViaMet42Met5']['_XYCoordinates'] = tmpXYs_A
+        # ''' V4 '''
+        # Via4Inputs = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
+        # Via4Inputs.update({'_ViaMet42Met5NumberOfCOX': NumViaX, '_ViaMet42Met5NumberOfCOY': NumViaY})
+        # self._DesignParameter['_ViaMet42Met5'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_Name='M4V4M5_In{}'.format(_Name)))[0]
+        # self._DesignParameter['_ViaMet42Met5']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureY(**Via4Inputs)
+        # self._DesignParameter['_ViaMet42Met5']['_XYCoordinates'] = tmpXYs_A
 
-        ''' M5A horizontal for Input '''
-        self._DesignParameter['_Met5A']['_XWidth'] = self._DesignParameter['_Met3A']['_XWidth']
-        self._DesignParameter['_Met5A']['_YWidth'] = self._DesignParameter['_Met3A']['_YWidth']
-        self._DesignParameter['_Met5A']['_XYCoordinates'] = self._DesignParameter['_Met3A']['_XYCoordinates']
+        # ''' M5A horizontal for Input '''
+        # self._DesignParameter['_Met5A']['_XWidth'] = self._DesignParameter['_Met3A']['_XWidth']
+        # self._DesignParameter['_Met5A']['_YWidth'] = self._DesignParameter['_Met3A']['_YWidth']
+        # self._DesignParameter['_Met5A']['_XYCoordinates'] = self._DesignParameter['_Met3A']['_XYCoordinates']
+        #
+        # ''' V5 '''
+        # Via5Inputs = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
+        # Via5Inputs.update({'_ViaMet52Met6NumberOfCOX': NumViaX, '_ViaMet52Met6NumberOfCOY': NumViaY})
+        # self._DesignParameter['_ViaMet52Met6'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_Name='M5V5M6_In{}'.format(_Name)))[0]
+        # self._DesignParameter['_ViaMet52Met6']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureY(**Via5Inputs)
+        # self._DesignParameter['_ViaMet52Met6']['_XYCoordinates'] = tmpXYs_A
+        #
+        # ''' M6A horizontal for Input '''
+        # self._DesignParameter['_Met6A']['_XWidth'] = self._DesignParameter['_Met3A']['_XWidth']
+        # self._DesignParameter['_Met6A']['_YWidth'] = self._DesignParameter['_Met3A']['_YWidth']
+        # self._DesignParameter['_Met6A']['_XYCoordinates'] = self._DesignParameter['_Met3A']['_XYCoordinates']
 
         '''    
         Next Work...
@@ -256,8 +276,8 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
                                                                              (upperYCoord_M1 + lowerYCoord_M1) / 2.0]
 
+        Printer.ThreeLine('{} Calculation End'.format(_Name))
 
-        print('test')
 
 if __name__ == '__main__':
 

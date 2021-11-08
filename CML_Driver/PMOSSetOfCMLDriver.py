@@ -8,6 +8,7 @@ import DRC
 import DRCchecker
 from Private import MyInfo
 import CoordCalc
+import PrintStr
 
 #
 import PMOSWithDummy_iksu
@@ -71,10 +72,9 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         _DRCObj = DRC.DRC()
         _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
+        Printer = PrintStr.PrintStr()
 
-        print ('#########################################################################################################')
-        print ('                                    {}  PMOSSet Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
-        print ('#########################################################################################################')
+
 
         ''' check # of all fingers '''
         NumFingerOfIP = _NumFingerOfInputPair / 2
@@ -115,8 +115,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M1forIPGate']['_YWidth'] = self._DesignParameter['POHforIP']['_YWidth']
 
         NumContactXY = ViaPoly2Met1._ViaPoly2Met1.CalculateNumContact(
-            XWidth=self._DesignParameter['POHforIP']['_XWidth'],
-            YWidth=self._DesignParameter['POHforIP']['_YWidth'])
+            _XWidth=self._DesignParameter['POHforIP']['_XWidth'],
+            _YWidth=self._DesignParameter['POHforIP']['_YWidth'])
 
         PolyContactParams = copy.deepcopy(ViaPoly2Met1._ViaPoly2Met1._ParametersForDesignCalculation)
         PolyContactParams['_ViaPoly2Met1NumberOfCOX'] = NumContactXY[0]
@@ -179,8 +179,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
         ''' M1V1M2 for IP '''
         NumViaX, NumViaY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureX(
-            XWidth=self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
-            YWidth=self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - 0.5*(_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)
+            _XWidth=self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
+            _YWidth=self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - 0.5*(_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)
         )
         assert NumViaY >= 2, 'FingerWidth should be longer.'
 
@@ -269,8 +269,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
         ''' M1V1M2, M2V2M3 on PMOSIP Gate(poly) Generate & Place '''
         NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaSameEnclosure(
-            XWidth=(step_M2Routing - 2) * (xlist_SD[0] - xlist_SD[1]) + _FingerLengthOfInputPair,
-            YWidth=_WidthOfMiddleRoutingIP)
+            _XWidth=(step_M2Routing - 2) * (xlist_SD[0] - xlist_SD[1]) + _FingerLengthOfInputPair,
+            _YWidth=_WidthOfMiddleRoutingIP)
         assert NumViaXY[0] >= 1 and NumViaXY[0] >= 1, 'M1V1M2OnPMOSIPGate Generation Failed.'
 
         M1V1M2OnPMOSIPGateParams = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -350,7 +350,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M1forCSGate']['_YWidth'] = self._DesignParameter['POHforCS']['_YWidth']
 
         NumContactXY_CS = ViaPoly2Met1._ViaPoly2Met1.CalculateNumContact(
-            XWidth=self._DesignParameter['POHforCS']['_XWidth'], YWidth=self._DesignParameter['POHforCS']['_YWidth'])
+            _XWidth=self._DesignParameter['POHforCS']['_XWidth'], _YWidth=self._DesignParameter['POHforCS']['_YWidth'])
         PolyContactParams_forCS = copy.deepcopy(ViaPoly2Met1._ViaPoly2Met1._ParametersForDesignCalculation)
         PolyContactParams_forCS['_ViaPoly2Met1NumberOfCOX'] = NumContactXY_CS[0]
         PolyContactParams_forCS['_ViaPoly2Met1NumberOfCOY'] = NumContactXY_CS[1]
@@ -412,8 +412,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
         ''' M1V1M2 for Current Source'''
         NumViaX, NumViaY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureX(
-            XWidth=self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
-            YWidth=self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - 0.5 * (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+            _XWidth=self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
+            _YWidth=self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - 0.5 * (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
         assert NumViaY >= 2, 'FingerWidth should be longer.'
 
         Via1Params = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -510,8 +510,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
         ''' M1V1M2, M2V2M3 on PMOS CS Gate(poly) Generate & Place '''
         NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaSameEnclosure(
-            XWidth=(step_M2V_CS_Routing - 2) * abs(xlist_SD[0] - xlist_SD[1]) + _FingerLengthOfCurrentSource,
-            YWidth=_WidthOfMiddleRoutingCS)
+            _XWidth=(step_M2V_CS_Routing - 2) * abs(xlist_SD[0] - xlist_SD[1]) + _FingerLengthOfCurrentSource,
+            _YWidth=_WidthOfMiddleRoutingCS)
         assert NumViaXY[0] >= 1 and NumViaXY[0] >= 1, 'M1V1M2OnPMOSCSGate Generation Failed.'
 
         M1V1M2OnPMOSCSGateParams = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -574,6 +574,9 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         _DRCObj = DRC.DRC()
         _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
+        Printer = PrintStr.PrintStr()
+        Printer.ThreeLine('{} Calculation Start'.format(_Name))
+
 
         NumFingerOfIP = _NumFingerOfInputPair / 2
         NumFingerOfCS = _NumFingerOfCurrentSource / 2
@@ -778,6 +781,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
                                                                              (upperYCoord_M1 + lowerYCoord_M1) / 2.0]
 
+        Printer.ThreeLine('{} Calculation End'.format(_Name))
 
 
     def YShiftUp(self, DesignObj, OffsetY):

@@ -287,10 +287,10 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
 
 
     @classmethod
-    def _CalculateNumViaByXYWidth(cls, XWidth=None, YWidth=None, Mode=None):
+    def _CalculateNumViaByXYWidth(cls, _XWidth=None, _YWidth=None, Mode=None):
         '''
-        :param XWidth:
-        :param YWidth:
+        :param _XWidth:
+        :param _YWidth:
         :param Mode:    None or 'MinEnclosureX' or 'MinEnclosureY'
         :return:
         '''
@@ -316,10 +316,10 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         # MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia1 if (Mode is 'MinEnclosureX') else _DRCObj._Metal1MinEnclosureVia12
         # MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia1 if (Mode is 'MinEnclosureY') else _DRCObj._Metal1MinEnclosureVia12
 
-        NumViaX_case1 = int((XWidth - 2*MetMinEnclosureX - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
-        NumViaY_case1 = int((YWidth - 2*MetMinEnclosureY - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
-        NumViaX_case2 = int((XWidth - 2*MetMinEnclosureX - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
-        NumViaY_case2 = int((YWidth - 2*MetMinEnclosureY - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
+        NumViaX_case1 = int((_XWidth - 2*MetMinEnclosureX - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
+        NumViaY_case1 = int((_YWidth - 2*MetMinEnclosureY - _DRCObj._VIAxMinWidth) // LengthBtwVias_case1) + 1
+        NumViaX_case2 = int((_XWidth - 2*MetMinEnclosureX - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
+        NumViaY_case2 = int((_YWidth - 2*MetMinEnclosureY - _DRCObj._VIAxMinWidth) // LengthBtwVias_case2) + 1
 
         if (NumViaX_case1 > 2) and (NumViaY_case1 > 2):
             NumViaX = NumViaX_case2
@@ -336,20 +336,20 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         return NumViaX, NumViaY
 
     @classmethod
-    def CalcNumVia(cls, XWidth=None, YWidth=None):
-        return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode=None)
+    def CalcNumVia(cls, _XWidth=None, _YWidth=None):
+        return cls._CalculateNumViaByXYWidth(_XWidth=_XWidth, _YWidth=_YWidth, Mode=None)
 
     @classmethod
-    def CalcNumViaMinEnclosureX(cls, XWidth=None, YWidth=None):
-        return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode='MinEnclosureX')
+    def CalcNumViaMinEnclosureX(cls, _XWidth=None, _YWidth=None):
+        return cls._CalculateNumViaByXYWidth(_XWidth=_XWidth, _YWidth=_YWidth, Mode='MinEnclosureX')
 
     @classmethod
-    def CalcNumViaMinEnclosureY(cls, XWidth=None, YWidth=None):
-        return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode='MinEnclosureY')
+    def CalcNumViaMinEnclosureY(cls, _XWidth=None, _YWidth=None):
+        return cls._CalculateNumViaByXYWidth(_XWidth=_XWidth, _YWidth=_YWidth, Mode='MinEnclosureY')
 
     @classmethod
-    def CalcNumViaSameEnclosure(cls, XWidth=None, YWidth=None):
-        return cls._CalculateNumViaByXYWidth(XWidth=XWidth, YWidth=YWidth, Mode='SameEnclosure')
+    def CalcNumViaSameEnclosure(cls, _XWidth=None, _YWidth=None):
+        return cls._CalculateNumViaByXYWidth(_XWidth=_XWidth, _YWidth=_YWidth, Mode='SameEnclosure')
 
 
 

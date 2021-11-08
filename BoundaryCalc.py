@@ -1,4 +1,22 @@
 
+def getOverlappedBoundaryElement(BoundaryElement1, BoundaryElement2):
+    """
+    It usually used for Via Calculation when two metals(BoundaryElements) are overlapped.
+    It cannot supported for PathElement
+      -> Later It can support PathElementType when only limited condition (like simple straight lines, not complicated orthogonal line).
+
+    Caution : Every Overlapped BoundaryElements should same XYWidths. Or AssertionError will occur.
+
+    :param BoundaryElement1: <dict('_XWidth', '_YWidth', '_XYCoordinates')>
+    :param BoundaryElement2: <dict('_XWidth', '_YWidth', '_XYCoordinates')>
+    :return: <dict('_XWidth', '_YWidth', '_XYCoordinates')> Overlapped BoundaryElement
+    """
+    overlappedMinMaxXYList = _getOverlappedMinMaxXY(MinMaxXYObj1=_BoundaryElement2MinMaxXY(BoundaryElement1),
+                                                    MinMaxXYObj2=_BoundaryElement2MinMaxXY(BoundaryElement2))
+
+    return _MinMaxXY2BoundaryElement(overlappedMinMaxXYList)
+
+
 def _BoundaryElement2MinMaxXY(BoundaryElementObj):
     MinMaxXYList = []
     for XYs in BoundaryElementObj['_XYCoordinates']:
@@ -48,14 +66,6 @@ def _MinMaxXY2BoundaryElement(MinMaxXYList):
                  (Obj[3] + Obj[1]) / 2.])
 
         return BoundaryElement
-
-
-def getOverlappedBoundaryElement(BoundaryElement1, BoundaryElement2):
-
-    overlappedMinMaxXYList = _getOverlappedMinMaxXY(MinMaxXYObj1=_BoundaryElement2MinMaxXY(BoundaryElement1),
-                                                    MinMaxXYObj2=_BoundaryElement2MinMaxXY(BoundaryElement2))
-
-    return _MinMaxXY2BoundaryElement(overlappedMinMaxXYList)
 
 
 if __name__ == '__main__':

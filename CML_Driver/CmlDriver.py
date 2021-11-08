@@ -512,7 +512,7 @@ class CmlLDriver(StickDiagram._StickDiagram):
             self._DesignParameter['M6VForIPGate2TerminationR']['_YWidth'] = UpperYOfM6VForIPGate2TerminationR - LowerYOfM6VForIPGate2TerminationR
 
             M6VForIPGate2TerminationR_type = 1
-            if M6VForIPGate2TerminationR_type == 1:
+            if M6VForIPGate2TerminationR_type == 1:     # default design
                 self._DesignParameter['M6VForIPGate2TerminationR']['_XWidth'] = self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XWidth']
 
                 DistanceXBtwM4VOfTermRes = (CoordCalc.getSortedList_ascending(self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XYCoordinates'])[0][1] \
@@ -527,6 +527,7 @@ class CmlLDriver(StickDiagram._StickDiagram):
                     tmpXYs.append(tmp2)
 
                 self._DesignParameter['M6VForIPGate2TerminationR']['_XYCoordinates'] = tmpXYs
+
             else:
                 if _TransmissionLineDistance is None:
                     XCoordOfM7M6TermRes = CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][-1]
@@ -585,9 +586,60 @@ class CmlLDriver(StickDiagram._StickDiagram):
 
 
 
-
+            # ############  Not Yet Implemented
+            # ''' M7A For TerminationR '''
+            # if _TransmissionLineDistance is None:
+            #     XCoordOfM7M6 = \
+            #     CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForIPDrain2LoadR']['_XYCoordinates'])[0][-1]
+            # else:
+            #     XCoordOfM7M6 = _TransmissionLineDistance / 2
+            #
+            # self._DesignParameter['M7ForTerminationR'] = self._BoundaryElementDeclaration(
+            #     _Layer=DesignParameters._LayerMapping['METAL7'][0],
+            #     _Datatype=DesignParameters._LayerMapping['METAL7'][1],
+            #     _XWidth=_TransmissionLineWidth,
+            #     _YWidth=self._DesignParameter['M2V_2ndForIPDrain2LoadR']['_YWidth'],
+            #     _XYCoordinates=[
+            #         [+XCoordOfM7M6, self._DesignParameter['M2V_2ndForIPDrain2LoadR']['_XYCoordinates'][0][1]],
+            #         [-XCoordOfM7M6, self._DesignParameter['M2V_2ndForIPDrain2LoadR']['_XYCoordinates'][0][1]]]
+            # )
+            # ############   Not Yet Implemented
         else:
             pass
+
+        # self._DesignParameter['M7TransmissionLine1'] = self._PathElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL7'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL7'][1],
+        #     _Width=_TransmissionLineWidth,
+        #     _XYCoordinates=[]
+        # )
+        # self._DesignParameter['M7TransmissionLine2'] = self._PathElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL7'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL7'][1],
+        #     _Width=_TransmissionLineWidth,
+        #     _XYCoordinates=[]
+        # )
+        # _TransmissionLineDistanceA = 32000
+        # length1 = 10000
+        # length2 = 5000
+        # self._DesignParameter['M7TransmissionLine1']['_XYCoordinates'] = [[
+        #     [+_TransmissionLineDistanceA/2, 50000],
+        #     [+_TransmissionLineDistanceA/2, 50000 + length1],
+        #     [+_TransmissionLineDistanceA/2 - length2, 50000+length2 + length1],
+        #     [+_TransmissionLineDistanceA/2 - length2, 50000+length2 + length1*2],
+        #     [+_TransmissionLineDistanceA/2, 50000 + length1*3],
+        #     [+_TransmissionLineDistanceA/2, 50000 + length1*4],
+        # ]]
+        # self._DesignParameter['M7TransmissionLine2']['_XYCoordinates'] = [[
+        #     [-_TransmissionLineDistanceA/2, 50000],
+        #     [-_TransmissionLineDistanceA/2, 50000 + length1],
+        #     [-_TransmissionLineDistanceA/2 + length2, 50000+length2 + length1],
+        #     [-_TransmissionLineDistanceA/2 + length2, 50000+length2 + length1*2],
+        #     [-_TransmissionLineDistanceA/2, 50000 + length1*3],
+        #     [-_TransmissionLineDistanceA/2, 50000 + length1*4],
+        # ]]
+
+
 
 
         Printer.ThreeLine('{} Calculation End'.format(_Name))
@@ -617,7 +669,7 @@ if __name__ == '__main__':
         _ResLength_LoadR=2300,
         _NumCOY_LoadR=4,
         _NumRows_LoadR=2,
-        _NumStripes_LoadR=3,
+        _NumStripes_LoadR=5,
         _RoutingWidth_LoadR=None,
         _Dummy_LoadR=True,
         _SubringWidth_LoadR=1000,
@@ -626,7 +678,7 @@ if __name__ == '__main__':
         _ResWidth_TerminationR=3000,
         _ResLength_TerminationR=2300,
         _NumCOY_TerminationR=4,
-        _NumRows_TerminationR=2,
+        _NumRows_TerminationR=4,
         _NumStripes_TerminationR=5,
         _RoutingWidth_TerminationR=None,
         _Dummy_TerminationR=True,

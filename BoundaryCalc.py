@@ -29,7 +29,6 @@ def _BoundaryElement2MinMaxXY(BoundaryElementObj):
 
 
 def _getOverlappedMinMaxXY(MinMaxXYObj1, MinMaxXYObj2):
-
     overlappedMinMaxXYList = []
     for Obj1 in MinMaxXYObj1:
         for Obj2 in MinMaxXYObj2:
@@ -57,7 +56,6 @@ def _MinMaxXY2BoundaryElement(MinMaxXYList):
         BoundaryElement = dict(_XWidth=(MinMaxXYList[0][2] - MinMaxXYList[0][0]),
                                _YWidth=(MinMaxXYList[0][3] - MinMaxXYList[0][1]),
                                _XYCoordinates=[])
-
         for Obj in MinMaxXYList:
             assert (Obj[2] - Obj[0]) == BoundaryElement['_XWidth']
             assert (Obj[3] - Obj[1]) == BoundaryElement['_YWidth']

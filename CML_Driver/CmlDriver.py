@@ -204,9 +204,9 @@ class CmlLDriver(StickDiagram._StickDiagram):
 
         tmpXYs = []
         for XYs in CoordCalc.getXYCoords_MinY(self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_ViaMet22Met3']['_XYCoordinates']):
-            tmpXYs.append(CoordCalc.Add3(self._DesignParameter['LoadResistors']['_XYCoordinates'][0],
-                                         XYs,
-                                         [0, (UpperYBoundaryOfM2V_2nd - LowerYBoundaryOfM2V_2nd) / 2 - self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_ViaMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] / 2]))
+            tmpXYs.append(CoordCalc.Sum(self._DesignParameter['LoadResistors']['_XYCoordinates'][0],
+                                        XYs,
+                                        [0, (UpperYBoundaryOfM2V_2nd - LowerYBoundaryOfM2V_2nd) / 2 - self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_ViaMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] / 2]))
 
         self._DesignParameter['M2V_2ndForIPDrain2LoadR']['_XWidth'] = self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met2A']['_XWidth']
         self._DesignParameter['M2V_2ndForIPDrain2LoadR']['_YWidth'] = UpperYBoundaryOfM2V_2nd - LowerYBoundaryOfM2V_2nd
@@ -294,12 +294,12 @@ class CmlLDriver(StickDiagram._StickDiagram):
 
         tmpXYs = []
         for i in range(0, _NumRows_LoadR):
-            tmp1 = CoordCalc.Add3(CoordCalc.getXYCoords_MaxX(self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XYCoordinates'])[0],
-                                  [0, (_NumRows_LoadR-1 - 2*i) * YWidthOfSthM4HForLoadR],
-                                  [- XWidthOfSthM4HForLoadR / 2.0 + self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XWidth']/2.0, 0])
-            tmp2 = CoordCalc.Add3(CoordCalc.getXYCoords_MinX(self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XYCoordinates'])[0],
-                                  [0, (_NumRows_LoadR-1 - 2*i) * YWidthOfSthM4HForLoadR],
-                                  [+ XWidthOfSthM4HForLoadR / 2.0 - self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XWidth']/2.0, 0])
+            tmp1 = CoordCalc.Sum(CoordCalc.getXYCoords_MaxX(self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XYCoordinates'])[0],
+                                 [0, (_NumRows_LoadR-1 - 2*i) * YWidthOfSthM4HForLoadR],
+                                 [- XWidthOfSthM4HForLoadR / 2.0 + self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XWidth']/2.0, 0])
+            tmp2 = CoordCalc.Sum(CoordCalc.getXYCoords_MinX(self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XYCoordinates'])[0],
+                                 [0, (_NumRows_LoadR-1 - 2*i) * YWidthOfSthM4HForLoadR],
+                                 [+ XWidthOfSthM4HForLoadR / 2.0 - self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XWidth']/2.0, 0])
             tmpXYs.append(tmp1)
             tmpXYs.append(tmp2)
 
@@ -425,11 +425,11 @@ class CmlLDriver(StickDiagram._StickDiagram):
             )
             tmpXYs = []
             for i in range(0, NumtmpSth):
-                tmp1 = CoordCalc.Add3(
+                tmp1 = CoordCalc.Sum(
                     CoordCalc.getXYCoords_MaxX(self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XYCoordinates'])[0],
                     self._DesignParameter['TerminationResistors']['_XYCoordinates'][0],
                     [- XWidthOfSthM4HForTerminationR / 2.0 + self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XWidth'] / 2.0, (NumtmpSth - 1 - 2 * i) * YWidthOfSthM4HForTerminationR])
-                tmp2 = CoordCalc.Add3(
+                tmp2 = CoordCalc.Sum(
                     CoordCalc.getXYCoords_MinX(self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XYCoordinates'])[0],
                     self._DesignParameter['TerminationResistors']['_XYCoordinates'][0],
                     [+ XWidthOfSthM4HForTerminationR / 2.0 - self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XWidth'] / 2.0, (NumtmpSth - 1 - 2 * i) * YWidthOfSthM4HForTerminationR])

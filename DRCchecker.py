@@ -32,45 +32,55 @@ class DRCchecker :
         self.cellname = cellname
         
 
-    def DRCchecker(self) :
+    def DRCchecker(self):
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        print ("############ Connecting to Server for DRC checking... ############")
-        ssh.connect(self.server, port = self.port, username=self.username, password=self.password)
+        print("############ Connecting to Server for DRC checking... ############")
+        ssh.connect(self.server, port=self.port, username=self.username, password=self.password)
 
 
         commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{0}/{2}.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname))
-        result1 = ''.join(stdout.read())
-        print (result1)
-        if (result1.split()[-6]) != "'0'" :
-            raise Exception ("Library name already Existing or XStream ERROR!!")
+        # result1 = ''.join(stdout.read())
+        result1 = stdout.read().decode('utf-8')
+        print(result1)
+        if (result1.split()[-6]) != "'0'":
+            raise Exception("Library name already Existing or XStream ERROR!!")
 
 
         commandlines2 = "cd {0}; source setup.cshrc; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
         stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
-        result2 = ''.join(stdout.read())
-        print (result2)
-        if (result2.split()[-6]) != "'0'" :
-            raise Exception ("XstreamOut ERROR")
+        # result2 = ''.join(stdout.read())
+        result2 = stdout.read().decode('utf-8')
+        print(result2)
+        if (result2.split()[-6]) != "'0'":
+            raise Exception("XstreamOut ERROR")
 
         commandlines3 = "cd {0}; sed -i '9s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' _cmos28lp.drc.cal_; sed -i '10s,.*,LAYOUT PRIMARY \"{1}\",' _cmos28lp.drc.cal_; sed -i '13s,.*,DRC RESULTS DATABASE \"{1}.drc.results\" ASCII,' _cmos28lp.drc.cal_; sed -i '18s,.*,DRC SUMMARY REPORT \"{1}.drc.summary\" REPLACE HIER,' _cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.DRCrunDir, self.cellname))
-        print (''.join(stdout.read()))
+        # print (''.join(stdout.read()))
+        print(stdout.read().decode('utf-8'))
 
 
         commandlines4 = "cd {0}; source setup.cshrc; calibre -drc -hier -nowait {1}/_cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines4.format(self.WorkDir, self.DRCrunDir))
-        a = (''.join(stdout.read()))
+
+        print('stdout: ', stdout.read())
+        # print('stderr: ', stderr.read())
+
+        # a = (''.join(stdout.read()))
+        # a = stdout.read().decode('utf-8')
+        # a = stdout.read()
 
         readfile = ssh.open_sftp()
         file = readfile.open('{0}/{1}.drc.summary'.format(self.WorkDir, self.cellname))
-        for line in (file.readlines() [-2:-1]) :
-            print (line)
-            if line.split()[4] != u'0' :
+        print("Reading '{0}/{1}.drc.summary' for check DRC Error......".format(self.WorkDir, self.cellname))
+        for line in (file.readlines()[-2:-1]):        # 'TOTAL DRC Results Generated:   656 (656)\n'
+            print(line)
+            if line.split()[4] != '0':
                 raise Exception("DRC ERROR!!!")
 
-            else :
+            else:
                 # commandlines5 = "cd {0}; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"{1}\" \"\" \"\" \"\")),' Skillcode.il"
                 # stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
                 # print (''.join(stdout.read()))
@@ -148,10 +158,12 @@ class DRCchecker :
         filename = self.cellname + '.gds'
         commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{2}/{3}' -attachTechFileOfLib {4} -logFile 'strmIn.log'"
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.WorkDir, filename, TechFile))
-        result1 = ''.join(stdout.read())
+        # result1 = ''.join(stdout.read())
+        result1 = stdout.read().decode('utf-8')
+
         print('--------------result1-----------------')
-        print (result1)
-        if (result1.split()[-6]) != "'0'":
+        print(result1)
+        if (result1.split()[-6]) != "'0'":          # Example of result1's Last Line : INFO (XSTRM-234): Translation completed. '0' error(s) and '125' warning(s) found.
             raise Exception("Library name already Existing or XStream ERROR!!")
 
         ssh.close
@@ -172,6 +184,6 @@ def RandomParam(start=None, stop=None, step=None):
     assert (stop - start) % step == 0
 
     tmp = random.randint(start, stop + (step - 1))
-    N = (tmp / step) * step
+    N = (tmp // step) * step
 
     return N

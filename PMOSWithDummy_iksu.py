@@ -245,11 +245,11 @@ class _PMOS(StickDiagram._StickDiagram):
         print ('#########################     Supply Routing Coordinates Calculation   ##################################')
         tmpXYs = []
         if (_PMOSNumberofGate % 2) == 0:
-            for i in range(0, _PMOSNumberofGate / 2 + 1):
+            for i in range(0, _PMOSNumberofGate // 2 + 1):
                 tmpXYs.append([_XYCoordinateOfPMOS[0][0] - _PMOSNumberofGate / 2 * _LengthPMOSBtwMet1 + i * 2 * _LengthPMOSBtwMet1,
                                _XYCoordinateOfPMOS[0][1]])
         else:
-            for i in range(0,(_PMOSNumberofGate - 1) / 2 + 1):
+            for i in range(0, (_PMOSNumberofGate + 1) // 2):
                 tmpXYs.append([_XYCoordinateOfPMOS[0][0] - ((_PMOSNumberofGate + 1) / 2 - 0.5) * _LengthPMOSBtwMet1 + i * 2 * _LengthPMOSBtwMet1,
                                _XYCoordinateOfPMOS[0][1]])
         self._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'] = tmpXYs
@@ -258,11 +258,11 @@ class _PMOS(StickDiagram._StickDiagram):
         print ('#########################     Output Routing Coordinates Calculation    ##################################')
         tmpXYs = []
         if (_PMOSNumberofGate % 2) == 0:
-            for i in range(0, _PMOSNumberofGate / 2):
+            for i in range(0, _PMOSNumberofGate // 2):
                 tmpXYs.append([_XYCoordinateOfPMOS[0][0] - _PMOSNumberofGate / 2 * _LengthPMOSBtwMet1 + (i * 2 + 1) * _LengthPMOSBtwMet1,
                                _XYCoordinateOfPMOS[0][1]])
         else:
-            for i in range(0, (_PMOSNumberofGate + 1) / 2):
+            for i in range(0, (_PMOSNumberofGate + 1) // 2):
                 tmpXYs.append([_XYCoordinateOfPMOS[0][0] - ((_PMOSNumberofGate + 1) / 2 - 0.5) * _LengthPMOSBtwMet1 + (i * 2 + 1) * _LengthPMOSBtwMet1,
                                _XYCoordinateOfPMOS[0][1]])
         self._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'] = tmpXYs
@@ -318,8 +318,8 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        _PMOSNumberofGate=6,
-        _PMOSChannelWidth=400,
+        _PMOSNumberofGate=10,
+        _PMOSChannelWidth=1000,
         _PMOSChannellength=30,          # Minimum value : 30 (samsung) / 60 (65nm)
         _PMOSDummy=False,
         _XVT='SLVT',                    # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
@@ -334,7 +334,7 @@ if __name__ == '__main__':
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
-    print ('#############################      Sending to FTP Server...      #############################')
+    print('#############################      Sending to FTP Server...      #############################')
     My = MyInfo.USER(DesignParameters._Technology)
     Checker = DRCchecker.DRCchecker(
         username=My.ID,
@@ -345,6 +345,6 @@ if __name__ == '__main__':
         cellname=cellname,
     )
     Checker.Upload2FTP()
-    Checker.StreamIn(tech=DesignParameters._Technology)
-    print ('#############################      Finished      ################################')
+    # Checker.StreamIn(tech=DesignParameters._Technology)
+    print('#############################      Finished      ################################')
     # end of 'main():' ---------------------------------------------------------------------------------------------

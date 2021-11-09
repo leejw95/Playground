@@ -474,7 +474,7 @@ class _Inverter(StickDiagram._StickDiagram):
 
         # Output M1 Routing (Column Line)
         tmpOutputRoutingM1Y = []
-        for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) / 2):
+        for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) // 2):
             tmpOutputRoutingM1Y.append([CoordCalc.Add(self._DesignParameter['_PMOS']['_XYCoordinates'][0],
                                                       self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2 * i]),
                                         CoordCalc.Add(self._DesignParameter['_NMOS']['_XYCoordinates'][0],
@@ -927,8 +927,7 @@ class _Inverter(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet32Met4OnSupply']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**_ViaVDDMet32Met4)
             self._DesignParameter['_ViaMet32Met4OnSupply']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates'] + self._DesignParameter['PbodyContact']['_XYCoordinates']
 
-
-    # end of 'def _CalculateDesignParameter' ---------------------------------------------------------------------------
+        print('test')
 
 
 if __name__ == '__main__':
@@ -939,9 +938,9 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        _Finger=4,
-        _ChannelWidth=400,
-        _ChannelLength=30,
+        _Finger=13,
+        _ChannelWidth=730,
+        _ChannelLength=38,
         _NPRatio=1,
         _Dummy=True,          # True / False
         _XVT='SLVT',          # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
@@ -963,13 +962,13 @@ if __name__ == '__main__':
 
 
     Mode_DRCCheck = True            # True | False
-    Num_DRCCheck = 100
+    Num_DRCCheck = 10
 
-    for i in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
+    for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
         if Mode_DRCCheck:
             ''' Input Parameters for Layout Object '''
-            InputParams['_Finger'] = DRCchecker.RandomParam(start=2, stop=20, step=1)
-            InputParams['_ChannelWidth'] = DRCchecker.RandomParam(start=200, stop=1000, step=2)
+            InputParams['_Finger'] = DRCchecker.RandomParam(start=2, stop=20, step=1)               # DRCchecker.RandomParam(start=2, stop=20, step=1)
+            InputParams['_ChannelWidth'] = DRCchecker.RandomParam(start=400, stop=1000, step=2)     # DRCchecker.RandomParam(start=200, stop=1000, step=2)
             InputParams['_ChannelLength'] = DRCchecker.RandomParam(start=30, stop=60, step=2)
         else:
             pass
@@ -984,7 +983,7 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print ('###############      Sending to FTP Server...      ##################')
+        print('###############      Sending to FTP Server...      ##################')
         My = MyInfo.USER(DesignParameters._Technology)
         Checker = DRCchecker.DRCchecker(
             username=My.ID,
@@ -997,12 +996,10 @@ if __name__ == '__main__':
         Checker.Upload2FTP()
 
         if Mode_DRCCheck:
-            print ('###############      DRC checking... {0}/{1}      ##################'.format(i + 1, Num_DRCCheck))
-            for key, value in InputParams.items():
-                print(key, ":", value)
-            Checker.DRCchecker()
+            print('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
+            Checker.DRCchecker_PrintInputParams(InputParams)
         else:
             Checker.StreamIn(tech=DesignParameters._Technology)
 
-    print ('#############################      Finished      ################################')
+    print('#############################      Finished      ################################')
 # end of 'main():' ---------------------------------------------------------------------------------------------

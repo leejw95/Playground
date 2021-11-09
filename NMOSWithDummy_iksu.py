@@ -269,12 +269,12 @@ class _NMOS(StickDiagram._StickDiagram):
         print ('#########################     Supply Routing Coordinates Calculation   ##################################')
         tmpXYs = []
         if (_NMOSNumberofGate % 2) == 0:
-            for i in range(0, _NMOSNumberofGate / 2 + 1):
+            for i in range(0, int(_NMOSNumberofGate / 2 + 1)):
                 tmpXYs.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 * _LengthNMOSBtwMet1 + i * 2 * _LengthNMOSBtwMet1,
                                _XYCoordinateOfNMOS[0][1]])
         else:
-            for i in range(0, (_NMOSNumberofGate - 1) / 2 + 1):
-                tmpXYs.append([_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) / 2 - 0.5) * _LengthNMOSBtwMet1 + i * 2 * _LengthNMOSBtwMet1,
+            for i in range(0, int((_NMOSNumberofGate + 1) / 2)):
+                tmpXYs.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 * _LengthNMOSBtwMet1 + i * 2 * _LengthNMOSBtwMet1,
                                _XYCoordinateOfNMOS[0][1]])
         self._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'] = tmpXYs
 
@@ -282,11 +282,11 @@ class _NMOS(StickDiagram._StickDiagram):
         print ('#########################     Output Routing Coordinates Calculation    ##################################')
         tmpXYs = []
         if (_NMOSNumberofGate % 2) == 0:
-            for i in range(0, _NMOSNumberofGate / 2):
+            for i in range(0, int(_NMOSNumberofGate / 2)):
                 tmpXYs.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 * _LengthNMOSBtwMet1 + (i * 2 + 1) * _LengthNMOSBtwMet1,
                                _XYCoordinateOfNMOS[0][1]])
         else:
-            for i in range(0, (_NMOSNumberofGate - 1) / 2 + 1):
+            for i in range(0, int((_NMOSNumberofGate + 1) / 2)):
                 tmpXYs.append([_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) / 2 - 0.5) * _LengthNMOSBtwMet1 + (i * 2 + 1) * _LengthNMOSBtwMet1,
                                _XYCoordinateOfNMOS[0][1]])
         self._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'] = tmpXYs
@@ -337,8 +337,8 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        _NMOSNumberofGate=9,
-        _NMOSChannelWidth=401,      # Minimum value : 200 (samsung) / 200 (65nm)
+        _NMOSNumberofGate=20,
+        _NMOSChannelWidth=1000,      # Minimum value : 200 (samsung) / 200 (65nm)
         _NMOSChannellength=30,      # Minimum value : 30 (samsung) / 60 (65nm)
         _NMOSDummy=True,
         _XVT='SLVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
@@ -364,6 +364,6 @@ if __name__ == '__main__':
         cellname=cellname,
     )
     Checker.Upload2FTP()
-    Checker.StreamIn(tech=DesignParameters._Technology)
+    # Checker.StreamIn(tech=DesignParameters._Technology)
     print ('#############################      Finished      ################################')
     # end of 'main():' ---------------------------------------------------------------------------------------------

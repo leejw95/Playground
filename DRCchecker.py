@@ -3,6 +3,7 @@ import random
 import paramiko
 import sys
 import os
+import time
 
 '''
     This is Beta Version For auto DRC checker.
@@ -20,8 +21,9 @@ import os
     2021-08-06 Junung
 '''
 
-class DRCchecker :
-    def __init__ (self, username, password, WorkDir, DRCrunDir, libname, cellname) :
+
+class DRCchecker:
+    def __init__(self, username, password, WorkDir, DRCrunDir, libname, cellname):
         self.server = '141.223.22.156'
         self.port = '22'
         self.username = username
@@ -43,6 +45,7 @@ class DRCchecker :
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname))
         # result1 = ''.join(stdout.read())
         result1 = stdout.read().decode('utf-8')
+        print('print after commandlines1 : ')
         print(result1)
         if (result1.split()[-6]) != "'0'":
             raise Exception("Library name already Existing or XStream ERROR!!")
@@ -52,6 +55,7 @@ class DRCchecker :
         stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
         # result2 = ''.join(stdout.read())
         result2 = stdout.read().decode('utf-8')
+        print('print after commandlines2 : ')
         print(result2)
         if (result2.split()[-6]) != "'0'":
             raise Exception("XstreamOut ERROR")
@@ -59,18 +63,18 @@ class DRCchecker :
         commandlines3 = "cd {0}; sed -i '9s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' _cmos28lp.drc.cal_; sed -i '10s,.*,LAYOUT PRIMARY \"{1}\",' _cmos28lp.drc.cal_; sed -i '13s,.*,DRC RESULTS DATABASE \"{1}.drc.results\" ASCII,' _cmos28lp.drc.cal_; sed -i '18s,.*,DRC SUMMARY REPORT \"{1}.drc.summary\" REPLACE HIER,' _cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.DRCrunDir, self.cellname))
         # print (''.join(stdout.read()))
+        print('print after commandlines3 : ')
         print(stdout.read().decode('utf-8'))
 
+        commandlines33 = "cd {0}; rm -r {1}.drc.summary"        # delete previous summary file
+        stdin, stdout, stderr = ssh.exec_command(commandlines33.format(self.WorkDir, self.cellname))
+        print('print after commandlines4 : ')
+        print(stdout.read().decode('utf-8'))
 
         commandlines4 = "cd {0}; source setup.cshrc; calibre -drc -hier -nowait {1}/_cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines4.format(self.WorkDir, self.DRCrunDir))
-
-        print('stdout: ', stdout.read())
-        # print('stderr: ', stderr.read())
-
         # a = (''.join(stdout.read()))
-        # a = stdout.read().decode('utf-8')
-        # a = stdout.read()
+        stdout.read()
 
         readfile = ssh.open_sftp()
         file = readfile.open('{0}/{1}.drc.summary'.format(self.WorkDir, self.cellname))
@@ -88,13 +92,13 @@ class DRCchecker :
                 # stdin, stdout, stderr = ssh.exec_command(commandlines6.format(self.WorkDir))
                 commandlines5 = "cd {0}; rm -r {1}"
                 stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
-                print ('No DRC ERROR for this case, deleting library...')
+                print('No DRC ERROR for this case, deleting library...')
 
 
-        ssh.close
+        ssh.close()
 
 
-    def DRCchecker_PrintInputParams(self, InputParams):
+    def DRCchecker_PrintInputParams(self, InputParams:dict):
 
         try:
             self.DRCchecker()
@@ -127,7 +131,7 @@ class DRCchecker :
         ftp.quit()
 
 
-    def StreamIn(self, tech=None):
+    def StreamIn(self, tech:str = '028nm'):
         """
         Only StreamIn
 
@@ -166,17 +170,14 @@ class DRCchecker :
         if (result1.split()[-6]) != "'0'":          # Example of result1's Last Line : INFO (XSTRM-234): Translation completed. '0' error(s) and '125' warning(s) found.
             raise Exception("Library name already Existing or XStream ERROR!!")
 
-        ssh.close
+        ssh.close()
 
 
-def RandomParam(start=None, stop=None, step=None):
+def RandomParam(start: int, stop: int, step: int = 1) -> int:
     """
-    ** (stop - start) should be a multiples of 'step' for uniform distribution
+        return random integer number 'N' between 'start' and 'stop', ( start <= N <= stop )
 
-    :param start: <int>
-    :param stop:  <int>
-    :param step:  <int>
-    :return:      <int> random integer number 'N' between 'start' and 'stop', ( start <= N <= stop )
+    :raises: (stop - start) should be a multiples of 'step' for uniform distribution
     """
     assert isinstance(start, int)
     assert isinstance(stop, int)

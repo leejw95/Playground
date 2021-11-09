@@ -1,8 +1,8 @@
-import user_define_exceptions
+from gds_editor_ver3 import user_define_exceptions
 import struct
-import gds_tags
-import gds_record
-import gds_structures
+from gds_editor_ver3 import gds_tags
+from gds_editor_ver3 import gds_record
+from gds_editor_ver3 import gds_structures
 
 """_HEADER=None
 _BGNLIB=None

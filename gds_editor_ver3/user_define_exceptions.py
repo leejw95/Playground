@@ -1,4 +1,4 @@
-import exceptions
+#import exceptions
 #####exceptions are defined
 
 __all__=('FormatError','EndofFileError','IncorrectRecordSize','IncorrectDataSize')

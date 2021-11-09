@@ -2,6 +2,9 @@ import StickDiagram
 import DesignParameters
 import DRC
 
+from Private import MyInfo
+import DRCchecker
+
 
 class _PbodyContact(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(_NumberOfPbodyCOX=None, _NumberOfPbodyCOY=None,
@@ -82,14 +85,29 @@ class _PbodyContact(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    PbodyContactObj = _PbodyContact(_DesignParameter=None, _Name='PbodyContact')
-    PbodyContactObj._CalculatePbodyContactDesignParameter(_NumberOfPbodyCOX=3, _NumberOfPbodyCOY=2, _Met1XWidth=1000, _Met1YWidth=500)
-    PbodyContactObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=PbodyContactObj._DesignParameter)
-    _fileName = 'PbodyContact.gds'
-    testStreamFile = open('./testStreamFile.gds','wb')
-    tmp = PbodyContactObj._CreateGDSStream(PbodyContactObj._DesignParameter['_GDSFile']['_GDSFile'])
+    libname = 'TEST_MOS'
+    cellname = 'PbodyContact'
+    _fileName = cellname + '.gds'
+
+    ''' Generate Layout Object '''
+    LayoutObj = _PbodyContact(_DesignParameter=None, _Name=cellname)
+    LayoutObj._CalculatePbodyContactDesignParameter(_NumberOfPbodyCOX=20, _NumberOfPbodyCOY=2, _Met1XWidth=None, _Met1YWidth=None)
+    LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+    testStreamFile = open('./{}'.format(_fileName), 'wb')
+    tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
     
-
-    print ('##########################################################################################')
+    print('#############################      Sending to FTP Server...      #############################')
+    My = MyInfo.USER(DesignParameters._Technology)
+    Checker = DRCchecker.DRCchecker(
+        username=My.ID,
+        password=My.PW,
+        WorkDir=My.Dir_Work,
+        DRCrunDir=My.Dir_DRCrun,
+        libname=libname,
+        cellname=cellname,
+    )
+    Checker.Upload2FTP()
+    # Checker.StreamIn(tech=DesignParameters._Technology)
+    print('#############################      Finished      ################################')

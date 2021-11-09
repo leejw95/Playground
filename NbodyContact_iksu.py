@@ -1,11 +1,9 @@
 import StickDiagram
 import DesignParameters
 import DRC
-import user_define_exceptions
 
-import ftplib
-from ftplib import FTP
-import base64
+from Private import MyInfo
+import DRCchecker
 
 
 class _NbodyContact(StickDiagram._StickDiagram):
@@ -87,12 +85,30 @@ class _NbodyContact(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    NbodyContactObj = _NbodyContact(_DesignParameter=None, _Name='NbodyContact')
-    NbodyContactObj._CalculateNbodyContactDesignParameter(_NumberOfNbodyCOX=3, _NumberOfNbodyCOY=1)
-    NbodyContactObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NbodyContactObj._DesignParameter)
-    testStreamFile = open('./testStreamFile.gds','wb')
-    tmp = NbodyContactObj._CreateGDSStream(NbodyContactObj._DesignParameter['_GDSFile']['_GDSFile'])
+
+    libname = 'TEST_MOS'
+    cellname = 'NbodyContact'
+    _fileName = cellname + '.gds'
+
+    ''' Generate Layout Object '''
+    LayoutObj = _NbodyContact(_DesignParameter=None, _Name=cellname)
+    LayoutObj._CalculateNbodyContactDesignParameter(_NumberOfNbodyCOX=30, _NumberOfNbodyCOY=1)
+    LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+    testStreamFile = open('./{}'.format(_fileName), 'wb')
+    tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
-    print ('##########################################################################################')
+    print('#############################      Sending to FTP Server...      #############################')
+    My = MyInfo.USER(DesignParameters._Technology)
+    Checker = DRCchecker.DRCchecker(
+        username=My.ID,
+        password=My.PW,
+        WorkDir=My.Dir_Work,
+        DRCrunDir=My.Dir_DRCrun,
+        libname=libname,
+        cellname=cellname,
+    )
+    Checker.Upload2FTP()
+    # Checker.StreamIn(tech=DesignParameters._Technology)
+    print('#############################      Finished      ################################')

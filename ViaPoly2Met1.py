@@ -3,9 +3,9 @@ import DesignParameters
 import user_define_exceptions
 import DRC
 
-import ftplib
-from ftplib import FTP
-import base64
+#
+from Private import MyInfo
+import DRCchecker
 
 class _ViaPoly2Met1(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation= dict(_ViaPoly2Met1NumberOfCOX=None, _ViaPoly2Met1NumberOfCOY=None )
@@ -128,16 +128,30 @@ class _ViaPoly2Met1(StickDiagram._StickDiagram):
 
 
 if __name__=='__main__':
-    ViaPoly2Met1Obj=_ViaPoly2Met1(_DesignParameter=None, _Name='ViaPoly2Met1')
-    ViaPoly2Met1Obj._CalculateViaPoly2Met1DesignParameter(_ViaPoly2Met1NumberOfCOX=2, _ViaPoly2Met1NumberOfCOY=2)
-    ViaPoly2Met1Obj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=ViaPoly2Met1Obj._DesignParameter)
-    testStreamFile=open('./testStreamFile12.gds','wb')
 
-    tmp=ViaPoly2Met1Obj._CreateGDSStream(ViaPoly2Met1Obj._DesignParameter['_GDSFile']['_GDSFile'])
+    libname = 'TEST_MOS'
+    cellname = 'ViaPoly2Met1'
+    _fileName = cellname + '.gds'
 
+
+    LayoutObj = _ViaPoly2Met1(_DesignParameter=None, _Name=cellname)
+    LayoutObj._CalculateViaPoly2Met1DesignParameter(_ViaPoly2Met1NumberOfCOX=2, _ViaPoly2Met1NumberOfCOY=2)
+    LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+    testStreamFile = open('./{}'.format(_fileName), 'wb')
+    tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)
-
     testStreamFile.close()
     
-
-    print ('##########################################################################################')
+    print('#############################      Sending to FTP Server...      #############################')
+    My = MyInfo.USER(DesignParameters._Technology)
+    Checker = DRCchecker.DRCchecker(
+        username=My.ID,
+        password=My.PW,
+        WorkDir=My.Dir_Work,
+        DRCrunDir=My.Dir_DRCrun,
+        libname=libname,
+        cellname=cellname,
+    )
+    Checker.Upload2FTP()
+    # Checker.StreamIn(tech=DesignParameters._Technology)
+    print('#############################      Finished      ################################')

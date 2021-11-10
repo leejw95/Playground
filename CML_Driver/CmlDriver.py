@@ -1,26 +1,20 @@
-import math
 import copy
-import warnings
 
 #
 import StickDiagram
 import DesignParameters
 import DRC
-import CoordCalc
-import BoundaryCalc
+from SthPack import BoundaryCalc, PrintStr, CoordCalc
 import DRCchecker
 from Private import MyInfo
-import PrintStr
 
 #
-import ViaPoly2Met1
 import ViaMet12Met2
 import ViaMet22Met3
 import ViaMet32Met4
 import ViaMet42Met5
 import ViaMet52Met6
 import ViaMet62Met7
-import psubring
 from CML_Driver import PMOSSetOfCMLDriver
 from CML_Driver import opppcres_with_subring
 
@@ -294,12 +288,14 @@ class CmlLDriver(StickDiagram._StickDiagram):
 
         tmpXYs = []
         for i in range(0, _NumRows_LoadR):
-            tmp1 = CoordCalc.Sum(CoordCalc.getXYCoords_MaxX(self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XYCoordinates'])[0],
-                                 [0, (_NumRows_LoadR-1 - 2*i) * YWidthOfSthM4HForLoadR],
-                                 [- XWidthOfSthM4HForLoadR / 2.0 + self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XWidth']/2.0, 0])
-            tmp2 = CoordCalc.Sum(CoordCalc.getXYCoords_MinX(self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XYCoordinates'])[0],
-                                 [0, (_NumRows_LoadR-1 - 2*i) * YWidthOfSthM4HForLoadR],
-                                 [+ XWidthOfSthM4HForLoadR / 2.0 - self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XWidth']/2.0, 0])
+            tmp1 = CoordCalc.Sum(
+                CoordCalc.getXYCoords_MaxX(self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XYCoordinates'])[0],
+                [0, (_NumRows_LoadR-1 - 2*i) * YWidthOfSthM4HForLoadR],
+                [- XWidthOfSthM4HForLoadR / 2.0 + self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XWidth']/2.0, 0])
+            tmp2 = CoordCalc.Sum(
+                CoordCalc.getXYCoords_MinX(self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XYCoordinates'])[0],
+                [0, (_NumRows_LoadR-1 - 2*i) * YWidthOfSthM4HForLoadR],
+                [+ XWidthOfSthM4HForLoadR / 2.0 - self._DesignParameter['M4V_2ndForIPDrain2LoadR']['_XWidth']/2.0, 0])
             tmpXYs.append(tmp1)
             tmpXYs.append(tmp2)
 
@@ -519,10 +515,12 @@ class CmlLDriver(StickDiagram._StickDiagram):
                                             - CoordCalc.getSortedList_ascending(self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XYCoordinates'])[0][0]) / 2.0
                 tmpXYs = []
                 for i in range(0, NumOfM6VForIPGate2TerminationR):
-                    tmp1 = [CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][0] + (i - (NumOfM6VForIPGate2TerminationR-1) / 2.0) * DistanceXBtwM4VOfTermRes,
-                            (UpperYOfM6VForIPGate2TerminationR + LowerYOfM6VForIPGate2TerminationR) / 2.0]
-                    tmp2 = [CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][-1] + (i - (NumOfM6VForIPGate2TerminationR-1) / 2.0) * DistanceXBtwM4VOfTermRes,
-                            (UpperYOfM6VForIPGate2TerminationR + LowerYOfM6VForIPGate2TerminationR) / 2.0]
+                    tmp1 = [
+                        CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][0] + (i - (NumOfM6VForIPGate2TerminationR - 1) / 2.0) * DistanceXBtwM4VOfTermRes,
+                        (UpperYOfM6VForIPGate2TerminationR + LowerYOfM6VForIPGate2TerminationR) / 2.0]
+                    tmp2 = [
+                        CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][-1] + (i - (NumOfM6VForIPGate2TerminationR - 1) / 2.0) * DistanceXBtwM4VOfTermRes,
+                        (UpperYOfM6VForIPGate2TerminationR + LowerYOfM6VForIPGate2TerminationR) / 2.0]
                     tmpXYs.append(tmp1)
                     tmpXYs.append(tmp2)
 

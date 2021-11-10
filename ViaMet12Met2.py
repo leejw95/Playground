@@ -34,7 +34,7 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         print ('#########################################################################################################')
 
         ###############################################Check the number of CO On Via Contact###########################################################################################
-        if _ViaMet12Met2NumberOfCOX is 0 or _ViaMet12Met2NumberOfCOY is 0:
+        if _ViaMet12Met2NumberOfCOX == 0 or _ViaMet12Met2NumberOfCOY == 0:
             print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
             if DesignParameters._DebugMode == 0:
                 return 0
@@ -255,13 +255,13 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
         LengthBtwVias_case1 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
         LengthBtwVias_case2 = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2  # when exceeding 2x2 array (3x2 or 2x3, ...)
 
-        if Mode is 'MinEnclosureX':
+        if Mode == 'MinEnclosureX':
             MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia1
             MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia12
-        elif Mode is 'MinEnclosureY':
+        elif Mode == 'MinEnclosureY':
             MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia12
             MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia1
-        elif Mode is 'SameEnclosure':
+        elif Mode == 'SameEnclosure':
             MetMinEnclosureX = _DRCObj._Metal1MinEnclosureVia3
             MetMinEnclosureY = _DRCObj._Metal1MinEnclosureVia3
         else:

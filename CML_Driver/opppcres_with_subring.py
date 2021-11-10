@@ -1,4 +1,3 @@
-import math
 import copy
 
 #
@@ -7,8 +6,7 @@ import DesignParameters
 import DRC
 import DRCchecker
 from Private import MyInfo
-import CoordCalc
-import PrintStr
+from SthPack import PrintStr, CoordCalc
 
 #
 import opppcres_b_iksu
@@ -16,8 +14,6 @@ import psubring
 import ViaMet12Met2
 import ViaMet22Met3
 import ViaMet32Met4
-import ViaMet42Met5
-import ViaMet52Met6
 
 
 class OpppcresWithSubring(StickDiagram._StickDiagram):

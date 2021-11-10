@@ -7,8 +7,7 @@ import DesignParameters
 import DRC
 import DRCchecker
 from Private import MyInfo
-import CoordCalc
-import PrintStr
+from SthPack import PrintStr, CoordCalc
 
 #
 import PMOSWithDummy_iksu
@@ -228,8 +227,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
         ''' horizontal routing M3 for PMOS Input Pair '''
         self._DesignParameter['M3HforIPSource']['_XWidth'] = CoordCalc.MinMaxXY(self._DesignParameter['M2V2M3OnPMOSIP']['_XYCoordinates'])[2] \
-                                                              - CoordCalc.MinMaxXY(self._DesignParameter['M2V2M3OnPMOSIP']['_XYCoordinates'])[0] \
-                                                              + self._DesignParameter['M2V2M3OnPMOSIP']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
+                                                             - CoordCalc.MinMaxXY(self._DesignParameter['M2V2M3OnPMOSIP']['_XYCoordinates'])[0] \
+                                                             + self._DesignParameter['M2V2M3OnPMOSIP']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
         self._DesignParameter['M3HforIPSource']['_YWidth'] = _DRCObj._MetalxMinWidth
         self._DesignParameter['M3HforIPDrain']['_XWidth'] = abs(self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0]
                                                                  - self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][-1][0]) \
@@ -449,15 +448,15 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         for XYs in self._DesignParameter['PMOS_CS_Source']['_XYCoordinates']:
             for i in range(0, NumM3HOnCS):
                 if XYs[1] < self._DesignParameter['POHforCS']['_XYCoordinates'][0][1]:
-                    tmpXYs.append(CoordCalc.Add(XYs, [0, +OffsetVia2_CS - DistanceYBtwM3H_CS * (2*i)]))  # Lower Source
+                    tmpXYs.append(CoordCalc.Add(XYs, [0, +OffsetVia2_CS - DistanceYBtwM3H_CS * (2 * i)]))  # Lower Source
                 else:
-                    tmpXYs.append(CoordCalc.Add(XYs, [0, -OffsetVia2_CS + DistanceYBtwM3H_CS * (2*i+1)]))  # Upper Source
+                    tmpXYs.append(CoordCalc.Add(XYs, [0, -OffsetVia2_CS + DistanceYBtwM3H_CS * (2 * i + 1)]))  # Upper Source
         for XYs in self._DesignParameter['PMOS_CS_Drain']['_XYCoordinates']:
             for i in range(0, NumM3HOnCS):
                 if XYs[1] > self._DesignParameter['POHforCS']['_XYCoordinates'][0][1]:
-                    tmpXYs.append(CoordCalc.Add(XYs, [0, -OffsetVia2_CS + DistanceYBtwM3H_CS * (2*i)]))  # Upper Drain
+                    tmpXYs.append(CoordCalc.Add(XYs, [0, -OffsetVia2_CS + DistanceYBtwM3H_CS * (2 * i)]))  # Upper Drain
                 else:
-                    tmpXYs.append(CoordCalc.Add(XYs, [0, +OffsetVia2_CS - DistanceYBtwM3H_CS * (2*i+1)]))  # Lower Drain
+                    tmpXYs.append(CoordCalc.Add(XYs, [0, +OffsetVia2_CS - DistanceYBtwM3H_CS * (2 * i + 1)]))  # Lower Drain
         self._DesignParameter['M2V2M3OnPMOSCS']['_XYCoordinates'] = tmpXYs
 
 

@@ -23,16 +23,17 @@ import time
 
 
 class DRCchecker:
-    def __init__(self, username, password, WorkDir, DRCrunDir, libname, cellname):
+    def __init__(self, username, password, WorkDir, DRCrunDir, libname, cellname, GDSDir):
         self.server = '141.223.22.156'
-        self.port = '22'
+        self.port = 22
         self.username = username
         self.password = password
         self.WorkDir = WorkDir
         self.DRCrunDir = DRCrunDir
         self.libname = libname
         self.cellname = cellname
-        
+        self.GDSDir = GDSDir if GDSDir != None else WorkDir
+
 
     def DRCchecker(self):
         ssh = paramiko.SSHClient()
@@ -41,8 +42,8 @@ class DRCchecker:
         ssh.connect(self.server, port=self.port, username=self.username, password=self.password)
 
 
-        commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{0}/{2}.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
-        stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname))
+        commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{3}/{2}.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
+        stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname, self.GDSDir))
         # result1 = ''.join(stdout.read())
         result1 = stdout.read().decode('utf-8')
         print('print after commandlines1 : ')
@@ -60,25 +61,26 @@ class DRCchecker:
         if (result2.split()[-6]) != "'0'":
             raise Exception("XstreamOut ERROR")
 
+
         commandlines3 = "cd {0}; sed -i '9s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' _cmos28lp.drc.cal_; sed -i '10s,.*,LAYOUT PRIMARY \"{1}\",' _cmos28lp.drc.cal_; sed -i '13s,.*,DRC RESULTS DATABASE \"{1}.drc.results\" ASCII,' _cmos28lp.drc.cal_; sed -i '18s,.*,DRC SUMMARY REPORT \"{1}.drc.summary\" REPLACE HIER,' _cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.DRCrunDir, self.cellname))
-        # print (''.join(stdout.read()))
         print('print after commandlines3 : ')
-        print(stdout.read().decode('utf-8'))
+        print(f"stdout: {stdout.read().decode('utf-8')}")
+        print(f"stderr: {stderr.read().decode('utf-8')}")
 
-        commandlines33 = "cd {0}; rm -r {1}.drc.summary"        # delete previous summary file
-        stdin, stdout, stderr = ssh.exec_command(commandlines33.format(self.WorkDir, self.cellname))
-        print('print after commandlines4 : ')
-        print(stdout.read().decode('utf-8'))
+        commandlines33 = f"cd {self.WorkDir}; rm {self.cellname}.drc.summary"        # delete previous summary file
+        stdin, stdout, stderr = ssh.exec_command(commandlines33)
+        print('print after commandlines33 : ')
+        print(f"stdout: {stdout.read().decode('utf-8')}")
+        print(f"stderr: {stderr.read().decode('utf-8')}")
 
         commandlines4 = "cd {0}; source setup.cshrc; calibre -drc -hier -nowait {1}/_cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines4.format(self.WorkDir, self.DRCrunDir))
-        # a = (''.join(stdout.read()))
         stdout.read()
 
         readfile = ssh.open_sftp()
         file = readfile.open('{0}/{1}.drc.summary'.format(self.WorkDir, self.cellname))
-        print("Reading '{0}/{1}.drc.summary' for check DRC Error......".format(self.WorkDir, self.cellname))
+        print(f"Reading '{self.WorkDir}/{self.cellname}.drc.summary' for check DRC Error......")
         for line in (file.readlines()[-2:-1]):        # 'TOTAL DRC Results Generated:   656 (656)\n'
             print(line)
             if line.split()[4] != '0':
@@ -94,7 +96,6 @@ class DRCchecker:
                 stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
                 print('No DRC ERROR for this case, deleting library...')
 
-
         ssh.close()
 
 
@@ -106,13 +107,13 @@ class DRCchecker:
             print('Error Occurred', e)
             print("=============================   Last Layout Object's Input Parameters are   =============================")
             for key, value in InputParams.items():
-                print(key, ":", value)
+                print(f'{key} : {value}')
             print("=========================================================================================================")
             raise Exception("Something ERROR with DRCchecker !!!")
         else:
             print("=============================   Last Layout Object's Input Parameters are   =============================")
             for key, value in InputParams.items():
-                print(key, ":", value)
+                print(f'{key} : {value}')
             print("=========================================================================================================")
 
 
@@ -124,7 +125,7 @@ class DRCchecker:
 
         ftp = ftplib.FTP(self.server)
         ftp.login(self.username, self.password)
-        ftp.cwd(self.WorkDir)
+        ftp.cwd(self.GDSDir)
         myFile = open(filename, 'rb')
         ftp.storbinary('STOR ' + filename, myFile)
         myFile.close()
@@ -140,18 +141,8 @@ class DRCchecker:
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        print ("############ Connecting to Server by SSH... ############")
+        print("############ Connecting to Server by SSH... ############")
         ssh.connect(hostname=self.server, port=self.port, username=self.username, password=self.password)
-
-        ''' Not Implemented
-        commandlines0 = 'cd {0}; source setup.cshrc; virtuoso -nograph;'
-        stdin, stdout, stderr = ssh.exec_command(commandlines0.format(Dir_Work))
-        result0 = ''.join(stdout.read())
-        print('--------------result0-----------------')
-        print (result0)
-
-        ddDeleteObj(ddGetObj("{1}"))
-        '''
 
         if tech in ('028nm', None):
             TechFile = 'cmos28lp'
@@ -161,8 +152,7 @@ class DRCchecker:
             raise NotImplemented
         filename = self.cellname + '.gds'
         commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{2}/{3}' -attachTechFileOfLib {4} -logFile 'strmIn.log'"
-        stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.WorkDir, filename, TechFile))
-        # result1 = ''.join(stdout.read())
+        stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.GDSDir, filename, TechFile))
         result1 = stdout.read().decode('utf-8')
 
         print('--------------result1-----------------')
@@ -179,9 +169,6 @@ def RandomParam(start: int, stop: int, step: int = 1) -> int:
 
     :raises: (stop - start) should be a multiples of 'step' for uniform distribution
     """
-    assert isinstance(start, int)
-    assert isinstance(stop, int)
-    assert isinstance(step, int)
     assert (stop - start) % step == 0
 
     tmp = random.randint(start, stop + (step - 1))

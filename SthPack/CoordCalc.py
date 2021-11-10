@@ -159,7 +159,7 @@ def _isCoordinate(Coordinate):
     assert isinstance(Coordinate, list), 'Expected list. But {}'.format(type(Coordinate))
     assert len(Coordinate) == 2, 'Expected two element. But {}.'.format(len(Coordinate))
     for i in Coordinate:
-        assert isinstance(i, (int, long, float)), 'Expected number. But {}.'.format(i)
+        assert isinstance(i, (int, float)), 'Expected number. But {}.'.format(i)
 
 
 # testbench

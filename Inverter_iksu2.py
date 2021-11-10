@@ -16,7 +16,7 @@ import ViaMet32Met4
 
 #
 from Private import MyInfo
-import CoordCalc
+from SthPack import CoordCalc, PlaygroundBot
 import DRCchecker
 
 
@@ -962,14 +962,14 @@ if __name__ == '__main__':
 
 
     Mode_DRCCheck = True            # True | False
-    Num_DRCCheck = 10
+    Num_DRCCheck = 1
 
     for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
         if Mode_DRCCheck:
             ''' Input Parameters for Layout Object '''
             InputParams['_Finger'] = DRCchecker.RandomParam(start=2, stop=20, step=1)               # DRCchecker.RandomParam(start=2, stop=20, step=1)
             InputParams['_ChannelWidth'] = DRCchecker.RandomParam(start=400, stop=1000, step=2)     # DRCchecker.RandomParam(start=200, stop=1000, step=2)
-            InputParams['_ChannelLength'] = DRCchecker.RandomParam(start=30, stop=60, step=2)
+            InputParams['_ChannelLength'] = DRCchecker.RandomParam(start=10, stop=20, step=2)
         else:
             pass
 
@@ -985,11 +985,13 @@ if __name__ == '__main__':
 
         print('###############      Sending to FTP Server...      ##################')
         My = MyInfo.USER(DesignParameters._Technology)
+        Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
         Checker = DRCchecker.DRCchecker(
             username=My.ID,
             password=My.PW,
             WorkDir=My.Dir_Work,
             DRCrunDir=My.Dir_DRCrun,
+            GDSDir=My.Dir_GDS,
             libname=libname,
             cellname=cellname,
         )
@@ -997,9 +999,28 @@ if __name__ == '__main__':
 
         if Mode_DRCCheck:
             print('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
-            Checker.DRCchecker_PrintInputParams(InputParams)
+            try:
+                Checker.DRCchecker()
+            except Exception as e:
+                print('Error Occurred: ', e)
+                print("=============================   Last Layout Object's Input Parameters are   =============================")
+                tmpStr = '\n'.join(f'{k} : {v}' for k,v in InputParams.items())
+                print(tmpStr)
+                print("=========================================================================================================")
+
+                Bot.send2Bot(f'Error Occurred During Checking DRC({ii + 1}/{Num_DRCCheck})...\n'
+                             f'ErrMsg : {e}\n'
+                             f'============================='
+                             f'{tmpStr}\n'
+                             f'=============================')
+            else:
+                if (ii + 1) == Num_DRCCheck:
+                    Bot.send2Bot(f'Checking DRC Finished.\nTotal Number Of Trial : {Num_DRCCheck}')
+                    # elapsed time, start time, end time, main python file name
+                else:
+                    pass
+            # Checker.DRCchecker_PrintInputParams(InputParams)
         else:
             Checker.StreamIn(tech=DesignParameters._Technology)
 
     print('#############################      Finished      ################################')
-# end of 'main():' ---------------------------------------------------------------------------------------------

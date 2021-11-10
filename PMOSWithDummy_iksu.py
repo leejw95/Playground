@@ -1,4 +1,4 @@
-import CoordCalc
+from SthPack import CoordCalc
 import StickDiagram
 import DesignParameters
 import DRC
@@ -164,7 +164,7 @@ class _PMOS(StickDiagram._StickDiagram):
         else:                # when finger width is odd number
             tmpXYs = []
             for XY in self._DesignParameter['_COLayer']['_XYCoordinates']:
-                tmpXYs.append(CoordCalc.Add(XY, [0, MinSnapSpacing/2.0]))
+                tmpXYs.append(CoordCalc.Add(XY, [0, MinSnapSpacing / 2.0]))
             self._DesignParameter['_COLayer']['_XYCoordinates'] = tmpXYs
 
         #

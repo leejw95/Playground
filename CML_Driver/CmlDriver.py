@@ -1,11 +1,12 @@
 import copy
-
+import time
 #
 import StickDiagram
 import DesignParameters
 import DRC
-from SthPack import BoundaryCalc, PrintStr, CoordCalc
 import DRCchecker
+from SthPack import BoundaryCalc, CoordCalc
+from SthPack import PlaygroundBot
 from Private import MyInfo
 
 #
@@ -88,13 +89,14 @@ class CmlLDriver(StickDiagram._StickDiagram):
                                   ):
 
         _DRCObj = DRC.DRC()
-        _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
-        Printer = PrintStr.PrintStr()
+        _Name = self._DesignParameter['_Name']['_Name']
 
-        Printer.ThreeLine('{} Calculation Start'.format(_Name))
+        print(''.center(105,'#'))
+        print('     {} Calculation Start     '.format(_Name).center(105,'#'))
+        print(''.center(105, '#'))
 
-        Printer.OneLine('Calculate PMOSSet_In{}'.format(_Name))
+        print('     Calculate PMOSSet_In{}     '.format(_Name).center(105, '#'))
         PMOSSetParam = copy.deepcopy(PMOSSetOfCMLDriver.PMOSSetOfCMLDriver._ParametersForDesignCalculation)
         PMOSSetParam['_FingerWidthOfInputPair'] = _FingerWidthOfInputPair
         PMOSSetParam['_FingerLengthOfInputPair'] = _FingerLengthOfInputPair
@@ -111,7 +113,7 @@ class CmlLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['PMOSSet']['_XYCoordinates'] = [[0,0]]
 
 
-        Printer.OneLine('Calculate RoadResistors_In{}'.format(_Name))
+        print('   Calculate RoadResistors_In{}   '.format(_Name).center(105, '#'))
         ResistorParam_LoadR = copy.deepcopy(opppcres_with_subring.OpppcresWithSubring._ParametersForDesignCalculation)
         ResistorParam_LoadR['_ResWidth'] = _ResWidth_LoadR
         ResistorParam_LoadR['_ResLength'] = _ResLength_LoadR
@@ -134,7 +136,7 @@ class CmlLDriver(StickDiagram._StickDiagram):
                   - self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][1])]]
 
 
-        Printer.OneLine("Connection Between InputPair's Drain and LoadResistor")
+        print("   Connection Between InputPair's Drain and LoadResistor   ".center(105,'#'))
         ''' M2V for InputPair Drain - LoadR '''
         UpperYBoundaryOfLoadRSubring = \
             self._DesignParameter['LoadResistors']['_XYCoordinates'][0][1] \
@@ -162,7 +164,7 @@ class CmlLDriver(StickDiagram._StickDiagram):
 
         # 2) Calculate 'RightBoundaryOfM2H1_byIP'
         for i,XYs in enumerate(CoordCalc.getXYCoords_MinY(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M2V2M3OnPMOSIP']['_XYCoordinates'])):
-            if i is 0:      # initialize
+            if i == 0:      # initialize
                 LowestAbsXCoord = abs(XYs[0])
                 LargestAbsXCoord = abs(XYs[0])
             else:
@@ -375,8 +377,7 @@ class CmlLDriver(StickDiagram._StickDiagram):
 
 
         if _TerminationR:
-            Printer.OneLine('Calculate TerminationResistors_In{}'.format(_Name))
-            print(" ===================================== Generate TerminationResistors ===================================== ")
+            print('   Calculate TerminationResistors_In{}   '.format(_Name).center(105,'#'))
             ResistorParam_TerminationR = copy.deepcopy(opppcres_with_subring.OpppcresWithSubring._ParametersForDesignCalculation)
             ResistorParam_TerminationR['_ResWidth'] = _ResWidth_TerminationR
             ResistorParam_TerminationR['_ResLength'] = _ResLength_TerminationR
@@ -398,8 +399,7 @@ class CmlLDriver(StickDiagram._StickDiagram):
                       + DistanceBtwSubrings_PMOSSetAndTerminationR
                       - self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][1])]]
 
-            Printer.OneLine("Connection Between CurrentSource's Drain and TerminationResistor")
-
+            print("Connection Between CurrentSource's Drain and TerminationResistor".center(105,'#'))
 
             ''' M5H '''
             ''' M5ForTerminationR '''
@@ -637,13 +637,14 @@ class CmlLDriver(StickDiagram._StickDiagram):
         #     [-_TransmissionLineDistanceA/2, 50000 + length1*4],
         # ]]
 
-
-
-
-        Printer.ThreeLine('{} Calculation End'.format(_Name))
-
+        print(''.center(105, '#'))
+        print('     {} Calculation End     '.format(_Name).center(105,'#'))
+        print(''.center(105, '#'))
 
 if __name__ == '__main__':
+
+    My = MyInfo.USER(DesignParameters._Technology)
+    Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
 
     libname = 'TEST_CmlDriver_2'
     cellname = 'CmlDriver'
@@ -687,19 +688,25 @@ if __name__ == '__main__':
     )
 
 
-    Mode_DRCCheck = False            # True | False
+    Mode_DRCCheck = False       # True | False
     Num_DRCCheck = 10
-
+    start_time = time.time()
+    
     for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
         if Mode_DRCCheck:
             ''' Random Parameters for Layout Object '''
             InputParams['_ResWidth_LoadR'] = DRCchecker.RandomParam(start=1000, stop=5000, step=100)
             InputParams['_ResLength_LoadR'] = DRCchecker.RandomParam(start=400, stop=5000, step=100)
-            InputParams['_NumCOY_LoadR'] = DRCchecker.RandomParam(start=1, stop=5, step=1)
-            InputParams['_NumRows_LoadR'] = DRCchecker.RandomParam(start=1, stop=5, step=1)
-            InputParams['_NumStripes_LoadR'] = DRCchecker.RandomParam(start=1, stop=10, step=1)
+            InputParams['_NumCOY_LoadR'] = DRCchecker.RandomParam(start=2, stop=5, step=1)
+            InputParams['_NumRows_LoadR'] = DRCchecker.RandomParam(start=1, stop=4, step=1)
+            InputParams['_NumStripes_LoadR'] = DRCchecker.RandomParam(start=2, stop=10, step=1)
         else:
             pass
+
+        print("   Layout Object's Input Parameters are   ".center(105, '='))
+        tmpStr = '\n'.join(f'{k} : {v}' for k, v in InputParams.items())
+        print(tmpStr)
+        print("".center(105, '='))
 
         ''' Generate Layout Object '''
         LayoutObj = CmlLDriver(_Name=cellname)
@@ -710,23 +717,45 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print ('##################################      Sending to FTP Server...      ##################################')
-        My = MyInfo.USER(DesignParameters._Technology)
         Checker = DRCchecker.DRCchecker(
             username=My.ID,
             password=My.PW,
             WorkDir=My.Dir_Work,
             DRCrunDir=My.Dir_DRCrun,
+            GDSDir=My.Dir_GDS,
             libname=libname,
             cellname=cellname,
         )
         Checker.Upload2FTP()
 
         if Mode_DRCCheck:
-            print ('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
-            Checker.DRCchecker_PrintInputParams(InputParams)
+            print(f'DRC checking... ({ii + 1}/{Num_DRCCheck})')
+
+            try:
+                Checker.DRCchecker()
+            except Exception as e:
+                print('Error Occurred: ', e)
+                print("   Last Layout Object's Input Parameters are   ".center(105, '='))
+                tmpStr = '\n'.join(f'{k} : {v}' for k, v in InputParams.items())
+                print(tmpStr)
+                print(''.center(105, '='))
+                m, s = divmod(time.time() - start_time, 60)
+                h, m = divmod(m, 60)
+                Bot.send2Bot(f'Error Occurred During Checking DRC({ii + 1}/{Num_DRCCheck})...\nErrMsg : {e}\n'
+                             f'**InputParameters:\n'
+                             f'{tmpStr}\n'
+                             f'****************************'
+                             f'Elapsed Time: {int(h)}:{int(m):0>2}:{int(s):0>2}s')
+            else:
+                if (ii + 1) == Num_DRCCheck:
+                    elapsed_time = time.time() - start_time
+                    m, s = divmod(elapsed_time, 60)
+                    h, m = divmod(m, 60)
+                    Bot.send2Bot(f'Checking DRC Finished.\nTotal Number of Run: {Num_DRCCheck}\n'
+                                 f'Elapsed Time: {int(h)}:{int(m):0>2}:{int(s):0>2}s')
+                else:
+                    pass
         else:
             Checker.StreamIn(tech=DesignParameters._Technology)
 
-    print ('########################################      Finished       ###########################################')
-# end of 'main():' ---------------------------------------------------------------------------------------------
+    print('   Main Function Finished   '.center(105, '#'))

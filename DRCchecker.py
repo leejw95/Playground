@@ -36,15 +36,15 @@ class DRCchecker:
 
 
     def DRCchecker(self):
+
+        print('   Connecting to Server by SSH...   '.center(105, '#'))
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        print("############ Connecting to Server for DRC checking... ############")
         ssh.connect(self.server, port=self.port, username=self.username, password=self.password)
 
 
         commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{3}/{2}.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname, self.GDSDir))
-        # result1 = ''.join(stdout.read())
         result1 = stdout.read().decode('utf-8')
         print('print after commandlines1 : ')
         print(result1)
@@ -54,9 +54,8 @@ class DRCchecker:
 
         commandlines2 = "cd {0}; source setup.cshrc; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
         stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
-        # result2 = ''.join(stdout.read())
         result2 = stdout.read().decode('utf-8')
-        print('print after commandlines2 : ')
+        print(f'print after commandlines2 :')
         print(result2)
         if (result2.split()[-6]) != "'0'":
             raise Exception("XstreamOut ERROR")
@@ -64,13 +63,13 @@ class DRCchecker:
 
         commandlines3 = "cd {0}; sed -i '9s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' _cmos28lp.drc.cal_; sed -i '10s,.*,LAYOUT PRIMARY \"{1}\",' _cmos28lp.drc.cal_; sed -i '13s,.*,DRC RESULTS DATABASE \"{1}.drc.results\" ASCII,' _cmos28lp.drc.cal_; sed -i '18s,.*,DRC SUMMARY REPORT \"{1}.drc.summary\" REPLACE HIER,' _cmos28lp.drc.cal_"
         stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.DRCrunDir, self.cellname))
-        print('print after commandlines3 : ')
+        print(f'print after commandlines3 :')
         print(f"stdout: {stdout.read().decode('utf-8')}")
         print(f"stderr: {stderr.read().decode('utf-8')}")
 
         commandlines33 = f"cd {self.WorkDir}; rm {self.cellname}.drc.summary"        # delete previous summary file
         stdin, stdout, stderr = ssh.exec_command(commandlines33)
-        print('print after commandlines33 : ')
+        print(f'print after commandlines33 :')
         print(f"stdout: {stdout.read().decode('utf-8')}")
         print(f"stderr: {stderr.read().decode('utf-8')}")
 
@@ -97,24 +96,25 @@ class DRCchecker:
                 print('No DRC ERROR for this case, deleting library...')
 
         ssh.close()
+        print(''.center(105, '#'))
 
 
-    def DRCchecker_PrintInputParams(self, InputParams:dict):
-
-        try:
-            self.DRCchecker()
-        except Exception as e:
-            print('Error Occurred', e)
-            print("=============================   Last Layout Object's Input Parameters are   =============================")
-            for key, value in InputParams.items():
-                print(f'{key} : {value}')
-            print("=========================================================================================================")
-            raise Exception("Something ERROR with DRCchecker !!!")
-        else:
-            print("=============================   Last Layout Object's Input Parameters are   =============================")
-            for key, value in InputParams.items():
-                print(f'{key} : {value}')
-            print("=========================================================================================================")
+    # def DRCchecker_PrintInputParams(self, InputParams:dict):
+    #
+    #     try:
+    #         self.DRCchecker()
+    #     except Exception as e:
+    #         print('Error Occurred', e)
+    #         print("=============================   Last Layout Object's Input Parameters are   =============================")
+    #         for key, value in InputParams.items():
+    #             print(f'{key} : {value}')
+    #         print("=========================================================================================================")
+    #         raise Exception("Something ERROR with DRCchecker !!!")
+    #     else:
+    #         print("=============================   Last Layout Object's Input Parameters are   =============================")
+    #         for key, value in InputParams.items():
+    #             print(f'{key} : {value}')
+    #         print("=========================================================================================================")
 
 
     def Upload2FTP(self):
@@ -123,6 +123,7 @@ class DRCchecker:
         """
         filename = self.cellname + '.gds'
 
+        print('   Uploading GDS file...   '.center(105, '#'))
         ftp = ftplib.FTP(self.server)
         ftp.login(self.username, self.password)
         ftp.cwd(self.GDSDir)
@@ -130,6 +131,7 @@ class DRCchecker:
         ftp.storbinary('STOR ' + filename, myFile)
         myFile.close()
         ftp.quit()
+        print(''.center(105, '#'))
 
 
     def StreamIn(self, tech:str = '028nm'):
@@ -138,10 +140,10 @@ class DRCchecker:
 
         :param tech:  '028nm' | '065nm'
         """
+
+        print('   Connecting to Server by SSH...   '.center(105, '#'))
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-        print("############ Connecting to Server by SSH... ############")
         ssh.connect(hostname=self.server, port=self.port, username=self.username, password=self.password)
 
         if tech in ('028nm', None):
@@ -155,12 +157,13 @@ class DRCchecker:
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.GDSDir, filename, TechFile))
         result1 = stdout.read().decode('utf-8')
 
-        print('--------------result1-----------------')
+        print('   Stream In   '.center(105, '-'))
         print(result1)
         if (result1.split()[-6]) != "'0'":          # Example of result1's Last Line : INFO (XSTRM-234): Translation completed. '0' error(s) and '125' warning(s) found.
             raise Exception("Library name already Existing or XStream ERROR!!")
 
         ssh.close()
+        print(''.center(105, '#'))
 
 
 def RandomParam(start: int, stop: int, step: int = 1) -> int:

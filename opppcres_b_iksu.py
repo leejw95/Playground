@@ -46,19 +46,20 @@ class Resistor_OPPPC(StickDiagram._StickDiagram):
         _XYCoordinateOfOPRES = [[0, 0]]
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
-        print ('#########################################################################################################')
-        print ('                                    {}  Opppcres Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name']))
-        print ('#########################################################################################################')
+        print('#########################################################################################################')
+        print('                                    {}  Opppcres Calculation Start                                       '.format(self._DesignParameter['_Name']['_Name']))
+        print('#########################################################################################################')
 
-        _DistanceBtwPC = max(_DRCObj._PolygateMinSpace2, _RoutingWidth)  # edge-to-edge
-        _DistanceBtwCO = (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)     # center-to-center
-        _NumRes = _NumStripes if (_NumStripes is not None) else 1        # Number of Resistor Set
+        # _DistanceBtwPC = max(_DRCObj._PolygateMinSpace2, _RoutingWidth)  # edge-to-edge
+        _DistanceBtwPC = _DRCObj._PolygateMinSpace2 if _RoutingWidth == None else _RoutingWidth     # edge-to-edge
+        _DistanceBtwCO = (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)                                # center-to-center
+        _NumRes = _NumStripes if (_NumStripes is not None) else 1                                   # # of Resistor Set
         _NumPC = _NumRes + 2 if _Dummy else _NumRes
         _NumCOX = int((_ResWidth - _DRCObj._CoMinEnclosureByPO2 * 2 - _DRCObj._CoMinWidth) // _DistanceBtwCO) + 1
         _NumCOY = _NumCOY if (_NumCOY is not None) else 1
 
 
-        print ('#############################     OP Layer Calculation    ################################################')
+        print('#############################     OP Layer Calculation    ################################################')
         self._DesignParameter['_OPLayer']['_XWidth'] = _ResWidth * _NumPC + _DistanceBtwPC * (_NumPC-1) + _DRCObj._OPlayeroverPoly * 2
         self._DesignParameter['_OPLayer']['_YWidth'] = _ResLength
         if _ResLength < _DRCObj._PolyoverOPlayer:
@@ -66,7 +67,7 @@ class Resistor_OPPPC(StickDiagram._StickDiagram):
         self._DesignParameter['_OPLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
 
-        print ('#############################     POLY Layer Calculation    ##############################################')
+        print('#############################     POLY Layer Calculation    ##############################################')
         PC_YWidth_1 = _ResLength + _DRCObj._PolyoverOPlayer * 2
         PC_YWidth_2 = _ResLength + (_DRCObj._CoMinSpace2OP + (_NumCOY-1) * _DistanceBtwCO + _DRCObj._CoMinWidth + _DRCObj._CoMinEnclosureByPOAtLeastTwoSide) * 2  # when with many contact rows
 
@@ -83,7 +84,7 @@ class Resistor_OPPPC(StickDiagram._StickDiagram):
         self._DesignParameter['_POLayer']['_XYCoordinates'] = tmpXYs
 
 
-        print ('#############################     CONT Layer Calculation    ##############################################')
+        print('#############################     CONT Layer Calculation    ##############################################')
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
 
@@ -97,15 +98,15 @@ class Resistor_OPPPC(StickDiagram._StickDiagram):
                         tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - (_NumCOX/2 - 0.5) * _DistanceBtwCO + i * _DistanceBtwCO,
                                        self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] + (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * _DistanceBtwCO])
                     else:
-                        tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - (_NumCOX/2) * _DistanceBtwCO + i * _DistanceBtwCO,
+                        tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - ((_NumCOX-1)/2) * _DistanceBtwCO + i * _DistanceBtwCO,
                                        self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] - (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) - j * _DistanceBtwCO])
-                        tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - (_NumCOX/2) * _DistanceBtwCO + i * _DistanceBtwCO,
+                        tmpXYs.append([self._DesignParameter['_POLayer']['_XYCoordinates'][k][0] - ((_NumCOX-1)/2) * _DistanceBtwCO + i * _DistanceBtwCO,
                                        self._DesignParameter['_POLayer']['_XYCoordinates'][k][1] + (self._DesignParameter['_OPLayer']['_YWidth']/2 + _DRCObj._CoMinSpace2OP + 0.5 * _DRCObj._CoMinWidth) + j * _DistanceBtwCO])
 
 
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmpXYs
 
-        print ('#############################     Metal1 Layer Calculation    #############################################')
+        print('#############################     Metal1 Layer Calculation    #############################################')
         self._DesignParameter['_Met1Layer']['_XWidth'] = (_NumCOX - 1) * _DistanceBtwCO + _DRCObj._CoMinWidth + _DRCObj._Metal1MinEnclosureCO3 * 2
         self._DesignParameter['_Met1Layer']['_YWidth'] = (_NumCOY - 1) * _DistanceBtwCO + _DRCObj._CoMinWidth + _DRCObj._Metal1MinEnclosureCO3 * 2
         tmpXYs = []
@@ -117,18 +118,18 @@ class Resistor_OPPPC(StickDiagram._StickDiagram):
         self._DesignParameter['_Met1Layer']['_XYCoordinates'] = tmpXYs
 
 
-        print ('#############################     PRES Layer Calculation    ##############################################')
+        print('#############################     PRES Layer Calculation    ##############################################')
         self._DesignParameter['_PRESLayer']['_XWidth'] = _ResWidth * _NumPC + _DistanceBtwPC * (_NumPC-1) + _DRCObj._PRESlayeroverPoly * 2
         self._DesignParameter['_PRESLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + _DRCObj._PRESlayeroverPoly * 2
         self._DesignParameter['_PRESLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
-        print ('#############################     PIMP Layer Calculation    ##############################################')
+        print('#############################     PIMP Layer Calculation    ##############################################')
         self._DesignParameter['_PPLayer']['_XWidth'] = self._DesignParameter['_PRESLayer']['_XWidth']
         self._DesignParameter['_PPLayer']['_YWidth'] = self._DesignParameter['_PRESLayer']['_YWidth']
         self._DesignParameter['_PPLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
 
-        print ('#############################     ETC. Options Calculation    ##############################################')
+        print('#############################     ETC. Options Calculation    ##############################################')
         if _Parallel:
             self._DesignParameter['_Met1Port'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PINDrawing'][0], _Datatype=DesignParameters._LayerMapping['METAL1PINDrawing'][1])
             self._DesignParameter['_Met1Port']['_XWidth'] = self._DesignParameter['_Met1Layer']['_XWidth'] + (_NumRes-1) * (_DistanceBtwPC + _ResWidth)

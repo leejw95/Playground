@@ -8,6 +8,7 @@ import DRC
 import DRCchecker
 from Private import MyInfo
 from SthPack import PrintStr, CoordCalc
+from SthPack import PlaygroundBot
 
 #
 import PMOSWithDummy_iksu
@@ -76,7 +77,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
 
         ''' check # of all fingers '''
-        NumFingerOfIP = _NumFingerOfInputPair / 2
+        assert _NumFingerOfInputPair % 2 == 0
+        NumFingerOfIP = _NumFingerOfInputPair // 2
 
         ''' PMOS Generation '''
         PMOSParam_InputPair = copy.deepcopy(PMOSWithDummy_iksu._PMOS._ParametersForDesignCalculation)
@@ -279,7 +281,11 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M1V1M2OnPMOSIPGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M1V1M2OnPMOSIPGateParams)
 
         NumViaSetOnGate = math.trunc(NumFingerOfIP / float(step_M2Routing * 2))
-        assert NumViaSetOnGate >= 1, 'M1V1M2OnPMOSIPGate Generation Failed. - should have more fingers.'
+        assert NumViaSetOnGate >= 1, f'M1V1M2OnPMOSIPGate Generation Failed. - should have more fingers.' \
+                                     f'NumFingerOfIP = {NumFingerOfIP}, ' \
+                                     f'step_M2Routing = {step_M2Routing},' \
+                                     f'-> NumViaSetOnGate = {NumViaSetOnGate}'
+
         tmpXYs = []
         for i in range(0, NumViaSetOnGate):
             tmpXYs.extend([[+DistanceXBtwIP2Origin + xlist_SD[0] - ((step_M2Routing - 1) / 2.0 + step_M2Routing) * (xlist_SD[0] - xlist_SD[1]) - (2 * i * step_M2Routing) * (xlist_SD[0] - xlist_SD[1]), 0],
@@ -323,7 +329,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         _DRCObj = DRC.DRC()
         _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
-        NumFingerOfCS = _NumFingerOfCurrentSource / 2
+        assert _NumFingerOfCurrentSource % 2 == 0
+        NumFingerOfCS = _NumFingerOfCurrentSource // 2
 
         """ ======================================================================================================= """
         """ --------------------------------------- PMOS for Current Source --------------------------------------- """
@@ -576,9 +583,10 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         Printer = PrintStr.PrintStr()
         Printer.ThreeLine('{} Calculation Start'.format(_Name))
 
-
-        NumFingerOfIP = _NumFingerOfInputPair / 2
-        NumFingerOfCS = _NumFingerOfCurrentSource / 2
+        assert _NumFingerOfInputPair % 2 == 0
+        assert _NumFingerOfCurrentSource % 2 == 0
+        NumFingerOfIP = _NumFingerOfInputPair // 2
+        NumFingerOfCS = _NumFingerOfCurrentSource // 2
 
         ''' PMOS IP & CS Generation '''
         self._CalculateDesignParameterInputPair(_FingerWidthOfInputPair=_FingerWidthOfInputPair,
@@ -792,22 +800,10 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter[DesignObj]['_XYCoordinates'] = tmpXYs
 
 
-    # @staticmethod
-    # def getSortedList_ascending(XYCoordinates):
-    #
-    #     xList = []
-    #     yList = []
-    #     for XY in XYCoordinates:
-    #         xList.append(XY[0])
-    #         yList.append(XY[1])
-    #
-    #     xList = sorted(set(xList))
-    #     yList = sorted(set(yList))
-    #
-    #     return xList, yList
-
-
 if __name__ == '__main__':
+
+    My = MyInfo.USER(DesignParameters._Technology)
+    Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
 
     libname = 'TEST_PMOSSet'
     cellname = 'PMOSSetOfCML'
@@ -846,6 +842,13 @@ if __name__ == '__main__':
             InputParams['_WidthOfMiddleRoutingCS'] = DRCchecker.RandomParam(start=100, stop=500, step=10)
         else:
             pass
+        print(
+            "=============================   Last Layout Object's Input Parameters are   =============================")
+        tmpStr = '\n'.join(f'{k} : {v}' for k, v in InputParams.items())
+        print(tmpStr)
+        print(
+            "=========================================================================================================")
+
 
         ''' Generate Layout Object '''
         LayoutObj = PMOSSetOfCMLDriver(_Name=cellname)
@@ -856,24 +859,42 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print ('##################################      Sending to FTP Server...      ##################################')
-        My = MyInfo.USER(DesignParameters._Technology)
+        print('##################################      Sending to FTP Server...      ##################################')
         Checker = DRCchecker.DRCchecker(
             username=My.ID,
             password=My.PW,
             WorkDir=My.Dir_Work,
             DRCrunDir=My.Dir_DRCrun,
+            GDSDir=My.Dir_GDS,
             libname=libname,
             cellname=cellname,
         )
         Checker.Upload2FTP()
 
         if Mode_DRCCheck:
-            print ('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
-            Checker.DRCchecker_PrintInputParams(InputParams)
+            print('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
+            # Bot.send2Bot(f'Start DRCChecker...\nTotal Number Of Run : {Num_DRCCheck}')
+            try:
+                Checker.DRCchecker()
+            except Exception as e:
+                print('Error Occurred: ', e)
+                print("=============================   Last Layout Object's Input Parameters are   =============================")
+                tmpStr = '\n'.join(f'{k} : {v}' for k,v in InputParams.items())
+                print(tmpStr)
+                print("=========================================================================================================")
+
+                Bot.send2Bot(f'Error Occurred During Checking DRC({ii + 1}/{Num_DRCCheck})...\n'
+                             f'ErrMsg : {e}\n'
+                             f'============================='
+                             f'{tmpStr}\n'
+                             f'=============================')
+            else:
+                if (ii + 1) == Num_DRCCheck:
+                    Bot.send2Bot(f'Checking DRC Finished.\nTotal Number Of Run : {Num_DRCCheck}')
+                    # elapsed time, start time, end time, main python file name
+                else:
+                    pass
         else:
             Checker.StreamIn(tech=DesignParameters._Technology)
 
-    print ('########################################      Finished       ###########################################')
-
-# end of 'main():' ---------------------------------------------------------------------------------------------
+    print('########################################      Finished       ###########################################')

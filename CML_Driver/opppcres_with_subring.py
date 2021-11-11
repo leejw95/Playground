@@ -7,6 +7,7 @@ import DRC
 import DRCchecker
 from Private import MyInfo
 from SthPack import PrintStr, CoordCalc
+from SthPack import PlaygroundBot
 
 #
 import opppcres_b_iksu
@@ -49,16 +50,18 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
             self._DesignParameter['_Name']['_Name'] = _Name
 
 
-    def _CalculateDesignParameter(self, _ResWidth=None, _ResLength=None, _NumCOY=None, _NumRows=None, _NumStripes=None,
-                                  _RoutingWidth=None, _Dummy=False, _SubringWidth=None):
+    def _CalculateDesignParameter(self, _ResWidth: int, _ResLength: int, _NumCOY: int,
+                                  _NumRows: int, _NumStripes: int,
+                                  _RoutingWidth: int = None, _Dummy: bool = False, _SubringWidth: int = None):
         _DRCObj = DRC.DRC()
         _Name = self._DesignParameter['_Name']['_Name']
         _XYCoordinateOfOPRES = [[0, 0]]
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
         Printer = PrintStr.PrintStr()
-
         Printer.ThreeLine('{} Calculation Start'.format(_Name))
+
+        assert _NumStripes > 1      # temporal condition
 
         print('##############################     Resistor_OPPPCRES Generation    ########################################')
         _OPPPCRES_inputs = copy.deepcopy(opppcres_b_iksu.Resistor_OPPPC._ParametersForDesignCalculation)
@@ -136,6 +139,9 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
 
         ''' Connect M1-V1-M2 for VSS and Input '''
         NumViaX, NumViaY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(_ResWidth/2, self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth'])
+        assert NumViaX * NumViaY >= 4, f'More Via1s are needed for this _ResWidth(={_ResWidth}),\n' \
+                                       f'Increase _NumCOY(={_NumCOY}).\n' \
+                                       f'Calculated NumViaX, NumViaY = {NumViaX}, {NumViaY}.\n'
         # print(NumViaX, NumViaY)
 
         tmpXYs_A, tmpXYs_B = [], []
@@ -191,6 +197,9 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         tmpXYs = []
         for i in range(0, len(tmpList[0])):
             tmpXYs.append([tmpList[0][i], (max(tmpList[1]) + min(tmpList[1])) / 2])
+        # print(f'Debugging...\n'
+        #       f'tmpXYs_B : {tmpXYs_B}\n'
+        #       f'tmpList : {tmpList}')
         self._DesignParameter['_Met2B']['_XWidth'] = self._DesignParameter['_ViaMet12Met2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
         self._DesignParameter['_Met2B']['_YWidth'] = self.CeilMinSnapSpacing(max(tmpList[1]) - min(tmpList[1]), 2 * MinSnapSpacing) \
                                                      + self._DesignParameter['_ViaMet12Met2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']
@@ -272,10 +281,13 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
                                                                              (upperYCoord_M1 + lowerYCoord_M1) / 2.0]
 
-        Printer.ThreeLine('{} Calculation End'.format(_Name))
+        Printer.ThreeLine(f'{_Name} Calculation End')
 
 
 if __name__ == '__main__':
+
+    My = MyInfo.USER(DesignParameters._Technology)
+    Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
 
     libname = 'TEST_OPPPCRES'
     cellname = 'OpppcresWithSubring'
@@ -283,17 +295,17 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        _ResWidth=3000,     # 3000
-        _ResLength=2300,    # 2300
-        _NumCOY=4,          # 4
+        _ResWidth=1000,     # 3000
+        _ResLength=2500,    # 2300
+        _NumCOY=1,          # 4
         _NumRows=2,
-        _NumStripes=5,
+        _NumStripes=3,
         _RoutingWidth=None,
         _Dummy=True,
         _SubringWidth=1000,
     )
 
-    Mode_DRCCheck = False            # True | False
+    Mode_DRCCheck = True            # True | False
     Num_DRCCheck = 10
 
     for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
@@ -301,11 +313,18 @@ if __name__ == '__main__':
             ''' Random Parameters for Layout Object '''
             InputParams['_ResWidth'] = DRCchecker.RandomParam(start=1000, stop=5000, step=100)
             InputParams['_ResLength'] = DRCchecker.RandomParam(start=400, stop=5000, step=100)
-            InputParams['_NumCOY'] = DRCchecker.RandomParam(start=1, stop=5, step=1)
-            InputParams['_NumRows'] = DRCchecker.RandomParam(start=1, stop=5, step=1)
-            InputParams['_NumStripes'] = DRCchecker.RandomParam(start=1, stop=10, step=1)
+            InputParams['_NumCOY'] = DRCchecker.RandomParam(start=2, stop=5, step=1)
+            InputParams['_NumRows'] = DRCchecker.RandomParam(start=1, stop=4, step=1)
+            InputParams['_NumStripes'] = DRCchecker.RandomParam(start=2, stop=10, step=1)
         else:
             pass
+        print(
+            "=============================   Last Layout Object's Input Parameters are   =============================")
+        tmpStr = '\n'.join(f'{k} : {v}' for k, v in InputParams.items())
+        print(tmpStr)
+        print(
+            "=========================================================================================================")
+
 
         ''' Generate Layout Object '''
         LayoutObj = OpppcresWithSubring(_DesignParameter=None, _Name=cellname)
@@ -316,23 +335,42 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print ('##################################      Sending to FTP Server...      ##################################')
-        My = MyInfo.USER(DesignParameters._Technology)
+        print('##################################      Sending to FTP Server...      ##################################')
         Checker = DRCchecker.DRCchecker(
             username=My.ID,
             password=My.PW,
             WorkDir=My.Dir_Work,
             DRCrunDir=My.Dir_DRCrun,
+            GDSDir=My.Dir_GDS,
             libname=libname,
             cellname=cellname,
         )
         Checker.Upload2FTP()
 
         if Mode_DRCCheck:
-            print ('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
-            Checker.DRCchecker_PrintInputParams(InputParams)
+            print('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
+            Bot.send2Bot(f'Start DRCChecker...\nTotal Number Of Run : {Num_DRCCheck}')
+            try:
+                Checker.DRCchecker()
+            except Exception as e:
+                print('Error Occurred: ', e)
+                print("=============================   Last Layout Object's Input Parameters are   =============================")
+                tmpStr = '\n'.join(f'{k} : {v}' for k,v in InputParams.items())
+                print(tmpStr)
+                print("=========================================================================================================")
+
+                Bot.send2Bot(f'Error Occurred During Checking DRC({ii + 1}/{Num_DRCCheck})...\n'
+                             f'ErrMsg : {e}\n'
+                             f'============================='
+                             f'{tmpStr}\n'
+                             f'=============================')
+            else:
+                if (ii + 1) == Num_DRCCheck:
+                    Bot.send2Bot(f'Checking DRC Finished.\nTotal Number Of Run : {Num_DRCCheck}')
+                    # elapsed time, start time, end time, main python file name
+                else:
+                    pass
         else:
             Checker.StreamIn(tech=DesignParameters._Technology)
 
-    print ('########################################      Finished       ###########################################')
-# end of 'main():' ---------------------------------------------------------------------------------------------
+    print('########################################      Finished       ###########################################')

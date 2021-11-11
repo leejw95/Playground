@@ -1,31 +1,48 @@
-import gds_editor_ver3.gds_stream
-import gds_editor_ver3.gds_structures
-import gds_editor_ver3.gds_tags
-import gds_editor_ver3.gds_record
-import gds_editor_ver3.gds_elements
+import types
+
+from gds_editor_ver3 import gds_stream
+from gds_editor_ver3 import gds_structures
+from gds_editor_ver3 import gds_tags
+from gds_editor_ver3 import gds_record
+from gds_editor_ver3 import gds_elements
 from datetime import datetime, MINYEAR
-import user_define_exceptions
+from gds_editor_ver3 import user_define_exceptions
+import gds_editor_ver3
+#
+# import gds_editor_ver3.gds_stream
+# import gds_editor_ver3.gds_structures
+# import gds_editor_ver3.gds_tags
+# import gds_editor_ver3.gds_record
+# import gds_editor_ver3.gds_elements
+# from datetime import datetime, MINYEAR
+# import gds_editor_ver3.user_define_exceptions
 
 import DesignParameters
 import copy
 import math
 
+
+
+
+
+
+
+
+
 class _StickDiagram:
     def __init__(self):
         pass
 
-    def RoundupMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
-        if _DesignParameter ==None or _MinSnapSpacing ==None:
-            raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
-        return (int(_DesignParameter /_MinSnapSpacing ) + 1)*_MinSnapSpacing
-    def RounddownMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
-        if _DesignParameter ==None or _MinSnapSpacing ==None:
-            raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
-        return int(_DesignParameter /_MinSnapSpacing ) *_MinSnapSpacing
+    def exec_pass(self,code, library_manager):
+        for name in library_manager.class_name_dict:
+            locals()[name] = library_manager.libraries[name]
+        exec(code)
+
+        # exec(code)
     def CeilMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
-        if _DesignParameter ==None or _MinSnapSpacing ==None:
-            raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
-        return int(math.ceil(_DesignParameter /_MinSnapSpacing ))*_MinSnapSpacing
+         if _DesignParameter ==None or _MinSnapSpacing ==None:
+             raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
+         return int(math.ceil(_DesignParameter /_MinSnapSpacing ))*_MinSnapSpacing
     def FloorMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
         if _DesignParameter ==None or _MinSnapSpacing ==None:
             raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
@@ -34,6 +51,75 @@ class _StickDiagram:
         if _DesignParameter ==None or _MinSnapSpacing ==None:
             raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect values')
         return math.trunc(_DesignParameter /_MinSnapSpacing )*_MinSnapSpacing
+
+    def RoundupMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
+        if _DesignParameter ==None or _MinSnapSpacing ==None:
+            raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect valuse')
+        return (int(_DesignParameter /_MinSnapSpacing ) + 1)*_MinSnapSpacing
+    def RounddownMinSnapSpacing(self, _DesignParameter=None, _MinSnapSpacing=None):
+        if _DesignParameter ==None or _MinSnapSpacing ==None:
+            raise user_define_exceptions.IncorrectInputError('_DesignParameter or _MinSnapSpacing has incorrect valuse')
+        return int(_DesignParameter /_MinSnapSpacing ) *_MinSnapSpacing
+
+
+
+    def getXWith(self, element_name: str, hierarchy_list:list = None):
+        if '_DesignParameter' not in self.__dict__:
+            raise Exception("There is no DesignParameter.")
+
+        if hierarchy_list == None:
+            element = self._DesignParameter[element_name]
+            if element['_DesignParametertype'] == 1:  # 1: Boundary, 2: Path, 3: Sref
+                return element['_XWidth']
+            else:
+                raise Exception("Only For Boundary Element.")
+        else:
+            if hierarchy_list[0] not in self._DesignParameter:
+                raise Exception("Invalid Hierarchy element Name.")
+            element = self._DesignParameter[hierarchy_list[0]]
+
+            for hierarchy_element in hierarchy_list:
+                if hierarchy_element not in element['_DesignObj']._DesignParameter:
+                    raise Exception("Invalid Hierarchy element Name.")
+                element = element['_DesignObj']._DesignParameter[hierarchy_element]
+            element = element['_DesignObj']._DesignParameter[element_name]
+
+            return element['_XWidth']
+
+
+    # self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XYCoordinates']
+
+
+
+
+    def Center(self,element_name,hierarchy_list=None):
+        if '_DesignParameter' not in self.__dict__:
+            raise Exception("There is no DesignParameter.")
+        if element_name not in self._DesignParameter:
+            raise Exception("Invalid element name.")
+        if hierarchy_list == None:
+            element = self._DesignParameter[element_name]
+            if element['_DesignParametertype'] == 1 : #Boundary Case
+                return (element['_XYCoordinates'][0][0],element['_XYCoordinates'][0][1])
+        else:
+            if hierarchy_list[0] not in self._DesignParameter:
+                raise Exception("Invalid Hierachy element Name.")
+            element = self._DesignParameter[hierarchy_list[0]]
+            for hierarchy_element in hierarchy_list:
+                if hierarchy_element not in element['_DeisgnObj']._DesignParameter:
+                    raise Exception("Ivalid Hierarchy element Name.")
+                element = element['_DesignObj']._DesignParameter[hierarchy_element]
+            element = element['_DesignObj']._DesignParameter[element_name]
+            return (element['_XYCoordinates'][0][0],element['_XYCoordinates'][0][1])
+
+
+    # def Distance(self,element_name1,element_name2):
+    #     element1 = self._DesignParameter[element_name1]
+    #     element2 = self._DesignParameter[element_name2]
+    #     center1 = self.Center(element_name1)
+    #     center2 = self.Center(element_name2)
+    #
+    #     if
 
 
     def XYCoordinate2MinMaxXY(self, _XYCoordinates):
@@ -153,28 +239,28 @@ class _StickDiagram:
 
         _newGDSPathElement._ELEMENTS._LAYER=gds_editor_ver3.gds_record.GDS_LAYER()
         if _Layer == None:
-            print ('_ElementName: ', _ElementName)
+            print('_ElementName: ', _ElementName)
             raise user_define_exceptions.IncorrectInputError('_Layer should have correct data type')
         _newGDSPathElement._ELEMENTS._LAYER.layer=_Layer
         _newGDSPathElement._ELEMENTS._LAYER.tag=gds_editor_ver3.gds_tags.DICT['LAYER']
 
         _newGDSPathElement._ELEMENTS._DATATYPE=gds_editor_ver3.gds_record.GDS_DATATYPE()
         if _Datatype == None:
-            print ('_ElementName: ', _ElementName)
+            print('_ElementName: ', _ElementName)
             raise user_define_exceptions.IncorrectInputError('_Datatype should have correct data type')
         _newGDSPathElement._ELEMENTS._DATATYPE.datatype=_Datatype
         _newGDSPathElement._ELEMENTS._DATATYPE.tag=gds_editor_ver3.gds_tags.DICT['DATATYPE']
 
         _newGDSPathElement._ELEMENTS._WIDTH=gds_editor_ver3.gds_record.GDS_WIDTH()
         if _Width == None:
-            print ('_ElementName: ', _ElementName)
+            print('_ElementName: ', _ElementName)
             raise user_define_exceptions.IncorrectInputError('_Width should have correct data type')
         _newGDSPathElement._ELEMENTS._WIDTH.width=_Width
         _newGDSPathElement._ELEMENTS._WIDTH.tag=gds_editor_ver3.gds_tags.DICT['WIDTH']
 
         _newGDSPathElement._ELEMENTS._XY=gds_editor_ver3.gds_record.GDS_XY()
         if _XYCoordinates == None:
-            print ('_ElementName: ', _ElementName)
+            print('_ElementName: ', _ElementName)
             raise user_define_exceptions.IncorrectInputError('_XYCoordinates should have correct data type')
         _newGDSPathElement._ELEMENTS._XY.xy=_XYCoordinates
         _newGDSPathElement._ELEMENTS._XY.tag=gds_editor_ver3.gds_tags.DICT['XY']
@@ -298,19 +384,19 @@ class _StickDiagram:
 
 
     def _UpdateDesignParameter2GDSStructure(self, _DesignParameterInDictionary = None):
-        print ('#########################################################################################################')
-        print ('                                    {}  Update2GDS Start                                    '.format(_DesignParameterInDictionary['_Name']['_Name']))
-        print ('#########################################################################################################')
+        print('#########################################################################################################')
+        print('                                    {}  Update2GDS Start                                    '.format(_DesignParameterInDictionary['_Name']['_Name']))
+        print('#########################################################################################################')
 
         _DesignParameterInDictionary['_GDSFile']['_GDSFile']=[ self._CreateGDSStructure(_GDSStructureName=_DesignParameterInDictionary['_Name']['_Name']) ]
 
         for _DesignParameter in _DesignParameterInDictionary:
-            print ('*********** ', _DesignParameter, ' is updating to GDS **********')
+            print('*********** ', _DesignParameter, ' is updating to GDS **********')
             if _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 1 and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
                 if DesignParameters._Technology!='180nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['WELLBODY'][0]:
                     pass
                 elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
-                    pass ## Ignoring IU Layer in 28nm tech
+                    pass
                 else :
                     for _XYCoordinate in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
 
@@ -318,7 +404,21 @@ class _StickDiagram:
                                                                                             self._CreateGDSBoundaryElement(_Layer= _DesignParameterInDictionary[_DesignParameter]['_Layer'], _Datatype=_DesignParameterInDictionary[_DesignParameter]['_Datatype'],
                                                                                                                            _XYCoordinates=self.CenterCoordinateAndWidth2XYCoordinate( _XYCenter=_XYCoordinate,
                                                                                                                            _WidthX=_DesignParameterInDictionary[_DesignParameter]['_XWidth'],
-                                                                                                                           _WidthY=_DesignParameterInDictionary[_DesignParameter]['_YWidth']))
+                                                                                                                           _WidthY=_DesignParameterInDictionary[_DesignParameter]['_YWidth'],),
+                                                                                                                           _ElementName = _DesignParameter)
+                                                                                            )
+            elif _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 11 and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
+                if DesignParameters._Technology!='180nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['WELLBODY'][0]:
+                    pass
+                elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
+                    pass
+                else :
+                    for _XYCoordinate in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
+
+                        _DesignParameterInDictionary['_GDSFile']['_GDSFile'][0]._ELEMENTS.append(
+                                                                                            self._CreateGDSBoundaryElement(_Layer= _DesignParameterInDictionary[_DesignParameter]['_Layer'], _Datatype=_DesignParameterInDictionary[_DesignParameter]['_Datatype'],
+                                                                                                                           _XYCoordinates=_DesignParameterInDictionary[_DesignParameter]['_XYCoordinates'],
+                                                                                                                           _ElementName = _DesignParameter)
                                                                                             )
             elif _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 2 and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
                 for _XYCoordinates in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
@@ -344,7 +444,7 @@ class _StickDiagram:
                         _DesignParameterInDictionary['_GDSFile']['_GDSFile'][0]._ELEMENTS.append(
                                                                                             self._CreateGDSPathElement(_Layer=_DesignParameterInDictionary[_DesignParameter]['_Layer'], _Datatype=_DesignParameterInDictionary[_DesignParameter]['_Datatype'],
                                                                                                                        _Width=_DesignParameterInDictionary[_DesignParameter]['_Width'],
-                                                                                                               _XYCoordinates=_tmpXYCoordinates, _ElementName =_DesignParameterInDictionary[_DesignParameter]['_ElementName'] )
+                                                                                                               _XYCoordinates=_tmpXYCoordinates, _ElementName =_DesignParameter,)
                                                                                             )
                     del _tmpXYCoordinates
             elif _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 3 and _DesignParameterInDictionary[_DesignParameter]['_DesignObj'] != None and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
@@ -358,6 +458,23 @@ class _StickDiagram:
                     _DesignParameterInDictionary['_GDSFile']['_GDSFile'][0]._ELEMENTS.append(
                                                                                             self._CreateGDSSrefElement(_SREFName=_DesignParameterInDictionary[_DesignParameter]['_DesignObj']._DesignParameter['_Name']['_Name'], _XYCoordinates=[_XYCoordinate], _Reflect=_DesignParameterInDictionary[_DesignParameter]['_Reflect'], _Angle=_DesignParameterInDictionary[_DesignParameter]['_Angle'])
                                                                                         )
+            elif _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 31 and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
+                macro_stream_obj = gds_stream.GDS_STREAM()
+                with open(f'{_DesignParameterInDictionary[_DesignParameter]["_ReferenceGDS"]}', 'rb') as f:
+                    macro_stream_obj.read_binary_gds_stream(gds_file=f)
+                macro_stream_obj._STRUCTURES.reverse()
+                _DesignParameterInDictionary['_GDSFile']['_GDSFile'].extend(macro_stream_obj._STRUCTURES)
+                structure_name = macro_stream_obj._STRUCTURES[0]._STRNAME.strname#.decode()
+                # if '\x00' in structure_name:
+                #     structure_name = structure_name.split('\x00', 1)[0]
+                for _XYCoordinate in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
+                    _DesignParameterInDictionary['_GDSFile']['_GDSFile'][0]._ELEMENTS.append(
+                        self._CreateGDSSrefElement(
+                        _SREFName=structure_name, _XYCoordinates=[_XYCoordinate],
+                        _Reflect=_DesignParameterInDictionary[_DesignParameter]['_Reflect'],
+                        _Angle=_DesignParameterInDictionary[_DesignParameter]['_Angle'])
+                    )
+
             elif _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 8:
                 #print 'monitor for debug2: ', _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']
                 for _XYCoordinate in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
@@ -370,6 +487,7 @@ class _StickDiagram:
                                                                                                                                _Mag=_DesignParameterInDictionary[_DesignParameter]['_Mag'],
                                                                                                                                _Angle=_DesignParameterInDictionary[_DesignParameter]['_Angle'],
                                                                                                                                _TEXT=_DesignParameterInDictionary[_DesignParameter]['_TEXT'],
+                                                                                                                               _ElementName=_DesignParameter
                                                                                                                                )
                                                                                                 )
             elif _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 6:
@@ -379,7 +497,8 @@ class _StickDiagram:
                                                                                             self._CreateGDSBoundaryElement(_Layer= _tmpRail['_Layer'], _Datatype=_tmpRail['_Datatype'],
                                                                                                                            _XYCoordinates=self.CenterCoordinateAndWidth2XYCoordinate( _XYCenter=_XYCoordinate,
                                                                                                                            _WidthX=_tmpRail['_XWidth'],
-                                                                                                                           _WidthY=_tmpRail['_YWidth']))
+                                                                                                                           _WidthY=_tmpRail['_YWidth'],
+                                                                                                                          _ElementName = _DesignParameter))
                                                                                             )
                 for _tmpViaArray in _DesignParameterInDictionary[_DesignParameter]['_ViaArrays']:
                     _tmpViaArray['_DesignObj']._UpdateDesignParameter2GDSStructure()
@@ -392,9 +511,9 @@ class _StickDiagram:
                                                                                                 self._CreateGDSSrefElement(_SREFName=_tmpViaArray['_DesignObj']._DesignParameter['_Name']['_Name'], _XYCoordinates=[_XYCoordinate])
                                                                                             )
 
-        print ('#########################################################################################################')
-        print ('                                    {}  Update2GDS End                                    '.format(_DesignParameterInDictionary['_Name']['_Name']))
-        print ('#########################################################################################################')
+        print('#########################################################################################################')
+        print('                                    {}  Update2GDS End                                    '.format(_DesignParameterInDictionary['_Name']['_Name']))
+        print('#########################################################################################################')
 
 
 
@@ -406,9 +525,17 @@ class _StickDiagram:
 
         return dict(_DesignParametertype=1, _Layer=_Layer,_Datatype=_Datatype, _XYCoordinates=_XYCoordinates,_XWidth=_XWidth, _YWidth=_YWidth, _Ignore=None, _ElementName = _ElementName)
 
+    def _PolygonElementDeclaration(self, _Layer=None,_Datatype=None, _XYCoordinates=[], _ElementName=None,):
+
+        return dict(_DesignParametertype=11, _Layer=_Layer,_Datatype=_Datatype, _XYCoordinates=_XYCoordinates, _Ignore=None, _ElementName = _ElementName)
+
     def _SrefElementDeclaration(self, _DesignObj=None, _XYCoordinates=[], _Reflect=None, _Angle=None, _ElementName = None):
 
         return dict(_DesignParametertype=3,_DesignObj=_DesignObj, _XYCoordinates=_XYCoordinates, _Reflect=_Reflect, _Angle=_Angle, _Ignore=None, _ElementName = _ElementName),
+
+    def _MacroElementDeclaration(self, _ReferenceGDS, _XYCoordinates=[], _Ignore=None, _Reflect=None, _Angle=None, _ElementName = None):
+
+        return dict(_DesignParametertype=31, _ReferenceGDS=_ReferenceGDS, _XYCoordinates=_XYCoordinates, _Ignore=_Ignore,  _Reflect=_Reflect, _Angle=_Angle, _ElementName=_ElementName)
 
     def _NameDeclaration(self,_Name= None ):
 
@@ -431,3 +558,35 @@ class _StickDiagram:
 
     def _SupplyRailDeclaration(self, _HorizontalSupplyRailArea=[], _VerticalSupplyRailArea=[],  _ViaArrays = [], _Rails = [], _SupplyNodeName=None):
         return dict(_DesignParametertype=6, _HorizontalSupplyRailArea=_HorizontalSupplyRailArea, _VerticalSupplyRailArea=_VerticalSupplyRailArea,  _ViaArrays = _ViaArrays, _Rails =_Rails, _SupplyNodeName=_SupplyNodeName)
+
+
+if __name__ == '__main__':
+    from generatorLib.generator_models import ViaMet12Met2
+
+    tmp = _StickDiagram()
+    tmp._DesignParameter = dict(
+        _Name=tmp._NameDeclaration('top'), _GDSFile = tmp._GDSObjDeclaration(None)
+    )
+    tmp._DesignParameter['sref1'] = tmp._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='test1'))[0]
+    tmp._DesignParameter['sref2'] = tmp._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='test2'))[0]
+    tmp._DesignParameter['sref1']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=3,
+                                                                            _ViaMet12Met2NumberOfCOY=4)
+    tmp._DesignParameter['sref2']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=1,
+                                                                            _ViaMet12Met2NumberOfCOY=1)
+    tmp._DesignParameter['sref1']['_XYCoordinates'] = [[0,0]]
+    tmp._DesignParameter['sref2']['_XYCoordinates'] = [[1000,0]]
+    tmp._UpdateDesignParameter2GDSStructure(tmp._DesignParameter)
+
+
+
+    tmpB = ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2test3')
+    tmpB._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=3,
+                                                                            _ViaMet12Met2NumberOfCOY=4)
+    tmpB._DesignParameter['macro_inv'] = tmpB._MacroElementDeclaration(_ReferenceGDS='./PyQTInterface/GDSFile/INV2.gds', _XYCoordinates=[[1200,100]])
+    tmpB._DesignParameter['macro_inv2'] = tmpB._MacroElementDeclaration(_ReferenceGDS='./PyQTInterface/GDSFile/INV2.gds', _XYCoordinates=[[-1200,100]])
+    tmpB._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=tmpB._DesignParameter)
+    testStreamFile=open('./macro.gds','wb')
+
+    tmp1=tmpB._CreateGDSStream(tmpB._DesignParameter['_GDSFile']['_GDSFile'])
+    tmp1.write_binary_gds_stream(testStreamFile)
+    testStreamFile.close()

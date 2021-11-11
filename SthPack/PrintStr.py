@@ -5,24 +5,41 @@ class PrintStr:
         self.dummyString = ''.center(self.MaxStrLength, self.FillChar)
 
 
-    def Start(self, string):
-        print(self.dummyString)
-        print(('   {}   '.format(string)).center(self.MaxStrLength, self.FillChar))
+    def Start(self, string, FillChar=None):
+        _FillChar = self.FillChar if FillChar is None else FillChar
+
+        print(self._dummyString(_FillChar))
+        print(('   {}   '.format(string)).center(self.MaxStrLength, _FillChar))
 
 
-    def End(self, string):
-        print(('   {}   '.format(string)).center(self.MaxStrLength, self.FillChar))
-        print(self.dummyString)
+    def End(self, string, FillChar=None):
+        _FillChar = self.FillChar if FillChar is None else FillChar
+
+        print(('   {}   '.format(string)).center(self.MaxStrLength, _FillChar))
+        print(self._dummyString(_FillChar))
 
 
-    def OneLine(self, string):
-        print(('   {}   '.format(string)).center(self.MaxStrLength, self.FillChar))
+    def OneLine(self, string, FillChar=None):
+        _FillChar = self.FillChar if FillChar is None else FillChar
+
+        print(('   {}   '.format(string)).center(self.MaxStrLength, _FillChar))
 
 
-    def ThreeLine(self, string):
-        print(self.dummyString)
-        print(('   {}   '.format(string)).center(self.MaxStrLength, self.FillChar))
-        print(self.dummyString)
+    def ThreeLine(self, string, FillChar=None):
+        _FillChar = self.FillChar if FillChar is None else FillChar
+
+        print(self._dummyString(_FillChar))
+        print(('   {}   '.format(string)).center(self.MaxStrLength, _FillChar))
+        print(self._dummyString(_FillChar))
+
+
+    def DummyLine(self, string, FillChar=None):
+        _FillChar = self.FillChar if FillChar is None else FillChar
+
+        print(self._dummyString(_FillChar))
+
+    def _dummyString(self, FillChar=None):
+        return ''.center(self.MaxStrLength, self.FillChar if FillChar is None else FillChar)
 
 
     # def Box(self, string):

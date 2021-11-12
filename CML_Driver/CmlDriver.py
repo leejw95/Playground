@@ -637,6 +637,26 @@ class CmlLDriver(StickDiagram._StickDiagram):
         #     [-_TransmissionLineDistanceA/2, 50000 + length1*4],
         # ]]
 
+        kk1 = self.getXWidth('PMOSSet', 'PMOS_IP', '_POLayer')
+        kk2 = self.getYWidth('PMOSSet', 'PMOS_IP', '_POLayer')
+        kk3 = self.getXY('PMOSSet', 'PMOS_IP', '_POLayer')
+        kk4 = self.getXY('PMOSSet', 'PMOS_IP')
+        kk5 = self.getXY('PMOSSet')
+
+        nn1 = self.getXWidth('M2HForIPDrain2LoadR')
+        nn2 = self.getYWidth('M2HForIPDrain2LoadR')
+
+        aa3 = self.getWidth('M3VForIPDrain2LoadR')
+        aa4 = self.getXY('M3VForIPDrain2LoadR')
+        # aa1 = self.getXWidth('M3VForIPDrain2LoadR')
+        # aa2 = self.getYWidth('M3VForIPDrain2LoadR')
+
+        aa5 = self.getXY('PMOSSet', 'M2VforCS2IP')
+
+
+
+
+
         print(''.center(105, '#'))
         print('     {} Calculation End     '.format(_Name).center(105,'#'))
         print(''.center(105, '#'))

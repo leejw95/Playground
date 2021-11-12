@@ -62,64 +62,115 @@ class _StickDiagram:
         return int(_DesignParameter /_MinSnapSpacing ) *_MinSnapSpacing
 
 
-
-    def getXWith(self, element_name: str, hierarchy_list:list = None):
-        if '_DesignParameter' not in self.__dict__:
-            raise Exception("There is no DesignParameter.")
-
-        if hierarchy_list == None:
-            element = self._DesignParameter[element_name]
-            if element['_DesignParametertype'] == 1:  # 1: Boundary, 2: Path, 3: Sref
-                return element['_XWidth']
-            else:
-                raise Exception("Only For Boundary Element.")
-        else:
-            if hierarchy_list[0] not in self._DesignParameter:
-                raise Exception("Invalid Hierarchy element Name.")
-            element = self._DesignParameter[hierarchy_list[0]]
-
-            for hierarchy_element in hierarchy_list:
-                if hierarchy_element not in element['_DesignObj']._DesignParameter:
-                    raise Exception("Invalid Hierarchy element Name.")
-                element = element['_DesignObj']._DesignParameter[hierarchy_element]
-            element = element['_DesignObj']._DesignParameter[element_name]
-
-            return element['_XWidth']
-
-
-    # self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XYCoordinates']
-
-
-
-
-    def Center(self,element_name,hierarchy_list=None):
-        if '_DesignParameter' not in self.__dict__:
-            raise Exception("There is no DesignParameter.")
-        if element_name not in self._DesignParameter:
-            raise Exception("Invalid element name.")
-        if hierarchy_list == None:
-            element = self._DesignParameter[element_name]
-            if element['_DesignParametertype'] == 1 : #Boundary Case
-                return (element['_XYCoordinates'][0][0],element['_XYCoordinates'][0][1])
-        else:
-            if hierarchy_list[0] not in self._DesignParameter:
-                raise Exception("Invalid Hierachy element Name.")
-            element = self._DesignParameter[hierarchy_list[0]]
-            for hierarchy_element in hierarchy_list:
-                if hierarchy_element not in element['_DeisgnObj']._DesignParameter:
-                    raise Exception("Ivalid Hierarchy element Name.")
-                element = element['_DesignObj']._DesignParameter[hierarchy_element]
-            element = element['_DesignObj']._DesignParameter[element_name]
-            return (element['_XYCoordinates'][0][0],element['_XYCoordinates'][0][1])
-
-
-    # def Distance(self,element_name1,element_name2):
-    #     element1 = self._DesignParameter[element_name1]
-    #     element2 = self._DesignParameter[element_name2]
-    #     center1 = self.Center(element_name1)
-    #     center2 = self.Center(element_name2)
+    # def getXWidth(self, element_name: str, hierarchy_list:list = None):
+    #     return self._getSthValue(element_name=element_name, hierarchy_list=hierarchy_list,
+    #                             SthValue='_XWidth', _DesignParametertype=1)
     #
-    #     if
+    # def getYWidth(self, element_name: str, hierarchy_list:list = None):
+    #     return self._getSthValue(element_name=element_name, hierarchy_list=hierarchy_list,
+    #                             SthValue='_YWidth', _DesignParametertype=1)
+    #
+    # def getWidth(self, element_name: str, hierarchy_list:list = None):
+    #     return self._getSthValue(element_name=element_name, hierarchy_list=hierarchy_list,
+    #                             SthValue='_Width', _DesignParametertype=2)
+    #
+    #
+    # def _getSthValue(self, element_name: str, hierarchy_list:list, SthValue:str, _DesignParametertype:int):
+    #     if _DesignParametertype == 1:
+    #         ElementType = 'Boundary'
+    #     elif _DesignParametertype == 2:
+    #         ElementType = 'Path'
+    #     else:
+    #         raise Exception(f"Invalid _DesignParametertype: {_DesignParametertype}.")
+    #
+    #     if '_DesignParameter' not in self.__dict__:
+    #         raise Exception("There is no DesignParameter.")
+    #
+    #     if hierarchy_list == None:
+    #         if element_name not in self._DesignParameter:
+    #             raise Exception(f"Invalid element_name: {element_name}")
+    #         element = self._DesignParameter[element_name]
+    #
+    #         if element['_DesignParametertype'] != _DesignParametertype:                # 1: Boundary, 2: Path, 3: Sref
+    #             raise Exception(f"Only For {ElementType} Element.")
+    #         return element[SthValue]
+    #
+    #     else:
+    #         if hierarchy_list[0] not in self._DesignParameter:
+    #             raise Exception(f"Invalid Hierarchy element name: {hierarchy_list[0]}")
+    #         element = self._DesignParameter[hierarchy_list.pop(0)]
+    #
+    #         for hierarchy_element in hierarchy_list:
+    #             if hierarchy_element not in element['_DesignObj']._DesignParameter:
+    #                 raise Exception("Invalid Hierarchy element Name.")
+    #             element = element['_DesignObj']._DesignParameter[hierarchy_element]
+    #
+    #         if element_name not in element['_DesignObj']._DesignParameter:
+    #             raise Exception(f"Invalid element_name: {element_name}")
+    #         element = element['_DesignObj']._DesignParameter[element_name]
+    #
+    #         if element['_DesignParametertype'] != _DesignParametertype:                # 1: Boundary, 2: Path, 3: Sref
+    #             raise Exception(f"Only For {ElementType} Element.")
+    #         return element[SthValue]
+
+
+    def _getSthValue(self, hier_element_tuple:tuple, SthValue:str, _DesignParametertype:int):
+        if _DesignParametertype == 1:
+            ElementType = 'Boundary'
+        elif _DesignParametertype == 2:
+            ElementType = 'Path'
+        if '_DesignParameter' not in self.__dict__:
+            raise Exception("There is no DesignParameter.")
+
+        HierElementList = list(hier_element_tuple)
+        if HierElementList[0] not in self._DesignParameter:
+            raise Exception(f"Invalid Hierarchy element name: {HierElementList[0]}")
+        element = self._DesignParameter[HierElementList.pop(0)]
+
+        for hierarchy_element in HierElementList:
+            if hierarchy_element not in element['_DesignObj']._DesignParameter:
+                raise Exception(f"Invalid Hierarchy element name: {hierarchy_element}.")
+            element = element['_DesignObj']._DesignParameter[hierarchy_element]
+
+        if element['_DesignParametertype'] != _DesignParametertype:                # 1: Boundary, 2: Path, 3: Sref
+            raise Exception(f"Only For {ElementType} Element.")
+        return element[SthValue]
+
+
+    def getXWidth(self, *hier_element_tuple):
+        return self._getSthValue(hier_element_tuple=hier_element_tuple, SthValue='_XWidth', _DesignParametertype=1)
+
+    def getYWidth(self, *hier_element_tuple):
+        return self._getSthValue(hier_element_tuple=hier_element_tuple, SthValue='_YWidth', _DesignParametertype=1)
+
+    def getWidth(self, *hier_element_tuple):
+        return self._getSthValue(hier_element_tuple=hier_element_tuple, SthValue='_Width', _DesignParametertype=2)
+
+    def getXY(self, *hier_element_tuple):
+        if '_DesignParameter' not in self.__dict__:
+            raise Exception("There is no DesignParameter.")
+
+        HierElementList = list(hier_element_tuple)
+        if HierElementList[0] not in self._DesignParameter:
+            raise Exception(f"Invalid Hierarchy element name: {HierElementList[0]}")
+        element = self._DesignParameter[HierElementList.pop(0)]
+        elementXY = element['_XYCoordinates']
+
+        for hierarchy_element in HierElementList:
+            if hierarchy_element not in element['_DesignObj']._DesignParameter:
+                raise Exception(f"Invalid Hierarchy element name: {hierarchy_element}.")
+            element = element['_DesignObj']._DesignParameter[hierarchy_element]
+
+            if element['_DesignParametertype'] == 2:    # 1: Boundary, 2: Path, 3: Sref
+                raise Exception("Not Available on PathElement.")
+
+            tmpAddedXYs = []
+            for XY1 in elementXY:
+                for XY2 in element['_XYCoordinates']:
+                    tmpAddedXYs.append([XY1[0] + XY2[0], XY1[1] + XY2[1]])      # tmpXYs1 + tmpXYs2
+            elementXY = tmpAddedXYs
+
+        return elementXY
 
 
     def XYCoordinate2MinMaxXY(self, _XYCoordinates):

@@ -47,6 +47,9 @@ class _Inverter(StickDiagram._StickDiagram):
         _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
+        print(''.center(105, '#'))
+        print('     {} Calculation Start     '.format(_Name).center(105, '#'))
+        print(''.center(105, '#'))
 
         ''' ------------------------------------------ MOSFET Generation ------------------------------------------- '''
         # 1) _NMOS Generation ------------------------------------------------------------------------------------------
@@ -927,7 +930,9 @@ class _Inverter(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet32Met4OnSupply']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**_ViaVDDMet32Met4)
             self._DesignParameter['_ViaMet32Met4OnSupply']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates'] + self._DesignParameter['PbodyContact']['_XYCoordinates']
 
-        print('test')
+        print(''.center(105, '#'))
+        print('     {} Calculation End     '.format(_Name).center(105, '#'))
+        print(''.center(105, '#'))
 
 
 if __name__ == '__main__':
@@ -939,8 +944,8 @@ if __name__ == '__main__':
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
         _Finger=13,
-        _ChannelWidth=730,
-        _ChannelLength=38,
+        _ChannelWidth=1000,
+        _ChannelLength=30,
         _NPRatio=1,
         _Dummy=True,          # True / False
         _XVT='SLVT',          # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
@@ -961,7 +966,7 @@ if __name__ == '__main__':
     )
 
 
-    Mode_DRCCheck = True            # True | False
+    Mode_DRCCheck = False            # True | False
     Num_DRCCheck = 1
 
     for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):

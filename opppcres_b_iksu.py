@@ -6,7 +6,6 @@ import StickDiagram
 import DesignParameters
 import DRC
 
-from Private import FileManage
 from Private import MyInfo
 
 
@@ -172,29 +171,3 @@ if __name__ == '__main__':
     tmp = OpppcresObj._CreateGDSStream(OpppcresObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
-
-    print ('###############      Sending to FTP Server...      ##################')
-    My = MyInfo.USER(DesignParameters._Technology)
-
-    FileManage.Upload2FTP(
-        server=My.server,
-        user=My.ID,
-        password=My.PW,
-        directory=My.Dir_GDS,
-        filename=_fileName
-    )
-
-    FileManage.StreamIn(
-        server=My.server,
-        port=22,
-        ID=My.ID,
-        PW=My.PW,
-        Dir_Work=My.Dir_Work,
-        Dir_GDS=My.Dir_GDS,
-        libname=libname,
-        filename=_fileName,
-        tech=DesignParameters._Technology
-    )
-
-    print ('###############      Finished      ##################')
-# end of 'main():' ---------------------------------------------------------------------------------------------

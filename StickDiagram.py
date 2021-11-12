@@ -62,58 +62,6 @@ class _StickDiagram:
         return int(_DesignParameter /_MinSnapSpacing ) *_MinSnapSpacing
 
 
-    # def getXWidth(self, element_name: str, hierarchy_list:list = None):
-    #     return self._getSthValue(element_name=element_name, hierarchy_list=hierarchy_list,
-    #                             SthValue='_XWidth', _DesignParametertype=1)
-    #
-    # def getYWidth(self, element_name: str, hierarchy_list:list = None):
-    #     return self._getSthValue(element_name=element_name, hierarchy_list=hierarchy_list,
-    #                             SthValue='_YWidth', _DesignParametertype=1)
-    #
-    # def getWidth(self, element_name: str, hierarchy_list:list = None):
-    #     return self._getSthValue(element_name=element_name, hierarchy_list=hierarchy_list,
-    #                             SthValue='_Width', _DesignParametertype=2)
-    #
-    #
-    # def _getSthValue(self, element_name: str, hierarchy_list:list, SthValue:str, _DesignParametertype:int):
-    #     if _DesignParametertype == 1:
-    #         ElementType = 'Boundary'
-    #     elif _DesignParametertype == 2:
-    #         ElementType = 'Path'
-    #     else:
-    #         raise Exception(f"Invalid _DesignParametertype: {_DesignParametertype}.")
-    #
-    #     if '_DesignParameter' not in self.__dict__:
-    #         raise Exception("There is no DesignParameter.")
-    #
-    #     if hierarchy_list == None:
-    #         if element_name not in self._DesignParameter:
-    #             raise Exception(f"Invalid element_name: {element_name}")
-    #         element = self._DesignParameter[element_name]
-    #
-    #         if element['_DesignParametertype'] != _DesignParametertype:                # 1: Boundary, 2: Path, 3: Sref
-    #             raise Exception(f"Only For {ElementType} Element.")
-    #         return element[SthValue]
-    #
-    #     else:
-    #         if hierarchy_list[0] not in self._DesignParameter:
-    #             raise Exception(f"Invalid Hierarchy element name: {hierarchy_list[0]}")
-    #         element = self._DesignParameter[hierarchy_list.pop(0)]
-    #
-    #         for hierarchy_element in hierarchy_list:
-    #             if hierarchy_element not in element['_DesignObj']._DesignParameter:
-    #                 raise Exception("Invalid Hierarchy element Name.")
-    #             element = element['_DesignObj']._DesignParameter[hierarchy_element]
-    #
-    #         if element_name not in element['_DesignObj']._DesignParameter:
-    #             raise Exception(f"Invalid element_name: {element_name}")
-    #         element = element['_DesignObj']._DesignParameter[element_name]
-    #
-    #         if element['_DesignParametertype'] != _DesignParametertype:                # 1: Boundary, 2: Path, 3: Sref
-    #             raise Exception(f"Only For {ElementType} Element.")
-    #         return element[SthValue]
-
-
     def _getSthValue(self, hier_element_tuple:tuple, SthValue:str, _DesignParametertype:int):
         if _DesignParametertype == 1:
             ElementType = 'Boundary'
@@ -137,16 +85,69 @@ class _StickDiagram:
         return element[SthValue]
 
 
-    def getXWidth(self, *hier_element_tuple):
+    def getXWidth(self, *hier_element_tuple:str):
+        """ Get XWidth of hierarchical designObj.
+
+        Note:
+            Input should start from the top hierarchical designObj.\n
+            This function can only be used on 'BoundaryElement'.
+        Args:
+            hier_element_tuple (str): hierarchical designObj Names.
+        Returns:
+            int | float: XWidth Of Lowest Hierarchical designObj.
+        Example:
+            >>> self.getXWidth('_Inverter', '_PMOS', '_POLayer')
+            30
+        """
         return self._getSthValue(hier_element_tuple=hier_element_tuple, SthValue='_XWidth', _DesignParametertype=1)
 
-    def getYWidth(self, *hier_element_tuple):
+    def getYWidth(self, *hier_element_tuple:str):
+        """ Get YWidth of hierarchical designObj.
+
+        Note:
+            Input should start from the top hierarchical designObj.\n
+            This function can only be used on 'BoundaryElement'.
+        Args:
+            hier_element_tuple (str): hierarchical designObj Names.
+        Returns:
+            int | float: YWidth Of Lowest Hierarchical designObj.
+        Example:
+            >>> self.getYWidth('_Inverter', '_PMOS', '_POLayer')
+            1000
+        """
         return self._getSthValue(hier_element_tuple=hier_element_tuple, SthValue='_YWidth', _DesignParametertype=1)
 
-    def getWidth(self, *hier_element_tuple):
+    def getWidth(self, *hier_element_tuple:str):
+        """ Get Width of hierarchical designObj.
+
+        Note:
+            Input should start from the top hierarchical designObj.\n
+            This function can only be used on 'PathElement'.
+        Args:
+            hier_element_tuple (str): hierarchical designObj Names.
+        Returns:
+            int | float: Width Of Lowest Hierarchical designObj.
+        Example:
+            >>> self.getWidth('_Inverter', '_PMOSSupplyRouting')
+            50
+        """
         return self._getSthValue(hier_element_tuple=hier_element_tuple, SthValue='_Width', _DesignParametertype=2)
 
-    def getXY(self, *hier_element_tuple):
+    def getXY(self, *hier_element_tuple:str):
+        """ Calculate Relative Coordinates of hierarchical designObj.
+
+        Note:
+            Input should start from the top hierarchical designObj.\n
+            This function can be used on 'Boundary/Path/Sref Element'.
+            But PathElement CANNOT be used on Multiple hierarchical designObj.
+        Args:
+            hier_element_tuple (str): hierarchical designObj Names.
+        Returns:
+            list[list[int | float]]: Relative Coordinates Of Lowest Hierarchical designObj.
+        Example:
+            >>> self.getXY('_PMOS', '_POLayer')
+            [[-1000,0], [-500,0], [+500,0], [+1000,0]]
+        """
         if '_DesignParameter' not in self.__dict__:
             raise Exception("There is no DesignParameter.")
 

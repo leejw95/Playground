@@ -1,5 +1,4 @@
 import telegram
-from Private import MyInfo
 
 
 class PGBot:
@@ -12,6 +11,8 @@ class PGBot:
 
 
 if __name__ == '__main__':
+    from Private import MyInfo
+
     My = MyInfo.USER()
     MyBot = PGBot(token=My.BotToken, chat_id=My.ChatID)
 

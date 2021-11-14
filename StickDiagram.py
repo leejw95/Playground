@@ -80,7 +80,7 @@ class _StickDiagram:
                 raise Exception(f"Invalid Hierarchy element name: {hierarchy_element}.")
             element = element['_DesignObj']._DesignParameter[hierarchy_element]
 
-        if element['_DesignParametertype'] != _DesignParametertype:                # 1: Boundary, 2: Path, 3: Sref
+        if element['_DesignParametertype'] not in (_DesignParametertype, 7):                # 1: Boundary, 2: Path, 3: Sref
             raise Exception(f"Only For {ElementType} Element.")
         return element[SthValue]
 

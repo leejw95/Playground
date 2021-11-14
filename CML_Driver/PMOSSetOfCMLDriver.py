@@ -268,10 +268,12 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M2VforIP']['_XWidth'] = self._DesignParameter['M2V2M3OnPMOSIP']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
         self._DesignParameter['M2VforIP']['_YWidth'] = DistanceYBtwMidRouting2IP * 2
 
+
         ''' M1V1M2, M2V2M3 on PMOSIP Gate(poly) Generate & Place '''
         NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaSameEnclosure(
             _XWidth=(step_M2Routing - 2) * (xlist_SD[0] - xlist_SD[1]) + _FingerLengthOfInputPair,
-            _YWidth=_WidthOfMiddleRoutingIP)
+            _YWidth=_WidthOfMiddleRoutingIP
+        )
         assert NumViaXY[0] >= 1 and NumViaXY[0] >= 1, 'M1V1M2OnPMOSIPGate Generation Failed.'
 
         M1V1M2OnPMOSIPGateParams = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -367,13 +369,13 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         ''' Coordinates setting '''
         # 0: CenterSource, 1: ShiftRight, 2: FlipS&D 3: ShiftLeft -> I want to put Source to Center(XCoordinate).
         CaseOfCSFingers = (NumFingerOfCS % 4)
-        if CaseOfCSFingers is 1:
+        if CaseOfCSFingers == 1:
             OffsetXforCenterSourceOfCS = +0.5 * self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList']
-        elif CaseOfCSFingers is 2:  # swap source-drain
+        elif CaseOfCSFingers == 2:  # swap source-drain
             OffsetXforCenterSourceOfCS = 0
             self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting'], self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting'] \
                 = self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting'], self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']
-        elif CaseOfCSFingers is 3:
+        elif CaseOfCSFingers == 3:
             OffsetXforCenterSourceOfCS = -0.5 * self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList']
         else:  # CaseOfCSFingers is 0
             OffsetXforCenterSourceOfCS = 0
@@ -785,8 +787,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
         self._DesignParameter['_Met1BoundaryOfSubring']['_XWidth'] = RightXCoord_M1 - LeftXCoord_M1
         self._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] = upperYCoord_M1 - lowerYCoord_M1
-        self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
-                                                                             (upperYCoord_M1 + lowerYCoord_M1) / 2.0]
+        self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [[(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
+                                                                              (upperYCoord_M1 + lowerYCoord_M1) / 2.0]]
 
         Printer.ThreeLine('{} Calculation End'.format(_Name))
 

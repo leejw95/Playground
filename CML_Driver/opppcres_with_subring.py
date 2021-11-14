@@ -278,8 +278,8 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
 
         self._DesignParameter['_Met1BoundaryOfSubring']['_XWidth'] = RightXCoord_M1 - LeftXCoord_M1
         self._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] = upperYCoord_M1 - lowerYCoord_M1
-        self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
-                                                                             (upperYCoord_M1 + lowerYCoord_M1) / 2.0]
+        self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [[(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
+                                                                              (upperYCoord_M1 + lowerYCoord_M1) / 2.0]]
 
         Printer.ThreeLine(f'{_Name} Calculation End')
 

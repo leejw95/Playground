@@ -61,6 +61,12 @@ class CurrentMirror(StickDiagram._StickDiagram):
                 M2HForPMOSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],
                                                                 _Datatype=DesignParameters._LayerMapping['METAL2'][1],
                                                                 _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                M3HForPMOSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],
+                                                                _Datatype=DesignParameters._LayerMapping['METAL3'][1],
+                                                                _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                M4HForPMOSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0],
+                                                                _Datatype=DesignParameters._LayerMapping['METAL4'][1],
+                                                                _XYCoordinates=[], _XWidth=400, _YWidth=400),
                 POVForPMOSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],
                                                                 _Datatype=DesignParameters._LayerMapping['POLY'][1],
                                                                 _XYCoordinates=[], _XWidth=400, _YWidth=400),
@@ -81,6 +87,9 @@ class CurrentMirror(StickDiagram._StickDiagram):
                 M2HForNMOSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],
                                                                 _Datatype=DesignParameters._LayerMapping['METAL2'][1],
                                                                 _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                M3HForNMOSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],
+                                                                _Datatype=DesignParameters._LayerMapping['METAL3'][1],
+                                                                _XYCoordinates=[], _XWidth=400, _YWidth=400),
                 POVForNMOSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],
                                                                 _Datatype=DesignParameters._LayerMapping['POLY'][1],
                                                                 _XYCoordinates=[], _XWidth=400, _YWidth=400),
@@ -98,6 +107,15 @@ class CurrentMirror(StickDiagram._StickDiagram):
 
                 M2VForOut=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],
                                                            _Datatype=DesignParameters._LayerMapping['METAL2'][1],
+                                                           _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                M2HForOut=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],
+                                                           _Datatype=DesignParameters._LayerMapping['METAL2'][1],
+                                                           _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                M4VForOut=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0],
+                                                           _Datatype=DesignParameters._LayerMapping['METAL4'][1],
+                                                           _XYCoordinates=[], _XWidth=400, _YWidth=400),
+                M4HForOut=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0],
+                                                           _Datatype=DesignParameters._LayerMapping['METAL4'][1],
                                                            _XYCoordinates=[], _XWidth=400, _YWidth=400),
 
                 Met1BoundaryOfPMOSSubring=dict(_DesignParametertype=7, _XWidth=None, _YWidth=None, _XYCoordinates=[]),
@@ -165,7 +183,8 @@ class CurrentMirror(StickDiagram._StickDiagram):
 
         OffsetYOfPMOS = upperYOfNMOSSubringM1 + _DRCObj._Metal1MinSpace4 + lowerYOfPMOSSubringM1
         ObjListRelatedPMOS = ['PMOS', 'ViaPoly2Met1ForPMOSGate', '_Via1ForPMOSGate', 'SubringForPMOS', 'POHForPMOSGate',
-                              'M1HForPMOSGate', 'M2HForPMOSGate', 'POVForPMOSGate', 'M1VForPMOSDrainGate', 'M1VForPMOSSupply']
+                              'M1HForPMOSGate', 'M2HForPMOSGate', 'POVForPMOSGate', 'M1VForPMOSDrainGate', 'M1VForPMOSSupply',
+                              'M3HForPMOSGate', 'M4HForPMOSGate']
         for DesignObj in ObjListRelatedPMOS:
             self.YShiftUp(DesignObj, OffsetYOfPMOS)
 
@@ -183,6 +202,24 @@ class CurrentMirror(StickDiagram._StickDiagram):
         self._DesignParameter['M2VForOut']['_YWidth'] = upperYOfM2VOut - lowerYOfM2VOut
         self._DesignParameter['M2VForOut']['_XYCoordinates'] = tmpXYs
 
+        self._DesignParameter['M2HForOut']['_XWidth'] = CoordCalc.getSortedList_ascending(self.getXY('M2VForOut'))[0][-1] \
+                                                        - CoordCalc.getSortedList_ascending(self.getXY('M2VForOut'))[0][0] \
+                                                        + self.getXWidth('M2VForOut')
+        self._DesignParameter['M2HForOut']['_YWidth'] = self.getYWidth('M2HForPMOSGate')
+        self._DesignParameter['M2HForOut']['_XYCoordinates'] = self.getXY('M2HForPMOSGate')
+
+        Mode_uptoM4 = True
+        if Mode_uptoM4:
+            self._DesignParameter['M4VForOut']['_XWidth'] = self._DesignParameter['M2VForOut']['_XWidth']
+            self._DesignParameter['M4VForOut']['_YWidth'] = self._DesignParameter['M2VForOut']['_YWidth']
+            self._DesignParameter['M4VForOut']['_XYCoordinates'] = self._DesignParameter['M2VForOut']['_XYCoordinates']
+
+            self._DesignParameter['M4HForOut']['_XWidth'] = self._DesignParameter['M2HForOut']['_XWidth']
+            self._DesignParameter['M4HForOut']['_YWidth'] = self._DesignParameter['M2HForOut']['_YWidth']
+            self._DesignParameter['M4HForOut']['_XYCoordinates'] = self._DesignParameter['M2HForOut']['_XYCoordinates']
+        else:
+            pass
+
 
 
 
@@ -195,7 +232,7 @@ class CurrentMirror(StickDiagram._StickDiagram):
 
 
 
-    def YShiftUp(self, DesignObj, OffsetY):
+    def YShiftUp(self, DesignObj, OffsetY):     # Need to Modify when empty
         tmpXYs = []
         for XY in self._DesignParameter[DesignObj]['_XYCoordinates']:
             tmpXYs.append(CoordCalc.Add(XY, [0, OffsetY]))
@@ -253,6 +290,18 @@ class CurrentMirror(StickDiagram._StickDiagram):
         self._DesignParameter['M2HForPMOSGate']['_YWidth'] = YWidthOfPMOSPolyGate
         self._DesignParameter['M2HForPMOSGate']['_XYCoordinates'] = [[0, -DistanceBtwPMOS2PolyGate]]
 
+        self._DesignParameter['M3HForPMOSGate']['_XWidth'] = XWidthOfPMOSPolyGate
+        self._DesignParameter['M3HForPMOSGate']['_YWidth'] = YWidthOfPMOSPolyGate
+        self._DesignParameter['M3HForPMOSGate']['_XYCoordinates'] = [[0, -DistanceBtwPMOS2PolyGate]]
+
+        Mode_uptoM4 = True
+        if Mode_uptoM4:
+            self._DesignParameter['M4HForPMOSGate']['_XWidth'] = XWidthOfPMOSPolyGate
+            self._DesignParameter['M4HForPMOSGate']['_YWidth'] = YWidthOfPMOSPolyGate
+            self._DesignParameter['M4HForPMOSGate']['_XYCoordinates'] = [[0, -DistanceBtwPMOS2PolyGate]]
+        else:
+            pass
+
         ''' Vias '''
         NumViaXY = ViaPoly2Met1._ViaPoly2Met1.CalculateNumContact(
             _XWidth=XWidthOfPMOSPolyGate, _YWidth=YWidthOfPMOSPolyGate)
@@ -274,6 +323,9 @@ class CurrentMirror(StickDiagram._StickDiagram):
         self._DesignParameter['_Via1ForPMOSGate']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**Via1Params)
         self._DesignParameter['_Via1ForPMOSGate']['_XYCoordinates'] = [[0, -DistanceBtwPMOS2PolyGate]]
 
+        # --------------------------------------------- #
+        """ Need to Add V2 V3(when only Mode_uptoM4 """
+        # --------------------------------------------- #
 
         ''' POV For PMOS Gate '''
         upperYCoordOfPOV = 0
@@ -395,6 +447,10 @@ class CurrentMirror(StickDiagram._StickDiagram):
         self._DesignParameter['M2HForNMOSGate']['_YWidth'] = YWidthOfNMOSPolyGate
         self._DesignParameter['M2HForNMOSGate']['_XYCoordinates'] = [[0, -DistanceBtwNMOS2PolyGate]]
 
+        self._DesignParameter['M3HForNMOSGate']['_XWidth'] = XWidthOfNMOSPolyGate
+        self._DesignParameter['M3HForNMOSGate']['_YWidth'] = YWidthOfNMOSPolyGate
+        self._DesignParameter['M3HForNMOSGate']['_XYCoordinates'] = [[0, -DistanceBtwNMOS2PolyGate]]
+
         ''' Vias '''
         NumViaXY = ViaPoly2Met1._ViaPoly2Met1.CalculateNumContact(
             _XWidth=XWidthOfNMOSPolyGate, _YWidth=YWidthOfNMOSPolyGate)
@@ -415,6 +471,14 @@ class CurrentMirror(StickDiagram._StickDiagram):
             _DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='Via1ForNMOSGate_In{}'.format(_Name)), _XYCoordinates=[])[0]
         self._DesignParameter['_Via1ForNMOSGate']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**Via1Params)
         self._DesignParameter['_Via1ForNMOSGate']['_XYCoordinates'] = [[0, -DistanceBtwNMOS2PolyGate]]
+
+        Via2Params = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+        Via2Params['_ViaMet22Met3NumberOfCOX'] = NumViaXY[0]
+        Via2Params['_ViaMet22Met3NumberOfCOY'] = NumViaXY[1]
+        self._DesignParameter['_Via2ForNMOSGate'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='Via2ForNMOSGate_In{}'.format(_Name)), _XYCoordinates=[])[0]
+        self._DesignParameter['_Via2ForNMOSGate']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**Via2Params)
+        self._DesignParameter['_Via2ForNMOSGate']['_XYCoordinates'] = [[0, -DistanceBtwNMOS2PolyGate]]
 
 
         ''' POV For NMOS Gate '''
@@ -542,6 +606,19 @@ class CurrentMirror(StickDiagram._StickDiagram):
         self._DesignParameter['M3HForNMOSD2']['_YWidth'] = self.getYWidth('Via2ForNMOSD2', '_Met3Layer') / 2
         self._DesignParameter['M3HForNMOSD2']['_XYCoordinates'] = [[(XLeftOfV2 + XRightOfV2) / 2, 0]]
 
+        Mode_uptoM4 = True
+        if Mode_uptoM4:
+            ''' M3V3M4 '''
+            Via3Params = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            Via3Params['_ViaMet32Met4NumberOfCOX'] = NumViaXY[0]
+            Via3Params['_ViaMet32Met4NumberOfCOY'] = NumViaXY[1]
+            self._DesignParameter['Via3ForNMOSD2'] = self._SrefElementDeclaration(
+                _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='Via3ForNMOSD2_In{}'.format(_Name)), _XYCoordinates=[])[0]
+            self._DesignParameter['Via3ForNMOSD2']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**Via3Params)
+            self._DesignParameter['Via3ForNMOSD2']['_XYCoordinates'] = tmpXYs_D2 + tmpXYs_D1
+        else:
+            pass
+
 
 
 
@@ -556,17 +633,17 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        FingerWidthOfNMOS=800,
+        FingerWidthOfNMOS=1000,
         FingerLengthOfNMOS=30,
-        NumFingerOfNMOS1=10,
-        NumFingerOfNMOS2=20,
+        NumFingerOfNMOS1=8,
+        NumFingerOfNMOS2=36,
         XVTOfNMOS='SLVT',
         NumViaPoly2Met1CoYNMOS=3,
         YWidthOfViaPoly2Met1NMOS=None,
 
-        FingerWidthOfPMOS=800,
-        FingerLengthOfPMOS=30,
-        NumFingerOfPMOS=50,
+        FingerWidthOfPMOS=1000,
+        FingerLengthOfPMOS=70,
+        NumFingerOfPMOS=35,
         XVTOfPMOS='SLVT',
         NumViaPoly2Met1CoYPMOS=3,
         YWidthOfViaPoly2Met1PMOS=None,
@@ -574,6 +651,26 @@ if __name__ == '__main__':
         DummyOfMOS=True,
         SubringWidth=1000
     )
+
+    # InputParams = dict(
+    #     FingerWidthOfNMOS=1000,
+    #     FingerLengthOfNMOS=30,
+    #     NumFingerOfNMOS1=30,
+    #     NumFingerOfNMOS2=56,
+    #     XVTOfNMOS='SLVT',
+    #     NumViaPoly2Met1CoYNMOS=3,
+    #     YWidthOfViaPoly2Met1NMOS=None,
+    #
+    #     FingerWidthOfPMOS=1000,
+    #     FingerLengthOfPMOS=30,
+    #     NumFingerOfPMOS=70,
+    #     XVTOfPMOS='SLVT',
+    #     NumViaPoly2Met1CoYPMOS=3,
+    #     YWidthOfViaPoly2Met1PMOS=None,
+    #
+    #     DummyOfMOS=True,
+    #     SubringWidth=1000
+    # )
 
     Mode_DRCCheck = False  # True | False
     Num_DRCCheck = 10

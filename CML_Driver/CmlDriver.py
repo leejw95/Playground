@@ -774,7 +774,7 @@ if __name__ == '__main__':
 
         # TransmissionLine
         _TransmissionLineWidth=4000,            # None | 4000
-        _TransmissionLineDistance=32000,        # Default(None) : Calculated as Center Of LoadResistor | normal : 32000
+        _TransmissionLineDistance=None,        # Default(None) : Calculated as Center Of LoadResistor | normal : 32000
     )
 
 

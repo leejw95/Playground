@@ -96,6 +96,10 @@ class CurrentMirror(StickDiagram._StickDiagram):
                                                               _Datatype=DesignParameters._LayerMapping['METAL3'][1],
                                                               _XYCoordinates=[], _XWidth=400, _YWidth=400),
 
+                M2VForOut=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],
+                                                           _Datatype=DesignParameters._LayerMapping['METAL2'][1],
+                                                           _XYCoordinates=[], _XWidth=400, _YWidth=400),
+
                 Met1BoundaryOfPMOSSubring=dict(_DesignParametertype=7, _XWidth=None, _YWidth=None, _XYCoordinates=[]),
                 Met1BoundaryOfNMOSSubring=dict(_DesignParametertype=7, _XWidth=None, _YWidth=None, _XYCoordinates=[]),
 
@@ -164,6 +168,24 @@ class CurrentMirror(StickDiagram._StickDiagram):
                               'M1HForPMOSGate', 'M2HForPMOSGate', 'POVForPMOSGate', 'M1VForPMOSDrainGate', 'M1VForPMOSSupply']
         for DesignObj in ObjListRelatedPMOS:
             self.YShiftUp(DesignObj, OffsetYOfPMOS)
+
+
+        ''' M2V For Routing PMOS NMOS Drain '''
+        upperYOfM2VOut = self.CeilMinSnapSpacing(self.getXY('M2HForPMOSGate')[0][1] - self.getYWidth('M2HForPMOSGate') / 2,
+                                                 2 * MinSnapSpacing)
+        lowerYOfM2VOut = self.FloorMinSnapSpacing(self.getXY('Via2ForNMOSD2', '_Met2Layer')[0][1], 2 * MinSnapSpacing)
+
+        tmpXYs = []
+        for XY in self.getXY('Via2ForNMOSD2'):
+            tmpXYs.append([XY[0], (upperYOfM2VOut + lowerYOfM2VOut) / 2])
+
+        self._DesignParameter['M2VForOut']['_XWidth'] = max(self.getXWidth('Via1ForNMOSD2', '_Met2Layer'), self.getXWidth('Via2ForNMOSD2', '_Met2Layer'))
+        self._DesignParameter['M2VForOut']['_YWidth'] = upperYOfM2VOut - lowerYOfM2VOut
+        self._DesignParameter['M2VForOut']['_XYCoordinates'] = tmpXYs
+
+
+
+
 
 
         print('\n' + ''.center(105, '#'))
@@ -511,7 +533,7 @@ class CurrentMirror(StickDiagram._StickDiagram):
         self._DesignParameter['Via2ForNMOSD2'] = self._SrefElementDeclaration(
             _DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='Via2ForNMOSD2_In{}'.format(_Name)), _XYCoordinates=[])[0]
         self._DesignParameter['Via2ForNMOSD2']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**Via2Params)
-        self._DesignParameter['Via2ForNMOSD2']['_XYCoordinates'] = tmpXYs_D2
+        self._DesignParameter['Via2ForNMOSD2']['_XYCoordinates'] = tmpXYs_D2 + tmpXYs_D1
 
         ''' M3H For D2 '''
         XLeftOfV2 = CoordCalc.getSortedList_ascending(self.getXY('Via2ForNMOSD2'))[0][0]
@@ -519,6 +541,7 @@ class CurrentMirror(StickDiagram._StickDiagram):
         self._DesignParameter['M3HForNMOSD2']['_XWidth'] = XRightOfV2 - XLeftOfV2 + self.getXWidth('Via2ForNMOSD2', '_Met3Layer')
         self._DesignParameter['M3HForNMOSD2']['_YWidth'] = self.getYWidth('Via2ForNMOSD2', '_Met3Layer') / 2
         self._DesignParameter['M3HForNMOSD2']['_XYCoordinates'] = [[(XLeftOfV2 + XRightOfV2) / 2, 0]]
+
 
 
 

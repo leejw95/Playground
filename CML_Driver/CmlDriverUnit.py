@@ -21,7 +21,7 @@ from CML_Driver import PMOSSetOfCMLDriver
 from CML_Driver import opppcres_with_subring
 
 
-class CmlLDriver(StickDiagram._StickDiagram):
+class CmlLDriverUnit(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(
         _FingerWidthOfInputPair=None,
         _FingerLengthOfInputPair=None,
@@ -799,7 +799,7 @@ if __name__ == '__main__':
         print("".center(105, '='))
 
         ''' Generate Layout Object '''
-        LayoutObj = CmlLDriver(_Name=cellname)
+        LayoutObj = CmlLDriverUnit(_Name=cellname)
         LayoutObj._CalculateDesignParameter(**InputParams)
         LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
         testStreamFile = open('./{}'.format(_fileName), 'wb')

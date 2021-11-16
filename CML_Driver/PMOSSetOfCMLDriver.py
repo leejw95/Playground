@@ -24,7 +24,9 @@ import psubring
 class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(_FingerWidthOfInputPair=None, _FingerLengthOfInputPair=None, _NumFingerOfInputPair=None,
                                            _FingerWidthOfCurrentSource=None, _FingerLengthOfCurrentSource=None, _NumFingerOfCurrentSource=None,
-                                           _WidthOfMiddleRoutingIP=None, _WidthOfMiddleRoutingCS=None, _XVT=None, _SubringWidth=None)
+                                           _WidthOfMiddleRoutingIP=None, _WidthOfMiddleRoutingCS=None, _XVT=None,
+                                           _NumCoYOfNbodybtwIPandCS=None, _YWidthOfNbodybtwIPandCS=None,
+                                           _SubringWidth=None)
 
     def __init__(self, _DesignParameter=None, _Name=None):
         if _DesignParameter != None:
@@ -67,14 +69,15 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         if _Name != None:
             self._DesignParameter['_Name']['_Name'] = _Name
 
-    def _CalculateDesignParameterInputPair(self, _FingerWidthOfInputPair=None, _FingerLengthOfInputPair=None, _NumFingerOfInputPair=None,
-                                           _WidthOfMiddleRoutingIP=None, _XVT=None):
+    def _CalculateDesignParameterInputPair(self,
+                                           _FingerWidthOfInputPair=None,
+                                           _FingerLengthOfInputPair=None,
+                                           _NumFingerOfInputPair=None,
+                                           _WidthOfMiddleRoutingIP=None,
+                                           _XVT=None):
         _DRCObj = DRC.DRC()
         _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
-        Printer = PrintStr.PrintStr()
-
-
 
         ''' check # of all fingers '''
         assert _NumFingerOfInputPair % 2 == 0
@@ -577,13 +580,19 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
                                   _FingerWidthOfCurrentSource=None, _FingerLengthOfCurrentSource=None,
                                   _NumFingerOfCurrentSource=None,
                                   _WidthOfMiddleRoutingIP=None, _WidthOfMiddleRoutingCS=None, _XVT=None,
+
+                                  _NumCoYOfNbodybtwIPandCS=None, _YWidthOfNbodybtwIPandCS=None,
+
                                   _SubringWidth=None):
 
         _DRCObj = DRC.DRC()
         _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
-        Printer = PrintStr.PrintStr()
-        Printer.ThreeLine('{} Calculation Start'.format(_Name))
+        _DRCtemp_metal1minspace = 165
+
+        print('\n' + ''.center(105,'#'))
+        print('     {} Calculation Start     '.format(_Name).center(105,'#'))
+        print(''.center(105, '#') + '\n')
 
         assert _NumFingerOfInputPair % 2 == 0
         assert _NumFingerOfCurrentSource % 2 == 0
@@ -602,18 +611,34 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
                                                     _WidthOfMiddleRoutingCS=_WidthOfMiddleRoutingCS,
                                                     _XVT=_XVT)
 
-        ''' Nbody Contact Generation '''
+        ''' Nbody Contact (between PMOS_IP and PMOS_CS) Generation '''
         XWidthOfNbody_byIP = self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] * (_NumFingerOfInputPair + 2) \
                              + self._DesignParameter['_Via1OnPMOSIP']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
         XWidthOfNbody_byCS = self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] * (_NumFingerOfCurrentSource/2 + 1) \
                              + self._DesignParameter['_Via1OnPMOSCS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
         XWidthOfNbody = max(XWidthOfNbody_byIP, XWidthOfNbody_byCS)
-        NumNbodyCoX = int(XWidthOfNbody / (_DRCObj._CoMinWidth+_DRCObj._CoMinSpace2)) - 1  # Bad Equation
-        NumNbodyCoY = 2
+        NumNbodyCoX = int(XWidthOfNbody / (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2)) - 1  # Bad Equation
+        ''' -------------------------------------------------------------------------------------------------------- '''
+        # 1) by YWidth (_YWidthOfNbodybtwIPandCS)
+        YWidthOfNbodybtwIPandCS_byYWidth = _YWidthOfNbodybtwIPandCS if _YWidthOfNbodybtwIPandCS != None else 0
+        NumNbodyCoY_byYWidth = (YWidthOfNbodybtwIPandCS_byYWidth - _DRCObj._CoMinWidth
+                                - 2 * max(_DRCObj._Metal1MinEnclosureCO2, _DRCObj._CoMinEnclosureByPOAtLeastTwoSide)) \
+                               // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2) + 1
+
+        # 2) by ContactNum (_NumCoYOfNbodybtwIPandCS)
+        NumNbodyCoY_byContactNum = _NumCoYOfNbodybtwIPandCS if _NumCoYOfNbodybtwIPandCS != None else 2
+        YWidthOfNbodybtwIPandCS_byContactNum = (NumNbodyCoY_byContactNum - 1) * (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2) \
+                                           + _DRCObj._CoMinWidth \
+                                           + 2 * max(_DRCObj._Metal1MinEnclosureCO2, _DRCObj._CoMinEnclosureByPOAtLeastTwoSide)
+
+        NumNbodyCoY = max(NumNbodyCoY_byYWidth, NumNbodyCoY_byContactNum)
+        YWidthOfNbody = max(YWidthOfNbodybtwIPandCS_byYWidth, YWidthOfNbodybtwIPandCS_byContactNum)
+        ''' -------------------------------------------------------------------------------------------------------- '''
+
 
         NbodyParameters = copy.deepcopy(NbodyContact_iksu._NbodyContact._ParametersForDesignCalculation)
         NbodyParameters.update({'_NumberOfNbodyCOX': NumNbodyCoX, '_NumberOfNbodyCOY': NumNbodyCoY,
-                                '_Met1XWidth': XWidthOfNbody, '_Met1YWidth': None})
+                                '_Met1XWidth': XWidthOfNbody, '_Met1YWidth': YWidthOfNbody})
         self._DesignParameter['NbodyContact'] = self._SrefElementDeclaration(
             _DesignObj=NbodyContact_iksu._NbodyContact(_Name='NbodyContact_In{}'.format(_Name)))[0]
         self._DesignParameter['NbodyContact']['_DesignObj']._CalculateNbodyContactDesignParameter(**NbodyParameters)
@@ -659,14 +684,34 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         DistanceYBtwMidRouting2CS = abs(self._DesignParameter['PMOS_CS']['_XYCoordinates'][0][1])
 
         # 1) Calculate YCoord of PMOS CS - by OD Layer(for Nbody) - OD Layer (for PMOS)     OD=RX
-        DistanceYBtwNbody2PMOSIP = \
+        DistanceYBtwNbody2PMOSIP_byOD = \
             0.5 * self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
             + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
             + _DRCObj._OdMinSpace
-        DistanceYBtwNbody2PMOSCS = \
+        DistanceYBtwNbody2PMOSCS_byOD = \
             0.5 * self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
             + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] \
             + _DRCObj._OdMinSpace
+
+        # 1-2)
+        DistanceYBtwNbody2PMOSIP_byM1 = \
+            0.5 * self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
+            + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
+            + max(_DRCObj._Metal1MinSpace2, _DRCObj._Metal1MinSpaceAtCorner)
+        DistanceYBtwNbody2PMOSCS_byM1 = \
+            0.5 * self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
+            + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
+            + max(_DRCObj._Metal1MinSpace2, _DRCObj._Metal1MinSpaceAtCorner)
+
+        # 1-3)
+        DistanceYBtwNbody2PMOSIP_byM2 = \
+            CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[1][-1] + self.getYWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2 \
+            + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
+            + _DRCtemp_metal1minspace - DistanceYBtwMidRouting2IP
+        # DistanceYBtwNbody2PMOSIP_byM2 = 0
+
+        DistanceYBtwNbody2PMOSIP = max(DistanceYBtwNbody2PMOSIP_byOD, DistanceYBtwNbody2PMOSIP_byM1, DistanceYBtwNbody2PMOSIP_byM2)
+        DistanceYBtwNbody2PMOSCS = max(DistanceYBtwNbody2PMOSCS_byOD, DistanceYBtwNbody2PMOSCS_byM1)
 
         OffsetYOfPMOSCS1 = DistanceYBtwMidRouting2IP + DistanceYBtwNbody2PMOSIP \
                            + DistanceYBtwNbody2PMOSCS + DistanceYBtwMidRouting2CS
@@ -697,7 +742,9 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         for DesignObj in ObjListRelatedCS:
             self.YShiftUp(DesignObj, OffsetYOfPMOSCS)
 
-        ''' Vertical Routing IP to CS '''
+
+        ''' -------------------------------------------------------------------------------------------------------- '''
+        ''' Vertical Routing  CS(drain) to IP(source) '''
         self._DesignParameter['M2VforCS2IP']['_Width'] = self._DesignParameter['M2V2M3OnPMOSIP']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
         self._DesignParameter['M3VforCS2IP']['_Width'] = self._DesignParameter['M2V2M3OnPMOSIP']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
 
@@ -707,13 +754,15 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M2VforCS2IP']['_XYCoordinates'] = tmpXYs
         self._DesignParameter['M3VforCS2IP']['_XYCoordinates'] = tmpXYs
 
+        ''' -------------------------------------------------------------------------------------------------------- '''
+
 
         ''' Subring '''
         print('##############################     SubRing Generation    ########################################')
         DistanceXBtwIP2Origin = abs(self._DesignParameter['POHforIP']['_XYCoordinates'][0][0])
         OffsetXforCenterSourceOfCS = abs(self._DesignParameter['POHforCS']['_XYCoordinates'][0][0])
 
-        _DRCtemp_metal1minspace = 165
+
 
         XWidthOfSubring1_ODtoOD = max(2*DistanceXBtwIP2Origin + self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'],
                                       2*OffsetXforCenterSourceOfCS + self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth']) \
@@ -727,7 +776,10 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         XWidthOfSubring = max(XWidthOfSubring1_ODtoOD, XWidthOfSubring2_PolytoOD, XWidthOfSubring3_Met1toMet1)
 
         # YWidth Of Subring - by Met1 spacing
-        YdownwardOfSubring = self.FloorMinSnapSpacing(DistanceYBtwMidRouting2IP + 0.5*_FingerWidthOfInputPair + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
+        YdownwardOfSubring_byM2V2M3 = self.CeilMinSnapSpacing(abs(CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[1][0]
+                                                              - self.getYWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2 - _DRCtemp_metal1minspace), 2*MinSnapSpacing)
+        YdownwardOfSubring_byMet1 = self.CeilMinSnapSpacing(DistanceYBtwMidRouting2IP + 0.5*_FingerWidthOfInputPair + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
+        YdownwardOfSubring = max(YdownwardOfSubring_byM2V2M3, YdownwardOfSubring_byMet1)
         YupwardOfSubring = self.CeilMinSnapSpacing(OffsetYOfPMOSCS + DistanceYBtwMidRouting2CS + 0.5*_FingerWidthOfCurrentSource + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
         YWidthOfSubring = YdownwardOfSubring + YupwardOfSubring
         YcenterOfSubring = (YupwardOfSubring - YdownwardOfSubring) / 2.0
@@ -790,7 +842,9 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'] = [[(RightXCoord_M1 + LeftXCoord_M1) / 2.0,
                                                                               (upperYCoord_M1 + lowerYCoord_M1) / 2.0]]
 
-        Printer.ThreeLine('{} Calculation End'.format(_Name))
+        print('\n' + ''.center(105, '#'))
+        print('     {} Calculation End     '.format(_Name).center(105,'#'))
+        print(''.center(105, '#') + '\n')
 
 
     def YShiftUp(self, DesignObj, OffsetY):
@@ -807,27 +861,30 @@ if __name__ == '__main__':
     My = MyInfo.USER(DesignParameters._Technology)
     Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
 
-    libname = 'TEST_PMOSSet'
+    libname = 'TEST_PMOSSet3'
     cellname = 'PMOSSetOfCML'
     _fileName = cellname + '.gds'
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        _FingerWidthOfInputPair=400,            # ''' Input Pair '''
+        _FingerWidthOfInputPair=1000,            # ''' Input Pair '''
         _FingerLengthOfInputPair=30,
         _NumFingerOfInputPair=200,
         _WidthOfMiddleRoutingIP=200,
 
-        _FingerWidthOfCurrentSource=400,        # ''' Current Source '''
+        _FingerWidthOfCurrentSource=1000,        # ''' Current Source '''
         _FingerLengthOfCurrentSource=30,
         _NumFingerOfCurrentSource=320,
         _WidthOfMiddleRoutingCS=350,
+
+        _NumCoYOfNbodybtwIPandCS=None,
+        _YWidthOfNbodybtwIPandCS=450,
 
         _XVT='SLVT',                      # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
         _SubringWidth=1000,
     )
 
-    Mode_DRCCheck = True            # True | False
+    Mode_DRCCheck = False            # True | False
     Num_DRCCheck = 10
 
     for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):

@@ -1,3 +1,7 @@
+import warnings
+
+
+
 def Add(Coordinate1, Coordinate2):
     x = Coordinate1[0] + Coordinate2[0]
     y = Coordinate1[1] + Coordinate2[1]
@@ -6,6 +10,16 @@ def Add(Coordinate1, Coordinate2):
 
 
 def Sum(*Coordinates):
+    """ Add all XYCoordinates
+
+    Args:
+        Coordinates (list[int | float]): XYCoordinates. ex) [[-3,0], [-1,1], [1,2], [3,3]]
+    Returns:
+        list[int | float]: One XYCoordinate by obtained by adding all XYCoordinates
+    Example:
+        >>> Sum([-3,0], [-1,1], [1,2], [3,3])
+        [0, 6]
+    """
     x, y = 0, 0     # Initialize
     for XY in Coordinates:
         _isCoordinate(XY)
@@ -146,6 +160,19 @@ def getXYCoords_MaxY(Coordinates):
 
 
 def getSortedList_ascending(Coordinates):
+    """ Return sorted set list of the each X and Y of XYCoordinates.\n
+    The first tuple contains X coordinates in ascending order and no duplicates.
+    The second tuple contains Y Coordinates in ascending order and no duplicates.\n
+    It can be used to find the minimum or maximum values of the X or Y Coordinates without knowing how they are ordered.
+
+    Args:
+        Coordinates (list[list[int | float]]): XYCoordinates. ex) [[-3,0], [-1,0], [1,0], [3,0]]
+    Returns:
+        tuple[list[int | float], list[int | float]]: [X coordinates sorted in ascending order], [Y coordinates sorted in ascending order]
+    Example:
+        >>> getSortedList_ascending([[-3,0], [0,1], [3,-5], [3,1]])
+        [-3, 0, 3], [-5, 0, 1]
+    """
     xList, yList = [], []
     for XY in Coordinates:
         _isCoordinate(XY)
@@ -153,6 +180,50 @@ def getSortedList_ascending(Coordinates):
         yList.append(XY[1])
 
     return sorted(set(xList)), sorted(set(yList))
+
+
+def getDistanceBtwMinMaxX(Coordinates):
+    """ Calculate the distance between maxX and minX.
+
+    Args:
+        Coordinates (list[list[int | float]]): XYCoordinates. ex) [[-3,-3], [-1,-3], [1,3], [3,3]]
+    Returns:
+        [int | float]: Distance between Min-Max XCoordinates.
+    Example:
+        >>> getDistanceBtwMinMaxX([[-3,-3], [-1,-3], [1,3], [3,3]])
+        6
+    """
+    xList, _ = getSortedList_ascending(Coordinates)
+    Distance = xList[-1] - xList[0]
+
+    if len(xList) == 1:
+        warnings.warn("Only one XCoordinate is inputted.")
+    elif Distance == 0:
+        warnings.warn("The Distance between MaxX and MinX is calculated as 'zero'.")
+
+    return Distance
+
+
+def getDistanceBtwMinMaxY(Coordinates):
+    """ Calculate the distance between maxY and minY.
+
+    Args:
+        Coordinates (list[list[int | float]]): XYCoordinates. ex) [[-3,-3], [-1,-3], [1,3], [3,3]]
+    Returns:
+        [int | float]: Distance between Min-Max YCoordinates.
+    Example:
+        >>> getDistanceBtwMinMaxY([[-3,-3], [-1,-3], [1,3], [3,3]])
+        6
+    """
+    _, yList = getSortedList_ascending(Coordinates)
+    Distance = yList[-1] - yList[0]
+
+    if len(yList) == 1:
+        warnings.warn("Only one YCoordinate is inputted.")
+    elif Distance == 0:
+        warnings.warn("The Distance between MaxY and MinY is calculated as 'zero'.")
+
+    return Distance
 
 
 def _isCoordinate(Coordinate):
@@ -170,7 +241,11 @@ if __name__ == '__main__':
     #
     # results = Add(value1, value2)
 
-    XYCoordinatesqq = [3,5], [1,5], [-1,5], [4,5], [0,-1], [0,-1], [-3,-1]
+    XYCoordinatesqq = [[3,5], [1,5], [-1,5], [4,5], [0,-1], [0,-1], [-3,-1]]
     results = Sum([3,5], [1,5], [-1,5])
 
-    print(results)
+    kk = getDistanceBtwMinMaxY([[0, 1]])
+    type_ = type(kk)
+
+    print(type_)
+    print(kk)

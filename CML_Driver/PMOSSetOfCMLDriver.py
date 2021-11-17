@@ -776,13 +776,32 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         XWidthOfSubring = max(XWidthOfSubring1_ODtoOD, XWidthOfSubring2_PolytoOD, XWidthOfSubring3_Met1toMet1)
 
         # YWidth Of Subring - by Met1 spacing
-        YdownwardOfSubring_byM2V2M3 = self.CeilMinSnapSpacing(abs(CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[1][0]
-                                                              - self.getYWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2 - _DRCtemp_metal1minspace), 2*MinSnapSpacing)
-        YdownwardOfSubring_byMet1 = self.CeilMinSnapSpacing(DistanceYBtwMidRouting2IP + 0.5*_FingerWidthOfInputPair + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
-        YdownwardOfSubring = max(YdownwardOfSubring_byM2V2M3, YdownwardOfSubring_byMet1)
-        YupwardOfSubring = self.CeilMinSnapSpacing(OffsetYOfPMOSCS + DistanceYBtwMidRouting2CS + 0.5*_FingerWidthOfCurrentSource + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
-        YWidthOfSubring = YdownwardOfSubring + YupwardOfSubring
-        YcenterOfSubring = (YupwardOfSubring - YdownwardOfSubring) / 2.0
+        # YdownwardOfSubring_byM2V2M3 = self.CeilMinSnapSpacing(abs(CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[1][0]
+        #                                                       - self.getYWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2 - _DRCtemp_metal1minspace), 2*MinSnapSpacing)
+        # YdownwardOfSubring_byMet1 = self.CeilMinSnapSpacing(DistanceYBtwMidRouting2IP + 0.5*_FingerWidthOfInputPair + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
+        # YdownwardOfSubring = max(YdownwardOfSubring_byM2V2M3, YdownwardOfSubring_byMet1)
+        # YupwardOfSubring = self.CeilMinSnapSpacing(OffsetYOfPMOSCS + DistanceYBtwMidRouting2CS + 0.5*_FingerWidthOfCurrentSource + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
+        # YWidthOfSubring = YdownwardOfSubring + YupwardOfSubring
+        # YcenterOfSubring = (YupwardOfSubring - YdownwardOfSubring) / 2.0
+
+
+        YdownwardOfSubring_byM2V2M3 = self.FloorMinSnapSpacing(CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[1][0]
+                                                               - self.getYWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2 - _DRCtemp_metal1minspace, 2*MinSnapSpacing)
+        YupwardOfSubring_byM2V2M3 = self.CeilMinSnapSpacing(CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSCS', '_Met2Layer'))[1][-1]
+                                                            + self.getYWidth('M2V2M3OnPMOSCS', '_Met2Layer') / 2 + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
+        YdownwardOfSubring_byM1 = self.FloorMinSnapSpacing(
+            CoordCalc.getSortedList_ascending(self.getXY('PMOS_IP', '_Met1Layer'))[1][0]
+            - self.getYWidth('PMOS_IP', '_Met1Layer') / 2 - _DRCtemp_metal1minspace, 2 * MinSnapSpacing)
+        YupwardOfSubring_byM1 = self.CeilMinSnapSpacing(
+            CoordCalc.getSortedList_ascending(self.getXY('PMOS_CS', '_Met1Layer'))[1][-1]
+            + self.getYWidth('PMOS_CS', '_Met1Layer') / 2 + _DRCtemp_metal1minspace, 2 * MinSnapSpacing)
+
+        YdownwardOfSubring = min(YdownwardOfSubring_byM2V2M3, YdownwardOfSubring_byM1)
+        YupwardOfSubring = max(YupwardOfSubring_byM2V2M3, YupwardOfSubring_byM1)
+
+        YWidthOfSubring = YupwardOfSubring - YdownwardOfSubring
+        YcenterOfSubring = (YupwardOfSubring + YdownwardOfSubring) / 2.0
+
 
         PSubringInputs = copy.deepcopy(psubring._PSubring._ParametersForDesignCalculation)
         PSubringInputs['_PType'] = False

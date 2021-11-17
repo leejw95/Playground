@@ -31,6 +31,8 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
         _NumFingerOfCurrentSource=None,
         _WidthOfMiddleRoutingIP=None,
         _WidthOfMiddleRoutingCS=None,
+        _NumCoYOfNbodybtwIPandCS=None,
+        _YWidthOfNbodybtwIPandCS=None,
         _XVT=None,
         _SubringWidth=None,
         _ResWidth_LoadR=None,
@@ -64,6 +66,8 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
                                   _NumFingerOfCurrentSource=None,
                                   _WidthOfMiddleRoutingIP=None,
                                   _WidthOfMiddleRoutingCS=None,
+                                  _NumCoYOfNbodybtwIPandCS=None,
+                                  _YWidthOfNbodybtwIPandCS=None,
                                   _XVT=None,
                                   _SubringWidth=None,
 
@@ -107,6 +111,8 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
         PMOSSetParam['_NumFingerOfCurrentSource'] = _NumFingerOfCurrentSource
         PMOSSetParam['_WidthOfMiddleRoutingIP'] = _WidthOfMiddleRoutingIP
         PMOSSetParam['_WidthOfMiddleRoutingCS'] = _WidthOfMiddleRoutingCS
+        PMOSSetParam['_NumCoYOfNbodybtwIPandCS'] = _NumCoYOfNbodybtwIPandCS
+        PMOSSetParam['_YWidthOfNbodybtwIPandCS'] = _YWidthOfNbodybtwIPandCS
         PMOSSetParam['_XVT'] = _XVT
         PMOSSetParam['_SubringWidth'] = _SubringWidth
         self._DesignParameter['PMOSSet'] = self._SrefElementDeclaration(_DesignObj=PMOSSetOfCMLDriver.PMOSSetOfCMLDriver(_DesignParameter=None, _Name='PMOSSet_In{}'.format(_Name)))[0]
@@ -747,6 +753,8 @@ if __name__ == '__main__':
         _FingerLengthOfCurrentSource=30,
         _NumFingerOfCurrentSource=320,
         _WidthOfMiddleRoutingCS=350,
+        _NumCoYOfNbodybtwIPandCS=None,
+        _YWidthOfNbodybtwIPandCS=450,
 
         _XVT='SLVT',
         _SubringWidth=1000,

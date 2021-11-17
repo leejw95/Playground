@@ -269,8 +269,8 @@ class _PMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = self._DesignParameter['_PPLayer']['_XYCoordinates']
 
         else:
-            self._DesignParameter['_SLVTLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._SlvtMinExtensionOnOD
-            self._DesignParameter['_SLVTLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth']
+            self._DesignParameter['_SLVTLayer']['_XWidth'] = 0
+            self._DesignParameter['_SLVTLayer']['_YWidth'] = 0
 
             self._DesignParameter['_SLVTLayer']['_XYCoordinates'] = self._DesignParameter['_PPLayer']['_XYCoordinates']
 

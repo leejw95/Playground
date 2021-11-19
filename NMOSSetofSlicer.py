@@ -568,11 +568,11 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             tmp = []
             tmpx = []
             if (_CLKinputNMOSFinger % 2) == 1:
-                for i in range(0, (_CLKinputNMOSFinger-1)/ 2 + 1):
+                for i in range(0, int((_CLKinputNMOSFinger-1)/ 2 + 1)):
                         tmpx=[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - ((_CLKinputNMOSFinger+1)/2 + 0.5)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i+1), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             elif (_CLKinputNMOSFinger % 2) == 0:
-                for i in range(0, _CLKinputNMOSFinger/2+1):
+                for i in range(0, int(_CLKinputNMOSFinger/2+1)):
                         tmpx=[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - (_CLKinputNMOSFinger/2)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             self._DesignParameter['_ViaMet12Met2OnNMOSOutput5']['_XYCoordinates'] = tmp
@@ -592,11 +592,11 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             tmp = []
             tmpx = []
             if (_CLKinputNMOSFinger % 2) == 1:
-                for i in range(0, (_CLKinputNMOSFinger-1)/ 2 + 1):
+                for i in range(0, int((_CLKinputNMOSFinger-1)/ 2 + 1)):
                         tmpx=[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - ((_CLKinputNMOSFinger+1)/2 + 0.5)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i+1), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             elif (_CLKinputNMOSFinger % 2) == 0:
-                for i in range(0, _CLKinputNMOSFinger/2+1):
+                for i in range(0, int(_CLKinputNMOSFinger/2+1)):
                         tmpx=[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - (_CLKinputNMOSFinger/2)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             self._DesignParameter['_ViaMet22Met3OnNMOSOutput5']['_XYCoordinates'] = tmp
@@ -615,11 +615,11 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             tmp = []
             tmpx = []
             if (_CLKinputNMOSFinger % 2) == 1:
-                for i in range(0, (_CLKinputNMOSFinger-1)/ 2 + 1):
+                for i in range(0, int((_CLKinputNMOSFinger-1)/ 2 + 1)):
                         tmpx=[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - ((_CLKinputNMOSFinger+1)/2 + 0.5)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i+1), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             elif (_CLKinputNMOSFinger % 2) == 0:
-                for i in range(0, _CLKinputNMOSFinger/2+1):
+                for i in range(0, int(_CLKinputNMOSFinger/2+1)):
                         tmpx=[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - (_CLKinputNMOSFinger/2)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_XYCoordinates'] = tmp
@@ -1012,12 +1012,12 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             MOStmp = self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] / 2
 
             if (_CLKinputNMOSFinger % 2) == 1:
-                for i in range(0, (_CLKinputNMOSFinger - 1) / 2 + 1):
+                for i in range(0, int((_CLKinputNMOSFinger - 1) / 2 + 1)):
                         tmpx.append([[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - ((_CLKinputNMOSFinger + 1) / 2 - 0.5) * _LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (i * 2 + 1), VSStmp],
                                      [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - ((_CLKinputNMOSFinger + 1) / 2 - 0.5) * _LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (i * 2 + 1), MOStmp]
                                      ])
             elif (_CLKinputNMOSFinger % 2) == 0:
-                for i in range(0, _CLKinputNMOSFinger / 2):
+                for i in range(0, int(_CLKinputNMOSFinger / 2)):
                         tmpx.append([[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - (_CLKinputNMOSFinger / 2) * _LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (i * 2 + 1), VSStmp],
                                      [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - (_CLKinputNMOSFinger / 2) * _LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (i * 2 + 1), MOStmp]
                                      ])

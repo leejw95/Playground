@@ -367,7 +367,7 @@ class _SlicerWithSRLatchX4 (StickDiagram._StickDiagram) :
             self._DesignParameter['_Met5VDDRouting']['_Width'] = 16 * _DRCObj._MetalxMinWidth
 
             self._DesignParameter['_Met6VDDRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=400)
-            self._DesignParameter['_Met6VDDRouting']['_Width'] = (self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 - (Guardring_right + _SLSlicerGuardringWidth / 2) - _DRCObj._MetalxMinSpace11) / 2
+            self._DesignParameter['_Met6VDDRouting']['_Width'] = int((self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 - (Guardring_right + _SLSlicerGuardringWidth // 2) - _DRCObj._MetalxMinSpace11) // 2)
             if self._DesignParameter['_Met6VDDRouting']['_Width'] >  _DRCObj._MetalxMaxWidth :
                 self._DesignParameter['_Met6VDDRouting']['_Width'] = _DRCObj._MetalxMaxWidth
 
@@ -958,18 +958,18 @@ if __name__ == '__main__' :
     DesignParameters._Technology = '028nm'
     #####################SRLatch#######################
     for _tries in range(1, 2) :
-        _SRFinger1 = 2##random.randint(1, 16)
-        _SRFinger2 = 4##random.randint(1, 16)
-        _SRFinger3 = 3##random.randint(1, 16)
-        _SRFinger4 = 8##random.randint(1, 16)
-        _SRNMOSChannelWidth1 = 300
-        _SRPMOSChannelWidth1 = 810
-        _SRNMOSChannelWidth2 = 300
-        _SRPMOSChannelWidth2 = 810
-        _SRNMOSChannelWidth3 = 300
-        _SRPMOSChannelWidth3 = 810
-        _SRNMOSChannelWidth4 = 300
-        _SRPMOSChannelWidth4 = 810
+        _SRFinger1 = 5##random.randint(1, 16)
+        _SRFinger2 = 1##random.randint(1, 16)
+        _SRFinger3 = 2##random.randint(1, 16)
+        _SRFinger4 = 2##random.randint(1, 16)
+        _SRNMOSChannelWidth1 = 200
+        _SRPMOSChannelWidth1 = 400
+        _SRNMOSChannelWidth2 = 200
+        _SRPMOSChannelWidth2 = 400
+        _SRNMOSChannelWidth3 = 200
+        _SRPMOSChannelWidth3 = 400
+        _SRNMOSChannelWidth4 = 200
+        _SRPMOSChannelWidth4 = 400
         _SRChannelLength = 30
         _SRNPRatio = None
         _SRVDD2VSSHeightAtOneSide = None
@@ -991,15 +991,15 @@ if __name__ == '__main__' :
         _SRSLVT = True
         _SRPowerLine = None
         #####################Slicer#######################
-        _SLCLKinputPMOSFinger1 = 8##random.randint(1, 16)
-        _SLCLKinputPMOSFinger2 = 1##random.randint(1, 16)
-        _SLPMOSFinger = 1##random.randint(1, 16)
-        _SLPMOSChannelWidth = 450##random.randrange(200, 1050)
-        _SLDATAinputNMOSFinger = 8##random.randint(2, 16)
-        _SLNMOSFinger = 1##random.randint(1, 16)
-        _SLCLKinputNMOSFinger = 12##random.randint(1, 16)
-        _SLNMOSChannelWidth = 600##random.randrange(200, 1050)
-        _SLCLKinputNMOSChannelWidth=650
+        _SLCLKinputPMOSFinger1 = 6##random.randint(1, 16)
+        _SLCLKinputPMOSFinger2 = 3##random.randint(1, 16)
+        _SLPMOSFinger = 2##random.randint(1, 16)
+        _SLPMOSChannelWidth = 1000##random.randrange(200, 1050)
+        _SLDATAinputNMOSFinger = 12##random.randint(2, 16)
+        _SLNMOSFinger = 2##random.randint(1, 16)
+        _SLCLKinputNMOSFinger = 8##random.randint(1, 16)
+        _SLNMOSChannelWidth = 1000##random.randrange(200, 1050)
+        _SLCLKinputNMOSChannelWidth=1000
         _SLChannelLength = 30
         _SLDummy = True
         _SLSLVT = True

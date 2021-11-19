@@ -326,7 +326,7 @@ class _Inverter(StickDiagram._StickDiagram) :
         self._DesignParameter['_OutputRouting'] = self._PathElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL2'][0], _Datatype = DesignParameters._LayerMapping['METAL2'][1],  _XYCoordinates = [], _Width = None)
         self._DesignParameter['_OutputRouting']['_Width'] = _DRCObj._MetalxMinWidth
 
-        for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) / 2) :
+        for i in range(0, int((len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) / 2)) :
             tmpOutputRouting.append([[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2*i][0], self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2*i][1]], \
                                      [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2*i][0], self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][2*i][1]]])
 

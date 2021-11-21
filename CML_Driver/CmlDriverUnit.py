@@ -752,22 +752,22 @@ if __name__ == '__main__':
         _SubringWidth=1000,
 
         # ''' Load R '''
-        _ResWidth_LoadR=3000,
+        _ResWidth_LoadR=1500,
         _ResLength_LoadR=2300,
         _NumCOY_LoadR=4,
         _NumRows_LoadR=2,
-        _NumStripes_LoadR=5,
+        _NumStripes_LoadR=10,
         _RoutingWidth_LoadR=None,
         _Dummy_LoadR=True,
         _SubringWidth_LoadR=1000,
 
         # ''' Termination R  '''
         _TerminationR=True,                    # True | False
-        _ResWidth_TerminationR=3000,
+        _ResWidth_TerminationR=1500,
         _ResLength_TerminationR=2300,
         _NumCOY_TerminationR=4,
-        _NumRows_TerminationR=2,
-        _NumStripes_TerminationR=5,
+        _NumRows_TerminationR=3,
+        _NumStripes_TerminationR=10,
         _RoutingWidth_TerminationR=None,
         _Dummy_TerminationR=True,
         _SubringWidth_TerminationR=1000,

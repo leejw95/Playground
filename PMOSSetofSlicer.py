@@ -252,24 +252,24 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             if (_CLKinputPMOSFinger % 2) == 0:
                 if (_CLKinputPMOSFinger1 % 2) == 0:
                     for j in PMOS12tmp3:
-                        for i in range(0, _CLKinputPMOSFinger/2):
+                        for i in range(0, int(_CLKinputPMOSFinger/2)):
                             tmpx=[j - (_CLKinputPMOSFinger/2 - 1)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
                 elif (_CLKinputPMOSFinger1 % 2) == 1:
                     for j in PMOS12tmp3:
-                        for i in range(0, _CLKinputPMOSFinger/2 + 1):
+                        for i in range(0, int(_CLKinputPMOSFinger/2 + 1)):
                             tmpx = [j - (_CLKinputPMOSFinger/2) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
 
             elif (_CLKinputPMOSFinger % 2) == 1:
                 if (_CLKinputPMOSFinger1 % 2) == 0:
                     for j in PMOS12tmp:
-                        for i in range(0, _CLKinputPMOSFinger/2 + 1):
+                        for i in range(0, int(_CLKinputPMOSFinger/2 + 1)):
                             tmpx=[j - (_CLKinputPMOSFinger/2-0.5)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
                 elif (_CLKinputPMOSFinger1 % 2) == 1:
                     for j in PMOS12tmp2:
-                        for i in range(0, _CLKinputPMOSFinger/2 + 1):
+                        for i in range(0, int(_CLKinputPMOSFinger/2 + 1)):
                             tmpx = [j - (_CLKinputPMOSFinger/2-0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
 
@@ -318,12 +318,12 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             elif (_CLKinputPMOSFinger % 2) == 1:
                 if (_CLKinputPMOSFinger1 % 2) == 0:
                     for j in PMOS12tmp:
-                        for i in range(0, _CLKinputPMOSFinger/2 + 1):
+                        for i in range(0, int(_CLKinputPMOSFinger/2 + 1)):
                             tmpx=[j - (_CLKinputPMOSFinger/2-0.5)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
                 elif (_CLKinputPMOSFinger1 % 2) == 1:
                     for j in PMOS12tmp2:
-                        for i in range(0, _CLKinputPMOSFinger/2 + 1):
+                        for i in range(0, int(_CLKinputPMOSFinger/2 + 1)):
                             tmpx = [j - (_CLKinputPMOSFinger/2-0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
 
@@ -363,14 +363,14 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             if (_CLKinputPMOSFinger % 2) == 0:
                 if (_CLKinputPMOSFinger1 % 2) == 0:
                     for j in PMOS12tmp3:
-                        for i in range(0, _CLKinputPMOSFinger / 2):
+                        for i in range(0, int(_CLKinputPMOSFinger / 2)):
                             tmpx = [
                                 j - (_CLKinputPMOSFinger / 2 - 1) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
                                 self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
                 elif (_CLKinputPMOSFinger1 % 2) == 1:
                     for j in PMOS12tmp3:
-                        for i in range(0, _CLKinputPMOSFinger / 2 + 1):
+                        for i in range(0, int(_CLKinputPMOSFinger / 2 + 1)):
                             tmpx = [j - (_CLKinputPMOSFinger / 2) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
                                     self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
@@ -378,14 +378,14 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             elif (_CLKinputPMOSFinger % 2) == 1:
                 if (_CLKinputPMOSFinger1 % 2) == 0:
                     for j in PMOS12tmp:
-                        for i in range(0, _CLKinputPMOSFinger / 2 + 1):
+                        for i in range(0, int(_CLKinputPMOSFinger / 2 + 1)):
                             tmpx = [
                                 j - (_CLKinputPMOSFinger / 2 - 0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
                                 self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
                             tmp.append(tmpx)
                 elif (_CLKinputPMOSFinger1 % 2) == 1:
                     for j in PMOS12tmp2:
-                        for i in range(0, _CLKinputPMOSFinger / 2 + 1):
+                        for i in range(0, int(_CLKinputPMOSFinger / 2 + 1)):
                             tmpx = [
                                 j - (_CLKinputPMOSFinger / 2 - 0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1,
                                 self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]
@@ -439,12 +439,12 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             if (_PMOSFinger % 2) == 1:
                 for j in PMOS34tmp:
-                    for i in range(0, (_PMOSFinger-1)/ 2 + 1):
+                    for i in range(0, int((_PMOSFinger-1)/ 2 + 1)):
                         tmpx=[j - ((_PMOSFinger+1)/2 + 0.5)*_LengthPMOSBtwMet1 + _LengthPMOSBtwMet1 * (2*i+1), self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             elif (_PMOSFinger % 2) == 0:
                 for j in PMOS34tmp2:
-                    for i in range(0, _PMOSFinger/2+1):
+                    for i in range(0, int(_PMOSFinger/2+1)):
                         tmpx=[j - (_PMOSFinger/2)*_LengthPMOSBtwMet1 + _LengthPMOSBtwMet1 * (2*i), self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1]]
                         tmp.append(tmpx)
             self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_XYCoordinates'] = tmp
@@ -805,24 +805,24 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ##################### PMOS12 VDD Met2 Routing Coordinate ############################
             if (_CLKinputPMOSFinger % 2) == 0: # Even = Finger1+Finger2
                 if (_CLKinputPMOSFinger1 % 2) == 1: # Even = Finger1+Finger2 and Odd = Finger1
-                    for i in range (0, _CLKinputPMOSFinger/2): # The number of the VDD routing
+                    for i in range (0, int(_CLKinputPMOSFinger/2)): # The number of the VDD routing
                         for k in PMOS12tmp3:
                             tmpx.append([[k-(_CLKinputPMOSFinger/2 - 1)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, VDDtmp],
                                          [k-(_CLKinputPMOSFinger/2 - 1)*_LengthPMOSBtwMet1 + (2*i)*_LengthPMOSBtwMet1, MOStmp]])
                 elif (_CLKinputPMOSFinger1 % 2) == 0: # Even = Finger1+Finger2 and Even = Finger1
-                    for i in range (0, _CLKinputPMOSFinger/2 + 1):
+                    for i in range (0, int(_CLKinputPMOSFinger/2 + 1)):
                         for k in PMOS12tmp3:
                             tmpx.append([[k - (_CLKinputPMOSFinger / 2) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, VDDtmp],
                                          [k - (_CLKinputPMOSFinger / 2) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, MOStmp]])
 
             elif (_CLKinputPMOSFinger % 2) == 1: # Odd = Finger1+Finger2
                 if (_CLKinputPMOSFinger1 % 2) == 0: # Odd = Finger1 + Finger2 and Even = Finger1
-                    for i in range (0, (_CLKinputPMOSFinger/2 + 1)): # + 0.5
+                    for i in range (0, int((_CLKinputPMOSFinger/2 + 1))): # + 0.5
                         for k in PMOS12tmp:
                             tmpx.append([[k - ((_CLKinputPMOSFinger / 2)+0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, VDDtmp],
                                          [k - ((_CLKinputPMOSFinger / 2)+0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, MOStmp]])
                 elif (_CLKinputPMOSFinger1 % 2) == 1: # Odd = Finger1+Finger2 and Odd = Finger1
-                    for i in range (0, (_CLKinputPMOSFinger/2 + 1)): # + 0.5
+                    for i in range (0, int((_CLKinputPMOSFinger/2 + 1))): # + 0.5
                         for k in PMOS12tmp2:
                             tmpx.append([[k - ((_CLKinputPMOSFinger/2)-0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, VDDtmp],
                                          [k - ((_CLKinputPMOSFinger/2)-0.5) * _LengthPMOSBtwMet1 + (2 * i) * _LengthPMOSBtwMet1, MOStmp]])
@@ -830,13 +830,13 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
 
             if (_PMOSFinger % 2 ) == 1:
-                for i in range(0, (_PMOSFinger - 1)/2 + 1 ):
+                for i in range(0, int((_PMOSFinger - 1)/2 + 1 )):
                     for k in PMOS34tmp2:
                         tmpx.append([[k - ((_PMOSFinger+1)/2-0.5)*_LengthPMOSBtwMet1 + _LengthPMOSBtwMet1*(i*2+1), VDDtmp],
                                      [k - ((_PMOSFinger+1)/2-0.5)*_LengthPMOSBtwMet1 + _LengthPMOSBtwMet1*(i*2+1), MOStmp]
                                     ])
             elif (_PMOSFinger % 2) == 0:
-                for i in range(0, _PMOSFinger / 2):
+                for i in range(0, int(_PMOSFinger / 2)):
                     for k in PMOS34tmp:
                         tmpx.append([[k - (_PMOSFinger/2) * _LengthPMOSBtwMet1 + _LengthPMOSBtwMet1*(i*2+1), VDDtmp],
                                      [k - (_PMOSFinger/2) * _LengthPMOSBtwMet1 + _LengthPMOSBtwMet1*(i*2+1), MOStmp]

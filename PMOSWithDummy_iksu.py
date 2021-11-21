@@ -4,7 +4,7 @@ import DesignParameters
 import DRC
 
 #
-from Private import MyInfo
+#from Private import MyInfo
 import DRCchecker
 
 

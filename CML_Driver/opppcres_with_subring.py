@@ -146,21 +146,6 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
 
         tmpXYs_A, tmpXYs_B = [], []
         dummy = 1 if _Dummy else 0
-        # for i in range(0, _NumRows+1):
-        #     for j in range(0, _NumStripes + dummy * 2):
-        #         if ((i % 2) == 1) and ((j+dummy) % 2 == 0):
-        #             tmpXYs_A.append([+(XWidthOfSubring + _SubringWidth) / 2 + self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
-        #                              distanceBtwM1Port * (_NumRows / 2.0 - i)])
-        #             tmpXYs_A.append([-(XWidthOfSubring + _SubringWidth) / 2 - self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
-        #                              distanceBtwM1Port * (_NumRows / 2.0 - i)])
-        #         elif ((i % 2) == 0) and ((j+dummy) % 2 == 1):
-        #             tmpXYs_B.append([+(XWidthOfSubring + _SubringWidth) / 2 + self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
-        #                              distanceBtwM1Port * (_NumRows / 2.0 - i)])
-        #             tmpXYs_B.append([-(XWidthOfSubring + _SubringWidth) / 2 - self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][j][0],
-        #                              distanceBtwM1Port * (_NumRows / 2.0 - i)])
-        #         else:
-        #             pass
-
         for i in range(0, _NumRows+1):
             for j in range(dummy, _NumStripes + dummy):
                 if ((i % 2) == 1) and ((j+dummy) % 2 == 0):
@@ -197,13 +182,22 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         tmpXYs = []
         for i in range(0, len(tmpList[0])):
             tmpXYs.append([tmpList[0][i], (max(tmpList[1]) + min(tmpList[1])) / 2])
-        # print(f'Debugging...\n'
-        #       f'tmpXYs_B : {tmpXYs_B}\n'
-        #       f'tmpList : {tmpList}')
         self._DesignParameter['_Met2B']['_XWidth'] = self._DesignParameter['_ViaMet12Met2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
         self._DesignParameter['_Met2B']['_YWidth'] = self.CeilMinSnapSpacing(max(tmpList[1]) - min(tmpList[1]), 2 * MinSnapSpacing) \
                                                      + self._DesignParameter['_ViaMet12Met2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']
         self._DesignParameter['_Met2B']['_XYCoordinates'] = tmpXYs
+
+
+        ''' M3 horizontal for Input '''
+        self._DesignParameter['_Met3A']['_XWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_XWidth']
+        self._DesignParameter['_Met3A']['_YWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth'] * 3
+        self._DesignParameter['_Met3A']['_XYCoordinates'] = M1APortXYs
+
+        ''' M4A '''
+        self._DesignParameter['_Met4A']['_XWidth'] = self._DesignParameter['_Met2A']['_XWidth']
+        self._DesignParameter['_Met4A']['_YWidth'] = self._DesignParameter['_Met2A']['_YWidth']
+        self._DesignParameter['_Met4A']['_XYCoordinates'] = self._DesignParameter['_Met2A']['_XYCoordinates']
+
 
 
         ''' M2V2M3 for Input '''
@@ -213,11 +207,6 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         self._DesignParameter['_ViaMet22Met3']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**Via2Inputs)
         self._DesignParameter['_ViaMet22Met3']['_XYCoordinates'] = tmpXYs_A
 
-        ''' M3 horizontal for Input '''
-        self._DesignParameter['_Met3A']['_XWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_XWidth']
-        self._DesignParameter['_Met3A']['_YWidth'] = self._DesignParameter['OPPPCRES']['_DesignObj']._DesignParameter['_Met1Port']['_YWidth']
-        self._DesignParameter['_Met3A']['_XYCoordinates'] = M1APortXYs
-
         ''' V3 '''
         Via3Inputs = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
         Via3Inputs.update({'_ViaMet32Met4NumberOfCOX': NumViaX, '_ViaMet32Met4NumberOfCOY': NumViaY})
@@ -225,10 +214,7 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         self._DesignParameter['_ViaMet32Met4']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**Via3Inputs)
         self._DesignParameter['_ViaMet32Met4']['_XYCoordinates'] = tmpXYs_A
 
-        ''' M4A '''
-        self._DesignParameter['_Met4A']['_XWidth'] = self._DesignParameter['_Met2A']['_XWidth']
-        self._DesignParameter['_Met4A']['_YWidth'] = self._DesignParameter['_Met2A']['_YWidth']
-        self._DesignParameter['_Met4A']['_XYCoordinates'] = self._DesignParameter['_Met2A']['_XYCoordinates']
+
 
         # ''' V4 '''
         # Via4Inputs = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
@@ -254,12 +240,12 @@ class OpppcresWithSubring(StickDiagram._StickDiagram):
         # self._DesignParameter['_Met6A']['_YWidth'] = self._DesignParameter['_Met3A']['_YWidth']
         # self._DesignParameter['_Met6A']['_XYCoordinates'] = self._DesignParameter['_Met3A']['_XYCoordinates']
 
-        '''    
-        Next Work...
-        Outline coordinates or XYWidth
-        1) Outline of M1(RX)
-        2) Outline of BP
-        '''
+        self._DesignParameter['RES_portA'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['text'][0], _Datatype=DesignParameters._LayerMapping['text'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Mag=0.1, _Angle=0, _TEXT='A', _XYCoordinates=tmpXYs_A)
+        self._DesignParameter['RES_portB'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['text'][0], _Datatype=DesignParameters._LayerMapping['text'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Mag=0.1, _Angle=0, _TEXT='B', _XYCoordinates=tmpXYs_B)
 
         ''' Metal1 Boundary(Outline) of Subring  '''
         upperYCoord_M1 = self._DesignParameter['_Subring']['_XYCoordinates'][0][1] \

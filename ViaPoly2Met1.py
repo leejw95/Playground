@@ -4,7 +4,7 @@ import user_define_exceptions
 import DRC
 
 #
-from Private import MyInfo
+#from Private import MyInfo
 import DRCchecker
 
 class _ViaPoly2Met1(StickDiagram._StickDiagram):
@@ -143,15 +143,15 @@ if __name__=='__main__':
     testStreamFile.close()
     
     print('#############################      Sending to FTP Server...      #############################')
-    My = MyInfo.USER(DesignParameters._Technology)
-    Checker = DRCchecker.DRCchecker(
-        username=My.ID,
-        password=My.PW,
-        WorkDir=My.Dir_Work,
-        DRCrunDir=My.Dir_DRCrun,
-        libname=libname,
-        cellname=cellname,
-    )
-    Checker.Upload2FTP()
+    #My = MyInfo.USER(DesignParameters._Technology)
+    # Checker = DRCchecker.DRCchecker(
+    #     username=My.ID,
+    #     password=My.PW,
+    #     WorkDir=My.Dir_Work,
+    #     DRCrunDir=My.Dir_DRCrun,
+    #     libname=libname,
+    #     cellname=cellname,
+    # )
+    # Checker.Upload2FTP()
     # Checker.StreamIn(tech=DesignParameters._Technology)
     print('#############################      Finished      ################################')

@@ -453,7 +453,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         _NumViaMet12Met2COY = _LengthOfAddMet1Y // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)
 
         _CONUMXmax = int((self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] - _DRCObj._CoMinEnclosureByPO2 * 2 - _DRCObj._CoMinWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1
-        _CONUMYmax = int((int((self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] - self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_OPLayer']['_YWidth'] - 2*_DRCObj._CoMinSpace2OP - 2*_DRCObj._CoMinEnclosureByPO2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1) / 2)
+        _CONUMYmax = int((int((self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] - self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_OPLayer']['_YWidth'] - 2*_DRCObj._CoMinSpace2OP - 2*_DRCObj._CoMinEnclosureByPO2) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1) // 2)
 
         if _ResistorMetXCO == None :
             _ResistorMetXCO = _CONUMXmax

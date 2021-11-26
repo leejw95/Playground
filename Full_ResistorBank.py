@@ -132,8 +132,8 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         print ('################################       Additional Path Settings      #####################################')
         self._DesignParameter['_Met4LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met4LayerVCM']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_Met4LayerVCM']['_XWidth'] + \
-                                                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']
+        self._DesignParameter['_Met4LayerVCM']['_Width'] = int(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_Met4LayerVCM']['_XWidth'] + \
+                                                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'])
 
         tmp = []
 

@@ -20,6 +20,7 @@ import gds_editor_ver3
 import DesignParameters
 import copy
 import math
+import DRC
 
 
 
@@ -439,7 +440,7 @@ class _StickDiagram:
         print('#########################################################################################################')
         print('                                    {}  Update2GDS Start                                    '.format(_DesignParameterInDictionary['_Name']['_Name']))
         print('#########################################################################################################')
-
+        _DRCObj = DRC.DRC()
         _DesignParameterInDictionary['_GDSFile']['_GDSFile']=[ self._CreateGDSStructure(_GDSStructureName=_DesignParameterInDictionary['_Name']['_Name']) ]
 
         for _DesignParameter in _DesignParameterInDictionary:
@@ -493,6 +494,7 @@ class _StickDiagram:
                     # print 'monitor for debug stickDiagram2: ', _tmpXYCoordinates
                     # print 'monitor for debug stickDiagram2: numOfPoints=', len(_tmpXYCoordinates)
                     if len(_tmpXYCoordinates) >= 2:
+                        _DesignParameterInDictionary[_DesignParameter]['_Width'] = int(_DesignParameterInDictionary[_DesignParameter]['_Width'] // _DRCObj._MinSnapSpacing) * _DRCObj._MinSnapSpacing
                         _DesignParameterInDictionary['_GDSFile']['_GDSFile'][0]._ELEMENTS.append(
                                                                                             self._CreateGDSPathElement(_Layer=_DesignParameterInDictionary[_DesignParameter]['_Layer'], _Datatype=_DesignParameterInDictionary[_DesignParameter]['_Datatype'],
                                                                                                                        _Width=_DesignParameterInDictionary[_DesignParameter]['_Width'],

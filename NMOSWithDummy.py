@@ -98,10 +98,10 @@ class _NMOS(StickDiagram._StickDiagram):
         tmp = []
         for i in range(0, _NMOSNumberofGate):
             if (_NMOSNumberofGate % 2) == 0:
-                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate / 2 - 0.5) \
+                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate // 2 - 0.5) \
                                     * _LengthNMOSBtwPO + i * _LengthNMOSBtwPO, _XYCoordinateOfNMOS[0][1]]
             elif (_NMOSNumberofGate % 2) == 1:
-                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2 \
+                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) // 2 \
                                     * _LengthNMOSBtwPO + i * _LengthNMOSBtwPO, _XYCoordinateOfNMOS[0][1]]
             tmp.append(_xycoordinatetmp)
         self._DesignParameter['_POLayer']['_XYCoordinates'] = tmp
@@ -129,13 +129,13 @@ class _NMOS(StickDiagram._StickDiagram):
             #     _DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD)
             if (_NMOSNumberofGate % 2) == 0: # When the number of finger is even
                 _xycoordinatetmp_dummy = [
-                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate / 2 - 0.5) *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2) ,  _XYCoordinateOfNMOS[0][1]],
-                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate / 2 - 0.5) *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2,  _XYCoordinateOfNMOS[0][1]]
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate // 2 - 0.5) *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])//2 + float(self._DesignParameter['_POLayer']['_XWidth'])//2) ,  _XYCoordinateOfNMOS[0][1]],
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate // 2 - 0.5) *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + float(self._DesignParameter['_PODummyLayer']['_XWidth'])//2 + float(self._DesignParameter['_POLayer']['_XWidth'])//2,  _XYCoordinateOfNMOS[0][1]]
                                    ]
             elif (_NMOSNumberofGate % 2) == 1: # When the number of finger is odd
                 _xycoordinatetmp_dummy = [
-                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) / 2 *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfNMOS[0][1]],
-                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) / 2 *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfNMOS[0][1]]
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) // 2 *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])//2 + float(self._DesignParameter['_POLayer']['_XWidth'])//2), _XYCoordinateOfNMOS[0][1]],
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) // 2 *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])//2 + float(self._DesignParameter['_POLayer']['_XWidth'])//2), _XYCoordinateOfNMOS[0][1]]
                                    ]
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
 
@@ -149,13 +149,13 @@ class _NMOS(StickDiagram._StickDiagram):
             #_LengthNMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_POLayer']['_XWidth']
             if (_NMOSNumberofGate % 2) == 0: # When the number of finger is even
                 _xycoordinatetmp_dummy = [
-                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate / 2 - 0.5) *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2) ,  _XYCoordinateOfNMOS[0][1]],
-                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate / 2 - 0.5) *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2,  _XYCoordinateOfNMOS[0][1]]
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate // 2 - 0.5) *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])//2 + float(self._DesignParameter['_POLayer']['_XWidth'])//2) ,  _XYCoordinateOfNMOS[0][1]],
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate // 2 - 0.5) *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + float(self._DesignParameter['_PODummyLayer']['_XWidth'])//2 + float(self._DesignParameter['_POLayer']['_XWidth'])//2,  _XYCoordinateOfNMOS[0][1]]
                                    ]
             elif (_NMOSNumberofGate % 2) == 1: # When the number of finger is odd
                 _xycoordinatetmp_dummy = [
-                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) / 2 *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfNMOS[0][1]],
-                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) / 2 *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])/2 + float(self._DesignParameter['_POLayer']['_XWidth'])/2), _XYCoordinateOfNMOS[0][1]]
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) // 2 *  _LengthNMOSBtwPO + 0 *  _LengthNMOSBtwPO - _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) - (float(self._DesignParameter['_PODummyLayer']['_XWidth'])//2 + float(self._DesignParameter['_POLayer']['_XWidth'])//2), _XYCoordinateOfNMOS[0][1]],
+                                   [_XYCoordinateOfNMOS[0][0] - ( _NMOSNumberofGate - 1) // 2 *  _LengthNMOSBtwPO + (_NMOSNumberofGate -1) *  _LengthNMOSBtwPO + _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + (float(self._DesignParameter['_PODummyLayer']['_XWidth'])//2 + float(self._DesignParameter['_POLayer']['_XWidth'])//2), _XYCoordinateOfNMOS[0][1]]
                                    ]
             self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
 
@@ -172,18 +172,18 @@ class _NMOS(StickDiagram._StickDiagram):
         #                        self._DesignParameter['_POLayer']['_XWidth']
         #     if (_NMOSNumberofGate % 2) == 0:  # When the number of finger is even
         #         _xycoordinatetmp_dummy = [
-        #             [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate / 2 - 0.5) * _LengthNMOSBtwPO + 0 * _LengthNMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) \
-        #              - (float(self._DesignParameter['_PODummyLayer']['_XWidth']) / 2 + float(self._DesignParameter['_POLayer']['_XWidth']) / 2), _XYCoordinateOfNMOS[0][1]],
-        #             [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate / 2 - 0.5) * _LengthNMOSBtwPO + (_NMOSNumberofGate - 1) * _LengthNMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) \
-        #              + float(self._DesignParameter['_PODummyLayer']['_XWidth']) / 2 + float(self._DesignParameter['_POLayer']['_XWidth']) / 2, _XYCoordinateOfNMOS[0][1]]
+        #             [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate // 2 - 0.5) * _LengthNMOSBtwPO + 0 * _LengthNMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) \
+        #              - (float(self._DesignParameter['_PODummyLayer']['_XWidth']) // 2 + float(self._DesignParameter['_POLayer']['_XWidth']) // 2), _XYCoordinateOfNMOS[0][1]],
+        #             [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate // 2 - 0.5) * _LengthNMOSBtwPO + (_NMOSNumberofGate - 1) * _LengthNMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) \
+        #              + float(self._DesignParameter['_PODummyLayer']['_XWidth']) // 2 + float(self._DesignParameter['_POLayer']['_XWidth']) // 2, _XYCoordinateOfNMOS[0][1]]
         #         ]
         #     elif (_NMOSNumberofGate % 2) == 1:  # When the number of finger is odd
         #         _xycoordinatetmp_dummy = [
-        #             [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2 * _LengthNMOSBtwPO + 0 * _LengthNMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) \
-        #             - (float(self._DesignParameter['_PODummyLayer']['_XWidth']) / 2 + float(self._DesignParameter['_POLayer']['_XWidth']) / 2), _XYCoordinateOfNMOS[0][1] ],
-        #             [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2 * _LengthNMOSBtwPO + (_NMOSNumberofGate - 1) * _LengthNMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) + (
-        #                          float(self._DesignParameter['_PODummyLayer']['_XWidth']) / 2 + float(
-        #                      self._DesignParameter['_POLayer']['_XWidth']) / 2),
+        #             [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) // 2 * _LengthNMOSBtwPO + 0 * _LengthNMOSBtwPO - _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) \
+        #             - (float(self._DesignParameter['_PODummyLayer']['_XWidth']) // 2 + float(self._DesignParameter['_POLayer']['_XWidth']) // 2), _XYCoordinateOfNMOS[0][1] ],
+        #             [_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) // 2 * _LengthNMOSBtwPO + (_NMOSNumberofGate - 1) * _LengthNMOSBtwPO + _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD) + (
+        #                          float(self._DesignParameter['_PODummyLayer']['_XWidth']) // 2 + float(
+        #                      self._DesignParameter['_POLayer']['_XWidth']) // 2),
         #              _XYCoordinateOfNMOS[0][1]]
         #         ]
         #     self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = _xycoordinatetmp_dummy
@@ -191,7 +191,7 @@ class _NMOS(StickDiagram._StickDiagram):
         #     self._DesignParameter['_PODummyLayer']['_XYCoordinates'] = []
         #
         #     if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
-        #         self._DesignParameter['_PODummyLayer']['_YWidth'] = float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']) + 2
+        #         self._DesignParameter['_PODummyLayer']['_YWidth'] = float(_DRCObj._PODummyMinArea) // float(self._DesignParameter['_PODummyLayer']['_XWidth']) + 2
         #
 
  #           if _Flip == False :
@@ -215,10 +215,10 @@ class _NMOS(StickDiagram._StickDiagram):
 
         for i in range(0, _NMOSNumberofGate + 1):
             if (_NMOSNumberofGate % 2) == 0:
-                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 * \
+                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate // 2 * \
                                     _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]]
             elif (_NMOSNumberofGate % 2) == 1:
-                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) / 2 - 0.5) \
+                _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) // 2 - 0.5) \
                                     * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]]
 
             tmp.append(_xycoordinatetmp)
@@ -236,7 +236,7 @@ class _NMOS(StickDiagram._StickDiagram):
         print ('#############################     CONT Layer Calculation    ##############################################')
         _XNumberOfCOInNMOS = _NMOSNumberofGate + 1
         _YNumberOfCOInNMOS = int(float(self._DesignParameter['_ODLayer']['_YWidth'] - 2 * max(
-            [_DRCObj._CoMinEnclosureByODAtLeastTwoSide, _DRCObj._Metal1MinEnclosureCO2]) + _DRCObj._CoMinSpace) / (
+            [_DRCObj._CoMinEnclosureByODAtLeastTwoSide, _DRCObj._Metal1MinEnclosureCO2]) + _DRCObj._CoMinSpace) // (
                                              _DRCObj._CoMinSpace + _DRCObj._CoMinWidth))
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
@@ -260,27 +260,27 @@ class _NMOS(StickDiagram._StickDiagram):
 
                     if (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 0:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
-                                    _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                    _XNumberOfCOInNMOS - 1) // 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                             _XYCoordinateOfNMOS[0][1] - (
-                                                        _YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                                                        _YNumberOfCOInNMOS // 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
                     elif (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 1:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
-                                    _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                    _XNumberOfCOInNMOS - 1) // 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                             _XYCoordinateOfNMOS[0][1] - (
-                                                        _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                                                        _YNumberOfCOInNMOS - 1) // 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
                     elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 0:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
-                                    _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                    _XNumberOfCOInNMOS // 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                             _XYCoordinateOfNMOS[0][1] - (
-                                                        _YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                                                        _YNumberOfCOInNMOS // 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
                     elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 1:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
-                                    _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                    _XNumberOfCOInNMOS // 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                             _XYCoordinateOfNMOS[0][1] - (
-                                                        _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                                                        _YNumberOfCOInNMOS - 1) // 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
                     tmp.append(_xycoordinatetmp)
         else:
             for i in range(0, _XNumberOfCOInNMOS):
@@ -288,27 +288,27 @@ class _NMOS(StickDiagram._StickDiagram):
 
                     if (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 0:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
-                                _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                _XNumberOfCOInNMOS - 1) // 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                             _XYCoordinateOfNMOS[0][1] + 0.5 - (
-                                                    _YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                                                    _YNumberOfCOInNMOS // 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
                     elif (_XNumberOfCOInNMOS % 2) == 1 and (_YNumberOfCOInNMOS % 2) == 1:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
-                                _XNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                _XNumberOfCOInNMOS - 1) // 2 * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                             _XYCoordinateOfNMOS[0][1] + 0.5  - (
-                                                    _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                                                    _YNumberOfCOInNMOS - 1) // 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
                     elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 0:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
-                                _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                _XNumberOfCOInNMOS // 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                             _XYCoordinateOfNMOS[0][1] + 0.5 - (
-                                                    _YNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                                                    _YNumberOfCOInNMOS // 2 - 0.5) * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
 
                     elif (_XNumberOfCOInNMOS % 2) == 0 and (_YNumberOfCOInNMOS % 2) == 1:
                         _xycoordinatetmp = [_XYCoordinateOfNMOS[0][0] - (
-                                _XNumberOfCOInNMOS / 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
+                                _XNumberOfCOInNMOS // 2 - 0.5) * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1,
                                             _XYCoordinateOfNMOS[0][1] + 0.5  - (
-                                                    _YNumberOfCOInNMOS - 1) / 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
+                                                    _YNumberOfCOInNMOS - 1) // 2 * _LengthNMOSBtwCO + j * _LengthNMOSBtwCO]
                     tmp.append(_xycoordinatetmp)
 
         self._DesignParameter['_COLayer']['_XYCoordinates'] = tmp
@@ -404,14 +404,14 @@ class _NMOS(StickDiagram._StickDiagram):
         # _LengthNMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
         #                      self._DesignParameter['_POLayer']['_XWidth']
         if (_NMOSNumberofGate % 2) == 0:
-            for i in range(0, int(_NMOSNumberofGate / 2 + 1)):
-                # _XYCenter=[self._XYCoordinateNMOS[0] -  self._NumberOfNMOSGate / 2 * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
-                tmp.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 \
+            for i in range(0, int(_NMOSNumberofGate // 2 + 1)):
+                # _XYCenter=[self._XYCoordinateNMOS[0] -  self._NumberOfNMOSGate // 2 * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
+                tmp.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate // 2 \
                             * _LengthNMOSBtwMet1 + i * 2 * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
         elif (_NMOSNumberofGate % 2) == 1:
-            for i in range(0, int((_NMOSNumberofGate - 1) / 2 + 1)):
-                # _XYCenter=[self._XYCoordinateNMOS[0] - (  (self._NumberOfNMOSGate + 1) / 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
-                tmp.append([_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) / 2 - 0.5) \
+            for i in range(0, int((_NMOSNumberofGate - 1) // 2 + 1)):
+                # _XYCenter=[self._XYCoordinateNMOS[0] - (  (self._NumberOfNMOSGate + 1) // 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
+                tmp.append([_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) // 2 - 0.5) \
                             * _LengthNMOSBtwMet1 + i * 2 * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
 
         self._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'] = tmp
@@ -421,14 +421,14 @@ class _NMOS(StickDiagram._StickDiagram):
         # _LengthNMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + \
         #                      self._DesignParameter['_POLayer']['_XWidth']
         if (_NMOSNumberofGate % 2) == 0:
-            for i in range(0, int(_NMOSNumberofGate / 2)):
-                # _XYCenter=[self._XYCoordinateNMOS[0] -  self._NumberOfNMOSGate / 2 * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
-                tmp.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate / 2 \
+            for i in range(0, int(_NMOSNumberofGate // 2)):
+                # _XYCenter=[self._XYCoordinateNMOS[0] -  self._NumberOfNMOSGate // 2 * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
+                tmp.append([_XYCoordinateOfNMOS[0][0] - _NMOSNumberofGate // 2 \
                             * _LengthNMOSBtwMet1 + (i * 2 + 1) * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
         elif (_NMOSNumberofGate % 2) == 1:
-            for i in range(0, int((_NMOSNumberofGate - 1) / 2 + 1)):
-                # _XYCenter=[self._XYCoordinateNMOS[0] - (  (self._NumberOfNMOSGate + 1) / 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
-                tmp.append([_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) / 2 - 0.5) \
+            for i in range(0, int((_NMOSNumberofGate - 1) // 2 + 1)):
+                # _XYCenter=[self._XYCoordinateNMOS[0] - (  (self._NumberOfNMOSGate + 1) // 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]]
+                tmp.append([_XYCoordinateOfNMOS[0][0] - ((_NMOSNumberofGate + 1) // 2 - 0.5) \
                             * _LengthNMOSBtwMet1 + (i * 2 + 1) * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
         self._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'] = tmp
 
@@ -438,11 +438,11 @@ class _NMOS(StickDiagram._StickDiagram):
         #                      self._DesignParameter['_POLayer']['_XWidth']
         for i in range(0, _NMOSNumberofGate):
             if (_NMOSNumberofGate % 2) == 0:
-                tmp.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate / 2 - 0.5) \
+                tmp.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate // 2 - 0.5) \
                             * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
-                # _xycoordinatetmp = self.CenterCoordinateAndWidth2XYCoordinate(_XYCenter=[self._XYCoordinateNMOS[0] - (self._NumberOfNMOSGate / 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]], _WidthX=self._LengthNMOSPO, _WidthY=self._WidthNMOSPO)
+                # _xycoordinatetmp = self.CenterCoordinateAndWidth2XYCoordinate(_XYCenter=[self._XYCoordinateNMOS[0] - (self._NumberOfNMOSGate // 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinateNMOS[1]], _WidthX=self._LengthNMOSPO, _WidthY=self._WidthNMOSPO)
             elif (_NMOSNumberofGate % 2) == 1:
-                tmp.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2 \
+                tmp.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) // 2 \
                             * _LengthNMOSBtwMet1 + i * _LengthNMOSBtwMet1, _XYCoordinateOfNMOS[0][1]])
 
         self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'] = tmp
@@ -456,21 +456,21 @@ class _NMOS(StickDiagram._StickDiagram):
 
         print ('##################################################### Diff Pin Generation & Coordinates ####################################################')
 
-        self._DesignParameter['_ODLayerPINDrawing']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] / 2 - (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)
+        self._DesignParameter['_ODLayerPINDrawing']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] // 2 - (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] // 2)
         self._DesignParameter['_ODLayerPINDrawing']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
 
-        self._DesignParameter['_ODLayerPINDrawing']['_XYCoordinates'] = [[(self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]], \
-                                                                        [0 - (self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2, _XYCoordinateOfNMOS[0][1]]]
+        self._DesignParameter['_ODLayerPINDrawing']['_XYCoordinates'] = [[(self._DesignParameter['_ODLayer']['_XWidth'] // 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] // 2)) // 2, _XYCoordinateOfNMOS[0][1]], \
+                                                                        [0 - (self._DesignParameter['_ODLayer']['_XWidth'] // 2 + (self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] // 2)) // 2, _XYCoordinateOfNMOS[0][1]]]
 
 
         print ('##################################################### POLayer Pin Generation & Coordinates ####################################################')
         self._DesignParameter['_POLayerPINDrawing']['_XWidth'] = self._DesignParameter['_POLayer']['_XWidth']
-        self._DesignParameter['_POLayerPINDrawing']['_YWidth'] = (self._DesignParameter['_SLVTLayer']['_YWidth'] - self._DesignParameter['_ODLayer']['_YWidth']) / 2
+        self._DesignParameter['_POLayerPINDrawing']['_YWidth'] = (self._DesignParameter['_SLVTLayer']['_YWidth'] - self._DesignParameter['_ODLayer']['_YWidth']) // 2
         tmp1 = []
         tmp2 = []
         for i in range(0, len(self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'])) :
-            tmp1.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], - (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
-            tmp2.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], (self._DesignParameter['_ODLayer']['_YWidth'] / 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] / 2)])
+            tmp1.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], - (self._DesignParameter['_ODLayer']['_YWidth'] // 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] // 2)])
+            tmp2.append([self._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][i][0], (self._DesignParameter['_ODLayer']['_YWidth'] // 2 + self._DesignParameter['_POLayerPINDrawing']['_YWidth'] // 2)])
 
         if _NMOSNumberofGate == 1 :
             self._DesignParameter['_POLayerPINDrawing']['_XYCoordinates'] = tmp1 + tmp2
@@ -515,7 +515,7 @@ if __name__ == '__main__':
 
     # ftp = ftplib.FTP('141.223.22.156')
     # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # ftp.cwd('//mnt//sdc//junung//OPUS//Samsung28n')
     # myfile = open('NMOSWithDummy.gds', 'rb')
     # ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
     # myfile.close()

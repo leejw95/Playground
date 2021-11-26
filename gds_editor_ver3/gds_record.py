@@ -562,6 +562,8 @@ class GDS_WIDTH():
         self.width=gds_data
     def write_binary_gds_stream(self,binary_gds_stream):
         fmt='>HHi'
+        if type(self.width) != int:
+            print(1)
         fmt_binary_data=struct.pack(fmt,struct.calcsize(fmt),self.tag,self.width)
         binary_gds_stream.write(fmt_binary_data)
         

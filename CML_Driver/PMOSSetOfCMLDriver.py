@@ -48,7 +48,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
                 POVforCS=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['POLY'][0],_Datatype=DesignParameters._LayerMapping['POLY'][1], _XYCoordinates=[]),
                 M1forCSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[]),
                 M3forCSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],_Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[]),
-                M5forCSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0],_Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[]),
+                # M5forCSGate=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0],_Datatype=DesignParameters._LayerMapping['METAL5'][1], _XYCoordinates=[]),
                 M2VforCS=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],_Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[]),
                 M3HforCSSource=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],_Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[]),
                 M3HforCSDrain=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],_Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[]),
@@ -568,24 +568,24 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M3forCSGate']['_XYCoordinates'] = self._DesignParameter['M1forCSGate']['_XYCoordinates']
 
 
-        ''' M3V3M4, M4V4M5 for CS gate  '''
-        M3V3M4OnPMOSCSGateParams = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-        M3V3M4OnPMOSCSGateParams['_ViaMet32Met4NumberOfCOX'] = M2V2M3OnPMOSCSGateParams['_ViaMet22Met3NumberOfCOX']
-        M3V3M4OnPMOSCSGateParams['_ViaMet32Met4NumberOfCOY'] = M2V2M3OnPMOSCSGateParams['_ViaMet22Met3NumberOfCOY']
-        self._DesignParameter['M3V3M4OnPMOSCSGate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='ViaMet32Met4OnPMOSCSGate_In{}'.format(_Name)))[0]
-        self._DesignParameter['M3V3M4OnPMOSCSGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M3V3M4OnPMOSCSGateParams)
-        self._DesignParameter['M3V3M4OnPMOSCSGate']['_XYCoordinates'] = self._DesignParameter['M2V2M3OnPMOSCSGate']['_XYCoordinates']
-
-        M4V4M5OnPMOSCSGateParams = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-        M4V4M5OnPMOSCSGateParams['_ViaMet42Met5NumberOfCOX'] = M3V3M4OnPMOSCSGateParams['_ViaMet32Met4NumberOfCOX']
-        M4V4M5OnPMOSCSGateParams['_ViaMet42Met5NumberOfCOY'] = M3V3M4OnPMOSCSGateParams['_ViaMet32Met4NumberOfCOY']
-        self._DesignParameter['M4V4M5OnPMOSCSGate'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_Name='ViaMet42Met5OnPMOSCSGate_In{}'.format(_Name)))[0]
-        self._DesignParameter['M4V4M5OnPMOSCSGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M4V4M5OnPMOSCSGateParams)
-        self._DesignParameter['M4V4M5OnPMOSCSGate']['_XYCoordinates'] = self._DesignParameter['M3V3M4OnPMOSCSGate']['_XYCoordinates']
-
-        self._DesignParameter['M5forCSGate']['_XWidth'] = self._DesignParameter['M1forCSGate']['_XWidth']
-        self._DesignParameter['M5forCSGate']['_YWidth'] = self._DesignParameter['M1forCSGate']['_YWidth']
-        self._DesignParameter['M5forCSGate']['_XYCoordinates'] = self._DesignParameter['M1forCSGate']['_XYCoordinates']
+        # ''' M3V3M4, M4V4M5 for CS gate  '''
+        # M3V3M4OnPMOSCSGateParams = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+        # M3V3M4OnPMOSCSGateParams['_ViaMet32Met4NumberOfCOX'] = M2V2M3OnPMOSCSGateParams['_ViaMet22Met3NumberOfCOX']
+        # M3V3M4OnPMOSCSGateParams['_ViaMet32Met4NumberOfCOY'] = M2V2M3OnPMOSCSGateParams['_ViaMet22Met3NumberOfCOY']
+        # self._DesignParameter['M3V3M4OnPMOSCSGate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='ViaMet32Met4OnPMOSCSGate_In{}'.format(_Name)))[0]
+        # self._DesignParameter['M3V3M4OnPMOSCSGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M3V3M4OnPMOSCSGateParams)
+        # self._DesignParameter['M3V3M4OnPMOSCSGate']['_XYCoordinates'] = self._DesignParameter['M2V2M3OnPMOSCSGate']['_XYCoordinates']
+        #
+        # M4V4M5OnPMOSCSGateParams = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
+        # M4V4M5OnPMOSCSGateParams['_ViaMet42Met5NumberOfCOX'] = M3V3M4OnPMOSCSGateParams['_ViaMet32Met4NumberOfCOX']
+        # M4V4M5OnPMOSCSGateParams['_ViaMet42Met5NumberOfCOY'] = M3V3M4OnPMOSCSGateParams['_ViaMet32Met4NumberOfCOY']
+        # self._DesignParameter['M4V4M5OnPMOSCSGate'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_Name='ViaMet42Met5OnPMOSCSGate_In{}'.format(_Name)))[0]
+        # self._DesignParameter['M4V4M5OnPMOSCSGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M4V4M5OnPMOSCSGateParams)
+        # self._DesignParameter['M4V4M5OnPMOSCSGate']['_XYCoordinates'] = self._DesignParameter['M3V3M4OnPMOSCSGate']['_XYCoordinates']
+        #
+        # self._DesignParameter['M5forCSGate']['_XWidth'] = self._DesignParameter['M1forCSGate']['_XWidth']
+        # self._DesignParameter['M5forCSGate']['_YWidth'] = self._DesignParameter['M1forCSGate']['_YWidth']
+        # self._DesignParameter['M5forCSGate']['_XYCoordinates'] = self._DesignParameter['M1forCSGate']['_XYCoordinates']
 
 
     def _CalculateDesignParameter(self, _FingerWidthOfInputPair=None, _FingerLengthOfInputPair=None,
@@ -725,7 +725,7 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         DistanceYBtwNbody2PMOSCS_byM2 = \
             CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSCS', '_Met2Layer'))[1][-1] + self.getYWidth('M2V2M3OnPMOSCS', '_Met2Layer') / 2 \
             + 0.5 * self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] \
-            + _DRCtemp_metal1minspace2 - DistanceYBtwMidRouting2CS
+            + _DRCtemp_metal1minspace - DistanceYBtwMidRouting2CS       #  Need to Modify
 
         DistanceYBtwNbody2PMOSIP = max(DistanceYBtwNbody2PMOSIP_byOD, DistanceYBtwNbody2PMOSIP_byM1, DistanceYBtwNbody2PMOSIP_byM2)
         DistanceYBtwNbody2PMOSCS = max(DistanceYBtwNbody2PMOSCS_byOD, DistanceYBtwNbody2PMOSCS_byM1, DistanceYBtwNbody2PMOSCS_byM2)
@@ -772,15 +772,17 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         # self._DesignParameter['M3VforCS2IP']['_XYCoordinates'] = tmpXYs
 
         ''' -------------------------------------------------------------------------------------------------------- '''
-        VariableForM2VForCS2IP_1 = 3-1
+        VariableForM2VForCS2IP_1 = 3
         VariableForM2VForCS2IP_2 = 10
+        VariableForM2VForCS2IP_3 = VariableForM2VForCS2IP_2 - VariableForM2VForCS2IP_1 - 2
+
 
         upperYOfM2VForCS2IP = CoordCalc.getSortedList_ascending(self.getXY('M2HforCS2IP'))[1][0] - self.getYWidth('M2HforCS2IP') / 2
         lowerYOfM2VForCS2IP = CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[1][-1] + self.getYWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2
         self._DesignParameter['M2VForCS2IP']['_YWidth'] = upperYOfM2VForCS2IP - lowerYOfM2VForCS2IP
 
         DistanceXBtwPoly_IP = self._DesignParameter['PMOS_IP']['_DesignObj']._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList']
-        self._DesignParameter['M2VForCS2IP']['_XWidth'] = DistanceXBtwPoly_IP * VariableForM2VForCS2IP_1 + self.getXWidth('M2V2M3OnPMOSIP', '_Met2Layer')
+        self._DesignParameter['M2VForCS2IP']['_XWidth'] = DistanceXBtwPoly_IP * (VariableForM2VForCS2IP_1 - 1) + self.getXWidth('M2V2M3OnPMOSIP', '_Met2Layer')
 
         MaxXBorderOfM2VForCS2IP = CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[0][-1] + self.getXWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2
         MaxXCoordOfM2VForCS2IP = MaxXBorderOfM2VForCS2IP - self.getXWidth('M2VForCS2IP') / 2
@@ -793,41 +795,40 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
             tmpXYs.append([+DistanceXBtwM2VForCS2IP * (i+1), (upperYOfM2VForCS2IP + lowerYOfM2VForCS2IP) / 2])
             tmpXYs.append([-DistanceXBtwM2VForCS2IP * (i+1), (upperYOfM2VForCS2IP + lowerYOfM2VForCS2IP) / 2])
         self._DesignParameter['M2VForCS2IP']['_XYCoordinates'] = tmpXYs
-        ''' -------------------------------------------------------------------------------------------------------- '''
 
-        self._DesignParameter['M2ForNbody']['_XWidth'] = (5-1) * DistanceXBtwPoly_IP + self.getXWidth('M2V2M3OnPMOSIP', '_Met2Layer')
+
+        ''' ----------------------------------------------- Nbody M2 ----------------------------------------------- '''
+
+        self._DesignParameter['M2ForNbody']['_XWidth'] = (VariableForM2VForCS2IP_3 - 1) * DistanceXBtwPoly_IP + self.getXWidth('M2V2M3OnPMOSIP', '_Met2Layer')
         self._DesignParameter['M2ForNbody']['_YWidth'] = self.getYWidth('NbodyContact', '_Met1Layer')
+
+        # MaxXCoordOfM2ForNbody = MaxXBorderOfM2VForCS2IP - self.getXWidth('M2ForNbody') / 2
+        # NumOnesideOfM2ForNbody = int((MaxXCoordOfM2VForCS2IP) / DistanceXBtwM2VForCS2IP)
         tmpXYs = []
         for i in range(0, NumOnesideOfM2VForCS2IP):
             tmpXYs.append([+DistanceXBtwM2VForCS2IP * (i+0.5), self.getXY('NbodyContact')[0][1]])
             tmpXYs.append([-DistanceXBtwM2VForCS2IP * (i+0.5), self.getXY('NbodyContact')[0][1]])
         self._DesignParameter['M2ForNbody']['_XYCoordinates'] = tmpXYs
 
-        # Later,,, Move this block to backward (with other subring power via).
-        # OverlappedBoundaryForVia2OfNbody = BoundaryCalc.getOverlappedBoundaryElement(
-        #     self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'],
-        #     self._DesignParameter['M2ForNbody']
-        # )
-        # NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
-        #     _XWidth=OverlappedBoundaryForVia2OfNbody['_XWidth'],
-        #     _YWidth=OverlappedBoundaryForVia2OfNbody['_YWidth']
-        # )
-        # Via6ParamsTerm = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-        # Via6ParamsTerm['_ViaMet62Met7NumberOfCOX'] = NumViaXYs[0]
-        # Via6ParamsTerm['_ViaMet62Met7NumberOfCOY'] = NumViaXYs[1]
-        # self._DesignParameter['Via6ForTerminationR'] = self._SrefElementDeclaration(
-        #     _DesignObj=ViaMet62Met7._ViaMet62Met7(_Name='Via6ForTerminationR_In{}'.format(_Name)),
-        #     _XYCoordinates=[])[0]
-        # self._DesignParameter['Via6ForTerminationR'][
-        #     '_DesignObj']._CalculateViaMet62Met7DesignParameterMinimumEnclosureY(**Via6ParamsTerm)
-        # self._DesignParameter['Via6ForTerminationR']['_XYCoordinates'] = OverlappedBoundaryForVia2OfNbody['_XYCoordinates']
 
-
-
-
-        ''' -------------------------------------------------------------------------------------------------------- '''
-
-
+        Boundary_Met1LayerOfNbody = dict(_XWidth=self.getXWidth('NbodyContact', '_Met1Layer'),
+                                         _YWidth=self.getYWidth('NbodyContact', '_Met1Layer'),
+                                         _XYCoordinates=self.getXY('NbodyContact', '_Met1Layer'))
+        OverlappedBoundaryForVia1OnNbody = BoundaryCalc.getOverlappedBoundaryElement(
+            Boundary_Met1LayerOfNbody,
+            self._DesignParameter['M2ForNbody']
+        )
+        NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
+            _XWidth=OverlappedBoundaryForVia1OnNbody['_XWidth'],
+            _YWidth=OverlappedBoundaryForVia1OnNbody['_YWidth']
+        )
+        Via1Params = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+        Via1Params['_ViaMet12Met2NumberOfCOX'] = NumViaXYs[0]
+        Via1Params['_ViaMet12Met2NumberOfCOY'] = NumViaXYs[1]
+        self._DesignParameter['Via1OnNbody'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='Via1OnNbody_In{}'.format(_Name)),_XYCoordinates=[])[0]
+        self._DesignParameter['Via1OnNbody']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**Via1Params)
+        self._DesignParameter['Via1OnNbody']['_XYCoordinates'] = OverlappedBoundaryForVia1OnNbody['_XYCoordinates']
 
 
         ''' Subring '''
@@ -847,16 +848,6 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
                                           2 * OffsetXforCenterSourceOfCS + self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] * NumFingerOfCS + self._DesignParameter['PMOS_CS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']) \
                                       + 2 * _DRCtemp_metal1minspace
         XWidthOfSubring = max(XWidthOfSubring1_ODtoOD, XWidthOfSubring2_PolytoOD, XWidthOfSubring3_Met1toMet1)
-
-        # YWidth Of Subring - by Met1 spacing
-        # YdownwardOfSubring_byM2V2M3 = self.CeilMinSnapSpacing(abs(CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[1][0]
-        #                                                       - self.getYWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2 - _DRCtemp_metal1minspace), 2*MinSnapSpacing)
-        # YdownwardOfSubring_byMet1 = self.CeilMinSnapSpacing(DistanceYBtwMidRouting2IP + 0.5*_FingerWidthOfInputPair + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
-        # YdownwardOfSubring = max(YdownwardOfSubring_byM2V2M3, YdownwardOfSubring_byMet1)
-        # YupwardOfSubring = self.CeilMinSnapSpacing(OffsetYOfPMOSCS + DistanceYBtwMidRouting2CS + 0.5*_FingerWidthOfCurrentSource + _DRCtemp_metal1minspace, 2*MinSnapSpacing)
-        # YWidthOfSubring = YdownwardOfSubring + YupwardOfSubring
-        # YcenterOfSubring = (YupwardOfSubring - YdownwardOfSubring) / 2.0
-
 
         YdownwardOfSubring_byM2V2M3 = self.FloorMinSnapSpacing(CoordCalc.getSortedList_ascending(self.getXY('M2V2M3OnPMOSIP', '_Met2Layer'))[1][0]
                                                                - self.getYWidth('M2V2M3OnPMOSIP', '_Met2Layer') / 2 - _DRCtemp_metal1minspace2, 2*MinSnapSpacing)

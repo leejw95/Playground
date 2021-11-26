@@ -31,6 +31,8 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
         _NumFingerOfCurrentSource=None,
         _WidthOfMiddleRoutingIP=None,
         _WidthOfMiddleRoutingCS=None,
+        _NumCoYOfNbodybtwIPandCS=None,
+        _YWidthOfNbodybtwIPandCS=None,
         _XVT=None,
         _SubringWidth=None,
         _ResWidth_LoadR=None,
@@ -64,6 +66,8 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
                                   _NumFingerOfCurrentSource=None,
                                   _WidthOfMiddleRoutingIP=None,
                                   _WidthOfMiddleRoutingCS=None,
+                                  _NumCoYOfNbodybtwIPandCS=None,
+                                  _YWidthOfNbodybtwIPandCS=None,
                                   _XVT=None,
                                   _SubringWidth=None,
 
@@ -107,6 +111,8 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
         PMOSSetParam['_NumFingerOfCurrentSource'] = _NumFingerOfCurrentSource
         PMOSSetParam['_WidthOfMiddleRoutingIP'] = _WidthOfMiddleRoutingIP
         PMOSSetParam['_WidthOfMiddleRoutingCS'] = _WidthOfMiddleRoutingCS
+        PMOSSetParam['_NumCoYOfNbodybtwIPandCS'] = _NumCoYOfNbodybtwIPandCS
+        PMOSSetParam['_YWidthOfNbodybtwIPandCS'] = _YWidthOfNbodybtwIPandCS
         PMOSSetParam['_XVT'] = _XVT
         PMOSSetParam['_SubringWidth'] = _SubringWidth
         self._DesignParameter['PMOSSet'] = self._SrefElementDeclaration(_DesignObj=PMOSSetOfCMLDriver.PMOSSetOfCMLDriver(_DesignParameter=None, _Name='PMOSSet_In{}'.format(_Name)))[0]
@@ -747,27 +753,29 @@ if __name__ == '__main__':
         _FingerLengthOfCurrentSource=30,
         _NumFingerOfCurrentSource=320,
         _WidthOfMiddleRoutingCS=350,
+        _NumCoYOfNbodybtwIPandCS=None,
+        _YWidthOfNbodybtwIPandCS=450,
 
         _XVT='SLVT',
         _SubringWidth=1000,
 
         # ''' Load R '''
-        _ResWidth_LoadR=3000,
+        _ResWidth_LoadR=1500,
         _ResLength_LoadR=2300,
         _NumCOY_LoadR=4,
         _NumRows_LoadR=2,
-        _NumStripes_LoadR=5,
+        _NumStripes_LoadR=10,
         _RoutingWidth_LoadR=None,
         _Dummy_LoadR=True,
         _SubringWidth_LoadR=1000,
 
         # ''' Termination R  '''
         _TerminationR=True,                    # True | False
-        _ResWidth_TerminationR=3000,
+        _ResWidth_TerminationR=1500,
         _ResLength_TerminationR=2300,
         _NumCOY_TerminationR=4,
-        _NumRows_TerminationR=2,
-        _NumStripes_TerminationR=5,
+        _NumRows_TerminationR=3,
+        _NumStripes_TerminationR=10,
         _RoutingWidth_TerminationR=None,
         _Dummy_TerminationR=True,
         _SubringWidth_TerminationR=1000,

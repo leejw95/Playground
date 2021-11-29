@@ -583,7 +583,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
                                                            _XYCoordinates=[[self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK0']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinCK0']['_XYCoordinates'][0][1]
                                                                             - i*self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']]],
-                                                           _Mag=0.5, _Angle=0, _TEXT='CK<{0}>'.format(i))
+                                                           _Mag=0.5, _Angle=0, _TEXT='CLK<{0}>'.format(i))
 
         for i in range(0, _N):
             self._DesignParameter['OUT<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],

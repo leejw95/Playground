@@ -1,3 +1,5 @@
+import ftplib
+import random
 import paramiko
 import sys
 import os
@@ -80,3 +82,96 @@ class DRCchecker :
 
 
         ssh.close
+
+
+    def DRCchecker_PrintInputParams(self, InputParams):
+
+        try:
+            self.DRCchecker()
+        except Exception as e:
+            print('Error Occurred', e)
+            print("=============================   Last Layout Object's Input Parameters are   =============================")
+            for key, value in InputParams.items():
+                print(key, ":", value)
+            print("=========================================================================================================")
+            raise Exception("Something ERROR with DRCchecker !!!")
+        else:
+            print("=============================   Last Layout Object's Input Parameters are   =============================")
+            for key, value in InputParams.items():
+                print(key, ":", value)
+            print("=========================================================================================================")
+
+
+    def Upload2FTP(self):
+        """
+        Upload GDS file to Working Directory
+        """
+        filename = self.cellname + '.gds'
+
+        ftp = ftplib.FTP(self.server)
+        ftp.login(self.username, self.password)
+        ftp.cwd(self.WorkDir)
+        myFile = open(filename, 'rb')
+        ftp.storbinary('STOR ' + filename, myFile)
+        myFile.close()
+        ftp.quit()
+
+
+    def StreamIn(self, tech=None):
+        """
+        Only StreamIn
+
+        :param tech:  '028nm' | '065nm'
+        """
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+        print ("############ Connecting to Server by SSH... ############")
+        ssh.connect(hostname=self.server, port=self.port, username=self.username, password=self.password)
+
+        ''' Not Implemented
+        commandlines0 = 'cd {0}; source setup.cshrc; virtuoso -nograph;'
+        stdin, stdout, stderr = ssh.exec_command(commandlines0.format(Dir_Work))
+        result0 = ''.join(stdout.read())
+        print('--------------result0-----------------')
+        print (result0)
+
+        ddDeleteObj(ddGetObj("{1}"))
+        '''
+
+        if tech in ('028nm', None):
+            TechFile = 'cmos28lp'
+        elif tech == '065nm':
+            TechFile = 'tsmcN65'
+        else:
+            raise NotImplemented
+        filename = self.cellname + '.gds'
+        commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{2}/{3}' -attachTechFileOfLib {4} -logFile 'strmIn.log'"
+        stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.WorkDir, filename, TechFile))
+        result1 = ''.join(stdout.read())
+        print('--------------result1-----------------')
+        print (result1)
+        if (result1.split()[-6]) != "'0'":
+            raise Exception("Library name already Existing or XStream ERROR!!")
+
+        ssh.close
+
+
+def RandomParam(start=None, stop=None, step=None):
+    """
+    ** (stop - start) should be a multiples of 'step' for uniform distribution
+
+    :param start: <int>
+    :param stop:  <int>
+    :param step:  <int>
+    :return:      <int> random integer number 'N' between 'start' and 'stop', ( start <= N <= stop )
+    """
+    assert isinstance(start, int)
+    assert isinstance(stop, int)
+    assert isinstance(step, int)
+    assert (stop - start) % step == 0
+
+    tmp = random.randint(start, stop + (step - 1))
+    N = (tmp / step) * step
+
+    return N

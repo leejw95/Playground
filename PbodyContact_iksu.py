@@ -1,11 +1,6 @@
 import StickDiagram
 import DesignParameters
 import DRC
-import user_define_exceptions
-
-import ftplib
-from ftplib import FTP
-import base64
 
 
 class _PbodyContact(StickDiagram._StickDiagram):
@@ -45,7 +40,6 @@ class _PbodyContact(StickDiagram._StickDiagram):
 
         _DRCObj = DRC.DRC()
         _XYCoordinateOfPbodyContact = [[0, 0]]
-
         _LengthPbodyBtwCO = _DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOX=_NumberOfPbodyCOX, NumOfCOY=_NumberOfPbodyCOY)
 
 
@@ -69,28 +63,12 @@ class _PbodyContact(StickDiagram._StickDiagram):
         self._DesignParameter['_Met1Layer']['_XYCoordinates'] = _XYCoordinateOfPbodyContact
 
 
-        print ('#############################     CONT Layer Caculation    ##############################################')
+        print ('#############################     CONT Layer Calculation    ##############################################')
         tmpXYs = []
         for i in range(0, _NumberOfPbodyCOX):
             for j in range(0, _NumberOfPbodyCOY):
-
-                if (_NumberOfPbodyCOX % 2) == 0 and (_NumberOfPbodyCOY % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfPbodyContact[0][0] - (_NumberOfPbodyCOX / 2 - 0.5) * _LengthPbodyBtwCO + i * _LengthPbodyBtwCO,
-                                        _XYCoordinateOfPbodyContact[0][1] - (_NumberOfPbodyCOY / 2 - 0.5) * _LengthPbodyBtwCO + j * _LengthPbodyBtwCO]
-
-                elif (_NumberOfPbodyCOX % 2) == 0 and (_NumberOfPbodyCOY % 2) == 1:
-                    _xycoordinatetmp = [_XYCoordinateOfPbodyContact[0][0] - (_NumberOfPbodyCOX / 2 - 0.5) * _LengthPbodyBtwCO + i * _LengthPbodyBtwCO,
-                                        _XYCoordinateOfPbodyContact[0][1] - (_NumberOfPbodyCOY - 1) / 2 * _LengthPbodyBtwCO + j * _LengthPbodyBtwCO]
-
-                elif (_NumberOfPbodyCOX % 2) == 1 and (_NumberOfPbodyCOY % 2) == 0:
-                    _xycoordinatetmp = [_XYCoordinateOfPbodyContact[0][0] - (_NumberOfPbodyCOX - 1) / 2 * _LengthPbodyBtwCO + i * _LengthPbodyBtwCO,
-                                        _XYCoordinateOfPbodyContact[0][1] - (_NumberOfPbodyCOY / 2 - 0.5) * _LengthPbodyBtwCO + j * _LengthPbodyBtwCO]
-
-                else:
-                    _xycoordinatetmp = [_XYCoordinateOfPbodyContact[0][0] - (_NumberOfPbodyCOX - 1) / 2 * _LengthPbodyBtwCO + i * _LengthPbodyBtwCO,
-                                        _XYCoordinateOfPbodyContact[0][1] - (_NumberOfPbodyCOY - 1) / 2 * _LengthPbodyBtwCO + j * _LengthPbodyBtwCO]
-
-                tmpXYs.append(_xycoordinatetmp)
+                tmpXYs.append([_XYCoordinateOfPbodyContact[0][0] - (_NumberOfPbodyCOX - 1) / 2.0 * _LengthPbodyBtwCO + i * _LengthPbodyBtwCO,
+                               _XYCoordinateOfPbodyContact[0][1] - (_NumberOfPbodyCOY - 1) / 2.0 * _LengthPbodyBtwCO + j * _LengthPbodyBtwCO])
 
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth

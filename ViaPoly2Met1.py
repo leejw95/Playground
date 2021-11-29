@@ -94,10 +94,10 @@ class _ViaPoly2Met1(StickDiagram._StickDiagram):
         print ('#########################################################################################################')
 
     @classmethod
-    def CalculateNumContact(cls, XWidth=None, YWidth=None):  # !!! Need to Modify.
+    def CalculateNumContact(cls, _XWidth=None, _YWidth=None):  # !!! Need to Modify.
         """
-        :param XWidth:
-        :param YWidth:
+        :param _XWidth:
+        :param _YWidth:
         :return:
         """
 
@@ -107,10 +107,10 @@ class _ViaPoly2Met1(StickDiagram._StickDiagram):
         LengthBtwContacts_case1 = _DRCObj._CoMinWidth + _DRCObj._CoMinSpace
         LengthBtwContacts_case2 = _DRCObj._CoMinWidth + _DRCObj._CoMinSpace2  # when exceeding 2x2 array (3x2 or 2x3, ...)
 
-        NumContactX_case1 = int((XWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case1) + 1
-        NumContactY_case1 = int((YWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case1) + 1
-        NumContactX_case2 = int((XWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case2) + 1
-        NumContactY_case2 = int((YWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case2) + 1
+        NumContactX_case1 = int((_XWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case1) + 1
+        NumContactY_case1 = int((_YWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case1) + 1
+        NumContactX_case2 = int((_XWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case2) + 1
+        NumContactY_case2 = int((_YWidth - 2 * MinEnclosure - _DRCObj._CoMinWidth) // LengthBtwContacts_case2) + 1
 
         if (NumContactX_case1 > 2 and NumContactY_case1 >= 2) or (NumContactX_case1 >= 2 and NumContactY_case1 > 2):
             NumContactX = NumContactX_case2

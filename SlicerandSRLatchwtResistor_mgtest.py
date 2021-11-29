@@ -878,8 +878,8 @@ if __name__ == '__main__':
 
     # Fixed Parameter for DRC
     for i in range(0, 500) :
-        _XRBNum = random.randint(1,10)
-        _NUM=int(40//_XRBNum)
+        _XRBNum = random.randint(1,8)
+        _NUM=int(32//_XRBNum)
         _YRBNum = random.randint(4,_NUM)
         _TransmissionGateFinger = random.randint(1,15)
         _TransmissionGateChannelWidth = random.randrange(200,500,3)  ##200nm ~ 500nm range
@@ -1299,7 +1299,7 @@ if __name__ == '__main__':
     # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     # myfile.close()
 
-# print ('###############      DRC checking... {}/500      ##################'.format(tries + 1))
+        print ('###############      DRC checking... {}/500      ##################'.format(i + 1))
 
         import DRCchecker
         a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')

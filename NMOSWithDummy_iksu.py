@@ -331,6 +331,9 @@ class _NMOS(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
+    from Private import MyInfo
+    import DRCchecker
+
     libname = 'TEST_MOS'
     cellname = 'NMOSWithDummy_iksu'
     _fileName = cellname + '.gds'
@@ -339,9 +342,9 @@ if __name__ == '__main__':
     InputParams = dict(
         _NMOSNumberofGate=20,
         _NMOSChannelWidth=1000,      # Minimum value : 200 (samsung) / 200 (65nm)
-        _NMOSChannellength=30,      # Minimum value : 30 (samsung) / 60 (65nm)
+        _NMOSChannellength=60,      # Minimum value : 30 (samsung) / 60 (65nm)
         _NMOSDummy=True,
-        _XVT='SLVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
+        _XVT='LVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
     )
 
     ''' Generate Layout Object '''
@@ -362,8 +365,18 @@ if __name__ == '__main__':
         DRCrunDir=My.Dir_DRCrun,
         libname=libname,
         cellname=cellname,
+        GDSDir=My.Dir_GDS
     )
     Checker.Upload2FTP()
-    # Checker.StreamIn(tech=DesignParameters._Technology)
+    Checker.StreamIn(tech=DesignParameters._Technology)
+    # import ftplib
+    #
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login('jicho0927', 'cho89140616!!')
+    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+    # myfile = open('NMOSWithDummy_iksu.gds', 'rb')
+    # ftp.storbinary('STOR NMOSWithDummy_iksu.gds', myfile)
+    # myfile.close()
+    # ftp.close()
     print ('#############################      Finished      ################################')
     # end of 'main():' ---------------------------------------------------------------------------------------------

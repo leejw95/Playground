@@ -315,6 +315,7 @@ class _PMOS(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
+    from Private import MyInfo
     libname = 'TEST_MOS'
     cellname = 'PMOSWithDummy_iksu'
     _fileName = cellname + '.gds'
@@ -325,7 +326,7 @@ if __name__ == '__main__':
         _PMOSChannelWidth=1000,
         _PMOSChannellength=30,          # Minimum value : 30 (samsung) / 60 (65nm)
         _PMOSDummy=False,
-        _XVT='SLVT',                    # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
+        _XVT=None,                    # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
     )
 
     ''' Generate Layout Object '''
@@ -346,8 +347,9 @@ if __name__ == '__main__':
         DRCrunDir=My.Dir_DRCrun,
         libname=libname,
         cellname=cellname,
+        GDSDir=My.Dir_GDS
     )
     Checker.Upload2FTP()
-    # Checker.StreamIn(tech=DesignParameters._Technology)
+    Checker.StreamIn(tech=DesignParameters._Technology)
     print('#############################      Finished      ################################')
     # end of 'main():' ---------------------------------------------------------------------------------------------

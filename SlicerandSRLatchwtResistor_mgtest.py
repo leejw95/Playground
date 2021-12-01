@@ -1198,14 +1198,6 @@ if __name__ == '__main__':
         # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         # myfile.close()
 
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('1joon', 'intelamd')
-        ftp.cwd('/mnt/sdd/1joon/OPUS/ss28')
-        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        myfile.close()
-
-
 
     # DesignParameters._Technology = '028nm'
 

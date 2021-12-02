@@ -589,7 +589,7 @@ class DRCMETAL1:
             self._Metal1MinSpace = 50  #D
             self._Metal1MinSpacetoGate = 20
             self._Metal1MinSpace2 = 66  #E (by JiCho)
-            self._Metal1MinSpace21 = 82  #E1k
+
             self._Metal1MinSpace22 = 74  # G
             self._Metal1MinSpace3 = 140  #F
             self._Metal1MinSpace4 = 500  #

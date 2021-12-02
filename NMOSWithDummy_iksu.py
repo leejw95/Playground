@@ -94,8 +94,8 @@ class _NMOS(StickDiagram._StickDiagram):
 
             if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:  # Should check this DRC at TSMC
                 self._DesignParameter['_PODummyLayer']['_YWidth'] = self.CeilMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
-                if DesignParameters._Technology != '028nm':  ## Need?
-                    self._DesignParameter['_POLayer']['_YWidth'] = self._DesignParameter['_PODummyLayer']['_YWidth']
+                # if DesignParameters._Technology != '028nm':  ## Need?
+                #     self._DesignParameter['_POLayer']['_YWidth'] = self._DesignParameter['_PODummyLayer']['_YWidth']
             else:
                 pass
         else:
@@ -341,9 +341,9 @@ if __name__ == '__main__':
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
         _NMOSNumberofGate=20,
-        _NMOSChannelWidth=1000,      # Minimum value : 200 (samsung) / 200 (65nm)
+        _NMOSChannelWidth=500,      # Minimum value : 200 (samsung) / 200 (65nm)
         _NMOSChannellength=60,      # Minimum value : 30 (samsung) / 60 (65nm)
-        _NMOSDummy=True,
+        _NMOSDummy=False,
         _XVT='LVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
     )
 

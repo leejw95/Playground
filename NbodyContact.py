@@ -21,7 +21,7 @@ class _NbodyContact(StickDiagram._StickDiagram):
                                                     _Met1Layer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
                                                     _NPLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['NIMP'][0],_Datatype=DesignParameters._LayerMapping['NIMP'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
                                                     _COLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0],_Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
-                                                    # _PDKLayer=dict(_DesignParametertype=1,_Layer=DesignParameters._LayerMapping['PDK'][0], _Datatype=DesignParameters._LayerMapping['PDK'][1],_XYCoordinates=[],_XWidth=400, _YWidth=400),
+                                                    _PDKLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PDK'][0], _Datatype=DesignParameters._LayerMapping['PDK'][1],_XYCoordinates=[],_XWidth=400, _YWidth=400),
                                                     _Name=self._NameDeclaration(_Name=_Name), _GDSFile=self._GDSObjDeclaration(_GDSFile=None),
 
                                                    )
@@ -51,16 +51,16 @@ class _NbodyContact(StickDiagram._StickDiagram):
         self._DesignParameter['_ODLayer']['_YWidth'] = _DRCObj._CoMinWidth + (_NumberOfNbodyCOY - 1) * _LengthNbodyBtwCO + 2 * _DRCObj._CoMinEnclosureByODAtLeastTwoSide
 
 
-        # if DesignParameters._Technology =='065nm':
-        #     print '#############################     PDK Layer Calculation    ##############################################'
-        #     self._DesignParameter['_PDKLayer']['_XYCoordinates']=_XYCoordinateOfNbodyContact
-        #     self._DesignParameter['_PDKLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth']
-        #     self._DesignParameter['_PDKLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
+        if DesignParameters._Technology !='028nm':
+            print ('#############################     PDK Layer Calculation    ##############################################')
+            self._DesignParameter['_PDKLayer']['_XYCoordinates']=_XYCoordinateOfNbodyContact
+            self._DesignParameter['_PDKLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth']
+            self._DesignParameter['_PDKLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth']
 
-        print ('#############################     NIMP  Layer Calculation    ##############################################')
-        # self._DesignParameter['_NPLayer']['_XYCoordinates']=_XYCoordinateOfNbodyContact
-        # self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
-        # self._DesignParameter['_NPLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
+            print ('#############################     NIMP  Layer Calculation    ##############################################')
+            self._DesignParameter['_NPLayer']['_XYCoordinates']=_XYCoordinateOfNbodyContact
+            self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
+            self._DesignParameter['_NPLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
 
 
 

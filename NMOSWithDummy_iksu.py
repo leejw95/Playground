@@ -227,7 +227,8 @@ class _NMOS(StickDiagram._StickDiagram):
                 self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(
                     _Layer=DesignParameters._LayerMapping[_XVTLayerMappingName][0],
                     _Datatype=DesignParameters._LayerMapping[_XVTLayerMappingName][1],
-                    _XWidth=self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX,
+                    _XWidth=max(self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX,
+                                _LengthNMOSBtwPO * (_NMOSNumberofGate + 1)),
                     _YWidth=self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODY,
                     _XYCoordinates=self._DesignParameter['_ODLayer']['_XYCoordinates']
                 )

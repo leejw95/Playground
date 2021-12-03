@@ -3,10 +3,14 @@ import StickDiagram
 import DesignParameters
 import DRC
 
+#
+#from Private import MyInfo
+import DRCchecker
+
 
 class _NMOS(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(_NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None,
-                                           _NMOSDummy=False, _XVT=None, _DistanceBtwFinger=None)
+                                           _NMOSDummy=False, _XVT=None)
 
     def __init__(self, _DesignParameter=None, _Name=None):
 
@@ -46,15 +50,13 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_Name']['_Name'] = _Name
 
     def _CalculateNMOSDesignParameter(self, _NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None,
-                                      _NMOSDummy=False, _XVT=None, _DistanceBtwFinger=None):
+                                      _NMOSDummy=False, _XVT=None):
 
         _DRCObj = DRC.DRC()
         MinSnapSpacing = _DRCObj._MinSnapSpacing
-        _Name = self._DesignParameter['_Name']['_Name']
-
-        print(''.center(105,'#'))
-        print(f'     {_Name} PMOS Calculation Start     '.center(105,'#'))
-        print(''.center(105,'#'))
+        print ('#########################################################################################################')
+        print ('                                    {}  NMOS Calculation Start                                    '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
         flag_EvenChannelWidth = True if (_NMOSChannelWidth % 2 == 0) else False
         _XYCoordinateOfNMOS = [[0, 0]] if flag_EvenChannelWidth else [[0, MinSnapSpacing/2.0]]
@@ -66,16 +68,8 @@ class _NMOS(StickDiagram._StickDiagram):
         else:
             _LengthNMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _NMOSChannellength
 
-        if _DistanceBtwFinger == None:
-            pass
-        elif _LengthNMOSBtwPO > _DistanceBtwFinger:
-            raise Exception(f"Invalid Parameter '_DistanceBtwFinger(={_DistanceBtwFinger})' in {_Name}.\n"
-                            f"Available Condition: 1) '_DistanceBtwFinger >= {_LengthNMOSBtwPO}'\n"
-                            f"                     2) '_DistanceBtwFinger = None' for Minimum Value.")
-        else:
-            _LengthNMOSBtwPO = _DistanceBtwFinger
 
-        print('     POLY (PO/PC) Layer Calculation     '.center(105,'#'))
+        print ('#############################     POLY (PO/PC) Layer Calculation    ##############################################')
         tmpXYs = []
         for i in range(0, _NMOSNumberofGate):
             tmpXYs.append([_XYCoordinateOfNMOS[0][0] - (_NMOSNumberofGate - 1) / 2.0 * _LengthNMOSBtwPO + i * _LengthNMOSBtwPO,
@@ -87,7 +81,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
         if _NMOSDummy:
-            print('     POLY Dummy Layer Calculation     '.center(105,'#'))
+            print ('#############################     POLY Dummy Layer Calculation    ##############################################')
             self._DesignParameter['_PODummyLayer'] = self._BoundaryElementDeclaration(
                 _Layer=DesignParameters._LayerMapping['POLY'][0],
                 _Datatype=DesignParameters._LayerMapping['POLY'][1],
@@ -100,15 +94,23 @@ class _NMOS(StickDiagram._StickDiagram):
 
             if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:  # Should check this DRC at TSMC
                 self._DesignParameter['_PODummyLayer']['_YWidth'] = self.CeilMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
-                if DesignParameters._Technology != '028nm':  ## Need?
-                    self._DesignParameter['_POLayer']['_YWidth'] = self._DesignParameter['_PODummyLayer']['_YWidth']
+                # if DesignParameters._Technology != '028nm':  ## Need?
+                #     self._DesignParameter['_POLayer']['_YWidth'] = self._DesignParameter['_PODummyLayer']['_YWidth']
             else:
                 pass
         else:
-            pass
+            self._DesignParameter['_PODummyLayer'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['POLY'][0],
+                _Datatype=DesignParameters._LayerMapping['POLY'][1],
+                _XWidth=0,
+                _YWidth=0,
+                _XYCoordinates=[
+                    CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][0], [-_LengthNMOSBtwPO, 0]),
+                    CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthNMOSBtwPO, 0])
+                ])
 
 
-        print('     DIFF (OD/RX) Layer Calculation     '.center(105,'#'))
+        print ('#############################     DIFF (OD/RX) Layer Calculation    ##############################################')
         if _NMOSDummy and DesignParameters._Technology != '028nm':
             XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _NMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
         else:
@@ -118,7 +120,7 @@ class _NMOS(StickDiagram._StickDiagram):
         self._DesignParameter['_ODLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
 
 
-        print('     METAL1 Layer Calculation     '.center(105,'#'))
+        print ('#############################     METAL1 Layer Calculation    ##############################################')
         # METAL1 Layer Coordinate Setting
         _LengthNMOSBtwMet1 = _LengthNMOSBtwPO
         self._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] = _LengthNMOSBtwMet1
@@ -138,7 +140,7 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_METAL1PINDrawing']['_XYCoordinates'] = self._DesignParameter['_Met1Layer']['_XYCoordinates']
 
 
-        print('     CONT (Source/Drain) Layer Calculation     '.center(105,'#'))
+        print ('#############################     CONT Layer Calculation    ##############################################')
         # CONT XNum/YNum Calculation
         _XNumberOfCOInNMOS = _NMOSNumberofGate + 1
         _YNumberOfCOInNMOS = int(float(self._DesignParameter['_ODLayer']['_YWidth']
@@ -225,7 +227,8 @@ class _NMOS(StickDiagram._StickDiagram):
                 self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(
                     _Layer=DesignParameters._LayerMapping[_XVTLayerMappingName][0],
                     _Datatype=DesignParameters._LayerMapping[_XVTLayerMappingName][1],
-                    _XWidth=self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX,
+                    _XWidth=max(self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX,
+                                _LengthNMOSBtwPO * (_NMOSNumberofGate + 1)),
                     _YWidth=self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODY,
                     _XYCoordinates=self._DesignParameter['_ODLayer']['_XYCoordinates']
                 )
@@ -330,12 +333,15 @@ class _NMOS(StickDiagram._StickDiagram):
         else:
             pass
 
-        print(''.center(105,'#'))
-        print(f'     {_Name} NMOS Calculation End     '.center(105,'#'))
-        print(''.center(105,'#'))
+        print ('#########################################################################################################')
+        print ('                                    {}  NMOS Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))
+        print ('#########################################################################################################')
 
 
 if __name__ == '__main__':
+
+    from Private import MyInfo
+    import DRCchecker
 
     libname = 'TEST_MOS'
     cellname = 'NMOSWithDummy_iksu'
@@ -344,10 +350,10 @@ if __name__ == '__main__':
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
         _NMOSNumberofGate=20,
-        _NMOSChannelWidth=1000,      # Minimum value : 200 (samsung) / 200 (65nm)
-        _NMOSChannellength=30,      # Minimum value : 30 (samsung) / 60 (65nm)
-        _NMOSDummy=True,
-        _XVT='SLVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
+        _NMOSChannelWidth=500,      # Minimum value : 200 (samsung) / 200 (65nm)
+        _NMOSChannellength=60,      # Minimum value : 30 (samsung) / 60 (65nm)
+        _NMOSDummy=False,
+        _XVT='LVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
     )
 
     ''' Generate Layout Object '''
@@ -359,16 +365,27 @@ if __name__ == '__main__':
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
-    # print('###############      Sending to FTP Server...      ##################')
-    # My = MyInfo.USER(DesignParameters._Technology)
-    # Checker = DRCchecker.DRCchecker(
-    #     username=My.ID,
-    #     password=My.PW,
-    #     WorkDir=My.Dir_Work,
-    #     DRCrunDir=My.Dir_DRCrun,
-    #     libname=libname,
-    #     cellname=cellname,
-    # )
-    # Checker.Upload2FTP()
-    # Checker.StreamIn(tech=DesignParameters._Technology)
-    print('#############################      Finished      ################################')
+    print ('###############      Sending to FTP Server...      ##################')
+    My = MyInfo.USER(DesignParameters._Technology)
+    Checker = DRCchecker.DRCchecker(
+        username=My.ID,
+        password=My.PW,
+        WorkDir=My.Dir_Work,
+        DRCrunDir=My.Dir_DRCrun,
+        libname=libname,
+        cellname=cellname,
+        GDSDir=My.Dir_GDS
+    )
+    Checker.Upload2FTP()
+    Checker.StreamIn(tech=DesignParameters._Technology)
+    # import ftplib
+    #
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login('jicho0927', 'cho89140616!!')
+    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+    # myfile = open('NMOSWithDummy_iksu.gds', 'rb')
+    # ftp.storbinary('STOR NMOSWithDummy_iksu.gds', myfile)
+    # myfile.close()
+    # ftp.close()
+    print ('#############################      Finished      ################################')
+    # end of 'main():' ---------------------------------------------------------------------------------------------

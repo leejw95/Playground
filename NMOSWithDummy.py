@@ -316,9 +316,9 @@ class _NMOS(StickDiagram._StickDiagram):
         _CoArrXWidth = (_XNumberOfCOInNMOS - 1) * _LengthNMOSBtwMet1 + self._DesignParameter['_COLayer']['_XWidth']
         _CoArrYWidth = (_YNumberOfCOInNMOS - 1) * _LengthNMOSBtwCO + self._DesignParameter['_COLayer']['_YWidth']
 
-        if min(_CoArrXWidth, _CoArrYWidth) > _DRCObj._CoArrayMaxWidth :
-            print('CA Array Maximum Width should be smaller than 1211n.')
-            raise NotImplementedError
+        # if min(_CoArrXWidth, _CoArrYWidth) > _DRCObj._CoArrayMaxWidth :
+        #     print('CA Array Maximum Width should be smaller than 1211n.')
+        #     raise NotImplementedError
 
 
 
@@ -482,19 +482,19 @@ class _NMOS(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     _NMOSFinger = 5
-    _NMOSWidth = 443
-    _NMOSChannelLength = 30
+    _NMOSWidth = 200
+    _NMOSChannellength = 30
     _NMOSDummy = True
-    _SLVT = True
+    _SLVT = False
     _LVT = False
     _HVT = False
 
 
-    DesignParameters._Technology = '028nm'
+    DesignParameters._Technology = '065nm'
     #    print 'Technology Process', DesignParameters._Technology
     NMOSObj = _NMOS(_DesignParameter=None, _Name='NMOS')
     NMOSObj._CalculateNMOSDesignParameter(_NMOSNumberofGate=_NMOSFinger, _NMOSChannelWidth=_NMOSWidth,
-                                          _NMOSChannellength=_NMOSChannelLength, _NMOSDummy=_NMOSDummy, _SLVT=_SLVT, _LVT=False, _HVT=False)
+                                          _NMOSChannellength=_NMOSChannellength, _NMOSDummy=_NMOSDummy, _SLVT=_SLVT, _LVT=False, _HVT=False)
     NMOSObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=NMOSObj._DesignParameter)
     testStreamFile = open('./NMOSWithDummy_test.gds', 'wb')
     tmp = NMOSObj._CreateGDSStream(NMOSObj._DesignParameter['_GDSFile']['_GDSFile'])
@@ -504,13 +504,13 @@ if __name__ == '__main__':
     print ('##########################################################################################')
     import ftplib
 
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('myungguk', 'vmfl!225')
-    ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
-    myfile = open('NMOSWithDummy_test.gds', 'rb')
-    ftp.storbinary('STOR NMOSWithDummy_test.gds', myfile)
-    myfile.close()
-    ftp.close()
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login('myungguk', 'vmfl!225')
+    # ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
+    # myfile = open('NMOSWithDummy_test.gds', 'rb')
+    # ftp.storbinary('STOR NMOSWithDummy_test.gds', myfile)
+    # myfile.close()
+    # ftp.close()
 
 
     # ftp = ftplib.FTP('141.223.22.156')
@@ -520,3 +520,12 @@ if __name__ == '__main__':
     # ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
     # myfile.close()
     # ftp.close()
+
+
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+    myfile = open('NMOSWithDummy.gds', 'rb')
+    ftp.storbinary('STOR NMOSWithDummy.gds', myfile)
+    myfile.close()
+    ftp.close()

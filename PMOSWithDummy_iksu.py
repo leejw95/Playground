@@ -3,10 +3,14 @@ import StickDiagram
 import DesignParameters
 import DRC
 
+#
+#from Private import MyInfo
+import DRCchecker
+
 
 class _PMOS(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(_PMOSNumberofGate=None, _PMOSChannelWidth=None, _PMOSChannellength=None,
-                                           _PMOSDummy=False, _XVT=None, _DistanceBtwFinger=None)
+                                           _PMOSDummy=False, _XVT=None)
 
     def __init__(self, _DesignParameter=None, _Name=None):
 
@@ -49,7 +53,7 @@ class _PMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_Name']['_Name'] = _Name
 
     def _CalculatePMOSDesignParameter(self, _PMOSNumberofGate=None, _PMOSChannelWidth=None, _PMOSChannellength=None,
-                                      _PMOSDummy=False, _XVT=None, _DistanceBtwFinger=None):
+                                      _PMOSDummy=False, _XVT=None):
 
         _DRCObj = DRC.DRC()
         MinSnapSpacing = _DRCObj._MinSnapSpacing
@@ -64,19 +68,10 @@ class _PMOS(StickDiagram._StickDiagram):
 
         _LengthPMOSBtwCO = _DRCObj._CoMinSpace + _DRCObj._CoMinWidth
 
-        if DesignParameters._Technology == '028nm':     # Need to Merge
+        if DesignParameters._Technology == '028nm':
             _LengthPMOSBtwPO = _DRCObj.DRCPolyMinSpace(_Width=_PMOSChannelWidth, _ParallelLength=_PMOSChannellength) + _PMOSChannellength
         else:
             _LengthPMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _PMOSChannellength
-
-        if _DistanceBtwFinger == None:
-            pass
-        elif _LengthPMOSBtwPO > _DistanceBtwFinger:
-            raise Exception(f"Invalid Parameter '_DistanceBtwFinger(={_DistanceBtwFinger})' in {_Name}.\n"
-                            f"Available Condition: 1) '_DistanceBtwFinger >= {_LengthPMOSBtwPO}'\n"
-                            f"                     2) '_DistanceBtwFinger = None' for Minimum Value.")
-        else:
-            _LengthPMOSBtwPO = _DistanceBtwFinger
 
 
         print('     POLY (PO/PC) Layer Calculation     '.center(105,'#'))
@@ -104,12 +99,20 @@ class _PMOS(StickDiagram._StickDiagram):
 
             if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:  # Should check this DRC at TSMC
                 self._DesignParameter['_PODummyLayer']['_YWidth'] = self.CeilMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
-                if DesignParameters._Technology != '028nm':
-                    self._DesignParameter['_POLayer']['_YWidth'] = self._DesignParameter['_PODummyLayer']['_YWidth']
+                # if DesignParameters._Technology != '028nm':
+                #     self._DesignParameter['_POLayer']['_YWidth'] = self._DesignParameter['_PODummyLayer']['_YWidth']
             else:
                 pass
         else:
-            pass
+            self._DesignParameter['_PODummyLayer'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['POLY'][0],
+                _Datatype=DesignParameters._LayerMapping['POLY'][1],
+                _XWidth=0,
+                _YWidth=0,
+                _XYCoordinates=[
+                    CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][0], [-_LengthPMOSBtwPO, 0]),
+                    CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthPMOSBtwPO, 0])
+                ])
 
 
         print('     DIFF (OD/RX) Layer Calculation     '.center(105,'#'))
@@ -225,7 +228,8 @@ class _PMOS(StickDiagram._StickDiagram):
                 self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(
                     _Layer=DesignParameters._LayerMapping[_XVTLayerMappingName][0],
                     _Datatype=DesignParameters._LayerMapping[_XVTLayerMappingName][1],
-                    _XWidth=self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX,
+                    _XWidth=max(self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX,
+                                _LengthPMOSBtwPO * (_PMOSNumberofGate + 1)),
                     _YWidth=self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODY,
                     _XYCoordinates=self._DesignParameter['_ODLayer']['_XYCoordinates']
                 )
@@ -320,6 +324,7 @@ class _PMOS(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
+    from Private import MyInfo
     libname = 'TEST_MOS'
     cellname = 'PMOSWithDummy_iksu'
     _fileName = cellname + '.gds'
@@ -330,8 +335,7 @@ if __name__ == '__main__':
         _PMOSChannelWidth=1000,
         _PMOSChannellength=30,          # Minimum value : 30 (samsung) / 60 (65nm)
         _PMOSDummy=False,
-        _XVT='SLVT',                    # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
-        _DistanceBtwFinger=None,
+        _XVT=None,                    # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
     )
 
     ''' Generate Layout Object '''
@@ -343,16 +347,18 @@ if __name__ == '__main__':
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
-    # print('#############################      Sending to FTP Server...      #############################')
-    # My = MyInfo.USER(DesignParameters._Technology)
-    # Checker = DRCchecker.DRCchecker(
-    #     username=My.ID,
-    #     password=My.PW,
-    #     WorkDir=My.Dir_Work,
-    #     DRCrunDir=My.Dir_DRCrun,
-    #     libname=libname,
-    #     cellname=cellname,
-    # )
-    # Checker.Upload2FTP()
-    # Checker.StreamIn(tech=DesignParameters._Technology)
+    print('#############################      Sending to FTP Server...      #############################')
+    My = MyInfo.USER(DesignParameters._Technology)
+    Checker = DRCchecker.DRCchecker(
+        username=My.ID,
+        password=My.PW,
+        WorkDir=My.Dir_Work,
+        DRCrunDir=My.Dir_DRCrun,
+        libname=libname,
+        cellname=cellname,
+        GDSDir=My.Dir_GDS
+    )
+    Checker.Upload2FTP()
+    Checker.StreamIn(tech=DesignParameters._Technology)
     print('#############################      Finished      ################################')
+    # end of 'main():' ---------------------------------------------------------------------------------------------

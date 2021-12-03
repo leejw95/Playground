@@ -4,6 +4,7 @@ import paramiko
 import sys
 import os
 import time
+import DesignParameters
 
 '''
     This is Beta Version For auto DRC checker.
@@ -36,6 +37,14 @@ class DRCchecker:
 
 
     def DRCchecker(self):
+        
+        if DesignParameters._Technology == '028nm' :
+            DRCfile = '_cmos28lp.drc.cal_'
+            Techlib = 'cmos28lp'
+        if DesignParameters._Technology == '065nm' :
+            DRCfile = '_calibre.drc_'
+            Techlib = 'tsmcN65'
+
 
         print('   Connecting to Server by SSH...   '.center(105, '#'))
         ssh = paramiko.SSHClient()
@@ -43,26 +52,29 @@ class DRCchecker:
         ssh.connect(self.server, port=self.port, username=self.username, password=self.password)
 
 
-        commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{3}/{2}.gds' -attachTechFileOfLib 'cmos28lp' -logFile 'strmIn.log'"
-        stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname, self.GDSDir))
+        commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{3}/{2}.gds' -attachTechFileOfLib '{4}' -logFile 'strmIn.log'"
+        stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.cellname, self.GDSDir, Techlib))
         result1 = stdout.read().decode('utf-8')
         print('print after commandlines1 : ')
         print(result1)
         if (result1.split()[-6]) != "'0'":
             raise Exception("Library name already Existing or XStream ERROR!!")
 
-
-        commandlines2 = "cd {0}; source setup.cshrc; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
-        stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
-        result2 = stdout.read().decode('utf-8')
+        if DesignParameters._Technology == '028nm' :
+            commandlines2 = "cd {0}; source setup.cshrc; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.layermap' -objectMap '/home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp_tech_7U1x_2T8x_LB/cmos28lp_tech.objectmap' -case 'Preserve' -convertDot 'node' -noWarn '156 246 269 270 315 333'"
+            stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
+            result2 = stdout.read().decode('utf-8')
+        if DesignParameters._Technology == '065nm' :
+            commandlines2 = "cd {0}; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/tsmc65/tsmcN65/tsmcN65.layermap' -case 'Preserve' -convertDot 'node'"
+            stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
+            result2 = stdout.read().decode('utf-8')
         print(f'print after commandlines2 :')
         print(result2)
         if (result2.split()[-6]) != "'0'":
             raise Exception("XstreamOut ERROR")
-
-
-        commandlines3 = "cd {0}; sed -i '9s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' _cmos28lp.drc.cal_; sed -i '10s,.*,LAYOUT PRIMARY \"{1}\",' _cmos28lp.drc.cal_; sed -i '13s,.*,DRC RESULTS DATABASE \"{1}.drc.results\" ASCII,' _cmos28lp.drc.cal_; sed -i '18s,.*,DRC SUMMARY REPORT \"{1}.drc.summary\" REPLACE HIER,' _cmos28lp.drc.cal_"
-        stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.DRCrunDir, self.cellname))
+        
+        commandlines3 = "cd {0}; sed -i '9s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' {2}; sed -i '10s,.*,LAYOUT PRIMARY \"{1}\",' {2}; sed -i '13s,.*,DRC RESULTS DATABASE \"{1}.drc.results\" ASCII,' {2}; sed -i '18s,.*,DRC SUMMARY REPORT \"{1}.drc.summary\" REPLACE HIER,' {2}"
+        stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.DRCrunDir, self.cellname, DRCfile))
         print(f'print after commandlines3 :')
         print(f"stdout: {stdout.read().decode('utf-8')}")
         print(f"stderr: {stderr.read().decode('utf-8')}")
@@ -73,27 +85,44 @@ class DRCchecker:
         print(f"stdout: {stdout.read().decode('utf-8')}")
         print(f"stderr: {stderr.read().decode('utf-8')}")
 
-        commandlines4 = "cd {0}; source setup.cshrc; calibre -drc -hier -nowait {1}/_cmos28lp.drc.cal_"
-        stdin, stdout, stderr = ssh.exec_command(commandlines4.format(self.WorkDir, self.DRCrunDir))
+        commandlines4 = "cd {0}; source setup.cshrc; calibre -drc -hier -turbo -turbo_litho -nowait {1}/{2}"
+        stdin, stdout, stderr = ssh.exec_command(commandlines4.format(self.WorkDir, self.DRCrunDir, DRCfile))
         stdout.read()
 
         readfile = ssh.open_sftp()
         file = readfile.open('{0}/{1}.drc.summary'.format(self.WorkDir, self.cellname))
         print(f"Reading '{self.WorkDir}/{self.cellname}.drc.summary' for check DRC Error......")
-        for line in (file.readlines()[-2:-1]):        # 'TOTAL DRC Results Generated:   656 (656)\n'
-            print(line)
-            if line.split()[4] != '0':
-                raise Exception("DRC ERROR!!!")
+        if DesignParameters._Technology == '028nm' :
+            for line in (file.readlines()[-2:-1]):        # 'TOTAL DRC Results Generated:   656 (656)\n'
+                print(line)
+                if line.split()[4] != '0':
+                    raise Exception("DRC ERROR!!!")
 
-            else:
-                # commandlines5 = "cd {0}; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"{1}\" \"\" \"\" \"\")),' Skillcode.il"
-                # stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
-                # print (''.join(stdout.read()))
-                # commandlines6 = "cd {0}; source setup.cshrc; virtuoso -nograph -restore Skillcode.il"
-                # stdin, stdout, stderr = ssh.exec_command(commandlines6.format(self.WorkDir))
-                commandlines5 = "cd {0}; rm -r {1}"
-                stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
-                print('No DRC ERROR for this case, deleting library...')
+                else:
+                    # commandlines5 = "cd {0}; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"{1}\" \"\" \"\" \"\")),' Skillcode.il"
+                    # stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
+                    # print (''.join(stdout.read()))
+                    # commandlines6 = "cd {0}; source setup.cshrc; virtuoso -nograph -restore Skillcode.il"
+                    # stdin, stdout, stderr = ssh.exec_command(commandlines6.format(self.WorkDir))
+                    commandlines5 = "cd {0}; rm -r {1}"
+                    stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
+                    print('No DRC ERROR for this case, deleting library...')
+        
+        if DesignParameters._Technology == '065nm' :
+            for line in (file.readlines()[-1:0]):        # 'TOTAL DRC Results Generated:   656 (656)\n'
+                print(line)
+                if line.split()[4] != '0':
+                    raise Exception("DRC ERROR!!!")
+
+                else:
+                    # commandlines5 = "cd {0}; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"{1}\" \"\" \"\" \"\")),' Skillcode.il"
+                    # stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
+                    # print (''.join(stdout.read()))
+                    # commandlines6 = "cd {0}; source setup.cshrc; virtuoso -nograph -restore Skillcode.il"
+                    # stdin, stdout, stderr = ssh.exec_command(commandlines6.format(self.WorkDir))
+                    commandlines5 = "cd {0}; rm -r {1}"
+                    stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
+                    print('No DRC ERROR for this case, deleting library...')
 
         ssh.close()
         print(''.center(105, '#'))

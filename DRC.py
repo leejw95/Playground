@@ -797,6 +797,7 @@ class DRCNW:
             self._NwMinEnclosurePactive2 = 112  # GR260a
             self._NwMinSpacetoNactive=56 #
             self._NwMinSpacetoRX=60
+            self._NwMinSpacetoNactive = 60
             self._NwMinSpacetoSLVT = 170  # ADDED! (by JiCho)
             self._NwMinArea = 500000
 
@@ -805,6 +806,7 @@ class DRCNW:
             self._NwMinSpace=470
             self._NwMinEnclosurePactive=160
             self._NwMinEnclosurePactive2 = 160
+            self._NwMinEnclosureNactive = 160
             self._NwMinSpacetoNactive=160
             self._NwMinArea = 640000
 

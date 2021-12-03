@@ -104,7 +104,15 @@ class _PMOS(StickDiagram._StickDiagram):
             else:
                 pass
         else:
-            pass
+            self._DesignParameter['_PODummyLayer'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['POLY'][0],
+                _Datatype=DesignParameters._LayerMapping['POLY'][1],
+                _XWidth=0,
+                _YWidth=0,
+                _XYCoordinates=[
+                    CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][0], [-_LengthPMOSBtwPO, 0]),
+                    CoordCalc.Add(self._DesignParameter['_POLayer']['_XYCoordinates'][-1], [_LengthPMOSBtwPO, 0])
+                ])
 
 
         print('     DIFF (OD/RX) Layer Calculation     '.center(105,'#'))

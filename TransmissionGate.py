@@ -2,8 +2,8 @@ import StickDiagram
 import DesignParameters
 import copy
 import DRC
-import NMOSWithDummy
-import PMOSWithDummy
+import NMOSWithDummy_iksu
+import PMOSWithDummy_iksu
 import NbodyContact
 import PbodyContact
 import ViaPoly2Met1
@@ -17,7 +17,7 @@ import ftplib
 ## This is for Resistor Bank...
 
 class _TransmissionGate (StickDiagram._StickDiagram) :
-    _ParametersForDesignCalculation = dict(_Finger=None, _ChannelWidth=None, _ChannelLength=None, _NPRatio=None,_VDD2VSSHeight=None, _Dummy = False, _SLVT = False, _SupplyMet1YWidth=None, 
+    _ParametersForDesignCalculation = dict(_Finger=None, _ChannelWidth=None, _ChannelLength=None, _NPRatio=None,_VDD2VSSHeight=None, _Dummy = False, _XVT = None, _SupplyMet1YWidth=None, 
                                             _Gatereverse = False, _Bodycontact = False)
 
     def __init__(self, _DesignParameter = None, _Name = 'TransmissionGate'):
@@ -30,7 +30,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             self._DesignParameter['_Name']['_Name'] = _Name
 
     def _CalculateTransmissionGate (self, _Finger = None, _ChannelWidth = None, _ChannelLength = None, _NPRatio = None, _VDD2VSSHeight = None, _Dummy = False,
-                            _SLVT = False, _Gatereverse = False, _NumSupplyCOX=None, _NumSupplyCOY=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None,
+                            _XVT = None, _Gatereverse = False, _NumSupplyCOX=None, _NumSupplyCOY=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None,
                                     _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _Bodycontact = False) :
         ## You Should Draw N-WELL Afterwards!!
         print ('#########################################################################################################')
@@ -41,32 +41,34 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _Name = 'TransmissionGate'
 
         print ('###############################     MOSFET Generation    ################################################')
-        _NMOSinputs = copy.deepcopy(NMOSWithDummy._NMOS._ParametersForDesignCalculation)
+        _NMOSinputs = copy.deepcopy(NMOSWithDummy_iksu._NMOS._ParametersForDesignCalculation)
         _NMOSinputs['_NMOSNumberofGate'] = _Finger
         _NMOSinputs['_NMOSChannelWidth'] = _ChannelWidth
         _NMOSinputs['_NMOSChannellength'] = _ChannelLength
         _NMOSinputs['_NMOSDummy'] = _Dummy
-        _NMOSinputs['_SLVT'] = _SLVT
+        _NMOSinputs['_XVT'] = _XVT
 
-        self._DesignParameter['_NMOSTG'] = self._SrefElementDeclaration(_Reflect = [1,0,0], _Angle =0, _DesignObj=NMOSWithDummy._NMOS(_DesignParameter=None, _Name='NMOSIn{}'.format(_Name)))[0]
+
+        self._DesignParameter['_NMOSTG'] = self._SrefElementDeclaration(_Reflect = [1,0,0], _Angle =0, _DesignObj=NMOSWithDummy_iksu._NMOS(_DesignParameter=None, _Name='NMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_NMOSTG']['_DesignObj']._CalculateNMOSDesignParameter(**_NMOSinputs)
 
         if _NPRatio == None:
             _NPRatio = 2
         # Default NPRatio = 2
 
-        _PMOSinputs = copy.deepcopy(PMOSWithDummy._PMOS._ParametersForDesignCalculation)
+        _PMOSinputs = copy.deepcopy(PMOSWithDummy_iksu._PMOS._ParametersForDesignCalculation)
         _PMOSinputs['_PMOSNumberofGate'] = _Finger
         _PMOSinputs['_PMOSChannelWidth'] = round(_ChannelWidth * _NPRatio)
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
-        _PMOSinputs['_SLVT'] = _SLVT
+        _PMOSinputs['_XVT'] = _XVT
 
-        self._DesignParameter['_PMOSTG'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy._PMOS(_DesignParameter=None, _Name='PMOSIn{}'.format(_Name)))[0]
+        self._DesignParameter['_PMOSTG'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_iksu._PMOS(_DesignParameter=None, _Name='PMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_PMOSTG']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOSinputs)
 
+        _XVT = self._DesignParameter['_NMOSTG']['_DesignObj']._XVTLayer
         print ('################################     VDD VSS Generation    ##############################################')
-        _NumSupplyCOX = int(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + 1)
+        _NumSupplyCOX = int(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter[_XVT]['_XWidth'] // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + 1)
         if _NumSupplyCOX < 2:
             _NumSupplyCOX = 2
         if _NumSupplyCOY == None:
@@ -167,8 +169,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_ViaMet52Met6OnPMOSOutputTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet52Met6._ViaMet52Met6(_DesignParameter=None,_Name='ViaMet52Met6OnPMOSOutputIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet52Met6OnPMOSOutputTG']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureX(**_ViaPMOSMet56)
 
-
-
+        
 
 
         print ('###########################     Via Generation for NMOS Outputs     #####################################')
@@ -249,6 +250,12 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_ViaMet52Met6OnNMOSOutputTG']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureX(**_ViaNMOSMet56)
 
 
+        ###### NMOS / PMOS Metal 1 width modification for TSMC process, but general solution ######
+        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+
+
+
         print ("###########################     Via Generation for PMOS Controls     #####################################")
         _ViaPMOSPoly2Met1 = copy.deepcopy(ViaPoly2Met1._ViaPoly2Met1._ParametersForDesignCalculation)
         _TotalLenOfPMOSGate = \
@@ -302,11 +309,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _ViaNMOSPoly2Met1 = copy.deepcopy(ViaPoly2Met1._ViaPoly2Met1._ParametersForDesignCalculation)
         _TotalLenOfNMOSGate = \
             self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting'][
-                '_XYCoordinates'][
-                -1][0] - \
+                '_XYCoordinates'][-1][0] - \
             self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting'][
-                '_XYCoordinates'][
-                0][0] + 2 * self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']
+                '_XYCoordinates'][0][0] + 2 * self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']
         ## [-1] means the last value of the list or key of dict
 
         tmp4X = int(round(_TotalLenOfNMOSGate // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)))
@@ -348,6 +353,11 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
         del tmp4X, tmp4vX
 
+        if DesignParameters._Technology == '028nm' :
+            _viaspacing = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
+        else :
+            _viaspacing = 0
+
         print('################################     Coordinates Settings     ############################################')
         if (_Gatereverse == False) :
             #if (_ChannelWidth * _NPRatio <= 700) :
@@ -355,10 +365,10 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             (self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
                             max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
                                 self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
-                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) + \
+                                (_viaspacing)//4) + \
                             max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
                                 self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
-                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) + \
+                                (_viaspacing)//4) + \
                             self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
                             self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 5 * _DRCObj._Metal1MinSpace3
                             # self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + \
@@ -369,10 +379,10 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             #                     (self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
             #                     max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
             #                         self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
-            #                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) + \
+            #                         (_viaspacing)//4) + \
             #                     max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
             #                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
-            #                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) + \
+            #                         (_viaspacing)//4) + \
             #                     self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
             #                     self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
             #                     self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] + \
@@ -404,7 +414,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
             self._DesignParameter['_NMOSTG']['_XYCoordinates'] = [[0, max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
                             self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2 +
-                                                                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                                                                            (_viaspacing)//4) +
                             self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
                             _DRCObj._Metal1MinSpace3]]
 
@@ -412,9 +422,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             #if (_ChannelWidth * _NPRatio <= 700) :
             self._DesignParameter['_PMOSTG']['_XYCoordinates'] = [[0, _VDD2VSSHeight - (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] /2 ,
                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] //2 +
-                                                                                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                                                                                            (_viaspacing)//4) +
                         self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                        _DRCObj._MetalxMinSpace8)]]
+                        _DRCObj._MetalxMinSpace3)]] ## Metalxminspace8
 
             # else :
             #     self._DesignParameter['_PMOSTG']['_XYCoordinates'] = [[0, _VDD2VSSHeight - (self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
@@ -427,14 +437,14 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                 self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
                                                                             max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
                                                                             self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                                                                                (_viaspacing)//4) +
                                                                             self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
                                                                             +_DRCObj._Metal1MinSpace3]]
 
                 self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
                                                                                     (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
                                                                                     self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                                                                                        (_viaspacing)//4) +
                                                                                     self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
                                                                                     +_DRCObj._Metal1MinSpace3)]]
             else : ## Recently editted
@@ -442,7 +452,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                                                                         self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
                                                                                 max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2 ,
                                                                                 self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2 +
-                                                                                    (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                                                                                    (_viaspacing)//4) +
                                                                                 self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2+
                                                                             +_DRCObj._Metal1MinSpace2]]
 
@@ -450,7 +460,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                                                                         self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
                                                                                 (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
                                                                                     self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                                                                                    (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+                                                                                    (_viaspacing)//4) +
                                                                                 self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
                                                                                 +_DRCObj._Metal1MinSpace2)]]
 
@@ -459,14 +469,14 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             #     self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
             #                                                                 max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
             #                                                                 self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-            #                                                                     (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+            #                                                                     (_viaspacing)//4) +
             #                                                                 self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
             #                                                                 +_DRCObj._Metal1MinSpace3]]
 
             #     self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
             #                                                                         (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
             #                                                                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-            #                                                                             (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+            #                                                                             (_viaspacing)//4) +
             #                                                                         self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
             #                                                                         +_DRCObj._Metal1MinSpace3)]]
             # else :
@@ -474,7 +484,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             #                                                                 self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
             #                                                                         max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2 ,
             #                                                                         self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2 +
-            #                                                                             (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+            #                                                                             (_viaspacing)//4) +
             #                                                                         self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']/2+
             #                                                                     +_DRCObj._Metal1MinSpace2]]
 
@@ -482,7 +492,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             #                                                                 self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
             #                                                                         (max(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2,
             #                                                                             self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
-            #                                                                             (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4) +
+            #                                                                             (_viaspacing)//4) +
             #                                                                         self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 +
             #                                                                         +_DRCObj._Metal1MinSpace2)]]
 
@@ -494,13 +504,13 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],
                             self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
                             self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]) ## inward
+                            (_viaspacing)//4]) ## inward
             for i in range(0, len(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'])):
                 tmp2.append([self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][i][0] +
                             self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],
                             self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][i][1] +
                             self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] -
-                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4])  ## outward
+                            (_viaspacing)//4])  ## outward
 
             if _Finger % 2 == 0 :
                 self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_XYCoordinates'] = tmp1 + tmp2
@@ -524,7 +534,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0],
                             self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                             self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] -
-                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4])
+                            (_viaspacing)//4])
             for i in range(0, len(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'])):
                 tmp2.append([self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter[
                                 '_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][i][0] +
@@ -532,7 +542,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter[
                                 '_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][i][1] +
                             self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                            (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4])
+                            (_viaspacing)//4])
 
             if _Finger % 2 == 0 :
                 self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_XYCoordinates'] = tmp1 + tmp2
@@ -755,12 +765,12 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             #                                                                     # self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0],
             #                                                                     # self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
             #                                                                     # self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][1] -
-            #                                                                     # (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4],
+            #                                                                     # (_viaspacing) // 4],
             #                                                                     # [self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
             #                                                                     # self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
             #                                                                     # self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
             #                                                                     # self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][1] -
-            #                                                                     # (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4]]]
+            #                                                                     # (_viaspacing) // 4]]]
 
             #     self._DesignParameter['_OutputNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
             #     self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
@@ -770,14 +780,14 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             #                             # self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
             #                             # self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting'][
             #                             #     '_XYCoordinates'][0][1] +
-            #                             # (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4],
+            #                             # (_viaspacing) // 4],
             #                             # [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
             #                             # self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting'][
             #                             #     '_XYCoordinates'][-1][0],
             #                             # self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
             #                             # self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting'][
             #                             #     '_XYCoordinates'][0][1] +
-            #                             # (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4]]]
+            #                             # (_viaspacing) // 4]]]
       
             #     self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
             #     self._DesignParameter['_OutputRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
@@ -826,7 +836,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__' :
-    ans = [5, 275, 30, 2, None, True, True, 4, 2, None, None, None, None, None, None, False]
+    ans = [5, 500, 60, 2, None, False, 'LVT', 4, 2, None, None, None, None, None, None, False]
     # for i in range (17) :
     #     if i == 5 or i==6 or i==7 or i==8 :
     #         print (lst[i]+'?'+'(True/False)')
@@ -842,7 +852,7 @@ if __name__ == '__main__' :
     _NPRatio = ans[3]
     _VDD2VSSHeight = ans[4]
     _Dummy = ans[5]
-    _SLVT = ans[6]
+    _XVT = ans[6]
     _NumSupplyCOX = ans[7]
     _NumSupplyCOY = ans[8]
     _SupplyMet1XWidth = ans[9]
@@ -854,12 +864,12 @@ if __name__ == '__main__' :
     _Gatereverse = ans[15]
     _Bodycontact = False
     #print (_NumVIAMet12COY, _NumVIAMet12COX)
-    DesignParameters._Technology = '028nm'
+    #DesignParameters._Technology = '028nm'
 
     TransmissionGateObj = _TransmissionGate(_DesignParameter=None, _Name='TransmissionGate')
     #print ("A!!")
     TransmissionGateObj._CalculateTransmissionGate(_Finger=_Finger, _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength, _NPRatio=_NPRatio, _VDD2VSSHeight=_VDD2VSSHeight,
-                                   _Dummy=_Dummy, _SLVT=_SLVT, _NumSupplyCOX=_NumSupplyCOX, _NumSupplyCOY = _NumSupplyCOY, _SupplyMet1XWidth= _SupplyMet1XWidth,
+                                   _Dummy=_Dummy, _XVT=_XVT, _NumSupplyCOX=_NumSupplyCOX, _NumSupplyCOY = _NumSupplyCOY, _SupplyMet1XWidth= _SupplyMet1XWidth,
                                    _SupplyMet1YWidth=_SupplyMet1YWidth, _NumVIAPoly2Met1COX=_NumVIAPoly2Met1COX, _NumVIAPoly2Met1COY= _NumVIAPoly2Met1COY,
                                    _NumVIAMet12COX=_NumVIAMet12COX, _NumVIAMet12COY=_NumVIAMet12COY, _Gatereverse=_Gatereverse, _Bodycontact = True)
 
@@ -886,7 +896,7 @@ if __name__ == '__main__' :
 
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
     myfile = open('TransmissionGate.gds', 'rb')
     ftp.storbinary('STOR TransmissionGate.gds', myfile)
     myfile.close()

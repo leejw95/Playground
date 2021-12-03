@@ -207,13 +207,13 @@ class _PMOS(StickDiagram._StickDiagram):
         # XVT Layer Calculation
         try:
             if (DesignParameters._Technology == '028nm') and _XVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
-                _XVTLayer = '_' + _XVT + 'Layer'
-                _XVTLayerMappingName = _XVT
+                self._XVTLayer = '_' + _XVT + 'Layer'
+                self._XVTLayerMappingName = _XVT
             elif (DesignParameters._Technology == '065nm') and _XVT in ('LVT', 'HVT'):
-                _XVTLayer = '_P' + _XVT + 'Layer'
-                _XVTLayerMappingName = 'P' + _XVT
+                self._XVTLayer = '_P' + _XVT + 'Layer'
+                self._XVTLayerMappingName = 'P' + _XVT
             elif (DesignParameters._Technology == '065nm') and (_XVT == None):
-                _XVTLayer = None
+                self._XVTLayer = None
 
             elif DesignParameters._Technology == '028nm':
                 _XVT = _XVT if _XVT else "None"  # just for Error Message
@@ -223,11 +223,11 @@ class _PMOS(StickDiagram._StickDiagram):
             else:
                 raise NotImplementedError("Not Implemented in other technology : {}".format(DesignParameters._Technology))
 
-            if _XVTLayer != None:
-                print('#############################     {0} Layer Calculation    ##############################################'.format(_XVTLayer))
-                self._DesignParameter[_XVTLayer] = self._BoundaryElementDeclaration(
-                    _Layer=DesignParameters._LayerMapping[_XVTLayerMappingName][0],
-                    _Datatype=DesignParameters._LayerMapping[_XVTLayerMappingName][1],
+            if self._XVTLayer != None:
+                print('#############################     {0} Layer Calculation    ##############################################'.format(self._XVTLayer))
+                self._DesignParameter[self._XVTLayer] = self._BoundaryElementDeclaration(
+                    _Layer=DesignParameters._LayerMapping[self._XVTLayerMappingName][0],
+                    _Datatype=DesignParameters._LayerMapping[self._XVTLayerMappingName][1],
                     _XWidth=max(self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODX,
                                 _LengthPMOSBtwPO * (_PMOSNumberofGate + 1)),
                     _YWidth=self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._XvtMinEnclosureOfODY,

@@ -234,6 +234,12 @@ class DRCPOLYGATE:
             self._PolygateMinExtensionOnODX = 115  # PO.EX.2
             self._PolygateMinSpaceAtCorner=140 #S1/S2
             self._PODummyMinArea = 51000
+
+            self._OPlayeroverPoly = 0 ### Created by junung for OP layer rules
+            self._PolyoverOPlayer = 0 ### Created by junung for OP layer rules
+            self._PRESlayeroverPoly = 0 ### Created by junung for OP layer rules
+
+
         if DesignParameters._Technology=='090nm':
             self._PolygateMinWidth=100
             self._PolygateMinSpace=140
@@ -387,6 +393,10 @@ class DRCCO:
             self._CoMinEnclosureByODAtLeastTwoSide=30
             self._CoMinEnclosureByPO=40
             self._CoMinEnclosureByPOAtLeastTwoSide=40
+
+            ##Created By junung for OPLayer rules
+            self._CoMinSpace2OP = 0
+            self._CoMinEnclosureByPO2 = 30 ##only in poly for resistor? Created by junung
 
         if DesignParameters._Technology=='090nm':
             self._CoMinWidth=120
@@ -599,6 +609,7 @@ class DRCMETAL1:
             self._Metal1MinEnclosureCO = 5  #I
             self._Metal1MinEnclosureCO2 = 21  #J
             self._Metal1MinEnclosureCO3 = 12  ##FOR PRES, By junung
+            self._Metal1MinEnclosureCO4 = 12  ##FOR PRES, By junung
             self._Metal1MinEnclosureVia1 = 0
             self._Metal1MinEnclosureVia12 = 32
             self._Metal1MinEnclosureVia3 = 8  # iksu
@@ -617,6 +628,8 @@ class DRCMETAL1:
 
             self._Metal1MinEnclosureCO = 0
             self._Metal1MinEnclosureCO2 = 40
+            self._Metal1MinEnclosureCO3 = 40  ##FOR PRES, By junung
+            self._Metal1MinEnclosureCO4 = 0  ##FOR PRES, By junung
             self._Metal1MinEnclosureVia1 = 0
             self._Metal1MinEnclosureVia12 = 40
             self._Metal1MinEnclosureVia3 = 40

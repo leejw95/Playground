@@ -5,7 +5,7 @@ import DRC
 
 #
 #from Private import MyInfo
-import DRCchecker
+# import DRCchecker
 
 class _ViaPoly2Met1(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation= dict(_ViaPoly2Met1NumberOfCOX=None, _ViaPoly2Met1NumberOfCOY=None )

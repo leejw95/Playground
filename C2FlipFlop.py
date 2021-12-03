@@ -1537,7 +1537,13 @@ if __name__=='__main__':
     testStreamFile.close()
 
 
-
+    ftp = ftplib.FTP('141.223.22.156')
+    ftp.login('junung','chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+    myfile = open('autoFlipFlop_45.gds', 'rb')
+    ftp.storbinary('STOR autoFlipFlop_45.gds', myfile)
+    myfile.close()
+    ftp.close()
 
 
 # Consider output routing on PMOS DRC

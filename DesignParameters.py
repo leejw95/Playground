@@ -2,7 +2,7 @@ import re
 import user_define_exceptions
 import sys
 import os
-_Technology='028nm'
+_Technology='065nm'
 _CadenceServer = '141.223.86.110'
 #_CadenceServer = '141.223.22.156'
 if _Technology =='065nm':
@@ -245,11 +245,15 @@ print ('##########################    PRES Layer Mapping########################
 
 if _Technology == '028nm':
     _LayerMapping.update({'PRES':_LayerMappingTmp[('PRES', 'drawing')]})
+elif _Technology == '065nm':
+    _LayerMapping.update({'PRES': (None,None) })
 
 print ('##########################    OP Layer Mapping#####################################')
 
 if _Technology == '028nm':
     _LayerMapping.update({'OP':_LayerMappingTmp[('OP', 'drawing')]})
+elif _Technology == '065nm' :
+    _LayerMapping.update({'OP': _LayerMappingTmp[('RPDMY', 'drawing')]})
 
 
 print ('#############################   METAL1 Layer Mapping#################################')

@@ -1172,14 +1172,14 @@ if __name__ == '__main__':
 
         print ('###############      Sending to FTP Server...      ##################')
 
-    # import base64
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    # ftp.cwd('//mnt//sdc//junung//OPUS//Samsung28n')
-    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        import base64
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('junung','chlwnsdnd1!')
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        myfile.close()
+        ftp.close()
 
     # import ftplib
     # import base64
@@ -1198,12 +1198,12 @@ if __name__ == '__main__':
         # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         # myfile.close()
 
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('1joon', 'intelamd')
-        ftp.cwd('/mnt/sdd/1joon/OPUS/ss28')
-        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        myfile.close()
+        # ftp = ftplib.FTP('141.223.22.156')
+        # ftp.login('1joon', 'intelamd')
+        # ftp.cwd('/mnt/sdd/1joon/OPUS/ss28')
+        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        # myfile.close()
 
 
 

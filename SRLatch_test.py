@@ -708,6 +708,10 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         #####################################################Via Met1&Met2 Coordinates Setting###############################################################
         _LengthbtwViaCentertoViaCenter = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
+        # if DesignParameters._Technology == '028nm' :
+        #     _LengthbtwViaCentertoViaCenter = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
+        # elif DesignParameters._Technology != '028nm' :
+        #     _LengthbtwViaCentertoViaCenter = 0
         tmpViaMet12Met2OnPMOS = []
         tmpViaMet12Met2OnPMOSandMet212Met3OnPMOS = []
         for i in range(0, len(
@@ -1478,32 +1482,6 @@ class _SRLatch(StickDiagram._StickDiagram):
         del tmpMet2RoutingOnPMOS
         del tmpMet2RoutingOnNMOS
 
-        # tmpMet1OutputRouting = []
-        #
-        # tmpMet1OutputRouting.append([[self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][0],
-        #                               self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][1]], \
-        #                              [self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][2][0],
-        #                               self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][2][1]]])
-        # tmpMet1OutputRouting.append([[self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][0][0],
-        #                               self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][0][1]], \
-        #                              [self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][2][0],
-        #                               self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][2][1]]])
-        # tmpMet1OutputRouting.append([[self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][0],
-        #                               self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][1]], \
-        #                              [self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][3][0],
-        #                               self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][3][1]]])
-        # tmpMet1OutputRouting.append([[self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][1][0],
-        #                               self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][1][1]], \
-        #                              [self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][3][0],
-        #                               self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][3][1]]])
-        #
-        # self._DesignParameter['_Met1OutputRouting'] = self._PathElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],
-        #     _XYCoordinates=[], _Width=100)
-        # self._DesignParameter['_Met1OutputRouting']['_Width'] = _DRCObj._Metal1MinWidth
-        # self._DesignParameter['_Met1OutputRouting']['_XYCoordinates'] = tmpMet1OutputRouting
-        #
-        # del tmpMet1OutputRouting
 
         tmpMet2OutputRouting = []
         tmpMet4OutputRouting = []
@@ -1596,9 +1574,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                                              '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0],
                                          self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][3][1]]])
 
-        for j in range(0, len(
-                self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting'][
-                    '_XYCoordinates'])):
+        for j in range(0, len(self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'])):
             tmpMet2OutputRouting.append([[self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][j][0] +
                                           self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
@@ -1643,14 +1619,66 @@ class _SRLatch(StickDiagram._StickDiagram):
                                           self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter[
                                               '_Met2Layer']['_YWidth'] // 2 - _LengthbtwViaCentertoViaCenter // 2]])
 
-        self._DesignParameter['_Met2OutputRouting'] = self._PathElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],
-            _XYCoordinates=[], _Width=100)
+        self._DesignParameter['_Met2OutputRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met2OutputRouting']['_Width'] = _DRCObj._MetalxMinWidth
         self._DesignParameter['_Met2OutputRouting']['_XYCoordinates'] = tmpMet2OutputRouting
 
         del tmpMet2OutputRouting
         del tmpMet4OutputRouting
+
+        tmp = []
+        for i in range(0, len(self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'])):
+            tmp.append([[self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter[
+                                              '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][j][0] +
+                                          self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
+                                          self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1]], \
+                                         [self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter[
+                                              '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][j][0] +
+                                          self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
+                                          self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] -
+                                          self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter[
+                                              '_Met2Layer']['_YWidth'] // 2 - _LengthbtwViaCentertoViaCenter // 2]])
+
+            tmp.append([[self._DesignParameter['_PMOS3_r']['_DesignObj']._DesignParameter[
+                                              '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][j][0] +
+                                          self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0],
+                                          self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1]], \
+                                         [self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter[
+                                              '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][j][0] +
+                                          self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0],
+                                          self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] +
+                                          self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter[
+                                              '_Met2Layer']['_YWidth'] // 2 + _LengthbtwViaCentertoViaCenter // 2]])
+
+            tmp.append([[self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter[
+                                              '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][j][0] +
+                                          self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
+                                          self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1]], \
+                                         [self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter[
+                                              '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][j][0] +
+                                          self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
+                                          self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] +
+                                          self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter[
+                                              '_Met2Layer']['_YWidth'] // 2 + _LengthbtwViaCentertoViaCenter // 2]])
+
+            tmp.append([[self._DesignParameter['_NMOS3_r']['_DesignObj']._DesignParameter[
+                                              '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][j][0] +
+                                          self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0],
+                                          self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1]], \
+                                         [self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter[
+                                              '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][j][0] +
+                                          self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0],
+                                          self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] -
+                                          self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter[
+                                              '_Met2Layer']['_YWidth'] // 2 - _LengthbtwViaCentertoViaCenter // 2]])
+
+
+
+        self._DesignParameter['_Met2OutputRouting2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _Width=100)
+        self._DesignParameter['_Met2OutputRouting2']['_Width'] = _DRCObj._MetalxMinWidth
+        self._DesignParameter['_Met2OutputRouting2']['_XYCoordinates'] = tmp
+
+        del tmp
 
         #####################################################Via Met2&Met3 Generation & Coordinates Setting###############################################################
         _PMOSViaNum = NumViaPMOSMet22Met3CoY
@@ -1668,9 +1696,9 @@ class _SRLatch(StickDiagram._StickDiagram):
         _VIAPMOSMet23['_ViaMet22Met3NumberOfCOX'] = NumViaPMOSMet22Met3CoX
         _VIAPMOSMet23['_ViaMet22Met3NumberOfCOY'] = _PMOSViaNum
 
-        self._DesignParameter['_ViaMet22Met3OnPMOS'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3OnPMOSIn{}'.format(_Name)))[
-            0]
+        self._DesignParameter['_ViaMet22Met3OnPMOS'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3OnPMOSIn{}'.format(_Name)))[0]
+
+
         tmp = []
         for i in range(0, len(
                 self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting'][
@@ -1689,8 +1717,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                             '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1]])
 
         self._DesignParameter['_ViaMet22Met3OnPMOS']['_XYCoordinates'] = tmpViaMet12Met2OnPMOSandMet212Met3OnPMOS + tmp
-        self._DesignParameter['_ViaMet22Met3OnPMOS'][
-            '_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_VIAPMOSMet23)
+        self._DesignParameter['_ViaMet22Met3OnPMOS']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_VIAPMOSMet23)
+        if self._DesignParameter['_ViaMet22Met3OnPMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_ViaMet22Met3OnPMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_ViaMet22Met3OnPMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnPMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'], MinSnapSpacing)
+
         del tmp
         del _PMOSViaNum
         del _VIAPMOSMet23
@@ -1711,9 +1741,8 @@ class _SRLatch(StickDiagram._StickDiagram):
         _VIANMOSMet23['_ViaMet22Met3NumberOfCOX'] = NumViaNMOSMet22Met3CoX
         _VIANMOSMet23['_ViaMet22Met3NumberOfCOY'] = _NMOSViaNum
 
-        self._DesignParameter['_ViaMet22Met3OnNMOS'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3OnNMOSIn{}'.format(_Name)))[
-            0]
+        self._DesignParameter['_ViaMet22Met3OnNMOS'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3OnNMOSIn{}'.format(_Name)))[0]
+
         tmp = []
         for i in range(0, len(
                 self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting'][
@@ -1732,8 +1761,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                             '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1]])
 
         self._DesignParameter['_ViaMet22Met3OnNMOS']['_XYCoordinates'] = tmpViaMet12Met2OnNMOSandMet212Met3OnNMOS + tmp
-        self._DesignParameter['_ViaMet22Met3OnNMOS'][
-            '_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_VIANMOSMet23)
+        self._DesignParameter['_ViaMet22Met3OnNMOS']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_VIANMOSMet23)
+        if self._DesignParameter['_ViaMet22Met3OnNMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_ViaMet22Met3OnNMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] < _DRCObj._MetalxMinArea  :
+            self._DesignParameter['_ViaMet22Met3OnNMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnNMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], MinSnapSpacing)
+
         del tmp
         del _NMOSViaNum
         del _VIANMOSMet23
@@ -2171,16 +2202,15 @@ class _SRLatch(StickDiagram._StickDiagram):
         _VIANMOSMet23['_ViaMet22Met3NumberOfCOX'] = _NMOSViaNumX
         _VIANMOSMet23['_ViaMet22Met3NumberOfCOY'] = _NMOSViaNumY
 
-        self._DesignParameter['_AdditinalMet22Met3OnGate1'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-                                                  _Name='AdditionalViaMet22Met3OnGate1In{}'.format(_Name)))[0]
-        self._DesignParameter['_AdditinalMet22Met3OnGate1'][
-            '_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_VIANMOSMet23)
-        self._DesignParameter['_AdditinalMet22Met3OnGate1']['_XYCoordinates'] = [
-            [self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][0],
-             self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][1]], \
-            [self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][0],
-             self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][1]]]
+        self._DesignParameter['_AdditinalMet22Met3OnGate1'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='AdditionalViaMet22Met3OnGate1In{}'.format(_Name)))[0]
+        self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_VIANMOSMet23)
+        if self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], MinSnapSpacing)
+        if self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditinalMet22Met3OnGate1']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], MinSnapSpacing)
+
+        self._DesignParameter['_AdditinalMet22Met3OnGate1']['_XYCoordinates'] = [[self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][0], self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][1]], \
+                                                                                 [self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][0], self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][1]]]
 
         del _NMOSViaNumX
         del _NMOSViaNumY
@@ -2285,22 +2315,15 @@ class _SRLatch(StickDiagram._StickDiagram):
         _VIANMOSMet23['_ViaMet22Met3NumberOfCOX'] = _NMOSViaNumX
         _VIANMOSMet23['_ViaMet22Met3NumberOfCOY'] = _NMOSViaNumY
 
-        self._DesignParameter['_AdditionalMet22Met3OnGate3'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-                                                  _Name='AdditionalViaMet22Met3OnGate3In{}'.format(_Name)))[0]
-        self._DesignParameter['_AdditionalMet22Met3OnGate3'][
-            '_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_VIANMOSMet23)
-        self._DesignParameter['_AdditionalMet22Met3OnGate3']['_XYCoordinates'] = [
-             \
-            [self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][2][0],
-             self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] +
-             self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met2Layer'][
-                 '_YWidth'] // 2 + _tmpLength // 4 + _DRCObj._MetalxMinWidth * 3 // 2 + _DRCObj._MetalxMinSpace], \
-            [self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][0],
-             self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] -
-             self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met2Layer'][
-                 '_YWidth'] // 2 - _tmpLength // 4 - _DRCObj._MetalxMinWidth * 3 // 2 - _DRCObj._MetalxMinSpace]
-            ]
+        self._DesignParameter['_AdditionalMet22Met3OnGate3'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='AdditionalViaMet22Met3OnGate3In{}'.format(_Name)))[0]
+        self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_VIANMOSMet23)
+        if self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], MinSnapSpacing)
+        if self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditionalMet22Met3OnGate3']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], MinSnapSpacing)
+
+        self._DesignParameter['_AdditionalMet22Met3OnGate3']['_XYCoordinates'] = [[self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][2][0], self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 + _tmpLength // 4 + _DRCObj._MetalxMinWidth * 3 // 2 + _DRCObj._MetalxMinSpace], \
+                                                                                  [self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][0], self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] - self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 - _tmpLength // 4 - _DRCObj._MetalxMinWidth * 3 // 2 - _DRCObj._MetalxMinSpace]]
 
 
         del _NMOSViaNumX
@@ -2322,15 +2345,14 @@ class _SRLatch(StickDiagram._StickDiagram):
         _VIANMOSMet23['_ViaMet22Met3NumberOfCOX'] = _NMOSViaNumX
         _VIANMOSMet23['_ViaMet22Met3NumberOfCOY'] = _NMOSViaNumY
 
-        self._DesignParameter['_AdditionalMet22Met3'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-                                                  _Name='AdditionalViaMet22Met3In{}'.format(_Name)))[0]
-        self._DesignParameter['_AdditionalMet22Met3'][
-            '_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_VIANMOSMet23)
-        self._DesignParameter['_AdditionalMet22Met3']['_XYCoordinates'] = [
-            [self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][0][0] - _tmpLengthbtwViaCentertoViaCenter, (
-                        self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][1][1] +
-                        self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][1]) // 2]]
+        self._DesignParameter['_AdditionalMet22Met3'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='AdditionalViaMet22Met3In{}'.format(_Name)))[0]
+        self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_VIANMOSMet23)
+        if self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], MinSnapSpacing)
+        if self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditionalMet22Met3']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], MinSnapSpacing)
+
+        self._DesignParameter['_AdditionalMet22Met3']['_XYCoordinates'] = [[self._DesignParameter['_AdditionalMet32Met4OnGate3']['_XYCoordinates'][0][0] - _tmpLengthbtwViaCentertoViaCenter, (self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][1][1] + self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][1]) // 2]]
 
         del _NMOSViaNumX
         del _NMOSViaNumY
@@ -2838,23 +2860,6 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         del _ViaNumMet34
 
-        # _ViaNumMet23X = 2
-        # _ViaNumMet23Y = 1
-        #
-        # _ViaNumMet23 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-        # _ViaNumMet23['_ViaMet22Met3NumberOfCOX'] = _ViaNumMet23X
-        # _ViaNumMet23['_ViaMet22Met3NumberOfCOY'] = _ViaNumMet23Y
-        #
-        # self._DesignParameter['_VIAMet22Met3forRouting'] = self._SrefElementDeclaration(
-        #     _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-        #                                           _Name='VIAMet22Met3forRoutingIn{}'.format(_Name)))[0]
-        # self._DesignParameter['_VIAMet22Met3forRouting'][
-        #     '_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaNumMet23)
-        # self._DesignParameter['_VIAMet22Met3forRouting']['_XYCoordinates'] = [
-        #     [self._DesignParameter['_AdditionalMet12Met2OnGate3']['_XYCoordinates'][3][0],
-        #      self._DesignParameter['_AdditionalMet12Met2OnGate3']['_XYCoordinates'][3][1]]]
-        #
-        # del _ViaNumMet23
 
         _ViaNumMet34X = 2
         _ViaNumMet34Y = 1
@@ -2888,21 +2893,15 @@ class _SRLatch(StickDiagram._StickDiagram):
         _ViaNumMet23['_ViaMet22Met3NumberOfCOX'] = _ViaNumMet23X
         _ViaNumMet23['_ViaMet22Met3NumberOfCOY'] = _ViaNumMet23Y
 
-        self._DesignParameter['_VIAMet22Met3forRouting2'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-                                                  _Name='VIAMet22Met3forRouting2In{}'.format(_Name)))[0]
-        self._DesignParameter['_VIAMet22Met3forRouting2'][
-            '_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaNumMet23)
-        self._DesignParameter['_VIAMet22Met3forRouting2']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1'][
-                                                                                    '_XYCoordinates'][0][0], (
-                                                                                            self._DesignParameter[
-                                                                                                '_VIAPMOS1Poly2Met1'][
-                                                                                                '_XYCoordinates'][0][
-                                                                                                1] +
-                                                                                            self._DesignParameter[
-                                                                                                '_VIAPMOS1Poly2Met1'][
-                                                                                                '_XYCoordinates'][2][
-                                                                                                1]) // 2]]
+        self._DesignParameter['_VIAMet22Met3forRouting2'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='VIAMet22Met3forRouting2In{}'.format(_Name)))[0]
+        self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaNumMet23)
+        if self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], MinSnapSpacing)
+        if self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_VIAMet22Met3forRouting2']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], MinSnapSpacing)
+
+
+        self._DesignParameter['_VIAMet22Met3forRouting2']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], (self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][1] + self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][2][1]) // 2]]
 
         del _ViaNumMet23
 
@@ -2980,6 +2979,9 @@ class _SRLatch(StickDiagram._StickDiagram):
         ViaMet22Met3forRoutingoverVSS['_ViaMet22Met3NumberOfCOY'] = 2
         self._DesignParameter['_ViaMet22Met3forRoutingoverVSS'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3forRoutingoverVSSIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaMet22Met3forRoutingoverVSS']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**ViaMet22Met3forRoutingoverVSS)
+        if self._DesignParameter['_ViaMet22Met3forRoutingoverVSS']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_ViaMet22Met3forRoutingoverVSS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_ViaMet22Met3forRoutingoverVSS']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3forRoutingoverVSS']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], MinSnapSpacing)
+
 
 
 
@@ -3048,6 +3050,11 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         self._DesignParameter['_AdditionalMet22Met3OnMOS4'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='AdditionalMet22Met3OnMOS4In{}'.format(_Name)))[0]
         self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaMOS4Met23)
+        if self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], MinSnapSpacing)
+        if self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth']  < _DRCObj._MetalxMinArea :
+            self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], MinSnapSpacing)
+
         self._DesignParameter['_AdditionalMet22Met3OnMOS4']['_XYCoordinates'] = self._DesignParameter['_AdditionalMet32Met4OnMOS4']['_XYCoordinates']
 
         del _ViaMOS4Met23
@@ -3058,6 +3065,9 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         self._DesignParameter['_AdditionalMet12Met2OnMOS4'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='AdditionalMet12Met2OnMOS4In{}'.format(_Name)))[0]
         self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMOS4Met12)
+        if self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] :
+            self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], MinSnapSpacing)
+
         self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'] = [[self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalMet4Routing1']['_XYCoordinates'][0][0][1]],[self._DesignParameter['_AdditionalMet2Routing1']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalMet2Routing1']['_XYCoordinates'][0][0][1]]]
         del _ViaMOS4Met12
 

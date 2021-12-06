@@ -3080,40 +3080,12 @@ class _SRLatch(StickDiagram._StickDiagram):
         #####################################XVT Generation & Coordinates#######################################
         # XVT Layer Calculation
 
-        if (DesignParameters._Technology == '028nm') and _XVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
-            _XVTPMOSLayer = '_' + _XVT + 'Layer'
-            _XVTPMOSLayerMappingName = _XVT
-        elif (DesignParameters._Technology == '065nm') and _XVT in ('LVT', 'HVT'):
-            _XVTPMOSLayer = '_P' + _XVT + 'Layer'
-            _XVTPMOSLayerMappingName = 'P' + _XVT
-        elif (DesignParameters._Technology == '065nm') and (_XVT == None):
-            _XVTPMOSLayer = None
+        _XVTPMOSLayer = self._DesignParameter['_PMOS1']['_DesignObj']._XVTLayer
+        _XVTPMOSLayerMappingName = self._DesignParameter['_PMOS1']['_DesignObj']._XVTLayerMappingName
 
-        elif DesignParameters._Technology == '028nm':
-            _XVT = _XVT if _XVT else "None"  # just for Error Message
-            raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
-        elif DesignParameters._Technology == '065nm':
-            raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
-        else:
-            raise NotImplementedError("Not Implemented in other technology : {}".format(DesignParameters._Technology))
+        _XVTNMOSLayer = self._DesignParameter['_NMOS1']['_DesignObj']._XVTLayer
+        _XVTNMOSLayerMappingName = self._DesignParameter['_NMOS1']['_DesignObj']._XVTLayerMappingName
 
-        if (DesignParameters._Technology == '028nm') and _XVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
-            _XVTNMOSLayer = '_' + _XVT + 'Layer'
-            _XVTNMOSLayerMappingName = _XVT
-        elif (DesignParameters._Technology == '065nm') and _XVT in ('LVT', 'HVT'):
-            _XVTNMOSLayer = '_N' + _XVT + 'Layer'
-            _XVTNMOSLayerMappingName = 'N' + _XVT
-        elif (DesignParameters._Technology == '065nm') and (_XVT == None):
-            _XVTNMOSLayer = None
-
-        elif DesignParameters._Technology == '028nm':
-            _XVT = _XVT if _XVT else "None"  # just for Error Message
-            raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
-        elif DesignParameters._Technology == '065nm':
-            raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
-        else:
-            raise NotImplementedError(
-                "Not Implemented in other technology : {}".format(DesignParameters._Technology))
 
         if _XVT != None:
             self._DesignParameter['_XVTPMOSLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPMOSLayerMappingName][0], _Datatype=DesignParameters._LayerMapping[_XVTPMOSLayerMappingName][1], _XYCoordinates=[], _Width=None)
@@ -3166,7 +3138,7 @@ class _SRLatch(StickDiagram._StickDiagram):
             self._DesignParameter['_AdditionalNWLayer']['_XYCoordinates'] = [[self._DesignParameter['_NWLayer']['_XYCoordinates'][0][0],[self._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalPPLayer']['_XYCoordinates'][0][1][1]]],\
                                                                              [self._DesignParameter['_NWLayer']['_XYCoordinates'][1][0],[self._DesignParameter['_NWLayer']['_XYCoordinates'][1][0][0], self._DesignParameter['_AdditionalPPLayer']['_XYCoordinates'][1][1][1]]]]
 
-            self._DesignParameter['_AdditionalMet1Layerfor65nNMOS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None
+            self._DesignParameter['_AdditionalMet1Layerfor65nNMOS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=None, _YWidth=None)
             self._DesignParameter['_AdditionalMet1Layerfor65nNMOS']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
             self._DesignParameter['_AdditionalMet1Layerfor65nNMOS']['_YWidth'] = self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
 

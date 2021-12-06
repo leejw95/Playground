@@ -577,6 +577,23 @@ class _SRLatch(StickDiagram._StickDiagram):
                 print('_VDD2VSSMinHeightAtOneSide =', _VDD2VSSMinHeightAtOneSide)
                 raise NotImplementedError
 
+        self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_NMOS1_r']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_NMOS2_r']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_NMOS3_r']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_NMOS4_r']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+
+        self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_PMOS1_r']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_PMOS2_r']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_PMOS3_r']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        self._DesignParameter['_PMOS4_r']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
 
         #####################################################MOS Coordinates Setting###############################################################
 
@@ -2703,7 +2720,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                                                                                       '_XYCoordinates'][1][1]]]]
 
         self._DesignParameter['_AdditionalMet3Routing'] = self._PathElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],
+            DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],
             _XYCoordinates=[], _Width=None)
         self._DesignParameter['_AdditionalMet3Routing']['_Width'] = _DRCObj._MetalxMinWidth
         self._DesignParameter['_AdditionalMet3Routing']['_XYCoordinates'] = [[[self._DesignParameter[
@@ -3046,7 +3063,7 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 
         self._DesignParameter['_AdditionalMet1RoutingforMOS4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
-        self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_Width'] = _DRCObj._Metal1MinWidth
+        self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_Width'] = self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
         self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_XYCoordinates'] = [[[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]]], \
                                                                                     [[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]]]]
 
@@ -3138,13 +3155,6 @@ class _SRLatch(StickDiagram._StickDiagram):
             self._DesignParameter['_AdditionalNWLayer']['_XYCoordinates'] = [[self._DesignParameter['_NWLayer']['_XYCoordinates'][0][0],[self._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalPPLayer']['_XYCoordinates'][0][1][1]]],\
                                                                              [self._DesignParameter['_NWLayer']['_XYCoordinates'][1][0],[self._DesignParameter['_NWLayer']['_XYCoordinates'][1][0][0], self._DesignParameter['_AdditionalPPLayer']['_XYCoordinates'][1][1][1]]]]
 
-            self._DesignParameter['_AdditionalMet1Layerfor65nNMOS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=None, _YWidth=None)
-            self._DesignParameter['_AdditionalMet1Layerfor65nNMOS']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
-            self._DesignParameter['_AdditionalMet1Layerfor65nNMOS']['_YWidth'] = self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-
-            # tmp = []
-            # for i in range(0, len(self._DesignParameter['_NMO1']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'])) :
-            #     tmp.append()
 
 
         #####################################Pin Generation & Coordinates#######################################
@@ -3282,10 +3292,10 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    _Finger1 = 5
+    _Finger1 = 1
     _Finger2 = 1
-    _Finger3 = 2
-    _Finger4 = 2
+    _Finger3 = 1
+    _Finger4 = 1
 
     _NMOSChannelWidth = 500
     _NPRatio = 2
@@ -3305,7 +3315,7 @@ if __name__ == '__main__':
     from Private import MyInfo
     import DRCchecker
     libname = 'SRLatch'
-    cellname = 'SRLatch_test'
+    cellname = 'SRLatch'
     _fileName = cellname + '.gds'
 
     InputParams = dict(

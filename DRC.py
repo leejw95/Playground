@@ -126,6 +126,13 @@ class DRCPP:
             self._PpMinExtensiononPactive2 = 20  # PP.EX.2  Pactive2 -> for suppy rail (PW STRAP)
             self._PpMinEnclosureOfPo=150
             self._PpMinEnclosureOfPtypePoRes=200
+
+            self._PpMinSpacetoPRES = 170 ##ADDED BY Junung do not use
+            self._RXMinSpacetoPRES = 230 ##Added By Junung
+            self._RXMinSpacetoOP = 160 ## Added By Junung
+            self._PpMinArea = 160000 ## Added By Junung
+
+
         if DesignParameters._Technology=='090nm':
             self._PpMinWidth=240
             self._PpMinSpace=240
@@ -628,8 +635,8 @@ class DRCMETAL1:
 
             self._Metal1MinEnclosureCO = 0
             self._Metal1MinEnclosureCO2 = 40
-            self._Metal1MinEnclosureCO3 = 40  ##FOR PRES, By junung
-            self._Metal1MinEnclosureCO4 = 0  ##FOR PRES, By junung
+            self._Metal1MinEnclosureCO3 = 40  ##FOR PRES, By junung do not use
+            self._Metal1MinEnclosureCO4 = 0  ##FOR PRES, By junung do not use
             self._Metal1MinEnclosureVia1 = 0
             self._Metal1MinEnclosureVia12 = 40
             self._Metal1MinEnclosureVia3 = 40

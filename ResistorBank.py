@@ -48,7 +48,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                # _InverterSupplyMet1XWidth = None, _InverterSupplMet1YWidth = None, _InverterNumVIAPoly2Met1COX = None, _InverterNumVIAPoly2Met1COY = None,
                                # _InverterNumVIAMet12COX = None, _InverterNumVIAMet12COY = None,
                                _TransmissionGateFinger = None, _TransmissionGateChannelWidth = None, _TransmissionGateChannelLength = None, _TransmissionGateNPRatio = None,
-                               _TransmissionGateDummy = False , _TransmissionGateVDD2VSSHeight = None, _TransmissionGateSLVT = False,
+                               _TransmissionGateDummy = False , _TransmissionGateVDD2VSSHeight = None, _TransmissionGateXVT = None,
                                _PowerLine = False,
                                # _TransmissionGateNumSupplyCOX = None, _TransmissionGateNumSupplyCOY = None, _TransmissionGateSupplyMet1XWidth = None, _TransmissionGateSupplyMet1YWidth = None,
                                # _TransmissionGateNumVIAPoly2Met1COX = None, _TransmissionGateNumVIAPoly2Met1COY = None, _TransmissionGateNumVIAMet12COX = None, _TransmissionGateNumVIAMet12COY = None,
@@ -87,7 +87,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         _TransmissionGateinputs['_NPRatio'] = _TransmissionGateNPRatio
         _TransmissionGateinputs['_Dummy'] = _TransmissionGateDummy
         _TransmissionGateinputs['_VDD2VSSHeight'] = _TransmissionGateVDD2VSSHeight
-        _TransmissionGateinputs['_SLVT'] = _TransmissionGateSLVT
+        _TransmissionGateinputs['_XVT'] = _TransmissionGateXVT
         _TransmissionGateinputs['_SupplyMet1YWidth'] = _NMOSSubringWidth
         _TransmissionGateinputs['_Gatereverse'] = False
         _TransmissionGateinputs['_Bodycontact'] = False
@@ -384,25 +384,26 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         ##Additional SLVT Generation
         # self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
-        if _TransmissionGateFinger == 1 or _TransmissionGateFinger == 2 :
-            self._DesignParameter['_SLVTLayerNMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
-            self._DesignParameter['_SLVTLayerNMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
-            _LengthOfSLVT = _DRCObj._SlvtMinArea2 // self._DesignParameter['_SLVTLayerNMOS']['_Width'] + 2
+        if DesignParameters._Technology == '028nm' :
+            if _TransmissionGateFinger == 1 or _TransmissionGateFinger == 2 :
+                self._DesignParameter['_SLVTLayerNMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
+                self._DesignParameter['_SLVTLayerNMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
+                _LengthOfSLVT = _DRCObj._SlvtMinArea2 // self._DesignParameter['_SLVTLayerNMOS']['_Width'] + 2
+                
+                self._DesignParameter['_SLVTLayerNMOS']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] - _LengthOfSLVT // 2 - 1,
+                                                                                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1]],
+                                                                                [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] + _LengthOfSLVT // 2 + 1,
+                                                                                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1]]]]
             
-            self._DesignParameter['_SLVTLayerNMOS']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] - _LengthOfSLVT // 2 - 1,
-                                                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1]],
-                                                                            [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] + _LengthOfSLVT // 2 + 1,
-                                                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1]]]]
-        
-        if (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] *
-            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']) < _DRCObj._SlvtMinArea2 :
-            self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
-            self._DesignParameter['_SLVTLayerPMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
-            _LengthOfSLVT = _DRCObj._SlvtMinArea2 // self._DesignParameter['_SLVTLayerPMOS']['_Width'] + 2
-            self._DesignParameter['_SLVTLayerPMOS']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] - _LengthOfSLVT // 2 - 1,
-                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1]],
-                                                                        [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] + _LengthOfSLVT // 2 + 1,
-                                                                        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1]]]]
+            if (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] *
+                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']) < _DRCObj._SlvtMinArea2 :
+                self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
+                self._DesignParameter['_SLVTLayerPMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
+                _LengthOfSLVT = _DRCObj._SlvtMinArea2 // self._DesignParameter['_SLVTLayerPMOS']['_Width'] + 2
+                self._DesignParameter['_SLVTLayerPMOS']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] - _LengthOfSLVT // 2 - 1,
+                                                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1]],
+                                                                            [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] + _LengthOfSLVT // 2 + 1,
+                                                                            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1]]]]
         # _GapBtwPMOS = abs(self._DesignParameter['_InverterRB']['_DesignObj']._DesignParameter['_PMOSINV']['_XYCoordinates'][0][1] - self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1])
         # _GapBtwNMOS = abs(self._DesignParameter['_InverterRB']['_DesignObj']._DesignParameter['_NMOSINV']['_XYCoordinates'][0][1] - self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1])
         # if _GapBtwPMOS % 2 == 1 :
@@ -1272,13 +1273,13 @@ if __name__ == '__main__' :
     # _InverterVDD2VSSHeight = 2252 ## SHOULD BE FIXED OVER MIN VALUE
     # _InverterSLVT = True     #T/F?
 
-    _TransmissionGateFinger = 1
-    _TransmissionGateChannelWidth = 275
-    _TransmissionGateChannelLength = 30
+    _TransmissionGateFinger = 8
+    _TransmissionGateChannelWidth = 500
+    _TransmissionGateChannelLength = 60
     _TransmissionGateNPRatio = 2
     _TransmissionGateDummy = True     #T/F?
-    _TransmissionGateVDD2VSSHeight = 3498 ## FIXED
-    _TransmissionGateSLVT = True     #T/F?
+    _TransmissionGateVDD2VSSHeight = 5532 ## FIXED
+    _TransmissionGateXVT = 'LVT'     #T/F?
 
     _PowerLine = True
 
@@ -1302,7 +1303,7 @@ if __name__ == '__main__' :
     _TotalSubringYWidth = None ## FIXED
     _TotalSubringWidth = 170
 
-    DesignParameters._Technology = '028nm'
+    #DesignParameters._Technology = '028nm'
 
     ResistorBankObj = _ResistorBank(_DesignParameter=None, _Name='ResistorBank')
     #print ("A!!")
@@ -1313,7 +1314,7 @@ if __name__ == '__main__' :
                                # _InverterSupplyMet1XWidth = None, _InverterSupplMet1YWidth = None, _InverterNumVIAPoly2Met1COX = None, _InverterNumVIAPoly2Met1COY = None,
                                # _InverterNumVIAMet12COX = None, _InverterNumVIAMet12COY = None,
                                _TransmissionGateFinger =_TransmissionGateFinger, _TransmissionGateChannelWidth = _TransmissionGateChannelWidth, _TransmissionGateChannelLength = _TransmissionGateChannelLength, _TransmissionGateNPRatio =_TransmissionGateNPRatio,
-                               _TransmissionGateDummy = _TransmissionGateDummy , _TransmissionGateVDD2VSSHeight = _TransmissionGateVDD2VSSHeight, _TransmissionGateSLVT = _TransmissionGateSLVT,
+                               _TransmissionGateDummy = _TransmissionGateDummy , _TransmissionGateVDD2VSSHeight = _TransmissionGateVDD2VSSHeight, _TransmissionGateXVT = _TransmissionGateXVT,
                                _PowerLine = _PowerLine,
                                # _TransmissionGateNumSupplyCOX = None, _TransmissionGateNumSupplyCOY = None, _TransmissionGateSupplyMet1XWidth = None, _TransmissionGateSupplyMet1YWidth = None,
                                # _TransmissionGateNumVIAPoly2Met1COX = None, _TransmissionGateNumVIAPoly2Met1COY = None, _TransmissionGateNumVIAMet12COX = None, _TransmissionGateNumVIAMet12COY = None,
@@ -1346,7 +1347,8 @@ if __name__ == '__main__' :
 
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
     myfile = open('ResistorBank.gds', 'rb')
     ftp.storbinary('STOR ResistorBank.gds', myfile)
     myfile.close()

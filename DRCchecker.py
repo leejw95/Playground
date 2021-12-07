@@ -109,20 +109,20 @@ class DRCchecker:
                     print('No DRC ERROR for this case, deleting library...')
         
         if DesignParameters._Technology == '065nm' :
-            for line in (file.readlines()[-1:0]):        # 'TOTAL DRC Results Generated:   656 (656)\n'
-                print(line)
-                if line.split()[4] != '0':
-                    raise Exception("DRC ERROR!!!")
+            line = (file.readlines()[-1])        # 'TOTAL DRC Results Generated:   656 (656)\n'
+            print(line)
+            if line.split()[4] != '0':
+                raise Exception("DRC ERROR!!!")
 
-                else:
+            else:
                     # commandlines5 = "cd {0}; sed -i '1s,.*,ddDeleteLocal(ddGetObj(\"{1}\" \"\" \"\" \"\")),' Skillcode.il"
                     # stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
                     # print (''.join(stdout.read()))
                     # commandlines6 = "cd {0}; source setup.cshrc; virtuoso -nograph -restore Skillcode.il"
                     # stdin, stdout, stderr = ssh.exec_command(commandlines6.format(self.WorkDir))
-                    commandlines5 = "cd {0}; rm -r {1}"
-                    stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
-                    print('No DRC ERROR for this case, deleting library...')
+                commandlines5 = "cd {0}; rm -r {1}"
+                stdin, stdout, stderr = ssh.exec_command(commandlines5.format(self.WorkDir, self.libname))
+                print('No DRC ERROR for this case, deleting library...')
 
         ssh.close()
         print(''.center(105, '#'))

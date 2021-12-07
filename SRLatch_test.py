@@ -661,10 +661,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                                           self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]])
-            tmpViaMet12Met2OnPMOS.append([self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[
+            tmpViaMet12Met2OnPMOS.append([self._DesignParameter['_PMOS1_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][0], \
-                                          self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[
+                                          self._DesignParameter['_PMOS1_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1]])
         for i in range(0, len(
@@ -676,10 +676,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                                           self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1]])
-            tmpViaMet12Met2OnPMOS.append([self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter[
+            tmpViaMet12Met2OnPMOS.append([self._DesignParameter['_PMOS2_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][0], \
-                                          self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter[
+                                          self._DesignParameter['_PMOS2_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1]])
         for i in range(0, len(
@@ -691,10 +691,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                                           self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1]])
-            tmpViaMet12Met2OnPMOS.append([self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter[
+            tmpViaMet12Met2OnPMOS.append([self._DesignParameter['_PMOS4_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][0], \
-                                          self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter[
+                                          self._DesignParameter['_PMOS4_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1]])
         for i in range(0, len(
@@ -707,10 +707,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_PMOS3']['_XYCoordinates'][0][
                                               1] - _LengthbtwViaCentertoViaCenter // 4, MinSnapSpacing)])
-            tmpViaMet12Met2OnPMOS.append([self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter[
+            tmpViaMet12Met2OnPMOS.append([self._DesignParameter['_PMOS3_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0], \
-                                          self.CeilMinSnapSpacing(self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter[
+                                          self.FloorMinSnapSpacing(self._DesignParameter['_PMOS3_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][
                                               1] + _LengthbtwViaCentertoViaCenter // 4, MinSnapSpacing)])
@@ -734,10 +734,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                                           self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1]])
-            tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter[
+            tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS1_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][0], \
-                                          self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter[
+                                          self._DesignParameter['_NMOS1_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1]])
         for i in range(0, len(
@@ -749,10 +749,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                                           self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1]])
-            tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter[
+            tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS2_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][0], \
-                                          self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter[
+                                          self._DesignParameter['_NMOS2_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1]])
         for i in range(0, len(
@@ -761,13 +761,13 @@ class _SRLatch(StickDiagram._StickDiagram):
             tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0], \
-                                          self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter[
+                                          self.FloorMinSnapSpacing(self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
-                                          self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1]])
-            tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter[
+                                          self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1], MinSnapSpacing)])
+            tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS4_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][0], \
-                                          self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter[
+                                          self._DesignParameter['_NMOS4_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1]])
         for i in range(0, len(
@@ -780,10 +780,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_NMOS3']['_XYCoordinates'][0][
                                               1] + _LengthbtwViaCentertoViaCenter // 4, MinSnapSpacing)])
-            tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter[
+            tmpViaMet12Met2OnNMOS.append([self._DesignParameter['_NMOS3_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][0] +
                                           self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0], \
-                                          self.CeilMinSnapSpacing(self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter[
+                                          self.CeilMinSnapSpacing(self._DesignParameter['_NMOS3_r']['_DesignObj']._DesignParameter[
                                               '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1] +
                                           self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][
                                               1] - _LengthbtwViaCentertoViaCenter // 4, MinSnapSpacing)])
@@ -1389,10 +1389,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                         self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[
                             '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1]])
             tmp.append([self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][0] +
-                        self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[
+                        self._DesignParameter['_PMOS1_r']['_DesignObj']._DesignParameter[
                             '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0],
                         self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1] +
-                        self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[
+                        self._DesignParameter['_PMOS1_r']['_DesignObj']._DesignParameter[
                             '_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1]])
 
         self._DesignParameter['_ViaMet22Met3OnPMOS']['_XYCoordinates'] = tmpViaMet12Met2OnPMOSandMet212Met3OnPMOS + tmp
@@ -1432,10 +1432,10 @@ class _SRLatch(StickDiagram._StickDiagram):
                         self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter[
                             '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1]])
             tmp.append([self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][0] +
-                        self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter[
+                        self._DesignParameter['_NMOS1_r']['_DesignObj']._DesignParameter[
                             '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][0],
                         self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1] +
-                        self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter[
+                        self._DesignParameter['_NMOS1_r']['_DesignObj']._DesignParameter[
                             '_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1]])
 
         self._DesignParameter['_ViaMet22Met3OnNMOS']['_XYCoordinates'] = tmpViaMet12Met2OnNMOSandMet212Met3OnNMOS + tmp
@@ -2877,13 +2877,13 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    for i in range(1,2) :
+    for i in range(1,5) :
         _Finger1 = random.randint(1, 16)
         _Finger2 = random.randint(1, 16)
         _Finger3 = random.randint(1, 16)
         _Finger4 = random.randint(1, 16)
         _NPRatio = 3##round(2 + random.random())
-        _SRRandWidth = random.randrange(505,1000,10)
+        _SRRandWidth = 635#random.randrange(500,1500,10)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
@@ -2942,19 +2942,31 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print('#############################      Sending to FTP Server...      #############################')
-        My = MyInfo.USER(DesignParameters._Technology)
-        Checker = DRCchecker.DRCchecker(
-            username=My.ID,
-            password=My.PW,
-            WorkDir=My.Dir_Work,
-            DRCrunDir=My.Dir_DRCrun,
-            libname=libname,
-            cellname=cellname,
-            GDSDir=My.Dir_GDS
-        )
-        Checker.Upload2FTP()
-        Checker.StreamIn(tech=DesignParameters._Technology)
+        # print('#############################      Sending to FTP Server...      #############################')
+        # My = MyInfo.USER(DesignParameters._Technology)
+        # Checker = DRCchecker.DRCchecker(
+        #     username=My.ID,
+        #     password=My.PW,
+        #     WorkDir=My.Dir_Work,
+        #     DRCrunDir=My.Dir_DRCrun,
+        #     libname=libname,
+        #     cellname=cellname,
+        #     GDSDir=My.Dir_GDS
+        # )
+        # Checker.Upload2FTP()
+        # Checker.StreamIn(tech=DesignParameters._Technology)
+
+        import ftplib
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+        myfile = open('SRLatch.gds', 'rb')
+        ftp.storbinary('STOR SRLatch.gds', myfile)
+        myfile.close()
 
 
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SRLatch','SRLatch',None)
+        a.DRCchecker()
 
+    print ("DRC Clean!!!")

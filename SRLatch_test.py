@@ -2877,7 +2877,7 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    for i in range(1,101) :
+    for i in range(1,2) :
         _Finger1 = random.randint(1, 16)
         _Finger2 = random.randint(1, 16)
         _Finger3 = random.randint(1, 16)
@@ -2888,7 +2888,7 @@ if __name__ == '__main__':
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
 
-        _ChannelLength = 60
+        _ChannelLength = 40
 
         _VDD2VSSHeightAtOneSide = None
         _NumSupplyCoX = None

@@ -307,7 +307,7 @@ class _PMOS(StickDiagram._StickDiagram):
                   _XYCoordinateOfPMOS[0][1]],
                 [0 - (self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2,
                  _XYCoordinateOfPMOS[0][1]]
-            ]t
+            ]
 
 
             print('     POLayer Pin Generation & Coordinates     '.center(105,'#'))

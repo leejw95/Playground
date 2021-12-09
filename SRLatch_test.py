@@ -2883,19 +2883,19 @@ if __name__ == '__main__':
         _Finger3 = 3##random.randint(1, 16)
         _Finger4 = 4##random.randint(1, 16)
         _NPRatio = 3##round(2 + random.random())
-        _SRRandWidth = 600##random.randrange(500,1500,10)
+        _SRRandWidth = 300##random.randrange(500,1500,10)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
 
-        _ChannelLength = 60
+        _ChannelLength = 40
 
         _VDD2VSSHeightAtOneSide = None
         _NumSupplyCoX = None
         _NumSupplyCoY = None
 
 
-        _Dummy = False
+        _Dummy = True
         _XVT = 'LVT'
         _PowerLine = False
 

@@ -179,6 +179,8 @@ class DRCchecker:
             TechFile = 'cmos28lp'
         elif tech == '065nm':
             TechFile = 'tsmcN65'
+        elif tech == '045nm' :
+            TechFile = 'tsmcN45'
         else:
             raise NotImplemented
         filename = self.cellname + '.gds'

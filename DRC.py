@@ -201,6 +201,8 @@ class DRCPOLYGATE:
             self._PolygateOnODMinWidth2=160
             self._PolygateOnODMinWidth3=200
             self._PolygateMinSpaceAtCorner=110
+            self._PolygateMinExtensionOnODX = 90
+            self._PODummyMinArea = 22000
 
         if DesignParameters._Technology=='028nm':
             self._PolygateMinWidth=30
@@ -285,6 +287,8 @@ class DRCPOLYGATE:
             elif _ChannelLength >= 90 :
                 return self._PolygateMinExtensionOnOD3
         if DesignParameters._Technology == '065nm':
+            return self._PolygateMinExtensionOnOD
+        if DesignParameters._Technology == '045nm':
             return self._PolygateMinExtensionOnOD
 
 
@@ -2025,6 +2029,12 @@ class DRCXVT:
             self._XvtMinArea = 270000         # VTL_N_A_1 = VTL_N_A_2
             # self._XvtMinArea2 = 160000
 
+        elif DesignParameters._Technology == '045nm':
+            self._XvtMinWidth = 180           # VTL_N_W_1
+            self._XvtMinSpace = 180           # VTL_N_S_1 (there are other space rules)
+            self._XvtMinEnclosureOfODX = 30   # This value is calculated by VTL_N_EN1(horizontal direction)
+            self._XvtMinEnclosureOfODY = 80  # VTL_N_EN2 (vertical direction)
+            self._XvtMinArea = 190000         # VTL_N_A_1 = VTL_N_A_2
 
 class DRC(DRCMultiplicantForMinEdgeWidth, DRCOD, DRCPOLYGATE, DRCPP, DRCNP, DRCCO, DRCMETAL1, DRCMETALy, DRCVIAy, DRCMETALz, DRCVIAz, DRCMETALr, DRCVIAr, DRCNW, DRCVIAx,DRCMETALx, DRCMinSnapSpacing, DRCRPO, DRCSLVT, DRCXVT):
     def __init__(self ):

@@ -214,12 +214,21 @@ class _PMOS(StickDiagram._StickDiagram):
                 self._XVTLayerMappingName = 'P' + _XVT
             elif (DesignParameters._Technology == '065nm') and (_XVT == None):
                 self._XVTLayer = None
+            elif (DesignParameters._Technology == '045nm') and _XVT in ('LVT', 'HVT'):
+                self._XVTLayer = '_P' + _XVT + 'Layer'
+                self._XVTLayerMappingName = 'P' + _XVT
+            elif (DesignParameters._Technology == '045nm') and (_XVT == None):
+                self._XVTLayer = None
+
 
             elif DesignParameters._Technology == '028nm':
                 _XVT = _XVT if _XVT else "None"  # just for Error Message
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
             elif DesignParameters._Technology == '065nm':
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
+            elif DesignParameters._Technology == '045nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 045nm".format(_XVT))
+
             else:
                 raise NotImplementedError("Not Implemented in other technology : {}".format(DesignParameters._Technology))
 
@@ -298,7 +307,7 @@ class _PMOS(StickDiagram._StickDiagram):
                   _XYCoordinateOfPMOS[0][1]],
                 [0 - (self._DesignParameter['_ODLayer']['_XWidth'] / 2 + (self._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_POLayer']['_XWidth'] / 2)) / 2,
                  _XYCoordinateOfPMOS[0][1]]
-            ]
+            ]t
 
 
             print('     POLayer Pin Generation & Coordinates     '.center(105,'#'))

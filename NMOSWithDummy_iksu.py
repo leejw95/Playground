@@ -213,12 +213,22 @@ class _NMOS(StickDiagram._StickDiagram):
             elif (DesignParameters._Technology == '065nm') and (_XVT == None):
                 self._XVTLayer = None
                 self._XVTLayerMappingName = None
+            elif (DesignParameters._Technology == '045nm') and _XVT in ('LVT', 'HVT'):
+                self._XVTLayer = '_N' + _XVT + 'Layer'
+                self._XVTLayerMappingName = 'N' + _XVT
+            elif (DesignParameters._Technology == '045nm') and (_XVT == None):
+                self._XVTLayer = None
+                self._XVTLayerMappingName = None
+
 
             elif DesignParameters._Technology == '028nm':
                 _XVT = _XVT if _XVT else "None"  # just for Error Message
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
             elif DesignParameters._Technology == '065nm':
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
+            elif DesignParameters._Technology == '045nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 045nm".format(_XVT))
+
             else:
                 raise NotImplementedError("Not Yet Implemented in other technology : {}".format(DesignParameters._Technology))
 
@@ -274,6 +284,20 @@ class _NMOS(StickDiagram._StickDiagram):
             )
         else:
             pass
+
+        if DesignParameters._Technology == '045nm':
+            print ('################################     PDK Layer Calculation    ############################################')
+            self._DesignParameter['_PDKLayer'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['PDK'][0],
+                _Datatype=DesignParameters._LayerMapping['PDK'][1],
+                _XWidth=self._DesignParameter['_NPLayer']['_XWidth'],
+                _YWidth=self._DesignParameter['_NPLayer']['_YWidth'],
+                _XYCoordinates=_XYCoordinateOfNMOS
+            )
+        else:
+            pass
+
+
 
         print ('#########################     Supply Routing Coordinates Calculation   ##################################')
         tmpXYs = []

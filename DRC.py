@@ -2032,7 +2032,7 @@ class DRCXVT:
         elif DesignParameters._Technology == '045nm':
             self._XvtMinWidth = 180           # VTL_N_W_1
             self._XvtMinSpace = 180           # VTL_N_S_1 (there are other space rules)
-            self._XvtMinEnclosureOfODX = 30   # This value is calculated by VTL_N_EN1(horizontal direction)
+            self._XvtMinEnclosureOfODX = 50   # This value is calculated by VTL_N_EN1(horizontal direction)
             self._XvtMinEnclosureOfODY = 80  # VTL_N_EN2 (vertical direction)
             self._XvtMinArea = 190000         # VTL_N_A_1 = VTL_N_A_2
 

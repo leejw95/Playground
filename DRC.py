@@ -101,6 +101,7 @@ class DRCPP:
             self._PpMinWidth=180
             self._PpMinSpace=180
             self._PpMinExtensiononPactive=80
+            self._PpMinExtensiononPactive2 = 20
             self._PpMinEnclosureOfPo=110
             self._PpMinEnclosureOfPtypePoRes=140
         if DesignParameters._Technology == '028nm':
@@ -158,6 +159,7 @@ class DRCNP:
             self._NpMinWidth=180
             self._NpMinSpace=180
             self._NpMinExtensiononNactive=80
+            self._NpMinExtensiononNactive2 = 20  # Nactive2 -> for supply rail
             self._NpMinEnclosureOfPo=110
         if DesignParameters._Technology == '028nm': # There is no NP layer in 28nm, junung
             self._NpMinWidth = 180

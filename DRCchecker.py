@@ -123,7 +123,7 @@ class DRCchecker:
             if line.split()[4] != '0':
                 raise Exception("DRC ERROR!!!")
 
-        if DesignParameters._Technology == '065nm':
+        if DesignParameters._Technology == '045nm':
             line = (file.readlines()[-1])  # 'TOTAL DRC Results Generated:   656 (656)\n'
             print(line)
             if line.split()[4] != '0':

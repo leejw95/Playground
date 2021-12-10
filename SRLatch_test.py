@@ -1369,12 +1369,12 @@ class _SRLatch(StickDiagram._StickDiagram):
         del tmpViaMet12Met2OnNMOSandMet212Met3OnNMOS
 
         self._DesignParameter['_Met3RoutingOnPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met3RoutingOnPMOS']['_Width'] = _DRCObj._VIAxMinWidth
+        self._DesignParameter['_Met3RoutingOnPMOS']['_Width'] = _DRCObj._MetalxMinWidth
         self._DesignParameter['_Met3RoutingOnPMOS']['_XYCoordinates'] = [[[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]], [self.CeilMinSnapSpacing(self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0] + _DRCObj._MetalxMinWidth // 2, MinSnapSpacing), self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1]]], \
                                                                          [[self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS1_r']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1]], [self.CeilMinSnapSpacing(self._DesignParameter['_PMOS4_r']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][0] + _DRCObj._MetalxMinWidth // 2, MinSnapSpacing), self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1]]]]
 
         self._DesignParameter['_Met3RoutingOnNMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met3RoutingOnNMOS']['_Width'] = _DRCObj._VIAxMinWidth
+        self._DesignParameter['_Met3RoutingOnNMOS']['_Width'] = _DRCObj._MetalxMinWidth
         self._DesignParameter['_Met3RoutingOnNMOS']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1]], [self.CeilMinSnapSpacing(self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0] + _DRCObj._MetalxMinWidth // 2 + _DRCObj._MetalxMinSpace, MinSnapSpacing), self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][1] + self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1]]], \
                                                                          [[self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS1_r']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1]], [self.CeilMinSnapSpacing(self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0] + self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][0] + _DRCObj._MetalxMinWidth // 2 + _DRCObj._MetalxMinSpace, MinSnapSpacing), self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1]]]]
 
@@ -2778,7 +2778,7 @@ if __name__ == '__main__':
         _Finger3 = 1#random.randint(1, 16)
         _Finger4 = 1#random.randint(1, 16)
         _NPRatio = 3#round(2 + random.random())
-        _SRRandWidth = 600#random.randrange(200,400,3)
+        _SRRandWidth = 600#random.randrange(600,1500,10)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
@@ -2850,7 +2850,7 @@ if __name__ == '__main__':
         )
         Checker.Upload2FTP()
         Checker.StreamIn(tech=DesignParameters._Technology)
-        #
+        # #
         # import ftplib
         # ftp = ftplib.FTP('141.223.22.156')
         # ftp.login('jicho0927', 'cho89140616!!')
@@ -2887,6 +2887,22 @@ if __name__ == '__main__':
     #
     #     import DRCchecker
     #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SRLatch','SRLatch',None)
+    #     a.DRCchecker()
+    #
+    #
+    # print ("DRC Clean!!!")
+
+    #    import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
+    #     myfile = open('SRLatch.gds', 'rb')
+    #     ftp.storbinary('STOR SRLatch.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','SRLatch','SRLatch',None)
     #     a.DRCchecker()
     #
     #

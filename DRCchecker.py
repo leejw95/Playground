@@ -75,13 +75,11 @@ class DRCchecker:
             result2 = stdout.read().decode('utf-8')
         if DesignParameters._Technology == '045nm':
             commandlines2 = "cd {0}; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/tsmc40/tsmcN45/tsmcN45.layermap' -case 'Preserve' -convertDot 'node'"
-            stdin, stdout, stderr = ssh.exec_command(
-            commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
+            stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
             result2 = stdout.read().decode('utf-8')
         if DesignParameters._Technology == '090nm':
             commandlines2 = "cd {0}; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/tsmc90/tsmcN90rf/tsmcN90rf.layermap' -case 'Preserve' -convertDot 'node'"
-            stdin, stdout, stderr = ssh.exec_command(
-            commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
+            stdin, stdout, stderr = ssh.exec_command(commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
             result2 = stdout.read().decode('utf-8')
 
 

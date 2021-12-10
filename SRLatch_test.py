@@ -2740,7 +2740,7 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    for i in range(1,10) :
+    for i in range(1,101) :
         _Finger1 = random.randint(1, 16)
         _Finger2 = random.randint(1, 16)
         _Finger3 = random.randint(1, 16)
@@ -2797,13 +2797,13 @@ if __name__ == '__main__':
         )
 
 
-        # LayoutObj = _SRLatch(_DesignParameter=None, _Name=cellname)
-        # LayoutObj._CalculateDesignParameter(**InputParams)
-        # LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
-        # testStreamFile = open('./{}'.format(_fileName), 'wb')
-        # tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
-        # tmp.write_binary_gds_stream(testStreamFile)
-        # testStreamFile.close()
+        LayoutObj = _SRLatch(_DesignParameter=None, _Name=cellname)
+        LayoutObj._CalculateDesignParameter(**InputParams)
+        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
         #
         # print('#############################      Sending to FTP Server...      #############################')
         # My = MyInfo.USER(DesignParameters._Technology)

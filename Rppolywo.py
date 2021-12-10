@@ -40,6 +40,7 @@ class _RPPOLYWOSegment(StickDiagram._StickDiagram):
 
     def _CalculateDesignParameter(self, _NumberOfCOX=None,  _ResXWidth=None, _ResYWidth=None):
         _DRCObj=DRC.DRC()
+        _MinSnapSpacing = _DRCObj._MinSnapSpacing
         ###############################################Check the number of CO ###########################################################################################
         if _NumberOfCOX ==0 :
             print ('************************* Error occured in {} Design Parameter Calculation******************************'.format(self._DesignParameter['_Name']['_Name']))
@@ -52,7 +53,8 @@ class _RPPOLYWOSegment(StickDiagram._StickDiagram):
             if DesignParameters._DebugMode == 0:
                 return 0
         ###############################################################################################################################################################################
-
+        if _ResXWidth % (2 * _MinSnapSpacing) != 0 or _ResYWidth % (2 * _MinSnapSpacing) != 0 :
+            raise Exception ("Design Rule Error!!")
         _XYCoordinateOfTheDesign = [[0,0]]
 
         print ('#############################     Cont Layer Calculation   ##############################################')

@@ -1,4 +1,3 @@
-from re import S
 import StickDiagram
 import DesignParameters
 import copy
@@ -29,6 +28,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
         if _Name == None :
             self._DesignParameter['_Name']['_Name'] = _Name
+
+    #def metalordoping (self, ) :
+
 
     def _CalculateTransmissionGate (self, _Finger = None, _ChannelWidth = None, _ChannelLength = None, _NPRatio = None, _VDD2VSSHeight = None, _Dummy = False,
                             _XVT = None, _Gatereverse = False, _NumSupplyCOX=None, _NumSupplyCOY=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None,
@@ -371,7 +373,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         #         self._DesignParameter['_AddPPLayer']['_XWidth'] = self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']
         #         self._DesignParameter['_AddPPLayer']['_YWidth'] = self._DesignParameter['_ControlPMOSRoutingXTG']['_Width'] + _DRCObj._PpMinEnclosureOfPo * 2
 
-                
+        
 
 
                 
@@ -381,8 +383,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
         if (_Gatereverse == False) :
             #if (_ChannelWidth * _NPRatio <= 700) :
-            if DesignParameters._Technology == '028nm' : # set vdd/vss height according to metal 1 layer at 28nm tech., doping layer at else.
-                _VDD2VSSMinHeight = (self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
+            #if DesignParameters._Technology == '028nm' : # set vdd/vss height according to metal 1 layer at 28nm tech., doping layer at else.
+            _VDD2VSSMinHeight = (self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
                                 (self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
                                 max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'],
                                     self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
@@ -402,13 +404,13 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                                 # self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + \
                                 # self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + \
             
-            if DesignParameters._Technology == '065nm' :
-                 _VDD2VSSMinHeight = self.CeilMinSnapSpacing(self.getYWidth('_PbodycontactTG', '_PPLayer') * 0.5, _MinSnapSpacing) + self.CeilMinSnapSpacing(self.getYWidth('_NbodycontactTG', '_NPLayer') * 0.5, _MinSnapSpacing) + \
-                        self.CeilMinSnapSpacing(self.getYWidth('_NMOSTG','_NPLayer') * 0.5, _MinSnapSpacing) + self.CeilMinSnapSpacing(self.getYWidth('_PMOSTG', '_PPLayer') * 0.5, _MinSnapSpacing) + \
-                        self.CeilMinSnapSpacing(self.getYWidth('_NMOSTG','_Met1Layer') * 0.5, _MinSnapSpacing) + self.CeilMinSnapSpacing(self.getYWidth('_PMOSTG','_Met1Layer') * 0.5, _MinSnapSpacing) + \
-                        _DRCObj.DRCMETAL1MinSpace(self.getXWidth('_NMOSTG', '_Met1Layer'), self.getXWidth('_ViaPoly2Met1OnNMOSControlTG', '_Met1Layer')) + \
-                        _DRCObj.DRCMETAL1MinSpace(self.getXWidth('_PMOSTG', '_Met1Layer'), self.getXWidth('_ViaPoly2Met1OnPMOSControlTG', '_Met1Layer')) + \
-                        self.getYWidth('_ViaPoly2Met1OnNMOSControlTG', '_POLayer') + self.getYWidth('_ViaPoly2Met1OnPMOSControlTG', '_POLayer') + _DRCObj._NpMinEnclosureOfPo + _DRCObj._PpMinEnclosureOfPo
+            # if DesignParameters._Technology == '065nm' :
+            #      _VDD2VSSMinHeight = self.CeilMinSnapSpacing(self.getYWidth('_PbodycontactTG', '_PPLayer') * 0.5, _MinSnapSpacing) + self.CeilMinSnapSpacing(self.getYWidth('_NbodycontactTG', '_NPLayer') * 0.5, _MinSnapSpacing) + \
+            #             self.CeilMinSnapSpacing(self.getYWidth('_NMOSTG','_NPLayer') * 0.5, _MinSnapSpacing) + self.CeilMinSnapSpacing(self.getYWidth('_PMOSTG', '_PPLayer') * 0.5, _MinSnapSpacing) + \
+            #             self.CeilMinSnapSpacing(self.getYWidth('_NMOSTG','_Met1Layer') * 0.5, _MinSnapSpacing) + self.CeilMinSnapSpacing(self.getYWidth('_PMOSTG','_Met1Layer') * 0.5, _MinSnapSpacing) + \
+            #             _DRCObj.DRCMETAL1MinSpace(self.getXWidth('_NMOSTG', '_Met1Layer'), self.getXWidth('_ViaPoly2Met1OnNMOSControlTG', '_Met1Layer')) + \
+            #             _DRCObj.DRCMETAL1MinSpace(self.getXWidth('_PMOSTG', '_Met1Layer'), self.getXWidth('_ViaPoly2Met1OnPMOSControlTG', '_Met1Layer')) + \
+            #             self.getYWidth('_ViaPoly2Met1OnNMOSControlTG', '_POLayer') + self.getYWidth('_ViaPoly2Met1OnPMOSControlTG', '_POLayer') + _DRCObj._NpMinEnclosureOfPo + _DRCObj._PpMinEnclosureOfPo
             
             # else :
             #     _VDD2VSSMinHeight = (self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \

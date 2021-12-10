@@ -219,6 +219,11 @@ class _PMOS(StickDiagram._StickDiagram):
                 self._XVTLayerMappingName = 'P' + _XVT
             elif (DesignParameters._Technology == '045nm') and (_XVT == None):
                 self._XVTLayer = None
+            elif (DesignParameters._Technology == '090nm') and _XVT in ('LVT', 'HVT'):
+                self._XVTLayer = '_P' + _XVT + 'Layer'
+                self._XVTLayerMappingName = 'P' + _XVT
+            elif (DesignParameters._Technology == '090nm') and (_XVT == None):
+                self._XVTLayer = None
 
 
             elif DesignParameters._Technology == '028nm':
@@ -228,6 +233,8 @@ class _PMOS(StickDiagram._StickDiagram):
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
             elif DesignParameters._Technology == '045nm':
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 045nm".format(_XVT))
+            elif DesignParameters._Technology == '090nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 090nm".format(_XVT))
 
             else:
                 raise NotImplementedError("Not Implemented in other technology : {}".format(DesignParameters._Technology))

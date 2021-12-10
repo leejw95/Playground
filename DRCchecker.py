@@ -47,7 +47,9 @@ class DRCchecker:
         if DesignParameters._Technology == '045nm' :
             DRCfile = '_calibre.drc_'
             Techlib = 'tsmcN45'
-
+        if DesignParameters._Technology == '090nm':
+            DRCfile = '_calibre.drc_'
+            Techlib = 'tsmcN90rf'
 
         print('   Connecting to Server by SSH...   '.center(105, '#'))
         ssh = paramiko.SSHClient()
@@ -76,6 +78,12 @@ class DRCchecker:
             stdin, stdout, stderr = ssh.exec_command(
             commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
             result2 = stdout.read().decode('utf-8')
+        if DesignParameters._Technology == '090nm':
+            commandlines2 = "cd {0}; strmout -library '{1}' -strmFile '{3}/{2}.calibre.db' -topCell '{2}' -view layout -runDir '{3}' -logFile 'PIPO.LOG.{1}' -layerMap '/home/PDK/tsmc40/tsmcN45/tsmcN45.layermap' -case 'Preserve' -convertDot 'node'"
+            stdin, stdout, stderr = ssh.exec_command(
+            commandlines2.format(self.WorkDir, self.libname, self.cellname, self.DRCrunDir))
+            result2 = stdout.read().decode('utf-8')
+
 
         print(f'print after commandlines2 :')
         print(result2)
@@ -124,6 +132,12 @@ class DRCchecker:
                 raise Exception("DRC ERROR!!!")
 
         if DesignParameters._Technology == '045nm':
+            line = (file.readlines()[-1])  # 'TOTAL DRC Results Generated:   656 (656)\n'
+            print(line)
+            if line.split()[4] != '0':
+                raise Exception("DRC ERROR!!!")
+
+        if DesignParameters._Technology == '090nm':
             line = (file.readlines()[-1])  # 'TOTAL DRC Results Generated:   656 (656)\n'
             print(line)
             if line.split()[4] != '0':
@@ -196,6 +210,9 @@ class DRCchecker:
             TechFile = 'tsmcN65'
         elif tech == '045nm' :
             TechFile = 'tsmcN45'
+        elif tech == '090nm' :
+            TechFile = 'tsmcN90rf'
+
         else:
             raise NotImplemented
         filename = self.cellname + '.gds'

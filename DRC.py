@@ -138,6 +138,7 @@ class DRCPP:
             self._PpMinWidth=240
             self._PpMinSpace=240
             self._PpMinExtensiononPactive=130
+            self._PpMinExtensiononPactive2 = 20
             self._PpMinEnclosureOfPo=200
             self._PpMinEnclosureOfPtypePoRes=200
         if DesignParameters._Technology=='130nm':
@@ -176,6 +177,7 @@ class DRCNP:
             self._NpMinWidth=240
             self._NpMinSpace=240
             self._NpMinExtensiononNactive=130
+            self._NpMinExtensiononNactive2 = 20
             self._NpMinEnclosureOfPo=200
         if DesignParameters._Technology=='130nm':
             self._NpMinWidth=310
@@ -261,6 +263,9 @@ class DRCPOLYGATE:
             #self._PolygateMinEnclosureByNW=430
             self._PolygateMinExtensionOnOD=160
             self._PolygateMinSpaceAtCorner=140
+            self._PODummyMinArea = 60000
+            self._PolygateMinExtensionOnODX = 150
+
         if DesignParameters._Technology=='130nm':
             self._PolygateMinWidth=130
             self._PolygateMinSpace=180
@@ -291,6 +296,8 @@ class DRCPOLYGATE:
         if DesignParameters._Technology == '065nm':
             return self._PolygateMinExtensionOnOD
         if DesignParameters._Technology == '045nm':
+            return self._PolygateMinExtensionOnOD
+        if DesignParameters._Technology == '090nm':
             return self._PolygateMinExtensionOnOD
 
 
@@ -2037,6 +2044,13 @@ class DRCXVT:
             self._XvtMinEnclosureOfODX = 50   # This value is calculated by VTL_N_EN1(horizontal direction)
             self._XvtMinEnclosureOfODY = 80  # VTL_N_EN2 (vertical direction)
             self._XvtMinArea = 190000         # VTL_N_A_1 = VTL_N_A_2
+
+        elif DesignParameters._Technology == '090nm':
+            self._XvtMinWidth = 400           # VTL_N_W_1
+            self._XvtMinSpace = 240          # VTL_N_S_1 (there are other space rules)
+            self._XvtMinEnclosureOfODX = 0  # This value is calculated by VTL_N_EN1(horizontal direction)
+            self._XvtMinEnclosureOfODY = 220  # VTL_N_EN2 (vertical direction)
+            self._XvtMinArea = 400000         # VTL_N_A_1 = VTL_N_A_2
 
 class DRC(DRCMultiplicantForMinEdgeWidth, DRCOD, DRCPOLYGATE, DRCPP, DRCNP, DRCCO, DRCMETAL1, DRCMETALy, DRCVIAy, DRCMETALz, DRCVIAz, DRCMETALr, DRCVIAr, DRCNW, DRCVIAx,DRCMETALx, DRCMinSnapSpacing, DRCRPO, DRCSLVT, DRCXVT):
     def __init__(self ):

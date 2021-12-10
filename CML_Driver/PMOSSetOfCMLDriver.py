@@ -6,9 +6,7 @@ import StickDiagram
 import DesignParameters
 import DRC
 import DRCchecker
-from Private import MyInfo
 from SthPack import CoordCalc, BoundaryCalc
-from SthPack import PlaygroundBot
 
 #
 import PMOSWithDummy_iksu
@@ -321,24 +319,24 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
         self._DesignParameter['M3forIPGate']['_YWidth'] = self._DesignParameter['M1forIPGate']['_YWidth']
         self._DesignParameter['M3forIPGate']['_XYCoordinates'] = self._DesignParameter['M1forIPGate']['_XYCoordinates']
 
-        ''' M3V3M4, M4V4M5 for IP and CS gate  '''
-        M3V3M4OnPMOSIPGateParams = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-        M3V3M4OnPMOSIPGateParams['_ViaMet32Met4NumberOfCOX'] = M2V2M3OnPMOSIPGateParams['_ViaMet22Met3NumberOfCOX']
-        M3V3M4OnPMOSIPGateParams['_ViaMet32Met4NumberOfCOY'] = M2V2M3OnPMOSIPGateParams['_ViaMet22Met3NumberOfCOY']
-        self._DesignParameter['M3V3M4OnPMOSIPGate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='ViaMet32Met4OnPMOSIPGate_In{}'.format(_Name)))[0]
-        self._DesignParameter['M3V3M4OnPMOSIPGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M3V3M4OnPMOSIPGateParams)
-        self._DesignParameter['M3V3M4OnPMOSIPGate']['_XYCoordinates'] = self._DesignParameter['M2V2M3OnPMOSIPGate']['_XYCoordinates']
-
-        M4V4M5OnPMOSIPGateParams = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-        M4V4M5OnPMOSIPGateParams['_ViaMet42Met5NumberOfCOX'] = M3V3M4OnPMOSIPGateParams['_ViaMet32Met4NumberOfCOX']
-        M4V4M5OnPMOSIPGateParams['_ViaMet42Met5NumberOfCOY'] = M3V3M4OnPMOSIPGateParams['_ViaMet32Met4NumberOfCOY']
-        self._DesignParameter['M4V4M5OnPMOSIPGate'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_Name='ViaMet42Met5OnPMOSIPGate_In{}'.format(_Name)))[0]
-        self._DesignParameter['M4V4M5OnPMOSIPGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M4V4M5OnPMOSIPGateParams)
-        self._DesignParameter['M4V4M5OnPMOSIPGate']['_XYCoordinates'] = self._DesignParameter['M3V3M4OnPMOSIPGate']['_XYCoordinates']
-
-        self._DesignParameter['M5forIPGate']['_XWidth'] = self._DesignParameter['M1forIPGate']['_XWidth']
-        self._DesignParameter['M5forIPGate']['_YWidth'] = self._DesignParameter['M1forIPGate']['_YWidth']
-        self._DesignParameter['M5forIPGate']['_XYCoordinates'] = self._DesignParameter['M1forIPGate']['_XYCoordinates']
+        # ''' M3V3M4, M4V4M5 for IP and CS gate  '''
+        # M3V3M4OnPMOSIPGateParams = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+        # M3V3M4OnPMOSIPGateParams['_ViaMet32Met4NumberOfCOX'] = M2V2M3OnPMOSIPGateParams['_ViaMet22Met3NumberOfCOX']
+        # M3V3M4OnPMOSIPGateParams['_ViaMet32Met4NumberOfCOY'] = M2V2M3OnPMOSIPGateParams['_ViaMet22Met3NumberOfCOY']
+        # self._DesignParameter['M3V3M4OnPMOSIPGate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='ViaMet32Met4OnPMOSIPGate_In{}'.format(_Name)))[0]
+        # self._DesignParameter['M3V3M4OnPMOSIPGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M3V3M4OnPMOSIPGateParams)
+        # self._DesignParameter['M3V3M4OnPMOSIPGate']['_XYCoordinates'] = self._DesignParameter['M2V2M3OnPMOSIPGate']['_XYCoordinates']
+        #
+        # M4V4M5OnPMOSIPGateParams = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
+        # M4V4M5OnPMOSIPGateParams['_ViaMet42Met5NumberOfCOX'] = M3V3M4OnPMOSIPGateParams['_ViaMet32Met4NumberOfCOX']
+        # M4V4M5OnPMOSIPGateParams['_ViaMet42Met5NumberOfCOY'] = M3V3M4OnPMOSIPGateParams['_ViaMet32Met4NumberOfCOY']
+        # self._DesignParameter['M4V4M5OnPMOSIPGate'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_Name='ViaMet42Met5OnPMOSIPGate_In{}'.format(_Name)))[0]
+        # self._DesignParameter['M4V4M5OnPMOSIPGate']['_DesignObj']._CalculateDesignParameterSameEnclosure(**M4V4M5OnPMOSIPGateParams)
+        # self._DesignParameter['M4V4M5OnPMOSIPGate']['_XYCoordinates'] = self._DesignParameter['M3V3M4OnPMOSIPGate']['_XYCoordinates']
+        #
+        # self._DesignParameter['M5forIPGate']['_XWidth'] = self._DesignParameter['M1forIPGate']['_XWidth']
+        # self._DesignParameter['M5forIPGate']['_YWidth'] = self._DesignParameter['M1forIPGate']['_YWidth']
+        # self._DesignParameter['M5forIPGate']['_XYCoordinates'] = self._DesignParameter['M1forIPGate']['_XYCoordinates']
 
 
     def _CalculateDesignParameterCurrentSource(self, _FingerWidthOfCurrentSource=None, _FingerLengthOfCurrentSource=None,
@@ -753,8 +751,9 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
         ''' Relocation of Current Source '''
         ObjListRelatedCS = ['PMOS_CS', 'PolyContactOnPMOSCSGate', 'PMOS_CS_Source', 'PMOS_CS_Drain', '_Via1OnPMOSCS',
-                            'M2V2M3OnPMOSCS', 'M1V1M2OnPMOSCSGate', 'M2V2M3OnPMOSCSGate', 'M3V3M4OnPMOSCSGate',
-                            'M4V4M5OnPMOSCSGate', 'POHforCS', 'POVforCS', 'M1forCSGate', 'M3forCSGate', 'M5forCSGate',
+                            'M2V2M3OnPMOSCS', 'M1V1M2OnPMOSCSGate', 'M2V2M3OnPMOSCSGate',
+                             'POHforCS', 'POVforCS', 'M1forCSGate', 'M3forCSGate',
+                            # 'M5forCSGate', 'M4V4M5OnPMOSCSGate', 'M3V3M4OnPMOSCSGate',
                             'M2VforCS', 'M3HforCSSource', 'M3HforCSDrain', 'M2HforCS2IP', 'M3HforCS2IP']
         for DesignObj in ObjListRelatedCS:
             self.YShiftUp(DesignObj, OffsetYOfPMOSCS)
@@ -940,6 +939,8 @@ class PMOSSetOfCMLDriver(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
+    from Private import MyInfo
+    from SthPack import PlaygroundBot
 
     My = MyInfo.USER(DesignParameters._Technology)
     Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)

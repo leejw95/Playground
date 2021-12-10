@@ -606,7 +606,7 @@ class DRCMETAL1:
             self._Metal1MinSpace = 50  #D
             self._Metal1MinSpacetoGate = 20
             self._Metal1MinSpace2 = 66  #E (by JiCho)
-
+            self._Metal1MinSpace21 = 82
             self._Metal1MinSpace22 = 74  # G
             self._Metal1MinSpace3 = 140  #F
             self._Metal1MinSpace4 = 500  #
@@ -688,37 +688,35 @@ class DRCMETAL1:
             self._Metal1MinArea = 202000
 
 
-    def DRCMETAL1MinSpace(self, _Width=None, _ParallelLength=None):
+    def DRCMETAL1MinSpace(self, _Width=None, _ParallelLength=None, _Width2 = None):
         if DesignParameters._Technology == '045nm':
             if _Width == None and _ParallelLength == None:
                 return self._Metal1MinSpace
-            elif 170 < _Width and 270 < _ParallelLength:
-                if 240 < _Width and 270 < _ParallelLength:
-                    if 310 < _Width and 400 < _ParallelLength:
-                        if 620 < _Width and 620 < _ParallelLength:
-                            if 1500 < _Width and 1500 < _ParallelLength:
-                                return self._Metal1MinSpace3
+            elif 170 < _Width and 270 < _ParallelLength: #1
+                if 240 < _Width and 270 < _ParallelLength: #2
+                    if 310 < _Width and 400 < _ParallelLength: #3
+                        if 620 < _Width and 620 < _ParallelLength: #4
+                            if 1500 < _Width and 1500 < _ParallelLength:#5
+                                return self._Metal1MinSpace3 #5
                             else:
-                                return self._Metal1MinSpace23
+                                return self._Metal1MinSpace23 #4
                         else:
-                            return self._Metal1MinSpace22
+                            return self._Metal1MinSpace22 #3
                     else:
-                        return self._Metal1MinSpace21
+                        return self._Metal1MinSpace21 #2
                 else:
-                    return self._Metal1MinSpace2
+                    return self._Metal1MinSpace2 #1
             else:
                 return self._Metal1MinSpace
 
         if DesignParameters._Technology == '028nm':
+            _Width = max(_Width,_Width2)
             if _Width == None and _ParallelLength == None:
                 return self._Metal1MinSpace
             elif 72 < _Width and 104 < _ParallelLength:  # a
-                if 156 < _Width and 104 < _ParallelLength:  # b
-                    if 208 < _Width and 104 < _ParallelLength:  # c
-                        if 208 < _Width and 300 < _ParallelLength:
-                            return self._Metal1MinSpace3  # 140
-                        else:
-                            return self._Metal1MinSpace22  # c 74
+                if 156 < _Width and 0 < _ParallelLength:  # b
+                    if 208 < _Width and 300 < _ParallelLength:
+                        return self._Metal1MinSpace3  # 140
                     else:
                         return self._Metal1MinSpace21  # b 82
                 else:
@@ -727,6 +725,8 @@ class DRCMETAL1:
                 return self._Metal1MinSpace  # 50
 
         if DesignParameters._Technology == '065nm':
+            if _Width2 != None :
+                _Width = max(_Width,_Width2)
             if _Width == None and _ParallelLength == None:
                 return self._Metal1MinSpace
             elif 200 < _Width and 380 < _ParallelLength:
@@ -1459,8 +1459,9 @@ class DRCMETALx:
             self._MetalxMinEnclosureVia3=60
             self._MetalxMinArea=202000
 
-    def DRCMETALxMinSpace(self, _Width=None, _ParallelLength=None):
+    def DRCMETALxMinSpace(self, _Width=None, _ParallelLength=None, _Width2=None): ###########not sure yet...
         if DesignParameters._Technology=='045nm':
+            
             if _Width==None  and _ParallelLength==None:
                 return self._MetalxMinSpace
             elif 170<_Width  and 270<_ParallelLength:
@@ -1483,37 +1484,62 @@ class DRCMETALx:
         if DesignParameters._Technology=='028nm':
             if _Width==None  and _ParallelLength==None:
                 return self._MetalxMinSpace
-            elif 72<_Width  and 104<_ParallelLength:
-                if 156<_Width and 104< _ParallelLength:
-                    if 208<_Width and 104< _ParallelLength:
-                        if 208<_Width and 300<_ParallelLength:
-                            return self._MetalxMinSpace5
+            elif 72<max(_Width,_Width2) and 104<_ParallelLength: #1
+                if 156<max(_Width,_Width2) and 0<_ParallelLength: #2
+                    if 156<max(_Width,_Width2) and 72<min(_Width,_Width2) and 0<_ParallelLength : #3
+                        if 156<max(_Width, _Width2) and 0< _ParallelLength : #4
+                            if 208<max(_Width, _Width2) and 300< _ParallelLength: #5
+                                if 700<max(_Width, _Width2) and 700<_ParallelLength: #6
+                                    if 700<max(_Width, _Width2) and 72<min(_Width,_Width2) and 700<_ParallelLength : #7
+                                        if 700<max(_Width, _Width2) and 156<min(_Width,_Width2) and 700<_ParallelLength : #8
+                                            if 700<max(_Width, _Width2) and 208<min(_Width,_Width2) and 700<_ParallelLength : #9
+                                                if 700<max(_Width, _Width2) and 700<min(_Width,_Width2) and 700<_ParallelLength : #10
+                                                    if 1500<min(_Width,_Width2) and 1500<_ParallelLength :
+                                                        return self._MetalxMinSpace11
+                                                    else :
+                                                        return self._MetalxMinSpace10
+                                                else :
+                                                    return self._MetalxMinSpace9 #10
+                                            else :
+                                                return self._MetalxMinSpace8 #9
+                                        else :
+                                            return self._MetalxMinSpace7 #8
+                                    else:
+                                        return self._MetalxMinSpace6 #7
+                                else:
+                                    return self._MetalxMinSpace5 #6
+                            else:
+                                return  self._MetalxMinSpace3 #5
                         else:
-                            return  self._MetalxMinSpace4
-                    else:
-                        return self._MetalxMinSpace3
+                            return self._MetalxMinSpace4 #4
+                    else :
+                        return self._MetalxMinSpace21 #3
                 else:
-                    return self._MetalxMinSpace2
+                    return self._MetalxMinSpace2 #2
             else :
-                return self._MetalxMinSpace
+                return self._MetalxMinSpace #1
 
         if DesignParameters._Technology=='065nm':
+            if _Width2 != None :
+                _Width = max(_Width, _Width2)
             if _Width==None  and _ParallelLength==None:
                 return self._MetalxMinSpace
-            elif 200<_Width  and 380<_ParallelLength:
-                if 420<_Width and 420< _ParallelLength:
-                    if 1500<_Width and 1500< _ParallelLength:
-                        if 4500<_Width and 4500<_ParallelLength:
-                            return self._MetalxMinSpace4
+            elif 200<_Width  and 380<_ParallelLength: #1
+                if 420<_Width and 420< _ParallelLength: #2
+                    if 1500<_Width and 1500< _ParallelLength: #3
+                        if 4500<_Width and 4500<_ParallelLength: #4
+                            return self._MetalxMinSpace4 #4
                         else:
-                            return  self._MetalxMinSpace3
+                            return  self._MetalxMinSpace3 #3
                     else:
-                        return self._MetalxMinSpace21
+                        return self._MetalxMinSpace21 #3
                 else:
-                    return self._MetalxMinSpace2
+                    return self._MetalxMinSpace2 #2
             else :
-                return self._MetalxMinSpace
+                return self._MetalxMinSpace #1
+
         if DesignParameters._Technology=='090nm':
+            
             if _Width==None  and _ParallelLength==None:
                 return self._MetalxMinSpace
             elif 210<_Width  and 520<_ParallelLength:

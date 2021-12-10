@@ -5,8 +5,8 @@ import copy
 import DRC
 import NMOSWithDummy_iksu
 import PMOSWithDummy_iksu
-import NbodyContact
-import PbodyContact
+import NbodyContact_iksu
+import PbodyContact_iksu
 import ViaPoly2Met1
 import ViaMet12Met2
 import ViaMet22Met3
@@ -75,22 +75,22 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         if _NumSupplyCOY == None:
             _NumSupplyCOY = 2
 
-        _PBodyinputs = copy.deepcopy(PbodyContact._PbodyContact._ParametersForDesignCalculation)
+        _PBodyinputs = copy.deepcopy(PbodyContact_iksu._PbodyContact._ParametersForDesignCalculation)
         _PBodyinputs['_NumberOfPbodyCOX'] = _NumSupplyCOX
         _PBodyinputs['_NumberOfPbodyCOY'] = _NumSupplyCOY
         # _PBodyinputs['_Met1XWidth'] = _SupplyMet1XWidth
         _PBodyinputs['_Met1YWidth'] = _SupplyMet1YWidth
 
-        self._DesignParameter['_PbodycontactTG'] = self._SrefElementDeclaration(_DesignObj=PbodyContact._PbodyContact(_DesignParameter=None, _Name='Pbodycontactin{}'.format(_Name)))[0]
+        self._DesignParameter['_PbodycontactTG'] = self._SrefElementDeclaration(_DesignObj=PbodyContact_iksu._PbodyContact(_DesignParameter=None, _Name='Pbodycontactin{}'.format(_Name)))[0]
         self._DesignParameter['_PbodycontactTG']['_DesignObj']._CalculatePbodyContactDesignParameter(**_PBodyinputs)
 
-        _NBodyinputs = copy.deepcopy(NbodyContact._NbodyContact._ParametersForDesignCalculation)
+        _NBodyinputs = copy.deepcopy(NbodyContact_iksu._NbodyContact._ParametersForDesignCalculation)
         _NBodyinputs['_NumberOfNbodyCOX'] = _NumSupplyCOX
         _NBodyinputs['_NumberOfNbodyCOY'] = _NumSupplyCOY
         # _NBodyinputs['_Met1XWidth'] = _SupplyMet1XWidth
         _NBodyinputs['_Met1YWidth'] = _SupplyMet1YWidth
 
-        self._DesignParameter['_NbodycontactTG'] = self._SrefElementDeclaration(_DesignObj=NbodyContact._NbodyContact(_DesignParameter=None, _Name='Nbodycontactin{}'.format(_Name)))[0]
+        self._DesignParameter['_NbodycontactTG'] = self._SrefElementDeclaration(_DesignObj=NbodyContact_iksu._NbodyContact(_DesignParameter=None, _Name='Nbodycontactin{}'.format(_Name)))[0]
         self._DesignParameter['_NbodycontactTG']['_DesignObj']._CalculateNbodyContactDesignParameter(**_NBodyinputs)
 
         print ('###########################     Via Generation for PMOS Outputs     #####################################')
@@ -252,8 +252,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
         ###### NMOS / PMOS Metal 1 width modification for TSMC process, but general solution ######
-        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
-        self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        #self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+        #self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
 
 
 
@@ -435,9 +435,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                     raise Exception('@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@# SET MINIMUM HEIGHT VALUE FOR TransmissionGate : ', _VDD2VSSMinHeight)
 
             ## BODY CONTACTS, MOS FIRST
-            _PbodyObj = PbodyContact._PbodyContact()
+            _PbodyObj = PbodyContact_iksu._PbodyContact()
             _PbodyObj._DesignParameter['_XYCoordinates'] = [[0, 0]]  ## This is the Origin Value of the TG!!
-            _NbodyObj = NbodyContact._NbodyContact()
+            _NbodyObj = NbodyContact_iksu._NbodyContact()
             _NbodyObj._DesignParameter['_XYCoordinates'] = [[0, _VDD2VSSHeight]]
 
             if _Bodycontact == True : 
@@ -472,7 +472,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
             ## control via coordinate
 
-            if _Finger == 1 :
+            if _Finger == 1 and DesignParameters._Technology == '028nm' :
                 self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0],self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
                                                                             max(self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
                                                                             self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +

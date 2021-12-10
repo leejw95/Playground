@@ -10,7 +10,7 @@ import DRCchecker
 
 class _PMOS(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(_PMOSNumberofGate=None, _PMOSChannelWidth=None, _PMOSChannellength=None,
-                                           _PMOSDummy=False, _XVT=None)
+                                           _PMOSDummy=False, _XVT=None, _DistanceBtwFinger=None)
 
     def __init__(self, _DesignParameter=None, _Name=None):
 
@@ -53,7 +53,7 @@ class _PMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_Name']['_Name'] = _Name
 
     def _CalculatePMOSDesignParameter(self, _PMOSNumberofGate=None, _PMOSChannelWidth=None, _PMOSChannellength=None,
-                                      _PMOSDummy=False, _XVT=None):
+                                      _PMOSDummy=False, _XVT=None, _DistanceBtwFinger=None):
 
         _DRCObj = DRC.DRC()
         MinSnapSpacing = _DRCObj._MinSnapSpacing
@@ -72,6 +72,15 @@ class _PMOS(StickDiagram._StickDiagram):
             _LengthPMOSBtwPO = _DRCObj.DRCPolyMinSpace(_Width=_PMOSChannelWidth, _ParallelLength=_PMOSChannellength) + _PMOSChannellength
         else:
             _LengthPMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _PMOSChannellength
+
+        if _DistanceBtwFinger == None:
+            pass
+        elif _LengthPMOSBtwPO > _DistanceBtwFinger:
+            raise Exception(f"Invalid Parameter '_DistanceBtwFinger(={_DistanceBtwFinger})' in {_Name}.\n"
+                            f"Available Condition: 1) '_DistanceBtwFinger >= {_LengthPMOSBtwPO}'\n"
+                            f"                     2) '_DistanceBtwFinger = None' for Minimum Value.")
+        else:
+            _LengthPMOSBtwPO = _DistanceBtwFinger
 
 
         print('     POLY (PO/PC) Layer Calculation     '.center(105,'#'))
@@ -214,12 +223,28 @@ class _PMOS(StickDiagram._StickDiagram):
                 self._XVTLayerMappingName = 'P' + _XVT
             elif (DesignParameters._Technology == '065nm') and (_XVT == None):
                 self._XVTLayer = None
+            elif (DesignParameters._Technology == '045nm') and _XVT in ('LVT', 'HVT'):
+                self._XVTLayer = '_P' + _XVT + 'Layer'
+                self._XVTLayerMappingName = 'P' + _XVT
+            elif (DesignParameters._Technology == '045nm') and (_XVT == None):
+                self._XVTLayer = None
+            elif (DesignParameters._Technology == '090nm') and _XVT in ('LVT', 'HVT'):
+                self._XVTLayer = '_P' + _XVT + 'Layer'
+                self._XVTLayerMappingName = 'P' + _XVT
+            elif (DesignParameters._Technology == '090nm') and (_XVT == None):
+                self._XVTLayer = None
+
 
             elif DesignParameters._Technology == '028nm':
                 _XVT = _XVT if _XVT else "None"  # just for Error Message
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
             elif DesignParameters._Technology == '065nm':
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
+            elif DesignParameters._Technology == '045nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 045nm".format(_XVT))
+            elif DesignParameters._Technology == '090nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 090nm".format(_XVT))
+
             else:
                 raise NotImplementedError("Not Implemented in other technology : {}".format(DesignParameters._Technology))
 

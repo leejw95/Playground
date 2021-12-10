@@ -6,8 +6,7 @@ import DesignParameters
 import DRC
 import DRCchecker
 from SthPack import BoundaryCalc, CoordCalc
-from SthPack import PlaygroundBot
-from Private import MyInfo
+
 
 #
 import ViaMet12Met2
@@ -471,104 +470,126 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
             self._DesignParameter['Via4ForTerminationR']['_XYCoordinates'] = OverlappedBoundaryForVia4Term['_XYCoordinates']
 
 
-            ''' M5HExtendForIPGate '''
-            self._DesignParameter['M5HExtendForIPGate'] = self._BoundaryElementDeclaration(
-                _Layer=DesignParameters._LayerMapping['METAL5'][0],
-                _Datatype=DesignParameters._LayerMapping['METAL5'][1],
+            ''' M3HExtendForIPGate '''
+            self._DesignParameter['M3HExtendForIPGate'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['METAL3'][0],
+                _Datatype=DesignParameters._LayerMapping['METAL3'][1],
                 _XWidth=None,
                 _YWidth=None,
                 _XYCoordinates=[]
             )
-            XLeftOfM5ForIPGate = self._DesignParameter['PMOSSet']['_XYCoordinates'][0][0] \
-                                 + CoordCalc.getSortedList_ascending(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M5forIPGate']['_XYCoordinates'])[0][-1] \
-                                 - self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M5forIPGate']['_XWidth'] / 2.0
-            XRightOfM5ForIPGate = self._DesignParameter['PMOSSet']['_XYCoordinates'][0][0] \
-                                  + CoordCalc.getSortedList_ascending(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M5forIPGate']['_XYCoordinates'])[0][-1] \
-                                  + self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M5forIPGate']['_XWidth'] / 2.0
+            XLeftOfM3ForIPGate = self._DesignParameter['PMOSSet']['_XYCoordinates'][0][0] \
+                                 + CoordCalc.getSortedList_ascending(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M3forIPGate']['_XYCoordinates'])[0][-1] \
+                                 - self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M3forIPGate']['_XWidth'] / 2.0
+            XRightOfM3ForIPGate = self._DesignParameter['PMOSSet']['_XYCoordinates'][0][0] \
+                                  + CoordCalc.getSortedList_ascending(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M3forIPGate']['_XYCoordinates'])[0][-1] \
+                                  + self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M3forIPGate']['_XWidth'] / 2.0
 
-            XRightOfM5ForTerminationR = CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][-1] \
+            XRightOfM3ForTerminationR = CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][-1] \
                                         + self._DesignParameter['M5ForTerminationR']['_XWidth'] / 2.0
 
-            XRightOfM5HExtendForIPGate = max(XRightOfM5ForIPGate, XRightOfM5ForTerminationR)
+            XRightOfM3HExtendForIPGate = max(XRightOfM3ForIPGate, XRightOfM3ForTerminationR)
 
-            self._DesignParameter['M5HExtendForIPGate']['_XWidth'] = XRightOfM5HExtendForIPGate - XLeftOfM5ForIPGate
-            self._DesignParameter['M5HExtendForIPGate']['_YWidth'] = self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M5forIPGate']['_YWidth']
-            self._DesignParameter['M5HExtendForIPGate']['_XYCoordinates'] = [
-                [+(XRightOfM5HExtendForIPGate + XLeftOfM5ForIPGate) / 2.0, self._DesignParameter['PMOSSet']['_XYCoordinates'][0][1] + self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M5forIPGate']['_XYCoordinates'][0][1]],
-                [-(XRightOfM5HExtendForIPGate + XLeftOfM5ForIPGate) / 2.0, self._DesignParameter['PMOSSet']['_XYCoordinates'][0][1] + self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M5forIPGate']['_XYCoordinates'][0][1]],
+            self._DesignParameter['M3HExtendForIPGate']['_XWidth'] = XRightOfM3HExtendForIPGate - XLeftOfM3ForIPGate
+            self._DesignParameter['M3HExtendForIPGate']['_YWidth'] = self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M3forIPGate']['_YWidth']
+            self._DesignParameter['M3HExtendForIPGate']['_XYCoordinates'] = [
+                [+(XRightOfM3HExtendForIPGate + XLeftOfM3ForIPGate) / 2.0, self._DesignParameter['PMOSSet']['_XYCoordinates'][0][1] + self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M3forIPGate']['_XYCoordinates'][0][1]],
+                [-(XRightOfM3HExtendForIPGate + XLeftOfM3ForIPGate) / 2.0, self._DesignParameter['PMOSSet']['_XYCoordinates'][0][1] + self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M3forIPGate']['_XYCoordinates'][0][1]],
             ]
+            self._DesignParameter['M4HExtendForIPGate'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['METAL4'][0],
+                _Datatype=DesignParameters._LayerMapping['METAL4'][1],
+                _XWidth=self.getXWidth('M3HExtendForIPGate'),
+                _YWidth=self.getYWidth('M3HExtendForIPGate'),
+                _XYCoordinates=self.getXY('M3HExtendForIPGate')
+            )
 
-            ''' M6VForIPGate2TerminationR '''       # Calculated by M5
-            self._DesignParameter['M6VForIPGate2TerminationR'] = self._BoundaryElementDeclaration(
-                _Layer=DesignParameters._LayerMapping['METAL6'][0],
-                _Datatype=DesignParameters._LayerMapping['METAL6'][1],
+            ''' M4VForIPGate2TerminationR '''       # Calculated by M5
+            self._DesignParameter['M4VForIPGate2TerminationR'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['METAL4'][0],
+                _Datatype=DesignParameters._LayerMapping['METAL4'][1],
                 _XWidth=None,
                 _YWidth=None,
                 _XYCoordinates=[]
             )
-            NumOfM6VForIPGate2TerminationR = _NumStripes_TerminationR
+            NumOfM4VForIPGate2TerminationR = _NumStripes_TerminationR
 
-            UpperYOfM6VForIPGate2TerminationR = CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[1][-1] \
-                                                + self._DesignParameter['M5ForTerminationR']['_YWidth'] / 2.0
-            LowerYOfM6VForIPGate2TerminationR = CoordCalc.getSortedList_ascending(self._DesignParameter['M5HExtendForIPGate']['_XYCoordinates'])[1][-1] \
-                                                - self._DesignParameter['M5HExtendForIPGate']['_YWidth'] / 2.0
-            self._DesignParameter['M6VForIPGate2TerminationR']['_YWidth'] = UpperYOfM6VForIPGate2TerminationR - LowerYOfM6VForIPGate2TerminationR
+            UpperYOfM4VForIPGate2TerminationR = CoordCalc.getSortedList_ascending(self.getXY('TerminationResistors', '_Met3A'))[1][-1] \
+                                                + self.getYWidth('TerminationResistors', '_Met3A') / 2.0
+            LowerYOfM4VForIPGate2TerminationR = CoordCalc.getSortedList_ascending(self._DesignParameter['M3HExtendForIPGate']['_XYCoordinates'])[1][-1] \
+                                                - self._DesignParameter['M3HExtendForIPGate']['_YWidth'] / 2.0
+            self._DesignParameter['M4VForIPGate2TerminationR']['_YWidth'] = UpperYOfM4VForIPGate2TerminationR - LowerYOfM4VForIPGate2TerminationR
 
 
-            self._DesignParameter['M6VForIPGate2TerminationR']['_XWidth'] = self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XWidth']
+            self._DesignParameter['M4VForIPGate2TerminationR']['_XWidth'] = self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XWidth']
 
             DistanceXBtwM4VOfTermRes = (CoordCalc.getSortedList_ascending(self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XYCoordinates'])[0][1] \
                                         - CoordCalc.getSortedList_ascending(self._DesignParameter['TerminationResistors']['_DesignObj']._DesignParameter['_Met4A']['_XYCoordinates'])[0][0]) / 2.0
             tmpXYs = []
-            for i in range(0, NumOfM6VForIPGate2TerminationR):
+            for i in range(0, NumOfM4VForIPGate2TerminationR):
                 tmp1 = [
-                    CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][0] + (i - (NumOfM6VForIPGate2TerminationR - 1) / 2.0) * DistanceXBtwM4VOfTermRes,
-                    (UpperYOfM6VForIPGate2TerminationR + LowerYOfM6VForIPGate2TerminationR) / 2.0]
+                    CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][0] + (i - (NumOfM4VForIPGate2TerminationR - 1) / 2.0) * DistanceXBtwM4VOfTermRes,
+                    (UpperYOfM4VForIPGate2TerminationR + LowerYOfM4VForIPGate2TerminationR) / 2.0]
                 tmp2 = [
-                    CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][-1] + (i - (NumOfM6VForIPGate2TerminationR - 1) / 2.0) * DistanceXBtwM4VOfTermRes,
-                    (UpperYOfM6VForIPGate2TerminationR + LowerYOfM6VForIPGate2TerminationR) / 2.0]
+                    CoordCalc.getSortedList_ascending(self._DesignParameter['M5ForTerminationR']['_XYCoordinates'])[0][-1] + (i - (NumOfM4VForIPGate2TerminationR - 1) / 2.0) * DistanceXBtwM4VOfTermRes,
+                    (UpperYOfM4VForIPGate2TerminationR + LowerYOfM4VForIPGate2TerminationR) / 2.0]
                 tmpXYs.append(tmp1)
                 tmpXYs.append(tmp2)
 
-            self._DesignParameter['M6VForIPGate2TerminationR']['_XYCoordinates'] = tmpXYs
+            self._DesignParameter['M4VForIPGate2TerminationR']['_XYCoordinates'] = tmpXYs
 
 
 
-            ''' 1 M5V5M6 On TermRes '''
-            OverlappedBoundaryForVia5Term1 = BoundaryCalc.getOverlappedBoundaryElement(
-                self._DesignParameter['M5ForTerminationR'], self._DesignParameter['M6VForIPGate2TerminationR']
-            )
+            ''' 1 M3V3M4 On TermRes '''
+            # M3Boundary = dict(_XWidth=self.getXWidth('TerminationResistors', '_Met3A'),
+            #                   _YWidth=self.getYWidth('TerminationResistors', '_Met3A'),
+            #                   _XYCoordinates=self.getXY('TerminationResistors', '_Met3A'))
+            # OverlappedBoundaryForVia3Term1 = BoundaryCalc.getOverlappedBoundaryElement(
+            #     M3Boundary, self._DesignParameter['M4VForIPGate2TerminationR']
+            # )
+            # NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
+            #     _XWidth=OverlappedBoundaryForVia3Term1['_XWidth'],
+            #     _YWidth=OverlappedBoundaryForVia3Term1['_YWidth']
+            # )
+            # Via3ParamsTerm1 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            # Via3ParamsTerm1['_ViaMet32Met4NumberOfCOX'] = NumViaXYs[0]
+            # Via3ParamsTerm1['_ViaMet32Met4NumberOfCOY'] = NumViaXYs[1]
+            # self._DesignParameter['Via3ForTerminationR1'] = self._SrefElementDeclaration(
+            #     _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='Via3ForTerminationR1_In{}'.format(_Name)),
+            #     _XYCoordinates=[])[0]
+            # self._DesignParameter['Via3ForTerminationR1']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**Via3ParamsTerm1)
+            # self._DesignParameter['Via3ForTerminationR1']['_XYCoordinates'] = OverlappedBoundaryForVia3Term1['_XYCoordinates']
+
+            ''' 2 M3V3M4 On InputGate '''
+            # OverlappedBoundaryForVia3Term2 = BoundaryCalc.getOverlappedBoundaryElement(
+            #     self._DesignParameter['M3HExtendForIPGate'], self._DesignParameter['M4VForIPGate2TerminationR']
+            # )
+            # NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
+            #     _XWidth=OverlappedBoundaryForVia3Term2['_XWidth'],
+            #     _YWidth=OverlappedBoundaryForVia3Term2['_YWidth']
+            # )
+            # Via3ParamsTerm2 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            # Via3ParamsTerm2['_ViaMet32Met4NumberOfCOX'] = NumViaXYs[0]
+            # Via3ParamsTerm2['_ViaMet32Met4NumberOfCOY'] = NumViaXYs[1]
+            # self._DesignParameter['Via3ForTerminationR2'] = self._SrefElementDeclaration(
+            #     _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='Via3ForTerminationR2_In{}'.format(_Name)),
+            #     _XYCoordinates=[])[0]
+            # self._DesignParameter['Via3ForTerminationR2']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**Via3ParamsTerm2)
+            # self._DesignParameter['Via3ForTerminationR2']['_XYCoordinates'] = OverlappedBoundaryForVia3Term2['_XYCoordinates']
             NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
-                _XWidth=OverlappedBoundaryForVia5Term1['_XWidth'],
-                _YWidth=OverlappedBoundaryForVia5Term1['_YWidth']
+                _XWidth=self.getXWidth('M3HExtendForIPGate'),
+                _YWidth=self.getYWidth('M3HExtendForIPGate')
             )
-            Via5ParamsTerm1 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
-            Via5ParamsTerm1['_ViaMet52Met6NumberOfCOX'] = NumViaXYs[0]
-            Via5ParamsTerm1['_ViaMet52Met6NumberOfCOY'] = NumViaXYs[1]
-            self._DesignParameter['Via5ForTerminationR1'] = self._SrefElementDeclaration(
-                _DesignObj=ViaMet52Met6._ViaMet52Met6(_Name='Via5ForTerminationR1_In{}'.format(_Name)),
+            Via3ParamsTerm2 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            Via3ParamsTerm2['_ViaMet32Met4NumberOfCOX'] = NumViaXYs[0]
+            Via3ParamsTerm2['_ViaMet32Met4NumberOfCOY'] = NumViaXYs[1]
+            self._DesignParameter['Via3ForTerminationR2'] = self._SrefElementDeclaration(
+                _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='Via3ForTerminationR2_In{}'.format(_Name)),
                 _XYCoordinates=[])[0]
-            self._DesignParameter['Via5ForTerminationR1']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureY(**Via5ParamsTerm1)
-            self._DesignParameter['Via5ForTerminationR1']['_XYCoordinates'] = OverlappedBoundaryForVia5Term1['_XYCoordinates']
+            self._DesignParameter['Via3ForTerminationR2']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**Via3ParamsTerm2)
+            self._DesignParameter['Via3ForTerminationR2']['_XYCoordinates'] = self.getXY('M3HExtendForIPGate')
 
-            ''' 2 M5V5M6 On InputGate '''
-            OverlappedBoundaryForVia5Term2 = BoundaryCalc.getOverlappedBoundaryElement(
-                self._DesignParameter['M5HExtendForIPGate'], self._DesignParameter['M6VForIPGate2TerminationR']
-            )
-            NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
-                _XWidth=OverlappedBoundaryForVia5Term2['_XWidth'],
-                _YWidth=OverlappedBoundaryForVia5Term2['_YWidth']
-            )
-            Via5ParamsTerm2 = copy.deepcopy(ViaMet52Met6._ViaMet52Met6._ParametersForDesignCalculation)
-            Via5ParamsTerm2['_ViaMet52Met6NumberOfCOX'] = NumViaXYs[0]
-            Via5ParamsTerm2['_ViaMet52Met6NumberOfCOY'] = NumViaXYs[1]
-            self._DesignParameter['Via5ForTerminationR2'] = self._SrefElementDeclaration(
-                _DesignObj=ViaMet52Met6._ViaMet52Met6(_Name='Via5ForTerminationR2_In{}'.format(_Name)),
-                _XYCoordinates=[])[0]
-            self._DesignParameter['Via5ForTerminationR2']['_DesignObj']._CalculateViaMet52Met6DesignParameterMinimumEnclosureY(**Via5ParamsTerm2)
-            self._DesignParameter['Via5ForTerminationR2']['_XYCoordinates'] = OverlappedBoundaryForVia5Term2['_XYCoordinates']
-
-
+            """
             ''' M7 For Input '''
             MinX_M5Term, MinY_M5Term, MaxX_M5Term, MaxY_M5Term = CoordCalc.MinMaxXY(self.getXY('M5ForTerminationR'))
 
@@ -583,7 +604,7 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
 
 
             OverlappedBoundaryForVia6Term = BoundaryCalc.getOverlappedBoundaryElement(
-                self._DesignParameter['M6VForIPGate2TerminationR'], self._DesignParameter['M7Input']
+                self._DesignParameter['M4VForIPGate2TerminationR'], self._DesignParameter['M7Input']
             )
             NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
                 _XWidth=OverlappedBoundaryForVia6Term['_XWidth'],
@@ -597,7 +618,7 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
                 _XYCoordinates=[])[0]
             self._DesignParameter['Via6ForTerminationR']['_DesignObj']._CalculateViaMet62Met7DesignParameterMinimumEnclosureY(**Via6ParamsTerm)
             self._DesignParameter['Via6ForTerminationR']['_XYCoordinates'] = OverlappedBoundaryForVia6Term['_XYCoordinates']
-
+            """
 
             # ''' Subring For CMLDriver '''
             # upperYOfSubring = self.getXY('TerminationResistors','_Met1BoundaryOfSubring')[0][1] \
@@ -638,6 +659,7 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
 
 
         else:
+            ''' -------------------------------- _TerminationR == None -------------------------------- '''
             ''' M5V5M6 For InputGate '''      # Just Copy PMOSSet's Via4
             NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaSameEnclosure(
                 _XWidth=self.getXWidth('PMOSSet', 'M4V4M5OnPMOSIPGate', '_Met5Layer'),
@@ -735,11 +757,13 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
+    from SthPack import PlaygroundBot
+    from Private import MyInfo
 
     My = MyInfo.USER(DesignParameters._Technology)
     Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
 
-    libname = 'TEST_CmlDriver_2'
+    libname = 'TEST_CmlDriver_3'
     cellname = 'CmlDriver'
     _fileName = cellname + '.gds'
 
@@ -763,7 +787,7 @@ if __name__ == '__main__':
         _ResWidth_LoadR=1500,
         _ResLength_LoadR=2300,
         _NumCOY_LoadR=4,
-        _NumRows_LoadR=2,
+        _NumRows_LoadR=3,
         _NumStripes_LoadR=10,
         _RoutingWidth_LoadR=None,
         _Dummy_LoadR=True,
@@ -774,7 +798,7 @@ if __name__ == '__main__':
         _ResWidth_TerminationR=1500,
         _ResLength_TerminationR=2300,
         _NumCOY_TerminationR=4,
-        _NumRows_TerminationR=3,
+        _NumRows_TerminationR=2,
         _NumStripes_TerminationR=10,
         _RoutingWidth_TerminationR=None,
         _Dummy_TerminationR=True,

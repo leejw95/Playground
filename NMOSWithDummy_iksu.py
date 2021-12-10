@@ -10,7 +10,7 @@ import DRCchecker
 
 class _NMOS(StickDiagram._StickDiagram):
     _ParametersForDesignCalculation = dict(_NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None,
-                                           _NMOSDummy=False, _XVT=None)
+                                           _NMOSDummy=False, _XVT=None, _DistanceBtwFinger=None)
 
     def __init__(self, _DesignParameter=None, _Name=None):
 
@@ -50,7 +50,7 @@ class _NMOS(StickDiagram._StickDiagram):
             self._DesignParameter['_Name']['_Name'] = _Name
 
     def _CalculateNMOSDesignParameter(self, _NMOSNumberofGate=None, _NMOSChannelWidth=None, _NMOSChannellength=None,
-                                      _NMOSDummy=False, _XVT=None):
+                                      _NMOSDummy=False, _XVT=None, _DistanceBtwFinger=None):
 
         _DRCObj = DRC.DRC()
         MinSnapSpacing = _DRCObj._MinSnapSpacing
@@ -67,6 +67,15 @@ class _NMOS(StickDiagram._StickDiagram):
             _LengthNMOSBtwPO = _DRCObj.DRCPolyMinSpace(_Width=_NMOSChannelWidth, _ParallelLength=_NMOSChannellength) + _NMOSChannellength
         else:
             _LengthNMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _NMOSChannellength
+
+        if _DistanceBtwFinger == None:
+            pass
+        elif _LengthNMOSBtwPO > _DistanceBtwFinger:
+            raise Exception(f"Invalid Parameter '_DistanceBtwFinger(={_DistanceBtwFinger})'.\n"
+                            f"Available Condition: 1) '_DistanceBtwFinger >= {_LengthNMOSBtwPO}'\n"
+                            f"                     2) '_DistanceBtwFinger = None' for Minimum Value.")
+        else:
+            _LengthNMOSBtwPO = _DistanceBtwFinger
 
 
         print ('#############################     POLY (PO/PC) Layer Calculation    ##############################################')
@@ -213,12 +222,30 @@ class _NMOS(StickDiagram._StickDiagram):
             elif (DesignParameters._Technology == '065nm') and (_XVT == None):
                 self._XVTLayer = None
                 self._XVTLayerMappingName = None
+            elif (DesignParameters._Technology == '045nm') and _XVT in ('LVT', 'HVT'):
+                self._XVTLayer = '_N' + _XVT + 'Layer'
+                self._XVTLayerMappingName = 'N' + _XVT
+            elif (DesignParameters._Technology == '045nm') and (_XVT == None):
+                self._XVTLayer = None
+                self._XVTLayerMappingName = None
+            elif (DesignParameters._Technology == '090nm') and _XVT in ('LVT', 'HVT'):
+                self._XVTLayer = '_N' + _XVT + 'Layer'
+                self._XVTLayerMappingName = 'N' + _XVT
+            elif (DesignParameters._Technology == '090nm') and (_XVT == None):
+                self._XVTLayer = None
+                self._XVTLayerMappingName = None
+
 
             elif DesignParameters._Technology == '028nm':
                 _XVT = _XVT if _XVT else "None"  # just for Error Message
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 028nm".format(_XVT))
             elif DesignParameters._Technology == '065nm':
                 raise NotImplementedError("Invalid '_XVT' argument({}) for 065nm".format(_XVT))
+            elif DesignParameters._Technology == '045nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 045nm".format(_XVT))
+            elif DesignParameters._Technology == '090nm':
+                raise NotImplementedError("Invalid '_XVT' argument({}) for 090nm".format(_XVT))
+
             else:
                 raise NotImplementedError("Not Yet Implemented in other technology : {}".format(DesignParameters._Technology))
 
@@ -274,6 +301,32 @@ class _NMOS(StickDiagram._StickDiagram):
             )
         else:
             pass
+
+        if DesignParameters._Technology == '045nm':
+            print ('################################     PDK Layer Calculation    ############################################')
+            self._DesignParameter['_PDKLayer'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['PDK'][0],
+                _Datatype=DesignParameters._LayerMapping['PDK'][1],
+                _XWidth=self._DesignParameter['_NPLayer']['_XWidth'],
+                _YWidth=self._DesignParameter['_NPLayer']['_YWidth'],
+                _XYCoordinates=_XYCoordinateOfNMOS
+            )
+        else:
+            pass
+
+        if DesignParameters._Technology == '090nm':
+            print ('################################     PDK Layer Calculation    ############################################')
+            self._DesignParameter['_PDKLayer'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['PDK'][0],
+                _Datatype=DesignParameters._LayerMapping['PDK'][1],
+                _XWidth=self._DesignParameter['_NPLayer']['_XWidth'],
+                _YWidth=self._DesignParameter['_NPLayer']['_YWidth'],
+                _XYCoordinates=_XYCoordinateOfNMOS
+            )
+        else:
+            pass
+
+
 
         print ('#########################     Supply Routing Coordinates Calculation   ##################################')
         tmpXYs = []

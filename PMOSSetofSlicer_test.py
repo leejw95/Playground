@@ -627,28 +627,13 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ############################################### Guardring Generation ####################################################################
             #########################################################################################################################################
             if _Guardring == True:
-                # print ('#################################     Guardring Layer Generation ###########################################')
-                # self._DesignParameter['_RingMetal1Layer1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[],_Width=400)
-                # self._DesignParameter['_RingMetal1Layer2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[],_Width=400)
-                # self._DesignParameter['_RingMetal1Layer3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=400)
-                # self._DesignParameter['_RingMetal1Layer4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=400)
-                # self._DesignParameter['_RingODLayer1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
-                # self._DesignParameter['_RingODLayer2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
-                # self._DesignParameter['_RingODLayer3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
-                # self._DesignParameter['_RingODLayer4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1], _XYCoordinates=[], _Width=400)
-                #
-                # self._DesignParameter['_RingMetal1Layer1']['_Width'] = _GuardringWidth
-                # self._DesignParameter['_RingMetal1Layer2']['_Width'] = _GuardringWidth
-                # self._DesignParameter['_RingMetal1Layer3']['_Width'] = _GuardringWidth
-                # self._DesignParameter['_RingMetal1Layer4']['_Width'] = _GuardringWidth
-                # self._DesignParameter['_RingODLayer1']['_Width'] = _GuardringWidth
-                # self._DesignParameter['_RingODLayer2']['_Width'] = _GuardringWidth
-                # self._DesignParameter['_RingODLayer3']['_Width'] = _GuardringWidth
-                # self._DesignParameter['_RingODLayer4']['_Width'] = _GuardringWidth
+                print ('#################################     Guardring Layer Generation ###########################################')
 
+
+                XVTLayer = self._DesignParameter['_PMOS1']['_DesignObj']._XVTLayer
 
                 toptmp = self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[XVTLayer]['_YWidth']//2 + (_DRCObj._PMOS2GuardringMinSpace + _GuardringWidth//2) + 10
-                bottomtmp = min(self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][1]) - self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _DRCObj._Metal1MinSpace3 - _GuardringWidth // 2####self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']//2 - (_DRCObj._PMOS2GuardringMinSpace + self._DesignParameter['_RingMetal1Layer1']['_Width']//2) - 2*_DRCObj._Metal1MinEnclosureCO2 - self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+                bottomtmp = min(self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][1]) - self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _DRCObj._Metal1MinSpace3 - _GuardringWidth // 2
                 lefttmp = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] - (_DRCObj._PMOS2GuardringMinSpace + _GuardringWidth//2) + self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] - 35
                 righttmp = self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] + (_DRCObj._PMOS2GuardringMinSpace + _GuardringWidth//2) + self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] + 35
 

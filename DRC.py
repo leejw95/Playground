@@ -596,7 +596,7 @@ class DRCCO:
 class DRCMETAL1:
     def __init__(self):
         if DesignParameters._Technology == '045nm':
-            self._Metal1DefaultSpace = 250
+            self._Metal1DefaultSpace = 220
             self._Metal1MinWidth = 70
             self._Metal1MinSpace = 70
             self._Metal1MinSpace2 = 80
@@ -659,7 +659,7 @@ class DRCMETAL1:
             self._Metal1MinArea = 42000
 
         if DesignParameters._Technology == '090nm':
-            self._Metal1DefaultSpace = 500
+            self._Metal1DefaultSpace = 380
             self._Metal1MinWidth = 120
             self._Metal1MinSpace = 120
 

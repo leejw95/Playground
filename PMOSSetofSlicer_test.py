@@ -838,7 +838,7 @@ if __name__ == '__main__':
     _ChannelLength=60
     _Dummy=False
     _XVT='LVT'
-    _GuardringWidth=200
+    _GuardringWidth=500
     _Guardring=True
     _NumSupplyCOY=None
     _NumSupplyCOX=None

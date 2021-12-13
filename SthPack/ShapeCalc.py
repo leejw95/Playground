@@ -1,6 +1,7 @@
 from shapely.geometry import Polygon, box, MultiPolygon
 import matplotlib.pyplot as plt
 import shapely.ops as so
+import math
 
 
 def _Boundary2Polygon(Boundary):
@@ -15,22 +16,34 @@ def _Boundary2Polygon(Boundary):
     return MultiPolygon(PolygonList)
 
 
-def _Polygon2BoundaryElement(MultiPolygon):
+def _MultiPolygon2MultiBoundary(MultiPolygon):
 
-    if len(MinMaxXYList) == 0:
-        return None
+    assert MultiPolygon.geom_type == 'MultiPolygon'
+
+    MultiBoundaryElement = []
+    for Polygon in multipolygon1.geoms:
+        MultiBoundaryElement.append(_Polygon2Boundary(Polygon))
+
+    return MultiBoundaryElement
+
+
+def _Polygon2Boundary(Polygon):
+    assert Polygon.geom_type == 'Polygon'
+    assert _isRectangle(Polygon)
+
+    (minx, miny, maxx, maxy) = Polygon.bounds
+    Boundary = dict(_XWidth=maxx - minx,
+                    _YWidth=maxy - miny,
+                    _XYCoordinates=[(minx + maxx) / 2, (miny + maxy) / 2])
+
+    return Boundary
+
+
+def _isRectangle(poly):
+    if math.isclose(poly.minimum_rotated_rectangle.area, poly.area):
+        return True
     else:
-        BoundaryElement = dict(_XWidth=(MinMaxXYList[0][2] - MinMaxXYList[0][0]),
-                               _YWidth=(MinMaxXYList[0][3] - MinMaxXYList[0][1]),
-                               _XYCoordinates=[])
-        for Obj in MinMaxXYList:
-            assert (Obj[2] - Obj[0]) == BoundaryElement['_XWidth']
-            assert (Obj[3] - Obj[1]) == BoundaryElement['_YWidth']
-            BoundaryElement['_XYCoordinates'].append(
-                [(Obj[2] + Obj[0]) / 2.,
-                 (Obj[3] + Obj[1]) / 2.])
-        return BoundaryElement
-
+        return False
 
 if __name__ == '__main__':
     plt.rcParams["figure.figsize"] = [7.00, 3.50]
@@ -56,9 +69,10 @@ if __name__ == '__main__':
     multipolygon1 = p3
 
     print(multipolygon1)
-    for Polygon in multipolygon1.geoms:
-        print(Polygon)
+    for Polygon1 in multipolygon1.geoms:
+        print(Polygon1.bounds)
 
+    kk = _MultiPolygon2MultiBoundary(multipolygon1)
 
     ''' plot '''
     fig, axs = plt.subplots()

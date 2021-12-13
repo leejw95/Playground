@@ -16,7 +16,7 @@ import ViaMet42Met5
 import ViaMet52Met6
 import ViaMet62Met7
 import psubring
-from CML_Driver import PMOSSetOfCMLDriver
+from CML_Driver import PMOSSetOfCMLDriver_v2
 from CML_Driver import opppcres_with_subring
 
 
@@ -101,7 +101,7 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
         print(''.center(105, '#') + '\n')
 
         print('     Calculate PMOSSet_In{}     '.format(_Name).center(105, '#'))
-        PMOSSetParam = copy.deepcopy(PMOSSetOfCMLDriver.PMOSSetOfCMLDriver._ParametersForDesignCalculation)
+        PMOSSetParam = copy.deepcopy(PMOSSetOfCMLDriver_v2.PMOSSetOfCMLDriver._ParametersForDesignCalculation)
         PMOSSetParam['_FingerWidthOfInputPair'] = _FingerWidthOfInputPair
         PMOSSetParam['_FingerLengthOfInputPair'] = _FingerLengthOfInputPair
         PMOSSetParam['_NumFingerOfInputPair'] = _NumFingerOfInputPair
@@ -114,7 +114,8 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
         PMOSSetParam['_YWidthOfNbodybtwIPandCS'] = _YWidthOfNbodybtwIPandCS
         PMOSSetParam['_XVT'] = _XVT
         PMOSSetParam['_SubringWidth'] = _SubringWidth
-        self._DesignParameter['PMOSSet'] = self._SrefElementDeclaration(_DesignObj=PMOSSetOfCMLDriver.PMOSSetOfCMLDriver(_DesignParameter=None, _Name='PMOSSet_In{}'.format(_Name)))[0]
+        self._DesignParameter['PMOSSet'] = self._SrefElementDeclaration(
+            _DesignObj=PMOSSetOfCMLDriver_v2.PMOSSetOfCMLDriver(_DesignParameter=None, _Name='PMOSSet_In{}'.format(_Name)))[0]
         self._DesignParameter['PMOSSet']['_DesignObj']._CalculateDesignParameter(**PMOSSetParam)
         self._DesignParameter['PMOSSet']['_XYCoordinates'] = [[0,0]]
 
@@ -129,13 +130,14 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
         ResistorParam_LoadR['_RoutingWidth'] = _RoutingWidth_LoadR
         ResistorParam_LoadR['_Dummy'] = _Dummy_LoadR
         ResistorParam_LoadR['_SubringWidth'] = _SubringWidth_LoadR
-        self._DesignParameter['LoadResistors'] = self._SrefElementDeclaration(_DesignObj=opppcres_with_subring.OpppcresWithSubring(_DesignParameter=None, _Name='LoadResistors_In{}'.format(_Name)))[0]
+        self._DesignParameter['LoadResistors'] = self._SrefElementDeclaration(
+            _DesignObj=opppcres_with_subring.OpppcresWithSubring(_DesignParameter=None, _Name='LoadResistors_In{}'.format(_Name)))[0]
         self._DesignParameter['LoadResistors']['_DesignObj']._CalculateDesignParameter(**ResistorParam_LoadR)
 
         DistanceBtwSubrings_PMOSSetAndLoadR = \
-            self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] / 2.0 \
+            self.getYWidth('PMOSSet', '_Met1BoundaryOfSubring') / 2.0 \
             + _DRCObj._Metal1MinSpace4 \
-            + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] / 2.0
+            + self.getYWidth('LoadResistors', '_Met1BoundaryOfSubring') / 2.0
         self._DesignParameter['LoadResistors']['_XYCoordinates'] = \
             [[0, (self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][0][1]
                   - DistanceBtwSubrings_PMOSSetAndLoadR
@@ -147,16 +149,16 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
         UpperYBoundaryOfLoadRSubring = \
             self._DesignParameter['LoadResistors']['_XYCoordinates'][0][1] \
             + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_XYCoordinates'][0][1] \
-            + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met1BoundaryOfSubring']['_YWidth'] / 2.0
+            + self.getYWidth('LoadResistors', '_Met1BoundaryOfSubring') / 2
 
         tmpXYs = []
-        for XYs in CoordCalc.getXYCoords_MinY(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M2V2M3OnPMOSIP']['_XYCoordinates']):
+        for XYs in CoordCalc.getXYCoords_MinY(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M1V1M2OnPMOSIP']['_XYCoordinates']):
             tmpXYs.append([XYs, [XYs[0], UpperYBoundaryOfLoadRSubring]])
 
         self._DesignParameter['M2VForIPDrain2LoadR'] = self._PathElementDeclaration(
             _Layer=DesignParameters._LayerMapping['METAL2'][0],
             _Datatype=DesignParameters._LayerMapping['METAL2'][1],
-            _Width=self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M2VforIP']['_XWidth'],
+            _Width=self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M1VforIP']['_XWidth'],
             _XYCoordinates=tmpXYs
         )
 
@@ -169,7 +171,7 @@ class CmlLDriverUnit(StickDiagram._StickDiagram):
                                           + self._DesignParameter['LoadResistors']['_DesignObj']._DesignParameter['_Met2A']['_XWidth'] / 2.0
 
         # 2) Calculate 'RightBoundaryOfM2H1_byIP'
-        for i,XYs in enumerate(CoordCalc.getXYCoords_MinY(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M2V2M3OnPMOSIP']['_XYCoordinates'])):
+        for i,XYs in enumerate(CoordCalc.getXYCoords_MinY(self._DesignParameter['PMOSSet']['_DesignObj']._DesignParameter['M1V1M2OnPMOSIP']['_XYCoordinates'])):
             if i == 0:      # initialize
                 LowestAbsXCoord = abs(XYs[0])
                 LargestAbsXCoord = abs(XYs[0])

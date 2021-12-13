@@ -281,9 +281,9 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        _ResWidth=1000,     # 3000
+        _ResWidth=2000,     # 3000
         _ResLength=2500,    # 2300
-        _NumCOY=1,          # 4
+        _NumCOY=2,          # 4
         _NumRows=2,
         _NumStripes=3,
         _RoutingWidth=None,
@@ -291,7 +291,7 @@ if __name__ == '__main__':
         _SubringWidth=1000,
     )
 
-    Mode_DRCCheck = True            # True | False
+    Mode_DRCCheck = False            # True | False
     Num_DRCCheck = 10
 
     for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):

@@ -125,10 +125,10 @@ class _PMOS(StickDiagram._StickDiagram):
 
 
         print('     DIFF (OD/RX) Layer Calculation     '.center(105,'#'))
-        if _PMOSDummy and DesignParameters._Technology != '028nm':
-            XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _PMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
-        else:
-            XWidth_OD = _LengthPMOSBtwPO * _PMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
+        # if _PMOSDummy and DesignParameters._Technology != '028nm':
+        #     XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _PMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
+        # else:
+        XWidth_OD = _LengthPMOSBtwPO * _PMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
         self._DesignParameter['_ODLayer']['_XWidth'] = XWidth_OD
         self._DesignParameter['_ODLayer']['_YWidth'] = _PMOSChannelWidth
         self._DesignParameter['_ODLayer']['_XYCoordinates'] = _XYCoordinateOfPMOS
@@ -199,7 +199,7 @@ class _PMOS(StickDiagram._StickDiagram):
 
 
         print('     PIMP (PP/BP) Layer Calculation     '.center(105,'#'))  # Need to check
-        if (DesignParameters._Technology == '065nm') and (_PMOSDummy is True):
+        if (DesignParameters._Technology != '028nm') and (_PMOSDummy is True) :
             XWidth_PP_byPO = self._DesignParameter['_PODummyLayer']['_XWidth'] \
                              + (self._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] -
                                 self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) \

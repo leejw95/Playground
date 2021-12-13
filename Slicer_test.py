@@ -57,7 +57,7 @@ class _Slicer(StickDiagram._StickDiagram):
             _DRCObj = DRC.DRC()
             _XYCoordinateOfPMOSSET = [[0, 0]]
             _XYCoordinateOfNMOSSET = [[0, 0]]
-            _PODummyWidth = 30
+            #_PODummyWidth = 30
             _Name = 'Slicer'
             _CLKinputPMOSFinger = _CLKinputPMOSFinger1 + _CLKinputPMOSFinger2
 

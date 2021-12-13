@@ -174,6 +174,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ##################################################################################################################################################################################
             #################################################################### Coordinate Settings #########################################################################################
             ##################################################################################################################################################################################
+
             _LengthPMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + _ChannelLength
             _LengthPMOSBtwCOnDummy= self.CeilMinSnapSpacing(_DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth//2) + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD + _ChannelLength//2, MinSnapSpacing)
             _LengthPMOSBtwPOnDummy= self.CeilMinSnapSpacing(_DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + _DRCObj._PolygateMinSpace2Co) + _ChannelLength // 2 + _DRCObj._CoMinEnclosureByOD + _DRCObj._PolygateMinSpace2OD + _ChannelLength//2, MinSnapSpacing)
@@ -480,6 +481,10 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                                                                            self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _DRCObj._Metal1MinSpace21, MinSnapSpacing)
                                                                                   ]]
 
+            self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+            self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
 
             if _Dummy == True :
 
@@ -737,7 +742,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             #########################################################################################################################################
             # PMOS Metal1 VDD --- Source Routing
             self._DesignParameter['_VDDMet1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=400)
-            self._DesignParameter['_VDDMet1']['_Width'] = _DRCObj._CoMinWidth + 2*_DRCObj._Metal1MinEnclosureCO
+            self._DesignParameter['_VDDMet1']['_Width'] = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']##_DRCObj._CoMinWidth + 2*_DRCObj._Metal1MinEnclosureCO
 
             _LengthPMOSBtwMet1 = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']
             tmpx  = []

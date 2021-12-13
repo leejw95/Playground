@@ -457,28 +457,33 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             print('x')
 
 
+            if DesignParameters._Technology == '90nm' :
+                _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace2
+            else :
+                _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace21
+
 
             # PMOS Gate Coordinate Setting
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
                                                                            self.CeilMinSnapSpacing(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,  self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) - \
-                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _DRCObj._Metal1MinSpace21, MinSnapSpacing)
+                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _Met1SpacebtwVIAMOS, MinSnapSpacing)
 
                                                                                   ]]
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'] = [[self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0],
                                                                            self.CeilMinSnapSpacing(self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,  self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) - \
-                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _DRCObj._Metal1MinSpace21, MinSnapSpacing)
+                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _Met1SpacebtwVIAMOS, MinSnapSpacing)
                                                                                   ]]
 
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'] = [[self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
                                                                             self.CeilMinSnapSpacing(self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,  self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) - \
-                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _DRCObj._Metal1MinSpace21, MinSnapSpacing)
+                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _Met1SpacebtwVIAMOS, MinSnapSpacing)
                                                                                   ]]
 
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'] = [[self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
                                                                             self.CeilMinSnapSpacing(self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - max(self._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,  self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) - \
-                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _DRCObj._Metal1MinSpace21, MinSnapSpacing)
+                                                                           self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 - _Met1SpacebtwVIAMOS, MinSnapSpacing)
                                                                                   ]]
 
             self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
@@ -839,11 +844,11 @@ if __name__ == '__main__':
     _CLKinputPMOSFinger1=6
     _CLKinputPMOSFinger2=3
     _PMOSFinger=2
-    _PMOSChannelWidth=300
-    _ChannelLength=40
-    _Dummy=True
+    _PMOSChannelWidth=700
+    _ChannelLength=100
+    _Dummy=False
     _XVT='LVT'
-    _GuardringWidth=300
+    _GuardringWidth=700
     _Guardring=True
     _NumSupplyCOY=None
     _NumSupplyCOX=None

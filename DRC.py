@@ -219,8 +219,8 @@ class DRCPOLYGATE:
             self._PolygateMinExtensionOnOD2=70
             self._PolygateMinExtensionOnOD3=105
             self._PolygateMinSpaceAtCorner=96
-            self._PMOS2GuardringMinSpace=90
-            self._NMOS2GuardringMinSpace=90
+            # self._PMOS2GuardringMinSpace=90
+            # self._NMOS2GuardringMinSpace=90
             self._PolygateWithPCCRIT=71
 
 

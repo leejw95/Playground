@@ -199,7 +199,7 @@ class _PMOS(StickDiagram._StickDiagram):
 
 
         print('     PIMP (PP/BP) Layer Calculation     '.center(105,'#'))  # Need to check
-        if (DesignParameters._Technology == '065nm') and (_PMOSDummy is True):
+        if (DesignParameters._Technology != '028nm') and (_PMOSDummy is True) :
             XWidth_PP_byPO = self._DesignParameter['_PODummyLayer']['_XWidth'] \
                              + (self._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] -
                                 self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) \

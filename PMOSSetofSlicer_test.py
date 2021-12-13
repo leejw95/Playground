@@ -839,11 +839,11 @@ if __name__ == '__main__':
     _CLKinputPMOSFinger1=6
     _CLKinputPMOSFinger2=3
     _PMOSFinger=2
-    _PMOSChannelWidth=500
-    _ChannelLength=60
-    _Dummy=False
+    _PMOSChannelWidth=300
+    _ChannelLength=40
+    _Dummy=True
     _XVT='LVT'
-    _GuardringWidth=500
+    _GuardringWidth=300
     _Guardring=True
     _NumSupplyCOY=None
     _NumSupplyCOX=None

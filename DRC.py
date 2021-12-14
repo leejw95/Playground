@@ -1376,7 +1376,7 @@ class DRCMETALx:
             self._MetalxMinSpace22=150
             self._MetalxMinSpace23=210
             self._MetalxMinSpace3=500
-
+            self._MetalxMinSpace5=100
             self._MetalxMinSpaceAtCorner=100
 
             self._MetalxMinEnclosureCO=0

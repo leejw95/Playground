@@ -252,14 +252,14 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_NMOS2']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(_XYCoordinateOfNMOS[0][0] + abs(2*tmp) + (_LengthNMOSBtwPO*(_DATAinputNMOSFinger//2) + _LengthNMOSBtwPOnDummy) + _DRCObj._PolygateMinSpace//2 + _ChannelLength//2, MinSnapSpacing), _XYCoordinateOfNMOS[0][1]]]
 
             # CLK NMOS5 Coordinate Setting
-            SpaceBtwNMOS = 250
+            #SpaceBtwNMOS = 250
             if (_DATAinputNMOSFinger % 2) == 0:
                 self._DesignParameter['_NMOS5']['_XYCoordinates'] = [[_XYCoordinateOfNMOS[0][0],
-                                                                      self.CeilMinSnapSpacing(_XYCoordinateOfNMOS[0][1] - (_CLKinputNMOSChannelWidth // 2 + _NMOSChannelWidth // 2 + 1 + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _DRCObj._Metal1MinSpace3 + _DRCObj._Metal1MinSpace3), MinSnapSpacing)
+                                                                      self.CeilMinSnapSpacing(_XYCoordinateOfNMOS[0][1] - (_CLKinputNMOSChannelWidth // 2 + _NMOSChannelWidth // 2 + 1 + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _DRCObj._Metal1DefaultSpace + _DRCObj._Metal1DefaultSpace), MinSnapSpacing)
                                                                     ]]
             elif (_DATAinputNMOSFinger % 2) == 1:
                 self._DesignParameter['_NMOS5']['_XYCoordinates'] = [[_XYCoordinateOfNMOS[0][0],
-                                                                      self.CeilMinSnapSpacing(_XYCoordinateOfNMOS[0][1] - (_CLKinputNMOSChannelWidth // 2 + _NMOSChannelWidth // 2 + 1 + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _DRCObj._Metal1MinSpace3 + _DRCObj._Metal1MinSpace3), MinSnapSpacing)
+                                                                      self.CeilMinSnapSpacing(_XYCoordinateOfNMOS[0][1] - (_CLKinputNMOSChannelWidth // 2 + _NMOSChannelWidth // 2 + 1 + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth + self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _DRCObj._Metal1DefaultSpace + _DRCObj._Metal1DefaultSpace), MinSnapSpacing)
                                                                     ]]
 
             if _CLKinputNMOSFinger > 2 * _NMOSFinger + 4 :

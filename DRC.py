@@ -663,7 +663,7 @@ class DRCMETAL1:
             self._Metal1MinWidth = 120
             self._Metal1MinSpace = 120
             self._Metal1MinSpace2 = 170
-            self._Metal1MinSpace21 = 160 ## There is no _Metal1MinSpace21 Rule in 90nm
+            #self._Metal1MinSpace21 = 160 ## There is no _Metal1MinSpace21 Rule in 90nm
             self._Metal1MinSpace3 = 500
             self._Metal1MinSpace4 = 1500
 
@@ -1438,10 +1438,11 @@ class DRCMETALx:
             self._MetalxMinWidth=140
             self._MetalxMinSpace=140
             self._MetalxMinSpace2=190
-            self._MetalxMinSpace21 = 160  ## There is no _Metal1MinSpace21 Rule in 90nm
+            #self._MetalxMinSpace21 = 160  ## There is no _Metal1MinSpace21 Rule in 90nm
             self._MetalxMinSpace3=500
             self._MetalxMinSpace4=1500
-
+            self._MetalxMinSpace5=1900
+            self._MetalxMinSpace6=3500
             self._MetalxMinSpaceAtCorner=None
 
             self._MetalxMinEnclosureCO=5

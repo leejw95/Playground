@@ -627,10 +627,12 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             del _tmpNumCOY
 
 
-            if DesignParameters._Technology == '90nm' :
-                _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace2
-            else :
-                _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace21
+            # if DesignParameters._Technology in ['028nm','045nm','065nm'] :
+            #     _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace21
+            # else :
+            #     _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace
+
+            _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace2
 
 
             self._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'] = [[self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0],
@@ -652,7 +654,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_XYCoordinates'] = [[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0],
                                                                             self.CeilMinSnapSpacing(self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] + max(self._DesignParameter['_ViaMet12Met2OnNMOSOutput5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
                                                                             self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 + _Met1SpacebtwVIAMOS, MinSnapSpacing)]]
-            ##+ _DRCObj._Metal1MinSpacetoGate
+
 
             self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
             self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutput1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
@@ -1151,12 +1153,12 @@ if __name__ == '__main__':
     _DATAinputNMOSFinger = 10  # random.randint(2, 16)
     _NMOSFinger = 2  # random.randint(1, 16)
     _CLKinputNMOSFinger = 8  # random.randint(1, 16)
-    _NMOSChannelWidth = 500  ###random.randrange(200, 1050, 50)
-    _CLKinputNMOSChannelWidth = 500
-    _ChannelLength = 60
-    _Dummy = False
+    _NMOSChannelWidth = 1000  ###random.randrange(200, 1050, 50)
+    _CLKinputNMOSChannelWidth = 1000
+    _ChannelLength = 40
+    _Dummy = True
     _XVT = 'LVT'
-    _GuardringWidth = 500
+    _GuardringWidth = 200
     _Guardring = True
     _NumSupplyCOY = None
     _NumSupplyCOX = None

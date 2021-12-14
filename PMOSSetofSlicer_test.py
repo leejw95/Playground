@@ -457,11 +457,12 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             print('x')
 
 
-            if DesignParameters._Technology == '90nm' :
-                _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace2
-            else :
-                _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace21
+            # if DesignParameters._Technology in ('028nm','045nm','065nm') :
+            #     _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace21
+            # else :
+            #     _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace
 
+            _Met1SpacebtwVIAMOS = _DRCObj._Metal1MinSpace2
 
             # PMOS Gate Coordinate Setting
             self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],

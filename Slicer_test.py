@@ -1370,18 +1370,18 @@ if __name__ == '__main__':
         _CLKinputPMOSFinger1 = 1###random.randint(1, 16)
         _CLKinputPMOSFinger2 = 1###random.randint(1, 16)
         _PMOSFinger = 1###random.randint(1, 16)
-        _PMOSChannelWidth = 700###random.randrange(200, 1050, 50)
+        _PMOSChannelWidth = 350###random.randrange(200, 1050, 50)
         _DATAinputNMOSFinger = 1###random.randint(2, 16)
         _NMOSFinger = 1###random.randint(1, 16)
         _CLKinputNMOSFinger = 1##random.randint(1, 16)
-        _NMOSChannelWidth = 700###random.randrange(200, 1050, 50)
-        _CLKinputNMOSChannelWidth = 700
-        _ChannelLength = 100
-        _Dummy = False
+        _NMOSChannelWidth = 350###random.randrange(200, 1050, 50)
+        _CLKinputNMOSChannelWidth = 350
+        _ChannelLength = 40
+        _Dummy = True
         _XVT = 'LVT'
-        _GuardringWidth = 700
+        _GuardringWidth = 350
         _Guardring = True
-        _SlicerGuardringWidth = 700
+        _SlicerGuardringWidth = 350
         _SlicerGuardring = None
         _NumSupplyCOY = None
         _NumSupplyCOX = None
@@ -1400,8 +1400,8 @@ if __name__ == '__main__':
 
         from Private import MyInfo
         import DRCchecker
-        libname = 'Slicer'
-        cellname = 'Slicer'
+        libname = 'Slicer_test'
+        cellname = 'Slicer_test'
         _fileName = cellname + '.gds'
 
         InputParams = dict(

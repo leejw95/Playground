@@ -210,7 +210,7 @@ class _PMOS(StickDiagram._StickDiagram):
         XWidth_PP_byOD = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._PpMinExtensiononPactive
 
         self._DesignParameter['_PPLayer']['_XWidth'] = max(XWidth_PP_byPO, XWidth_PP_byOD)
-        self._DesignParameter['_PPLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._PpMinEnclosureOfPo
+        self._DesignParameter['_PPLayer']['_YWidth'] = max(self._DesignParameter['_POLayer']['_YWidth'], self._DesignParameter['_PODummyLayer']['_YWidth']) + 2 * _DRCObj._PpMinEnclosureOfPo
         self._DesignParameter['_PPLayer']['_XYCoordinates'] = _XYCoordinateOfPMOS
 
         # XVT Layer Calculation

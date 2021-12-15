@@ -111,7 +111,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][0][0]
 
             _VIANMOSPoly2Met1NMOS1 = copy.deepcopy(ViaPoly2Met1._ViaPoly2Met1._ParametersForDesignCalculation)
-            _tmpNumCOY = int(_LenBtwNMOSGates // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+            _tmpNumCOY = int(_LenBtwNMOSGates // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2))
 
             if _tmpNumCOY < 1:
                 _VIANMOSPoly2Met1NMOS1['_ViaPoly2Met1NumberOfCOX'] = 1
@@ -134,7 +134,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_XYCoordinateNMOSGateRouting']['_XYCoordinates'][0][0]
 
             _VIANMOSPoly2Met1NMOS2 = copy.deepcopy(ViaPoly2Met1._ViaPoly2Met1._ParametersForDesignCalculation)
-            _tmpNumCOY = int(_LenBtwNMOSGates // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+            _tmpNumCOY = int(_LenBtwNMOSGates // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2))
 
             if _tmpNumCOY < 1:
                 _VIANMOSPoly2Met1NMOS2['_ViaPoly2Met1NumberOfCOX'] = 1

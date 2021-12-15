@@ -343,8 +343,10 @@ class _Slicer(StickDiagram._StickDiagram):
                                                                                 #    self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]
                                                                                 #   ]]
 
+            # if self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
+            #
+
             if self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
-                #self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], 2*MinSnapSpacing)
                 self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], 2*MinSnapSpacing)
 
 
@@ -362,6 +364,8 @@ class _Slicer(StickDiagram._StickDiagram):
                                                                                      [self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_XYCoordinates'][_PMOSFinger // 2 + 1][0],
                                                                                    self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput2']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]]]
 
+            if self._DesignParameter['_ViaMet22Met3OnPMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_ViaMet22Met3OnPMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
+                self._DesignParameter['_ViaMet22Met3OnPMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnPMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'], 2*MinSnapSpacing)
 
 
 
@@ -1268,13 +1272,13 @@ class _Slicer(StickDiagram._StickDiagram):
 if __name__ == '__main__':
 
 
-        _CLKinputPMOSFinger1 = 1###random.randint(1, 16)
-        _CLKinputPMOSFinger2 = 1###random.randint(1, 16)
-        _PMOSFinger = 1###random.randint(1, 16)
+        _CLKinputPMOSFinger1 = 6###random.randint(1, 16)
+        _CLKinputPMOSFinger2 = 3###random.randint(1, 16)
+        _PMOSFinger = 2###random.randint(1, 16)
         _PMOSChannelWidth = 400###random.randrange(200, 1050, 50)
-        _DATAinputNMOSFinger = 1###random.randint(2, 16)
-        _NMOSFinger = 5###random.randint(1, 16)
-        _CLKinputNMOSFinger = 1##random.randint(1, 16)
+        _DATAinputNMOSFinger = 12###random.randint(2, 16)
+        _NMOSFinger = 3###random.randint(1, 16)
+        _CLKinputNMOSFinger = 12##random.randint(1, 16)
         _NMOSChannelWidth = 400###random.randrange(200, 1050, 50)
         _CLKinputNMOSChannelWidth = 400
         _ChannelLength = 40

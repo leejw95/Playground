@@ -448,8 +448,8 @@ class _StickDiagram:
             if _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 1 and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
                 if DesignParameters._Technology!='180nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['WELLBODY'][0]:
                     pass
-                elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
-                    pass
+                # elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
+                #     pass
                 else :
                     for _XYCoordinate in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
 
@@ -463,8 +463,8 @@ class _StickDiagram:
             elif _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 11 and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
                 if DesignParameters._Technology!='180nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['WELLBODY'][0]:
                     pass
-                elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
-                    pass
+                # elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
+                #     pass
                 else :
                     for _XYCoordinate in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
 

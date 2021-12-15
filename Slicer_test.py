@@ -220,6 +220,10 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet12Met2OnNMOSGate2']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0] ,
                                                                                     self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]]
                                                                                   ]
+            if self._DesignParameter['_ViaMet12Met2OnNMOSGate2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_ViaMet12Met2OnNMOSGate2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] < _DRCObj._MetalxMinArea:
+                self._DesignParameter['_ViaMet12Met2OnNMOSGate2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet12Met2OnNMOSGate2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], 2 * MinSnapSpacing)
+
+
             del _tmpNumViaX
             print('x')
 
@@ -237,6 +241,11 @@ class _Slicer(StickDiagram._StickDiagram):
                                                                                     + self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]],
                                                                                    [self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][0], self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][1] \
                                                                                     + self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]]]
+
+            if self._DesignParameter['_ViaMet12Met2OnPMOSGate2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_ViaMet12Met2OnPMOSGate2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] < _DRCObj._MetalxMinArea:
+                self._DesignParameter['_ViaMet12Met2OnPMOSGate2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet12Met2OnPMOSGate2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], 2 * MinSnapSpacing)
+
+
             del _tmpNumViaX
 
 
@@ -256,6 +265,7 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet12Met2OnPMOSGate1']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][0], self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][1] +self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]],
                                                                                    [self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'][0][0], self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'][0][1] +self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]]
                                                                                   ]
+
             del _tmpNumViaX
 
 
@@ -274,7 +284,6 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_Met1ForNMOSGates5']['_XWidth'] = max(self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'], self._DesignParameter['_ViaMet12Met2OnNMOSGate2']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])
             self._DesignParameter['_Met1ForNMOSGates5']['_YWidth'] = max(self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOSGate2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'])
             self._DesignParameter['_Met1ForNMOSGates5']['_XYCoordinates'] = self._DesignParameter['_ViaMet12Met2OnNMOSGate2']['_XYCoordinates']
-            print('x')
 
             self._DesignParameter['_Met1ForPMOSGates1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
             self._DesignParameter['_Met1ForPMOSGates1']['_XWidth'] = max(0, self._DesignParameter['_ViaMet12Met2OnPMOSGate2']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])###max(self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'], self._DesignParameter['_ViaMet12Met2OnPMOSGate1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])
@@ -282,13 +291,12 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_Met1ForPMOSGates1']['_XYCoordinates'] =  [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][0], self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][1] +self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]],
                                                                               [self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][0], self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][1] +self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1]]
                                                                                 ]
-            print('x')
 
             self._DesignParameter['_Met1ForPMOSGates3'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
             self._DesignParameter['_Met1ForPMOSGates3']['_XWidth'] = max(self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'], self._DesignParameter['_ViaMet12Met2OnPMOSGate1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])
             self._DesignParameter['_Met1ForPMOSGates3']['_YWidth'] = max(self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOSGate1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'])
             self._DesignParameter['_Met1ForPMOSGates3']['_XYCoordinates'] = self._DesignParameter['_ViaMet12Met2OnPMOSGate1']['_XYCoordinates']
-            print('x')
+
 
 
             ## VIA2 Generation of Inner PMOS Drain and Inner NMOS Drain for PMOSSET, NMOSSET Connection
@@ -307,7 +315,8 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'] = [[self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_NMOS3']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0], self.CeilMinSnapSpacing(self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + _LengthbtwViaCentertoViaCenter // 4, MinSnapSpacing)],
                                                                                     [-(self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_NMOS3']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0]), self.CeilMinSnapSpacing(self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + _LengthbtwViaCentertoViaCenter // 4, MinSnapSpacing)]]
 
-
+            # if self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] * self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] < _DRCObj._MetalxMinArea:
+            #   self._DesignParameter['_NMOSSET']['_DesignObj']
 
             _VIANMOSMet23 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
 
@@ -334,9 +343,9 @@ class _Slicer(StickDiagram._StickDiagram):
                                                                                 #    self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]
                                                                                 #   ]]
 
-            # if self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
-            #     self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'], 2*MinSnapSpacing)
-            #     self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], 2*MinSnapSpacing)
+            if self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
+                #self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], 2*MinSnapSpacing)
+                self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], 2*MinSnapSpacing)
 
 
 
@@ -380,6 +389,11 @@ class _Slicer(StickDiagram._StickDiagram):
             self._DesignParameter['_ViaMet32Met4OnNMOSOutput']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_VIANMOSMet34)
             self._DesignParameter['_ViaMet32Met4OnNMOSOutput']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_XYCoordinates'][0][1] + _DRCObj._MetalxMinSpace // 2, MinSnapSpacing)],\
                                                                                     [self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_XYCoordinates'][1][0], self.CeilMinSnapSpacing(self._DesignParameter['_ViaMet22Met3OnNMOSOutput']['_XYCoordinates'][1][1] + _DRCObj._MetalxMinSpace // 2, MinSnapSpacing)]]
+
+            if self._DesignParameter['_ViaMet32Met4OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] * self._DesignParameter['_ViaMet32Met4OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] < _DRCObj._MetalxMinArea :
+                self._DesignParameter['_ViaMet32Met4OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea // self._DesignParameter['_ViaMet32Met4OnNMOSOutput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], 2*MinSnapSpacing)
+
+
                                                                                 # [
                                                                                 #
                                                                                 #   [self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_NMOS3']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0],
@@ -1259,7 +1273,7 @@ if __name__ == '__main__':
         _PMOSFinger = 1###random.randint(1, 16)
         _PMOSChannelWidth = 400###random.randrange(200, 1050, 50)
         _DATAinputNMOSFinger = 1###random.randint(2, 16)
-        _NMOSFinger = 1###random.randint(1, 16)
+        _NMOSFinger = 5###random.randint(1, 16)
         _CLKinputNMOSFinger = 1##random.randint(1, 16)
         _NMOSChannelWidth = 400###random.randrange(200, 1050, 50)
         _CLKinputNMOSChannelWidth = 400

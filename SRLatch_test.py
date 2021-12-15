@@ -2741,18 +2741,18 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    for i in range(1,101) :
-        _Finger1 = random.randint(1, 16)
-        _Finger2 = random.randint(1, 16)
-        _Finger3 = random.randint(1, 16)
-        _Finger4 = random.randint(1, 16)
-        _NPRatio = round(2 + random.random())
-        _SRRandWidth = random.randrange(200,400,3)
+    for i in range(1,2) :
+        _Finger1 = 5#random.randint(1, 16)
+        _Finger2 = 5#random.randint(1, 16)
+        _Finger3 = 5#random.randint(1, 16)
+        _Finger4 = 5#random.randint(1, 16)
+        _NPRatio = 3#round(2 + random.random())
+        _SRRandWidth = 400#random.randrange(200,400,3)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
 
-        _ChannelLength = 30
+        _ChannelLength = 40
 
         _VDD2VSSHeightAtOneSide = None
         _NumSupplyCoX = None
@@ -2806,20 +2806,20 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        # print('#############################      Sending to FTP Server...      #############################')
-        # My = MyInfo.USER(DesignParameters._Technology)
-        # Checker = DRCchecker.DRCchecker(
-        #     username=My.ID,
-        #     password=My.PW,
-        #     WorkDir=My.Dir_Work,
-        #     DRCrunDir=My.Dir_DRCrun,
-        #     libname=libname,
-        #     cellname=cellname,
-        #     GDSDir=My.Dir_GDS
-        # )
-        # Checker.Upload2FTP()
-        # Checker.StreamIn(tech=DesignParameters._Technology)
-        # #
+        print('#############################      Sending to FTP Server...      #############################')
+        My = MyInfo.USER(DesignParameters._Technology)
+        Checker = DRCchecker.DRCchecker(
+            username=My.ID,
+            password=My.PW,
+            WorkDir=My.Dir_Work,
+            DRCrunDir=My.Dir_DRCrun,
+            libname=libname,
+            cellname=cellname,
+            GDSDir=My.Dir_GDS
+        )
+        Checker.Upload2FTP()
+        Checker.StreamIn(tech=DesignParameters._Technology)
+        #
         # import ftplib
         # ftp = ftplib.FTP('141.223.22.156')
         # ftp.login('jicho0927', 'cho89140616!!')
@@ -2831,20 +2831,20 @@ if __name__ == '__main__':
 
 
 
-        import ftplib
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        myfile = open('SRLatch.gds', 'rb')
-        ftp.storbinary('STOR SRLatch.gds', myfile)
-        myfile.close()
-
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SRLatch','SRLatch',None)
-        a.DRCchecker()
-
-    print ("DRC Clean!!!")
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    #     myfile = open('SRLatch.gds', 'rb')
+    #     ftp.storbinary('STOR SRLatch.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SRLatch','SRLatch',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
 
 
         # import ftplib

@@ -846,7 +846,7 @@ if __name__ == '__main__':
     _CLKinputPMOSFinger2=3
     _PMOSFinger=2
     _PMOSChannelWidth=700
-    _ChannelLength=100
+    _ChannelLength=40
     _Dummy=False
     _XVT='LVT'
     _GuardringWidth=700

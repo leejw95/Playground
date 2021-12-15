@@ -303,15 +303,14 @@ class DRCPOLYGATE:
 
     def DRCPolygateMinSpace(self, _TmpLengthBtwPolyEdge = None):
         if DesignParameters._Technology=='045nm':
-            if _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth1:
-                return self._PolygateOnODMinWidth1
-            elif _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth2:
-                return self._PolygateOnODMinWidth2
-            elif _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth3:
-                return self._PolygateOnODMinWidth3
-
+            # if _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth1:
+            #     return self._PolygateOnODMinWidth1
+            # elif _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth2:
+            #     return self._PolygateOnODMinWidth2
+            # elif _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth3:
+            #     return self._PolygateOnODMinWidth3
+            return _TmpLengthBtwPolyEdge
         if DesignParameters._Technology=='028nm':
-            
             return _TmpLengthBtwPolyEdge
         if DesignParameters._Technology=='065nm':
             return _TmpLengthBtwPolyEdge

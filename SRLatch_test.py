@@ -556,18 +556,9 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         #####################################################Coordinates Setting###############################################################
         _Met1DistancebtwSupplyandMOS = _DRCObj._Metal1DefaultSpace
-        _VDD2VSSMinHeightAtOneSide = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][
-                                         '_YWidth'] + \
-                                     self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][
-                                         '_YWidth'] + \
-                                     self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                                         '_YWidth'] + \
-                                     self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                                         '_YWidth'] + \
-                                     2 * _Met1DistancebtwSupplyandMOS + 2 * \
-                                     self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter[
-                                         '_Met1Layer'][
-                                         '_YWidth'] + 3 * _DRCObj._Metal1MinSpace2 + _DRCObj._MetalxMinSpace2, MinSnapSpacing)
+        _VDD2VSSMinHeightAtOneSide = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
+                                     self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
+                                     2 * _Met1DistancebtwSupplyandMOS + 2 * self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 3 * _DRCObj._Metal1MinSpace2 + _DRCObj._MetalxMinSpace2, MinSnapSpacing)
 
         if _VDD2VSSHeightAtOneSide == None:
             _VDD2VSSHeightAtOneSide = _VDD2VSSMinHeightAtOneSide
@@ -1979,25 +1970,13 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 
 
-        self._DesignParameter['_AdditionalMet1Routing1'] = self._BoundaryElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],
-            _XYCoordinates=[], _XWidth=None, _YWidth=None)
-        self._DesignParameter['_AdditionalMet1Routing1']['_XWidth'] = max(
-            self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
-            self._DesignParameter['_AdditionalMet12Met2OnGate1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                '_XWidth'])
-        self._DesignParameter['_AdditionalMet1Routing1']['_YWidth'] = \
-        self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        self._DesignParameter['_AdditionalMet1Routing1']['_XYCoordinates'] = \
-        self._DesignParameter['_AdditionalMet12Met2OnGate1']['_XYCoordinates']
+        self._DesignParameter['_AdditionalMet1Routing1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=None, _YWidth=None)
+        self._DesignParameter['_AdditionalMet1Routing1']['_XWidth'] = max(self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'], self._DesignParameter['_AdditionalMet12Met2OnGate1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])
+        self._DesignParameter['_AdditionalMet1Routing1']['_YWidth'] = self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+        self._DesignParameter['_AdditionalMet1Routing1']['_XYCoordinates'] = self._DesignParameter['_AdditionalMet12Met2OnGate1']['_XYCoordinates']
 
-        self._DesignParameter['_AdditionalMet1Routing3'] = self._PathElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],
-            _XYCoordinates=[], _Width=None)
-        self._DesignParameter['_AdditionalMet1Routing3']['_Width'] = max(
-            self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
-            self._DesignParameter['_AdditionalMet12Met2OnGate3']['_DesignObj']._DesignParameter['_Met1Layer'][
-                '_XWidth'])
+        self._DesignParameter['_AdditionalMet1Routing3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
+        self._DesignParameter['_AdditionalMet1Routing3']['_Width'] = max(self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'], self._DesignParameter['_AdditionalMet12Met2OnGate3']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])
         self._DesignParameter['_AdditionalMet1Routing3']['_XYCoordinates'] = [[[self._DesignParameter[
                                                                                     '_VIAPMOS3Poly2Met1'][
                                                                                     '_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(
@@ -2519,8 +2498,8 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         self._DesignParameter['_AdditionalMet1RoutingforMOS4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
         self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_Width'] = self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_XYCoordinates'] = [[[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]]], \
-                                                                                    [[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]]]]
+        self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_XYCoordinates'] = [[[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][-1][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]]], \
+                                                                                    [[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][-1][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]]]]
 
 
 
@@ -2741,13 +2720,13 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    for i in range(1,2) :
-        _Finger1 = 6#random.randint(1, 16)
-        _Finger2 = 8#random.randint(1, 16)
-        _Finger3 = 8#random.randint(1, 16)
-        _Finger4 = 5#random.randint(1, 16)
+    for i in range(1,101) :
+        _Finger1 = random.randint(1, 16)
+        _Finger2 = random.randint(1, 16)
+        _Finger3 = random.randint(1, 16)
+        _Finger4 = random.randint(1, 16)
         _NPRatio = 3#round(2 + random.random())
-        _SRRandWidth = 350#random.randrange(200,400,3)
+        _SRRandWidth = random.randrange(350,600,50)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
@@ -2806,19 +2785,19 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print('#############################      Sending to FTP Server...      #############################')
-        My = MyInfo.USER(DesignParameters._Technology)
-        Checker = DRCchecker.DRCchecker(
-            username=My.ID,
-            password=My.PW,
-            WorkDir=My.Dir_Work,
-            DRCrunDir=My.Dir_DRCrun,
-            libname=libname,
-            cellname=cellname,
-            GDSDir=My.Dir_GDS
-        )
-        Checker.Upload2FTP()
-        Checker.StreamIn(tech=DesignParameters._Technology)
+        # print('#############################      Sending to FTP Server...      #############################')
+        # My = MyInfo.USER(DesignParameters._Technology)
+        # Checker = DRCchecker.DRCchecker(
+        #     username=My.ID,
+        #     password=My.PW,
+        #     WorkDir=My.Dir_Work,
+        #     DRCrunDir=My.Dir_DRCrun,
+        #     libname=libname,
+        #     cellname=cellname,
+        #     GDSDir=My.Dir_GDS
+        # )
+        # Checker.Upload2FTP()
+        # Checker.StreamIn(tech=DesignParameters._Technology)
         #
         # import ftplib
         # ftp = ftplib.FTP('141.223.22.156')
@@ -2847,36 +2826,36 @@ if __name__ == '__main__':
     # print ("DRC Clean!!!")
 
 
-        # import ftplib
-        #
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('jicho0927', 'cho89140616!!')
-        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-        # myfile = open('SRLatch.gds', 'rb')
-        # ftp.storbinary('STOR SRLatch.gds', myfile)
-        # myfile.close()
-        #
-        # import DRCchecker
-        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SRLatch','SRLatch',None)
-        # a.DRCchecker()
-
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+    #     myfile = open('SRLatch.gds', 'rb')
+    #     ftp.storbinary('STOR SRLatch.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SRLatch','SRLatch',None)
+    #     a.DRCchecker()
+    #
     # print ("DRC Clean!!!")
 
-        # import ftplib
-        #
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('jicho0927', 'cho89140616!!')
-        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
-        # myfile = open('SRLatch.gds', 'rb')
-        # ftp.storbinary('STOR SRLatch.gds', myfile)
-        # myfile.close()
-        #
-        # import DRCchecker
-        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc40n','/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run','SRLatch','SRLatch',None)
-        # a.DRCchecker()
+        import ftplib
+
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+        myfile = open('SRLatch.gds', 'rb')
+        ftp.storbinary('STOR SRLatch.gds', myfile)
+        myfile.close()
+
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc40n','/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run','SRLatch','SRLatch',None)
+        a.DRCchecker()
 
 
-    #print ("DRC Clean!!!")
+    print ("DRC Clean!!!")
 
     #     import ftplib
     #

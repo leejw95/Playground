@@ -128,8 +128,12 @@ class _Slicer(StickDiagram._StickDiagram):
             toptmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth//2 + _GuardRingMet1Space + _SlicerGuardringWidth//2, self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
             bottomtmp = self.CeilMinSnapSpacing(self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - max(_GuardringWidth//2 + _GuardRingMet1Space + _SlicerGuardringWidth//2, _GuardringWidth + 2 * _DRCObj._PpMinExtensiononPactive2 + _DRCObj._PpMinSpace), MinSnapSpacing)
 
-            lefttmp = self.CeilMinSnapSpacing(min(self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth//2 - _GuardRingMet1Space - _SlicerGuardringWidth//2, self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 - _SlicerGuardringWidth//2 - _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
-            righttmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth//2 + _GuardRingMet1Space + _SlicerGuardringWidth//2, self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
+            lefttmp = self.CeilMinSnapSpacing(min(self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0] + NMOS_lefttmp - self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_PPLayer']['_Width'] // 2 - _SlicerGuardringWidth // 2 - _DRCObj._PpMinSpace - _DRCObj._PpMinExtensiononPactive2, \
+                                                  self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - _GuardringWidth//2 - _GuardRingMet1Space - _SlicerGuardringWidth//2,\
+                                                  self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + min(PMOS_lefttmp, NMOS_lefttmp) - self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 - _SlicerGuardringWidth//2 - _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
+            righttmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0] + NMOS_righttmp + self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_PPLayer']['_Width'] // 2 + _SlicerGuardringWidth // 2 + _DRCObj._PpMinSpace + _DRCObj._PpMinExtensiononPactive2,\
+                                                   self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth//2 + _GuardRingMet1Space + _SlicerGuardringWidth//2, \
+                                                   self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
 
             _GuardringCetPointX = self.CeilMinSnapSpacing(int(round(lefttmp + righttmp + 0.5)) // 2, MinSnapSpacing)
             _GuardringCetPointY = self.CeilMinSnapSpacing(int(round(toptmp + bottomtmp + 0.5)) // 2, MinSnapSpacing)
@@ -1368,22 +1372,22 @@ class _Slicer(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    for i in range(1,2) :
-        _CLKinputPMOSFinger1 = 1#random.randint(1, 16)
-        _CLKinputPMOSFinger2 = 1#random.randint(1, 16)
-        _PMOSFinger = 4#random.randint(1, 16)
-        _PMOSChannelWidth = 700#random.randrange(700, 1800, 50)
-        _DATAinputNMOSFinger = 1#random.randint(2, 16)
-        _NMOSFinger = 1#random.randint(1, 16)
-        _CLKinputNMOSFinger = 1#random.randint(1, 16)
-        _NMOSChannelWidth = 700#random.randrange(700, 1800, 50)
-        _CLKinputNMOSChannelWidth = 700#random.randrange(700, 1800, 50)
-        _ChannelLength = 100
-        _Dummy = False
+    for i in range(1,101) :
+        _CLKinputPMOSFinger1 = random.randint(1, 16)
+        _CLKinputPMOSFinger2 = random.randint(1, 16)
+        _PMOSFinger = random.randint(1, 16)
+        _PMOSChannelWidth = random.randrange(200, 1050, 50)
+        _DATAinputNMOSFinger = random.randint(2, 16)
+        _NMOSFinger = random.randint(1, 16)
+        _CLKinputNMOSFinger = random.randint(1, 16)
+        _NMOSChannelWidth = random.randrange(200, 1050, 50)
+        _CLKinputNMOSChannelWidth = random.randrange(200, 1050, 50)
+        _ChannelLength = 30
+        _Dummy = True
         _XVT = 'LVT'
-        _GuardringWidth = 700
+        _GuardringWidth = 200
         _Guardring = True
-        _SlicerGuardringWidth = 700
+        _SlicerGuardringWidth = 200
         _SlicerGuardring = None
         _NumSupplyCOY = None
         _NumSupplyCOX = None
@@ -1427,36 +1431,36 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print('#############################      Sending to FTP Server...      #############################')
-        My = MyInfo.USER(DesignParameters._Technology)
-        Checker = DRCchecker.DRCchecker(
-            username=My.ID,
-            password=My.PW,
-            WorkDir=My.Dir_Work,
-            DRCrunDir=My.Dir_DRCrun,
-            libname=libname,
-            cellname=cellname,
-            GDSDir=My.Dir_GDS
-        )
-        Checker.Upload2FTP()
-        Checker.StreamIn(tech=DesignParameters._Technology)
+        # print('#############################      Sending to FTP Server...      #############################')
+        # My = MyInfo.USER(DesignParameters._Technology)
+        # Checker = DRCchecker.DRCchecker(
+        #     username=My.ID,
+        #     password=My.PW,
+        #     WorkDir=My.Dir_Work,
+        #     DRCrunDir=My.Dir_DRCrun,
+        #     libname=libname,
+        #     cellname=cellname,
+        #     GDSDir=My.Dir_GDS
+        # )
+        # Checker.Upload2FTP()
+        # Checker.StreamIn(tech=DesignParameters._Technology)
 
 
-    #     import ftplib
-    #
-    #     ftp = ftplib.FTP('141.223.22.156')
-    #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    #     myfile = open('Slicer.gds', 'rb')
-    #     ftp.storbinary('STOR Slicer.gds', myfile)
-    #     myfile.close()
-    #
-    #     import DRCchecker
-    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Slicer','Slicer',None)
-    #     a.DRCchecker()
-    #
-    # print ("DRC Clean!!!")
-    #
+        import ftplib
+
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        myfile = open('Slicer.gds', 'rb')
+        ftp.storbinary('STOR Slicer.gds', myfile)
+        myfile.close()
+
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Slicer','Slicer',None)
+        a.DRCchecker()
+
+    print ("DRC Clean!!!")
+
     #     import ftplib
     #
     #     ftp = ftplib.FTP('141.223.22.156')

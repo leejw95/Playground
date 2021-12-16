@@ -11,6 +11,7 @@ import ViaMet12Met2
 import ViaMet22Met3
 import ViaMet32Met4
 import math
+import random
 
 class _Inverter(StickDiagram._StickDiagram) :
     _ParametersForDesignCalculation = dict(_Finger = None, _ChannelWidth = None, _ChannelLength = None, _NPRatio = None,\
@@ -220,9 +221,9 @@ class _Inverter(StickDiagram._StickDiagram) :
 
         if DesignParameters._Technology == '028nm' :
             _VDD2VSSMinHeight = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 + max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 + max(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) +\
-                                                        2 * _DRCObj._Metal1DefaultSpace + self._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 2 * _DRCObj._Metal1MinSpace2, MinSnapSpacing)
+                                                        2 * _DRCObj._Metal1DefaultSpace + self._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 2 * _DRCObj._Metal1MinSpace2 + 2 * MinSnapSpacing, MinSnapSpacing)
         else :
-            _VDD2VSSMinHeight = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2 + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth'] // 2 + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth'], MinSnapSpacing)
+            _VDD2VSSMinHeight = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2 + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth'] // 2 + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth'] + 2 * MinSnapSpacing, MinSnapSpacing)
 
         # if _Dummy == True and _Finger == 1 :
         #     _VDD2VSSMinHeight =
@@ -418,8 +419,8 @@ class _Inverter(StickDiagram._StickDiagram) :
         self._DesignParameter['_NWLayer'] = self._PathElementDeclaration(_Layer = DesignParameters._LayerMapping['NWELL'][0],_Datatype = DesignParameters._LayerMapping['NWELL'][1], _XYCoordinates = [], _Width=None)
         self._DesignParameter['_NWLayer']['_Width'] = self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive
 
-        self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], self._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth'] // 2 + _DRCObj._NwMinEnclosurePactive], \
-                                                                [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2 - _DRCObj._NwMinEnclosurePactive]]]
+        self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth'] // 2 + _DRCObj._NwMinEnclosurePactive, MinSnapSpacing)], \
+                                                                [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2, MinSnapSpacing)]]]
 
 
         _XVTPMOSLayer = self._DesignParameter['_PMOS']['_DesignObj']._XVTLayer
@@ -496,70 +497,135 @@ class _Inverter(StickDiagram._StickDiagram) :
                 raise NotImplementedError
 
 if __name__ == '__main__':
-    _Finger = 3
-    _ChannelWidth = 350
-    _ChannelLength = 40
-    _NPRatio = 3
-    _VDD2VSSHeight = None
-    _Dummy = True
-    _NumSupplyCoX = None
-    _NumSupplyCoY = None
-    _SupplyMet1XWidth = None
-    _SupplyMet1YWidth = None
-    _NumViaPoly2Met1CoX = None
-    _NumViaPoly2Met1CoY = None
-    _NumViaPMOSMet12Met2CoX = None
-    _NumViaPMOSMet12Met2CoY = None
-    _NumViaNMOSMet12Met2CoX = None
-    _NumViaNMOSMet12Met2CoY = None
-    _XVT = 'LVT'
-    _SupplyLine = False
+
+    for i in range(1, 101) :
+        _Finger = random.randint(2,16)
+        _ChannelWidth = random.randrange(350,600,50)
+        _ChannelLength = 30
+        _NPRatio = 3
+        _VDD2VSSHeight = None
+        _Dummy = True
+        _NumSupplyCoX = None
+        _NumSupplyCoY = None
+        _SupplyMet1XWidth = None
+        _SupplyMet1YWidth = None
+        _NumViaPoly2Met1CoX = None
+        _NumViaPoly2Met1CoY = None
+        _NumViaPMOSMet12Met2CoX = None
+        _NumViaPMOSMet12Met2CoY = None
+        _NumViaNMOSMet12Met2CoX = None
+        _NumViaNMOSMet12Met2CoY = None
+        _XVT = 'LVT'
+        _SupplyLine = False
 
 
-    from Private import MyInfo
-    import DRCchecker
-    libname = 'Inverter'
-    cellname = 'Inverter'
-    _fileName = cellname + '.gds'
+        from Private import MyInfo
+        import DRCchecker
+        libname = 'Inverter'
+        cellname = 'Inverter'
+        _fileName = cellname + '.gds'
 
-    InputParams = dict(
-        _Finger=_Finger,
-    _ChannelWidth = _ChannelWidth,
-    _ChannelLength = _ChannelLength,
-    _NPRatio = _NPRatio,
-    _VDD2VSSHeight = _VDD2VSSHeight,
-    _Dummy = _Dummy,
-    _NumSupplyCoX = _NumSupplyCoX,
-    _NumSupplyCoY = _NumSupplyCoY,
-    _SupplyMet1XWidth = _SupplyMet1XWidth,
-    _SupplyMet1YWidth = _SupplyMet1YWidth,
-    _NumViaPoly2Met1CoX = _NumViaPoly2Met1CoX,
-    _NumViaPoly2Met1CoY = _NumViaPoly2Met1CoY,
-    _NumViaPMOSMet12Met2CoX = _NumViaPMOSMet12Met2CoX,
-    _NumViaPMOSMet12Met2CoY = _NumViaPMOSMet12Met2CoY,
-    _NumViaNMOSMet12Met2CoX = _NumViaNMOSMet12Met2CoX,
-    _NumViaNMOSMet12Met2CoY = _NumViaNMOSMet12Met2CoY,
-    _XVT = _XVT,
-    _SupplyLine = _SupplyLine
-    )
-    LayoutObj = _Inverter(_DesignParameter=None, _Name=cellname)
-    LayoutObj._CalculateDesignParameter(**InputParams)
-    LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-    tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
+        InputParams = dict(
+            _Finger=_Finger,
+        _ChannelWidth = _ChannelWidth,
+        _ChannelLength = _ChannelLength,
+        _NPRatio = _NPRatio,
+        _VDD2VSSHeight = _VDD2VSSHeight,
+        _Dummy = _Dummy,
+        _NumSupplyCoX = _NumSupplyCoX,
+        _NumSupplyCoY = _NumSupplyCoY,
+        _SupplyMet1XWidth = _SupplyMet1XWidth,
+        _SupplyMet1YWidth = _SupplyMet1YWidth,
+        _NumViaPoly2Met1CoX = _NumViaPoly2Met1CoX,
+        _NumViaPoly2Met1CoY = _NumViaPoly2Met1CoY,
+        _NumViaPMOSMet12Met2CoX = _NumViaPMOSMet12Met2CoX,
+        _NumViaPMOSMet12Met2CoY = _NumViaPMOSMet12Met2CoY,
+        _NumViaNMOSMet12Met2CoX = _NumViaNMOSMet12Met2CoX,
+        _NumViaNMOSMet12Met2CoY = _NumViaNMOSMet12Met2CoY,
+        _XVT = _XVT,
+        _SupplyLine = _SupplyLine
+        )
+        LayoutObj = _Inverter(_DesignParameter=None, _Name=cellname)
+        LayoutObj._CalculateDesignParameter(**InputParams)
+        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
 
-    print('#############################      Sending to FTP Server...      #############################')
-    My = MyInfo.USER(DesignParameters._Technology)
-    Checker = DRCchecker.DRCchecker(
-        username=My.ID,
-        password=My.PW,
-        WorkDir=My.Dir_Work,
-        DRCrunDir=My.Dir_DRCrun,
-        libname=libname,
-        cellname=cellname,
-        GDSDir=My.Dir_GDS
-    )
-    Checker.Upload2FTP()
-    Checker.StreamIn(tech=DesignParameters._Technology)
+        print('#############################      Sending to FTP Server...      #############################')
+        My = MyInfo.USER(DesignParameters._Technology)
+        Checker = DRCchecker.DRCchecker(
+            username=My.ID,
+            password=My.PW,
+            WorkDir=My.Dir_Work,
+            DRCrunDir=My.Dir_DRCrun,
+            libname=libname,
+            cellname=cellname,
+            GDSDir=My.Dir_GDS
+        )
+        Checker.Upload2FTP()
+        Checker.StreamIn(tech=DesignParameters._Technology)
+
+        #     import ftplib
+        #
+        #     ftp = ftplib.FTP('141.223.22.156')
+        #     ftp.login('jicho0927', 'cho89140616!!')
+        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        #     myfile = open('Inverter.gds', 'rb')
+        #     ftp.storbinary('STOR Inverter.gds', myfile)
+        #     myfile.close()
+        #
+        #     import DRCchecker
+        #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Inverter','Inverter',None)
+        #     a.DRCchecker()
+        #
+        # print ("DRC Clean!!!")
+
+
+        #     import ftplib
+        #
+        #     ftp = ftplib.FTP('141.223.22.156')
+        #     ftp.login('jicho0927', 'cho89140616!!')
+        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+        #     myfile = open('Inverter.gds', 'rb')
+        #     ftp.storbinary('STOR Inverter.gds', myfile)
+        #     myfile.close()
+        #
+        #     import DRCchecker
+        #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','Inverter','Inverter',None)
+        #     a.DRCchecker()
+        #
+        # print ("DRC Clean!!!")
+
+        import ftplib
+
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+        myfile = open('Inverter.gds', 'rb')
+        ftp.storbinary('STOR Inverter.gds', myfile)
+        myfile.close()
+
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc40n','/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run','Inverter','Inverter',None)
+        a.DRCchecker()
+
+
+    print ("DRC Clean!!!")
+
+        #     import ftplib
+        #
+        #     ftp = ftplib.FTP('141.223.22.156')
+        #     ftp.login('jicho0927', 'cho89140616!!')
+        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
+        #     myfile = open('Inverter.gds', 'rb')
+        #     ftp.storbinary('STOR Inverter.gds', myfile)
+        #     myfile.close()
+        #
+        #     import DRCchecker
+        #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','Inverter','Inverter',None)
+        #     a.DRCchecker()
+        #
+        #
+        # print ("DRC Clean!!!")

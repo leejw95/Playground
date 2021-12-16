@@ -1114,6 +1114,10 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                     _tmpNumCOY = 2
                 _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOX'] = _tmpNumCOY
                 _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOY'] = 1
+
+                self._DesignParameter['_ViaMet32Met4OnNMOSOutput5'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4OnNMOSOutputIn5{}'.format(_Name)))[0]
+                self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(**_VIACLKNMOSMet34)
+
             elif  _CLKinputNMOSFinger == 1 :
                 _tmpNumCOY = int((_CLKinputNMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
                 if _tmpNumCOY < 2 :
@@ -1121,8 +1125,8 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOX'] = 1
                 _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOY'] = _tmpNumCOY
 
-            self._DesignParameter['_ViaMet32Met4OnNMOSOutput5'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4OnNMOSOutputIn5{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_VIACLKNMOSMet34)
+                self._DesignParameter['_ViaMet32Met4OnNMOSOutput5'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4OnNMOSOutputIn5{}'.format(_Name)))[0]
+                self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_VIACLKNMOSMet34)
 
 
             if _CLKinputNMOSFinger != 1 :

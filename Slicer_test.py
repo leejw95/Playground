@@ -114,7 +114,7 @@ class _Slicer(StickDiagram._StickDiagram):
 
             NMOS_GuardringHeight = NMOS_toptmp - NMOS_bottomtmp
             tmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_bottomtmp
-            self._DesignParameter['_NMOSSET']['_XYCoordinates'] = [[0, self.CeilMinSnapSpacing(tmp - (int(round(NMOS_GuardringHeight + 0.5)) // 2 + _NMOSGuardringY) - max(_DRCObj._Metal1DefaultSpace + _GuardringWidth, self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _GuardringWidth // 2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)]]
+            self._DesignParameter['_NMOSSET']['_XYCoordinates'] = [[0, self.FloorMinSnapSpacing(tmp - (int(round(NMOS_GuardringHeight + 0.5)) // 2 + _NMOSGuardringY) - max(_DRCObj._Metal1DefaultSpace + _GuardringWidth, self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _GuardringWidth // 2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)]]
 
 
 
@@ -1372,18 +1372,18 @@ if __name__ == '__main__':
         _CLKinputPMOSFinger1 = random.randint(1, 16)
         _CLKinputPMOSFinger2 = random.randint(1, 16)
         _PMOSFinger = random.randint(1, 16)
-        _PMOSChannelWidth = random.randrange(350, 1200, 50)
+        _PMOSChannelWidth = random.randrange(700, 1800, 50)
         _DATAinputNMOSFinger = random.randint(2, 16)
         _NMOSFinger = random.randint(1, 16)
         _CLKinputNMOSFinger = random.randint(1, 16)
-        _NMOSChannelWidth = random.randrange(350, 1200, 50)
-        _CLKinputNMOSChannelWidth = random.randrange(350, 1200, 50)
-        _ChannelLength = 40
-        _Dummy = True
+        _NMOSChannelWidth = random.randrange(700, 1800, 50)
+        _CLKinputNMOSChannelWidth = random.randrange(700, 1800, 50)
+        _ChannelLength = 100
+        _Dummy = False
         _XVT = 'LVT'
-        _GuardringWidth = 350
+        _GuardringWidth = 700
         _Guardring = True
-        _SlicerGuardringWidth = 350
+        _SlicerGuardringWidth = 700
         _SlicerGuardring = None
         _NumSupplyCOY = None
         _NumSupplyCOX = None
@@ -1456,18 +1456,50 @@ if __name__ == '__main__':
     #     a.DRCchecker()
     #
     # print ("DRC Clean!!!")
+    #
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+    #     myfile = open('Slicer.gds', 'rb')
+    #     ftp.storbinary('STOR Slicer.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc40n','/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run','Slicer','Slicer',None)
+    #     a.DRCchecker()
+    #
+    #
+    # print ("DRC Clean!!!")
+
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+    #     myfile = open('Slicer.gds', 'rb')
+    #     ftp.storbinary('STOR Slicer.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','Slicer','Slicer',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
+
 
         import ftplib
 
         ftp = ftplib.FTP('141.223.22.156')
         ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
         myfile = open('Slicer.gds', 'rb')
         ftp.storbinary('STOR Slicer.gds', myfile)
         myfile.close()
 
         import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc40n','/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run','Slicer','Slicer',None)
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','Slicer','Slicer',None)
         a.DRCchecker()
 
 

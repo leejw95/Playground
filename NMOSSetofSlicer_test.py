@@ -604,27 +604,27 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             del _tmpNumCOY
 
 
-            _VIACLKNMOSMet34 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-
-            _tmpNumCOY = int((_CLKinputNMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
-            _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOX'] = 1
-            _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOY'] = _tmpNumCOY
-
-            self._DesignParameter['_ViaMet32Met4OnNMOSOutput5'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4OnPMOSOutputIn5{}'.format(_Name)))[0]
-            self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_VIACLKNMOSMet34)
-
-            tmp = []
-            tmpx = []
-            if (_CLKinputNMOSFinger % 2) == 1:
-                for i in range(0, int((_CLKinputNMOSFinger-1)// 2 + 1)):
-                        tmpx=[self.CeilMinSnapSpacing(self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - ((_CLKinputNMOSFinger+1)//2 + 0.5)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i+1), MinSnapSpacing), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
-                        tmp.append(tmpx)
-            elif (_CLKinputNMOSFinger % 2) == 0:
-                for i in range(0, int(_CLKinputNMOSFinger//2+1)):
-                        tmpx=[self.CeilMinSnapSpacing(self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - (_CLKinputNMOSFinger//2)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i), MinSnapSpacing), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
-                        tmp.append(tmpx)
-            self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_XYCoordinates'] = tmp
-            del _tmpNumCOY
+            # _VIACLKNMOSMet34 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+            #
+            # _tmpNumCOY = int((_CLKinputNMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+            # _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOX'] = 1
+            # _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOY'] = _tmpNumCOY
+            #
+            # self._DesignParameter['_ViaMet32Met4OnNMOSOutput5'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4OnPMOSOutputIn5{}'.format(_Name)))[0]
+            # self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_VIACLKNMOSMet34)
+            #
+            # tmp = []
+            # tmpx = []
+            # if (_CLKinputNMOSFinger % 2) == 1:
+            #     for i in range(0, int((_CLKinputNMOSFinger-1)// 2 + 1)):
+            #             tmpx=[self.CeilMinSnapSpacing(self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - ((_CLKinputNMOSFinger+1)//2 + 0.5)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i+1), MinSnapSpacing), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
+            #             tmp.append(tmpx)
+            # elif (_CLKinputNMOSFinger % 2) == 0:
+            #     for i in range(0, int(_CLKinputNMOSFinger//2+1)):
+            #             tmpx=[self.CeilMinSnapSpacing(self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] - (_CLKinputNMOSFinger//2)*_LengthNMOSBtwMet1 + _LengthNMOSBtwMet1 * (2*i), MinSnapSpacing), self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]
+            #             tmp.append(tmpx)
+            # self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_XYCoordinates'] = tmp
+            # del _tmpNumCOY
 
 
             # if DesignParameters._Technology in ['028nm','045nm','065nm'] :
@@ -862,7 +862,7 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
                 print ('#################################     Guardring Layer Generation ###########################################')
 
                 toptmp = self.CeilMinSnapSpacing(self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_VIANMOSPoly2Met1NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 + _DRCObj._Metal1DefaultSpace + _GuardringWidth // 2, MinSnapSpacing)
-                bottomtmp = self.CeilMinSnapSpacing(self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] - max(self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_VIANMOSPoly2Met1NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 - (_DRCObj._Metal1DefaultSpace + _GuardringWidth // 2), MinSnapSpacing)
+                bottomtmp = self.CeilMinSnapSpacing(self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] - max(self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOSOutput5']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 - (_DRCObj._Metal1DefaultSpace + _GuardringWidth // 2), MinSnapSpacing)
                 lefttmp = self.CeilMinSnapSpacing(min(self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] // 2 - _GuardringWidth // 2 - _DRCObj._Metal1DefaultSpace, MinSnapSpacing)
                 righttmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0]) - self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] // 2 + _GuardringWidth // 2 + _DRCObj._Metal1DefaultSpace, MinSnapSpacing)
 
@@ -1106,11 +1106,34 @@ class _NMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             self._DesignParameter['_Met3NMOS']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]], [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]]]  ##+ [[[self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][0][0] - _DRCObj._MetalxMinWidth // 2, self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][0][1]], [self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][_NMOSFinger // 2][0] +  _DRCObj._MetalxMinWidth // 2, self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][0][1]]], [[-(self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][_NMOSFinger // 2][0] +  _DRCObj._MetalxMinWidth // 2), self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][0][1]], [-(self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][0][0] -  _DRCObj._MetalxMinWidth // 2), self._DesignParameter['_ViaMet12Met2OnNMOSOutput3']['_XYCoordinates'][0][1]]]]
 
 
+            _VIACLKNMOSMet34 = copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
+
+            if _CLKinputNMOSFinger != 1 :
+                _tmpNumCOY = int((self._DesignParameter['_Met3NMOS']['_XYCoordinates'][0][1][0] - self._DesignParameter['_Met3NMOS']['_XYCoordinates'][0][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._Metal1MinEnclosureCO2) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+                if _tmpNumCOY < 2 :
+                    _tmpNumCOY = 2
+                _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOX'] = _tmpNumCOY
+                _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOY'] = 1
+            elif  _CLKinputNMOSFinger == 1 :
+                _tmpNumCOY = int((_CLKinputNMOSChannelWidth - 2 * _DRCObj._Metal1MinEnclosureVia12) // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)) + 1
+                if _tmpNumCOY < 2 :
+                    _tmpNumCOY =2
+                _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOX'] = 1
+                _VIACLKNMOSMet34['_ViaMet32Met4NumberOfCOY'] = _tmpNumCOY
+
+            self._DesignParameter['_ViaMet32Met4OnNMOSOutput5'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaMet32Met4OnNMOSOutputIn5{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_VIACLKNMOSMet34)
 
 
-            self._DesignParameter['_Met4NMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _Width=400)
-            self._DesignParameter['_Met4NMOS']['_Width'] = _DRCObj._MetalxMinWidth
-            self._DesignParameter['_Met4NMOS']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]], [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]]]
+            if _CLKinputNMOSFinger != 1 :
+                self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_XYCoordinates'] = [[self.CeilMinSnapSpacing((self._DesignParameter['_Met3NMOS']['_XYCoordinates'][0][1][0] + self._DesignParameter['_Met3NMOS']['_XYCoordinates'][0][0][0]) // 2, MinSnapSpacing), self._DesignParameter['_Met3NMOS']['_XYCoordinates'][0][0][1]]]
+            elif _CLKinputNMOSFinger == 1 :
+                self._DesignParameter['_ViaMet32Met4OnNMOSOutput5']['_XYCoordinates'] = [[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0],\
+                                                                                          self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1]]]
+
+            # self._DesignParameter['_Met4NMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1], _XYCoordinates=[], _Width=400)
+            # self._DesignParameter['_Met4NMOS']['_Width'] = _DRCObj._MetalxMinWidth
+            # self._DesignParameter['_Met4NMOS']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]], [self._DesignParameter['_NMOS5']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS5']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0], self._DesignParameter['_NMOS5']['_XYCoordinates'][0][1]]]]
 
 
 
@@ -1153,13 +1176,13 @@ if __name__ == '__main__':
 
     _DATAinputNMOSFinger = 10  # random.randint(2, 16)
     _NMOSFinger = 2  # random.randint(1, 16)
-    _CLKinputNMOSFinger = 8  # random.randint(1, 16)
-    _NMOSChannelWidth = 1000  ###random.randrange(200, 1050, 50)
-    _CLKinputNMOSChannelWidth = 1000
+    _CLKinputNMOSFinger = 2  # random.randint(1, 16)
+    _NMOSChannelWidth = 350  ###random.randrange(200, 1050, 50)
+    _CLKinputNMOSChannelWidth = 350
     _ChannelLength = 40
     _Dummy = True
     _XVT = 'LVT'
-    _GuardringWidth = 200
+    _GuardringWidth = 350
     _Guardring = True
     _NumSupplyCOY = None
     _NumSupplyCOX = None

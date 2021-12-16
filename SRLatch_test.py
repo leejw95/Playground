@@ -2742,12 +2742,12 @@ class _SRLatch(StickDiagram._StickDiagram):
 if __name__ == '__main__':
 
     for i in range(1,2) :
-        _Finger1 = 5#random.randint(1, 16)
-        _Finger2 = 5#random.randint(1, 16)
-        _Finger3 = 5#random.randint(1, 16)
+        _Finger1 = 6#random.randint(1, 16)
+        _Finger2 = 8#random.randint(1, 16)
+        _Finger3 = 8#random.randint(1, 16)
         _Finger4 = 5#random.randint(1, 16)
         _NPRatio = 3#round(2 + random.random())
-        _SRRandWidth = 400#random.randrange(200,400,3)
+        _SRRandWidth = 350#random.randrange(200,400,3)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 

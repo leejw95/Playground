@@ -2726,12 +2726,12 @@ if __name__ == '__main__':
         _Finger3 = random.randint(1, 16)
         _Finger4 = random.randint(1, 16)
         _NPRatio = 3#round(2 + random.random())
-        _SRRandWidth = random.randrange(350,600,50)
+        _SRRandWidth = random.randrange(200,350,50)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
 
-        _ChannelLength = 40
+        _ChannelLength = 30
 
         _VDD2VSSHeightAtOneSide = None
         _NumSupplyCoX = None
@@ -2799,31 +2799,22 @@ if __name__ == '__main__':
         # Checker.Upload2FTP()
         # Checker.StreamIn(tech=DesignParameters._Technology)
         #
-        # import ftplib
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('jicho0927', 'cho89140616!!')
-        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-        # myfile = open('SRLatch.gds', 'rb')
-        # ftp.storbinary('STOR SRLatch.gds', myfile)
-        # myfile.close()
-        #
 
 
+        import ftplib
 
-    #     import ftplib
-    #
-    #     ftp = ftplib.FTP('141.223.22.156')
-    #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    #     myfile = open('SRLatch.gds', 'rb')
-    #     ftp.storbinary('STOR SRLatch.gds', myfile)
-    #     myfile.close()
-    #
-    #     import DRCchecker
-    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SRLatch','SRLatch',None)
-    #     a.DRCchecker()
-    #
-    # print ("DRC Clean!!!")
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        myfile = open('SRLatch.gds', 'rb')
+        ftp.storbinary('STOR SRLatch.gds', myfile)
+        myfile.close()
+
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SRLatch','SRLatch',None)
+        a.DRCchecker()
+
+    print ("DRC Clean!!!")
 
 
     #     import ftplib
@@ -2841,21 +2832,21 @@ if __name__ == '__main__':
     #
     # print ("DRC Clean!!!")
 
-        import ftplib
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
-        myfile = open('SRLatch.gds', 'rb')
-        ftp.storbinary('STOR SRLatch.gds', myfile)
-        myfile.close()
-
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc40n','/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run','SRLatch','SRLatch',None)
-        a.DRCchecker()
-
-
-    print ("DRC Clean!!!")
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+    #     myfile = open('SRLatch.gds', 'rb')
+    #     ftp.storbinary('STOR SRLatch.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc40n','/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run','SRLatch','SRLatch',None)
+    #     a.DRCchecker()
+    #
+    #
+    # print ("DRC Clean!!!")
 
     #     import ftplib
     #

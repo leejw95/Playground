@@ -906,7 +906,7 @@ if __name__ == '__main__' :
         _SRNumViaPMOSMet22Met3CoY = None
         _SRNumViaNMOSMet22Met3CoX = None
         _SRNumViaNMOSMet22Met3CoY = None
-        _SRXVT = True
+        _SRXVT = 'LVT'
         _SRPowerLine = None
         #####################Slicer#######################
         _SLCLKinputPMOSFinger1 = 6##random.randint(1, 16)
@@ -921,7 +921,7 @@ if __name__ == '__main__' :
 
         _SLChannelLength = 30
         _SLDummy = True
-        _SLXVT = True
+        _SLXVT = 'LVT'
         _SLGuardringWidth = 200
         _SLGuardring = True
         _SLSlicerGuardringWidth = 200
@@ -953,7 +953,7 @@ if __name__ == '__main__' :
         _InvNumViaPMOSMet12Met2CoY = None
         _InvNumViaNMOSMet12Met2CoX = None
         _InvNumViaNMOSMet12Met2CoY = None
-        _InvXVT = True
+        _InvXVT = 'LVT'
         _InvPowerLine = None
         #####################Power Line#######################
         _SLSRInvSupplyLine = False

@@ -1376,12 +1376,12 @@ if __name__ == '__main__':
         _CLKinputPMOSFinger1 = random.randint(1, 16)
         _CLKinputPMOSFinger2 = random.randint(1, 16)
         _PMOSFinger = random.randint(1, 16)
-        _PMOSChannelWidth = random.randrange(200, 1050, 50)
+        _PMOSChannelWidth = random.randrange(200, 1050, 3)
         _DATAinputNMOSFinger = random.randint(2, 16)
         _NMOSFinger = random.randint(1, 16)
         _CLKinputNMOSFinger = random.randint(1, 16)
-        _NMOSChannelWidth = random.randrange(200, 1050, 50)
-        _CLKinputNMOSChannelWidth = random.randrange(200, 1050, 50)
+        _NMOSChannelWidth = random.randrange(200, 1050, 3)
+        _CLKinputNMOSChannelWidth = random.randrange(200, 1050, 3)
         _ChannelLength = 30
         _Dummy = True
         _XVT = 'LVT'

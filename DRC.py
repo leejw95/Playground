@@ -809,6 +809,7 @@ class DRCNW:
         if DesignParameters._Technology=='045nm':
             self._NwMinWidth=340
             self._NwMinSpace=340
+            self._NwMinSpace2=800
             self._NwMinEnclosurePactive=80
             self._NwMinEnclosurePactive2 = 80
             self._NwMinSpacetoNactive=80
@@ -820,13 +821,14 @@ class DRCNW:
             self._NwMinEnclosurePactive2 = 112  # GR260a
             self._NwMinSpacetoNactive=56 #
             self._NwMinSpacetoRX=60
-            self._NwMinSpacetoNactive = 60
+            self.kf = 60
             self._NwMinSpacetoSLVT = 170  # ADDED! (by JiCho)
             self._NwMinArea = 500000
 
         if DesignParameters._Technology=='065nm':
             self._NwMinWidth=470
             self._NwMinSpace=470
+            self._NwMinSpace2=1000
             self._NwMinEnclosurePactive=160
             self._NwMinEnclosurePactive2 = 160
             self._NwMinEnclosureNactive = 160
@@ -836,6 +838,7 @@ class DRCNW:
         if DesignParameters._Technology=='090nm':
             self._NwMinWidth=620
             self._NwMinSpace=620
+            self._NwMinSpace2=1000
             self._NwMinEnclosurePactive=220
             self._NwMinEnclosurePactive2 = 220
             self._NwMinSpacetoNactive=220

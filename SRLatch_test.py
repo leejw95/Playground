@@ -520,7 +520,7 @@ class _SRLatch(StickDiagram._StickDiagram):
                            + 3 * _tmpPolySpace + 4 * _ChannelLength
 
         if _NumSupplyCoX == None:
-            _ContactNum = int((_tmpPODummySpace // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))) + 1
+            _ContactNum = int((_tmpPODummySpace // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2))) + 3
                            #            6 * _tmpPolySpace + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
                            # self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
                            # self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
@@ -2517,8 +2517,8 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 
         self._DesignParameter['_NWLayer']['_Width'] = self.CeilMinSnapSpacing(max(
-            self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][ '_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive, \
-            self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + _tmpPolySpace * 3 + 2 * _DRCObj._NwMinSpacetoNactive), 2*MinSnapSpacing)
+            self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_NPLayer'][ '_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive, self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] / 2 + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] / 2 + 2 * _DRCObj._NwMinEnclosurePactive), MinSnapSpacing)
+            #self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + _tmpPolySpace * 3 + 2 * _DRCObj._NwMinSpacetoNactive), 2 * MinSnapSpacing)
 
         self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[[self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + _SupplyRailYwidth // 2 + _DRCObj._NwMinEnclosurePactive, MinSnapSpacing)], \
                                                                 [self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2, MinSnapSpacing) - MinSnapSpacing]], \
@@ -2729,12 +2729,12 @@ if __name__ == '__main__':
         _Finger3 = 2#random.randint(1, 16)
         _Finger4 = 2#random.randint(1, 16)
         _NPRatio = 3#round(2 + random.random())
-        _SRRandWidth = 200#random.randrange(350,700,50)
+        _SRRandWidth = 350#random.randrange(350,700,50)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
 
-        _ChannelLength = 30
+        _ChannelLength = 40
 
         _VDD2VSSHeightAtOneSide = None
         _NumSupplyCoX = None

@@ -513,14 +513,19 @@ class _SRLatch(StickDiagram._StickDiagram):
         _ContactNum = _NumSupplyCoX
 
         _tmpPolySpace = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co)
+        _tmpPODummySpace = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] +\
+                           self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] +\
+                           self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] +\
+                           self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] +\
+                           + 3 * _tmpPolySpace + 4 * _ChannelLength
 
         if _NumSupplyCoX == None:
-            _ContactNum = int((3 * _tmpPolySpace +
-                               self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
-                               self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
-                               self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
-                               self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + 3 * _tmpPolySpace) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
-
+            _ContactNum = int((_tmpPODummySpace // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))) + 1
+                           #            6 * _tmpPolySpace + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
+                           # self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
+                           # self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
+                           # self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+                           #
         if _ContactNum < 2:
             _ContactNum = 2
 
@@ -2724,12 +2729,12 @@ if __name__ == '__main__':
         _Finger3 = 2#random.randint(1, 16)
         _Finger4 = 2#random.randint(1, 16)
         _NPRatio = 3#round(2 + random.random())
-        _SRRandWidth = random.randrange(350,700,50)
+        _SRRandWidth = 200#random.randrange(350,700,50)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
 
-        _ChannelLength = 40
+        _ChannelLength = 30
 
         _VDD2VSSHeightAtOneSide = None
         _NumSupplyCoX = None

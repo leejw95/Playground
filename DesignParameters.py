@@ -2,7 +2,7 @@ import re
 import user_define_exceptions
 import sys
 import os
-_Technology='028nm'
+_Technology='045nm'
 _CadenceServer = '141.223.86.110'
 #_CadenceServer = '141.223.22.156'
 if _Technology =='065nm':

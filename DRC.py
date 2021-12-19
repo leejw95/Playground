@@ -817,6 +817,7 @@ class DRCNW:
         if DesignParameters._Technology == '028nm':
             self._NwMinWidth=260 #A
             self._NwMinSpace=260 #C
+            self._NwMinSpace2=350 #C
             self._NwMinEnclosurePactive=56 #H
             self._NwMinEnclosurePactive2 = 112  # GR260a
             self._NwMinSpacetoNactive=56 #
@@ -1440,7 +1441,7 @@ class DRCMETALx:
             self._MetalxMinWidth=140
             self._MetalxMinSpace=140
             self._MetalxMinSpace2=190
-            #self._MetalxMinSpace21 = 160  ## There is no _Metal1MinSpace21 Rule in 90nm
+            #self._MetalxMinSpace21 = 190  ## There is no _MetalxMinSpace21 Rule in 90nm. Added for compatibility (jicho)
             self._MetalxMinSpace3=500
             self._MetalxMinSpace4=1500
             self._MetalxMinSpace5=1900

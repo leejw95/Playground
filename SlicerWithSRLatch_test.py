@@ -332,9 +332,10 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 
 
         print ('#################################       Coordinates Settings      #########################################')
+        SRLatchCenterX = self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['SRLatchCenterX']['_Ignore']
+
         _XYCoordinateOfSlicer = [[0,0]]
         self._DesignParameter['_Slicer']['_XYCoordinates'] = _XYCoordinateOfSlicer
-        SRLatchCenterX = self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['SRLatchCenterX']['_Ignore']
         PMOS_bottomtmp = self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_bottomtmp']['_Ignore']
         NMOS_toptmp = self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_toptmp']['_Ignore']
         VDD2VSSHeightofInverter = self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] - self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1]
@@ -467,10 +468,16 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
         self._DesignParameter['_CLKMet5Routing']['_Width'] = 4 * _DRCObj._MetalxMinWidth
 
 
-        CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSCLKInput']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnNMOSCLKInput']['_XYCoordinates'][0][1]) // 2, MinSnapSpacing)
+        CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSCLKInput']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnNMOSCLKInput']['_XYCoordinates'][0][1]) / 2, MinSnapSpacing)
 
-        if (self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - self._DesignParameter['_VIAMet42Met5forSSnRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_YWidth'] / 2) - (CenterofCLKMOSofSlicer + self._DesignParameter['_CLKMet5Routing']['_Width'] / 2) < _DRCObj._Metal1MinSpace21 :
-            CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - self._DesignParameter['_VIAMet42Met5forSSnRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_YWidth'] / 2) - self._DesignParameter['_CLKMet5Routing']['_Width'] / 2 - MinSnapSpacing - _DRCObj._Metal1MinSpace21, MinSnapSpacing)
+
+        if DesignParameters._Technology in ['045nm', '065nm', '028nm'] :
+            if (self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - self._DesignParameter['_Met5RoutingforSRInput']['_Width'] / 2) - (CenterofCLKMOSofSlicer + self._DesignParameter['_CLKMet5Routing']['_Width'] / 2) < _DRCObj._MetalxMinSpace21 :
+                CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - self._DesignParameter['_Met5RoutingforSRInput']['_Width'] / 2) - self._DesignParameter['_CLKMet5Routing']['_Width'] / 2 - _DRCObj._MetalxMinSpace21, MinSnapSpacing)
+
+        elif DesignParameters._Technology in ['090nm'] :
+            if (self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - self._DesignParameter['_Met5RoutingforSRInput']['_Width'] / 2) - (CenterofCLKMOSofSlicer + self._DesignParameter['_CLKMet5Routing']['_Width'] / 2) < _DRCObj._MetalxMinSpace2 :
+                CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - self._DesignParameter['_Met5RoutingforSRInput']['_Width'] / 2) - self._DesignParameter['_CLKMet5Routing']['_Width'] / 2 - _DRCObj._MetalxMinSpace2, MinSnapSpacing)
 
 
         _ViaMet42Met5forCLKRouting = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
@@ -496,7 +503,7 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                                                         self._DesignParameter['_Inverter']['_XYCoordinates'][0][1] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][1]], \
                                                                        [self.CeilMinSnapSpacing(self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] - self._DesignParameter['_ViaMet52Met6forCLKRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_XWidth'] // 2, MinSnapSpacing), PMOSYofInverter]
                                                                      ],
-                                                                    [[self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met4CLKinput']['_XYCoordinates'][1][0][0], CenterofCLKMOSofSlicer], [self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met4CLKinput']['_XYCoordinates'][0][0][0], CenterofCLKMOSofSlicer]]]
+                                                                    [[self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met4CLKinput']['_XYCoordinates'][1][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + CenterofCLKMOSofSlicer], [self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met4CLKinput']['_XYCoordinates'][0][0][0], self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + CenterofCLKMOSofSlicer]]]
 
         self._DesignParameter['_CLKMet6Routing'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0],_Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[],_Width=None)
         self._DesignParameter['_CLKMet6Routing']['_Width'] = 4 * _DRCObj._MetalxMinWidth
@@ -605,7 +612,7 @@ if __name__ == '__main__' :
         _SRFinger2 = random.randint(1, 16)
         _SRFinger3 = random.randint(1, 16)
         _SRFinger4 = random.randint(1, 16)
-        _RandomNMOSChannelWidth = random.randrange(500,2500,50)
+        _RandomNMOSChannelWidth = random.randrange(200,400,3)
         _SRNMOSChannelWidth1 = _RandomNMOSChannelWidth
         _SRPMOSChannelWidth1 = 2 * _RandomNMOSChannelWidth
         _SRNMOSChannelWidth2 = _RandomNMOSChannelWidth
@@ -614,10 +621,10 @@ if __name__ == '__main__' :
         _SRPMOSChannelWidth3 = 2 * _RandomNMOSChannelWidth
         _SRNMOSChannelWidth4 = _RandomNMOSChannelWidth
         _SRPMOSChannelWidth4 = 2 * _RandomNMOSChannelWidth
-        _SRChannelLength = 60
+        _SRChannelLength = 30
         _SRNPRatio = None
         _SRVDD2VSSHeightAtOneSide = None
-        _SRDummy = False
+        _SRDummy = True
         _SRNumSupplyCoX = None
         _SRNumSupplyCoY = 2
         _SRSupplyMet1XWidth = None
@@ -638,19 +645,19 @@ if __name__ == '__main__' :
         _SLCLKinputPMOSFinger1 = random.randint(1, 16)
         _SLCLKinputPMOSFinger2 = random.randint(1, 16)
         _SLPMOSFinger = random.randint(1, 16)
-        _SLPMOSChannelWidth = random.randrange(500, 830, 50)
+        _SLPMOSChannelWidth = random.randrange(200, 1050, 3)
         _SLDATAinputNMOSFinger = random.randint(3, 16)
         _SLNMOSFinger = random.randint(1, 16)
         _SLCLKinputNMOSFinger = random.randint(1, 16)
-        _SLNMOSChannelWidth = random.randrange(500, 830, 50)
-        _SLCLKinputNMOSChannelWidth = random.randrange(500, 830, 50)
+        _SLNMOSChannelWidth = random.randrange(200, 1050, 3)
+        _SLCLKinputNMOSChannelWidth = random.randrange(200, 1050, 3)
 
-        _SLChannelLength = 60
-        _SLDummy = False
+        _SLChannelLength = 30
+        _SLDummy = True
         _SLXVT = 'LVT'
-        _SLGuardringWidth = 500
+        _SLGuardringWidth = 200
         _SLGuardring = True
-        _SLSlicerGuardringWidth = 500
+        _SLSlicerGuardringWidth = 200
         _SLSlicerGuardring = None
         _SLNumSupplyCOY = None
         _SLNumSupplyCOX = None
@@ -664,11 +671,11 @@ if __name__ == '__main__' :
         _SLPowerLine = None
         #####################Inverter#######################
         _InvFinger = random.randint(5, 16)
-        _InvChannelWidth = random.randrange(500,830,50)
-        _InvChannelLength = 60
+        _InvChannelWidth = random.randrange(200,400,3)
+        _InvChannelLength = 30
         _InvNPRatio = 3
         _InvVDD2VSSHeight = None
-        _InvDummy = False
+        _InvDummy = True
         _InvNumSupplyCoX = None
         _InvNumSupplyCoY = None
         _InvSupplyMet1XWidth = None
@@ -739,35 +746,35 @@ if __name__ == '__main__' :
         # Checker.Upload2FTP()
         # Checker.StreamIn(tech=DesignParameters._Technology)
 
-    #     import ftplib
-    #
-    #     ftp = ftplib.FTP('141.223.22.156')
-    #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    #     myfile = open('SlicerWithSRLatch.gds', 'rb')
-    #     ftp.storbinary('STOR SlicerWithSRLatch.gds', myfile)
-    #     myfile.close()
-    #
-    #     import DRCchecker
-    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerWithSRLatch','SlicerWithSRLatch',None)
-    #     a.DRCchecker()
-    #
-    # print ("DRC Clean!!!")
-
         import ftplib
 
         ftp = ftplib.FTP('141.223.22.156')
         ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
         myfile = open('SlicerWithSRLatch.gds', 'rb')
         ftp.storbinary('STOR SlicerWithSRLatch.gds', myfile)
         myfile.close()
 
         import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SlicerWithSRLatch','SlicerWithSRLatch',None)
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerWithSRLatch','SlicerWithSRLatch',None)
         a.DRCchecker()
 
     print ("DRC Clean!!!")
+
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+    #     myfile = open('SlicerWithSRLatch.gds', 'rb')
+    #     ftp.storbinary('STOR SlicerWithSRLatch.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SlicerWithSRLatch','SlicerWithSRLatch',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
 
     #     import ftplib
     #
@@ -785,20 +792,20 @@ if __name__ == '__main__' :
     #
     # print("DRC Clean!!!")
 
-#     import ftplib
-#
-#     ftp = ftplib.FTP('141.223.22.156')
-#     ftp.login('jicho0927', 'cho89140616!!')
-#     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
-#     myfile = open('Inverter.gds', 'rb')
-#     ftp.storbinary('STOR Inverter.gds', myfile)
-#     myfile.close()
-#
-#     import DRCchecker
-#     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','Inverter','Inverter',None)
-#     a.DRCchecker()
-#
-#
-# print ("DRC Clean!!!")
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
+    #     myfile = open('SlicerWithSRLatch.gds', 'rb')
+    #     ftp.storbinary('STOR SlicerWithSRLatch.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','SlicerWithSRLatch','SlicerWithSRLatch',None)
+    #     a.DRCchecker()
+    #
+    #
+    # print ("DRC Clean!!!")
 
 

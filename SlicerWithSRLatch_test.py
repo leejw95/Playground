@@ -471,7 +471,7 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
         CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnPMOSCLKInput']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_ViaMet22Met3OnNMOSCLKInput']['_XYCoordinates'][0][1]) / 2, MinSnapSpacing)
 
 
-        if DesignParameters._Technology in ['045nm', '065nm', '028nm'] :
+        if DesignParameters._Technology in ['045nm', '065nm'] :
             if (self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - max(self._DesignParameter['_VIAMet42Met5forSSnRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_YWidth'], self._DesignParameter['_Met5RoutingforSRInput']['_Width']) / 2) - (CenterofCLKMOSofSlicer + self._DesignParameter['_CLKMet5Routing']['_Width'] / 2) < _DRCObj._MetalxMinSpace21 :
                 CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - max(self._DesignParameter['_VIAMet42Met5forSSnRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_YWidth'], self._DesignParameter['_Met5RoutingforSRInput']['_Width']) / 2) - self._DesignParameter['_CLKMet5Routing']['_Width'] / 2 - _DRCObj._MetalxMinSpace21, MinSnapSpacing)
 
@@ -479,6 +479,9 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
             if (self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - max(self._DesignParameter['_VIAMet42Met5forSSnRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_YWidth'], self._DesignParameter['_Met5RoutingforSRInput']['_Width']) / 2) - (CenterofCLKMOSofSlicer + self._DesignParameter['_CLKMet5Routing']['_Width'] / 2) < _DRCObj._MetalxMinSpace2 :
                 CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - max(self._DesignParameter['_VIAMet42Met5forSSnRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_YWidth'], self._DesignParameter['_Met5RoutingforSRInput']['_Width']) / 2) - self._DesignParameter['_CLKMet5Routing']['_Width'] / 2 - _DRCObj._MetalxMinSpace2, MinSnapSpacing)
 
+        elif DesignParameters._Technology in ['028nm'] :
+            if (self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - max(self._DesignParameter['_VIAMet42Met5forSSnRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_YWidth'], self._DesignParameter['_Met5RoutingforSRInput']['_Width']) / 2) - (CenterofCLKMOSofSlicer + self._DesignParameter['_CLKMet5Routing']['_Width'] / 2) < _DRCObj._MetalxMinSpace3 :
+                CenterofCLKMOSofSlicer = self.FloorMinSnapSpacing((self._DesignParameter['_VIAMet42Met5forSSnRouting']['_XYCoordinates'][0][1] - max(self._DesignParameter['_VIAMet42Met5forSSnRouting']['_DesignObj']._DesignParameter['_Met5Layer']['_YWidth'], self._DesignParameter['_Met5RoutingforSRInput']['_Width']) / 2) - self._DesignParameter['_CLKMet5Routing']['_Width'] / 2 - _DRCObj._MetalxMinSpace3, MinSnapSpacing)
 
         _ViaMet42Met5forCLKRouting = copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
         _ViaMet42Met5forCLKRouting['_ViaMet42Met5NumberOfCOX'] = 2

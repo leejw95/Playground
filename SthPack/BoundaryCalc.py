@@ -1,9 +1,12 @@
+from shapely.geometry import Polygon, box
+import matplotlib.pyplot as plt
+
 
 def getOverlappedBoundaryElement(BoundaryElement1, BoundaryElement2):
     """
-    It usually used for Via Calculation when two metals(BoundaryElements) are overlapped.
-    It cannot supported for PathElement
-      -> Later It can support PathElementType when only limited condition (like simple straight lines, not complicated orthogonal line).
+    It is usually used for Via Calculation when two metals(BoundaryElements) are overlapped.
+    It cannot support PathElement
+      -> Later, It can support PathElementType when only limited condition (like simple straight lines, not complicated orthogonal line).
 
     Caution : Every Overlapped BoundaryElements should same XYWidths. Or AssertionError will occur.
 

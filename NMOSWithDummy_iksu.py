@@ -120,10 +120,10 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
         print ('#############################     DIFF (OD/RX) Layer Calculation    ##############################################')
-        if _NMOSDummy and DesignParameters._Technology != '028nm':
-            XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _NMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
-        else:
-            XWidth_OD = _LengthNMOSBtwPO * _NMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
+        # if _NMOSDummy and DesignParameters._Technology != '028nm':
+        #     XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _NMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
+        # else:
+        XWidth_OD = _LengthNMOSBtwPO * _NMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
         self._DesignParameter['_ODLayer']['_XWidth'] = XWidth_OD
         self._DesignParameter['_ODLayer']['_YWidth'] = _NMOSChannelWidth
         self._DesignParameter['_ODLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
@@ -215,7 +215,7 @@ class _NMOS(StickDiagram._StickDiagram):
                 _Layer=DesignParameters._LayerMapping['NIMP'][0],
                 _Datatype=DesignParameters._LayerMapping['NIMP'][1],
                 _XWidth=max(XWidth_NP_byPO, XWidth_NP_byOD),
-                _YWidth=self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._NpMinEnclosureOfPo,
+                _YWidth=max(self._DesignParameter['_POLayer']['_YWidth'], self._DesignParameter['_PODummyLayer']['_YWidth']) + 2 * _DRCObj._NpMinEnclosureOfPo,
                 _XYCoordinates=_XYCoordinateOfNMOS,)
 
 

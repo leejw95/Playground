@@ -512,17 +512,20 @@ class _SRLatch(StickDiagram._StickDiagram):
         #####################################VSS Generation######################################
         _ContactNum = _NumSupplyCoX
 
-        _tmpPolySpace = _DRCObj.DRCPolyMinSpace(_Width = _NMOSChannelWidth1, _ParallelLength=_ChannelLength)
+        _tmpPolySpace = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co)
+        _tmpPODummySpace = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] +\
+                           self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] +\
+                           self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] +\
+                           self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] - self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] +\
+                           + 3 * _tmpPolySpace + 4 * _ChannelLength
 
         if _NumSupplyCoX == None:
-            _ContactNum = int((3 * _tmpPolySpace +
-                               self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
-                               self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + \
-                               self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
-                               self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer'][
-                                   '_XWidth'] + 3 * _tmpPolySpace) // (
-                                          _DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
-
+            _ContactNum = int((_tmpPODummySpace // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2))) + 3
+                           #            6 * _tmpPolySpace + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
+                           # self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
+                           # self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] +
+                           # self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+                           #
         if _ContactNum < 2:
             _ContactNum = 2
 
@@ -556,18 +559,9 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         #####################################################Coordinates Setting###############################################################
         _Met1DistancebtwSupplyandMOS = _DRCObj._Metal1DefaultSpace
-        _VDD2VSSMinHeightAtOneSide = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][
-                                         '_YWidth'] + \
-                                     self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][
-                                         '_YWidth'] + \
-                                     self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                                         '_YWidth'] + \
-                                     self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                                         '_YWidth'] + \
-                                     2 * _Met1DistancebtwSupplyandMOS + 2 * \
-                                     self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter[
-                                         '_Met1Layer'][
-                                         '_YWidth'] + 3 * _DRCObj._Metal1MinSpace2 + _DRCObj._MetalxMinSpace2, MinSnapSpacing)
+        _VDD2VSSMinHeightAtOneSide = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
+                                     self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
+                                     2 * _Met1DistancebtwSupplyandMOS + 2 * self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 3 * _DRCObj._Metal1MinSpace2 + _DRCObj._MetalxMinSpace2, MinSnapSpacing)
 
         if _VDD2VSSHeightAtOneSide == None:
             _VDD2VSSHeightAtOneSide = _VDD2VSSMinHeightAtOneSide
@@ -600,8 +594,8 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         self._DesignParameter['_NMOS1']['_XYCoordinates'] = [
             [-self.CeilMinSnapSpacing((self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth']) // 2, MinSnapSpacing),
-             + self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2  + \
-             max(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + _Met1DistancebtwSupplyandMOS, MinSnapSpacing)]]
+             + self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2  + \
+             max(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + _Met1DistancebtwSupplyandMOS, MinSnapSpacing)]]
 
         self._DesignParameter['_NMOS1_r']['_XYCoordinates'] = [
             [-self.CeilMinSnapSpacing((self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth']) // 2, MinSnapSpacing),
@@ -644,9 +638,12 @@ class _SRLatch(StickDiagram._StickDiagram):
         #####################################################Supply Rail Coordinates Setting###############################################################
         MiddleCoordinateX = self.CeilMinSnapSpacing((self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][-1][0]) // 2, MinSnapSpacing)  ## Center of MOSs
 
+
         self._DesignParameter['PbodyContact']['_XYCoordinates'] = [[MiddleCoordinateX, 0]]
         self._DesignParameter['NbodyContact']['_XYCoordinates'] = [[MiddleCoordinateX, _VDD2VSSHeightAtOneSide],
                                                                    [MiddleCoordinateX, 0 - _VDD2VSSHeightAtOneSide]]
+
+        self._DesignParameter['SRLatchCenterX'] = {'_Ignore': MiddleCoordinateX, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None} #### Must be used when you s-reference this SRLatch file!!!!!!!!!!!!!!!!!!
 
         #####################################################Via Met1&Met2 Coordinates Setting###############################################################
         _LengthbtwViaCentertoViaCenter = _DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace
@@ -821,104 +818,104 @@ class _SRLatch(StickDiagram._StickDiagram):
         #####################################_VIAPMOS1Poly2Met1#####################################
         self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'] = [
             [self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._Metal1MinSpace2],
+             self.FloorMinSnapSpacing(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - max(self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 - self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
             [self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][0],
-             self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1] + self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._Metal1MinSpace2],
+             self.CeilMinSnapSpacing(self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1] + max(self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
             [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._Metal1MinSpace2],
+             self.CeilMinSnapSpacing(self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + max(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
             [self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][0],
-             self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1] - self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._Metal1MinSpace2]
+             self.FloorMinSnapSpacing(self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1] - max(self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 - self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing)]
         ]
 
         ############################
         if _Dummy == True :
             if _Finger1 == 1:
                 _LengthBtwPoly2Poly = _ChannelLength + _tmpPolySpace
-                _LengthNPolyDummyEdge2OriginX = (int(_Finger1 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength // 2 - (self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) // 2
-                _LengthPPolyDummyEdge2OriginX = (int(_Finger1 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength // 2 - (self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) // 2
+                _LengthNPolyDummyEdge2OriginX = (int(_Finger1 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                _LengthPPolyDummyEdge2OriginX = (int(_Finger1 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
 
                 _LengthNPolyVIAtoGoUp = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + MinSnapSpacing
                 _LengthPPolyVIAtoGoDown = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + MinSnapSpacing
-                self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 - self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _LengthPPolyVIAtoGoDown, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _LengthPPolyVIAtoGoDown, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _LengthNPolyVIAtoGoUp, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 - self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _LengthNPolyVIAtoGoUp, MinSnapSpacing)]]
+                self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthPPolyVIAtoGoDown, self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthPPolyVIAtoGoDown, self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_NMOS1']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp, self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][2][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS1']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthNPolyVIAtoGoUp, self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][3][1]), MinSnapSpacing)]]
 
             #####################################_VIAPMOS2Poly2Met1#####################################
         self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'] = [
                 [self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] - self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._Metal1MinSpace2],
+                 self.FloorMinSnapSpacing(self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] - max(self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 - self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1] + self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._Metal1MinSpace2],
+                 self.CeilMinSnapSpacing(self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1] + max(self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] + self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._Metal1MinSpace2],
+                 self.CeilMinSnapSpacing(self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] + max(self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1] - self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._Metal1MinSpace2]]
+                 self.FloorMinSnapSpacing(self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1] - max(self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 - self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing)]]
 
             ############################
         if _Dummy == True :
             if _Finger2 == 1:
                 _LengthBtwPoly2Poly = _ChannelLength + _tmpPolySpace
-                _LengthNPolyDummyEdge2OriginX = (int(_Finger2 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength // 2 - (self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) // 2
-                _LengthPPolyDummyEdge2OriginX = (int(_Finger2 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength // 2 - (self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) // 2
+                _LengthNPolyDummyEdge2OriginX = (int(_Finger2 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                _LengthPPolyDummyEdge2OriginX = (int(_Finger2 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
 
                 _LengthNPolyVIAtoGoUp = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + MinSnapSpacing
                 _LengthPPolyVIAtoGoDown = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + MinSnapSpacing
-                self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 - self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _LengthPPolyVIAtoGoDown, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _LengthNPolyVIAtoGoUp, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _LengthNPolyVIAtoGoUp, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 - self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _LengthPPolyVIAtoGoDown, MinSnapSpacing)]]
+                self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_PMOS2']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthPPolyVIAtoGoDown, self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS2_r']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp, self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_NMOS2']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS2']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp, self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][2][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_NMOS2_r']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS2']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIAPMOS2Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthPPolyVIAtoGoDown, self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][3][1]), MinSnapSpacing)]]
 
             #####################################_VIAPMOS3Poly2Met1#####################################
         self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'] = [
                 [self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _LengthbtwViaCentertoViaCenter // 2) // 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._Metal1MinSpace2],
+                 self.FloorMinSnapSpacing(self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - max(self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 - self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] + self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _LengthbtwViaCentertoViaCenter // 2) // 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._Metal1MinSpace2],
+                 self.CeilMinSnapSpacing(self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] + max(self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _LengthbtwViaCentertoViaCenter // 2) // 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._Metal1MinSpace2],
+                 self.CeilMinSnapSpacing(self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + max(self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] - self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _LengthbtwViaCentertoViaCenter // 2) // 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._Metal1MinSpace2]
+                 self.FloorMinSnapSpacing(self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] - max(self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + _LengthbtwViaCentertoViaCenter / 2) / 2 - self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing)]
         ]
 
             ############################
         if _Dummy == True :
             if _Finger3 == 1:
                 _LengthBtwPoly2Poly = _ChannelLength + _tmpPolySpace
-                _LengthNPolyDummyEdge2OriginX = (int(_Finger3 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength // 2 - (self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) // 2
-                _LengthPPolyDummyEdge2OriginX = (int(_Finger3 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength // 2 - (self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) // 2
+                _LengthNPolyDummyEdge2OriginX = (int(_Finger3 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                _LengthPPolyDummyEdge2OriginX = (int(_Finger3 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
 
                 _LengthNPolyVIAtoGoUp = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + MinSnapSpacing
                 _LengthPPolyVIAtoGoDown = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + MinSnapSpacing
-                self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 - self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _LengthPPolyVIAtoGoDown, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _LengthPPolyVIAtoGoDown, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _LengthNPolyVIAtoGoUp, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 - self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _LengthNPolyVIAtoGoUp, MinSnapSpacing)]]
+                self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS3']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_PMOS3']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthPPolyVIAtoGoDown, self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][0][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS3_r']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthPPolyVIAtoGoDown, self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][1][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_NMOS3']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS3']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp, self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][2][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_NMOS3_r']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS3']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthNPolyVIAtoGoUp, self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][1]), MinSnapSpacing)]]
 
             #####################################_VIAPMOS4Poly2Met1#####################################
         self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'] = [
                 [self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._Metal1MinSpace2],
+                 self.FloorMinSnapSpacing(self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - max(self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 - self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1] + self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._Metal1MinSpace2],
+                 self.CeilMinSnapSpacing(self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1] + max(self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._Metal1MinSpace2],
+                 self.CeilMinSnapSpacing(self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + max(self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing)],
                 [self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][0],
-                 self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1] - self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) // 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._Metal1MinSpace2]]
+                 self.FloorMinSnapSpacing(self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1] - max(self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) / 2 - self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing)]]
 
             ############################
         if _Dummy == True :
             if _Finger4 == 1:
                 _LengthBtwPoly2Poly = _ChannelLength + _tmpPolySpace
-                _LengthNPolyDummyEdge2OriginX = (int(_Finger4 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength // 2 - (self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) // 2
-                _LengthPPolyDummyEdge2OriginX = (int(_Finger4 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength // 2 - (self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) // 2
+                _LengthNPolyDummyEdge2OriginX = (int(_Finger4 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
+                _LengthPPolyDummyEdge2OriginX = (int(_Finger4 // 2) + 1) * _LengthBtwPoly2Poly - _ChannelLength / 2 - (self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']) / 2
 
                 _LengthNPolyVIAtoGoUp = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthNPolyDummyEdge2OriginX * _LengthNPolyDummyEdge2OriginX) + MinSnapSpacing
                 _LengthPPolyVIAtoGoDown = math.sqrt(_DRCObj._PolygateMinSpaceAtCorner * _DRCObj._PolygateMinSpaceAtCorner - _LengthPPolyDummyEdge2OriginX * _LengthPPolyDummyEdge2OriginX) + MinSnapSpacing
-                self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 - self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _LengthPPolyVIAtoGoDown, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _LengthNPolyVIAtoGoUp, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _LengthNPolyVIAtoGoUp, MinSnapSpacing)],
-                                                                                 [self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] // 2 - self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _LengthPPolyVIAtoGoDown, MinSnapSpacing)]]
+                self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'] = [[self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_PMOS4']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthPPolyVIAtoGoDown, self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][0][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOS4_r']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp, self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][1][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_NMOS4']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOS4']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 + self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _LengthNPolyVIAtoGoUp, self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][2][1]), MinSnapSpacing)],
+                                                                                 [self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_NMOS4_r']['_XYCoordinates'][0][1] - self._DesignParameter['_NMOS4']['_DesignObj']._DesignParameter['_PODummyLayer']['_YWidth'] / 2 - self._DesignParameter['_VIAPMOS4Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _LengthPPolyVIAtoGoDown, self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][3][1]), MinSnapSpacing)]]
 
         #####################################################Routing###############################################################
         #####################################VSS&VDD Met1 Routing######################################
@@ -1979,25 +1976,13 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 
 
-        self._DesignParameter['_AdditionalMet1Routing1'] = self._BoundaryElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],
-            _XYCoordinates=[], _XWidth=None, _YWidth=None)
-        self._DesignParameter['_AdditionalMet1Routing1']['_XWidth'] = max(
-            self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
-            self._DesignParameter['_AdditionalMet12Met2OnGate1']['_DesignObj']._DesignParameter['_Met1Layer'][
-                '_XWidth'])
-        self._DesignParameter['_AdditionalMet1Routing1']['_YWidth'] = \
-        self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        self._DesignParameter['_AdditionalMet1Routing1']['_XYCoordinates'] = \
-        self._DesignParameter['_AdditionalMet12Met2OnGate1']['_XYCoordinates']
+        self._DesignParameter['_AdditionalMet1Routing1'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _XWidth=None, _YWidth=None)
+        self._DesignParameter['_AdditionalMet1Routing1']['_XWidth'] = max(self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'], self._DesignParameter['_AdditionalMet12Met2OnGate1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])
+        self._DesignParameter['_AdditionalMet1Routing1']['_YWidth'] = self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
+        self._DesignParameter['_AdditionalMet1Routing1']['_XYCoordinates'] = self._DesignParameter['_AdditionalMet12Met2OnGate1']['_XYCoordinates']
 
-        self._DesignParameter['_AdditionalMet1Routing3'] = self._PathElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],
-            _XYCoordinates=[], _Width=None)
-        self._DesignParameter['_AdditionalMet1Routing3']['_Width'] = max(
-            self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'],
-            self._DesignParameter['_AdditionalMet12Met2OnGate3']['_DesignObj']._DesignParameter['_Met1Layer'][
-                '_XWidth'])
+        self._DesignParameter['_AdditionalMet1Routing3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
+        self._DesignParameter['_AdditionalMet1Routing3']['_Width'] = max(self._DesignParameter['_VIAPMOS3Poly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'], self._DesignParameter['_AdditionalMet12Met2OnGate3']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'])
         self._DesignParameter['_AdditionalMet1Routing3']['_XYCoordinates'] = [[[self._DesignParameter[
                                                                                     '_VIAPMOS3Poly2Met1'][
                                                                                     '_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(
@@ -2519,8 +2504,8 @@ class _SRLatch(StickDiagram._StickDiagram):
 
         self._DesignParameter['_AdditionalMet1RoutingforMOS4'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[], _Width=None)
         self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_Width'] = self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']
-        self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_XYCoordinates'] = [[[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]]], \
-                                                                                    [[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][0][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]]]]
+        self._DesignParameter['_AdditionalMet1RoutingforMOS4']['_XYCoordinates'] = [[[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][-1][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][1]]], \
+                                                                                    [[self._DesignParameter['_AdditionalMet1GateRouting4']['_XYCoordinates'][-1][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]], [self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][0], self._DesignParameter['_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][1]]]]
 
 
 
@@ -2535,8 +2520,8 @@ class _SRLatch(StickDiagram._StickDiagram):
 
 
         self._DesignParameter['_NWLayer']['_Width'] = self.CeilMinSnapSpacing(max(
-            self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][ '_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive, \
-            self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + _tmpPolySpace * 3 + 2 * _DRCObj._NwMinSpacetoNactive), 2*MinSnapSpacing)
+            self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][ '_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive, self._DesignParameter['_PMOS4']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] / 2 + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] / 2 + 2 * _DRCObj._NwMinEnclosurePactive), MinSnapSpacing)
+            #self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS2']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS3']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + self._DesignParameter['_PMOS4']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] + _tmpPolySpace * 3 + 2 * _DRCObj._NwMinSpacetoNactive), 2 * MinSnapSpacing)
 
         self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[[self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + _SupplyRailYwidth // 2 + _DRCObj._NwMinEnclosurePactive, MinSnapSpacing)], \
                                                                 [self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] - self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2, MinSnapSpacing) - MinSnapSpacing]], \
@@ -2584,19 +2569,19 @@ class _SRLatch(StickDiagram._StickDiagram):
             self._DesignParameter['_PDKLayer']['_XYCoordinates'] = self._DesignParameter['_NPLayer']['_XYCoordinates']
 
             self._DesignParameter['_AdditionalPPLayer']  = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[], _Width=None)
-            self._DesignParameter['_AdditionalPPLayer']['_Width'] = self._DesignParameter['_PPLayer']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PPLayer']['_XYCoordinates'][0][0][0]
+            self._DesignParameter['_AdditionalPPLayer']['_Width'] = self.CeilMinSnapSpacing(self._DesignParameter['_PPLayer']['_XYCoordinates'][0][1][0] - self._DesignParameter['_PPLayer']['_XYCoordinates'][0][0][0], 2 * MinSnapSpacing)
             self._DesignParameter['_AdditionalPPLayer']['_XYCoordinates'] = [[[self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]], \
-                                                                              [self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], min(self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][0][1]) - self.CeilMinSnapSpacing(self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2, MinSnapSpacing) - _DRCObj._PpMinEnclosureOfPo]], \
+                                                                              [self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], min(self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][0][1]) - self.CeilMinSnapSpacing(self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2, MinSnapSpacing) - _DRCObj._PpMinEnclosureOfPo]], \
                                                                              [[self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], self._DesignParameter['_PMOS1_r']['_XYCoordinates'][0][1]], \
-                                                                              [self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], max(self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][1], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][1][1], self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][1][1]) + self.CeilMinSnapSpacing(self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2, MinSnapSpacing) + _DRCObj._PpMinEnclosureOfPo]]
+                                                                              [self._DesignParameter['NbodyContact']['_XYCoordinates'][0][0], max(self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][1][1], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][1][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][1][1], self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][1][1]) + self.CeilMinSnapSpacing(self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2, MinSnapSpacing) + _DRCObj._PpMinEnclosureOfPo]]
                                                                              ]
 
             self._DesignParameter['_AdditionalNPLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NIMP'][0], _Datatype=DesignParameters._LayerMapping['NIMP'][1], _XYCoordinates=[], _Width=None)
             self._DesignParameter['_AdditionalNPLayer']['_Width'] = self.CeilMinSnapSpacing(self._DesignParameter['_AdditionalPPLayer']['_Width'], 2 * MinSnapSpacing)
             self._DesignParameter['_AdditionalNPLayer']['_XYCoordinates'] = [[[self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1']['_XYCoordinates'][0][1]], \
-                                                                              [self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][2][1], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][2][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][2][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][2][1]) + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 + _DRCObj._NpMinEnclosureOfPo, MinSnapSpacing)]], \
+                                                                              [self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(max(self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][2][1], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][2][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][2][1], self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][2][1]) + self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 + _DRCObj._NpMinEnclosureOfPo, MinSnapSpacing)]], \
                                                                              [[self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0], self._DesignParameter['_NMOS1_r']['_XYCoordinates'][0][1]], \
-                                                                              [self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(min(self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][3][1], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][3][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][1]) - self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _DRCObj._NpMinEnclosureOfPo, MinSnapSpacing)]]
+                                                                              [self._DesignParameter['PbodyContact']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(min(self._DesignParameter['_VIAPMOS1Poly2Met1']['_XYCoordinates'][3][1], self._DesignParameter['_VIAPMOS2Poly2Met1']['_XYCoordinates'][3][1], self._DesignParameter['_VIAPMOS3Poly2Met1']['_XYCoordinates'][3][1], self._DesignParameter['_VIAPMOS4Poly2Met1']['_XYCoordinates'][3][1]) - self._DesignParameter['_VIAPMOS1Poly2Met1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] / 2 - _DRCObj._NpMinEnclosureOfPo, MinSnapSpacing)]]
                                                                              ]
 
             self._DesignParameter['_AdditionalNWLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1], _XYCoordinates=[], _Width=None)
@@ -2742,24 +2727,24 @@ class _SRLatch(StickDiagram._StickDiagram):
 if __name__ == '__main__':
 
     for i in range(1,2) :
-        _Finger1 = 1#random.randint(1, 16)
+        _Finger1 = 5#random.randint(1, 16)
         _Finger2 = 1#random.randint(1, 16)
-        _Finger3 = 1#random.randint(1, 16)
-        _Finger4 = 1#random.randint(1, 16)
+        _Finger3 = 2#random.randint(1, 16)
+        _Finger4 = 2#random.randint(1, 16)
         _NPRatio = 3#round(2 + random.random())
-        _SRRandWidth = 600##random.randrange(600,1500,10)
+        _SRRandWidth = 350#random.randrange(350,700,50)
         _NMOSChannelWidth = _SRRandWidth
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
 
-        _ChannelLength = 100
+        _ChannelLength = 40
 
         _VDD2VSSHeightAtOneSide = None
         _NumSupplyCoX = None
         _NumSupplyCoY = None
 
 
-        _Dummy = False
+        _Dummy = True
         _XVT = 'LVT'
         _PowerLine = False
 
@@ -2819,31 +2804,24 @@ if __name__ == '__main__':
         )
         Checker.Upload2FTP()
         Checker.StreamIn(tech=DesignParameters._Technology)
-        # #
-        # import ftplib
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('jicho0927', 'cho89140616!!')
-        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-        # myfile = open('SRLatch.gds', 'rb')
-        # ftp.storbinary('STOR SRLatch.gds', myfile)
-        # myfile.close()
-        #
-        #import ftplib
 
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('jicho0927', 'cho89140616!!')
-        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        # myfile = open('SRLatch.gds', 'rb')
-        # ftp.storbinary('STOR SRLatch.gds', myfile)
-        # myfile.close()
-        # #
-        # import DRCchecker
-        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SRLatch','SRLatch',None)
-        # a.DRCchecker()
-        #
-        # import DRCchecker
-        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SRLatch','SRLatch',None)
-        # a.DRCchecker()
+
+
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    #     myfile = open('SRLatch.gds', 'rb')
+    #     ftp.storbinary('STOR SRLatch.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SRLatch','SRLatch',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
+
 
     #     import ftplib
     #
@@ -2856,6 +2834,21 @@ if __name__ == '__main__':
     #
     #     import DRCchecker
     #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SRLatch','SRLatch',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
+
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+    #     myfile = open('SRLatch.gds', 'rb')
+    #     ftp.storbinary('STOR SRLatch.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc40n','/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run','SRLatch','SRLatch',None)
     #     a.DRCchecker()
     #
     #

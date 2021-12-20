@@ -220,8 +220,8 @@ class DRCPOLYGATE:
             self._PolygateMinExtensionOnOD2=70
             self._PolygateMinExtensionOnOD3=105
             self._PolygateMinSpaceAtCorner=96
-            self._PMOS2GuardringMinSpace=90
-            self._NMOS2GuardringMinSpace=90
+            # self._PMOS2GuardringMinSpace=90
+            # self._NMOS2GuardringMinSpace=90
             self._PolygateWithPCCRIT=71
 
 
@@ -304,15 +304,14 @@ class DRCPOLYGATE:
 
     def DRCPolygateMinSpace(self, _TmpLengthBtwPolyEdge = None):
         if DesignParameters._Technology=='045nm':
-            if _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth1:
-                return self._PolygateOnODMinWidth1
-            elif _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth2:
-                return self._PolygateOnODMinWidth2
-            elif _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth3:
-                return self._PolygateOnODMinWidth3
-
+            # if _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth1:
+            #     return self._PolygateOnODMinWidth1
+            # elif _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth2:
+            #     return self._PolygateOnODMinWidth2
+            # elif _TmpLengthBtwPolyEdge <= self._PolygateOnODMinWidth3:
+            #     return self._PolygateOnODMinWidth3
+            return _TmpLengthBtwPolyEdge
         if DesignParameters._Technology=='028nm':
-            
             return _TmpLengthBtwPolyEdge
         if DesignParameters._Technology=='065nm':
             return _TmpLengthBtwPolyEdge
@@ -599,6 +598,7 @@ class DRCMETAL1:
         if DesignParameters._Technology == '045nm':
             self._Metal1DefaultSpace = 220
             self._Metal1MinSpacetoGate = 0
+            self._Metal1DefaultSpace = 230
             self._Metal1MinWidth = 70
             self._Metal1MinSpace = 70
             self._Metal1MinSpace2 = 80
@@ -667,6 +667,7 @@ class DRCMETAL1:
             self._Metal1MinSpace = 120
             self._Metal1MinSpacetoGate = 0
             self._Metal1MinSpace2 = 170
+            #self._Metal1MinSpace21 = 160 ## There is no _Metal1MinSpace21 Rule in 90nm
             self._Metal1MinSpace3 = 500
             self._Metal1MinSpace4 = 1500
 
@@ -813,6 +814,7 @@ class DRCNW:
         if DesignParameters._Technology=='045nm':
             self._NwMinWidth=340
             self._NwMinSpace=340
+            self._NwMinSpace2=800
             self._NwMinEnclosurePactive=80
             self._NwMinEnclosurePactive2 = 80
             self._NwMinEnclosureNactive=80
@@ -822,6 +824,7 @@ class DRCNW:
         if DesignParameters._Technology == '028nm':
             self._NwMinWidth=260 #A
             self._NwMinSpace=260 #C
+            self._NwMinSpace2=350 #C
             self._NwMinEnclosurePactive=56 #H
             self._NwMinEnclosurePactive2 = 112  # GR260a
             self._NwMinEnclosureNactive=56
@@ -829,12 +832,14 @@ class DRCNW:
             self._NwMinSpacetoRX=60
             self._NwMinSpacetoNactive = 60
             self._NwMinSpacetoPactive = 60
+            self.kf = 60
             self._NwMinSpacetoSLVT = 170  # ADDED! (by JiCho)
             self._NwMinArea = 500000
 
         if DesignParameters._Technology=='065nm':
             self._NwMinWidth=470
             self._NwMinSpace=470
+            self._NwMinSpace2=1000
             self._NwMinEnclosurePactive=160
             self._NwMinEnclosurePactive2 = 160
             self._NwMinEnclosureNactive = 160
@@ -845,6 +850,7 @@ class DRCNW:
         if DesignParameters._Technology=='090nm':
             self._NwMinWidth=620
             self._NwMinSpace=620
+            self._NwMinSpace2=1000
             self._NwMinEnclosurePactive=220
             self._NwMinEnclosurePactive2 = 220
             self._NwMinSpacetoNactive=220
@@ -1384,7 +1390,7 @@ class DRCMETALx:
             self._MetalxMinSpace22=150
             self._MetalxMinSpace23=210
             self._MetalxMinSpace3=500
-
+            self._MetalxMinSpace5=100
             self._MetalxMinSpaceAtCorner=100
 
             self._MetalxMinEnclosureCO=0
@@ -1446,9 +1452,11 @@ class DRCMETALx:
             self._MetalxMinWidth=140
             self._MetalxMinSpace=140
             self._MetalxMinSpace2=190
+            #self._MetalxMinSpace21 = 190  ## There is no _MetalxMinSpace21 Rule in 90nm. Added for compatibility (jicho)
             self._MetalxMinSpace3=500
             self._MetalxMinSpace4=1500
-
+            self._MetalxMinSpace5=1900
+            self._MetalxMinSpace6=3500
             self._MetalxMinSpaceAtCorner=None
 
             self._MetalxMinEnclosureCO=5

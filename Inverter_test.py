@@ -395,12 +395,12 @@ class _Inverter(StickDiagram._StickDiagram) :
 
         self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[0, _VDD2VSSHeight]]
         self._DesignParameter['_VSSpin']['_XYCoordinates'] = [[0,0]]
-        self._DesignParameter['_Inputpin']['_XYCoordinates'] = [[round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][0] + \
-                    self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][0]) // 2), round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][1] + \
-                    self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][1]) // 2)]]
-        self._DesignParameter['_Outputpin']['_XYCoordinates'] = [[round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][0] + \
-                    self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][0]) // 2), round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][1] + \
-                    self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][1]) // 2)]]
+        self._DesignParameter['_Inputpin']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][0] + \
+                    self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][0]) / 2), MinSnapSpacing), self.CeilMinSnapSpacing(round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][1] + \
+                    self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][1]) / 2), MinSnapSpacing)]]
+        self._DesignParameter['_Outputpin']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][0] + \
+                    self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][0]) / 2), MinSnapSpacing), self.CeilMinSnapSpacing(round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][1] + \
+                    self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][1]) / 2), MinSnapSpacing)]]
 
 
 
@@ -448,7 +448,7 @@ class _Inverter(StickDiagram._StickDiagram) :
 
 if __name__ == '__main__':
 
-    for i in range(1, 2) :
+    for i in range(1, 31) :
         _Finger = random.randint(5,16)
         _ChannelWidth = random.randrange(200,400,3)
         _ChannelLength = 30
@@ -476,7 +476,7 @@ if __name__ == '__main__':
         _fileName = cellname + '.gds'
 
         InputParams = dict(
-            _Finger=_Finger,
+        _Finger=_Finger,
         _ChannelWidth = _ChannelWidth,
         _ChannelLength = _ChannelLength,
         _NPRatio = _NPRatio,
@@ -504,33 +504,33 @@ if __name__ == '__main__':
         testStreamFile.close()
 
         print('#############################      Sending to FTP Server...      #############################')
-        My = MyInfo.USER(DesignParameters._Technology)
-        Checker = DRCchecker.DRCchecker(
-            username=My.ID,
-            password=My.PW,
-            WorkDir=My.Dir_Work,
-            DRCrunDir=My.Dir_DRCrun,
-            libname=libname,
-            cellname=cellname,
-            GDSDir=My.Dir_GDS
-        )
-        Checker.Upload2FTP()
-        Checker.StreamIn(tech=DesignParameters._Technology)
+        # My = MyInfo.USER(DesignParameters._Technology)
+        # Checker = DRCchecker.DRCchecker(
+        #     username=My.ID,
+        #     password=My.PW,
+        #     WorkDir=My.Dir_Work,
+        #     DRCrunDir=My.Dir_DRCrun,
+        #     libname=libname,
+        #     cellname=cellname,
+        #     GDSDir=My.Dir_GDS
+        # )
+        # Checker.Upload2FTP()
+        # Checker.StreamIn(tech=DesignParameters._Technology)
 
-    #     import ftplib
-    #
-    #     ftp = ftplib.FTP('141.223.22.156')
-    #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    #     myfile = open('Inverter.gds', 'rb')
-    #     ftp.storbinary('STOR Inverter.gds', myfile)
-    #     myfile.close()
-    #
-    #     import DRCchecker
-    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Inverter','Inverter',None)
-    #     a.DRCchecker()
-    #
-    # print ("DRC Clean!!!")
+        import ftplib
+
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        myfile = open('Inverter.gds', 'rb')
+        ftp.storbinary('STOR Inverter.gds', myfile)
+        myfile.close()
+
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Inverter','Inverter',None)
+        a.DRCchecker()
+
+    print ("DRC Clean!!!")
 
 
     #     import ftplib

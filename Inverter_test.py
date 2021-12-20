@@ -443,7 +443,7 @@ class _Inverter(StickDiagram._StickDiagram) :
             self._DesignParameter['_ViaMet22Met3OnSupply']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaVDDMet22Met3)
             self._DesignParameter['_ViaMet22Met3OnSupply']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates'] + self._DesignParameter['PbodyContact']['_XYCoordinates']
 
-            if _Finger < 5 :
+            if _Finger < 3 :
                 raise NotImplementedError
 
 if __name__ == '__main__':

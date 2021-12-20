@@ -289,7 +289,7 @@ class _SlicerWithSRLatchX4(StickDiagram._StickDiagram):
 
             self._DesignParameter['_Met6VDDRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=400)
             self._DesignParameter['_Met6VDDRouting']['_Width'] = self.CeilMinSnapSpacing((self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] +
-                                                                      self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 - (Guardring_right + _SLSlicerGuardringWidth / 2) - _DRCObj._MetalxMinSpace11 / 2), 2 * MinSnapSpacing)
+                                                                      self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 - (Guardring_right + _SLSlicerGuardringWidth / 2) - _DRCObj._MetalxMinSpace11) / 2, 2 * MinSnapSpacing)
 
             if self._DesignParameter['_Met6VDDRouting']['_Width'] > _DRCObj._MetalxMaxWidth:
                 self._DesignParameter['_Met6VDDRouting']['_Width'] = _DRCObj._MetalxMaxWidth
@@ -610,7 +610,7 @@ class _SlicerWithSRLatchX4(StickDiagram._StickDiagram):
                                                                                     [[self.CeilMinSnapSpacing(Guardring_right - self._DesignParameter['_AdditionalMet2forVSSinSL']['_Width'] / 2 + _SLSlicerGuardringWidth / 2, MinSnapSpacing),
                                                                                       self.CeilMinSnapSpacing(self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1], MinSnapSpacing)], \
                                                                                      [self.CeilMinSnapSpacing(Guardring_right - self._DesignParameter['_AdditionalMet2forVSSinSL']['_Width'] / 2 + _SLSlicerGuardringWidth / 2, MinSnapSpacing),
-                                                                                      self.CeilMinSnapSpacing(min(self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] - self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2, MinSnapSpacing), self.CeilMinSnapSpacing(self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1]), MinSnapSpacing)]]]
+                                                                                      self.CeilMinSnapSpacing(min(self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] - self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] / 2, self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][-1][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1]), MinSnapSpacing)]]]
 
             self._DesignParameter['_AdditionalLineVDDMet4'] = self._PathElementDeclaration(
                 _Layer=DesignParameters._LayerMapping['METAL4'][0],
@@ -618,13 +618,13 @@ class _SlicerWithSRLatchX4(StickDiagram._StickDiagram):
             self._DesignParameter['_AdditionalLineVDDMet4']['_Width'] = self._DesignParameter['_Met4VDDRouting'][
                 '_Width']
             self._DesignParameter['_AdditionalLineVDDMet4']['_XYCoordinates'] = [
-                [self.CeilMinSnapSpacing(self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][0][0], MinSnapSpacing),
+                [self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][0][0],
                  [self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][0][0][0],
                   self.CeilMinSnapSpacing(self._DesignParameter['_Met5VDDRouting']['_XYCoordinates'][0][0][1] +
                   self._DesignParameter['_Met5VDDRouting']['_Width'] / 2, MinSnapSpacing)]],
                 [self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][1][0],
-                 [self.CeilMinSnapSpacing(self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][1][0][0],
-                  self._DesignParameter['_Met5VDDRouting']['_XYCoordinates'][0][0][1] +
+                 [self._DesignParameter['_Met4VDDRouting']['_XYCoordinates'][1][0][0],
+                  self.CeilMinSnapSpacing(self._DesignParameter['_Met5VDDRouting']['_XYCoordinates'][0][0][1] +
                   self._DesignParameter['_Met5VDDRouting']['_Width'] / 2, MinSnapSpacing)]]]
 
             self._DesignParameter['_AdditionalLineVDDMet6'] = self._PathElementDeclaration(
@@ -1090,7 +1090,7 @@ if __name__ == '__main__':
             _InvPowerLine = None
             #####################Power Line#######################
             _SLSRInvSupplyLine = None
-            _SLSRInvSupplyLineX4 = True
+            _SLSRInvSupplyLineX4 = False
 
             from Private import MyInfo
             import DRCchecker

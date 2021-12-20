@@ -1012,7 +1012,7 @@ if __name__ == '__main__':
             _SRFinger2 = random.randint(1, 16)
             _SRFinger3 = random.randint(1, 16)
             _SRFinger4 = random.randint(1, 16)
-            _RandChannelWidth = random.randrange(350, 580, 10)
+            _RandChannelWidth = random.randrange(200, 400, 1)
             _SRNPRatio = 2
             _SRNMOSChannelWidth1 = _RandChannelWidth
             _SRPMOSChannelWidth1 = _SRNPRatio * _RandChannelWidth
@@ -1022,7 +1022,7 @@ if __name__ == '__main__':
             _SRPMOSChannelWidth3 = _SRNPRatio * _RandChannelWidth
             _SRNMOSChannelWidth4 = _RandChannelWidth
             _SRPMOSChannelWidth4 = _SRNPRatio * _RandChannelWidth
-            _SRChannelLength = 40
+            _SRChannelLength = 30
             _SRVDD2VSSHeightAtOneSide = None
             _SRDummy = True
             _SRNumSupplyCoX = None
@@ -1045,18 +1045,18 @@ if __name__ == '__main__':
             _SLCLKinputPMOSFinger1 = random.randint(1, 16)
             _SLCLKinputPMOSFinger2 = random.randint(1, 16)
             _SLPMOSFinger = random.randint(1, 16)
-            _SLPMOSChannelWidth = random.randrange(350, 1800, 10)
+            _SLPMOSChannelWidth = random.randrange(200, 1050, 1)
             _SLDATAinputNMOSFinger = random.randint(2, 16)
             _SLNMOSFinger = random.randint(1, 16)
             _SLCLKinputNMOSFinger = random.randint(1, 16)
-            _SLNMOSChannelWidth = random.randrange(350, 1800, 10)
-            _SLCLKinputNMOSChannelWidth = random.randrange(350, 1800, 10)
-            _SLChannelLength = 40
+            _SLNMOSChannelWidth = random.randrange(200, 1050, 1)
+            _SLCLKinputNMOSChannelWidth = random.randrange(200, 1050, 1)
+            _SLChannelLength = 30
             _SLDummy = True
             _SLXVT = 'LVT'
-            _SLGuardringWidth = 350
+            _SLGuardringWidth = 200
             _SLGuardring = True
-            _SLSlicerGuardringWidth = 350
+            _SLSlicerGuardringWidth = 200
             _SLSlicerGuardring = None
             _SLNumSupplyCOY = None
             _SLNumSupplyCOX = None
@@ -1071,8 +1071,8 @@ if __name__ == '__main__':
             _NumberofSlicerWithSRLatch = random.randint(1, 20)
             #####################Inverter#######################
             _InvFinger = random.randint(5, 16)
-            _InvChannelWidth = random.randrange(350, 580, 10)
-            _InvChannelLength = 40
+            _InvChannelWidth = random.randrange(200, 400, 1)
+            _InvChannelLength = 30
             _InvNPRatio = 3
             _InvVDD2VSSHeight = None
             _InvDummy = True
@@ -1163,19 +1163,19 @@ if __name__ == '__main__':
 
             import ftplib
 
-        #     ftp = ftplib.FTP('141.223.22.156')
-        #     ftp.login('jicho0927', 'cho89140616!!')
-        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
-        #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
-        #     myfile.close()
-        #
-        #     import DRCchecker
-        #
-        #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
-        #     a.DRCchecker()
-        #
-        # print("DRC Clean!!!")
+            ftp = ftplib.FTP('141.223.22.156')
+            ftp.login('jicho0927', 'cho89140616!!')
+            ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+            myfile = open('SlicerWithSRLatchX4.gds', 'rb')
+            ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
+            myfile.close()
+
+            import DRCchecker
+
+            a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
+            a.DRCchecker()
+
+        print("DRC Clean!!!")
 
         #     import ftplib
         #
@@ -1192,21 +1192,21 @@ if __name__ == '__main__':
         #
         # print ("DRC Clean!!!")
 
-            import ftplib
-
-            ftp = ftplib.FTP('141.223.22.156')
-            ftp.login('jicho0927', 'cho89140616!!')
-            ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
-            myfile = open('SlicerWithSRLatchX4.gds', 'rb')
-            ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
-            myfile.close()
-
-            import DRCchecker
-
-            a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/tsmc40n', '/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
-            a.DRCchecker()
-
-        print("DRC Clean!!!")
+        #     import ftplib
+        #
+        #     ftp = ftplib.FTP('141.223.22.156')
+        #     ftp.login('jicho0927', 'cho89140616!!')
+        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+        #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
+        #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
+        #     myfile.close()
+        #
+        #     import DRCchecker
+        #
+        #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/tsmc40n', '/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
+        #     a.DRCchecker()
+        #
+        # print("DRC Clean!!!")
 
         #     import ftplib
         #

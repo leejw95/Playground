@@ -63,9 +63,11 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
         _PMOSinputs['_XVT'] = _XVT
-
         self._DesignParameter['_PMOSTG'] = self._SrefElementDeclaration(_DesignObj=PMOSWithDummy_iksu._PMOS(_DesignParameter=None, _Name='PMOSIn{}'.format(_Name)))[0]
         self._DesignParameter['_PMOSTG']['_DesignObj']._CalculatePMOSDesignParameter(**_PMOSinputs)
+        a = PMOSWithDummy_iksu._PMOS()
+        print (self._DesignParameter['_PMOSTG']['_DesignObj'])
+        print (a)
 
         _nXVT = self._DesignParameter['_NMOSTG']['_DesignObj']._XVTLayer
         print ('################################     VDD VSS Generation    ##############################################')

@@ -166,6 +166,7 @@ class DRCNP:
             self._NpMinWidth = 180
             self._NpMinSpace = 180
             self._NpMinExtensiononNactive = 130
+            self._NpMinExtensiononNactive2 = 0  # Nactive2 -> for supply rail
             self._NpMinEnclosureOfPo = 150
         if DesignParameters._Technology=='065nm':
             self._NpMinWidth=180
@@ -597,6 +598,7 @@ class DRCMETAL1:
     def __init__(self):
         if DesignParameters._Technology == '045nm':
             self._Metal1DefaultSpace = 220
+            self._Metal1MinSpacetoGate = 0
             self._Metal1MinWidth = 70
             self._Metal1MinSpace = 70
             self._Metal1MinSpace2 = 80
@@ -642,6 +644,7 @@ class DRCMETAL1:
             self._Metal1DefaultSpace = 310
             self._Metal1MinWidth = 90
             self._Metal1MinSpace = 90
+            self._Metal1MinSpacetoGate = 0
             self._Metal1MinSpace2 = 110
             self._Metal1MinSpace21 = 160
             self._Metal1MinSpace3 = 500
@@ -662,7 +665,7 @@ class DRCMETAL1:
             self._Metal1DefaultSpace = 380
             self._Metal1MinWidth = 120
             self._Metal1MinSpace = 120
-
+            self._Metal1MinSpacetoGate = 0
             self._Metal1MinSpace2 = 170
             self._Metal1MinSpace3 = 500
             self._Metal1MinSpace4 = 1500
@@ -812,16 +815,20 @@ class DRCNW:
             self._NwMinSpace=340
             self._NwMinEnclosurePactive=80
             self._NwMinEnclosurePactive2 = 80
+            self._NwMinEnclosureNactive=80
             self._NwMinSpacetoNactive=80
+            self._NwMinSpacetoPactive=80
 
         if DesignParameters._Technology == '028nm':
             self._NwMinWidth=260 #A
             self._NwMinSpace=260 #C
             self._NwMinEnclosurePactive=56 #H
             self._NwMinEnclosurePactive2 = 112  # GR260a
+            self._NwMinEnclosureNactive=56
             self._NwMinSpacetoNactive=56 #
             self._NwMinSpacetoRX=60
             self._NwMinSpacetoNactive = 60
+            self._NwMinSpacetoPactive = 60
             self._NwMinSpacetoSLVT = 170  # ADDED! (by JiCho)
             self._NwMinArea = 500000
 
@@ -832,6 +839,7 @@ class DRCNW:
             self._NwMinEnclosurePactive2 = 160
             self._NwMinEnclosureNactive = 160
             self._NwMinSpacetoNactive=160
+            self._NwMinSpacetoPactive=160 # Nwell space to PP added by junung
             self._NwMinArea = 640000
 
         if DesignParameters._Technology=='090nm':

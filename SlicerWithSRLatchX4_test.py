@@ -1472,221 +1472,221 @@ class _SlicerWithSRLatchX4(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     #####################SRLatch#######################
-    for _tries in range(1, 101):
-        _SRFinger1 = random.randint(1, 16)
-        _SRFinger2 = random.randint(1, 16)
-        _SRFinger3 = random.randint(1, 16)
-        _SRFinger4 = random.randint(1, 16)
-        _RandChannelWidth = random.randrange(350, 580, 10)
-        _SRNPRatio = 2
-        _SRNMOSChannelWidth1 = _RandChannelWidth
-        _SRPMOSChannelWidth1 = _SRNPRatio * _RandChannelWidth
-        _SRNMOSChannelWidth2 = _RandChannelWidth
-        _SRPMOSChannelWidth2 = _SRNPRatio * _RandChannelWidth
-        _SRNMOSChannelWidth3 = _RandChannelWidth
-        _SRPMOSChannelWidth3 = _SRNPRatio * _RandChannelWidth
-        _SRNMOSChannelWidth4 = _RandChannelWidth
-        _SRPMOSChannelWidth4 = _SRNPRatio * _RandChannelWidth
-        _SRChannelLength = 40
-        _SRVDD2VSSHeightAtOneSide = None
-        _SRDummy = True
-        _SRNumSupplyCoX = None
-        _SRNumSupplyCoY = 2
-        _SRSupplyMet1XWidth = None
-        _SRSupplyMet1YWidth = None
-        _SRNumViaPoly2Met1CoX = None
-        _SRNumViaPoly2Met1CoY = None
-        _SRNumViaPMOSMet12Met2CoX = None
-        _SRNumViaPMOSMet12Met2CoY = None
-        _SRNumViaNMOSMet12Met2CoX = None
-        _SRNumViaNMOSMet12Met2CoY = None
-        _SRNumViaPMOSMet22Met3CoX = None
-        _SRNumViaPMOSMet22Met3CoY = None
-        _SRNumViaNMOSMet22Met3CoX = None
-        _SRNumViaNMOSMet22Met3CoY = None
-        _SRXVT = 'LVT'
-        _SRPowerLine = None
-        #####################Slicer#######################
-        _SLCLKinputPMOSFinger1 = random.randint(1, 16)
-        _SLCLKinputPMOSFinger2 = random.randint(1, 16)
-        _SLPMOSFinger = random.randint(1, 16)
-        _SLPMOSChannelWidth = random.randrange(350, 1750, 10)
-        _SLDATAinputNMOSFinger = random.randint(2, 16)
-        _SLNMOSFinger = random.randint(1, 16)
-        _SLCLKinputNMOSFinger = random.randint(1, 16)
-        _SLNMOSChannelWidth = random.randrange(350, 1750, 10)
-        _SLCLKinputNMOSChannelWidth = random.randrange(350, 1750, 10)
-        _SLChannelLength = 40
-        _SLDummy = True
-        _SLXVT = 'LVT'
-        _SLGuardringWidth = 350
-        _SLGuardring = True
-        _SLSlicerGuardringWidth = 350
-        _SLSlicerGuardring = None
-        _SLNumSupplyCOY = None
-        _SLNumSupplyCOX = None
-        _SLSupplyMet1XWidth = None
-        _SLSupplyMet1YWidth = None
-        _SLVDD2VSSHeight = None
-        _SLNumVIAPoly2Met1COX = None
-        _SLNumVIAPoly2Met1COY = None
-        _SLNumVIAMet12COX = None
-        _SLNumVIAMet12COY = None
-        _SLPowerLine = None
-        _N = random.randint(1, 20)
-        #####################Inverter#######################
-        _InvFinger = random.randint(5, 16)
-        _InvChannelWidth = random.randrange(350, 580, 10)
-        _InvChannelLength = 40
-        _InvNPRatio = 3
-        _InvVDD2VSSHeight = None
-        _InvDummy = True
-        _InvNumSupplyCoX = None
-        _InvNumSupplyCoY = None
-        _InvSupplyMet1XWidth = None
-        _InvSupplyMet1YWidth = None
-        _InvNumViaPoly2Met1CoX = None
-        _InvNumViaPoly2Met1CoY = None
-        _InvNumViaPMOSMet12Met2CoX = None
-        _InvNumViaPMOSMet12Met2CoY = None
-        _InvNumViaNMOSMet12Met2CoX = None
-        _InvNumViaNMOSMet12Met2CoY = None
-        _InvXVT = 'LVT'
-        _InvPowerLine = None
-        #####################Power Line#######################
-        _SLSRInvSupplyLine = None
-        _SLSRInvSupplyLineX4 = False
+        for _tries in range(1, 31):
+            _SRFinger1 = random.randint(1, 16)
+            _SRFinger2 = random.randint(1, 16)
+            _SRFinger3 = random.randint(1, 16)
+            _SRFinger4 = random.randint(1, 16)
+            _RandChannelWidth = random.randrange(200, 400 , 3)
+            _SRNPRatio = 2
+            _SRNMOSChannelWidth1 = _RandChannelWidth
+            _SRPMOSChannelWidth1 = _SRNPRatio * _RandChannelWidth
+            _SRNMOSChannelWidth2 = _RandChannelWidth
+            _SRPMOSChannelWidth2 = _SRNPRatio * _RandChannelWidth
+            _SRNMOSChannelWidth3 = _RandChannelWidth
+            _SRPMOSChannelWidth3 = _SRNPRatio * _RandChannelWidth
+            _SRNMOSChannelWidth4 = _RandChannelWidth
+            _SRPMOSChannelWidth4 = _SRNPRatio * _RandChannelWidth
+            _SRChannelLength = 30
+            _SRVDD2VSSHeightAtOneSide = None
+            _SRDummy = True
+            _SRNumSupplyCoX = None
+            _SRNumSupplyCoY = 2
+            _SRSupplyMet1XWidth = None
+            _SRSupplyMet1YWidth = None
+            _SRNumViaPoly2Met1CoX = None
+            _SRNumViaPoly2Met1CoY = None
+            _SRNumViaPMOSMet12Met2CoX = None
+            _SRNumViaPMOSMet12Met2CoY = None
+            _SRNumViaNMOSMet12Met2CoX = None
+            _SRNumViaNMOSMet12Met2CoY = None
+            _SRNumViaPMOSMet22Met3CoX = None
+            _SRNumViaPMOSMet22Met3CoY = None
+            _SRNumViaNMOSMet22Met3CoX = None
+            _SRNumViaNMOSMet22Met3CoY = None
+            _SRXVT = 'LVT'
+            _SRPowerLine = None
+            #####################Slicer#######################
+            _SLCLKinputPMOSFinger1 = random.randint(1, 16)
+            _SLCLKinputPMOSFinger2 = random.randint(1, 16)
+            _SLPMOSFinger = random.randint(1, 16)
+            _SLPMOSChannelWidth = random.randrange(200, 1050, 3)
+            _SLDATAinputNMOSFinger = random.randint(2, 16)
+            _SLNMOSFinger = random.randint(1, 16)
+            _SLCLKinputNMOSFinger = random.randint(1, 16)
+            _SLNMOSChannelWidth = random.randrange(200, 1050, 3)
+            _SLCLKinputNMOSChannelWidth = random.randrange(200, 1050, 3)
+            _SLChannelLength = 30
+            _SLDummy = True
+            _SLXVT = 'LVT'
+            _SLGuardringWidth = 200
+            _SLGuardring = True
+            _SLSlicerGuardringWidth = 200
+            _SLSlicerGuardring = None
+            _SLNumSupplyCOY = None
+            _SLNumSupplyCOX = None
+            _SLSupplyMet1XWidth = None
+            _SLSupplyMet1YWidth = None
+            _SLVDD2VSSHeight = None
+            _SLNumVIAPoly2Met1COX = None
+            _SLNumVIAPoly2Met1COY = None
+            _SLNumVIAMet12COX = None
+            _SLNumVIAMet12COY = None
+            _SLPowerLine = None
+            _N = random.randint(1, 20)
+            #####################Inverter#######################
+            _InvFinger = random.randint(5, 16)
+            _InvChannelWidth = random.randrange(200, 400, 3)
+            _InvChannelLength = 30
+            _InvNPRatio = 3
+            _InvVDD2VSSHeight = None
+            _InvDummy = True
+            _InvNumSupplyCoX = None
+            _InvNumSupplyCoY = None
+            _InvSupplyMet1XWidth = None
+            _InvSupplyMet1YWidth = None
+            _InvNumViaPoly2Met1CoX = None
+            _InvNumViaPoly2Met1CoY = None
+            _InvNumViaPMOSMet12Met2CoX = None
+            _InvNumViaPMOSMet12Met2CoY = None
+            _InvNumViaNMOSMet12Met2CoX = None
+            _InvNumViaNMOSMet12Met2CoY = None
+            _InvXVT = 'LVT'
+            _InvPowerLine = None
+            #####################Power Line#######################
+            _SLSRInvSupplyLine = None
+            _SLSRInvSupplyLineX4 = False
 
-        from Private import MyInfo
-        import DRCchecker
+            from Private import MyInfo
+            import DRCchecker
 
-        libname = 'SlicerWithSRLatchX4'
-        cellname = 'SlicerWithSRLatchX4'
-        _fileName = cellname + '.gds'
+            libname = 'SlicerWithSRLatchX4'
+            cellname = 'SlicerWithSRLatchX4'
+            _fileName = cellname + '.gds'
 
-        InputParams = dict(
-            _SRFinger1=_SRFinger1, _SRFinger2=_SRFinger2, _SRFinger3=_SRFinger3, _SRFinger4=_SRFinger4,
-            _SRNMOSChannelWidth1=_SRNMOSChannelWidth1, _SRPMOSChannelWidth1=_SRPMOSChannelWidth1,
-            _SRNMOSChannelWidth2=_SRNMOSChannelWidth2, _SRPMOSChannelWidth2=_SRPMOSChannelWidth2,
-            _SRNMOSChannelWidth3=_SRNMOSChannelWidth3, _SRPMOSChannelWidth3=_SRPMOSChannelWidth3,
-            _SRNMOSChannelWidth4=_SRNMOSChannelWidth4, _SRPMOSChannelWidth4=_SRPMOSChannelWidth4,
-            _SRChannelLength=_SRChannelLength, _SRNPRatio=_SRNPRatio,
-            _SRVDD2VSSHeightAtOneSide=_SRVDD2VSSHeightAtOneSide, _SRDummy=_SRDummy, _SRNumSupplyCoX=_SRNumSupplyCoX,
-            _SRNumSupplyCoY=_SRNumSupplyCoY,
-            _SRSupplyMet1XWidth=_SRSupplyMet1XWidth, _SRSupplyMet1YWidth=_SRSupplyMet1YWidth,
-            _SRNumViaPoly2Met1CoX=_SRNumViaPoly2Met1CoX, \
-            _SRNumViaPoly2Met1CoY=_SRNumViaPoly2Met1CoY, _SRNumViaPMOSMet12Met2CoX=_SRNumViaPMOSMet12Met2CoX,
-            _SRNumViaPMOSMet12Met2CoY=_SRNumViaPMOSMet12Met2CoY,
-            _SRNumViaNMOSMet12Met2CoX=_SRNumViaNMOSMet12Met2CoX, _SRNumViaNMOSMet12Met2CoY=_SRNumViaNMOSMet12Met2CoY,
-            _SRNumViaPMOSMet22Met3CoX=_SRNumViaPMOSMet22Met3CoX, _SRNumViaPMOSMet22Met3CoY=_SRNumViaPMOSMet22Met3CoY,
-            _SRNumViaNMOSMet22Met3CoX=_SRNumViaNMOSMet22Met3CoX, _SRNumViaNMOSMet22Met3CoY=_SRNumViaNMOSMet22Met3CoY,
-            _SRXVT=_SRXVT, _SRPowerLine=_SRPowerLine,
-            _SLCLKinputPMOSFinger1=_SLCLKinputPMOSFinger1, _SLCLKinputPMOSFinger2=_SLCLKinputPMOSFinger2,
-            _SLPMOSFinger=_SLPMOSFinger, _SLPMOSChannelWidth=_SLPMOSChannelWidth,
-            _SLDATAinputNMOSFinger=_SLDATAinputNMOSFinger, _SLNMOSFinger=_SLNMOSFinger,
-            _SLCLKinputNMOSFinger=_SLCLKinputNMOSFinger, _SLNMOSChannelWidth=_SLNMOSChannelWidth,
-            _SLCLKinputNMOSChannelWidth=_SLCLKinputNMOSChannelWidth,
-            _SLChannelLength=_SLChannelLength, _SLDummy=_SLDummy, _SLXVT=_SLXVT, _SLGuardringWidth=_SLGuardringWidth,
-            _SLGuardring=_SLGuardring,
-            _SLSlicerGuardringWidth=_SLSlicerGuardringWidth, _SLSlicerGuardring=_SLSlicerGuardring,
-            _SLNumSupplyCOY=_SLNumSupplyCOY, _SLNumSupplyCOX=_SLNumSupplyCOX, _SLSupplyMet1XWidth=_SLSupplyMet1XWidth,
-            _SLSupplyMet1YWidth=_SLSupplyMet1YWidth, _SLVDD2VSSHeight=_SLVDD2VSSHeight,
-            _SLNumVIAPoly2Met1COX=_SLNumVIAPoly2Met1COX, _SLNumVIAPoly2Met1COY=_SLNumVIAPoly2Met1COY,
-            _SLNumVIAMet12COX=_SLNumVIAMet12COX, _SLNumVIAMet12COY=_SLNumVIAMet12COY, _SLPowerLine=_SLPowerLine, \
-            _InvFinger=_InvFinger, _InvChannelWidth=_InvChannelWidth, _InvChannelLength=_InvChannelLength,
-            _InvNPRatio=_InvNPRatio,
-            _InvVDD2VSSHeight=_InvVDD2VSSHeight, _InvDummy=_InvDummy, _InvNumSupplyCoX=_InvNumSupplyCoX,
-            _InvNumSupplyCoY=_InvNumSupplyCoY, _InvSupplyMet1XWidth=_InvSupplyMet1XWidth,
-            _InvSupplyMet1YWidth=_InvSupplyMet1YWidth, _InvNumViaPoly2Met1CoX=_InvNumViaPoly2Met1CoX, \
-            _InvNumViaPoly2Met1CoY=_InvNumViaPoly2Met1CoY, _InvNumViaPMOSMet12Met2CoX=_InvNumViaPMOSMet12Met2CoX,
-            _InvNumViaPMOSMet12Met2CoY=_InvNumViaPMOSMet12Met2CoY,
-            _InvNumViaNMOSMet12Met2CoX=_InvNumViaNMOSMet12Met2CoX, \
-            _InvNumViaNMOSMet12Met2CoY=_InvNumViaNMOSMet12Met2CoY, _InvXVT=_InvXVT, _InvPowerLine=_InvPowerLine,
-            _SLSRInvSupplyLineX4=_SLSRInvSupplyLineX4, _N=_N
-        )
-        LayoutObj = _SlicerWithSRLatchX4(_DesignParameter=None, _Name=cellname)
-        LayoutObj._CalculateDesignParameter(**InputParams)
-        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
-        testStreamFile = open('./{}'.format(_fileName), 'wb')
-        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
-        tmp.write_binary_gds_stream(testStreamFile)
-        testStreamFile.close()
+            InputParams = dict(
+                _SRFinger1=_SRFinger1, _SRFinger2=_SRFinger2, _SRFinger3=_SRFinger3, _SRFinger4=_SRFinger4,
+                _SRNMOSChannelWidth1=_SRNMOSChannelWidth1, _SRPMOSChannelWidth1=_SRPMOSChannelWidth1,
+                _SRNMOSChannelWidth2=_SRNMOSChannelWidth2, _SRPMOSChannelWidth2=_SRPMOSChannelWidth2,
+                _SRNMOSChannelWidth3=_SRNMOSChannelWidth3, _SRPMOSChannelWidth3=_SRPMOSChannelWidth3,
+                _SRNMOSChannelWidth4=_SRNMOSChannelWidth4, _SRPMOSChannelWidth4=_SRPMOSChannelWidth4,
+                _SRChannelLength=_SRChannelLength, _SRNPRatio=_SRNPRatio,
+                _SRVDD2VSSHeightAtOneSide=_SRVDD2VSSHeightAtOneSide, _SRDummy=_SRDummy, _SRNumSupplyCoX=_SRNumSupplyCoX,
+                _SRNumSupplyCoY=_SRNumSupplyCoY,
+                _SRSupplyMet1XWidth=_SRSupplyMet1XWidth, _SRSupplyMet1YWidth=_SRSupplyMet1YWidth,
+                _SRNumViaPoly2Met1CoX=_SRNumViaPoly2Met1CoX, \
+                _SRNumViaPoly2Met1CoY=_SRNumViaPoly2Met1CoY, _SRNumViaPMOSMet12Met2CoX=_SRNumViaPMOSMet12Met2CoX,
+                _SRNumViaPMOSMet12Met2CoY=_SRNumViaPMOSMet12Met2CoY,
+                _SRNumViaNMOSMet12Met2CoX=_SRNumViaNMOSMet12Met2CoX, _SRNumViaNMOSMet12Met2CoY=_SRNumViaNMOSMet12Met2CoY,
+                _SRNumViaPMOSMet22Met3CoX=_SRNumViaPMOSMet22Met3CoX, _SRNumViaPMOSMet22Met3CoY=_SRNumViaPMOSMet22Met3CoY,
+                _SRNumViaNMOSMet22Met3CoX=_SRNumViaNMOSMet22Met3CoX, _SRNumViaNMOSMet22Met3CoY=_SRNumViaNMOSMet22Met3CoY,
+                _SRXVT=_SRXVT, _SRPowerLine=_SRPowerLine,
+                _SLCLKinputPMOSFinger1=_SLCLKinputPMOSFinger1, _SLCLKinputPMOSFinger2=_SLCLKinputPMOSFinger2,
+                _SLPMOSFinger=_SLPMOSFinger, _SLPMOSChannelWidth=_SLPMOSChannelWidth,
+                _SLDATAinputNMOSFinger=_SLDATAinputNMOSFinger, _SLNMOSFinger=_SLNMOSFinger,
+                _SLCLKinputNMOSFinger=_SLCLKinputNMOSFinger, _SLNMOSChannelWidth=_SLNMOSChannelWidth,
+                _SLCLKinputNMOSChannelWidth=_SLCLKinputNMOSChannelWidth,
+                _SLChannelLength=_SLChannelLength, _SLDummy=_SLDummy, _SLXVT=_SLXVT, _SLGuardringWidth=_SLGuardringWidth,
+                _SLGuardring=_SLGuardring,
+                _SLSlicerGuardringWidth=_SLSlicerGuardringWidth, _SLSlicerGuardring=_SLSlicerGuardring,
+                _SLNumSupplyCOY=_SLNumSupplyCOY, _SLNumSupplyCOX=_SLNumSupplyCOX, _SLSupplyMet1XWidth=_SLSupplyMet1XWidth,
+                _SLSupplyMet1YWidth=_SLSupplyMet1YWidth, _SLVDD2VSSHeight=_SLVDD2VSSHeight,
+                _SLNumVIAPoly2Met1COX=_SLNumVIAPoly2Met1COX, _SLNumVIAPoly2Met1COY=_SLNumVIAPoly2Met1COY,
+                _SLNumVIAMet12COX=_SLNumVIAMet12COX, _SLNumVIAMet12COY=_SLNumVIAMet12COY, _SLPowerLine=_SLPowerLine, \
+                _InvFinger=_InvFinger, _InvChannelWidth=_InvChannelWidth, _InvChannelLength=_InvChannelLength,
+                _InvNPRatio=_InvNPRatio,
+                _InvVDD2VSSHeight=_InvVDD2VSSHeight, _InvDummy=_InvDummy, _InvNumSupplyCoX=_InvNumSupplyCoX,
+                _InvNumSupplyCoY=_InvNumSupplyCoY, _InvSupplyMet1XWidth=_InvSupplyMet1XWidth,
+                _InvSupplyMet1YWidth=_InvSupplyMet1YWidth, _InvNumViaPoly2Met1CoX=_InvNumViaPoly2Met1CoX, \
+                _InvNumViaPoly2Met1CoY=_InvNumViaPoly2Met1CoY, _InvNumViaPMOSMet12Met2CoX=_InvNumViaPMOSMet12Met2CoX,
+                _InvNumViaPMOSMet12Met2CoY=_InvNumViaPMOSMet12Met2CoY,
+                _InvNumViaNMOSMet12Met2CoX=_InvNumViaNMOSMet12Met2CoX, \
+                _InvNumViaNMOSMet12Met2CoY=_InvNumViaNMOSMet12Met2CoY, _InvXVT=_InvXVT, _InvPowerLine=_InvPowerLine,
+                _SLSRInvSupplyLineX4=_SLSRInvSupplyLineX4, _N=_N
+            )
+            LayoutObj = _SlicerWithSRLatchX4(_DesignParameter=None, _Name=cellname)
+            LayoutObj._CalculateDesignParameter(**InputParams)
+            LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+            testStreamFile = open('./{}'.format(_fileName), 'wb')
+            tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+            tmp.write_binary_gds_stream(testStreamFile)
+            testStreamFile.close()
 
-        # print('#############################      Sending to FTP Server...      #############################')
-        # My = MyInfo.USER(DesignParameters._Technology)
-        # Checker = DRCchecker.DRCchecker(
-        #     username=My.ID,
-        #     password=My.PW,
-        #     WorkDir=My.Dir_Work,
-        #     DRCrunDir=My.Dir_DRCrun,
-        #     libname=libname,
-        #     cellname=cellname,
-        #     GDSDir=My.Dir_GDS
-        # )
-        # Checker.Upload2FTP()
-        # Checker.StreamIn(tech=DesignParameters._Technology)
+            # print('#############################      Sending to FTP Server...      #############################')
+            # My = MyInfo.USER(DesignParameters._Technology)
+            # Checker = DRCchecker.DRCchecker(
+            #     username=My.ID,
+            #     password=My.PW,
+            #     WorkDir=My.Dir_Work,
+            #     DRCrunDir=My.Dir_DRCrun,
+            #     libname=libname,
+            #     cellname=cellname,
+            #     GDSDir=My.Dir_GDS
+            # )
+            # Checker.Upload2FTP()
+            # Checker.StreamIn(tech=DesignParameters._Technology)
 
-    #     import ftplib
-    #
-    #     ftp = ftplib.FTP('141.223.22.156')
-    #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
-    #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
-    #     myfile.close()
-    #
-    #     import DRCchecker
-    #
-    #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
-    #     a.DRCchecker()
-    #
-    # print("DRC Clean!!!")
+            import ftplib
 
-    #     import ftplib
-    #
-    #     ftp = ftplib.FTP('141.223.22.156')
-    #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-    #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
-    #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
-    #     myfile.close()
-    #
-    #     import DRCchecker
-    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SlicerWithSRLatchX4','SlicerWithSRLatchX4',None)
-    #     a.DRCchecker()
-    #
-    # print ("DRC Clean!!!")
+            ftp = ftplib.FTP('141.223.22.156')
+            ftp.login('jicho0927', 'cho89140616!!')
+            ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+            myfile = open('SlicerWithSRLatchX4.gds', 'rb')
+            ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
+            myfile.close()
 
-        import ftplib
+            import DRCchecker
 
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
-        myfile = open('SlicerWithSRLatchX4.gds', 'rb')
-        ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
-        myfile.close()
+            a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
+            a.DRCchecker()
 
-        import DRCchecker
+        print("DRC Clean!!!")
 
-        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/tsmc40n', '/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
-        a.DRCchecker()
+        #     import ftplib
+        #
+        #     ftp = ftplib.FTP('141.223.22.156')
+        #     ftp.login('jicho0927', 'cho89140616!!')
+        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+        #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
+        #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
+        #     myfile.close()
+        #
+        #     import DRCchecker
+        #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SlicerWithSRLatchX4','SlicerWithSRLatchX4',None)
+        #     a.DRCchecker()
+        #
+        # print ("DRC Clean!!!")
 
-    print("DRC Clean!!!")
+        #     import ftplib
+        #
+        #     ftp = ftplib.FTP('141.223.22.156')
+        #     ftp.login('jicho0927', 'cho89140616!!')
+        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+        #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
+        #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
+        #     myfile.close()
+        #
+        #     import DRCchecker
+        #
+        #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/tsmc40n', '/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
+        #     a.DRCchecker()
+        #
+        # print("DRC Clean!!!")
 
-    #     import ftplib
-    #
-    #     ftp = ftplib.FTP('141.223.22.156')
-    #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
-    #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
-    #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
-    #     myfile.close()
-    #
-    #     import DRCchecker
-    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','SlicerWithSRLatchX4','SlicerWithSRLatchX4',None)
-    #     a.DRCchecker()
-    #
-    #
-    # print ("DRC Clean!!!")
+        #     import ftplib
+        #
+        #     ftp = ftplib.FTP('141.223.22.156')
+        #     ftp.login('jicho0927', 'cho89140616!!')
+        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
+        #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
+        #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
+        #     myfile.close()
+        #
+        #     import DRCchecker
+        #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','SlicerWithSRLatchX4','SlicerWithSRLatchX4',None)
+        #     a.DRCchecker()
+        #
+        #
+        # print ("DRC Clean!!!")
 
 

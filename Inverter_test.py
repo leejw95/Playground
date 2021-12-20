@@ -448,13 +448,13 @@ class _Inverter(StickDiagram._StickDiagram) :
 
 if __name__ == '__main__':
 
-    for i in range(1, 31) :
+    for i in range(1, 101) :
         _Finger = random.randint(5,16)
-        _ChannelWidth = random.randrange(200,400,3)
-        _ChannelLength = 30
+        _ChannelWidth = random.randrange(700,1200,10)
+        _ChannelLength = 100
         _NPRatio = 3
         _VDD2VSSHeight = None
-        _Dummy = True
+        _Dummy = False
         _NumSupplyCoX = None
         _NumSupplyCoY = None
         _SupplyMet1XWidth = None
@@ -517,20 +517,20 @@ if __name__ == '__main__':
         # Checker.Upload2FTP()
         # Checker.StreamIn(tech=DesignParameters._Technology)
 
-        import ftplib
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        myfile = open('Inverter.gds', 'rb')
-        ftp.storbinary('STOR Inverter.gds', myfile)
-        myfile.close()
-
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Inverter','Inverter',None)
-        a.DRCchecker()
-
-    print ("DRC Clean!!!")
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    #     myfile = open('Inverter.gds', 'rb')
+    #     ftp.storbinary('STOR Inverter.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Inverter','Inverter',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
 
 
     #     import ftplib
@@ -564,18 +564,18 @@ if __name__ == '__main__':
     #
     # print ("DRC Clean!!!")
 
-    #     import ftplib
-    #
-    #     ftp = ftplib.FTP('141.223.22.156')
-    #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
-    #     myfile = open('Inverter.gds', 'rb')
-    #     ftp.storbinary('STOR Inverter.gds', myfile)
-    #     myfile.close()
-    #
-    #     import DRCchecker
-    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','Inverter','Inverter',None)
-    #     a.DRCchecker()
-    #
-    #
-    # print ("DRC Clean!!!")
+        import ftplib
+
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
+        myfile = open('Inverter.gds', 'rb')
+        ftp.storbinary('STOR Inverter.gds', myfile)
+        myfile.close()
+
+        import DRCchecker
+        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc90n','/mnt/sdc/jicho0927/OPUS/tsmc90n/DRC/run','Inverter','Inverter',None)
+        a.DRCchecker()
+
+
+    print ("DRC Clean!!!")

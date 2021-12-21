@@ -853,7 +853,9 @@ class DRCNW:
             self._NwMinSpace2=1000
             self._NwMinEnclosurePactive=220
             self._NwMinEnclosurePactive2 = 220
+            self._NwMinEnclosureNactive=220
             self._NwMinSpacetoNactive=220
+            self._NwMinSpacetoPactive=220
         if DesignParameters._Technology=='130nm':
             self._NwMinWidth=620
             self._NwMinSpace=620
@@ -1982,6 +1984,8 @@ class DRCRPO:
             self._RPOMinExtensionOnPO=220
             self._RPOMinExtensionOnPOLargerThan10um=300
             self._RPOMinExtensionOnPOSmallerThan430nm=300
+
+            self._RHMinExtensionOnPO = 190 # RES.EN.1 , added by junung
         if DesignParameters._Technology=='065nm':
             self._RPOMinWidth=430
             self._RPOMinSpace=430

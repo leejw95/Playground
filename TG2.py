@@ -18,7 +18,7 @@ import ftplib
 
 class _TransmissionGate (StickDiagram._StickDiagram) :
     _ParametersForDesignCalculation = dict(_Finger=None, _ChannelWidth=None, _ChannelLength=None, _NPRatio=None,_VDD2VSSHeight=None, _Dummy = False, _XVT = None, _SupplyMet1YWidth=None, 
-                                            _Gatereverse = False, _Bodycontact = False)
+                                            _Gatereverse = False, _Bodycontact = False, _MOStoSupply = None)
 
     def __init__(self, _DesignParameter = None, _Name = 'TransmissionGate'):
         if _DesignParameter != None:
@@ -34,7 +34,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
     def _CalculateTransmissionGate (self, _Finger = None, _ChannelWidth = None, _ChannelLength = None, _NPRatio = None, _VDD2VSSHeight = None, _Dummy = False,
                             _XVT = None, _Gatereverse = False, _NumSupplyCOX=None, _NumSupplyCOY=None, _SupplyMet1XWidth=None, _SupplyMet1YWidth=None,
-                                    _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _Bodycontact = False) :
+                                    _NumVIAPoly2Met1COX=None, _NumVIAPoly2Met1COY=None, _NumVIAMet12COX=None, _NumVIAMet12COY=None, _Bodycontact = False, _MOStoSupply = None) :
         ## You Should Draw N-WELL Afterwards!!
         print ('#########################################################################################################')
         print ('                              {}  TransmissionGate Calculation Start                                     '.format(self._DesignParameter['_Name']['_Name']))
@@ -42,6 +42,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
         _DRCObj = DRC.DRC()
         _Name = 'TransmissionGate'
+
+        if _MOStoSupply == None :
+            _MOStoSupply = _DRCObj._Metal1DefaultSpace
 
         print ('###############################     MOSFET Generation    ################################################')
         _NMOSinputs = copy.deepcopy(NMOSWithDummy_iksu._NMOS._ParametersForDesignCalculation)
@@ -393,7 +396,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                                     self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] +
                                     (_viaspacing)//4) + \
                                 self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
-                                self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 2 * _DRCObj._Metal1DefaultSpace + \
+                                self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 2 * _MOStoSupply + \
                                 _DRCObj.DRCMETAL1MinSpace(self.getYWidth('_ViaPoly2Met1OnNMOSControlTG','_Met1Layer'),self.getXWidth('_NMOSTG','_Met1Layer'),self.getXWidth('_NMOSTG','_Met1Layer')) + \
                                 _DRCObj._Metal1MinSpacetoGate + _DRCObj._Metal1MinSpacetoGate +\
                                 _DRCObj.DRCMETAL1MinSpace(self.getYWidth('_ViaPoly2Met1OnPMOSControlTG','_Met1Layer'),self.getXWidth('_PMOSTG','_Met1Layer'),self.getXWidth('_PMOSTG','_Met1Layer')) + \
@@ -459,7 +462,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2 +
                                                                             (_viaspacing)//4) +
                             self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                            _DRCObj._Metal1DefaultSpace]]
+                            _MOStoSupply]]
 
 
             #if (_ChannelWidth * _NPRatio <= 700) :
@@ -467,7 +470,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                             self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] //2 +
                                                                                                 (_viaspacing)//4) +
                             self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 +
-                            _DRCObj._Metal1DefaultSpace)]] ## Metalxminspace8
+                            _MOStoSupply)]] ## Metalxminspace8
             
             # else :
             #     self._DesignParameter['_NMOSTG']['_XYCoordinates'] = [[0, self.CeilMinSnapSpacing(self._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] * 0.5, _MinSnapSpacing) +
@@ -914,6 +917,7 @@ if __name__ == '__main__' :
     _NumVIAMet12COX = None
     _NumVIAMet12COY = None
     _Gatereverse = False
+    _MOStoSupply = None
     #_Bodycontact = False
     #print (_NumVIAMet12COY, _NumVIAMet12COX)
     #DesignParameters._Technology = '028nm'
@@ -923,7 +927,7 @@ if __name__ == '__main__' :
     TransmissionGateObj._CalculateTransmissionGate(_Finger=_Finger, _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength, _NPRatio=_NPRatio, _VDD2VSSHeight=_VDD2VSSHeight,
                                    _Dummy=_Dummy, _XVT=_XVT, _NumSupplyCOX=_NumSupplyCOX, _NumSupplyCOY = _NumSupplyCOY, _SupplyMet1XWidth= _SupplyMet1XWidth,
                                    _SupplyMet1YWidth=_SupplyMet1YWidth, _NumVIAPoly2Met1COX=_NumVIAPoly2Met1COX, _NumVIAPoly2Met1COY= _NumVIAPoly2Met1COY,
-                                   _NumVIAMet12COX=_NumVIAMet12COX, _NumVIAMet12COY=_NumVIAMet12COY, _Gatereverse=_Gatereverse, _Bodycontact = True)
+                                   _NumVIAMet12COX=_NumVIAMet12COX, _NumVIAMet12COY=_NumVIAMet12COY, _Gatereverse=_Gatereverse, _Bodycontact = True, _MOStoSupply = _MOStoSupply)
 
 
     TransmissionGateObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=TransmissionGateObj._DesignParameter)

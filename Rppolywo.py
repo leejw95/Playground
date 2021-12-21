@@ -58,9 +58,9 @@ class _RPPOLYWOSegment(StickDiagram._StickDiagram):
 
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth
         self._DesignParameter['_COLayer']['_YWidth'] = _DRCObj._CoMinWidth
-        _NumberOfCOX = int(int(_ResXWidth - 2*_DRCObj._CoMinEnclosureByPO + _DRCObj._CoMinSpace)/(_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
+        _NumberOfCOX = int(int(_ResXWidth - 2*_DRCObj._CoMinEnclosureByPOAtLeastTwoSide + _DRCObj._CoMinSpace)/(_DRCObj._CoMinWidth + _DRCObj._CoMinSpace))
         if (2 < _NumberOfCOX and 2 <=_NumberOfCOY) or (2 <=_NumberOfCOX and 2 <_NumberOfCOY):
-            _NumberOfCOX = int(int(_ResXWidth - 2*_DRCObj._CoMinEnclosureByPO + _DRCObj._CoMinSpace2)/(_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2))
+            _NumberOfCOX = int(int(_ResXWidth - 2*_DRCObj._CoMinEnclosureByPOAtLeastTwoSide + _DRCObj._CoMinSpace2)/(_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2))
 
         ###############################################Check the number of CO ###########################################################################################
         if _NumberOfCOX ==0 :
@@ -74,7 +74,7 @@ class _RPPOLYWOSegment(StickDiagram._StickDiagram):
         tmp=[]
         _LengthBtwCO = _DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOX=_NumberOfCOY,NumOfCOY=_NumberOfCOX )
         self._DesignParameter['_POLayer']['_XWidth']= _ResXWidth 
-        self._DesignParameter['_POLayer']['_YWidth']= _ResYWidth + (_DRCObj._CoMinWidth + (_NumberOfCOY - 1)* _LengthBtwCO+ _DRCObj._CoMinEnclosureByPO + _DRCObj._RPOMinSpace2CO) * 2
+        self._DesignParameter['_POLayer']['_YWidth']= _ResYWidth + (_DRCObj._CoMinWidth + (_NumberOfCOY - 1)* _LengthBtwCO+ _DRCObj._CoMinEnclosureByPOAtLeastTwoSide + _DRCObj._RPOMinSpace2CO) * 2
         self._DesignParameter['_POLayer']['_XYCoordinates'] = [[_XYCoordinateOfTheDesign[0][0], _XYCoordinateOfTheDesign[0][1]]]
 
         ## CO layer coordinate settings
@@ -135,10 +135,17 @@ class _RPPOLYWOSegment(StickDiagram._StickDiagram):
         self._DesignParameter['_PPLayer']['_YWidth']= self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._PpMinEnclosureOfPo
         self._DesignParameter['_PPLayer']['_XYCoordinates'] = self._DesignParameter['_POLayer']['_XYCoordinates']
 
-        print ('#############################     RHO Layer Calculation    ##############################################')
-        self._DesignParameter['_RHLayer']['_XWidth']= self._DesignParameter['_PPLayer']['_XWidth']
-        self._DesignParameter['_RHLayer']['_YWidth']= self._DesignParameter['_PPLayer']['_YWidth']
-        self._DesignParameter['_RHLayer']['_XYCoordinates'] = self._DesignParameter['_POLayer']['_XYCoordinates']
+        if (DesignParameters._Technology != '045nm') :
+            print ('#############################     RHO Layer Calculation    ##############################################')
+            self._DesignParameter['_RHLayer']['_XWidth']= self._DesignParameter['_PPLayer']['_XWidth']
+            self._DesignParameter['_RHLayer']['_YWidth']= self._DesignParameter['_PPLayer']['_YWidth']
+            self._DesignParameter['_RHLayer']['_XYCoordinates'] = self._DesignParameter['_POLayer']['_XYCoordinates']
+
+        else :
+            print ('#############################     RHO Layer Calculation    ##############################################')
+            self._DesignParameter['_RHLayer']['_XWidth']= self._DesignParameter['_POLayer']['_XWidth'] + _DRCObj._RHMinExtensionOnPO * 2
+            self._DesignParameter['_RHLayer']['_YWidth']= self._DesignParameter['_POLayer']['_YWidth'] + _DRCObj._RHMinExtensionOnPO * 2
+            self._DesignParameter['_RHLayer']['_XYCoordinates'] = self._DesignParameter['_POLayer']['_XYCoordinates']
 
 
 if __name__=='__main__':

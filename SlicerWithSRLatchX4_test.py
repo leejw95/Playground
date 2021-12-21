@@ -858,7 +858,7 @@ if __name__ == '__main__':
             _SLNumVIAMet12COX = None
             _SLNumVIAMet12COY = None
             _SLPowerLine = None
-            _NumberofSlicerWithSRLatch = random.randint(1, 20)
+            _NumberofSlicerWithSRLatch = random.randint(1, 16)
             #####################Inverter#######################
             _InvFinger = random.randint(5, 16)
             _InvChannelWidth = random.randrange(200, 400, 1)

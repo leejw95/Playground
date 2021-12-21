@@ -650,105 +650,7 @@ class _SlicerWithSRLatchX4(StickDiagram._StickDiagram):
             _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
             _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
             _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='VSS')
-        # self._DesignParameter['_PinInputP1'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp1')
-        # self._DesignParameter['_PinInputN1'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn1')
-        # self._DesignParameter['_PinInputP2'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp2')
-        # self._DesignParameter['_PinInputN2'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn2')
-        # self._DesignParameter['_PinInputP3'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp3')
-        # self._DesignParameter['_PinInputN3'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn3')
-        # self._DesignParameter['_PinInputP4'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp4')
-        # self._DesignParameter['_PinInputN4'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn4')
-        #
-        # self._DesignParameter['_PinCLK0'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK0')
-        # self._DesignParameter['_PinCLK90'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK90')
-        # self._DesignParameter['_PinCLK180'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK180')
-        # self._DesignParameter['_PinCLK270'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK270')
-        #
-        # self._DesignParameter['_PinCK0'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK0')
-        # self._DesignParameter['_PinCK90'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK90')
-        # self._DesignParameter['_PinCK180'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK180')
-        # self._DesignParameter['_PinCK270'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK270')
-        #
-        # self._DesignParameter['_OUT1pin'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT1')
-        # self._DesignParameter['_OUTb1pin'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb1')
-        # self._DesignParameter['_OUT2pin'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT2')
-        # self._DesignParameter['_OUTb2pin'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb2')
-        # self._DesignParameter['_OUT3pin'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT3')
-        # self._DesignParameter['_OUTb3pin'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb3')
-        # self._DesignParameter['_OUT4pin'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT4')
-        # self._DesignParameter['_OUTb4pin'] = self._TextElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb4')
+
 
         self._DesignParameter['_PinVDD']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVDD']['_XYCoordinates'][0][0],\
                                                                self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVDD']['_XYCoordinates'][0][1]]]
@@ -764,17 +666,17 @@ class _SlicerWithSRLatchX4(StickDiagram._StickDiagram):
 
         for i in range(0, _NumberofSlicerWithSRLatch):
             self._DesignParameter['OUT<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],\
-                                                              _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_OUTpin']['_XYCoordinates'][0][0],
-                                                                            self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_OUTpin']['_XYCoordinates'][0][1]
+                                                              _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_OUTpin']['_XYCoordinates'][0][0],
+                                                                            self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_OUTpin']['_XYCoordinates'][0][1]
                                                                                - i*GuardringHeight]],
                                                               _Mag=0.5, _Angle=0, _TEXT='OUT<{0}>'.format(i))
 
         for i in range(0, _NumberofSlicerWithSRLatch):
-            self._DesignParameter['OUT<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],\
-                                                              _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_OUTbpin']['_XYCoordinates'][0][0],
-                                                                            self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_OUTbpin']['_XYCoordinates'][0][1]
+            self._DesignParameter['OUTb<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],\
+                                                              _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_OUTbpin']['_XYCoordinates'][0][0],
+                                                                            self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_OUTbpin']['_XYCoordinates'][0][1]
                                                                                - i*GuardringHeight]],
-                                                              _Mag=0.5, _Angle=0, _TEXT='OUT<{0}>'.format(i))
+                                                              _Mag=0.5, _Angle=0, _TEXT='OUTb<{0}>'.format(i))
 
         for i in range(0, _NumberofSlicerWithSRLatch):
             self._DesignParameter['INp<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], \

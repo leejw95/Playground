@@ -643,371 +643,161 @@ class _SlicerWithSRLatchX4(StickDiagram._StickDiagram):
                   self._DesignParameter['_Met5VDDRouting']['_Width'] / 2, MinSnapSpacing)]]]
 
         self._DesignParameter['_PinVDD'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
             _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='VDD')
         self._DesignParameter['_PinVSS'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL6PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
             _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='VSS')
-        self._DesignParameter['_PinInputP1'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp1')
-        self._DesignParameter['_PinInputN1'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn1')
-        self._DesignParameter['_PinInputP2'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp2')
-        self._DesignParameter['_PinInputN2'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn2')
-        self._DesignParameter['_PinInputP3'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp3')
-        self._DesignParameter['_PinInputN3'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn3')
-        self._DesignParameter['_PinInputP4'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp4')
-        self._DesignParameter['_PinInputN4'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn4')
+        # self._DesignParameter['_PinInputP1'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp1')
+        # self._DesignParameter['_PinInputN1'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn1')
+        # self._DesignParameter['_PinInputP2'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp2')
+        # self._DesignParameter['_PinInputN2'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn2')
+        # self._DesignParameter['_PinInputP3'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp3')
+        # self._DesignParameter['_PinInputN3'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn3')
+        # self._DesignParameter['_PinInputP4'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INp4')
+        # self._DesignParameter['_PinInputN4'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='INn4')
+        #
+        # self._DesignParameter['_PinCLK0'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK0')
+        # self._DesignParameter['_PinCLK90'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK90')
+        # self._DesignParameter['_PinCLK180'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK180')
+        # self._DesignParameter['_PinCLK270'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK270')
+        #
+        # self._DesignParameter['_PinCK0'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK0')
+        # self._DesignParameter['_PinCK90'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK90')
+        # self._DesignParameter['_PinCK180'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK180')
+        # self._DesignParameter['_PinCK270'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK270')
+        #
+        # self._DesignParameter['_OUT1pin'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT1')
+        # self._DesignParameter['_OUTb1pin'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb1')
+        # self._DesignParameter['_OUT2pin'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT2')
+        # self._DesignParameter['_OUTb2pin'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb2')
+        # self._DesignParameter['_OUT3pin'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT3')
+        # self._DesignParameter['_OUTb3pin'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb3')
+        # self._DesignParameter['_OUT4pin'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT4')
+        # self._DesignParameter['_OUTb4pin'] = self._TextElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
+        #     _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb4')
 
-        self._DesignParameter['_PinCLK0'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK0')
-        self._DesignParameter['_PinCLK90'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK90')
-        self._DesignParameter['_PinCLK180'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK180')
-        self._DesignParameter['_PinCLK270'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CLK270')
+        self._DesignParameter['_PinVDD']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVDD']['_XYCoordinates'][0][0],\
+                                                               self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVDD']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_PinVSS']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVSS']['_XYCoordinates'][0][0],\
+                                                               self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVSS']['_XYCoordinates'][0][1]]]
 
-        self._DesignParameter['_PinCK0'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK0')
-        self._DesignParameter['_PinCK90'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK90')
-        self._DesignParameter['_PinCK180'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK180')
-        self._DesignParameter['_PinCK270'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL5PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='CK270')
+        for i in range(0, _NumberofSlicerWithSRLatch):
+            self._DesignParameter['CK<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],\
+                                                           _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_Inputpin']['_XYCoordinates'][0][0],
+                                                                            self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_Inputpin']['_XYCoordinates'][0][1]
+                                                                            - i*GuardringHeight]],
+                                                           _Mag=0.5, _Angle=0, _TEXT='CLK<{0}>'.format(i))
 
-        self._DesignParameter['_OUT1pin'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT1')
-        self._DesignParameter['_OUTb1pin'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb1')
-        self._DesignParameter['_OUT2pin'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT2')
-        self._DesignParameter['_OUTb2pin'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb2')
-        self._DesignParameter['_OUT3pin'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT3')
-        self._DesignParameter['_OUTb3pin'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb3')
-        self._DesignParameter['_OUT4pin'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUT4')
-        self._DesignParameter['_OUTb4pin'] = self._TextElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],
-            _XYCoordinates=[[0, 0]], _Mag=0.1, _Angle=0, _TEXT='OUTb4')
+        for i in range(0, _NumberofSlicerWithSRLatch):
+            self._DesignParameter['OUT<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],\
+                                                              _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_OUTpin']['_XYCoordinates'][0][0],
+                                                                            self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_OUTpin']['_XYCoordinates'][0][1]
+                                                                               - i*GuardringHeight]],
+                                                              _Mag=0.5, _Angle=0, _TEXT='OUT<{0}>'.format(i))
 
-        #self._DesignParameter['_PinVDD']['_XYCoordinates'] = [[self._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Met6VDDRouting']['_XYCoordinates'][0][0][1]]]
-        #self._DesignParameter['_PinVSS']['_XYCoordinates'] = [[self._DesignParameter['_Met6VSSRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['_Met6VSSRouting']['_XYCoordinates'][0][0][1]]]
-        #self._DesignParameter['_PinInputP1']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][0],
-        #                                                           self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1]]]
-        # self._DesignParameter['_PinInputN1']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][
-        #                                                                0],
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][
-        #                                                                1] +
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_XYCoordinates'][0][1]]]
-        # self._DesignParameter['_PinInputP2']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][
-        #                                                                0],
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][
-        #                                                                1] +
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_XYCoordinates'][0][1] - GuardringHeight]]
-        # self._DesignParameter['_PinInputN2']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][
-        #                                                                0],
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][
-        #                                                                1] +
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_XYCoordinates'][0][1] - GuardringHeight]]
-        # self._DesignParameter['_PinInputP3']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][
-        #                                                                0],
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][
-        #                                                                1] +
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_XYCoordinates'][0][1] - 2 * GuardringHeight]]
-        # self._DesignParameter['_PinInputN3']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][
-        #                                                                0],
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][
-        #                                                                1] +
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_XYCoordinates'][0][1] - 2 * GuardringHeight]]
-        # self._DesignParameter['_PinInputP4']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][
-        #                                                                0],
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][
-        #                                                                1] +
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_XYCoordinates'][0][1] - 3 * GuardringHeight]]
-        # self._DesignParameter['_PinInputN4']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][
-        #                                                                0],
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_DesignObj']._DesignParameter[
-        #                                                                '_VIANMOSPoly2Met1NMOS2']['_XYCoordinates'][0][
-        #                                                                1] +
-        #                                                            self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                                '_DesignObj']._DesignParameter['_Slicer'][
-        #                                                                '_DesignObj']._DesignParameter['_NMOSSET'][
-        #                                                                '_XYCoordinates'][0][1] - 3 * GuardringHeight]]
-        #
-        # self._DesignParameter['_OUT1pin']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_XYCoordinates'][0][0] +
-        #                                                         self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_DesignObj']._DesignParameter[
-        #                                                             '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][
-        #                                                             0], self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_XYCoordinates'][0][1] +
-        #                                                         self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_DesignObj']._DesignParameter[
-        #                                                             '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][
-        #                                                             1]]]
-        # self._DesignParameter['_OUTb1pin']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_XYCoordinates'][0][0] +
-        #                                                          self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_DesignObj']._DesignParameter[
-        #                                                              '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][
-        #                                                              0], self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_XYCoordinates'][0][1] +
-        #                                                          self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_DesignObj']._DesignParameter[
-        #                                                              '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][
-        #                                                              1]]]
-        # self._DesignParameter['_OUT2pin']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_XYCoordinates'][0][0] +
-        #                                                         self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_DesignObj']._DesignParameter[
-        #                                                             '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][
-        #                                                             0], self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_XYCoordinates'][0][1] +
-        #                                                         self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_DesignObj']._DesignParameter[
-        #                                                             '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][
-        #                                                             1] - GuardringHeight]]
-        # self._DesignParameter['_OUTb2pin']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_XYCoordinates'][0][0] +
-        #                                                          self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_DesignObj']._DesignParameter[
-        #                                                              '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][
-        #                                                              0], self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_XYCoordinates'][0][1] +
-        #                                                          self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_DesignObj']._DesignParameter[
-        #                                                              '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][
-        #                                                              1] - GuardringHeight]]
-        # self._DesignParameter['_OUT3pin']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_XYCoordinates'][0][0] +
-        #                                                         self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_DesignObj']._DesignParameter[
-        #                                                             '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][
-        #                                                             0], self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_XYCoordinates'][0][1] +
-        #                                                         self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_DesignObj']._DesignParameter[
-        #                                                             '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][
-        #                                                             1] - 2 * GuardringHeight]]
-        # self._DesignParameter['_OUTb3pin']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_XYCoordinates'][0][0] +
-        #                                                          self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_DesignObj']._DesignParameter[
-        #                                                              '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][
-        #                                                              0], self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_XYCoordinates'][0][1] +
-        #                                                          self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_DesignObj']._DesignParameter[
-        #                                                              '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][
-        #                                                              1] - 2 * GuardringHeight]]
-        # self._DesignParameter['_OUT4pin']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_XYCoordinates'][0][0] +
-        #                                                         self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_DesignObj']._DesignParameter[
-        #                                                             '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][
-        #                                                             0], self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_XYCoordinates'][0][1] +
-        #                                                         self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                             '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                             '_DesignObj']._DesignParameter[
-        #                                                             '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][0][
-        #                                                             1] - 3 * GuardringHeight]]
-        # self._DesignParameter['_OUTb4pin']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_XYCoordinates'][0][0] +
-        #                                                          self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_DesignObj']._DesignParameter[
-        #                                                              '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][
-        #                                                              0], self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_XYCoordinates'][0][1] +
-        #                                                          self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                              '_DesignObj']._DesignParameter['_SRLatch'][
-        #                                                              '_DesignObj']._DesignParameter[
-        #                                                              '_AdditionalMet12Met2OnMOS4']['_XYCoordinates'][1][
-        #                                                              1] - 3 * GuardringHeight]]
-        #
-        #
-        # self._DesignParameter['_PinCK0']['_XYCoordinates'] = [[self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                            '_XYCoordinates'][0][0] +
-        #                                                        self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                            '_DesignObj']._DesignParameter[
-        #                                                            '_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][0],
-        #                                                        self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                            '_XYCoordinates'][0][1] +
-        #                                                        self._DesignParameter['_SlicerWithSRLatchX4'][
-        #                                                            '_DesignObj']._DesignParameter[
-        #                                                            '_ViaMet42Met5forCLKInput']['_XYCoordinates'][0][1]]]
-        #
-        #
+        for i in range(0, _NumberofSlicerWithSRLatch):
+            self._DesignParameter['OUT<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],\
+                                                              _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_OUTbpin']['_XYCoordinates'][0][0],
+                                                                            self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_OUTbpin']['_XYCoordinates'][0][1]
+                                                                               - i*GuardringHeight]],
+                                                              _Mag=0.5, _Angle=0, _TEXT='OUT<{0}>'.format(i))
+
+        for i in range(0, _NumberofSlicerWithSRLatch):
+            self._DesignParameter['INp<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], \
+                _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinInputP']['_XYCoordinates'][0][0],
+                                 self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinInputP']['_XYCoordinates'][0][1] - i * GuardringHeight]],
+                _Mag=0.5, _Angle=0, _TEXT='INp<{0}>'.format(i))
+
+            for i in range(0, _NumberofSlicerWithSRLatch):
+                self._DesignParameter['INn<{0}>pin'.format(i)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], \
+                    _XYCoordinates=[[self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinInputN']['_XYCoordinates'][0][0],
+                                     self._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinInputN']['_XYCoordinates'][0][1] - i * GuardringHeight]],
+                    _Mag=0.5, _Angle=0, _TEXT='INn<{0}>'.format(i))
+
+
+
+
 
 
 
 
 if __name__ == '__main__':
     #####################SRLatch#######################
-        for _tries in range(1, 101):
+        for _tries in range(1, 2):
             _SRFinger1 = random.randint(1, 16)
             _SRFinger2 = random.randint(1, 16)
             _SRFinger3 = random.randint(1, 16)
@@ -1161,21 +951,21 @@ if __name__ == '__main__':
             Checker.Upload2FTP()
             Checker.StreamIn(tech=DesignParameters._Technology)
 
-            import ftplib
-
-            ftp = ftplib.FTP('141.223.22.156')
-            ftp.login('jicho0927', 'cho89140616!!')
-            ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-            myfile = open('SlicerWithSRLatchX4.gds', 'rb')
-            ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
-            myfile.close()
-
-            import DRCchecker
-
-            a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
-            a.DRCchecker()
-
-        print("DRC Clean!!!")
+        #     import ftplib
+        #
+        #     ftp = ftplib.FTP('141.223.22.156')
+        #     ftp.login('jicho0927', 'cho89140616!!')
+        #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        #     myfile = open('SlicerWithSRLatchX4.gds', 'rb')
+        #     ftp.storbinary('STOR SlicerWithSRLatchX4.gds', myfile)
+        #     myfile.close()
+        #
+        #     import DRCchecker
+        #
+        #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerWithSRLatchX4', 'SlicerWithSRLatchX4', None)
+        #     a.DRCchecker()
+        #
+        # print("DRC Clean!!!")
 
         #     import ftplib
         #

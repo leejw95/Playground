@@ -2672,21 +2672,21 @@ class _SRLatch(StickDiagram._StickDiagram):
             ############ Via Generations ##############
             _ViaNumVDDX = int(
                 (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer'][
-                     '_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                     '_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (
                         _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
             _ViaNumVDDY = int(
-                (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) // (
+                (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) / (
                             _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
             if _ViaNumVDDX <= 1:
                 _ViaNumVDDX = 1
                 _ViaNumVDDY = int(
-                    (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth)// (
+                    (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth)/ (
                             _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
             if _ViaNumVDDY <= 1:
                 _ViaNumVDDY = 1
                 _ViaNumVDDX = int(
-                    (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
+                    (self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (
                             _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
 

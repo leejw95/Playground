@@ -1394,7 +1394,6 @@ class DRCMETALx:
             self._MetalxMinSpace22=150
             self._MetalxMinSpace23=210
             self._MetalxMinSpace3=500
-            self._MetalxMinSpace4 = 500
             self._MetalxMinSpace5=100
             self._MetalxMinSpaceAtCorner=100
             self._MetalxMinSpace11 = 500
@@ -1469,7 +1468,7 @@ class DRCMETALx:
             self._MetalxMinSpace5=1900
             self._MetalxMinSpace6=3500
             self._MetalxMinSpaceAtCorner=None
-            self._MetalxMinSpace11 = 3500
+            self._MetalxMinSpace11 = 1500
             self._MetalxMinEnclosureCO=5
             self._MetalxMinEnclosureCO2=50
             self._MetalxMinEnclosureVia3=50

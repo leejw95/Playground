@@ -198,8 +198,8 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                         _ResistorBankOrigin[0][1] + _GapbtwOriginY],
                         [self.CeilMinSnapSpacing(_ResistorBankOrigin[0][0] + min(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
                         self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] - 
-                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] // 2 -
-                        _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met6LayerVCM']['_Width'] // 2) + i * _ResistorSpaceX, 2*_MinSnapSpacing),
+                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] / 2 -
+                        _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met6LayerVCM']['_Width'] / 2) + i * _ResistorSpaceX, 2*_MinSnapSpacing),
                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY]])
 
         self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'] = tmp
@@ -1775,29 +1775,34 @@ if __name__ == '__main__' :
     #     if m % 2 == 1 :
     #         m += 1
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
+
+    ## 65nm : 500nm min width (60), 28nm : 200nm min width (30), 40nm : 350nm min width(40),  90nm (100nm channel length) : 700nm min width
+    ## 65nm : pmos maximum width 1.5um
+
+
     _XRBNum = 4
     _YRBNum = 8
     
     _TransmissionGateFinger = 8
-    _TransmissionGateChannelWidth = 500 ##200nm ~ 500nm range
-    _TransmissionGateChannelLength = 60
+    _TransmissionGateChannelWidth = 700 ##200nm ~ 500nm range
+    _TransmissionGateChannelLength = 100
     _TransmissionGateNPRatio = 2  ##Default = 2
     _TransmissionGateDummy = False     #T/F?
-    _TransmissionGateVDD2VSSHeight = 3850 ## FIXED
+    _TransmissionGateVDD2VSSHeight = 5060 ## FIXED
     _TransmissionGateXVT = 'LVT'     #T/F?
 
     _PowerLine = False # T/F?
     _InputLine = False
 
     _ResistorWidth = 2000
-    _ResistorLength = 2000    ## minimum : 400 1234
+    _ResistorLength = 2400    ## minimum : 400 1234
     _ResistorMetXCO = None
     _ResistorMetYCO = 1
 
     _PMOSSubringType = False ## FIXED
     _PMOSSubringXWidth = None ## FIXED
     _PMOSSubringYWidth = None ## FIXED
-    _PMOSSubringWidth = 170 ## def : 170, 170~200
+    _PMOSSubringWidth = 200 ## def : 170, 170~200
 
     _NMOSSubringType = True ## FIXED
     _NMOSSubringXWidth = None ## FIXED
@@ -1845,7 +1850,9 @@ if __name__ == '__main__' :
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('junung', 'chlwnsdnd1!')
     #ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-    ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+    #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+    #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
+    ftp.cwd('/mnt/sdc/junung/OPUS/TSMC90n')
     myfile = open('FullResistorBank.gds', 'rb')
     ftp.storbinary('STOR FullResistorBank.gds', myfile)
     myfile.close()

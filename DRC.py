@@ -1400,6 +1400,9 @@ class DRCMETALx:
             self._MetalxMinEnclosureVia3=30
             self._MetalxMinArea=27000
 
+            self._MetalxMaxWidth = 4500 ## metalx layout rules Mx.W.3 <=4.50 , junung
+
+
         if DesignParameters._Technology=='028nm':
             self._MetalxMinWidth=50 #A
             self._MetalxMinSpace=50 #D
@@ -1450,6 +1453,9 @@ class DRCMETALx:
             self._MetalxMinEnclosureCO2=40
             self._MetalxMinEnclosureVia3=40
             self._MetalxMinArea=52000
+
+            self._MetalxMaxWidth = 12000 ## metalx layout rules Mx.W.3 <=12.00 , junung
+
         if DesignParameters._Technology=='090nm':
             self._MetalxMinWidth=140
             self._MetalxMinSpace=140
@@ -1465,6 +1471,9 @@ class DRCMETALx:
             self._MetalxMinEnclosureCO2=50
             self._MetalxMinEnclosureVia3=50
             self._MetalxMinArea=70000
+
+            self._MetalxMaxWidth = 12000 ## metalx layout rules Mx.W.3 <=12.000 , junung
+
         if DesignParameters._Technology=='130nm':
             self._MetalxMinWidth=200
             self._MetalxMinSpace=210

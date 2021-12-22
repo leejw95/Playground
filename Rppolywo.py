@@ -89,7 +89,7 @@ class _RPPOLYWOSegment(StickDiagram._StickDiagram):
 
                     tmp.append(_xycoordinatetmp)
                     _xycoordinatetmp = [_XYCoordinateOfTheDesign[0][0] - (_NumberOfCOX / 2 - 0.5 )*_LengthBtwCO + j*_LengthBtwCO,
-                                        _XYCoordinateOfTheDesign[0][1] + _ResYWidth // 2  + float(_DRCObj._CoMinWidth)/2 + (_NumberOfCOY - 1) * _LengthBtwCO + \
+                                        _XYCoordinateOfTheDesign[0][1] + _ResYWidth // 2  + float(_DRCObj._CoMinWidth)/2  + \
                                          _DRCObj._RPOMinSpace2CO + i * _LengthBtwCO] 
                 else:
                     _xycoordinatetmp = [_XYCoordinateOfTheDesign[0][0] - (_NumberOfCOX  - 1 )/2*_LengthBtwCO + j*_LengthBtwCO,
@@ -97,7 +97,7 @@ class _RPPOLYWOSegment(StickDiagram._StickDiagram):
 
                     tmp.append(_xycoordinatetmp)
                     _xycoordinatetmp = [_XYCoordinateOfTheDesign[0][0] - (_NumberOfCOX - 1 )/2*_LengthBtwCO + j*_LengthBtwCO,
-                                        _XYCoordinateOfTheDesign[0][1] + _ResYWidth // 2 + float(_DRCObj._CoMinWidth)/2 + (_NumberOfCOY - 1) * _LengthBtwCO + \
+                                        _XYCoordinateOfTheDesign[0][1] + _ResYWidth // 2 + float(_DRCObj._CoMinWidth)/2 + \
                                         _DRCObj._RPOMinSpace2CO + i * _LengthBtwCO]
 
                 tmp.append(_xycoordinatetmp)
@@ -113,14 +113,14 @@ class _RPPOLYWOSegment(StickDiagram._StickDiagram):
         print ('#############################     METAL1 Layer Calculation    ##############################################')
         _LengthBtwCO = _DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOX=_NumberOfCOY,NumOfCOY=_NumberOfCOX )
         self._DesignParameter['_Met1Layer']['_XWidth']= _LengthBtwCO*(_NumberOfCOX - 1) + _DRCObj._CoMinWidth + _DRCObj._Metal1MinEnclosureCO2 * 2
-        self._DesignParameter['_Met1Layer']['_YWidth']= _LengthBtwCO*(_NumberOfCOY - 1) + _DRCObj._CoMinWidth 
-        # tmp1 = _XYCoordinateOfTheDesign[0][0] + _DRCObj._CoMinEnclosureByPO
-        # tmp2 = _XYCoordinateOfTheDesign[0][0] + _DRCObj._CoMinWidth + (_NumberOfCOY - 1)* _LengthBtwCO+ _DRCObj._CoMinEnclosureByPO
-        # tmp3 = _XYCoordinateOfTheDesign[0][0] + _DRCObj._CoMinWidth + (_NumberOfCOY - 1)* _LengthBtwCO+ _DRCObj._CoMinEnclosureByPO  + _DRCObj._RPOMinSpace2CO + _ResXWidth + _DRCObj._RPOMinSpace2CO
-        # tmp4 = _XYCoordinateOfTheDesign[0][0] + _DRCObj._CoMinWidth + (_NumberOfCOY - 1)* _LengthBtwCO+ _DRCObj._CoMinEnclosureByPO  + _DRCObj._RPOMinSpace2CO + _ResXWidth + _DRCObj._RPOMinSpace2CO \
-        #      + float(_DRCObj._CoMinWidth)/2 + (_NumberOfCOY - 1)* _LengthBtwCO+ float(_DRCObj._CoMinWidth)/2
-        self._DesignParameter['_Met1Layer']['_XYCoordinates'] = [[_XYCoordinateOfTheDesign[0][0],_XYCoordinateOfTheDesign[0][1] + self._DesignParameter['_COLayer']['_XYCoordinates'][0][1]],
-                                                                 [_XYCoordinateOfTheDesign[0][0],_XYCoordinateOfTheDesign[0][1] + self._DesignParameter['_COLayer']['_XYCoordinates'][1][1]]]
+        self._DesignParameter['_Met1Layer']['_YWidth']= _LengthBtwCO*(_NumberOfCOY - 1) + _DRCObj._CoMinWidth + _DRCObj._Metal1MinEnclosureCO2 * 2
+        tmp1 = _XYCoordinateOfTheDesign[0][1] - _ResYWidth // 2 - _DRCObj._RPOMinSpace2CO - float(_DRCObj._CoMinWidth)/2
+        tmp2 = _XYCoordinateOfTheDesign[0][1] + _ResYWidth // 2 + float(_DRCObj._CoMinWidth)/2 + _DRCObj._RPOMinSpace2CO
+        tmp3 = _XYCoordinateOfTheDesign[0][1] - _ResYWidth // 2 - _DRCObj._RPOMinSpace2CO - float(_DRCObj._CoMinWidth)/2 - (_NumberOfCOY - 1) * _LengthBtwCO
+        tmp4 = _XYCoordinateOfTheDesign[0][1] + _ResYWidth // 2 + float(_DRCObj._CoMinWidth)/2 + _DRCObj._RPOMinSpace2CO + (_NumberOfCOY - 1) * _LengthBtwCO
+        
+        self._DesignParameter['_Met1Layer']['_XYCoordinates'] = [[_XYCoordinateOfTheDesign[0][0],self.CeilMinSnapSpacing((tmp1 + tmp3)//2, 2*_MinSnapSpacing)],
+                                                                 [_XYCoordinateOfTheDesign[0][0],self.CeilMinSnapSpacing((tmp2 + tmp4)//2, 2*_MinSnapSpacing)]]
         self._DesignParameter['_XYCoordinatePort1Routing']['_XYCoordinates'] = [self._DesignParameter['_Met1Layer']['_XYCoordinates'][0]]
         self._DesignParameter['_XYCoordinatePort2Routing']['_XYCoordinates'] = [self._DesignParameter['_Met1Layer']['_XYCoordinates'][1]]
 

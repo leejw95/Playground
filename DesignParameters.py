@@ -1073,6 +1073,8 @@ elif _Technology == '045nm':
     _LayerMapping.update({'RXPIN': (None, None)})
 elif _Technology == '090nm':
     _LayerMapping.update({'RXPIN': (None, None)})
+elif _Technology == '130nm':
+    _LayerMapping.update({'RXPIN': (None, None)})
 
 print ('#########################   PCPIN Layer Mapping    #################################')
 
@@ -1083,6 +1085,8 @@ elif _Technology == '065nm':
 elif _Technology == '045nm':
     _LayerMapping.update({'PCPIN': (None, None)})
 elif _Technology == '090nm':
+    _LayerMapping.update({'PCPIN': (None, None)})
+elif _Technology == '130nm':
     _LayerMapping.update({'PCPIN': (None, None)})
 
 print ('#########################   PCCRIT Layer Mapping    #################################')
@@ -1095,6 +1099,8 @@ elif _Technology == '045nm':
     _LayerMapping.update({'PCCRIT': (None, None)})
 elif _Technology == '090nm':
     _LayerMapping.update({'PCCRIT': (None, None)})
+elif _Technology == '130nm':
+    _LayerMapping.update({'PCCRIT': (None, None)})
 
 print ('#########################   M1PIN Layer Mapping    #################################')
 
@@ -1105,6 +1111,8 @@ elif _Technology == '065nm':
 elif _Technology == '045nm':
     _LayerMapping.update({'M1PIN': (None, None)})
 elif _Technology == '090nm':
+    _LayerMapping.update({'M1PIN': (None, None)})
+elif _Technology == '130nm':
     _LayerMapping.update({'M1PIN': (None, None)})
 
 print ('#########################   text Layer Mapping    #################################')

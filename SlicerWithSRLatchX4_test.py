@@ -699,11 +699,11 @@ class _SlicerWithSRLatchX4(StickDiagram._StickDiagram):
 if __name__ == '__main__':
     #####################SRLatch#######################
         for _tries in range(1, 2):
-            _SRFinger1 = random.randint(1, 16)
-            _SRFinger2 = random.randint(1, 16)
-            _SRFinger3 = random.randint(1, 16)
-            _SRFinger4 = random.randint(1, 16)
-            _RandChannelWidth = random.randrange(200, 400, 1)
+            _SRFinger1 = 5#random.randint(1, 16)
+            _SRFinger2 = 1#random.randint(1, 16)
+            _SRFinger3 = 2#random.randint(1, 16)
+            _SRFinger4 = 2#random.randint(1, 16)
+            _RandChannelWidth = 200#random.randrange(200, 400, 1)
             _SRNPRatio = 2
             _SRNMOSChannelWidth1 = _RandChannelWidth
             _SRPMOSChannelWidth1 = _SRNPRatio * _RandChannelWidth
@@ -733,15 +733,15 @@ if __name__ == '__main__':
             _SRXVT = 'LVT'
             _SRPowerLine = None
             #####################Slicer#######################
-            _SLCLKinputPMOSFinger1 = random.randint(1, 16)
-            _SLCLKinputPMOSFinger2 = random.randint(1, 16)
-            _SLPMOSFinger = random.randint(1, 16)
-            _SLPMOSChannelWidth = random.randrange(200, 1050, 1)
-            _SLDATAinputNMOSFinger = random.randint(2, 16)
-            _SLNMOSFinger = random.randint(1, 16)
-            _SLCLKinputNMOSFinger = random.randint(1, 16)
-            _SLNMOSChannelWidth = random.randrange(200, 1050, 1)
-            _SLCLKinputNMOSChannelWidth = random.randrange(200, 1050, 1)
+            _SLCLKinputPMOSFinger1 = 6#random.randint(1, 16)
+            _SLCLKinputPMOSFinger2 = 3#random.randint(1, 16)
+            _SLPMOSFinger = 2#random.randint(1, 16)
+            _SLPMOSChannelWidth = 1000#random.randrange(200, 1050, 1)
+            _SLDATAinputNMOSFinger = 12#random.randint(2, 16)
+            _SLNMOSFinger = 2#random.randint(1, 16)
+            _SLCLKinputNMOSFinger = 8#random.randint(1, 16)
+            _SLNMOSChannelWidth = 1000#random.randrange(200, 1050, 1)
+            _SLCLKinputNMOSChannelWidth = 1000#random.randrange(200, 1050, 1)
             _SLChannelLength = 30
             _SLDummy = True
             _SLXVT = 'LVT'
@@ -759,10 +759,10 @@ if __name__ == '__main__':
             _SLNumVIAMet12COX = None
             _SLNumVIAMet12COY = None
             _SLPowerLine = None
-            _NumberofSlicerWithSRLatch = random.randint(1, 16)
+            _NumberofSlicerWithSRLatch = 4#random.randint(1, 16)
             #####################Inverter#######################
-            _InvFinger = random.randint(5, 16)
-            _InvChannelWidth = random.randrange(200, 400, 1)
+            _InvFinger = 6#random.randint(5, 16)
+            _InvChannelWidth = 200#random.randrange(200, 400, 1)
             _InvChannelLength = 30
             _InvNPRatio = 3
             _InvVDD2VSSHeight = None

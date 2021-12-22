@@ -300,6 +300,8 @@ class DRCPOLYGATE:
             return self._PolygateMinExtensionOnOD
         if DesignParameters._Technology == '090nm':
             return self._PolygateMinExtensionOnOD
+        if DesignParameters._Technology == '130nm':
+            return self._PolygateMinExtensionOnOD
 
 
     def DRCPolygateMinSpace(self, _TmpLengthBtwPolyEdge = None):

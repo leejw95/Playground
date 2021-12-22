@@ -57,6 +57,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         _DRCObj = DRC.DRC()
         _Name = 'FullResistorBank'
+        _MinSnapSpacing = _DRCObj._MinSnapSpacing
 
         print ('###############################      ResistorBank Generation     #########################################')
 
@@ -141,16 +142,16 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         del tmp
 
         self._DesignParameter['_Met5LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met5LayerVCM']['_Width'] = (self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1] + 
+        self._DesignParameter['_Met5LayerVCM']['_Width'] = self.CeilMinSnapSpacing((self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1] + 
                                                             self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1])- \
-                                                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'][0][1]
+                                                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'][0][1], 2*_MinSnapSpacing)
         tmp = []
         for i in range (0, _YRBNum) :
             if i % 2 == 0 :
                 tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX ,
-                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'][0][1] + self._DesignParameter['_Met5LayerVCM']['_Width'] // 2 + i * _ResistorSpaceY],
+                        self.CeilMinSnapSpacing(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'][0][1] + self._DesignParameter['_Met5LayerVCM']['_Width'] / 2 + i * _ResistorSpaceY, 2*_MinSnapSpacing)],
                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX  + _XRBNum * _ResistorSpaceX,
-                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'][0][1] + self._DesignParameter['_Met5LayerVCM']['_Width'] // 2 + i * _ResistorSpaceY]])
+                        self.CeilMinSnapSpacing(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet22Met3OnRes']['_XYCoordinates'][0][1] + self._DesignParameter['_Met5LayerVCM']['_Width'] // 2 + i * _ResistorSpaceY, 2*_MinSnapSpacing)]])
 
 
         self._DesignParameter['_Met5LayerVCM']['_XYCoordinates'] = tmp
@@ -190,15 +191,15 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
         tmp = []
         for i in range (0, _XRBNum) :
             if i % 4 == 0 or i % 4 == 3 :
-                tmp.append([[_ResistorBankOrigin[0][0] + min(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
+                tmp.append([[self.CeilMinSnapSpacing(_ResistorBankOrigin[0][0] + min(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
                         self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] - 
-                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] // 2 -
-                        _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met6LayerVCM']['_Width'] // 2) + i * _ResistorSpaceX,
+                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] / 2 -
+                        _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met6LayerVCM']['_Width'] / 2) + i * _ResistorSpaceX, 2*_MinSnapSpacing),
                         _ResistorBankOrigin[0][1] + _GapbtwOriginY],
-                        [_ResistorBankOrigin[0][0] + min(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
+                        [self.CeilMinSnapSpacing(_ResistorBankOrigin[0][0] + min(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0],
                         self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] - 
                         self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'] // 2 -
-                        _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met6LayerVCM']['_Width'] // 2) + i * _ResistorSpaceX,
+                        _DRCObj._MetalxMinSpace11 - self._DesignParameter['_Met6LayerVCM']['_Width'] // 2) + i * _ResistorSpaceX, 2*_MinSnapSpacing),
                         _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY]])
 
         self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'] = tmp
@@ -329,9 +330,9 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             #     continue
             # else :
                 tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                            _ResistorBankOrigin[0][1] + _GapbtwOriginY + (i + 1) * ((_YRBNum * _ResistorSpaceY) // (_Met7LayerVRXEA + 1))],
+                            self.CeilMinSnapSpacing(_ResistorBankOrigin[0][1] + _GapbtwOriginY + (i + 1) * ((_YRBNum * _ResistorSpaceY) // (_Met7LayerVRXEA + 1)), 2*_MinSnapSpacing)],
                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-                            _ResistorBankOrigin[0][1] + _GapbtwOriginY + (i + 1) * ((_YRBNum * _ResistorSpaceY) // (_Met7LayerVRXEA + 1))]])
+                            self.CeilMinSnapSpacing(_ResistorBankOrigin[0][1] + _GapbtwOriginY + (i + 1) * ((_YRBNum * _ResistorSpaceY) // (_Met7LayerVRXEA + 1)), 2*_MinSnapSpacing)]])
 
         
         self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'] = tmp
@@ -378,12 +379,12 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                 continue
 
             if i == len(self._DesignParameter['_Met7LayerVRX']['_XYCoordinates']) - 1 :
-                tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
-                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 * 2 - self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
+                tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'][0][0][0] - self._DesignParameter['_Met6LayerVCM']['_Width'] // 2,
+                        self.CeilMinSnapSpacing(_ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
+                        self._DesignParameter['_Met7LayerVRX']['_Width'] / 2 - _DRCObj._MetalxMinSpace11 * 2 - self._DesignParameter['_Met7LayerVCM']['_Width'] / 2, 2*_MinSnapSpacing)],
                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
-                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 * 2- self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]])
+                        self.CeilMinSnapSpacing(_ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
+                        self._DesignParameter['_Met7LayerVRX']['_Width'] / 2 - _DRCObj._MetalxMinSpace11 * 2- self._DesignParameter['_Met7LayerVCM']['_Width'] / 2, 2*_MinSnapSpacing)]])
                 
                 # tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
                 #         _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] + 
@@ -397,11 +398,11 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                 
             elif i % 8 != 7 :
                 tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
-                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 * 2 - self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
+                        self.CeilMinSnapSpacing(_ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
+                        self._DesignParameter['_Met7LayerVRX']['_Width'] / 2 - _DRCObj._MetalxMinSpace11 * 2 - self._DesignParameter['_Met7LayerVCM']['_Width'] / 2, 2*_MinSnapSpacing)],
                         [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-                        _ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
-                        self._DesignParameter['_Met7LayerVRX']['_Width'] // 2 - _DRCObj._MetalxMinSpace11 * 2- self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]])
+                        self.CeilMinSnapSpacing(_ResistorBankOrigin[0][1] + self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][i][0][1] - 
+                        self._DesignParameter['_Met7LayerVRX']['_Width'] / 2 - _DRCObj._MetalxMinSpace11 * 2- self._DesignParameter['_Met7LayerVCM']['_Width'] / 2, 2*_MinSnapSpacing)]])
 
 
         self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'] = tmp

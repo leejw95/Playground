@@ -1005,24 +1005,24 @@ if __name__ == '__main__' :
 
     for _ in range (1,100) :
         _TransmissionGateFinger = random.randrange(2,12,1)
-        _TransmissionGateChannelWidth = random.randrange(500,750,10)
-        _TransmissionGateChannelLength = 60
+        _TransmissionGateChannelWidth = random.randrange(700,1500,10)
+        _TransmissionGateChannelLength = 100
         _TransmissionGateNPRatio = 2
         _TransmissionGateDummy = False    #T/F?
-        _TransmissionGateVDD2VSSHeight = 8000 ## FIXED
+        _TransmissionGateVDD2VSSHeight = 6000 ## FIXED
         _TransmissionGateXVT = 'LVT'     #T/F?
 
         _PowerLine = True
 
-        _ResistorWidth = random.randrange(1500,2500,100)
-        _ResistorLength = random.randrange(4000,5000,100)
+        _ResistorWidth = random.randrange(2000,4000,100)
+        _ResistorLength = _ResistorWidth + random.randrange(0,1000,100) ## length should be larger than width in 40nm tsmc process
         _ResistorMetXCO = None
         _ResistorMetYCO = random.randint(1,3)
 
         _PMOSSubringType = False ## FIXED
         _PMOSSubringXWidth = None ## FIXED
         _PMOSSubringYWidth = None ## FIXED
-        _PMOSSubringWidth = 170           ## 65 : 170, 45 : 170, 90 : 200, 28 : 170
+        _PMOSSubringWidth = 200           ## 65 : 170, 45 : 170, 90 : 200, 28 : 170
 
         _NMOSSubringType = True ## FIXED
         _NMOSSubringXWidth = None ## FIXED
@@ -1071,15 +1071,15 @@ if __name__ == '__main__' :
         ftp = ftplib.FTP('141.223.22.156')
         ftp.login('junung', 'chlwnsdnd1!')
         #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-        #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
+        #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
         #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC90n')
         myfile = open('ResistorBank.gds', 'rb')
         ftp.storbinary('STOR ResistorBank.gds', myfile)
         myfile.close()
         ftp.close()
 
-        _Checker = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/TSMC65n','/mnt/sdc/junung/OPUS/TSMC65n/DRC/DRC_run','Rescell_tst','ResistorBank')
+        _Checker = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/TSMC40n','/mnt/sdc/junung/OPUS/TSMC40n/DRC/DRC_run','Rescell_tst','ResistorBank')
         _Checker.DRCchecker()
 
 

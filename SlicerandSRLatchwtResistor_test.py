@@ -256,19 +256,21 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         _CenterofVRX = self.CeilMinSnapSpacing((self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][1] +
                         self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][-1][0][1]) / 2, MinSnapSpacing)
 
+        GuardringHeight = self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']
 
         if _PowerLine == False :
-            temp = _ResistorBankOrigin[0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_XYCoordinates'][-1][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] / 2
+            temp = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_XYCoordinates'][-1][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][0] + self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_TotalSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XWidth'] / 2
         else :
             temp = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met5LayerVSS']['_XYCoordinates'][0][1][0]
 
+        tempMet1space = _DRCObj.DRCMETAL1MinSpace(_TotalSubringWidth, GuardringHeight + _SLSlicerGuardringWidth, _SLSlicerGuardringWidth)
+
         self._DesignParameter['_Slicer']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(_ResistorBankOrigin[0][0] + temp +
-                                                               ##self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met5LayerVSS']['_XYCoordinates'][0][1][0] + 
-                                                               _DRCObj._MetalxMinSpace11 + abs(self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][0] +
+                                                               tempMet1space + abs(self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][0] +
                                                                    self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0]) +
                                                                _SLGuardringWidth / 2, MinSnapSpacing),
                                                                self.CeilMinSnapSpacing(_ResistorBankOrigin[0][1] - self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_YINp']['_Ignore']
-                                                               + (self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore'] * (_NumberofSlicerWithSRLatch - 1) / 2)
+                                                               + (GuardringHeight * (_NumberofSlicerWithSRLatch - 1) / 2)
                                                                + _CenterofVRX, MinSnapSpacing)]]
 
         print ('################################       Additional Via Settings      #######################################')
@@ -703,14 +705,14 @@ if __name__ == '__main__':
         _XRBNum = 4##random.randint(3,10)
         _YRBNum = 8##random.randint(4,_NUM)
         _TransmissionGateFinger = 8##random.randint(1,15)
-        _TransmissionGateChannelWidth = 350##random.randrange(200,500,3)  ##200nm ~ 500nm range
-        _TransmissionGateChannelLength = 40
+        _TransmissionGateChannelWidth = 500##random.randrange(200,500,3)  ##200nm ~ 500nm range
+        _TransmissionGateChannelLength = 60
         _TransmissionGateNPRatio = 2  ##Default = 2
-        _ResistorWidth = 2500##random.randrange(1000,2000, 3)
-        _ResistorLength = 2500##random.randrange(400,2000, 3)  ## minimum : 400
-        _TransmissionGateVDD2VSSHeight = 3420  ## FIXED
+        _ResistorWidth = 3500##random.randrange(1000,2000, 3)
+        _ResistorLength = 3500##random.randrange(400,2000, 3)  ## minimum : 400
+        _TransmissionGateVDD2VSSHeight = 5370  ## FIXED
 
-        _TransmissionGateDummy = True  # T//F?
+        _TransmissionGateDummy = False  # T//F?
         _TransmissionGateXVT = 'LVT'  # T//F?
         _PowerLine = False  # T//F?
         _InputLine = False
@@ -719,7 +721,7 @@ if __name__ == '__main__':
         _PMOSSubringType = False  ## FIXED
         _PMOSSubringXWidth = None  ## FIXED
         _PMOSSubringYWidth = None  ## FIXED
-        _PMOSSubringWidth = 350
+        _PMOSSubringWidth = 500
         _NMOSSubringType = True  ## FIXED
         _NMOSSubringXWidth = None  ## FIXED
         _NMOSSubringYWidth = None  ## FIXED
@@ -733,21 +735,21 @@ if __name__ == '__main__':
         ##_SRNPRatio = 2##round(2 + random.random())
         _SRFinger1 = 5##random.randint(1,15)
         _SRPMOSChannelWidth1 = 700##int(_SRRandWidth * _SRNPRatio)
-        _SRNMOSChannelWidth1 = 350##_SRRandWidth
+        _SRNMOSChannelWidth1 = 500##_SRRandWidth
         _SRFinger2 = 1##random.randint(1,15)
         _SRPMOSChannelWidth2 = 700##int(_SRRandWidth * _SRNPRatio)
-        _SRNMOSChannelWidth2 = 350##_SRRandWidth
+        _SRNMOSChannelWidth2 = 500##_SRRandWidth
         _SRFinger3 = 2##random.randint(1,15)
         _SRPMOSChannelWidth3 = 700##int(_SRRandWidth * _SRNPRatio)
-        _SRNMOSChannelWidth3 = 350##_SRRandWidth
+        _SRNMOSChannelWidth3 = 500##_SRRandWidth
         _SRFinger4 = 2##random.randint(1,15)
         _SRPMOSChannelWidth4 = 700##int(_SRRandWidth * _SRNPRatio)
-        _SRNMOSChannelWidth4 = 350##_SRRandWidth
-        _SRChannelLength = 40
+        _SRNMOSChannelWidth4 = 500##_SRRandWidth
+        _SRChannelLength = 60
 
         _SRNPRatio = None
         _SRVDD2VSSHeightAtOneSide = None
-        _SRDummy = True
+        _SRDummy = False
         _SRNumSupplyCoX = None
         _SRNumSupplyCoY = 2
         _SRSupplyMet1XWidth = None
@@ -774,13 +776,13 @@ if __name__ == '__main__':
         _SLCLKinputNMOSFinger = 8##random.randint(1,15)
         _SLNMOSChannelWidth = 1800##random.randrange(200,1050,3)
         _SLCLKinputNMOSChannelWidth = 1800##random.randrange(200,1050,3)
-        _SLChannelLength = 40
+        _SLChannelLength = 60
 
-        _SLDummy = True
+        _SLDummy = False
         _SLXVT = 'LVT'
-        _SLGuardringWidth = 350
+        _SLGuardringWidth = 500
         _SLGuardring = True
-        _SLSlicerGuardringWidth = 350
+        _SLSlicerGuardringWidth = 500
         _SLSlicerGuardring = None
         _SLNumSupplyCOY = None
         _SLNumSupplyCOX = None
@@ -793,12 +795,12 @@ if __name__ == '__main__':
         _SLNumVIAMet12COY = None
         _SLPowerLine = False
         _N = 4##random.randint(1,15)
-        _InvChannelWidth = 350##random.randrange(200,300,3)
-        _InvChannelLength = 40
+        _InvChannelWidth = 500##random.randrange(200,300,3)
+        _InvChannelLength = 60
         _InvFinger = 16##random.randint(5,16)
         _InvNPRatio = 3##round(2+random.random())
         _InvVDD2VSSHeight = None
-        _InvDummy = True
+        _InvDummy = False
         _InvNumSupplyCoX = None
         _InvNumSupplyCoY = None
         _InvSupplyMet1XWidth = None

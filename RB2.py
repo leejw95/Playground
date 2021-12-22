@@ -349,7 +349,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                         # + _TotalSubringinputs['_Width'] +
                                                                         max(_PMOSSubringinputs['_Width'] + _DRCObj._NwMinEnclosurePactive ,_NMOSSubringinputs['_Width'] + _DRCObj._PpMinExtensiononPactive2 
                                                                         + max(_DRCObj._PpMinSpace + _DRCObj._PpMinExtensiononPactive2, _DRCObj._NwMinEnclosureNactive + _DRCObj._NwMinSpacetoPactive + _DRCObj._PpMinExtensiononPactive2))),
-                                                                        min(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2,
+                                                                        max(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2,
                                                                         self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + int(round(_TotalSubringinputs['_YWidth'] + 0.5)) // 2 -
                                                                         int(round((_NMOSSubringinputs['_Width']+0.5))//2 + _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace))]]
         
@@ -1001,12 +1001,12 @@ if __name__ == '__main__' :
     ## 65nm : 500nm min width (60), 28nm : 200nm min width (30), 40nm : 350nm min width(40),  90nm (100nm channel length) : 700nm min width
 
     _TransmissionGateFinger = 8
-    _TransmissionGateChannelWidth = 500
-    _TransmissionGateChannelLength = 60
+    _TransmissionGateChannelWidth = 250
+    _TransmissionGateChannelLength = 30
     _TransmissionGateNPRatio = 2
-    _TransmissionGateDummy = False     #T/F?
-    _TransmissionGateVDD2VSSHeight = 3850 ## FIXED
-    _TransmissionGateXVT = 'LVT'     #T/F?
+    _TransmissionGateDummy = True     #T/F?
+    _TransmissionGateVDD2VSSHeight = 2440 ## FIXED
+    _TransmissionGateXVT = 'SLVT'     #T/F?
 
     _PowerLine = True
 
@@ -1066,8 +1066,8 @@ if __name__ == '__main__' :
 
     ftp = ftplib.FTP('141.223.22.156')
     ftp.login('junung', 'chlwnsdnd1!')
-    #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
     #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
     #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC90n')
     myfile = open('ResistorBank.gds', 'rb')

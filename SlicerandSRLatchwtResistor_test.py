@@ -264,7 +264,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         else :
             temp = self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met5LayerVSS']['_XYCoordinates'][0][1][0]
 
-        tempMet1space = _DRCObj.DRCMETAL1MinSpace(_TotalSubringWidth, GuardringHeight + _SLSlicerGuardringWidth, _SLSlicerGuardringWidth)
+        tempMet1space = _DRCObj._Metal1MinSpace3 #_DRCObj.DRCMETAL1MinSpace(_TotalSubringWidth, GuardringHeight + _SLSlicerGuardringWidth, _SLSlicerGuardringWidth)
 
         self._DesignParameter['_Slicer']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(max(_ResistorBankOrigin[0][0] + temp +
                                                                tempMet1space + abs(self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][0] +
@@ -812,7 +812,7 @@ if __name__ == '__main__':
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
 
-        _SRRandWidth = random.randrange(500,1000,10)
+        _SRRandWidth = random.randrange(500,700,10)
         _SRNPRatio = 2##round(2 + random.random())
         _SRFinger1 = random.randint(1,15)
         _SRPMOSChannelWidth1 = _SRRandWidth * _SRNPRatio
@@ -876,7 +876,7 @@ if __name__ == '__main__':
         _SLNumVIAMet12COY = None
         _SLPowerLine = False
         _N = random.randint(1,15)
-        _InvChannelWidth = random.randrange(500,1000,10)
+        _InvChannelWidth = random.randrange(500,700,10)
         _InvChannelLength = 60
         _InvFinger = random.randint(5,16)
         _InvNPRatio = 3##round(2+random.random())
@@ -991,36 +991,36 @@ if __name__ == '__main__':
     #
     # print("DRC Clean!!!")
 
-        import ftplib
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        myfile.close()
-
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SlicerandSRLatchwtResistor','SlicerandSRLatchwtResistor',None)
-        a.DRCchecker()
-
-    print ("DRC Clean!!!")
-
     #     import ftplib
     #
     #     ftp = ftplib.FTP('141.223.22.156')
     #     ftp.login('jicho0927', 'cho89140616!!')
-    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
     #     myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
     #     ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     #     myfile.close()
     #
     #     import DRCchecker
-    #
-    #     a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/tsmc40n', '/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run', 'SlicerandSRLatchwtResistor', 'SlicerandSRLatchwtResistor', None)
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','SlicerandSRLatchwtResistor','SlicerandSRLatchwtResistor',None)
     #     a.DRCchecker()
     #
-    # print("DRC Clean!!!")
+    # print ("DRC Clean!!!")
+
+        import ftplib
+
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
+        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        myfile.close()
+
+        import DRCchecker
+
+        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/tsmc40n', '/mnt/sdc/jicho0927/OPUS/tsmc40n/DRC/run', 'SlicerandSRLatchwtResistor', 'SlicerandSRLatchwtResistor', None)
+        a.DRCchecker()
+
+    print("DRC Clean!!!")
 
     #     import ftplib
     #

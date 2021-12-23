@@ -163,17 +163,17 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         _PMOSSubringinputs['_PType'] = False
         _PMOSSubringinputs['_Width'] = _PMOSSubringWidth
         #if (_TransmissionGateFinger % 2 )
-        if DesignParameters._Technology != '028nm' :
+        if DesignParameters._Technology != '028nm' : ## for tsmc process
             _PMOSSubringinputs['_XWidth'] = self.CeilMinSnapSpacing((max(((self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] -
                                          self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) - \
                                         (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][0]
                                          - self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) * 2 + \
                                         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] 
                                         + _DRCObj.DRCMETAL1MinSpace(self.getXWidth('_TransmissionGateRB','_PMOSTG','_Met1Layer'), self.getYWidth('_TransmissionGateRB','_PMOSTG','_Met1Layer'), _PMOSSubringinputs['_Width']) * 2),
-                                        self.getXWidth('_TransmissionGateRB','_PMOSTG','_PPLayer') + _DRCObj._NpMinExtensiononNactive2 * 2  + _DRCObj._PpMinEnclosureOfPo * 2)// 2 + \
+                                        self.getXWidth('_TransmissionGateRB','_PMOSTG','_PPLayer') + _DRCObj._NpMinExtensiononNactive2 * 2  + _DRCObj._PpMinEnclosureOfPo * 2) // 2 + \
                                         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 +
-                                        self._DesignParameter['_ViaMet12Met2OnInput']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] 
-                                        + _DRCObj.DRCMETAL1MinSpace(self.getYWidth('_TransmissionGateRB','_ViaPoly2Met1OnPMOSControlTG','_Met1Layer'),self.getYWidth('_TransmissionGateRB','_ViaPoly2Met1OnPMOSControlTG','_Met1Layer'),_PMOSSubringinputs['_Width']) * 2), 2*_MinSnapSpacing)
+                                        self._DesignParameter['_ViaMet12Met2OnInput']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
+                                        + _DRCObj.DRCMETAL1MinSpace(self.getYWidth('_TransmissionGateRB','_ViaPoly2Met1OnPMOSControlTG','_Met1Layer'),self.getYWidth('_TransmissionGateRB','_ViaPoly2Met1OnPMOSControlTG','_Met1Layer'),_PMOSSubringinputs['_Width']) + _DRCObj._MetalxMinSpace2), 2*_MinSnapSpacing)
 
         else :
             _PMOSSubringinputs['_XWidth'] = ((self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] -
@@ -283,7 +283,9 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
             _TotalSubringinputs['_YWidth'] = max(_TransmissionGateVDD2VSSHeight + _NMOSSubringinputs['_Width'] +\
                                                +  max(_DRCObj._NwMinSpacetoPactive + _DRCObj._NwMinEnclosureNactive + _DRCObj._NpMinExtensiononNactive2 +  _DRCObj._PpMinExtensiononPactive2 , _DRCObj._PpMinSpace +  _DRCObj._PpMinExtensiononPactive2 +  _DRCObj._PpMinExtensiononPactive2) * 2,
-                                                self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] + _DRCObj._PpMinSpace * 2 + _DRCObj._PpMinExtensiononPactive2 * 2)
+                                                self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] + _DRCObj._PpMinSpace * 2 + _DRCObj._PpMinExtensiononPactive2 * 2,
+                                                self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] +
+                                                _DRCObj.DRCMETAL1MinSpace(_TotalSubringWidth, _ResistorWidth, self.getXWidth('_OpppcresRB','_Met1Layer') * 2 - _DRCObj._PpMinEnclosureOfPo * 2 + _DRCObj._Metal1MinEnclosureCO2 * 2))
 
 
         self._DesignParameter['_TotalSubringRB'] = self._SrefElementDeclaration(_DesignObj=psubring._PSubring(_DesignParameter=None, _Name='TotalSubringIn{}'.format(_Name)))[0]
@@ -392,7 +394,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         #         min(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2, self._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1])]]
 
         ##Input Via Settings
-
+        # if DesignParameters._Technology == '028nm' :
         self._DesignParameter['_ViaMet12Met2OnInput']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] + 
                                                                         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0] -
                                                                         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 -
@@ -404,6 +406,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                         self._DesignParameter['_ViaMet12Met2OnInput']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 - _DRCObj._Metal1MinSpace2,
                                                                         self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'][0][1]]]
 
+      
         self._DesignParameter['_ViaMet22Met3OnInput']['_XYCoordinates'] = self._DesignParameter['_ViaMet12Met2OnInput']['_XYCoordinates']
         self._DesignParameter['_ViaMet32Met4OnInput']['_XYCoordinates'] = self._DesignParameter['_ViaMet12Met2OnInput']['_XYCoordinates']
         self._DesignParameter['_ViaMet42Met5OnInput']['_XYCoordinates'] = self._DesignParameter['_ViaMet12Met2OnInput']['_XYCoordinates']
@@ -1003,26 +1006,26 @@ if __name__ == '__main__' :
     import random
     import DRCchecker
 
-    for _ in range (1,100) :
-        _TransmissionGateFinger = random.randrange(2,12,1)
-        _TransmissionGateChannelWidth = random.randrange(700,1500,10)
-        _TransmissionGateChannelLength = 100
+    for _ in range (1,2) :
+        _TransmissionGateFinger = 8
+        _TransmissionGateChannelWidth = 500
+        _TransmissionGateChannelLength = 60
         _TransmissionGateNPRatio = 2
         _TransmissionGateDummy = False    #T/F?
-        _TransmissionGateVDD2VSSHeight = 6000 ## FIXED
+        _TransmissionGateVDD2VSSHeight = 3850 ## FIXED
         _TransmissionGateXVT = 'LVT'     #T/F?
 
         _PowerLine = True
 
-        _ResistorWidth = random.randrange(2000,4000,100)
-        _ResistorLength = _ResistorWidth + random.randrange(0,1000,100) ## length should be larger than width in 40nm tsmc process
+        _ResistorWidth = 2000
+        _ResistorLength = 2000 ## length should be larger than width in 40nm tsmc process
         _ResistorMetXCO = None
         _ResistorMetYCO = random.randint(1,3)
 
         _PMOSSubringType = False ## FIXED
         _PMOSSubringXWidth = None ## FIXED
         _PMOSSubringYWidth = None ## FIXED
-        _PMOSSubringWidth = 200           ## 65 : 170, 45 : 170, 90 : 200, 28 : 170
+        _PMOSSubringWidth = 170           ## 65 : 170, 45 : 170, 90 : 200, 28 : 170
 
         _NMOSSubringType = True ## FIXED
         _NMOSSubringXWidth = None ## FIXED
@@ -1071,16 +1074,16 @@ if __name__ == '__main__' :
         ftp = ftplib.FTP('141.223.22.156')
         ftp.login('junung', 'chlwnsdnd1!')
         #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
+        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
         #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC90n')
         myfile = open('ResistorBank.gds', 'rb')
         ftp.storbinary('STOR ResistorBank.gds', myfile)
         myfile.close()
         ftp.close()
 
-        _Checker = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/TSMC40n','/mnt/sdc/junung/OPUS/TSMC40n/DRC/DRC_run','Rescell_tst','ResistorBank')
-        _Checker.DRCchecker()
+        # _Checker = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/TSMC40n','/mnt/sdc/junung/OPUS/TSMC40n/DRC/DRC_run','Rescell_tst','ResistorBank')
+        # _Checker.DRCchecker()
 
 
 

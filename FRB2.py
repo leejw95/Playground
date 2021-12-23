@@ -126,8 +126,8 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         print ('################################       Additional Path Settings      #####################################')
         self._DesignParameter['_Met4LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met4LayerVCM']['_Width'] = int(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_Met4LayerVCM']['_XWidth'] + \
-                                                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'])
+        self._DesignParameter['_Met4LayerVCM']['_Width'] = self.CeilMinSnapSpacing(int(self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_Met4LayerVCM']['_XWidth'] + \
+                                                        self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaVCMMet32Met4']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']), 2*_MinSnapSpacing)
 
         tmp = []
 
@@ -230,67 +230,10 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         del tmp
 
-        # self._DesignParameter['_Met7LayerVCM'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1],_XYCoordinates=[], _Width=100)
-        # self._DesignParameter['_Met7LayerVCM']['_Width'] = _ResistorSpaceY
-
-        # self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'] = [[[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2],
-        #                                                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2]],
-        #                                                             [[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY
-        #                                                             - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)],
-        #                                                             [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-        #                                                             _ResistorBankOrigin[0][1] + _GapbtwOriginY + _YRBNum * _ResistorSpaceY
-        #                                                             - (_ResistorSpaceY // 2 + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met7LayerVCM']['_Width'] // 2)]]]
-
-        # _ViaVCMMet62Met7 = copy.deepcopy(ViaMet62Met7._ViaMet62Met7._ParametersForDesignCalculation)
-        # _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOX'] = int(self._DesignParameter['_Met6LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-        # _ViaVCMMet62Met7['_ViaMet62Met7NumberOfCOY'] = int(self._DesignParameter['_Met7LayerVCM']['_Width'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace2))
-
-        # self._DesignParameter['_ViaMet62Met7OnVCM'] = self._SrefElementDeclaration(_DesignObj=ViaMet62Met7._ViaMet62Met7(_DesignParameter=None, _Name = 'ViaMet62Met7OnVCMIn{}'.format(_Name)))[0]
-        # self._DesignParameter['_ViaMet62Met7OnVCM']['_DesignObj']._CalculateViaMet62Met7DesignParameter(**_ViaVCMMet62Met7)
-
-        # tmp = []
-        # for i in range (0, len(self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'])) :
-        #     for j in range (0, len(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'])) :
-        #         tmp.append([self._DesignParameter['_Met6LayerVCM']['_XYCoordinates'][i][0][0],
-        #                     self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'][j][0][1]])
-        # self._DesignParameter['_ViaMet62Met7OnVCM']['_XYCoordinates'] = tmp
-
-        # del tmp
-
-
-
-
+        
         self._DesignParameter['_Met6LayerVRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1],_XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met6LayerVRX']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth']
-        # tmp = []
-        # if _YRBNum % 2 == 0 :
-        #     for i in range (0, _XRBNum) :
-        #         for j in range (0, _YRBNum // 2) :
-        #             tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-        #                     _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1] + _ResistorSpaceY * 2 * j],
-        #                     [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-        #                     _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1] + _ResistorSpaceY * 2 * j + _ResistorSpaceY]])
         
-        # elif _YRBNum == 1 :
-        #     tmp = []
-        
-        # else :
-        #     for i in range (0, _XRBNum) :
-        #         for j in range (0, _YRBNum // 2 - 1) :
-        #             tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-        #                     _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1] + _ResistorSpaceY * 2 * j],
-        #                     [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-        #                     _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1] + _ResistorSpaceY * 2 * j + _ResistorSpaceY]])
-
-        #     for i in range (0, _XRBNum) :
-        #         tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-        #                     _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1] + _ResistorSpaceY * 2 * (_YRBNum // 2 - 1)],
-        #                     [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-        #                     _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1] + _ResistorSpaceY * 2 * (_YRBNum // 2 - 1) + 2 * _ResistorSpaceY]])
-
         tmp = []
         for i in range(0, _XRBNum) :
             tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
@@ -310,19 +253,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         self._DesignParameter['_Met7LayerVRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met7LayerVRX']['_Width'] = _Met7DefWidth - 2 * _DRCObj._MetalxMinSpace11
-        # _Met7LayerVRXEA = ((_YRBNum * _ResistorSpaceY) - (_ResistorSpaceY * 3 + _DRCObj._MetalxMinSpace11 * 2)) // (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11)
-        # _GapbtwfirstVRX = (((_YRBNum * _ResistorSpaceY) - (_ResistorSpaceY * 3 + _DRCObj._MetalxMinSpace11 * 2)) - (_DRCObj._MetalxMaxWidth * _Met7LayerVRXEA + _DRCObj._MetalxMinSpace11 * (_Met7LayerVRXEA - 1))) // 2
-
-        # tmp = []
-        # for i in range (0, _Met7LayerVRXEA) :
-        #     tmp.append([[_ResistorBankOrigin[0][0] + _GapbtwOriginX,
-        #                 _ResistorBankOrigin[0][1] + _ResistorSpaceY * 1.5 + _DRCObj._MetalxMinSpace + _GapbtwfirstVRX + i * (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11) + _DRCObj._MetalxMaxWidth // 2],
-        #                 [_ResistorBankOrigin[0][0] + _GapbtwOriginX + _XRBNum * _ResistorSpaceX,
-        #                 _ResistorBankOrigin[0][1] + _ResistorSpaceY * 1.5 + _DRCObj._MetalxMinSpace + _GapbtwfirstVRX + i * (_DRCObj._MetalxMaxWidth + _DRCObj._MetalxMinSpace11) + _DRCObj._MetalxMaxWidth // 2]])
-
-        # self._DesignParameter['_Met7LayerVRX']['_XYCoordinates'] = tmp
-
-        # del tmp
+        
         
         tmp = []
         for i in range (0, _Met7LayerVRXEA) : 
@@ -1763,6 +1694,7 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
 if __name__ == '__main__' :
     import random
+    import DRCchecker
 
     # for tries in range (0, 100) :
     #     i = random.randint(4,50)
@@ -1778,85 +1710,88 @@ if __name__ == '__main__' :
 
     ## 65nm : 500nm min width (60), 28nm : 200nm min width (30), 40nm : 350nm min width(40),  90nm (100nm channel length) : 700nm min width
     ## 65nm : pmos maximum width 1.5um
-
-
-    _XRBNum = 4
-    _YRBNum = 8
     
-    _TransmissionGateFinger = 8
-    _TransmissionGateChannelWidth = 700 ##200nm ~ 500nm range
-    _TransmissionGateChannelLength = 100
-    _TransmissionGateNPRatio = 2  ##Default = 2
-    _TransmissionGateDummy = False     #T/F?
-    _TransmissionGateVDD2VSSHeight = 5060 ## FIXED
-    _TransmissionGateXVT = 'LVT'     #T/F?
+    for _ in range (1,2) :
+        _XRBNum = 5
+        _YRBNum = 6
+        
+        _TransmissionGateFinger = 8
+        _TransmissionGateChannelWidth = 350 ##200nm ~ 500nm range
+        _TransmissionGateChannelLength = 40
+        _TransmissionGateNPRatio = 2  ##Default = 2
+        _TransmissionGateDummy = False     #T/F?
+        _TransmissionGateVDD2VSSHeight = 3160 ## FIXED
+        _TransmissionGateXVT = 'LVT'     #T/F?
 
-    _PowerLine = False # T/F?
-    _InputLine = False
+        _PowerLine = False # T/F?
+        _InputLine = False
 
-    _ResistorWidth = 2000
-    _ResistorLength = 2400    ## minimum : 400 1234
-    _ResistorMetXCO = None
-    _ResistorMetYCO = 1
+        _ResistorWidth = 2000
+        _ResistorLength = 2500    ## minimum : 400 1234
+        _ResistorMetXCO = None
+        _ResistorMetYCO = 2
 
-    _PMOSSubringType = False ## FIXED
-    _PMOSSubringXWidth = None ## FIXED
-    _PMOSSubringYWidth = None ## FIXED
-    _PMOSSubringWidth = 200 ## def : 170, 170~200
+        _PMOSSubringType = False ## FIXED
+        _PMOSSubringXWidth = None ## FIXED
+        _PMOSSubringYWidth = None ## FIXED
+        _PMOSSubringWidth = 170 ## def : 170, 170~200
 
-    _NMOSSubringType = True ## FIXED
-    _NMOSSubringXWidth = None ## FIXED
-    _NMOSSubringYWidth = None ## FIXED
-    _NMOSSubringWidth = _PMOSSubringWidth
+        _NMOSSubringType = True ## FIXED
+        _NMOSSubringXWidth = None ## FIXED
+        _NMOSSubringYWidth = None ## FIXED
+        _NMOSSubringWidth = _PMOSSubringWidth
 
-    _TotalSubringType = True ## FIXED
-    _TotalSubringXWidth = None ## FIXED
-    _TotalSubringYWidth = None ## FIXED
-    _TotalSubringWidth = _PMOSSubringWidth
+        _TotalSubringType = True ## FIXED
+        _TotalSubringXWidth = None ## FIXED
+        _TotalSubringYWidth = None ## FIXED
+        _TotalSubringWidth = _PMOSSubringWidth
 
-    FullResistorBankObj = _FullResistorBank(_DesignParameter=None, _Name='FullResistorBank')
-    #print ("A!!")
-    FullResistorBankObj._CalculateFullResistorBank(
-                            #  _InverterFinger=_InverterFinger, _InverterChannelWidth=_InverterChannelWidth, _InverterChannelLength=_InverterChannelLength, _InverterNPRatio=_InverterNPRatio, _InverterDummy = _InverterDummy,
-                            # _InverterVDD2VSSHeight=_InverterVDD2VSSHeight, _InverterSLVT = _InverterSLVT,
-                            # _InverterNumSupplyCOX = None, _InverterNumSupplyCOY = None,
-                            # _InverterSupplyMet1XWidth = None, _InverterSupplMet1YWidth = None, _InverterNumVIAPoly2Met1COX = None, _InverterNumVIAPoly2Met1COY = None,
-                            # _InverterNumVIAMet12COX = None, _InverterNumVIAMet12COY = None,
-                                _XRBNum=_XRBNum, _YRBNum=_YRBNum,
-                            _TransmissionGateFinger =_TransmissionGateFinger, _TransmissionGateChannelWidth = _TransmissionGateChannelWidth, _TransmissionGateChannelLength = _TransmissionGateChannelLength, _TransmissionGateNPRatio =_TransmissionGateNPRatio,
-                            _TransmissionGateDummy = _TransmissionGateDummy , _TransmissionGateVDD2VSSHeight = _TransmissionGateVDD2VSSHeight, _TransmissionGateXVT = _TransmissionGateXVT,
-                            _PowerLine = _PowerLine, _InputLine = _InputLine,
-                            # _TransmissionGateNumSupplyCOX = None, _TransmissionGateNumSupplyCOY = None, _TransmissionGateSupplyMet1XWidth = None, _TransmissionGateSupplyMet1YWidth = None,
-                            # _TransmissionGateNumVIAPoly2Met1COX = None, _TransmissionGateNumVIAPoly2Met1COY = None, _TransmissionGateNumVIAMet12COX = None, _TransmissionGateNumVIAMet12COY = None,
-                            _ResistorWidth=_ResistorWidth, _ResistorLength=_ResistorLength, _ResistorMetXCO = _ResistorMetXCO, _ResistorMetYCO = _ResistorMetYCO,
-                                _PMOSSubringType=_PMOSSubringType, _PMOSSubringXWidth=_PMOSSubringXWidth, _PMOSSubringYWidth=_PMOSSubringYWidth,_PMOSSubringWidth=_PMOSSubringWidth,
-                                _NMOSSubringType=_NMOSSubringType, _NMOSSubringXWidth=_NMOSSubringXWidth, _NMOSSubringYWidth=_NMOSSubringYWidth,_NMOSSubringWidth=_NMOSSubringWidth,
-                                _TotalSubringType=_TotalSubringType, _TotalSubringXWidth=_TotalSubringXWidth, _TotalSubringYWidth=_TotalSubringYWidth,_TotalSubringWidth=_TotalSubringWidth)
-
-
-    FullResistorBankObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=FullResistorBankObj._DesignParameter)
-    _fileName = 'FullResistorBank.gds'
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-
-    tmp = FullResistorBankObj._CreateGDSStream(FullResistorBankObj._DesignParameter['_GDSFile']['_GDSFile'])
-
-    tmp.write_binary_gds_stream(testStreamFile)
-
-    testStreamFile.close()
-
-    print ('###############      Sending to FTP Server...      ##################')
+        FullResistorBankObj = _FullResistorBank(_DesignParameter=None, _Name='FullResistorBank')
+        #print ("A!!")
+        FullResistorBankObj._CalculateFullResistorBank(
+                                #  _InverterFinger=_InverterFinger, _InverterChannelWidth=_InverterChannelWidth, _InverterChannelLength=_InverterChannelLength, _InverterNPRatio=_InverterNPRatio, _InverterDummy = _InverterDummy,
+                                # _InverterVDD2VSSHeight=_InverterVDD2VSSHeight, _InverterSLVT = _InverterSLVT,
+                                # _InverterNumSupplyCOX = None, _InverterNumSupplyCOY = None,
+                                # _InverterSupplyMet1XWidth = None, _InverterSupplMet1YWidth = None, _InverterNumVIAPoly2Met1COX = None, _InverterNumVIAPoly2Met1COY = None,
+                                # _InverterNumVIAMet12COX = None, _InverterNumVIAMet12COY = None,
+                                    _XRBNum=_XRBNum, _YRBNum=_YRBNum,
+                                _TransmissionGateFinger =_TransmissionGateFinger, _TransmissionGateChannelWidth = _TransmissionGateChannelWidth, _TransmissionGateChannelLength = _TransmissionGateChannelLength, _TransmissionGateNPRatio =_TransmissionGateNPRatio,
+                                _TransmissionGateDummy = _TransmissionGateDummy , _TransmissionGateVDD2VSSHeight = _TransmissionGateVDD2VSSHeight, _TransmissionGateXVT = _TransmissionGateXVT,
+                                _PowerLine = _PowerLine, _InputLine = _InputLine,
+                                # _TransmissionGateNumSupplyCOX = None, _TransmissionGateNumSupplyCOY = None, _TransmissionGateSupplyMet1XWidth = None, _TransmissionGateSupplyMet1YWidth = None,
+                                # _TransmissionGateNumVIAPoly2Met1COX = None, _TransmissionGateNumVIAPoly2Met1COY = None, _TransmissionGateNumVIAMet12COX = None, _TransmissionGateNumVIAMet12COY = None,
+                                _ResistorWidth=_ResistorWidth, _ResistorLength=_ResistorLength, _ResistorMetXCO = _ResistorMetXCO, _ResistorMetYCO = _ResistorMetYCO,
+                                    _PMOSSubringType=_PMOSSubringType, _PMOSSubringXWidth=_PMOSSubringXWidth, _PMOSSubringYWidth=_PMOSSubringYWidth,_PMOSSubringWidth=_PMOSSubringWidth,
+                                    _NMOSSubringType=_NMOSSubringType, _NMOSSubringXWidth=_NMOSSubringXWidth, _NMOSSubringYWidth=_NMOSSubringYWidth,_NMOSSubringWidth=_NMOSSubringWidth,
+                                    _TotalSubringType=_TotalSubringType, _TotalSubringXWidth=_TotalSubringXWidth, _TotalSubringYWidth=_TotalSubringYWidth,_TotalSubringWidth=_TotalSubringWidth)
 
 
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('junung', 'chlwnsdnd1!')
-    #ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-    #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-    #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
-    ftp.cwd('/mnt/sdc/junung/OPUS/TSMC90n')
-    myfile = open('FullResistorBank.gds', 'rb')
-    ftp.storbinary('STOR FullResistorBank.gds', myfile)
-    myfile.close()
-    ftp.close()
+        FullResistorBankObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=FullResistorBankObj._DesignParameter)
+        _fileName = 'FullResistorBank.gds'
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+
+        tmp = FullResistorBankObj._CreateGDSStream(FullResistorBankObj._DesignParameter['_GDSFile']['_GDSFile'])
+
+        tmp.write_binary_gds_stream(testStreamFile)
+
+        testStreamFile.close()
+
+        print ('###############      Sending to FTP Server...      ##################')
+
+
+        ftp = ftplib.FTP('141.223.22.156')
+        ftp.login('junung', 'chlwnsdnd1!')
+        #ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
+        #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
+        #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC90n')
+        myfile = open('FullResistorBank.gds', 'rb')
+        ftp.storbinary('STOR FullResistorBank.gds', myfile)
+        myfile.close()
+        ftp.close()
+
+        # _Checker = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/TSMC90n','/mnt/sdc/junung/OPUS/TSMC90n/DRC/DRC_run','FRBtst','FullResistorBank')
+        # _Checker.DRCchecker()
 
     # ftp = ftplib.FTP('141.223.22.156')
     # ftp.login('jicho0927', 'cho89140616!!')

@@ -1352,8 +1352,9 @@ class _Slicer(StickDiagram._StickDiagram):
 
 
 
-            if _DATAinputNMOSFinger == 1 and _NMOSFinger == 1 :
-                warnings.warn("The input signal can be disturbed.")
+            if _DATAinputNMOSFinger == 1 :
+                print("The input signal can be disturbed.")
+                raise NotImplementedError
 
 
 

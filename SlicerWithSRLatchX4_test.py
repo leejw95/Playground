@@ -703,7 +703,7 @@ if __name__ == '__main__':
             _SRFinger2 = 1#random.randint(1, 16)
             _SRFinger3 = 2#random.randint(1, 16)
             _SRFinger4 = 2#random.randint(1, 16)
-            _RandChannelWidth = 200#random.randrange(200, 400, 1)
+            _RandChannelWidth = 350#random.randrange(200, 400, 1)
             _SRNPRatio = 2
             _SRNMOSChannelWidth1 = _RandChannelWidth
             _SRPMOSChannelWidth1 = _SRNPRatio * _RandChannelWidth
@@ -762,7 +762,7 @@ if __name__ == '__main__':
             _NumberofSlicerWithSRLatch = 4#random.randint(1, 16)
             #####################Inverter#######################
             _InvFinger = 6#random.randint(5, 16)
-            _InvChannelWidth = 200#random.randrange(200, 400, 1)
+            _InvChannelWidth = 350#random.randrange(200, 400, 1)
             _InvChannelLength = 30
             _InvNPRatio = 3
             _InvVDD2VSSHeight = None

@@ -125,7 +125,6 @@ class _Slicer(StickDiagram._StickDiagram):
             _GuardRingMet1Space = _DRCObj._Metal1DefaultSpace##_DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace
 
 
-            toptmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth//2 + _GuardRingMet1Space + _SlicerGuardringWidth//2, self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
             bottomtmp = self.CeilMinSnapSpacing(self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - max(_GuardringWidth//2 + _GuardRingMet1Space + _SlicerGuardringWidth//2, _GuardringWidth + 2 * _DRCObj._PpMinExtensiononPactive2 + _DRCObj._PpMinSpace), MinSnapSpacing)
 
             lefttmp = self.CeilMinSnapSpacing(min(self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0] + NMOS_lefttmp - self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_PPLayer']['_Width'] // 2 - _SlicerGuardringWidth // 2 - _DRCObj._PpMinSpace - _DRCObj._PpMinExtensiononPactive2, \
@@ -134,6 +133,10 @@ class _Slicer(StickDiagram._StickDiagram):
             righttmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][0] + NMOS_righttmp + self._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_PPLayer']['_Width'] // 2 + _SlicerGuardringWidth // 2 + _DRCObj._PpMinSpace + _DRCObj._PpMinExtensiononPactive2,\
                                                    self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth//2 + _GuardRingMet1Space + _SlicerGuardringWidth//2, \
                                                    self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
+
+            _GuardringMet1Space2 = _DRCObj.DRCMETAL1MinSpace(_GuardringWidth, NMOS_righttmp - NMOS_lefttmp + _GuardringWidth, self.CeilMinSnapSpacing(NMOS_bottomtmp - bottomtmp + _SlicerGuardringWidth / 2 + _GuardringWidth / 2, MinSnapSpacing))
+
+            toptmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth//2 + _GuardringMet1Space2 + _SlicerGuardringWidth//2, self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
 
             _GuardringCetPointX = self.CeilMinSnapSpacing(int(round(lefttmp + righttmp + 0.5)) // 2, MinSnapSpacing)
             _GuardringCetPointY = self.CeilMinSnapSpacing(int(round(toptmp + bottomtmp + 0.5)) // 2, MinSnapSpacing)
@@ -1241,40 +1244,40 @@ class _Slicer(StickDiagram._StickDiagram):
 
             if _PowerLine == True :
                 Ptoptmp = self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1]
-                Gtoptmp = self._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1] ### self._DesignParameter['_SlicerGuardringMet1']['_XYCoordinates'][0][1]
+                Gtoptmp = self._DesignParameter['_Guardring']['_XYCoordinates'][0][1] + self._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][1][1]
 
                 self._DesignParameter['_SupplyLineMet2VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
                 self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
                 self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                self._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] ###[[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] // 2]]
+                self._DesignParameter['_SupplyLineMet2VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates']
 
                 self._DesignParameter['_SupplyLineMet3VSS'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
                 self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] = self._DesignParameter['_GuardringVSS']['_XWidth']
                 self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] = self._DesignParameter['_GuardringVSS']['_YWidth']
-                self._DesignParameter['_SupplyLineMet3VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates'] # + self._DesignParameter['_GuardringVSS']['_YWidth'] // 2]]
+                self._DesignParameter['_SupplyLineMet3VSS']['_XYCoordinates'] = self._DesignParameter['_GuardringVSS']['_XYCoordinates']
 
 
-                _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
-                _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
-                _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
-                _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
 
                 if _ViaNumVSSX12 <= 1 :
                     _ViaNumVSSX12 = 1
-                    _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVSSY12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVSSY12 <= 1:
                     _ViaNumVSSY12 = 1
-                    _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVSSX12 = int((self._DesignParameter['_SupplyLineMet2VSS']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVSSX23 <= 1 :
                     _ViaNumVSSX23 = 1
-                    _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVSSY23 = int((self._DesignParameter['_SupplyLineMet3VSS']['_YWidth'] - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVSSY23 <= 1:
                     _ViaNumVSSY23 = 1
-                    _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet3VSS'][ '_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVSSX23 = int((self._DesignParameter['_SupplyLineMet3VSS'][ '_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
 
 
@@ -1301,63 +1304,49 @@ class _Slicer(StickDiagram._StickDiagram):
                 self._DesignParameter['_SupplyLineMet2VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
                 self._DesignParameter['_SupplyLineMet2VDD']['_XWidth'] = _LengthofSupplyLine
                 self._DesignParameter['_SupplyLineMet2VDD']['_YWidth'] = _GuardringWidth
-                self._DesignParameter['_SupplyLineMet2VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]] ###[[0, GuardringMet1Coordinate1[0][1] + self._DesignParameter['_GuardringVSS']['_YWidth'] // 2]]
+                self._DesignParameter['_SupplyLineMet2VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]
 
                 self._DesignParameter['_SupplyLineMet3VDD'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _XWidth=400, _YWidth=400)
                 self._DesignParameter['_SupplyLineMet3VDD']['_XWidth'] = _LengthofSupplyLine
                 self._DesignParameter['_SupplyLineMet3VDD']['_YWidth'] = _GuardringWidth
-                self._DesignParameter['_SupplyLineMet3VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]  # + self._DesignParameter['_GuardringVSS']['_YWidth'] // 2]]
+                self._DesignParameter['_SupplyLineMet3VDD']['_XYCoordinates'] = [[self._DesignParameter['_GuardringVSS']['_XYCoordinates'][0][0], Ptoptmp]]
 
 
-                _ViaNumVDDX12 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
-                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
-                _ViaNumVDDX23 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
-                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVDDX12 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVDDX23 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
-                _ViaNumVDDY12 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) // (
-                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
-                _ViaNumVDDY23 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) // (
-                        _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVDDY12 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumVDDY23 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVDDX12 <= 1:
                     _ViaNumVDDX12 = 1
-                    _ViaNumVDDY12 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) // (
-                                                _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVDDY12 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVDDX23 <= 1:
                     _ViaNumVDDX23 = 1
-                    _ViaNumVDDY23 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) // (
-                                                _DRCObj._VIAxMinSpace+ _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVDDY23 = int((_GuardringWidth - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace+ _DRCObj._VIAxMinWidth)) + 1
 
 
                 if _ViaNumVDDY12 <= 1:
                     _ViaNumVDDY12 = 1
-                    _ViaNumVDDX12 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
-                            _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVDDX12 = int((_LengthofSupplyLine - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 if _ViaNumVDDY23 <= 1:
                     _ViaNumVDDY23 = 1
-                    _ViaNumVDDX23 = int((_LengthofSupplyLine  - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (
-                            _DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                    _ViaNumVDDX23 = int((_LengthofSupplyLine  - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
                 _ViaVDDMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
                 _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOX'] = _ViaNumVDDX12
                 _ViaVDDMet12Met2['_ViaMet12Met2NumberOfCOY'] = _ViaNumVDDY12
-                self._DesignParameter['_ViaMet12Met2VDD'] = self._SrefElementDeclaration(
-                _DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,
-                                                      _Name='ViaMet12Met2VDDIn{}'.format(_Name)))[0]
-                self._DesignParameter['_ViaMet12Met2VDD']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(
-                **_ViaVDDMet12Met2)
+                self._DesignParameter['_ViaMet12Met2VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2VDDIn{}'.format(_Name)))[0]
+                self._DesignParameter['_ViaMet12Met2VDD']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaVDDMet12Met2)
                 self._DesignParameter['_ViaMet12Met2VDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0], Ptoptmp]]
 
                 _ViaVDDMet22Met3 = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
                 _ViaVDDMet22Met3['_ViaMet22Met3NumberOfCOX'] = _ViaNumVDDX23
                 _ViaVDDMet22Met3['_ViaMet22Met3NumberOfCOY'] = _ViaNumVDDY23
-                self._DesignParameter['_ViaMet22Met3VDD'] = self._SrefElementDeclaration(
-                _DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,
-                                                      _Name='ViaMet22Met3VDDIn{}'.format(_Name)))[0]
-                self._DesignParameter['_ViaMet22Met3VDD']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
-                **_ViaVDDMet22Met3)
+                self._DesignParameter['_ViaMet22Met3VDD'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaMet22Met3VDDIn{}'.format(_Name)))[0]
+                self._DesignParameter['_ViaMet22Met3VDD']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaVDDMet22Met3)
                 self._DesignParameter['_ViaMet22Met3VDD']['_XYCoordinates'] = [[self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0], Ptoptmp]]
 
 
@@ -1372,22 +1361,22 @@ class _Slicer(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    for i in range(1,101) :
-        _CLKinputPMOSFinger1 = random.randint(1, 16)
-        _CLKinputPMOSFinger2 = random.randint(1, 16)
-        _PMOSFinger = random.randint(1, 16)
-        _PMOSChannelWidth = random.randrange(200, 1050, 50)
-        _DATAinputNMOSFinger = random.randint(2, 16)
-        _NMOSFinger = random.randint(1, 16)
-        _CLKinputNMOSFinger = random.randint(1, 16)
-        _NMOSChannelWidth = random.randrange(200, 1050, 50)
-        _CLKinputNMOSChannelWidth = random.randrange(200, 1050, 50)
-        _ChannelLength = 30
+    for i in range(1,2) :
+        _CLKinputPMOSFinger1 = 6#random.randint(1, 16)
+        _CLKinputPMOSFinger2 = 3#random.randint(1, 16)
+        _PMOSFinger = 2#random.randint(1, 16)
+        _PMOSChannelWidth = 1800#random.randrange(350, 1800, 10)
+        _DATAinputNMOSFinger = 12#random.randint(2, 16)
+        _NMOSFinger = 2#random.randint(1, 16)
+        _CLKinputNMOSFinger = 8#random.randint(1, 16)
+        _NMOSChannelWidth = 1800#random.randrange(350, 1800, 10)
+        _CLKinputNMOSChannelWidth = 1800#random.randrange(350, 1800, 10)
+        _ChannelLength = 40
         _Dummy = True
         _XVT = 'LVT'
-        _GuardringWidth = 200
+        _GuardringWidth = 350
         _Guardring = True
-        _SlicerGuardringWidth = 200
+        _SlicerGuardringWidth = 350
         _SlicerGuardring = None
         _NumSupplyCOY = None
         _NumSupplyCOX = None
@@ -1431,35 +1420,35 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        # print('#############################      Sending to FTP Server...      #############################')
-        # My = MyInfo.USER(DesignParameters._Technology)
-        # Checker = DRCchecker.DRCchecker(
-        #     username=My.ID,
-        #     password=My.PW,
-        #     WorkDir=My.Dir_Work,
-        #     DRCrunDir=My.Dir_DRCrun,
-        #     libname=libname,
-        #     cellname=cellname,
-        #     GDSDir=My.Dir_GDS
-        # )
-        # Checker.Upload2FTP()
-        # Checker.StreamIn(tech=DesignParameters._Technology)
+        print('#############################      Sending to FTP Server...      #############################')
+        My = MyInfo.USER(DesignParameters._Technology)
+        Checker = DRCchecker.DRCchecker(
+            username=My.ID,
+            password=My.PW,
+            WorkDir=My.Dir_Work,
+            DRCrunDir=My.Dir_DRCrun,
+            libname=libname,
+            cellname=cellname,
+            GDSDir=My.Dir_GDS
+        )
+        Checker.Upload2FTP()
+        Checker.StreamIn(tech=DesignParameters._Technology)
 
 
-        import ftplib
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        myfile = open('Slicer.gds', 'rb')
-        ftp.storbinary('STOR Slicer.gds', myfile)
-        myfile.close()
-
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Slicer','Slicer',None)
-        a.DRCchecker()
-
-    print ("DRC Clean!!!")
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    #     myfile = open('Slicer.gds', 'rb')
+    #     ftp.storbinary('STOR Slicer.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Slicer','Slicer',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
 
     #     import ftplib
     #

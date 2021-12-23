@@ -730,8 +730,8 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
 
             if _XVT != None :
                 self._DesignParameter['_XVTPMOSLayer'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPMOSLayerMappingName][0], _Datatype=DesignParameters._LayerMapping[_XVTPMOSLayerMappingName][1], _XYCoordinates=[], _XWidth=None, _YWidth=None)
-                self._DesignParameter['_XVTPMOSLayer']['_XWidth'] = self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0]
-                self._DesignParameter['_XVTPMOSLayer']['_YWidth'] = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[_XVTPMOSLayer]['_YWidth'] #+ _DRCObj._MetalxMinWidth
+                self._DesignParameter['_XVTPMOSLayer']['_XWidth'] = self.CeilMinSnapSpacing(self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0], 2 * MinSnapSpacing)
+                self._DesignParameter['_XVTPMOSLayer']['_YWidth'] = self.CeilMinSnapSpacing(self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[_XVTPMOSLayer]['_YWidth'], 2 * MinSnapSpacing)
                 self._DesignParameter['_XVTPMOSLayer']['_XYCoordinates'] = [[self.CeilMinSnapSpacing((righttmp+lefttmp)//2, MinSnapSpacing), self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1]]]
 
             ###########################################################################################################################################
@@ -739,8 +739,7 @@ class _PMOSWithDummyOfSlicer(StickDiagram._StickDiagram):
             ###########################################################################################################################################
             self._DesignParameter['_BPLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0],_Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[],_Width=400)
             self._DesignParameter['_BPLayer']['_Width'] = self.CeilMinSnapSpacing(self._DesignParameter['_PMOS2']['_XYCoordinates'][0][0] - self._DesignParameter['_PMOS1']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'], 2*MinSnapSpacing)
-            #self._DesignParameter['_BPLayer']['_YWidth'] = self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth']#self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter[_XVTPMOSLayer]['_YWidth'] + _DRCObj._MetalxMinWidth
-            self._DesignParameter['_BPLayer']['_XYCoordinates'] = [[[self.CeilMinSnapSpacing((righttmp+lefttmp)//2, MinSnapSpacing), self.CeilMinSnapSpacing(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2, MinSnapSpacing)], \
+            self._DesignParameter['_BPLayer']['_XYCoordinates'] = [[[self.CeilMinSnapSpacing((righttmp+lefttmp)//2, MinSnapSpacing), self.CeilMinSnapSpacing(self._DesignParameter['_PMOS1']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOS1']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] / 2, MinSnapSpacing)], \
                                                                    [self.CeilMinSnapSpacing((righttmp+lefttmp)//2, MinSnapSpacing), self.CeilMinSnapSpacing(min(self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOSPoly2Met1PMOS2']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOSPoly2Met1PMOS3']['_XYCoordinates'][0][1], self._DesignParameter['_VIAPMOSPoly2Met1PMOS4']['_XYCoordinates'][0][1]) - self._DesignParameter['_VIAPMOSPoly2Met1PMOS1']['_DesignObj']._DesignParameter['_POLayer']['_YWidth'] // 2 - _DRCObj._PpMinEnclosureOfPo, MinSnapSpacing)]]]
 
             #########################################################################################################################################

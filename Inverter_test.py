@@ -66,7 +66,7 @@ class _Inverter(StickDiagram._StickDiagram) :
         #####################################VDD Generation######################################
         _ContactNum = _NumSupplyCoX
         if _ContactNum == None:
-            _ContactNum = int((self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)) + 1
+            _ContactNum = int((self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2)) + 1
         if _ContactNum < 2 :
             _ContactNum = 2
 
@@ -301,6 +301,32 @@ class _Inverter(StickDiagram._StickDiagram) :
                                                                       [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0], \
                                                                        self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1]]]]
 
+        if _Finger > 4 :
+            _ViaMet12Met2forInput = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+            _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOX'] = int((self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2][0] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0] - self._DesignParameter['_Met2OnOutput']['_Width'] - 2 * _DRCObj._MetalxMinEnclosureCO2 - 2 * _DRCObj._MetalxMinSpace) / (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+            _ViaMet12Met2forInput['_ViaMet12Met2NumberOfCOY'] = 1
+            self._DesignParameter['_ViaMet12Met2forInput'] = self._SrefElementDeclaration(_DesignObj = ViaMet12Met2._ViaMet12Met2(_DesignParameter = None, _Name = 'ViaMet12Met2forInputIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet12Met2forInput']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaMet12Met2forInput)
+            tmp = []
+            for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) // 2 - 1) :
+                tmp.append([self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2*i+1][0], self._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]])
+            self._DesignParameter['_ViaMet12Met2forInput']['_XYCoordinates'] = tmp
+            del tmp
+
+            _ViaMet22Met3forInput = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+            _ViaMet22Met3forInput['_ViaMet22Met3NumberOfCOX'] = int((self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2][0] - self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0] - self._DesignParameter['_Met2OnOutput']['_Width'] - 2 * _DRCObj._MetalxMinEnclosureCO2 - 2 * _DRCObj._MetalxMinSpace) / (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+            _ViaMet22Met3forInput['_ViaMet22Met3NumberOfCOY'] = 1
+            self._DesignParameter['_ViaMet22Met3forInput'] = self._SrefElementDeclaration(_DesignObj = ViaMet22Met3._ViaMet22Met3(_DesignParameter = None, _Name = 'ViaMet22Met3forInputIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ViaMet22Met3forInput']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaMet22Met3forInput)
+            tmp = []
+            for i in range(0, (len(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates']) + 1) // 2 - 1) :
+                tmp.append([self._DesignParameter['_PMOS']['_XYCoordinates'][0][0] + self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][2*i+1][0], self._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]])
+            self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'] = tmp
+            del tmp
+
+            self._DesignParameter['_Met3InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[],_Width=None)
+            self._DesignParameter['_Met3InRouting']['_Width'] = self.CeilMinSnapSpacing(self._DesignParameter['_ViaMet22Met3forInput']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'], 2 * MinSnapSpacing)
+            self._DesignParameter['_Met3InRouting']['_XYCoordinates'] = [[self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0], self._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][-1]]]
 
 
 
@@ -369,12 +395,12 @@ class _Inverter(StickDiagram._StickDiagram) :
 
         self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[0, _VDD2VSSHeight]]
         self._DesignParameter['_VSSpin']['_XYCoordinates'] = [[0,0]]
-        self._DesignParameter['_Inputpin']['_XYCoordinates'] = [[round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][0] + \
-                    self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][0]) // 2), round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][1] + \
-                    self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][1]) // 2)]]
-        self._DesignParameter['_Outputpin']['_XYCoordinates'] = [[round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][0] + \
-                    self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][0]) // 2), round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][1] + \
-                    self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][1]) // 2)]]
+        self._DesignParameter['_Inputpin']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][0] + \
+                    self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][0]) / 2), MinSnapSpacing), self.CeilMinSnapSpacing(round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][1] + \
+                    self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][1]) / 2), MinSnapSpacing)]]
+        self._DesignParameter['_Outputpin']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][0] + \
+                    self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][0]) / 2), MinSnapSpacing), self.CeilMinSnapSpacing(round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][1] + \
+                    self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][1]) / 2), MinSnapSpacing)]]
 
 
 
@@ -391,16 +417,16 @@ class _Inverter(StickDiagram._StickDiagram) :
             self._DesignParameter['_Met2LayerOnSupply']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates'] + self._DesignParameter['PbodyContact']['_XYCoordinates']
             self._DesignParameter['_Met3LayerOnSupply']['_XYCoordinates'] = self._DesignParameter['NbodyContact']['_XYCoordinates'] + self._DesignParameter['PbodyContact']['_XYCoordinates']
 
-            _ViaNumSupplyX = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
-            _ViaNumSupplyY = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+            _ViaNumSupplyX = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
+            _ViaNumSupplyY = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth)) + 1
 
 
             if _ViaNumSupplyX <= 1:
                 _ViaNumSupplyX = 1
-                _ViaNumSupplyY = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumSupplyY = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
             if _ViaNumSupplyY <= 1:
                 _ViaNumSupplyY = 1
-                _ViaNumSupplyX = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) // (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
+                _ViaNumSupplyX = int((self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - 2 * _DRCObj._VIAxMinEnclosureByMetxTwoOppositeSide - _DRCObj._VIAxMinWidth) / (_DRCObj._VIAxMinSpace + _DRCObj._VIAxMinWidth)) + 1
 
 
             _ViaVDDMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -422,13 +448,13 @@ class _Inverter(StickDiagram._StickDiagram) :
 
 if __name__ == '__main__':
 
-    for i in range(1, 101) :
-        _Finger = random.randint(3,16)
-        _ChannelWidth = random.randrange(200,400,3)
-        _ChannelLength = 30
+    for i in range(1, 2) :
+        _Finger = random.randint(5,16)
+        _ChannelWidth = random.randrange(700,1200,10)
+        _ChannelLength = 100
         _NPRatio = 3
         _VDD2VSSHeight = None
-        _Dummy = True
+        _Dummy = False
         _NumSupplyCoX = None
         _NumSupplyCoY = None
         _SupplyMet1XWidth = None
@@ -450,7 +476,7 @@ if __name__ == '__main__':
         _fileName = cellname + '.gds'
 
         InputParams = dict(
-            _Finger=_Finger,
+        _Finger=_Finger,
         _ChannelWidth = _ChannelWidth,
         _ChannelLength = _ChannelLength,
         _NPRatio = _NPRatio,
@@ -491,20 +517,20 @@ if __name__ == '__main__':
         Checker.Upload2FTP()
         Checker.StreamIn(tech=DesignParameters._Technology)
 
-        import ftplib
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        myfile = open('Inverter.gds', 'rb')
-        ftp.storbinary('STOR Inverter.gds', myfile)
-        myfile.close()
-
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Inverter','Inverter',None)
-        a.DRCchecker()
-
-    print ("DRC Clean!!!")
+    #     import ftplib
+    #
+    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp.login('jicho0927', 'cho89140616!!')
+    #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    #     myfile = open('Inverter.gds', 'rb')
+    #     ftp.storbinary('STOR Inverter.gds', myfile)
+    #     myfile.close()
+    #
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Inverter','Inverter',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
 
 
     #     import ftplib

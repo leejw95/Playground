@@ -59,8 +59,8 @@ class _NbodyContact(StickDiagram._StickDiagram):
 
             print ('#############################     NIMP  Layer Calculation    ##############################################')
             self._DesignParameter['_NPLayer']['_XYCoordinates']=_XYCoordinateOfNbodyContact
-            self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
-            self._DesignParameter['_NPLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._NpMinExtensiononNactive
+            self._DesignParameter['_NPLayer']['_XWidth'] = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._NpMinExtensiononNactive2
+            self._DesignParameter['_NPLayer']['_YWidth'] = self._DesignParameter['_ODLayer']['_YWidth'] + 2 * _DRCObj._NpMinExtensiononNactive2
 
 
 

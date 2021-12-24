@@ -469,7 +469,8 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         # #Additional SLVT Generation
         # self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
         if DesignParameters._Technology == '028nm' :
-            if _TransmissionGateFinger == 1 or _TransmissionGateFinger == 2 :
+            if (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] *
+                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']) < _DRCObj._SlvtMinArea2 :
                 self._DesignParameter['_SLVTLayerNMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
                 self._DesignParameter['_SLVTLayerNMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
                 _LengthOfSLVT = _DRCObj._SlvtMinArea2 // self._DesignParameter['_SLVTLayerNMOS']['_Width'] + 2

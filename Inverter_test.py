@@ -519,7 +519,7 @@ if __name__ == '__main__':
 
     #     import ftplib
     #
-    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp = ftplib.FTP('141.223.29.62')
     #     ftp.login('jicho0927', 'cho89140616!!')
     #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
     #     myfile = open('Inverter.gds', 'rb')
@@ -535,7 +535,7 @@ if __name__ == '__main__':
 
     #     import ftplib
     #
-    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp = ftplib.FTP('141.223.29.62')
     #     ftp.login('jicho0927', 'cho89140616!!')
     #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
     #     myfile = open('Inverter.gds', 'rb')
@@ -550,7 +550,7 @@ if __name__ == '__main__':
 
     #     import ftplib
     #
-    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp = ftplib.FTP('141.223.29.62')
     #     ftp.login('jicho0927', 'cho89140616!!')
     #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc40n')
     #     myfile = open('Inverter.gds', 'rb')
@@ -566,7 +566,7 @@ if __name__ == '__main__':
 
     #     import ftplib
     #
-    #     ftp = ftplib.FTP('141.223.22.156')
+    #     ftp = ftplib.FTP('141.223.29.62')
     #     ftp.login('jicho0927', 'cho89140616!!')
     #     ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc90n')
     #     myfile = open('Inverter.gds', 'rb')

@@ -789,9 +789,9 @@ if __name__ == '__main__':
         _TransmissionGateChannelWidth = random.randrange(200,500,2)  ## 40 : random.randrange(350,500,10), 65nm : random.randrange(500,700,10), 90nm : random.randrange(700,900,10)
         _TransmissionGateChannelLength = 30  ##40 : 40, 65 : 60, 90 : 100
         _TransmissionGateNPRatio = 2  ##Default = 2
-        _ResistorWidth = random.randrange(1000,2000, 2) #random.randrange(1500,2500, 100)
-        _ResistorLength = random.randrange(400,2000, 2) ##_ResistorWidth + random.randrange(100,1000, 100)  ## minimum : 400
-        _TransmissionGateVDD2VSSHeight = 3600  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
+        _ResistorWidth = random.randrange(1500,2500, 100)#random.randrange(1500,2500, 100), random.randrange(1000,2000, 2)
+        _ResistorLength = _ResistorWidth + random.randrange(100,1000, 100)##_ResistorWidth + random.randrange(100,1000, 100), random.randrange(400,2000, 2)  ## minimum : 400
+        _TransmissionGateVDD2VSSHeight = 6000  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
 
         _TransmissionGateDummy = True  # T//F? only true @ 40, 28nm process
         _TransmissionGateXVT = 'SLVT'  # T//F?
@@ -812,7 +812,7 @@ if __name__ == '__main__':
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
 
-        _SRRandWidth = random.randrange(200,400,10)
+        _SRRandWidth = random.randrange(200,400,2)
         _SRNPRatio = 2##round(2 + random.random())
         _SRFinger1 = random.randint(1,15)
         _SRPMOSChannelWidth1 = _SRRandWidth * _SRNPRatio
@@ -855,7 +855,7 @@ if __name__ == '__main__':
         _SLNMOSFinger = random.randint(1,15)
         _SLDATAinputNMOSFinger = random.randint(2,15)
         _SLCLKinputNMOSFinger = random.randint(1,15)
-        _SLNMOSChannelWidth = random.randrange(700,1050,2)
+        _SLNMOSChannelWidth = random.randrange(200,1050,2)
         _SLCLKinputNMOSChannelWidth = random.randrange(200,1050,2)
         _SLChannelLength = 30
 
@@ -876,7 +876,7 @@ if __name__ == '__main__':
         _SLNumVIAMet12COY = None
         _SLPowerLine = False
         _N = random.randint(1,15)
-        _InvChannelWidth = random.randrange(200,400,10)
+        _InvChannelWidth = random.randrange(200,400,2)
         _InvChannelLength = 30
         _InvFinger = random.randint(5,16)
         _InvNPRatio = 3##round(2+random.random())

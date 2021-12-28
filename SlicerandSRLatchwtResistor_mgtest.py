@@ -971,7 +971,7 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = True
-        _N = 1##random.randint(1,15)
+        _N = 3##random.randint(1,15)
         _InvChannelWidth = 200##random.randrange(200,300,3)
         _InvChannelLength = 30
         _InvFinger = 16##random.randint(5,16)
@@ -1173,7 +1173,7 @@ if __name__ == '__main__':
         print ('###############      Sending to FTP Server...      ##################')
 
         import base64
-        ftp = ftplib.FTP('141.223.22.156')
+        ftp = ftplib.FTP('141.223.29.62')
         ftp.login('junung','chlwnsdnd1!')
         ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
         myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')

@@ -230,6 +230,11 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         del tmp
 
+        _Met7LayerVRXEA = int(((_YRBNum * _ResistorSpaceY) * 0.5) // (_DRCObj._MetalxMaxWidth // 2 + _DRCObj._MetalxMinSpace11))
+        _Met7DefWidth = _DRCObj._MetalxMaxWidth // 2
+        if _Met7LayerVRXEA <= 1 :
+            _Met7LayerVRXEA = 1
+
         
         self._DesignParameter['_Met6LayerVRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1],_XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met6LayerVRX']['_Width'] = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth']
@@ -239,17 +244,18 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
             tmp.append([[_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
                         _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1]],
                         [_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][0] + i * _ResistorSpaceX,
-                        _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1] + (_YRBNum - 1) * _ResistorSpaceY]])
+                        max(_ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_ViaMet52Met6OnRes']['_XYCoordinates'][0][1] + (_YRBNum - 1) * _ResistorSpaceY,
+                        self.CeilMinSnapSpacing(_ResistorBankOrigin[0][1] + _GapbtwOriginY + (_Met7LayerVRXEA) * ((_YRBNum * _ResistorSpaceY) // (_Met7LayerVRXEA + 1)) + (_Met7DefWidth - 2 * _DRCObj._MetalxMinSpace11) / 2, 2*_MinSnapSpacing))]])
 
         self._DesignParameter['_Met6LayerVRX']['_XYCoordinates'] = tmp
 
         del tmp
 
 
-        _Met7LayerVRXEA = int(((_YRBNum * _ResistorSpaceY) * 0.5) // (_DRCObj._MetalxMaxWidth // 2 + _DRCObj._MetalxMinSpace11))
-        _Met7DefWidth = _DRCObj._MetalxMaxWidth // 2
-        if _Met7LayerVRXEA <= 1 :
-            _Met7LayerVRXEA = 1
+        # _Met7LayerVRXEA = int(((_YRBNum * _ResistorSpaceY) * 0.5) // (_DRCObj._MetalxMaxWidth // 2 + _DRCObj._MetalxMinSpace11))
+        # _Met7DefWidth = _DRCObj._MetalxMaxWidth // 2
+        # if _Met7LayerVRXEA <= 1 :
+        #     _Met7LayerVRXEA = 1
 
         self._DesignParameter['_Met7LayerVRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL7'][0], _Datatype=DesignParameters._LayerMapping['METAL7'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met7LayerVRX']['_Width'] = _Met7DefWidth - 2 * _DRCObj._MetalxMinSpace11
@@ -1715,13 +1721,13 @@ if __name__ == '__main__' :
         _XRBNum = 6
         _YRBNum = 5
         
-        _TransmissionGateFinger = 13
-        _TransmissionGateChannelWidth = 380 ##200nm ~ 500nm range
-        _TransmissionGateChannelLength = 40
+        _TransmissionGateFinger = 3
+        _TransmissionGateChannelWidth = 250 ##200nm ~ 500nm range
+        _TransmissionGateChannelLength = 30
         _TransmissionGateNPRatio = 2  ##Default = 2
-        _TransmissionGateDummy = False     #T/F?
-        _TransmissionGateVDD2VSSHeight = 4000 ## FIXED
-        _TransmissionGateXVT = 'LVT'     #T/F?
+        _TransmissionGateDummy = True     #T/F?
+        _TransmissionGateVDD2VSSHeight = 6000 ## FIXED
+        _TransmissionGateXVT = 'SLVT'     #T/F?
 
         _PowerLine = False # T/F?
         _InputLine = False
@@ -1781,9 +1787,9 @@ if __name__ == '__main__' :
 
         ftp = ftplib.FTP('141.223.22.156')
         ftp.login('junung', 'chlwnsdnd1!')
-        #ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
         #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
+        #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
         #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC90n')
         myfile = open('FullResistorBank.gds', 'rb')
         ftp.storbinary('STOR FullResistorBank.gds', myfile)

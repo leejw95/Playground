@@ -278,8 +278,9 @@ class _ResistorBank(StickDiagram._StickDiagram) :
 
         else :
             _TotalSubringinputs['_XWidth'] =_NMOSSubringinputs['_XWidth'] + (_NMOSSubringinputs['_Width']) * 2 + _DRCObj._PpMinExtensiononPactive2 * 4 + _DRCObj._NwMinSpacetoPactive + _DRCObj._NwMinEnclosurePactive + \
-                                            self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_RPOLayer']['_XWidth'] + \
-                                            _DRCObj._RPOMinSpace2OD * 2
+                                            max(_DRCObj._RPOMinSpace2OD * 2 , 
+                                            _DRCObj.DRCMETAL1MinSpace(_TransmissionGateChannelWidth * _TransmissionGateNPRatio, _TransmissionGateChannelWidth * _TransmissionGateNPRatio, _TotalSubringWidth) * 2 - _DRCObj._RPOMinExtensionOnPO * 2) \
+                                            + self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_RPOLayer']['_XWidth']
 
             _TotalSubringinputs['_YWidth'] = max(_TransmissionGateVDD2VSSHeight + _NMOSSubringinputs['_Width'] +\
                                                +  max(_DRCObj._NwMinSpacetoPactive + _DRCObj._NwMinEnclosureNactive + _DRCObj._NpMinExtensiononNactive2 +  _DRCObj._PpMinExtensiononPactive2 , _DRCObj._PpMinSpace +  _DRCObj._PpMinExtensiononPactive2 +  _DRCObj._PpMinExtensiononPactive2) * 2,
@@ -368,7 +369,8 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         else :
             self._DesignParameter['_OpppcresRB']['_XYCoordinates'] = [
                 [self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] +self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
-                _NMOSSubringinputs['_Width'] + int(round(_NMOSSubringinputs['_XWidth'] + 0.5)) // 2 + max(_DRCObj._RPOMinSpace2OD, _DRCObj._PpMinSpace) +
+                _NMOSSubringinputs['_Width'] + int(round(_NMOSSubringinputs['_XWidth'] + 0.5)) // 2 + max(_DRCObj._RPOMinSpace2OD, 
+                _DRCObj._PpMinSpace, _DRCObj.DRCMETAL1MinSpace(_TransmissionGateChannelWidth * _TransmissionGateNPRatio, _TransmissionGateChannelWidth * _TransmissionGateNPRatio, _TotalSubringWidth) - _DRCObj._RPOMinExtensionOnPO) +
                 int(round(self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_RPOLayer']['_XWidth'] + 0.5)) // 2,
                 min(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2, self._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1])]]
         
@@ -1009,11 +1011,11 @@ if __name__ == '__main__' :
 
     for _ in range (1,2) :
         _TransmissionGateFinger = 8
-        _TransmissionGateChannelWidth = 500
+        _TransmissionGateChannelWidth = 800
         _TransmissionGateChannelLength = 60
         _TransmissionGateNPRatio = 2
         _TransmissionGateDummy = False    #T/F?
-        _TransmissionGateVDD2VSSHeight = 3850 ## FIXED
+        _TransmissionGateVDD2VSSHeight = 4750 ## FIXED
         _TransmissionGateXVT = 'LVT'     #T/F?
 
         _PowerLine = True

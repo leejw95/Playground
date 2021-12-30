@@ -791,7 +791,7 @@ if __name__ == '__main__':
         _TransmissionGateNPRatio = 2  ##Default = 2
         _ResistorWidth = random.randrange(1500,2500, 100)#random.randrange(1500,2500, 100), random.randrange(1000,2000, 2)
         _ResistorLength = _ResistorWidth + random.randrange(100,1000, 100)##_ResistorWidth + random.randrange(100,1000, 100), random.randrange(400,2000, 2)  ## minimum : 400
-        _TransmissionGateVDD2VSSHeight = 6000  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
+        _TransmissionGateVDD2VSSHeight = 4000  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
 
         _TransmissionGateDummy = True  # T//F? only true @ 40, 28nm process
         _TransmissionGateXVT = 'SLVT'  # T//F?
@@ -898,7 +898,7 @@ if __name__ == '__main__':
 
 
 
-        from Private import MyInfo
+        # from Private import MyInfo
         import DRCchecker
 
         libname = 'SlicerandSRLatchwtResistor'
@@ -966,27 +966,28 @@ if __name__ == '__main__':
         # Checker.Upload2FTP()
         # Checker.StreamIn(tech=DesignParameters._Technology)
 
-        import ftplib
-
-        ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('jicho0927', 'cho89140616!!')
-        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        myfile.close()
-
         # import ftplib
-        #
+
         # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('junung', 'chlwnsdnd1!')
-        # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        # ftp.login('jicho0927', 'cho89140616!!')
+        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
         # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         # myfile.close()
+
+        import ftplib
+        
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('junung', 'chlwnsdnd1!')
+        #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        myfile.close()
     
         import DRCchecker
 
-        a = DRCchecker.DRCchecker('jicho0927', 'cho89140616!!', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n', '/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run', 'SlicerandSRLatchwtResistor', 'SlicerandSRLatchwtResistor', None)
+        a = DRCchecker.DRCchecker('junung', 'chlwnsdnd1!', '/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/DRC/run', 'SlicerandSRLatchwtResistor', 'SlicerandSRLatchwtResistor', None)
         a.DRCchecker()
 
     print("DRC Clean!!!")

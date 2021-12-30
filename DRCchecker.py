@@ -25,7 +25,7 @@ import DesignParameters
 
 class DRCchecker:
     def __init__(self, username, password, WorkDir, DRCrunDir, libname, cellname, GDSDir=None):
-        self.server = '141.223.22.156'
+        self.server = '141.223.29.62'
         self.port = 22
         self.username = username
         self.password = password

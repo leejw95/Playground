@@ -793,7 +793,7 @@ if __name__ == '__main__':
         _ResistorLength = 2000#_ResistorWidth + random.randrange(100,2000, 100)##_ResistorWidth + random.randrange(100,1000, 100), random.randrange(400,2000, 2)  ## minimum : 400
         _TransmissionGateVDD2VSSHeight = 3850  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
 
-        _TransmissionGateDummy = False  # T//F? only true @ 40, 28nm process
+        _TransmissionGateDummy = True  # T//F? only true @ 40, 28nm process
         _TransmissionGateXVT = 'LVT'  # T//F?
         _PowerLine = False  # T//F?
         _InputLine = False
@@ -829,7 +829,7 @@ if __name__ == '__main__':
         _SRChannelLength = 60
 
         _SRVDD2VSSHeightAtOneSide = None
-        _SRDummy = False
+        _SRDummy = True
         _SRNumSupplyCoX = None
         _SRNumSupplyCoY = 2
         _SRSupplyMet1XWidth = None
@@ -880,7 +880,7 @@ if __name__ == '__main__':
         _InvFinger = 15#random.randint(5,16)
         _InvNPRatio = 3##round(2+random.random())
         _InvVDD2VSSHeight = None
-        _InvDummy = False
+        _InvDummy = True
         _InvNumSupplyCoX = None
         _InvNumSupplyCoY = None
         _InvSupplyMet1XWidth = None
@@ -897,7 +897,7 @@ if __name__ == '__main__':
 
 
 
-        # from Private import MyInfo
+        from Private import MyInfo
         import DRCchecker
 
         libname = 'SlicerandSRLatchwtResistor'
@@ -951,19 +951,19 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        # print('#############################      Sending to FTP Server...      #############################')
-        # My = MyInfo.USER(DesignParameters._Technology)
-        # Checker = DRCchecker.DRCchecker(
-        #     username=My.ID,
-        #     password=My.PW,
-        #     WorkDir=My.Dir_Work,
-        #     DRCrunDir=My.Dir_DRCrun,
-        #     libname=libname,
-        #     cellname=cellname,
-        #     GDSDir=My.Dir_GDS
-        # )
-        # Checker.Upload2FTP()
-        # Checker.StreamIn(tech=DesignParameters._Technology)
+        print('#############################      Sending to FTP Server...      #############################')
+        My = MyInfo.USER(DesignParameters._Technology)
+        Checker = DRCchecker.DRCchecker(
+            username=My.ID,
+            password=My.PW,
+            WorkDir=My.Dir_Work,
+            DRCrunDir=My.Dir_DRCrun,
+            libname=libname,
+            cellname=cellname,
+            GDSDir=My.Dir_GDS
+        )
+        Checker.Upload2FTP()
+        Checker.StreamIn(tech=DesignParameters._Technology)
 
         # import ftplib
 

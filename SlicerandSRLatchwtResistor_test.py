@@ -830,7 +830,7 @@ if __name__ == '__main__':
 
         _SRNPRatio = None
         _SRVDD2VSSHeightAtOneSide = None
-        _SRDummy = True
+        _SRDummy = False
         _SRNumSupplyCoX = None
         _SRNumSupplyCoY = 2
         _SRSupplyMet1XWidth = None
@@ -859,7 +859,7 @@ if __name__ == '__main__':
         _SLCLKinputNMOSChannelWidth = random.randrange(700,3500,10)#(200,1050,2)
         _SLChannelLength = 100#30
 
-        _SLDummy = True
+        _SLDummy = False
         _SLXVT = 'LVT'
         _SLGuardringWidth = 700#200
         _SLGuardring = True
@@ -876,7 +876,7 @@ if __name__ == '__main__':
         _SLNumVIAMet12COY = None
         _SLPowerLine = False
         _N = random.randint(1,8)
-        _InvChannelWidth = random.randrange(700,3500,10)#(200,400,2)
+        _InvChannelWidth = random.randrange(700,750,10)#(200,400,2)
         _InvChannelLength = 100
         _InvFinger = random.randint(5,16)
         _InvNPRatio = 3##round(2+random.random())

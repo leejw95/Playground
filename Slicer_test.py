@@ -138,10 +138,10 @@ class _Slicer(StickDiagram._StickDiagram):
 
             toptmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth / 2 + _GuardringMet1Space2 + _SlicerGuardringWidth / 2, self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
 
-            _GuardringCetPointX = self.CeilMinSnapSpacing(int(round(lefttmp + righttmp + 0.5)) // 2, MinSnapSpacing)
-            _GuardringCetPointY = self.CeilMinSnapSpacing(int(round(toptmp + bottomtmp + 0.5)) // 2, MinSnapSpacing)
-            _GuardringXWidth = self.CeilMinSnapSpacing(int(righttmp - lefttmp - _SlicerGuardringWidth) + 2, MinSnapSpacing)
-            _GuardringYWidth = self.CeilMinSnapSpacing(int(toptmp - bottomtmp - _SlicerGuardringWidth) + 2, MinSnapSpacing)
+            _GuardringCetPointX = self.CeilMinSnapSpacing((lefttmp + righttmp) / 2, MinSnapSpacing)
+            _GuardringCetPointY = self.CeilMinSnapSpacing((toptmp + bottomtmp) / 2, MinSnapSpacing)
+            _GuardringXWidth = self.CeilMinSnapSpacing((righttmp - lefttmp - _SlicerGuardringWidth), MinSnapSpacing)
+            _GuardringYWidth = self.CeilMinSnapSpacing((toptmp - bottomtmp - _SlicerGuardringWidth), MinSnapSpacing)
             # if _GuardringXWidth % 2 == 1:
             #     _GuardringXWidth = _GuardringXWidth + 1
             # if _GuardringYWidth % 2 == 1:

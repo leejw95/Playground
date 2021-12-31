@@ -851,12 +851,12 @@ if __name__ == '__main__':
         _SLCLKinputPMOSFinger1 = 6#random.randint(1,15)
         _SLCLKinputPMOSFinger2 = 3#random.randint(1,15)
         _SLPMOSFinger = 2#random.randint(1,15)
-        _SLPMOSChannelWidth = 1750#random.randrange(700,3500,10)#(200,1050,2)
+        _SLPMOSChannelWidth = 1500#random.randrange(700,3500,10)#(200,1050,2)
         _SLNMOSFinger = 2#random.randint(1,15)
-        _SLDATAinputNMOSFinger = 12#random.randint(2,15)
+        _SLDATAinputNMOSFinger = 12#random.randint(3,15)
         _SLCLKinputNMOSFinger = 8#random.randint(1,15)
-        _SLNMOSChannelWidth = 1750#random.randrange(700,3500,10)#(200,1050,2)
-        _SLCLKinputNMOSChannelWidth = 1750#random.randrange(700,3500,10)#(200,1050,2)
+        _SLNMOSChannelWidth = 1500#random.randrange(700,3500,10)#(200,1050,2)
+        _SLCLKinputNMOSChannelWidth = 1500#random.randrange(700,3500,10)#(200,1050,2)
         _SLChannelLength = 40#30
 
         _SLDummy = True

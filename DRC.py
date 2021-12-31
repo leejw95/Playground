@@ -713,6 +713,7 @@ class DRCMETAL1:
 
     def DRCMETAL1MinSpace(self, _Width=None, _ParallelLength=None, _Width2 = None):
         if DesignParameters._Technology == '045nm':
+            _Width = max(_Width,_Width2)
             if _Width == None and _ParallelLength == None:
                 return self._Metal1MinSpace
             elif 170 < _Width and 270 < _ParallelLength: #1

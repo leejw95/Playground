@@ -134,9 +134,9 @@ class _Slicer(StickDiagram._StickDiagram):
                                                    self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + _GuardringWidth//2 + _GuardRingMet1Space + _SlicerGuardringWidth//2, \
                                                    self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][0] + max(PMOS_righttmp, NMOS_righttmp) + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
 
-            _GuardringMet1Space2 = _DRCObj.DRCMETAL1MinSpace(_GuardringWidth, PMOS_righttmp - PMOS_lefttmp + _GuardringWidth, self.CeilMinSnapSpacing(NMOS_bottomtmp - bottomtmp + _SlicerGuardringWidth / 2 + _GuardringWidth / 2, MinSnapSpacing))
+            _GuardringMet1Space2 = _DRCObj.DRCMETAL1MinSpace(_GuardringWidth, PMOS_righttmp - PMOS_lefttmp + _GuardringWidth, self._DesignParameter['_NMOSSET']['_XYCoordinates'][0][1] + NMOS_bottomtmp - bottomtmp + _SlicerGuardringWidth / 2 + _GuardringWidth / 2)
 
-            toptmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth//2 + _GuardringMet1Space2 + _SlicerGuardringWidth//2, self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
+            toptmp = self.CeilMinSnapSpacing(max(self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + _GuardringWidth / 2 + _GuardringMet1Space2 + _SlicerGuardringWidth / 2, self._DesignParameter['_PMOSSET']['_XYCoordinates'][0][1] + PMOS_toptmp + self._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2 + _SlicerGuardringWidth//2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing)
 
             _GuardringCetPointX = self.CeilMinSnapSpacing(int(round(lefttmp + righttmp + 0.5)) // 2, MinSnapSpacing)
             _GuardringCetPointY = self.CeilMinSnapSpacing(int(round(toptmp + bottomtmp + 0.5)) // 2, MinSnapSpacing)
@@ -1366,12 +1366,12 @@ if __name__ == '__main__':
         _CLKinputPMOSFinger1 = 6#random.randint(1, 16)
         _CLKinputPMOSFinger2 = 3#random.randint(1, 16)
         _PMOSFinger = 2#random.randint(1, 16)
-        _PMOSChannelWidth = 1800#random.randrange(350, 1800, 10)
+        _PMOSChannelWidth = 1750#random.randrange(350, 1800, 10)
         _DATAinputNMOSFinger = 12#random.randint(2, 16)
         _NMOSFinger = 2#random.randint(1, 16)
         _CLKinputNMOSFinger = 8#random.randint(1, 16)
-        _NMOSChannelWidth = 1800#random.randrange(350, 1800, 10)
-        _CLKinputNMOSChannelWidth = 1800#random.randrange(350, 1800, 10)
+        _NMOSChannelWidth = 1750#random.randrange(350, 1800, 10)
+        _CLKinputNMOSChannelWidth = 1750#random.randrange(350, 1800, 10)
         _ChannelLength = 40
         _Dummy = True
         _XVT = 'LVT'

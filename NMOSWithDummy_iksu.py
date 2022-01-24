@@ -401,7 +401,7 @@ class _NMOS(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
 
-    # from Private import MyInfo
+    from Private import MyInfo
     import DRCchecker
 
     libname = 'TEST_MOS'
@@ -412,7 +412,7 @@ if __name__ == '__main__':
     InputParams = dict(
         _NMOSNumberofGate=20,
         _NMOSChannelWidth=500,      # Minimum value : 200 (samsung) / 200 (65nm)
-        _NMOSChannellength=40,      # Minimum value : 30 (samsung) / 60 (65nm)
+        _NMOSChannellength=30,      # Minimum value : 30 (samsung) / 60 (65nm)
         _NMOSDummy=True,
         _XVT='LVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
     )
@@ -426,30 +426,30 @@ if __name__ == '__main__':
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
 
-    import ftplib
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('junung', 'chlwnsdnd1!')
-    #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-    ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
-    myfile = open('NMOSWithDummy_iksu.gds', 'rb')
-    ftp.storbinary('STOR NMOSWithDummy_iksu.gds', myfile)
-    myfile.close()
-    ftp.close()
+    # import ftplib
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login('junung', 'chlwnsdnd1!')
+    # #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+    # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
+    # myfile = open('NMOSWithDummy_iksu.gds', 'rb')
+    # ftp.storbinary('STOR NMOSWithDummy_iksu.gds', myfile)
+    # myfile.close()
+    # ftp.close()
 
-    # print ('###############      Sending to FTP Server...      ##################')
-    # My = MyInfo.USER(DesignParameters._Technology)
-    # Checker = DRCchecker.DRCchecker(
-    #     username=My.ID,
-    #     password=My.PW,
-    #     WorkDir=My.Dir_Work,
-    #     DRCrunDir=My.Dir_DRCrun,
-    #     libname=libname,
-    #     cellname=cellname,
-    #     GDSDir=My.Dir_GDS
-    # )
-    # Checker.Upload2FTP()
-    # Checker.StreamIn(tech=DesignParameters._Technology)
+    print ('###############      Sending to FTP Server...      ##################')
+    My = MyInfo.USER(DesignParameters._Technology)
+    Checker = DRCchecker.DRCchecker(
+        username=My.ID,
+        password=My.PW,
+        WorkDir=My.Dir_Work,
+        DRCrunDir=My.Dir_DRCrun,
+        libname=libname,
+        cellname=cellname,
+        GDSDir=My.Dir_GDS
+    )
+    Checker.Upload2FTP()
+    Checker.StreamIn(tech=DesignParameters._Technology)
     # import ftplib
     #
     # ftp = ftplib.FTP('141.223.22.156')

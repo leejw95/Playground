@@ -174,6 +174,30 @@ class _StickDiagram:
 
         return elementXY
 
+    def getXYwtBoudary(self, boundary:str, *hier_element_tuple:str):
+        _elementXY = self.getXY(*hier_element_tuple)
+        XWidth = self.getXWidth(*hier_element_tuple)
+        YWidth = self.getYWidth(*hier_element_tuple)
+        if boundary == 'up':
+            offset = [0, +YWidth / 2]
+        elif boundary == 'down':
+            offset = [0, -YWidth / 2]
+        elif boundary == 'right':
+            offset = [+XWidth / 2, 0]
+        elif boundary == 'left':
+            offset = [-XWidth / 2, 0]
+        else:
+            raise Exception(f"Invalid boundary parameter: {boundary}.")
+
+        elementXY = []
+        for XYs in _elementXY:
+            elementXY.append([
+                XYs[0] + offset[0],
+                XYs[1] + offset[1]
+            ])
+
+        return elementXY
+
 
     def XYCoordinate2MinMaxXY(self, _XYCoordinates):
         x_list = []
@@ -448,8 +472,8 @@ class _StickDiagram:
             if _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 1 and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
                 if DesignParameters._Technology!='180nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['WELLBODY'][0]:
                     pass
-                elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
-                    pass
+                # elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
+                #     pass
                 else :
                     for _XYCoordinate in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
 
@@ -463,8 +487,8 @@ class _StickDiagram:
             elif _DesignParameterInDictionary[_DesignParameter]['_DesignParametertype'] == 11 and _DesignParameterInDictionary[_DesignParameter]['_Ignore']==None:
                 if DesignParameters._Technology!='180nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['WELLBODY'][0]:
                     pass
-                elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
-                    pass
+                # elif DesignParameters._Technology!='065nm' and _DesignParameterInDictionary[_DesignParameter]['_Layer'] == DesignParameters._LayerMapping['PDK'][0] :
+                #     pass
                 else :
                     for _XYCoordinate in _DesignParameterInDictionary[_DesignParameter]['_XYCoordinates']:
 

@@ -19,8 +19,8 @@ class _Opppcres(StickDiagram._StickDiagram) :
                                                     _OPLayer = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['OP'][0],_Datatype=DesignParameters._LayerMapping['OP'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
                                                     _PRESLayer = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PRES'][0],_Datatype=DesignParameters._LayerMapping['PRES'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
                                                     _PPLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0],_Datatype=DesignParameters._LayerMapping['PIMP'][1],_XYCoordinates=[], _XWidth=400, _YWidth=400),
-                                                    #_RPOLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['RPO'][0],_Datatype=DesignParameters._LayerMapping['RPO'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
-                                                    #_RHLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['RH'][0],_Datatype=DesignParameters._LayerMapping['RH'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
+                                                    _RPOLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['RPO'][0],_Datatype=DesignParameters._LayerMapping['RPO'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
+                                                    _RHLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['RH'][0],_Datatype=DesignParameters._LayerMapping['RH'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
                                                     _Met1Layer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0],_Datatype=DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
                                                     _COLayer=self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['CONT'][0],_Datatype=DesignParameters._LayerMapping['CONT'][1], _XYCoordinates=[],_XWidth=400, _YWidth=400),
                                                     _Name=self._NameDeclaration(_Name=_Name), _GDSFile=self._GDSObjDeclaration(_GDSFile=None),
@@ -80,17 +80,6 @@ class _Opppcres(StickDiagram._StickDiagram) :
         self._DesignParameter['_PPLayer']['_YWidth'] = self._DesignParameter['_PRESLayer']['_YWidth']
         self._DesignParameter['_PPLayer']['_XYCoordinates'] = _XYCoordinateOfOPRES
 
-        # if DesignParameters._Technology != '028nm' :
-        #     if _Silicide == True :
-        #         print ('#############################     RPO Layer Calculation    ##############################################')
-        #         self._DesignParameter['_RPOLayer']['_XWidth']= _ResWidth + 2* _DRCObj.DRCRPOMinExtensionOnPO(_Width=_ResLength)
-        #         self._DesignParameter['_RPOLayer']['_YWidth']= _ResLength
-        #         self._DesignParameter['_RPOLayer']['_XYCoordinates'] = self._DesignParameter['_POLayer']['_XYCoordinates']
-
-        #         print ('#############################     RHO Layer Calculation    ##############################################')
-        #         self._DesignParameter['_RHLayer']['_XWidth']= self._DesignParameter['_POLayer']['_XWidth'] + 2 * _DRCObj._PpMinEnclosureOfPo
-        #         self._DesignParameter['_RHLayer']['_YWidth']= self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._PpMinEnclosureOfPo
-        #         self._DesignParameter['_RHLayer']['_XYCoordinates'] = self._DesignParameter['_POLayer']['_XYCoordinates']
 
         print ('#############################     CONT Layer Calculation    ##############################################')
         self._DesignParameter['_COLayer']['_XWidth'] = _DRCObj._CoMinWidth

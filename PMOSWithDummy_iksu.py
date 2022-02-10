@@ -125,10 +125,10 @@ class _PMOS(StickDiagram._StickDiagram):
 
 
         print('     DIFF (OD/RX) Layer Calculation     '.center(105,'#'))
-        if _PMOSDummy and DesignParameters._Technology != '028nm':
-            XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _PMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
-        else:
-            XWidth_OD = _LengthPMOSBtwPO * _PMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
+        # if _PMOSDummy and DesignParameters._Technology != '028nm':
+        #     XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _PMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
+        # else:
+        XWidth_OD = _LengthPMOSBtwPO * _PMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
         self._DesignParameter['_ODLayer']['_XWidth'] = XWidth_OD
         self._DesignParameter['_ODLayer']['_YWidth'] = _PMOSChannelWidth
         self._DesignParameter['_ODLayer']['_XYCoordinates'] = _XYCoordinateOfPMOS
@@ -199,7 +199,7 @@ class _PMOS(StickDiagram._StickDiagram):
 
 
         print('     PIMP (PP/BP) Layer Calculation     '.center(105,'#'))  # Need to check
-        if (DesignParameters._Technology == '065nm') and (_PMOSDummy is True):
+        if (DesignParameters._Technology != '028nm') and (_PMOSDummy is True) :
             XWidth_PP_byPO = self._DesignParameter['_PODummyLayer']['_XWidth'] \
                              + (self._DesignParameter['_PODummyLayer']['_XYCoordinates'][1][0] -
                                 self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) \
@@ -210,7 +210,7 @@ class _PMOS(StickDiagram._StickDiagram):
         XWidth_PP_byOD = self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._PpMinExtensiononPactive
 
         self._DesignParameter['_PPLayer']['_XWidth'] = max(XWidth_PP_byPO, XWidth_PP_byOD)
-        self._DesignParameter['_PPLayer']['_YWidth'] = self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._PpMinEnclosureOfPo
+        self._DesignParameter['_PPLayer']['_YWidth'] = max(self._DesignParameter['_POLayer']['_YWidth'], self._DesignParameter['_PODummyLayer']['_YWidth']) + 2 * _DRCObj._PpMinEnclosureOfPo
         self._DesignParameter['_PPLayer']['_XYCoordinates'] = _XYCoordinateOfPMOS
 
         # XVT Layer Calculation

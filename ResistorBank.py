@@ -48,7 +48,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                # _InverterSupplyMet1XWidth = None, _InverterSupplMet1YWidth = None, _InverterNumVIAPoly2Met1COX = None, _InverterNumVIAPoly2Met1COY = None,
                                # _InverterNumVIAMet12COX = None, _InverterNumVIAMet12COY = None,
                                _TransmissionGateFinger = None, _TransmissionGateChannelWidth = None, _TransmissionGateChannelLength = None, _TransmissionGateNPRatio = None,
-                               _TransmissionGateDummy = False , _TransmissionGateVDD2VSSHeight = None, _TransmissionGateXVT = None,
+                               _TransmissionGateDummy = False , _TransmissionGateVDD2VSSHeight = None, _TransmissionGateSLVT = False,
                                _PowerLine = False,
                                # _TransmissionGateNumSupplyCOX = None, _TransmissionGateNumSupplyCOY = None, _TransmissionGateSupplyMet1XWidth = None, _TransmissionGateSupplyMet1YWidth = None,
                                # _TransmissionGateNumVIAPoly2Met1COX = None, _TransmissionGateNumVIAPoly2Met1COY = None, _TransmissionGateNumVIAMet12COX = None, _TransmissionGateNumVIAMet12COY = None,
@@ -93,7 +93,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         _TransmissionGateinputs['_NPRatio'] = _TransmissionGateNPRatio
         _TransmissionGateinputs['_Dummy'] = _TransmissionGateDummy
         _TransmissionGateinputs['_VDD2VSSHeight'] = _TransmissionGateVDD2VSSHeight
-        _TransmissionGateinputs['_XVT'] = _TransmissionGateXVT
+        _TransmissionGateinputs['_SLVT'] = _TransmissionGateSLVT
         _TransmissionGateinputs['_SupplyMet1YWidth'] = _NMOSSubringWidth
         _TransmissionGateinputs['_Gatereverse'] = False
         _TransmissionGateinputs['_Bodycontact'] = False
@@ -1310,7 +1310,7 @@ if __name__ == '__main__' :
     _TransmissionGateNPRatio = 2
     _TransmissionGateDummy = False     #T/F?
     _TransmissionGateVDD2VSSHeight = 4760 ## FIXED
-    _TransmissionGateXVT = 'LVT'     #T/F?
+    _TransmissionGateSLVT = False     #T/F?
 
     _PowerLine = True
 

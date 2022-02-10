@@ -120,10 +120,10 @@ class _NMOS(StickDiagram._StickDiagram):
 
 
         print ('#############################     DIFF (OD/RX) Layer Calculation    ##############################################')
-        if _NMOSDummy and DesignParameters._Technology != '028nm':
-            XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _NMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
-        else:
-            XWidth_OD = _LengthNMOSBtwPO * _NMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
+        # if _NMOSDummy and DesignParameters._Technology != '028nm':
+        #     XWidth_OD = self._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] - self._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0] + _NMOSChannellength + 2 * _DRCObj._PolygateMinExtensionOnODX
+        # else:
+        XWidth_OD = _LengthNMOSBtwPO * _NMOSNumberofGate + _DRCObj._CoMinWidth + 2 * _DRCObj._CoMinEnclosureByOD
         self._DesignParameter['_ODLayer']['_XWidth'] = XWidth_OD
         self._DesignParameter['_ODLayer']['_YWidth'] = _NMOSChannelWidth
         self._DesignParameter['_ODLayer']['_XYCoordinates'] = _XYCoordinateOfNMOS
@@ -192,6 +192,14 @@ class _NMOS(StickDiagram._StickDiagram):
         else:
             pass
 
+        self._DesignParameter['_NPLayer'] = self._BoundaryElementDeclaration(
+                _Layer=DesignParameters._LayerMapping['NIMP'][0],
+                _Datatype=DesignParameters._LayerMapping['NIMP'][1],
+                _XWidth=0,
+                _YWidth=0,
+                _XYCoordinates=_XYCoordinateOfNMOS,)
+
+
 
         if DesignParameters._Technology != '028nm':  # There is no NIMP(NP) Layer at 28nm
             print ('#############################     NIMP (NP/-) Layer Calculation    ####################')
@@ -207,7 +215,7 @@ class _NMOS(StickDiagram._StickDiagram):
                 _Layer=DesignParameters._LayerMapping['NIMP'][0],
                 _Datatype=DesignParameters._LayerMapping['NIMP'][1],
                 _XWidth=max(XWidth_NP_byPO, XWidth_NP_byOD),
-                _YWidth=self._DesignParameter['_POLayer']['_YWidth'] + 2 * _DRCObj._NpMinEnclosureOfPo,
+                _YWidth=max(self._DesignParameter['_POLayer']['_YWidth'], self._DesignParameter['_PODummyLayer']['_YWidth']) + 2 * _DRCObj._NpMinEnclosureOfPo,
                 _XYCoordinates=_XYCoordinateOfNMOS,)
 
 
@@ -404,8 +412,8 @@ if __name__ == '__main__':
     InputParams = dict(
         _NMOSNumberofGate=20,
         _NMOSChannelWidth=500,      # Minimum value : 200 (samsung) / 200 (65nm)
-        _NMOSChannellength=60,      # Minimum value : 30 (samsung) / 60 (65nm)
-        _NMOSDummy=False,
+        _NMOSChannellength=30,      # Minimum value : 30 (samsung) / 60 (65nm)
+        _NMOSDummy=True,
         _XVT='LVT',                # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
     )
 
@@ -417,6 +425,17 @@ if __name__ == '__main__':
     tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
     tmp.write_binary_gds_stream(testStreamFile)
     testStreamFile.close()
+
+    # import ftplib
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login('junung', 'chlwnsdnd1!')
+    # #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # #ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+    # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC40n')
+    # myfile = open('NMOSWithDummy_iksu.gds', 'rb')
+    # ftp.storbinary('STOR NMOSWithDummy_iksu.gds', myfile)
+    # myfile.close()
+    # ftp.close()
 
     print ('###############      Sending to FTP Server...      ##################')
     My = MyInfo.USER(DesignParameters._Technology)

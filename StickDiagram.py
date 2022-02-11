@@ -22,14 +22,6 @@ import copy
 import math
 import DRC
 
-
-
-
-
-
-
-
-
 class _StickDiagram:
     def __init__(self):
         pass

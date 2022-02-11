@@ -468,8 +468,8 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                  self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1]]]]
 
 
-        # #Additional SLVT Generation
-        # self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
+        #Additional SLVT Generation
+        #self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
         if DesignParameters._Technology == '028nm' :
             _XVTLayer='_'+_TransmissionGateXVT+'Layer'
             if (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth'] *

@@ -264,7 +264,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
                                                                    self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_Met1Layery']['_XYCoordinates'][1][0]) +
                                                                _SLGuardringWidth // 2,
                                                                _ResistorBankOrigin[0][1] - self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_YINp']['_Ignore']
-                                                               + (self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore'] * (_NumberofSlicerWithSRLatch - 1) // 2)
+                                                               + (self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore'] * (_NumberofSlicerWithSRLatch - 1) / 2)
                                                                + _CenterofVRX]]
 
         print ('################################       Additional Via Settings      #######################################')
@@ -444,14 +444,14 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         # del tmp
         # tmp = []
         # for i in range(0, _NumberofSlicerWithSRLatch):
-        #     tmp.append([[self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][0] - self._DesignParameter['_ViaMet12Met2OnVRX']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+        #     tmp.append([[self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][0] - self._DesignParameter['_ViaMet12Met2OnVRX']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2,
         #                  self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i * self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']], [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
         #                                                                                                                                                                                              self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4'][
         #                                                                                                                                                                                                  '_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET'][
         #                                                                                                                                                                                                  '_DesignObj']._DesignParameter['_VIANMOSPoly2Met1NMOS1']['_XYCoordinates'][0][0],
         #                                                                                                                                                                                              self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i *
         #                                                                                                                                                                                              self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']]])
-        #     tmp.append([[self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][-1][0] + self._DesignParameter['_ViaMet12Met2OnVRX']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+        #     tmp.append([[self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][-1][0] + self._DesignParameter['_ViaMet12Met2OnVRX']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2,
         #                  self._DesignParameter['_ViaMet12Met2OnVRX']['_XYCoordinates'][0][1] - i * self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore']], [self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
         #                                                                                                                                                                                              self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4'][
         #                                                                                                                                                                                                  '_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET'][
@@ -467,7 +467,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         # del tmp
 
         self._DesignParameter['_Met6LayerbtwSlicer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met6LayerbtwSlicer']['_Width'] = int(self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'])
+        self._DesignParameter['_Met6LayerbtwSlicer']['_Width'] = self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth']
         self._DesignParameter['_Met6LayerbtwSlicer']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][0][0],
                                                                             self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] +
                                                                             self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_YINp']['_Ignore']],
@@ -477,7 +477,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
                                                                             self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_GuardringHeight']['_Ignore'] * (_NumberofSlicerWithSRLatch - 1)]]]
 
         self._DesignParameter['_Met6Layer4VRX'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met6Layer4VRX']['_Width'] = int(self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'])
+        self._DesignParameter['_Met6Layer4VRX']['_Width'] = self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth']
         self._DesignParameter['_Met6Layer4VRX']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][0][0],
                                                                        self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][-1][0][1] +
                                                                        self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_Width'] // 2],
@@ -499,7 +499,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         del tmp
 
         self._DesignParameter['_Met6LayerVref'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=100)
-        self._DesignParameter['_Met6LayerVref']['_Width'] = int(self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth'])
+        self._DesignParameter['_Met6LayerVref']['_Width'] = self._DesignParameter['_ViaMet52Met6OnVRX']['_DesignObj']._DesignParameter['_Met6Layer']['_XWidth']
         self._DesignParameter['_Met6LayerVref']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet52Met6OnVRX']['_XYCoordinates'][-1][0],
                                                                        #  self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] +
                                                                        # self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter[
@@ -703,7 +703,7 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
         #                                             + _DRCObj._MetalxMinSpace11 + self._DesignParameter['_Met6LayerSli2ResY']['_Width'] // 2,
         #                                             self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_XYCoordinates'][0][0][1] - self._DesignParameter['_FRB']['_DesignObj']._DesignParameter['_Met7LayerVRX']['_Width'] // 2]]]
 
-        ## VDD // VSS Extension
+        ## VDD / VSS Extension
         self._DesignParameter['_Met6LayerSlicerVSS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL6'][0], _Datatype=DesignParameters._LayerMapping['METAL6'][1], _XYCoordinates=[], _Width=100)
         self._DesignParameter['_Met6LayerSlicerVSS']['_Width'] = self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VSSRouting']['_Width']
         self._DesignParameter['_Met6LayerSlicerVSS']['_XYCoordinates'] = [[[self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Met6VSSRouting']['_XYCoordinates'][0][0][0] +
@@ -1174,22 +1174,22 @@ if __name__ == '__main__':
 
         import base64
         ftp = ftplib.FTP('141.223.22.156')
-        ftp.login('junung','chlwnsdnd1!')
+        ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
         ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
         myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         myfile.close()
         ftp.close()
 
-    # import ftplib
-    # import base64
-    # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login(base64.b64decode('bXl1bmdndWs='), base64.b64decode('dm1mbCEyMjU='))
-    # ftp.cwd('//mnt//sdd//myungguk//OPUS//ss28nm_workspace')
-    # myfile = open('SlicerandSRLatchwtResistor_halfrate.gds', 'rb')
-    # ftp.storbinary('STOR SlicerandSRLatchwtResistor_halfrate.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        # import ftplib
+
+        # ftp = ftplib.FTP('141.223.22.156')
+        # ftp.login('myungguk', 'vmfl!225')
+        # ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
+        # myfile = open('SlicerandSRLatchwtResistor2.gds', 'rb')
+        # ftp.storbinary('STOR SlicerandSRLatchwtResistor2.gds', myfile)
+        # myfile.close()
+        # ftp.close()
 
         # ftp = ftplib.FTP('141.223.22.156')
         # ftp.login('jicho0927', 'cho89140616!!')
@@ -1197,6 +1197,9 @@ if __name__ == '__main__':
         # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         # myfile.close()
+
+
+
 
 
     # DesignParameters._Technology = '028nm'
@@ -1258,7 +1261,7 @@ if __name__ == '__main__':
 
     # SlicerandSRLatchwtResistorObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SlicerandSRLatchwtResistorObj._DesignParameter)
     # _fileName = 'SlicerandSRLatchwtResistor.gds'
-    # testStreamFile = open('.//{}'.format(_fileName), 'wb')
+    # testStreamFile = open('./{}'.format(_fileName), 'wb')
 
     # tmp = SlicerandSRLatchwtResistorObj._CreateGDSStream(SlicerandSRLatchwtResistorObj._DesignParameter['_GDSFile']['_GDSFile'])
 
@@ -1271,7 +1274,7 @@ if __name__ == '__main__':
     # # import base64
     # # ftp = ftplib.FTP('141.223.22.156')
     # # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    # # ftp.cwd('//mnt//sdc//junung//OPUS//Samsung28n')
+    # # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
     # # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
     # # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     # # myfile.close()
@@ -1281,7 +1284,7 @@ if __name__ == '__main__':
 
     # # ftp = ftplib.FTP('141.223.22.156')
     # # ftp.login('myungguk', 'vmfl!225')
-    # # ftp.cwd('//mnt//sdd//myungguk//OPUS//ss28nm_workspace')
+    # # ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
     # # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
     # # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     # # myfile.close()
@@ -1289,24 +1292,24 @@ if __name__ == '__main__':
 
     # ftp = ftplib.FTP('141.223.22.156')
     # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('//mnt//sdc//jicho0927//OPUS//SAMSUNG28n')
+    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
     # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
     # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     # myfile.close()
 
-        # print ('###############      DRC checking... {}//100      ##################'.format(tries + 1))
+        print ('###############      DRC checking... {}/500      ##################'.format(i + 1))
 
-    # import DRCchecker
-    # a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','//mnt//sdc//junung//OPUS//Samsung28n','//mnt//sdc//junung//OPUS//Samsung28n//DRC//run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-    # a.DRCchecker()
+        import DRCchecker
+        a = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        a.DRCchecker()
     # #
-#     import DRCchecker
-#     a = DRCchecker.DRCchecker(base64.b64decode('bXl1bmdndWs='), base64.b64decode('dm1mbCEyMjU='),'//mnt//sdd//myungguk//OPUS//ss28nm_workspace','//mnt//sdd//myungguk//OPUS//ss28nm_workspace//DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
-#     a.DRCchecker()
-#
-    #     import DRCchecker
-    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor',None)
-    #     a.DRCchecker()
-    #
-    # print ("DRC Clean!!!")
+    # import DRCchecker
+    # a = DRCchecker.DRCchecker('myungguk','vmfl!225','/mnt/sdd/myungguk/OPUS/ss28nm_workspace','/mnt/sdd/myungguk/OPUS/ss28nm_workspace/DRC_run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+    # a.DRCchecker()
+
+        # import DRCchecker
+        # a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerandSRLatchwtResistor_test','SlicerandSRLatchwtResistor')
+        # a.DRCchecker()
+
+    print ("DRC Clean!!!")
 #sys.stdout.close()

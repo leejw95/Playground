@@ -990,6 +990,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__' :
+    import time
+    start = time.time()
     ans = [6, 275, 30, 2, None, True, True, 4, 2, None, None, None, None, None, None, False]
     # for i in range (17) :
     #     if i == 5 or i==6 or i==7 or i==8 :
@@ -1037,21 +1039,14 @@ if __name__ == '__main__' :
     tmp.write_binary_gds_stream(testStreamFile)
 
     testStreamFile.close()
+    print ("time : ", time.time() - start)
 
-    print ('###############      Sending to FTP Server...      ##################')
+    # print ('###############      Sending to FTP Server...      ##################')
 
-    ftp = ftplib.FTP('141.223.29.61')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-    myfile = open('TransmissionGate.gds', 'rb')
-    ftp.storbinary('STOR TransmissionGate.gds', myfile)
-    myfile.close()
-    ftp.close()
-
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('TransmissionGate.gds', 'rb')
-    ftp.storbinary('STOR TransmissionGate.gds', myfile)
-    myfile.close()
-    ftp.close()
+    # ftp = ftplib.FTP('141.223.29.62')
+    # ftp.login('junung', 'chlwnsdnd1!')
+    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # myfile = open('TransmissionGate.gds', 'rb')
+    # ftp.storbinary('STOR TransmissionGate.gds', myfile)
+    # myfile.close()
+    # ftp.close()

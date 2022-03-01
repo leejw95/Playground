@@ -987,19 +987,6 @@ if __name__ == '__main__':
         # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         # myfile.close()
-<<<<<<< HEAD
-=======
-
-        # import ftplib
-        #
-        # ftp = ftplib.FTP('141.223.29.62')
-        # ftp.login('junung', 'chlwnsdnd1!')
-        # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-        # #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        # myfile.close()
->>>>>>> 90a3951b5b64bd9713b02e3437fedd2b4a593b53
     
         # import DRCchecker
 

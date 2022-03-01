@@ -782,19 +782,21 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
+    import time
+    start = time.time()
     for _ in range(0, 1) :
         _XRBNum = 4#random.randint(3,6)
         _YRBNum = 8#32//_XRBNum
         _TransmissionGateFinger = 8#random.randint(2,13)
         _TransmissionGateChannelWidth = 500#random.randrange(700,900,10)  ## 40 : random.randrange(350,500,10), 65nm : random.randrange(500,700,10), 90nm : random.randrange(700,900,10)
-        _TransmissionGateChannelLength = 60  ##40 : 40, 65 : 60, 90 : 100
+        _TransmissionGateChannelLength = 30  ##40 : 40, 65 : 60, 90 : 100
         _TransmissionGateNPRatio = 2  ##Default = 2
         _ResistorWidth = 2000#random.randrange(1500,2500, 100)#random.randrange(1500,2500, 100), random.randrange(1000,2000, 2)
         _ResistorLength = 2000#_ResistorWidth + random.randrange(100,2000, 100)##_ResistorWidth + random.randrange(100,1000, 100), random.randrange(400,2000, 2)  ## minimum : 400
         _TransmissionGateVDD2VSSHeight = 3850  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
 
         _TransmissionGateDummy = True  # T//F? only true @ 40, 28nm process
-        _TransmissionGateXVT = 'LVT'  # T//F?
+        _TransmissionGateXVT = 'SLVT'  # T//F?
         _PowerLine = False  # T//F?
         _InputLine = False
         _ResistorMetXCO = None
@@ -826,7 +828,7 @@ if __name__ == '__main__':
         _SRFinger4 = 2#random.randint(1,15)
         _SRPMOSChannelWidth4 = _SRRandWidth * _SRNPRatio
         _SRNMOSChannelWidth4 = _SRRandWidth
-        _SRChannelLength = 60
+        _SRChannelLength = 30
 
         _SRVDD2VSSHeightAtOneSide = None
         _SRDummy = True
@@ -844,7 +846,7 @@ if __name__ == '__main__':
         _SRNumViaPMOSMet22Met3CoY = None
         _SRNumViaNMOSMet22Met3CoX = None
         _SRNumViaNMOSMet22Met3CoY = None
-        _SRXVT = 'LVT'
+        _SRXVT = 'SLVT'
         _SRPowerLine = False
 
         _SLCLKinputPMOSFinger1 = 6#random.randint(1,15)
@@ -856,10 +858,10 @@ if __name__ == '__main__':
         _SLCLKinputNMOSFinger = 10#random.randint(1,15)
         _SLNMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
         _SLCLKinputNMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
-        _SLChannelLength = 60#30
+        _SLChannelLength = 30#30
 
         _SLDummy = False
-        _SLXVT = 'LVT'
+        _SLXVT = 'SLVT'
         _SLGuardringWidth = 200#200
         _SLGuardring = True
         _SLSlicerGuardringWidth = 200#200
@@ -875,8 +877,8 @@ if __name__ == '__main__':
         _SLNumVIAMet12COY = None
         _SLPowerLine = False
         _N = 4#random.randint(1,8)
-        _InvChannelWidth = 500#random.randrange(700,750,10)#(200,400,2)
-        _InvChannelLength = 60
+        _InvChannelWidth = 200#random.randrange(700,750,10)#(200,400,2)
+        _InvChannelLength = 30
         _InvFinger = 15#random.randint(5,16)
         _InvNPRatio = 3##round(2+random.random())
         _InvVDD2VSSHeight = None
@@ -891,14 +893,14 @@ if __name__ == '__main__':
         _InvNumViaPMOSMet12Met2CoY = None
         _InvNumViaNMOSMet12Met2CoX = None
         _InvNumViaNMOSMet12Met2CoY = None
-        _InvXVT = 'LVT'
+        _InvXVT = 'SLVT'
         _InvPowerLine = False
         _SLSRInvSupplyLineX4 = False
 
 
 
-        from Private import MyInfo
-        import DRCchecker
+        # from Private import MyInfo
+        # import DRCchecker
 
         libname = 'SlicerandSRLatchwtResistor'
         cellname = 'SlicerandSRLatchwtResistor'
@@ -951,40 +953,42 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print('#############################      Sending to FTP Server...      #############################')
-        My = MyInfo.USER(DesignParameters._Technology)
-        Checker = DRCchecker.DRCchecker(
-            username=My.ID,
-            password=My.PW,
-            WorkDir=My.Dir_Work,
-            DRCrunDir=My.Dir_DRCrun,
-            libname=libname,
-            cellname=cellname,
-            GDSDir=My.Dir_GDS
-        )
-        Checker.Upload2FTP()
-        Checker.StreamIn(tech=DesignParameters._Technology)
+    print ("run time : ", time.time() - start)
+
+        # print('#############################      Sending to FTP Server...      #############################')
+        # My = MyInfo.USER(DesignParameters._Technology)
+        # Checker = DRCchecker.DRCchecker(
+        #     username=My.ID,
+        #     password=My.PW,
+        #     WorkDir=My.Dir_Work,
+        #     DRCrunDir=My.Dir_DRCrun,
+        #     libname=libname,
+        #     cellname=cellname,
+        #     GDSDir=My.Dir_GDS
+        # )
+        # Checker.Upload2FTP()
+        # Checker.StreamIn(tech=DesignParameters._Technology)
+
+        # # import ftplib
+
+        # # ftp = ftplib.FTP('141.223.22.156')
+        # # ftp.login('jicho0927', 'cho89140616!!')
+        # # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        # # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        # # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        # # myfile.close()
 
         # import ftplib
-
-        # ftp = ftplib.FTP('141.223.22.156')
-        # ftp.login('jicho0927', 'cho89140616!!')
-        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        # #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
         # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         # myfile.close()
-
-        import ftplib
-        
-        ftp = ftplib.FTP('141.223.29.62')
-        ftp.login('junung', 'chlwnsdnd1!')
-        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-        #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        myfile.close()
     
-        import DRCchecker
+        # import DRCchecker
 
         # a = DRCchecker.DRCchecker('junung', 'chlwnsdnd1!', '/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/DRC/run', 'SlicerandSRLatchwtResistor', 'SlicerandSRLatchwtResistor', None)
         # a.DRCchecker()

@@ -826,7 +826,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
 if __name__ == '__main__' :
-    ans = [5, 275, 30, 2, None, True, True, 4, 2, None, None, None, None, None, None, False]
+    ans = [5, 270, 30, 2, None, True, True, 4, 2, None, None, None, None, None, None, False]
     # for i in range (17) :
     #     if i == 5 or i==6 or i==7 or i==8 :
     #         print (lst[i]+'?'+'(True/False)')
@@ -876,15 +876,7 @@ if __name__ == '__main__' :
 
     print ('###############      Sending to FTP Server...      ##################')
 
-    ftp = ftplib.FTP('141.223.29.61')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sda/junung/OPUS/Samsung28n')
-    myfile = open('TransmissionGate.gds', 'rb')
-    ftp.storbinary('STOR TransmissionGate.gds', myfile)
-    myfile.close()
-    ftp.close()
-
-    ftp = ftplib.FTP('141.223.22.156')
+    ftp = ftplib.FTP('141.223.29.62')
     ftp.login('junung', 'chlwnsdnd1!')
     ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
     myfile = open('TransmissionGate.gds', 'rb')

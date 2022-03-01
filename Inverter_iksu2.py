@@ -2027,9 +2027,10 @@ class _Inverter(StickDiagram._StickDiagram):
 
 
 if __name__ == '__main__':
-    from Private import MyInfo
-    from SthPack import PlaygroundBot
-    import DRCchecker
+    # from Private import MyInfo
+    # from SthPack import PlaygroundBot
+    # import DRCchecker
+    import ftplib
 
     libname = 'INV_x2'
     cellname = 'INV_x2_postech'
@@ -2037,19 +2038,19 @@ if __name__ == '__main__':
 
     ''' Input Parameters for Layout Object '''
     InputParams = dict(
-        _Finger=1,
+        _Finger=5,
         _ChannelWidth=200,
         _ChannelLength=30,
         _NPRatio=2,
         _Dummy=True,                    # True / False
-        _XVT='RVT',                    # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
+        _XVT='SLVT',                    # @ 028nm, 'SLVT' 'LVT' 'RVT' 'HVT' / @ 065nm, 'LVT' 'HVT' or None
 
-        _DistanceBtwFinger=150,        # default(None) MinimumValue by DRC | onesemicon:150
+        _DistanceBtwFinger=None,        # default(None) MinimumValue by DRC | onesemicon:150
         _VDD2VSSHeight=1800,           # 1800
         _VDD2PMOSHeight=500,           # 500  |  599
-        _VSS2NMOSHeight=300,           # 300  |  461
+        _VSS2NMOSHeight=500,           # 300  |  461
 
-        _NumSupplyCoY=1,
+        _NumSupplyCoY=2,
         _SupplyMet1YWidth=None,
 
         _NumViaPoly2Met1CoX=None,
@@ -2061,66 +2062,73 @@ if __name__ == '__main__':
     )
 
 
-    Mode_DRCCheck = False            # True | False
-    Num_DRCCheck = 1
+    # Mode_DRCCheck = False            # True | False
+    # Num_DRCCheck = 1
 
-    for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
-        if Mode_DRCCheck:
-            ''' Input Parameters for Layout Object '''
-            InputParams['_Finger'] = DRCchecker.RandomParam(start=2, stop=20, step=1)               # DRCchecker.RandomParam(start=2, stop=20, step=1)
-            InputParams['_ChannelWidth'] = DRCchecker.RandomParam(start=400, stop=1000, step=2)     # DRCchecker.RandomParam(start=200, stop=1000, step=2)
-            InputParams['_ChannelLength'] = DRCchecker.RandomParam(start=10, stop=20, step=2)
-        else:
-            pass
+    # for ii in range(0, Num_DRCCheck if Mode_DRCCheck else 1):
+    #     if Mode_DRCCheck:
+    #         ''' Input Parameters for Layout Object '''
+    #         InputParams['_Finger'] = DRCchecker.RandomParam(start=2, stop=20, step=1)               # DRCchecker.RandomParam(start=2, stop=20, step=1)
+    #         InputParams['_ChannelWidth'] = DRCchecker.RandomParam(start=400, stop=1000, step=2)     # DRCchecker.RandomParam(start=200, stop=1000, step=2)
+    #         InputParams['_ChannelLength'] = DRCchecker.RandomParam(start=10, stop=20, step=2)
+    #     else:
+    #         pass
 
-        ''' Generate Inverter Layout Object '''
-        LayoutObj = _Inverter(_Name=cellname)
-        LayoutObj._CalculateDesignParameter_v2(**InputParams)
-        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+        # ''' Generate Inverter Layout Object '''
+    LayoutObj = _Inverter(_Name=cellname)
+    LayoutObj._CalculateDesignParameter_v2(**InputParams)
+    LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
 
-        testStreamFile = open('./{}'.format(_fileName), 'wb')
-        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
-        tmp.write_binary_gds_stream(testStreamFile)
-        testStreamFile.close()
+    testStreamFile = open('./{}'.format(_fileName), 'wb')
+    tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+    tmp.write_binary_gds_stream(testStreamFile)
+    testStreamFile.close()
 
-        print('###############      Sending to FTP Server...      ##################')
-        My = MyInfo.USER(DesignParameters._Technology)
-        Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
-        Checker = DRCchecker.DRCchecker(
-            username=My.ID,
-            password=My.PW,
-            WorkDir=My.Dir_Work,
-            DRCrunDir=My.Dir_DRCrun,
-            GDSDir=My.Dir_GDS,
-            libname=libname,
-            cellname=cellname,
-        )
-        Checker.Upload2FTP()
+    print('###############      Sending to FTP Server...      ##################')
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('INV_x2_postech.gds', 'rb')
+    ftp.storbinary('STOR INV_x2_postech.gds', myfile)
+    myfile.close()
+    ftp.close()
+        # My = MyInfo.USER(DesignParameters._Technology)
+        # Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
+        # Checker = DRCchecker.DRCchecker(
+        #     username=My.ID,
+        #     password=My.PW,
+        #     WorkDir=My.Dir_Work,
+        #     DRCrunDir=My.Dir_DRCrun,
+        #     GDSDir=My.Dir_GDS,
+        #     libname=libname,
+        #     cellname=cellname,
+        # )
+        # Checker.Upload2FTP()
 
-        if Mode_DRCCheck:
-            print('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
-            try:
-                Checker.DRCchecker()
-            except Exception as e:
-                print('Error Occurred: ', e)
-                print("=============================   Last Layout Object's Input Parameters are   =============================")
-                tmpStr = '\n'.join(f'{k} : {v}' for k,v in InputParams.items())
-                print(tmpStr)
-                print("=========================================================================================================")
+        # if Mode_DRCCheck:
+        #     print('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
+        #     try:
+        #         Checker.DRCchecker()
+        #     except Exception as e:
+        #         print('Error Occurred: ', e)
+        #         print("=============================   Last Layout Object's Input Parameters are   =============================")
+        #         tmpStr = '\n'.join(f'{k} : {v}' for k,v in InputParams.items())
+        #         print(tmpStr)
+        #         print("=========================================================================================================")
 
-                Bot.send2Bot(f'Error Occurred During Checking DRC({ii + 1}/{Num_DRCCheck})...\n'
-                             f'ErrMsg : {e}\n'
-                             f'============================='
-                             f'{tmpStr}\n'
-                             f'=============================')
-            else:
-                if (ii + 1) == Num_DRCCheck:
-                    Bot.send2Bot(f'Checking DRC Finished.\nTotal Number Of Trial : {Num_DRCCheck}')
-                    # elapsed time, start time, end time, main python file name
-                else:
-                    pass
-            # Checker.DRCchecker_PrintInputParams(InputParams)
-        else:
-            Checker.StreamIn(tech=DesignParameters._Technology)
+        #         Bot.send2Bot(f'Error Occurred During Checking DRC({ii + 1}/{Num_DRCCheck})...\n'
+        #                      f'ErrMsg : {e}\n'
+        #                      f'============================='
+        #                      f'{tmpStr}\n'
+        #                      f'=============================')
+        #     else:
+        #         if (ii + 1) == Num_DRCCheck:
+        #             Bot.send2Bot(f'Checking DRC Finished.\nTotal Number Of Trial : {Num_DRCCheck}')
+        #             # elapsed time, start time, end time, main python file name
+        #         else:
+        #             pass
+        #     # Checker.DRCchecker_PrintInputParams(InputParams)
+        # else:
+        #     Checker.StreamIn(tech=DesignParameters._Technology)
 
     print('#############################      Finished      ################################')

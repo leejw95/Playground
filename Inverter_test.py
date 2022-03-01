@@ -43,7 +43,7 @@ class _Inverter(StickDiagram._StickDiagram) :
         _NMOSinputs['_NMOSChannelWidth'] = _ChannelWidth
         _NMOSinputs['_NMOSChannellength'] = _ChannelLength
         _NMOSinputs['_NMOSDummy'] = _Dummy
-        _NMOSinputs['_XVT'] = 'LVT'
+        _NMOSinputs['_XVT'] = 'SLVT'
 
         self._DesignParameter['_NMOS'] = self._SrefElementDeclaration(_Reflect = [1,0,0], _Angle=0, _DesignObj = NMOSWithDummy_iksu._NMOS(_DesignParameter = None, \
                                                                                                            _Name = 'NMOSIn{}'.format(_Name)))[0]
@@ -56,7 +56,7 @@ class _Inverter(StickDiagram._StickDiagram) :
         _PMOSinputs['_PMOSChannelWidth'] = round(_ChannelWidth * _NPRatio)
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
-        _PMOSinputs['_XVT'] = 'LVT'
+        _PMOSinputs['_XVT'] = 'SLVT'
 
         self._DesignParameter['_PMOS'] = self._SrefElementDeclaration(_DesignObj = PMOSWithDummy_iksu._PMOS(_DesignParameter = None, \
                                                                                                             _Name = 'PMOSIn{}'.format(_Name)))[0]
@@ -447,14 +447,15 @@ class _Inverter(StickDiagram._StickDiagram) :
                 raise NotImplementedError
 
 if __name__ == '__main__':
+    import ftplib
 
     for i in range(1, 2) :
-        _Finger = random.randint(5,16)
-        _ChannelWidth = random.randrange(700,1200,10)
-        _ChannelLength = 100
-        _NPRatio = 3
+        _Finger = 6#random.randint(5,16)
+        _ChannelWidth = 200#random.randrange(700,1200,10)
+        _ChannelLength = 30
+        _NPRatio = 2
         _VDD2VSSHeight = None
-        _Dummy = False
+        _Dummy = True
         _NumSupplyCoX = None
         _NumSupplyCoY = None
         _SupplyMet1XWidth = None
@@ -465,12 +466,12 @@ if __name__ == '__main__':
         _NumViaPMOSMet12Met2CoY = None
         _NumViaNMOSMet12Met2CoX = None
         _NumViaNMOSMet12Met2CoY = None
-        _XVT = 'LVT'
-        _SupplyLine = False
+        _XVT = 'SLVT'
+        _SupplyLine = True
 
 
-        from Private import MyInfo
-        import DRCchecker
+        # from Private import MyInfo
+        # import DRCchecker
         libname = 'Inverter'
         cellname = 'Inverter'
         _fileName = cellname + '.gds'
@@ -504,18 +505,26 @@ if __name__ == '__main__':
         testStreamFile.close()
 
         print('#############################      Sending to FTP Server...      #############################')
-        My = MyInfo.USER(DesignParameters._Technology)
-        Checker = DRCchecker.DRCchecker(
-            username=My.ID,
-            password=My.PW,
-            WorkDir=My.Dir_Work,
-            DRCrunDir=My.Dir_DRCrun,
-            libname=libname,
-            cellname=cellname,
-            GDSDir=My.Dir_GDS
-        )
-        Checker.Upload2FTP()
-        Checker.StreamIn(tech=DesignParameters._Technology)
+
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('junung', 'chlwnsdnd1!')
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        myfile = open('Inverter.gds', 'rb')
+        ftp.storbinary('STOR Inverter.gds', myfile)
+        myfile.close()
+        ftp.close()
+        # My = MyInfo.USER(DesignParameters._Technology)
+        # Checker = DRCchecker.DRCchecker(
+        #     username=My.ID,
+        #     password=My.PW,
+        #     WorkDir=My.Dir_Work,
+        #     DRCrunDir=My.Dir_DRCrun,
+        #     libname=libname,
+        #     cellname=cellname,
+        #     GDSDir=My.Dir_GDS
+        # )
+        # Checker.Upload2FTP()
+        # Checker.StreamIn(tech=DesignParameters._Technology)
 
     #     import ftplib
     #

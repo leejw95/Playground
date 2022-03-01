@@ -468,13 +468,14 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                  self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + self._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1]]]]
 
 
-        # #Additional SLVT Generation
-        # self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
+        #Additional SLVT Generation
+        #self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
         if DesignParameters._Technology == '028nm' :
-            if (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] *
-                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']) < _DRCObj._SlvtMinArea2 :
-                self._DesignParameter['_SLVTLayerNMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
-                self._DesignParameter['_SLVTLayerNMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
+            _XVTLayer='_'+_TransmissionGateXVT+'Layer'
+            if (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth'] *
+                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']) < _DRCObj._SlvtMinArea2 :
+                self._DesignParameter['_SLVTLayerNMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_TransmissionGateXVT][0], _Datatype=DesignParameters._LayerMapping[_TransmissionGateXVT][1], _XYCoordinates=[], _Width=100)
+                self._DesignParameter['_SLVTLayerNMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']
                 _LengthOfSLVT = _DRCObj._SlvtMinArea2 // self._DesignParameter['_SLVTLayerNMOS']['_Width'] + 2
 
                 self._DesignParameter['_SLVTLayerNMOS']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] - _LengthOfSLVT // 2 - 1,
@@ -482,10 +483,10 @@ class _ResistorBank(StickDiagram._StickDiagram) :
                                                                                 [self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] + _LengthOfSLVT // 2 + 1,
                                                                                 self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1]]]]
 
-            if (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] *
-                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']) < _DRCObj._SlvtMinArea2 :
-                self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1], _XYCoordinates=[], _Width=100)
-                self._DesignParameter['_SLVTLayerPMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth']
+            if (self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter[_XVTLayer]['_XWidth'] *
+                self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']) < _DRCObj._SlvtMinArea2 :
+                self._DesignParameter['_SLVTLayerPMOS'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_TransmissionGateXVT][0], _Datatype=DesignParameters._LayerMapping[_TransmissionGateXVT][1], _XYCoordinates=[], _Width=100)
+                self._DesignParameter['_SLVTLayerPMOS']['_Width'] = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter[_XVTLayer]['_YWidth']
                 _LengthOfSLVT = _DRCObj._SlvtMinArea2 // self._DesignParameter['_SLVTLayerPMOS']['_Width'] + 2
                 self._DesignParameter['_SLVTLayerPMOS']['_XYCoordinates'] = [[[self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] - _LengthOfSLVT // 2 - 1,
                                                                             self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1]],

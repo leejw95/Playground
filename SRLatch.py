@@ -3600,10 +3600,10 @@ if __name__ == '__main__':
 
 
         _Dummy = True
-        _SLVT = True
+        _SLVT = None
         _PowerLine = False
 
-        DesignParameters._Technology = '028nm'
+        DesignParameters._Technology = '065nm'
 
 
         SRLatchObj = _SRLatch(_DesignParameter=None, _Name='SRLatch')

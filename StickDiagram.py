@@ -191,16 +191,16 @@ class _StickDiagram:
         return elementXY
 
     def getXYTop(self, *hier_element_tuple:str):
-        return self._getXYwtBoudary(boundary='top', *hier_element_tuple)
+        return self._getXYwtBoudary('top', *hier_element_tuple)
 
     def getXYBot(self, *hier_element_tuple:str):
-        return self._getXYwtBoudary(boundary='bot', *hier_element_tuple)
+        return self._getXYwtBoudary('bot', *hier_element_tuple)
 
     def getXYRight(self, *hier_element_tuple:str):
-        return self._getXYwtBoudary(boundary='right', *hier_element_tuple)
+        return self._getXYwtBoudary('right', *hier_element_tuple)
 
     def getXYLeft(self, *hier_element_tuple:str):
-        return self._getXYwtBoudary(boundary='left', *hier_element_tuple)
+        return self._getXYwtBoudary('left', *hier_element_tuple)
 
 
     def XYCoordinate2MinMaxXY(self, _XYCoordinates):

@@ -338,6 +338,9 @@ class _PMOS(StickDiagram._StickDiagram):
 
         # self._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] = _LengthPMOSBtwMet1
 
+        # CellXWidth
+        self.CellXWidth = _LengthPMOSBtwPO * (_PMOSNumberofGate + 1)
+
         print ('#########################################################################################################')
         print ('                                    {}  PMOS Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')

@@ -372,6 +372,9 @@ class _NMOS(StickDiagram._StickDiagram):
 
             # self._DesignParameter['DistanceXBtwPoly']['_DesignSizesInList'] = _LengthNMOSBtwMet1
 
+        # CellXWidth
+        self.CellXWidth = _LengthNMOSBtwPO * (_NMOSNumberofGate + 1)
+
         print ('#########################################################################################################')
         print ('                                    {}  NMOS Calculation End                                   '.format(self._DesignParameter['_Name']['_Name']))
         print ('#########################################################################################################')

@@ -215,6 +215,7 @@ class DRCchecker:
             raise NotImplemented
         filename = self.cellname + '.gds'
         commandlines1 = "cd {0}; source setup.cshrc; strmin -library '{1}' -strmFile '{2}/{3}' -attachTechFileOfLib {4} -logFile 'strmIn.log'"
+        # commandlines1 = commandlines1 + " -noDetectVias"      # To identify Via Objects' Names (For Debugging)
         stdin, stdout, stderr = ssh.exec_command(commandlines1.format(self.WorkDir, self.libname, self.GDSDir, filename, TechFile))
         result1 = stdout.read().decode('utf-8')
 

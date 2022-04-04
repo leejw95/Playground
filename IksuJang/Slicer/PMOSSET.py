@@ -156,6 +156,17 @@ class PMOSSET(StickDiagram._StickDiagram):
         self._DesignParameter['M1V1M2OnPM12Drain']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**ViaParams)
         self._DesignParameter['M1V1M2OnPM12Drain']['_XYCoordinates'] = tmpXYs_Drain2 + CoordCalc.FlipXs(tmpXYs_Drain2)
 
+        #
+        self._DesignParameter['M2V2M3OnPM12Drain'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='M2V2M3OnPM12DrainIn{}'.format(_Name)))[0]
+        self._DesignParameter['M2V2M3OnPM12Drain']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M2V2M3OnPM12Drain']['_XYCoordinates'] = [tmpXYs_Drain2[0]] + CoordCalc.FlipXs([tmpXYs_Drain2[0]])
+
+        self._DesignParameter['M3V3M4OnPM12Drain'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnPM12DrainIn{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnPM12Drain']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M3V3M4OnPM12Drain']['_XYCoordinates'] = self.getXY('M2V2M3OnPM12Drain')
+
 
         ''' ------------------------------ M1V1M2 on PM46,35 Drain ----------------------------- '''
         tmpXYs_D = []

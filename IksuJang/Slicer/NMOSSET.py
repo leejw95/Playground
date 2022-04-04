@@ -95,12 +95,25 @@ class NMOSSET(StickDiagram._StickDiagram):
         self._DesignParameter['M1V1M2OnNM2345Dn'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='M1V1M2OnNM2345DnIn{}'.format(_Name)))[0]
         self._DesignParameter['M1V1M2OnNM2345Dn']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**ViaParams)
 
+        self._DesignParameter['M1V1M2OnNM45Middle'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='M1V1M2OnNM45MiddleIn{}'.format(_Name)))[0]
+        self._DesignParameter['M1V1M2OnNM45Middle']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(
+            **dict(_ViaMet12Met2NumberOfCOX=NumViaXY[0], _ViaMet12Met2NumberOfCOY=NumViaXY[1] - 1))
+        self._DesignParameter['M2V2M3OnNM45Middle'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='M2V2M3OnNM45MiddleIn{}'.format(_Name)))[0]
+        self._DesignParameter['M2V2M3OnNM45Middle']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1] - 1))
+        self._DesignParameter['M3V3M4OnNM45Middle'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnNM45MiddleIn{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnNM45Middle']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1] - 1))
+
         tmpXYs_Up = []
         tmpXYs_Dn = []
+        tmpXYs_Middle = []
         offsetY = (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) / 4
         for i, XYs in enumerate(self.getXY('NM5', '_Met1Layer')):
             if i % 2 == 1:
                 tmpXYs_Up.append(CoordCalc.Sum(XYs, [0, self.FloorMinSnapSpacing(+offsetY, MinSnapSpacing)]))
+            elif i == 0:
+                tmpXYs_Middle.append(CoordCalc.Sum(XYs, [0, self.FloorMinSnapSpacing(+offsetY, MinSnapSpacing)]))
             else:
                 pass
         for i, XYs in enumerate(self.getXY('NM3', '_Met1Layer')):
@@ -111,6 +124,10 @@ class NMOSSET(StickDiagram._StickDiagram):
 
         self._DesignParameter['M1V1M2OnNM2345Up']['_XYCoordinates'] = tmpXYs_Up + CoordCalc.FlipXs(tmpXYs_Up)
         self._DesignParameter['M1V1M2OnNM2345Dn']['_XYCoordinates'] = tmpXYs_Dn + CoordCalc.FlipXs(tmpXYs_Dn)
+
+        self._DesignParameter['M1V1M2OnNM45Middle']['_XYCoordinates'] = tmpXYs_Middle + CoordCalc.FlipXs(tmpXYs_Middle)
+        self._DesignParameter['M2V2M3OnNM45Middle']['_XYCoordinates'] = tmpXYs_Middle + CoordCalc.FlipXs(tmpXYs_Middle)
+        self._DesignParameter['M3V3M4OnNM45Middle']['_XYCoordinates'] = tmpXYs_Middle + CoordCalc.FlipXs(tmpXYs_Middle)
 
         # M2H Up
         YCoord_M2HUp = max((self.getXYTop('M1V1M2OnNM2345Dn', '_Met2Layer')[0][1] + _DRCObj._MetalxMinSpaceAtCorner), self.getXYTop('M1V1M2OnNM2345Up', '_Met2Layer')[0][1]) + _DRCObj._MetalxMinWidth / 2
@@ -274,7 +291,7 @@ class NMOSSET(StickDiagram._StickDiagram):
 
 
         ''' -------------------------------------------------------------------------------------------------------- '''
-        self._DesignParameter['NM1']['_XYCoordinates'] = [[0, -2000]]
+        self._DesignParameter['NM1']['_XYCoordinates'] = [[0, -1500]]
 
         NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureX(XWidth=self.getXWidth('NM1', '_Met1Layer'), YWidth=self.getYWidth('NM1', '_Met1Layer'))
         ViaParams = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -349,8 +366,21 @@ class NMOSSET(StickDiagram._StickDiagram):
             tmpXYs.append([XYs[0], YCoord_POV_NM1])
         self._DesignParameter['POV_NM1']['_XYCoordinates'] = tmpXYs
 
+        #
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(XWidth=self.getXWidth('PolyContactOnNM1', '_Met1Layer'), YWidth=self.getYWidth('PolyContactOnNM1', '_Met1Layer'))
+        ViaParams = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
+        ViaParams['_ViaMet12Met2NumberOfCOX'] = NumViaXY[0]
+        ViaParams['_ViaMet12Met2NumberOfCOY'] = NumViaXY[1]
+        self._DesignParameter['M1V1M2OnNM1Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='M1V1M2OnNM1GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M1V1M2OnNM1Gate']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**ViaParams)
+        self._DesignParameter['M1V1M2OnNM1Gate']['_XYCoordinates'] = self.getXY('PolyContactOnNM1')
 
-
+        ViaParams = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+        ViaParams['_ViaMet22Met3NumberOfCOX'] = NumViaXY[0]
+        ViaParams['_ViaMet22Met3NumberOfCOY'] = NumViaXY[1]
+        self._DesignParameter['M2V2M3OnNM1Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='M2V2M3OnNM1GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M2V2M3OnNM1Gate']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**ViaParams)
+        self._DesignParameter['M2V2M3OnNM1Gate']['_XYCoordinates'] = self.getXY('PolyContactOnNM1')
 
 
 

@@ -394,6 +394,7 @@ class DRCCO:
             self._CoMinSpace2 = 60
             self._CoMinSpaceDifferentNet = 78
             self._CoMinSpaceFor3neighboring = 92
+            self._CoMinSpace3 = 184                     # GR221b : ((CA, CAREC, or CAMINI) Arra with width >= 0.540) minimum space (CA, CAREC, or CAMINI) array >= 0.184
             self._CoMinEnclosureByOD = 8
             self._CoMinEnclosureByODAtLeastTwoSide = 30
             self._CoMinEnclosureByPO = 30

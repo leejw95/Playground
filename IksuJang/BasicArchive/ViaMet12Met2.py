@@ -321,10 +321,12 @@ class _ViaMet12Met2(StickDiagram._StickDiagram):
             NumViaX = NumViaX_case1
             NumViaY = NumViaY_case1
 
+        print('NumViaX_case1=', NumViaX_case1, 'NumViaY_case1=', NumViaY_case1, 'NumViaX_case2=', NumViaX_case2, 'NumViaY_case2=', NumViaY_case2)
+        print('NumViaX=', NumViaX, 'NumViaY=', NumViaY)
+
         if (NumViaX < 1) or (NumViaY < 1):
             raise NotImplementedError
 
-        # print('NumViaX_case1', NumViaX_case1, 'NumViaY_case1', NumViaY_case1, 'NumViaX_case2', NumViaX_case2, 'NumViaY_case2', NumViaY_case2)
 
         return NumViaX, NumViaY
 

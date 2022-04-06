@@ -291,7 +291,9 @@ class NMOSSET(StickDiagram._StickDiagram):
 
 
         ''' -------------------------------------------------------------------------------------------------------- '''
-        self._DesignParameter['NM1']['_XYCoordinates'] = [[0, -1500]]
+        ''' ----------------------------------------------- NM1 ---------------------------------------------------- '''
+        ''' -------------------------------------------------------------------------------------------------------- '''
+        self._DesignParameter['NM1']['_XYCoordinates'] = [[0, -1500]]       # Temporal Setting. ReCalculated Later.
 
         NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureX(XWidth=self.getXWidth('NM1', '_Met1Layer'), YWidth=self.getYWidth('NM1', '_Met1Layer'))
         ViaParams = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -382,22 +384,68 @@ class NMOSSET(StickDiagram._StickDiagram):
         self._DesignParameter['M2V2M3OnNM1Gate']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**ViaParams)
         self._DesignParameter['M2V2M3OnNM1Gate']['_XYCoordinates'] = self.getXY('PolyContactOnNM1')
 
+        self._DesignParameter['M3HOnNM1Gate'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL3'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL3'][1],
+            _XWidth=self.getXWidth('M2V2M3OnNM1Gate', '_Met3Layer'),
+            _YWidth=_DRCObj._MetalxMinWidth*2
+        )
+        self._DesignParameter['M3HOnNM1Gate']['_XYCoordinates'] = [
+            CoordCalc.Sum(self.getXYBot('M2V2M3OnNM1Gate', '_Met3Layer')[0], [0, self.getYWidth('M3HOnNM1Gate')/2])
+        ]
 
 
-        #
-        # 'NM1', 'M1V1M2OnNM1', 'M2V2M3OnNM1', 'M3V3M4OnNM1', 'Met2H_NM1', 'Met3H_NM1', 'Met4H_NM1', 'PolyContactOnNM1', 'POV_NM1'
+        ''' ----------------------------------- temporal via for CoordCalc ----------------------------------------- '''
+        self._DesignParameter['M3V3M4OnNM1Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnNM1GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnNM1Gate']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(
+            **dict(_ViaMet32Met4NumberOfCOX=1, _ViaMet32Met4NumberOfCOY=2))
+        self._DesignParameter['M3V3M4OnNM1Gate']['_XYCoordinates'] = [
+            [self.getXYLeft('M3HOnNM1Gate')[0][0], self.getXYBot('M3HOnNM1Gate')[0][1] + self.getYWidth('M3V3M4OnNM1Gate', '_Met3Layer')/2],
+            [self.getXYRight('M3HOnNM1Gate')[0][0], self.getXYBot('M3HOnNM1Gate')[0][1] + self.getYWidth('M3V3M4OnNM1Gate', '_Met3Layer')/2]
+        ]       # Temporal Setting. ReCalculated Later.
 
+
+        ''' ------------------------------------------ ReLocate NM1 ------------------------------------------------ '''
+        gapBtwNM3NM1_Met1Gate = self.getXYLeft('PolyContactOnNM23', '_Met1Layer')[1][0] - self.getXYRight('PolyContactOnNM1', '_Met1Layer')[0][0]
+        if gapBtwNM3NM1_Met1Gate - _DRCObj._Metal1MinSpaceAtCorner >= 0:
+            YCoord_M3V3M4OnNM1Gate_reCalc = self.getXYBot('M2HDn')[0][1] - _DRCObj._Metal1MinSpaceAtCorner - self.getYWidth('M3V3M4OnNM1Gate', '_Met3Layer') / 2
+            YOffset_NM1 = YCoord_M3V3M4OnNM1Gate_reCalc - self.getXY('M3V3M4OnNM1Gate')[0][1]
+        else:
+            YCoord_M3HOnNM1Gate_reCalc = self.getXYBot('PolyContactOnNM23', '_Met1Layer')[0][1] - _DRCObj._MetalxMinSpace4 - self.getYWidth('M3HOnNM1Gate') / 2
+            YOffset_NM1_case1 = YCoord_M3HOnNM1Gate_reCalc - self.getXY('M3HOnNM1Gate')[0][1]
+
+            YCoord_topOfPolyContactOnNM1_reCalc = CoordCalc.getXYCoords_MinY(self.getXYBot('PolyContactOnNM23', '_COLayer'))[0][1] - _DRCObj._CoMinSpace3
+            YOffset_NM1_case2 = YCoord_topOfPolyContactOnNM1_reCalc - CoordCalc.getXYCoords_MaxY(self.getXYTop('PolyContactOnNM1', '_COLayer'))[0][1]
+
+            YOffset_NM1 = min(YOffset_NM1_case1, YOffset_NM1_case2)
+
+
+        ObjList_NM1 = ['NM1', 'M1V1M2OnNM1', 'M2V2M3OnNM1', 'M3V3M4OnNM1', 'Met2H_NM1', 'Met3H_NM1', 'Met4H_NM1',
+                       'PolyContactOnNM1', 'POV_NM1', 'M1V1M2OnNM1Gate', 'M2V2M3OnNM1Gate', 'M3HOnNM1Gate', 'M3V3M4OnNM1Gate']
+        for DesignObj in ObjList_NM1:
+            self.YShiftUp(DesignObj, YOffset_NM1)
+
+
+        # '''  -------------------------------- M4V on NM1's Drain to M2HDn ------------------------------------------ '''
+        # topBoundary_M4VOnNM1DrainToM2HDn = self.getXYBot('M2HDn')[0][1]
+        # botBoundary_M4VOnNM1DrainToM2HDn = self.getXYBot('M3V3M4OnNM1', '_Met4Layer')[0][1]
+        # self._DesignParameter['M4VOnNM1DrainToM2HDn'] = self._BoundaryElementDeclaration(
+        #     _Layer=DesignParameters._LayerMapping['METAL4'][0],
+        #     _Datatype=DesignParameters._LayerMapping['METAL4'][1],
+        #     _XWidth=_DRCObj._MetalxMinSpace * 3,
+        #     _YWidth=topBoundary_M4VOnNM1DrainToM2HDn - botBoundary_M4VOnNM1DrainToM2HDn,
+        #     _XYCoordinates=[[0, (topBoundary_M4VOnNM1DrainToM2HDn + botBoundary_M4VOnNM1DrainToM2HDn) / 2]]
+        # )
+        # # There's No Via Btw M2HDn - M4V... -> Calculated Later (At Slicer)
 
 
         ''' ---------------------------------------------- PSubring ------------------------------------------------ '''
-        _DRCtemp_metal1minspace = 165
-
-        XWidthOfSubring1_ODtoOD = self.getXYRight('NM3', '_ODLayer')[0][0] + _DRCObj._OdMinSpace                ## ???
-        XWidthOfSubring3_Met1toMet1 = self.getXYRight('NM3', '_Met1Layer')[0][0] + _DRCtemp_metal1minspace      ## ???
+        XWidthOfSubring1_ODtoOD = self.getXYRight('NM3', '_ODLayer')[0][0] + _DRCObj._OdMinSpace
+        XWidthOfSubring3_Met1toMet1 = self.getXYRight('NM3', '_Met1Layer')[-1][0] + _DRCObj._Metal1DefaultSpace
         XWidthOfSubring = max(XWidthOfSubring1_ODtoOD, XWidthOfSubring3_Met1toMet1) * 2
 
-        YdownwardOfSubring = self.getXYBot('NM1', '_Met1Layer')[0][1] - _DRCObj._Metal1DefaultSpace     ## ???
-        YupwardOfSubring = self.getXYTop('M1V1M2OnNM45Gate', '_Met1Layer')[0][1] + _DRCObj._Metal1DefaultSpace       ## ???
+        YdownwardOfSubring = self.getXYBot('NM1', '_Met1Layer')[0][1] - _DRCObj._Metal1DefaultSpace
+        YupwardOfSubring = self.getXYTop('M1V1M2OnNM45Gate', '_Met1Layer')[0][1] + _DRCObj._Metal1DefaultSpace
 
         YWidthOfSubring = YupwardOfSubring - YdownwardOfSubring
         YcenterOfSubring = (YupwardOfSubring + YdownwardOfSubring) / 2
@@ -430,13 +478,6 @@ class NMOSSET(StickDiagram._StickDiagram):
         self._DesignParameter['Met1V_NM1Source']['_XYCoordinates'] = tmpXYs
 
 
-
-
-
-
-
-
-
         ''' ---------------------------------------------- XVT Layer ----------------------------------------------- '''
         _XVTLayer = '_' + XVT + 'Layer'
         self._DesignParameter['XVTLayer1'] = self._BoundaryElementDeclaration(
@@ -451,13 +492,23 @@ class NMOSSET(StickDiagram._StickDiagram):
             _Datatype=DesignParameters._LayerMapping[XVT][1],
             _XWidth=self.getXWidth('NM1', _XVTLayer),
             _YWidth=self.getXYBot('NM4', _XVTLayer)[0][1] - self.getXYTop('NM1', _XVTLayer)[0][1],
-            _XYCoordinates=[[0, self.CeilMinSnapSpacing((self.getXYBot('NM4', _XVTLayer)[0][1] + self.getXYTop('NM1', _XVTLayer)[0][1]) / 2, MinSnapSpacing)]]
+            _XYCoordinates=[[0, (self.getXYBot('NM4', _XVTLayer)[0][1] + self.getXYTop('NM1', _XVTLayer)[0][1]) / 2]]
+            # _XYCoordinates=[[0, self.CeilMinSnapSpacing((self.getXYBot('NM4', _XVTLayer)[0][1] + self.getXYTop('NM1', _XVTLayer)[0][1]) / 2, MinSnapSpacing)]]
         )
 
         print('\n' + ''.center(105, '#'))
         print('     {} Calculation End     '.format(_Name).center(105, '#'))
         print(''.center(105, '#') + '\n')
         ''' -------------------------------------------------------------------------------------------------------- '''
+
+
+    def YShiftUp(self, DesignObj, OffsetY):
+
+        tmpXYs = []
+        for XY in self._DesignParameter[DesignObj]['_XYCoordinates']:
+            tmpXYs.append(CoordCalc.Add(XY, [0, OffsetY]))
+
+        self._DesignParameter[DesignObj]['_XYCoordinates'] = tmpXYs
 
 
 if __name__ == '__main__':

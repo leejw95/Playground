@@ -278,14 +278,12 @@ class PMOSSET(StickDiagram._StickDiagram):
 
 
         ''' ---------------------------------------------- NSubring ------------------------------------------------ '''
-        _DRCtemp_metal1minspace = 165
-
-        XWidthOfSubring1_ODtoOD = self.getXYRight('PM46', '_ODLayer')[0][0] + _DRCObj._OdMinSpace                ## ???
-        XWidthOfSubring3_Met1toMet1 = self.getXYRight('PM46', '_Met1Layer')[0][0] + _DRCtemp_metal1minspace      ## ???
+        XWidthOfSubring1_ODtoOD = self.getXYRight('PM46', '_ODLayer')[0][0] + _DRCObj._OdMinSpace
+        XWidthOfSubring3_Met1toMet1 = self.getXYRight('PM46', '_Met1Layer')[-1][0] + _DRCObj._Metal1DefaultSpace
         XWidthOfSubring = max(XWidthOfSubring1_ODtoOD, XWidthOfSubring3_Met1toMet1) * 2
 
-        YdownwardOfSubring = self.getXYBot('PolyContactOnPM35PM46', '_Met1Layer')[0][1] - _DRCObj._Metal1DefaultSpace     ## ???
-        YupwardOfSubring = self.getXYTop('PM1', '_Met1Layer')[0][1] + _DRCObj._Metal1DefaultSpace       ## ???
+        YdownwardOfSubring = self.getXYBot('PolyContactOnPM35PM46', '_Met1Layer')[0][1] - _DRCObj._Metal1DefaultSpace
+        YupwardOfSubring = self.getXYTop('PM1', '_Met1Layer')[0][1] + _DRCObj._Metal1DefaultSpace
 
         YWidthOfSubring = YupwardOfSubring - YdownwardOfSubring
         YcenterOfSubring = (YupwardOfSubring + YdownwardOfSubring) / 2

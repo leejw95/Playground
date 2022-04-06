@@ -18,9 +18,9 @@ from IksuJang.Slicer import NMOSSET
 from IksuJang.Slicer import PMOSSET
 
 
-class Slicer(StickDiagram._StickDiagram):
+class StrongArmLatch(StickDiagram._StickDiagram):
 
-    def __init__(self, _DesignParameter=None, _Name='Slicer'):
+    def __init__(self, _DesignParameter=None, _Name='StrongArmLatch'):
         if _DesignParameter != None:
             self._DesignParameter = _DesignParameter
         else:
@@ -38,9 +38,9 @@ class Slicer(StickDiagram._StickDiagram):
                                   Width_NM23=1000,
                                   Width_NM45=1000,
 
-                                  NumContactY_NM1=1,  # option
-                                  NumContactY_NM23=2,  # option
-                                  NumContactY_NM45=1,  # option
+                                  NumContactY_NM1=1,            # option
+                                  NumContactY_NM23=2,           # option
+                                  NumContactY_NM45=1,           # option
                                   NumContact_NMOSSETSubring=2,  # option
 
                                   NumFinger_PM12=2,
@@ -48,14 +48,13 @@ class Slicer(StickDiagram._StickDiagram):
                                   NumFinger_PM56=6,
                                   Width_PM=1000,
 
-                                  ChannelLength=30,
-                                  XVT='SLVT',
-
-                                  NumContactY_PM=1,  # option
+                                  NumContactY_PM=1,             # option
                                   NumContact_PMOSSETSubring=2,  # option
 
                                   NumContact_Subring=2,
 
+                                  ChannelLength=30,
+                                  XVT='SLVT',
                                   _GateSpacing=None
                                   ):
 
@@ -71,15 +70,6 @@ class Slicer(StickDiagram._StickDiagram):
         _UnitPitch = _GateSpacing + ChannelLength if _GateSpacing else _DRCObj._PolygateMinSpace + ChannelLength
 
         ''' -------------------------------------------------------------------------------------------------------- '''
-
-        self._DesignParameter['NMOSSET'] = self._SrefElementDeclaration(_DesignObj=NMOSSET.NMOSSET(_Name='NMOSSETIn{}'.format(_Name)))[0]
-        self._DesignParameter['NMOSSET']['_DesignObj']._CalculateDesignParameter(
-            **dict(NumFinger_NM1=NumFinger_NM1, NumFinger_NM23=NumFinger_NM23, NumFinger_NM45=NumFinger_NM45,
-                   Width_NM1=Width_NM1, Width_NM23=Width_NM23, Width_NM45=Width_NM45,
-                   ChannelLength=ChannelLength, XVT=XVT,
-                   NumContactY_NM1=NumContactY_NM1, NumContactY_NM23=NumContactY_NM23, NumContactY_NM45=NumContactY_NM45,
-                   NumContact_Subring=NumContact_NMOSSETSubring, _GateSpacing=_GateSpacing)
-        )
         self._DesignParameter['PMOSSET'] = self._SrefElementDeclaration(_DesignObj=PMOSSET.PMOSSET(_Name='PMOSSETIn{}'.format(_Name)))[0]
         self._DesignParameter['PMOSSET']['_DesignObj']._CalculateDesignParameter(
             **dict(NumFinger_PM12=NumFinger_PM12, NumFinger_PM34=NumFinger_PM34, NumFinger_PM56=NumFinger_PM56,
@@ -87,8 +77,25 @@ class Slicer(StickDiagram._StickDiagram):
                    NumContactY_PM=NumContactY_PM,
                    NumContact_Subring=NumContact_PMOSSETSubring, _GateSpacing=_GateSpacing)
         )
-        self._DesignParameter['NMOSSET']['_XYCoordinates'] = [[0, -1100]]           ## !!!!!!!!
-        self._DesignParameter['PMOSSET']['_XYCoordinates'] = [[0, 1100]]            ## !!!!!!!!
+        self._DesignParameter['NMOSSET'] = self._SrefElementDeclaration(_DesignObj=NMOSSET.NMOSSET(_Name='NMOSSETIn{}'.format(_Name)))[0]
+        self._DesignParameter['NMOSSET']['_DesignObj']._CalculateDesignParameter(
+            **dict(NumFinger_NM1=NumFinger_NM1, NumFinger_NM23=NumFinger_NM23, NumFinger_NM45=NumFinger_NM45,
+                   Width_NM1=Width_NM1, Width_NM23=Width_NM23, Width_NM45=Width_NM45,
+                   ChannelLength=ChannelLength, XVT=XVT,
+                   NumContactY_NM1=NumContactY_NM1, NumContactY_NM23=NumContactY_NM23,
+                   NumContactY_NM45=NumContactY_NM45,
+                   NumContact_Subring=NumContact_NMOSSETSubring, _GateSpacing=_GateSpacing)
+        )
+        self._DesignParameter['PMOSSET']['_XYCoordinates'] = [[0, 0]]       # temporal setting. reCalculated Later.
+        self._DesignParameter['NMOSSET']['_XYCoordinates'] = [[0, 0]]       # temporal setting. reCalculated Later.
+
+        _YCoord_PMOSSET = abs(self.getXYBot('PMOSSET', 'NSubring', 'nw_bot')[0][1]) + _DRCObj._NwMinEnclosurePactive / 2
+        _YCoord_NMOSSET = -abs(self.getXYTop('NMOSSET', 'PSubring', 'top', '_PPLayer')[0][1]) - _DRCObj._NwMinEnclosurePactive / 2
+        YCoord_PMOSSET = self.CeilMinSnapSpacing(_YCoord_PMOSSET, MinSnapSpacing * 2)
+        YCoord_NMOSSET = self.FloorMinSnapSpacing(_YCoord_NMOSSET, MinSnapSpacing*2)
+
+        self._DesignParameter['PMOSSET']['_XYCoordinates'] = [[0, YCoord_PMOSSET]]
+        self._DesignParameter['NMOSSET']['_XYCoordinates'] = [[0, YCoord_NMOSSET]]
 
 
         ''' ----------------------------------------------------- (net01) ------------------------------------------ '''
@@ -120,28 +127,13 @@ class Slicer(StickDiagram._StickDiagram):
         self._DesignParameter['M3V3M4Onnet01']['_XYCoordinates'] = tmpXYs
 
 
-
-
-
-        ''' ----------------------------------------- M4V From NM1's Drain to NM23 (net02) -------------------------------------------- '''
-        topBoundary_M4V_net02 = self.getXYTop('NMOSSET', 'M2HDn')[0][1]
-        botBoundary_M4V_net02 = self.getXYBot('NMOSSET', 'M3V3M4OnNM1', '_Met4Layer')[0][1]
-        self._DesignParameter['M4V_net02'] = self._BoundaryElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL4'][0],
-            _Datatype=DesignParameters._LayerMapping['METAL4'][1],
-            _XWidth=176,                                                ## !!!!
-            _YWidth=topBoundary_M4V_net02 - botBoundary_M4V_net02,
-            _XYCoordinates=[[0, (topBoundary_M4V_net02 + botBoundary_M4V_net02) / 2]]
-        )
-
-
         ''' -------------------------------------- M4V From NM45's Drain to PM12's Drain (net03) ----------------------------------------------- '''
         topBoundary_M4V_net03 = self.getXYTop('PMOSSET', 'M3V3M4OnPM12Drain', '_Met4Layer')[0][1]
         botBoundary_M4V_net03 = self.getXYBot('NMOSSET', 'M3V3M4OnNM45Middle', '_Met4Layer')[0][1]
         self._DesignParameter['M4V_net03'] = self._BoundaryElementDeclaration(
             _Layer=DesignParameters._LayerMapping['METAL4'][0],
             _Datatype=DesignParameters._LayerMapping['METAL4'][1],
-            _XWidth=100,                                                ## !!!!
+            _XWidth=_DRCObj._MetalxMinWidth*2,
             _YWidth=topBoundary_M4V_net03 - botBoundary_M4V_net03,
         )
         self._DesignParameter['M4V_net03']['_XYCoordinates'] = [
@@ -150,27 +142,26 @@ class Slicer(StickDiagram._StickDiagram):
         ]
 
         ''' ---------------------------------------------- PSubring ------------------------------------------------ '''
-        _DRCtemp_metal1minspace = 165
+        self._DesignParameter['PSubring'] = self._SrefElementDeclaration(_DesignObj=PSubRing.PSubRing(_Name='PSubringIn{}'.format(_Name)))[0]
+        self._DesignParameter['PSubring']['_DesignObj']._CalculateDesignParameter(
+            **dict(height=1000, width=1000, contact=NumContact_Subring if NumContact_Subring is not None else 2)
+        )       # temporal gen. ReCalculated Later.
 
-        XWidthOfSubring1 = self.getXYRight('NMOSSET', 'PSubring', 'met_right')[0][0] + _DRCObj._Metal1DefaultSpace  ## ???
-        XWidthOfSubring2 = self.getXYRight('PMOSSET', 'NSubring', 'met_right')[0][0] + _DRCObj._Metal1DefaultSpace  ## ???
+        XWidthOfSubring1 = self.getXYRight('NMOSSET', 'PSubring', 'right', '_PPLayer')[0][0] + _DRCObj._PpMinSpace + self.getXWidth('PSubring', 'right', '_PPLayer') / 2
+        XWidthOfSubring2 = self.getXYRight('PMOSSET', 'NSubring', 'nw_right')[0][0] + _DRCObj._NwMinEnclosurePactive + self.getXWidth('PSubring', 'right', '_PPLayer') / 2
         XWidthOfSubring = max(XWidthOfSubring1, XWidthOfSubring2) * 2
 
-        YdownwardOfSubring = self.getXYBot('NMOSSET', 'PSubring', 'met_bot')[0][1] - _DRCObj._Metal1DefaultSpace  ## ???
-        YupwardOfSubring = self.getXYTop('PMOSSET', 'NSubring', 'met_top')[0][1] + _DRCObj._Metal1DefaultSpace  ## ???
+        _YdownwardOfSubring = self.getXYBot('NMOSSET', 'PSubring', 'bot', '_PPLayer')[0][1] - _DRCObj._PpMinSpace - self.getYWidth('PSubring', 'bot', '_PPLayer') / 2
+        _YupwardOfSubring = self.getXYTop('PMOSSET', 'NSubring', 'nw_right')[0][1] + _DRCObj._NwMinEnclosurePactive + self.getYWidth('PSubring', 'top', '_PPLayer') / 2
+        YdownwardOfSubring = self.FloorMinSnapSpacing(_YdownwardOfSubring, 2*MinSnapSpacing)
+        YupwardOfSubring = self.CeilMinSnapSpacing(_YupwardOfSubring, 2*MinSnapSpacing)
 
-        YWidthOfSubring = 6000
-        YcenterOfSubring = (YupwardOfSubring + YdownwardOfSubring) / 2
-
-        self._DesignParameter['PSubring'] = self._SrefElementDeclaration(
-            _DesignObj=PSubRing.PSubRing(_Name='PSubringIn{}'.format(_Name)))[0]
         self._DesignParameter['PSubring']['_DesignObj']._CalculateDesignParameter(
-            **dict(height=1000, width=1000, contact=NumContact_Subring if NumContact_Subring is not None else 2))
-        self._DesignParameter['PSubring']['_DesignObj']._CalculateDesignParameter(
-            **dict(height=YWidthOfSubring + self.getYWidth('PSubring', 'met_top'),
-                   width=XWidthOfSubring + self.getXWidth('PSubring', 'met_right'),
-                   contact=NumContact_Subring if NumContact_Subring is not None else 2))
-        self._DesignParameter['PSubring']['_XYCoordinates'] = [[0, YcenterOfSubring]]
+            **dict(height=YupwardOfSubring-YdownwardOfSubring,
+                   width=XWidthOfSubring,
+                   contact=NumContact_Subring if NumContact_Subring is not None else 2)
+        )
+        self._DesignParameter['PSubring']['_XYCoordinates'] = [[0, (YupwardOfSubring + YdownwardOfSubring) / 2]]
 
 
         ''' --------------------------------- M2V (from PM12 to NM45) ---------------------------------------- '''
@@ -236,10 +227,10 @@ class Slicer(StickDiagram._StickDiagram):
 
         # M2V2M3, M3V3M4
         self._DesignParameter['M2V2M3Onnet03net04'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='M2V2M3Onnet03net04In{}'.format(_Name)))[0]
-        self._DesignParameter['M2V2M3Onnet03net04']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+        self._DesignParameter['M2V2M3Onnet03net04']['_DesignObj']._CalculateDesignParameterSameEnclosure(
             **dict(_ViaMet22Met3NumberOfCOX=1, _ViaMet22Met3NumberOfCOY=2))
         self._DesignParameter['M3V3M4Onnet03net04'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4Onnet03net04In{}'.format(_Name)))[0]
-        self._DesignParameter['M3V3M4Onnet03net04']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+        self._DesignParameter['M3V3M4Onnet03net04']['_DesignObj']._CalculateDesignParameterSameEnclosure(
             **dict(_ViaMet32Met4NumberOfCOX=1, _ViaMet32Met4NumberOfCOY=2))
 
         XCoordofVia0304_byM2 = self.FloorMinSnapSpacing(CoordCalc.getXYCoords_MaxX(self.getXYLeft('M2V_net04'))[0][0] - _DRCObj._MetalxMinSpaceAtCorner - self.getXWidth('M2V2M3Onnet03net04', '_Met2Layer') / 2, MinSnapSpacing)
@@ -292,7 +283,75 @@ class Slicer(StickDiagram._StickDiagram):
         self._DesignParameter['M2V2M3OnM2HUp']['_XYCoordinates'] = self.getXY('M3HonM2HUp')
 
 
+        ''' -------------------------------------- M4V (net05) ------------------------------------------ '''
+        topBoundary_M4V_net05 = self.getXYTop('PMOSSET', 'M2V2M3OnPM35PM46Gate', '_Met3Layer')[0][1]
+        botBoundary_M4V_net05 = self.getXYBot('NMOSSET', 'M3HOnNM1Gate')[0][1]
+        XCoord_M4V_net05_byPMOSSET = (self.getXY('PMOSSET', 'PM2', '_Met1Layer')[-1][0] + self.getXY('PMOSSET', 'PM46', '_Met1Layer')[0][0]) / 2
+        XCoord_M4V_net05_byNMOSSET = (self.getXY('NMOSSET', 'NM5', '_Met1Layer')[-1][0] + self.getXY('NMOSSET', 'NM3', '_Met1Layer')[0][0]) / 2
+        XCoord_M4V_net05 = min(XCoord_M4V_net05_byPMOSSET, XCoord_M4V_net05_byNMOSSET)
+        self._DesignParameter['M4V_net05'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],
+            _XWidth=_DRCObj._MetalxMinWidth*2,
+            _YWidth=topBoundary_M4V_net05-botBoundary_M4V_net05,
+            _XYCoordinates=[
+                [-XCoord_M4V_net05, (topBoundary_M4V_net05 + botBoundary_M4V_net05) / 2],
+                [+XCoord_M4V_net05, (topBoundary_M4V_net05 + botBoundary_M4V_net05) / 2]
+            ]
+        )
+
+        # recalculate
+        self._DesignParameter['NMOSSET']['_DesignObj']._DesignParameter['M3V3M4OnNM1Gate']['_XYCoordinates'] = [
+            [-XCoord_M4V_net05, self._DesignParameter['NMOSSET']['_DesignObj']._DesignParameter['M3V3M4OnNM1Gate']['_XYCoordinates'][0][1]],
+            [+XCoord_M4V_net05, self._DesignParameter['NMOSSET']['_DesignObj']._DesignParameter['M3V3M4OnNM1Gate']['_XYCoordinates'][0][1]]
+        ]
+        self._DesignParameter['NMOSSET']['_DesignObj']._DesignParameter['M3HOnNM1Gate']['_XWidth'] = \
+            max(XCoord_M4V_net05 * 2, self.getXWidth('NMOSSET', 'M3HOnNM1Gate'))
+
+        # on PMOSSET
+        rightBoundary_M3HOnPM35PM46Gate = CoordCalc.getXYCoords_MaxX(self.getXYRight('PMOSSET', 'M2V2M3OnPM35PM46Gate', '_Met3Layer'))[0][0]
+        leftBoundary_M3HOnPM35PM46Gate = CoordCalc.getXYCoords_MaxX(self.getXYLeft('NMOSSET', 'M3V3M4OnNM1Gate', '_Met3Layer'))[0][0]
+        self._DesignParameter['M3HOnPM35PM46Gate'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],
+            _XWidth=rightBoundary_M3HOnPM35PM46Gate-leftBoundary_M3HOnPM35PM46Gate,
+            _YWidth=_DRCObj._MetalxMinWidth * 2
+        )
+        YCoord_M3HOnPM35PM46Gate = self.getXYTop('PMOSSET', 'M2V2M3OnPM35PM46Gate', '_Met3Layer')[0][1] - self.getYWidth('M3HOnPM35PM46Gate') / 2
+        self._DesignParameter['M3HOnPM35PM46Gate']['_XYCoordinates'] = [
+            [-(rightBoundary_M3HOnPM35PM46Gate + leftBoundary_M3HOnPM35PM46Gate) / 2, YCoord_M3HOnPM35PM46Gate],
+            [+(rightBoundary_M3HOnPM35PM46Gate + leftBoundary_M3HOnPM35PM46Gate) / 2, YCoord_M3HOnPM35PM46Gate]
+        ]
+
+        self._DesignParameter['M3V3M4OnPM35PM46Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnPM35PM46GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnPM35PM46Gate']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(
+            **dict(_ViaMet32Met4NumberOfCOX=1, _ViaMet32Met4NumberOfCOY=2))
+        YCoord_M3V3M4OnPM35PM46Gate = self.getXYTop('M4V_net05')[0][1] - self.getYWidth('M3V3M4OnPM35PM46Gate', '_Met4Layer') / 2
+        self._DesignParameter['M3V3M4OnPM35PM46Gate']['_XYCoordinates'] = [
+            [-XCoord_M4V_net05, YCoord_M3V3M4OnPM35PM46Gate],
+            [+XCoord_M4V_net05, YCoord_M3V3M4OnPM35PM46Gate]
+        ]
+
         ''' -------------------------------------------------------------------------------------------------------- '''
+        ''' ---------------------------- M4V From NM1's Drain to NM23 (net02) -------------------------------------- '''
+        topBoundary_M4V_net02 = self.getXYTop('NMOSSET', 'M2HDn')[0][1]
+        botBoundary_M4V_net02 = self.getXYBot('NMOSSET', 'M3V3M4OnNM1', '_Met4Layer')[0][1]
+        self._DesignParameter['M4V_net02'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL4'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL4'][1],
+            _XWidth=_DRCObj._MetalxMinSpace * 3,
+            _YWidth=topBoundary_M4V_net02 - botBoundary_M4V_net02,
+            _XYCoordinates=[[0, (topBoundary_M4V_net02 + botBoundary_M4V_net02) / 2]]
+        )
+
+        # M2 - M4 Via for net02
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(XWidth=self.getXYLeft('M4V_net05')[1][0], YWidth=self.getYWidth('NMOSSET', 'M2HDn'))
+        self._DesignParameter['M2V2M3OnM2HDn'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='M2V2M3OnM2HDnIn{}'.format(_Name)))[0]
+        self._DesignParameter['M2V2M3OnM2HDn']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M3V3M4OnM2HDn'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnM2HDnIn{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnM2HDn']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M2V2M3OnM2HDn']['_XYCoordinates'] = self.getXY('NMOSSET', 'M2HDn')
+        self._DesignParameter['M3V3M4OnM2HDn']['_XYCoordinates'] = self.getXY('NMOSSET', 'M2HDn')
 
         ''' --------------------------------- Up to M3 Supply Vias (VDD & VSS) ------------------------------------- '''
         # M3, M2 VDD Rail
@@ -348,6 +407,47 @@ class Slicer(StickDiagram._StickDiagram):
         self._DesignParameter['M2V2M3OnVSS']['_XYCoordinates'] = self.getXY('M3_VSS')
 
         ''' -------------------------------------------------------------------------------------------------------- '''
+
+        self._DesignParameter['PIN_VSS'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL3PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1],
+            _Presentation=[0,1,1], _Reflect=[0,0,0], _Angle=0,
+            _XYCoordinates=self.getXY('M3_VSS'), _Mag=0.04,  _TEXT='VSS')
+        self._DesignParameter['PIN_VDD'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL3PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Angle=0,
+            _XYCoordinates=self.getXY('M3_VDD'), _Mag=0.04, _TEXT='VDD')
+
+        self._DesignParameter['PIN_INp'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Angle=0,
+            _XYCoordinates=[self.getXY('NMOSSET', 'PolyContactOnNM23')[0]], _Mag=0.04, _TEXT='INp')
+        self._DesignParameter['PIN_INn'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Angle=0,
+            _XYCoordinates=[self.getXY('NMOSSET', 'PolyContactOnNM23')[1]], _Mag=0.04, _TEXT='INn')
+
+        self._DesignParameter['PIN_CLK'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL3PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Angle=0,
+            _XYCoordinates=self.getXY('NMOSSET', 'M3HOnNM1Gate'), _Mag=0.04, _TEXT='CLK')
+
+        self._DesignParameter['PIN_SSp'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL4PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL4PIN'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Angle=0,
+            _XYCoordinates=[self.getXY('M4V_net03')[0]], _Mag=0.04, _TEXT='SSp')
+        self._DesignParameter['PIN_SSn'] = self._TextElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL4PIN'][0],
+            _Datatype=DesignParameters._LayerMapping['METAL4PIN'][1],
+            _Presentation=[0, 1, 1], _Reflect=[0, 0, 0], _Angle=0,
+            _XYCoordinates=[self.getXY('M4V_net03')[1]], _Mag=0.04, _TEXT='SSn')
+
+
         print('\n' + ''.center(105, '#'))
         print('     {} Calculation End     '.format(_Name).center(105, '#'))
         print(''.center(105, '#') + '\n')
@@ -363,11 +463,11 @@ if __name__ == '__main__':
     Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
 
     libname = 'TEST_Slicer'
-    cellname = 'Slicer'
+    cellname = 'StrongArmLatch'
     _fileName = cellname + '.gds'
 
     ''' Input Parameters for Layout Object '''
-    InputParams1 = dict(
+    InputParams_20G = dict(
         NumFinger_NM1=8,
         NumFinger_NM23=12,
         NumFinger_NM45=2,
@@ -375,39 +475,79 @@ if __name__ == '__main__':
         Width_NM23=1000,
         Width_NM45=1000,
 
-        NumContactY_NM1=1,  # option
-        NumContactY_NM23=2,  # option
-        NumContactY_NM45=1,  # option
-        NumContact_NMOSSETSubring=2,  # option
+        NumContactY_NM1=1,              # option
+        NumContactY_NM23=2,             # option
+        NumContactY_NM45=1,             # option
+        NumContact_NMOSSETSubring=2,    # option
 
         NumFinger_PM12=2,
         NumFinger_PM34=3,
         NumFinger_PM56=6,
         Width_PM=1000,
 
+        NumContactY_PM=1,               # option
+        NumContact_PMOSSETSubring=2,    # option
+
         ChannelLength=30,
         XVT='SLVT',
-
-        NumContactY_PM=1,  # option
-        NumContact_PMOSSETSubring=2,  # option
-
         _GateSpacing=None
 
     )
 
-    InputParams2 = dict(
+    InputParams_16G = dict(
+        NumFinger_NM1=12,
+        NumFinger_NM23=10,
+        NumFinger_NM45=1,
+        Width_NM1=500,
+        Width_NM23=1000,
+        Width_NM45=1000,
+
+        NumContactY_NM1=1,              # option
+        NumContactY_NM23=2,             # option
+        NumContactY_NM45=1,             # option
+        NumContact_NMOSSETSubring=2,    # option
+
+        #
+        NumFinger_PM12=3,
+        NumFinger_PM34=3,
+        NumFinger_PM56=4,
+        Width_PM=500,
+
+        NumContactY_PM=1,               # option
+        NumContact_PMOSSETSubring=2,    # option
+
+        ChannelLength=30,
+        XVT='SLVT',
+        _GateSpacing=None
+    )
+
+    InputParams_12G = dict(
+        NumFinger_NM1=20,
+        NumFinger_NM23=8,
+        NumFinger_NM45=1,
+        Width_NM1=300,
+        Width_NM23=1000,
+        Width_NM45=1000,
+
+        NumContactY_NM1=1,              # option
+        NumContactY_NM23=2,             # option
+        NumContactY_NM45=1,             # option
+        NumContact_NMOSSETSubring=2,    # option
+
+        #
         NumFinger_PM12=2,
         NumFinger_PM34=3,
         NumFinger_PM56=3,
         Width_PM=500,
 
+        NumContactY_PM=1,               # option
+        NumContact_PMOSSETSubring=2,    # option
+
         ChannelLength=30,
         XVT='SLVT',
-
-        NumContactY_PM=1,  # option
-        NumContact_Subring=2,  # option
+        _GateSpacing=None
     )
-    InputParams = InputParams1
+    InputParams = InputParams_20G
 
     Mode_DRCCheck = False  # True | False
     Num_DRCCheck = 10
@@ -418,15 +558,13 @@ if __name__ == '__main__':
 
         else:
             pass
-        print(
-            "=============================   Last Layout Object's Input Parameters are   ===========================")
+        print("=============================   Last Layout Object's Input Parameters are   ==========================")
         tmpStr = '\n'.join(f'{k} : {v}' for k, v in InputParams.items())
         print(tmpStr)
-        print(
-            "=======================================================================================================")
+        print("======================================================================================================")
 
         ''' Generate Layout Object '''
-        LayoutObj = Slicer(_Name=cellname)
+        LayoutObj = StrongArmLatch(_Name=cellname)
         LayoutObj._CalculateDesignParameter(**InputParams)
         LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
         testStreamFile = open('./{}'.format(_fileName), 'wb')
@@ -434,8 +572,7 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print(
-            '##################################      Sending to FTP Server...      #################################')
+        print('#################################      Sending to FTP Server...      #################################')
         Checker = DRCchecker.DRCchecker(
             username=My.ID,
             password=My.PW,
@@ -448,19 +585,16 @@ if __name__ == '__main__':
         Checker.Upload2FTP()
 
         if Mode_DRCCheck:
-            print(
-                '###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
+            print('###############      DRC checking... {0}/{1}      ##################'.format(ii + 1, Num_DRCCheck))
             # Bot.send2Bot(f'Start DRCChecker...\nTotal Number Of Run : {Num_DRCCheck}')
             try:
                 Checker.DRCchecker()
             except Exception as e:
                 print('Error Occurred: ', e)
-                print(
-                    "=============================   Last Layout Object's Input Parameters are   =============================")
+                print("=============================   Last Layout Object's Input Parameters are   =============================")
                 tmpStr = '\n'.join(f'{k} : {v}' for k, v in InputParams.items())
                 print(tmpStr)
-                print(
-                    "=========================================================================================================")
+                print("=========================================================================================================")
 
                 Bot.send2Bot(f'Error Occurred During Checking DRC({ii + 1}/{Num_DRCCheck})...\n'
                              f'ErrMsg : {e}\n'
@@ -476,5 +610,4 @@ if __name__ == '__main__':
         else:
             Checker.StreamIn(tech=DesignParameters._Technology)
 
-    print(
-        '########################################      Finished       ###########################################')
+    print('########################################      Finished       ###########################################')

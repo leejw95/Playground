@@ -112,16 +112,14 @@ class _NMOS(StickDiagram._StickDiagram):
 
         elif _NMOSDummy:
             self._DesignParameter['_PODummyLayer']['_XWidth'] = _NMOSChannellength
-            self._DesignParameter['_PODummyLayer']['_YWidth'] = max(_NMOSChannelWidth + 2 * a , (round(_DRCObj._PODummyMinArea / _NMOSChannellength) + _DRCObj._MinSnapSpacing)/ (2*_DRCObj._MinSnapSpacing) * (2*_DRCObj._MinSnapSpacing))
+            self._DesignParameter['_PODummyLayer']['_YWidth'] = _NMOSChannelWidth + 2 * a
 
-        #     if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
-        #         self._DesignParameter['_PODummyLayer']['_YWidth'] = self.CeilMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
-        #         if DesignParameters._Technology != '028nm':  ## Need?
-        #             self._DesignParameter['_POLayer']['_YWidth'] = self._DesignParameter['_PODummyLayer']['_YWidth']
-        #     else:
-        #         pass
-        # else:
-        #     pass
+            if float(self._DesignParameter['_PODummyLayer']['_XWidth']) * float(self._DesignParameter['_PODummyLayer']['_YWidth']) < _DRCObj._PODummyMinArea:
+                self._DesignParameter['_PODummyLayer']['_YWidth'] = self.CeilMinSnapSpacing(float(_DRCObj._PODummyMinArea) / float(self._DesignParameter['_PODummyLayer']['_XWidth']), _DRCObj._MinSnapSpacing*2)
+            else:
+                pass
+        else:
+            pass
 
 
         print ('#############################     DIFF (OD/RX) Layer Calculation    ##############################################')

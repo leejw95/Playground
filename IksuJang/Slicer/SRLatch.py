@@ -63,7 +63,7 @@ class SRLatch(StickDiagram._StickDiagram):
         ''' -------------------------------------------------------------------------------------------------------- '''
         # NMOS, PMOS
 
-        InputParemeters = dict(
+        InputParameters = dict(
             NumFinger_M1=NumFinger_M1, NumFinger_M2=NumFinger_M2, NumFinger_M3=NumFinger_M3, NumFinger_M4=NumFinger_M4,
             Width_PM1=Width_PM1, Width_PM2=Width_PM2, Width_PM3=Width_PM3, Width_PM4=Width_PM4,
             Width_NM1=Width_NM1, Width_NM2=Width_NM2, Width_NM3=Width_NM3, Width_NM4=Width_NM4,
@@ -75,36 +75,103 @@ class SRLatch(StickDiagram._StickDiagram):
         self._DesignParameter['SRLatchUp'] = self._SrefElementDeclaration(
             _Reflect=[0, 0, 0], _Angle=0,
             _DesignObj=SRLatchHalf.SRLatchHalf(_Name='SRLatchUpIn{}'.format(_Name)))[0]
-        self._DesignParameter['SRLatchUp']['_DesignObj']._CalculateDesignParameter(**InputParemeters)
+        self._DesignParameter['SRLatchUp']['_DesignObj']._CalculateDesignParameter(**InputParameters)
 
         self._DesignParameter['SRLatchDn'] = self._SrefElementDeclaration(
             _Reflect=[1, 0, 0], _Angle=0,
             _DesignObj=SRLatchHalf.SRLatchHalf(_Name='SRLatchDnIn{}'.format(_Name)))[0]
-        self._DesignParameter['SRLatchDn']['_DesignObj']._CalculateDesignParameter(**InputParemeters)
+        self._DesignParameter['SRLatchDn']['_DesignObj']._CalculateDesignParameter(**InputParameters)
 
         self._DesignParameter['SRLatchUp']['_XYCoordinates'] = [[0, 0]]
         self._DesignParameter['SRLatchDn']['_XYCoordinates'] = [[0, 0]]
 
 
         ''' -------------------------------------------------------------------------------------------------------- '''
-        topBoundary = self.getXYTop('SRLatchUp', 'M1V1M2OnNet07', '_Met2Layer')[0][1]
-        botBoundary = self.getXYBot('SRLatchDn', 'M1V1M2OnNet07', '_Met2Layer')[0][1]
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
+            XWidth=self.getXWidth('SRLatchUp', 'M1V1M2OnPM1Gate', '_Met1Layer'),
+            YWidth=self.getYWidth('SRLatchUp', 'M1V1M2OnPM1Gate', '_Met1Layer'))
+        self._DesignParameter['M2V2M3OnPM1Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='M2V2M3OnPM1GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M2V2M3OnPM1Gate']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M2V2M3OnPM1Gate']['_XYCoordinates'] = self.getXY('SRLatchUp', 'M1V1M2OnPM1Gate')
+
+
+        rightBoundary = self.getXYRight('SRLatchUp', 'M1V1M2OnPM3Gate', '_Met2Layer')[0][0]
+        leftBoundary = self.getXYLeft('M2V2M3OnPM1Gate', '_Met3Layer')[0][0]
         # botBoundary = 0
-        self._DesignParameter['M4Vtemp'] = self._BoundaryElementDeclaration(
-            _Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],
-            _XWidth=50,
-            _YWidth=topBoundary-botBoundary,
-            _XYCoordinates=[[self.getXY('SRLatchUp', 'M1V1M2OnNet07')[0][0], (topBoundary + botBoundary) / 2]]
+        self._DesignParameter['M3H_01'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],
+            _XWidth=rightBoundary-leftBoundary,
+            _YWidth=self.getYWidth('M2V2M3OnPM1Gate', '_Met3Layer'),
+            _XYCoordinates=[[(rightBoundary + leftBoundary) / 2, self.getXY('M2V2M3OnPM1Gate')[0][1]]]
         )
 
-        # self.getXYTest('SRLatchDn', 'M1V1M2OnNet07', '_Met2Layer')
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
+            XWidth=self.getXWidth('SRLatchUp', 'M1V1M2OnPM3Gate', '_Met2Layer'),
+            YWidth=self.getYWidth('SRLatchUp', 'M1V1M2OnPM3Gate', '_Met2Layer'))
+        self._DesignParameter['M3V3M4OnPM1Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnPM1GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnPM1Gate']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M3V3M4OnPM1Gate']['_XYCoordinates'] = [
+            [self.getXY('SRLatchUp', 'M1V1M2OnPM3Gate')[0][0], self.getXY('M3H_01')[0][1]]
+        ]
+
+        self._DesignParameter['M3V3M4OnNM3Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnNM3GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnNM3Gate']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M3V3M4OnNM3Gate']['_XYCoordinates'] = self.getXY('SRLatchUp', 'M2V2M3OnNM3Gate')
 
 
+
+
+        ''' --- '''
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
+            XWidth=self.getXWidth('SRLatchUp', 'M1V1M2OnNet07', '_Met2Layer'),
+            YWidth=self.getYWidth('SRLatchUp', 'M1V1M2OnNet07', '_Met2Layer'))
+        self._DesignParameter['M2V2M3OnNet07'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='M2V2M3OnNet07In{}'.format(_Name)))[0]
+        self._DesignParameter['M2V2M3OnNet07']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M2V2M3OnNet07']['_XYCoordinates'] = self.getXY('SRLatchUp', 'M1V1M2OnNet07')
+
+        self._DesignParameter['M3V3M4OnNet07'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnNet07In{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnNet07']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M3V3M4OnNet07']['_XYCoordinates'] = self.getXY('SRLatchUp', 'M1V1M2OnNet07')
+
+
+        ''' -------------------------------------------------------------------------------------------------------- '''
+        NumViaXY = (2, 1)
+        self._DesignParameter['M1V1M2OnM2Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='M1V1M2OnM2GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M1V1M2OnM2Gate']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet12Met2NumberOfCOX=NumViaXY[0], _ViaMet12Met2NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M1V1M2OnM2Gate']['_XYCoordinates'] = [
+            [self.getXY('M2V2M3OnPM1Gate')[0][0], self.getXY('M3V3M4OnNet07')[0][1]]
+        ]
+
+        self._DesignParameter['M2V2M3OnM2Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='M2V2M3OnM2GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M2V2M3OnM2Gate']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M2V2M3OnM2Gate']['_XYCoordinates'] = self.getXY('M1V1M2OnM2Gate')
+
+        self._DesignParameter['M3V3M4OnM2Gate'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='M3V3M4OnM2GateIn{}'.format(_Name)))[0]
+        self._DesignParameter['M3V3M4OnM2Gate']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['M3V3M4OnM2Gate']['_XYCoordinates'] = self.getXY('M1V1M2OnM2Gate')
+
+        rightBoundary = self.getXYRight('SRLatchUp', 'M1VForNM2PM2Gate')[0][0]
+        leftBoundary = self.getXYLeft('M1V1M2OnM2Gate', '_Met1Layer')[0][0]
+        self._DesignParameter['M1H_02'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],
+            _XWidth=rightBoundary - leftBoundary,
+            _YWidth=self.getYWidth('M1V1M2OnM2Gate', '_Met1Layer'),
+            _XYCoordinates=[[(rightBoundary + leftBoundary) / 2, self.getXY('M1V1M2OnM2Gate')[0][1]]]
+        )
 
 
         ''' -------------------------------------------------------------------------------------------------------- '''
 
 
+        ''' -------------------------------------------------------------------------------------------------------- '''
         print('\n' + ''.center(105, '#'))
         print('     {} Calculation End     '.format(_Name).center(105, '#'))
         print(''.center(105, '#') + '\n')
@@ -126,8 +193,8 @@ if __name__ == '__main__':
     ''' Input Parameters for Layout Object '''
     InputParams_20G = dict(
         NumFinger_M1=5,         # 5 1 2 2
-        NumFinger_M2=5,
-        NumFinger_M3=6,
+        NumFinger_M2=1,
+        NumFinger_M3=4,
         NumFinger_M4=2,
 
         Width_PM1=400,

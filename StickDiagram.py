@@ -126,7 +126,7 @@ class _StickDiagram:
         """
         return self._getSthValue(hier_element_tuple=hier_element_tuple, SthValue='_Width', _DesignParametertype=2)
 
-    def getXY(self, *hier_element_tuple:str):
+    def getXY__(self, *hier_element_tuple:str):
         """ Calculate Relative Coordinates of hierarchical designObj.
 
         Note:
@@ -163,6 +163,99 @@ class _StickDiagram:
                 for XY2 in element['_XYCoordinates']:
                     tmpAddedXYs.append([XY1[0] + XY2[0], XY1[1] + XY2[1]])      # tmpXYs1 + tmpXYs2
             elementXY = tmpAddedXYs
+
+        return elementXY
+
+
+    def _getSignXY(self, element:dict):
+
+        if element['_DesignParametertype'] == 3:    # Sref
+            if element['_Reflect'] in (None, [0, 0, 0]) and element['_Angle'] in (None, 0):    # R0
+                _SignX = +1
+                _SignY = +1
+            elif element['_Reflect'] == [1, 0, 0] and element['_Angle'] in (None, 0):          # MX
+                _SignX = +1
+                _SignY = -1
+            elif element['_Reflect'] == [1, 0, 0] and element['_Angle'] == 180:                # MY
+                _SignX = -1
+                _SignY = +1
+            else:
+                raise NotImplemented
+        else:
+            _SignX = +1
+            _SignY = +1
+
+        return _SignX, _SignY
+
+
+    def getXY(self, *hier_element_tuple:str):
+        """ Calculate Relative Coordinates of hierarchical designObj.
+
+        Note:
+            Input should start from the top hierarchical designObj.\n
+            This function can be used on 'Boundary/Path/Sref Element'.
+            But PathElement CANNOT be used on Multiple hierarchical designObj.
+        Args:
+            hier_element_tuple (str): hierarchical designObj Names.
+        Returns:
+            list[list[int | float]]: Relative Coordinates Of Lowest Hierarchical designObj.
+        Example:
+            >>> self.getXY('_PMOS', '_POLayer')
+            [[-1000,0], [-500,0], [+500,0], [+1000,0]]
+        """
+        if '_DesignParameter' not in self.__dict__:
+            raise Exception("There is no DesignParameter.")
+
+        HierElementDictList = []
+
+        print(f'type: {type(hier_element_tuple)}')      #
+        print(hier_element_tuple)                       #
+        for Element in hier_element_tuple:
+            HierElementDictList.append(dict(_ElementName=Element, _XYCoordinates=[], _SignX=0, _SignY=0))
+
+        if HierElementDictList[0]['_ElementName'] not in self._DesignParameter:
+            raise Exception(f"Invalid Hierarchy element name: {HierElementDictList[0]['_ElementName']}")
+
+        element = self._DesignParameter[HierElementDictList[0]['_ElementName']]
+        HierElementDictList[0]['_XYCoordinates'] = element['_XYCoordinates']
+        HierElementDictList[0]['_SignX'] = self._getSignXY(element)[0]
+        HierElementDictList[0]['_SignY'] = self._getSignXY(element)[1]
+
+        for i, hierarchy_element_dict in enumerate(HierElementDictList):
+            if i is not 0:
+                if hierarchy_element_dict['_ElementName'] not in element['_DesignObj']._DesignParameter:
+                    raise Exception(f"Invalid Hierarchy element name: {hierarchy_element_dict['_ElementName']}.")
+                else:
+                    element = element['_DesignObj']._DesignParameter[hierarchy_element_dict['_ElementName']]
+
+                if element['_DesignParametertype'] == 2:    # 1: Boundary, 2: Path, 3: Sref
+                    raise Exception("Not Available on PathElement.")
+
+                HierElementDictList[i]['_XYCoordinates'] = element['_XYCoordinates']
+                HierElementDictList[i]['_SignX'] = self._getSignXY(element)[0]
+                HierElementDictList[i]['_SignY'] = self._getSignXY(element)[1]
+
+        # elementXY = HierElementDictList[-1]['_XYCoordinates']
+
+
+        for i in range(len(HierElementDictList), 0, -1):
+            if i == len(HierElementDictList):       # first
+                elementXY = HierElementDictList[-1]['_XYCoordinates']
+                tmpAddedXYs = []
+                for XY in elementXY:
+                    tmpAddedXYs.append([XY[0] * HierElementDictList[i - 1]['_SignX'],
+                                        XY[1] * HierElementDictList[i - 1]['_SignY']])
+                elementXY = tmpAddedXYs
+            else:
+                tmpAddedXYs = []
+                for XY1 in elementXY:
+                    for XY2 in HierElementDictList[i-1]['_XYCoordinates']:
+                        tmpAddedXYs.append([XY1[0] * HierElementDictList[i - 1]['_SignX'] + XY2[0],
+                                            XY1[1] * HierElementDictList[i - 1]['_SignY'] + XY2[1]])
+
+                elementXY = tmpAddedXYs
+
+        print('HierElementDictList: ', HierElementDictList)
 
         return elementXY
 

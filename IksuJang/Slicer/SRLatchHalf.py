@@ -102,7 +102,7 @@ class SRLatchHalf(StickDiagram._StickDiagram):
 
         # Supply Rail
         CellXWidth = _UnitPitch * (NumFinger_M1 + NumFinger_M2 + NumFinger_M3 + NumFinger_M4 + 7)
-        NumContactX_SupplyRail = int((CellXWidth - 2 * _DRCObj._CoMinEnclosureByODAtLeastTwoSide - _DRCObj._CoMinWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + 1)
+        NumContactX_SupplyRail = int((CellXWidth - 2 * _DRCObj._CoMinEnclosureByODAtLeastTwoSide - _DRCObj._CoMinWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + 1) + 2
 
         self._DesignParameter['VDDRail'] = self._SrefElementDeclaration(_DesignObj=NbodyContact._NbodyContact(_Name='VDDRailIn{}'.format(_Name)))[0]
         self._DesignParameter['VDDRail']['_DesignObj']._CalculateDesignParameter(**dict(_NumberOfNbodyCOX=NumContactX_SupplyRail, _NumberOfNbodyCOY=NumContactY_SupplyRail))
@@ -145,7 +145,8 @@ class SRLatchHalf(StickDiagram._StickDiagram):
         # NMOS YCoordinates
         bot2top_Met1_NM1 = self.getYWidth('NM1', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnNM1Drain', '_Met1Layer') - self.getYWidth('NM1', '_Met1Layer')) / 2
         bot2top_Met1_NM2 = self.getYWidth('NM2', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnNM2Drain', '_Met1Layer') - self.getYWidth('NM2', '_Met1Layer')) / 2
-        bot2top_Met1_NM3 = self.getYWidth('NM3', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnNM3Source', '_Met1Layer') - self.getYWidth('NM3', '_Met1Layer'))
+        # bot2top_Met1_NM3 = self.getYWidth('NM3', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnNM2Drain', '_Met1Layer') - self.getYWidth('NM3', '_Met1Layer')) / 2 + (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) / 2
+        bot2top_Met1_NM3 = self.getYWidth('NM3', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnNM2Drain', '_Met1Layer') - self.getYWidth('NM3', '_Met1Layer')) / 2
         bot2top_Met1_NM4 = self.getYWidth('NM4', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnNM4Drain', '_Met1Layer') - self.getYWidth('NM4', '_Met1Layer')) / 2
         maxbot2top_Met1_NM1234 = max(bot2top_Met1_NM1, bot2top_Met1_NM2, bot2top_Met1_NM3, bot2top_Met1_NM4)
 
@@ -164,7 +165,8 @@ class SRLatchHalf(StickDiagram._StickDiagram):
         # PMOS YCoordinates
         bot2top_Met1_PM1 = self.getYWidth('PM1', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnPM1Drain', '_Met1Layer') - self.getYWidth('PM1', '_Met1Layer')) / 2
         bot2top_Met1_PM2 = self.getYWidth('PM2', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnPM2Drain', '_Met1Layer') - self.getYWidth('PM2', '_Met1Layer')) / 2
-        bot2top_Met1_PM3 = self.getYWidth('PM3', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnPM3Source', '_Met1Layer') - self.getYWidth('PM3', '_Met1Layer'))
+        # bot2top_Met1_PM3 = self.getYWidth('PM3', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnPM2Drain', '_Met1Layer') - self.getYWidth('PM3', '_Met1Layer')) / 2 + (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) / 2
+        bot2top_Met1_PM3 = self.getYWidth('PM3', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnPM2Drain', '_Met1Layer') - self.getYWidth('PM3', '_Met1Layer')) / 2
         bot2top_Met1_PM4 = self.getYWidth('PM4', '_Met1Layer') + max(0, self.getYWidth('M1V1M2OnPM4Drain', '_Met1Layer') - self.getYWidth('PM4', '_Met1Layer')) / 2
         maxbot2top_Met1_PM1234 = max(bot2top_Met1_PM1, bot2top_Met1_PM2, bot2top_Met1_PM3, bot2top_Met1_PM4)
 
@@ -196,10 +198,11 @@ class SRLatchHalf(StickDiagram._StickDiagram):
         tmpXYs = []
         for i, XYs in enumerate(self.getXY('NM3', '_Met1Layer')):
             if i % 2 == 0:
-                if self.getYWidth('NM3', '_Met1Layer') < self.getYWidth('M1V1M2OnNM3Source', '_Met1Layer'):
-                    tmpXYs.append([XYs[0], self.getXYTop('NM3', '_Met1Layer')[0][1] - self.getYWidth('M1V1M2OnNM3Source', '_Met1Layer') / 2])
-                else:
-                    tmpXYs.append([XYs[0], XYs[1]])
+                # if self.getYWidth('NM3', '_Met1Layer') < self.getYWidth('M1V1M2OnNM3Source', '_Met1Layer'):
+                #     tmpXYs.append([XYs[0], self.getXYTop('NM3', '_Met1Layer')[0][1] - self.getYWidth('M1V1M2OnNM3Source', '_Met1Layer') / 2])
+                # else:
+                #     tmpXYs.append([XYs[0], XYs[1]])
+                tmpXYs.append([XYs[0], XYs[1] - (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) / 2])
         self._DesignParameter['M1V1M2OnNM3Source']['_XYCoordinates'] = tmpXYs
         self._DesignParameter['M2V2M3OnNM3Source']['_XYCoordinates'] = tmpXYs
 
@@ -207,10 +210,11 @@ class SRLatchHalf(StickDiagram._StickDiagram):
         tmpXYs = []
         for i, XYs in enumerate(self.getXY('PM3', '_Met1Layer')):
             if i % 2 == 0:
-                if self.getYWidth('PM3', '_Met1Layer') < self.getYWidth('M1V1M2OnPM3Source', '_Met1Layer'):
-                    tmpXYs.append([XYs[0], self.getXYBot('PM3', '_Met1Layer')[0][1] + self.getYWidth('M1V1M2OnPM3Source', '_Met1Layer') / 2])
-                else:
-                    tmpXYs.append([XYs[0], XYs[1]])
+                # if self.getYWidth('PM3', '_Met1Layer') < self.getYWidth('M1V1M2OnPM3Source', '_Met1Layer'):
+                #     tmpXYs.append([XYs[0], self.getXYBot('PM3', '_Met1Layer')[0][1] + self.getYWidth('M1V1M2OnPM3Source', '_Met1Layer') / 2])
+                # else:
+                #     tmpXYs.append([XYs[0], XYs[1]])
+                tmpXYs.append([XYs[0], XYs[1] + (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) / 2])
         self._DesignParameter['M1V1M2OnPM3Source']['_XYCoordinates'] = tmpXYs
         self._DesignParameter['M2V2M3OnPM3Source']['_XYCoordinates'] = tmpXYs
 
@@ -233,8 +237,11 @@ class SRLatchHalf(StickDiagram._StickDiagram):
 
         for mosfet in ('NM1', 'NM2', 'NM3', 'NM4'):
             # set coordinates
-            YCoord_PolyContact_case1 = max(self.getXYTop(mosfet, '_Met1Layer')[0][1], self.getXYTop(f'M1V1M2On{mosfet}Drain', '_Met1Layer')[0][1]) + _DRCObj._Metal1MinSpaceAtCorner + self.getYWidth(f'PolyContactOn{mosfet}', '_Met1Layer') / 2
-            YCoord_PolyContact_case2 = 0
+            YCoord_PolyContact_case1 = max(self.getXYTop(mosfet, '_Met1Layer')[0][1], self.getXYTop(f'M1V1M2On{mosfet}Drain', '_Met1Layer')[0][1]) + _DRCObj._Metal1MinSpace2 + self.getYWidth(f'PolyContactOn{mosfet}', '_Met1Layer') / 2
+            # YCoord_PolyContact_case2
+            _XGapPolyDummyEdge2PolyEdge = (self.getXYLeft(mosfet, '_PODummyLayer')[1][0] - self.getXY(mosfet)[0][0]) - self.getXWidth(f'PolyContactOn{mosfet}', '_POLayer') / 2
+            _YGapPolyDummy2InputViaPoly = math.ceil(math.sqrt(_DRCObj._PolygateMinSpaceAtCorner ** 2 - _XGapPolyDummyEdge2PolyEdge ** 2))
+            YCoord_PolyContact_case2 = self.getXYTop(mosfet, '_PODummyLayer')[1][1] + _YGapPolyDummy2InputViaPoly + self.getYWidth(f'PolyContactOn{mosfet}', '_POLayer') / 2
             YCoord_PolyContact = max(YCoord_PolyContact_case1, YCoord_PolyContact_case2)
             self._DesignParameter[f'PolyContactOn{mosfet}']['_XYCoordinates'] = [[self.getXY(mosfet)[0][0], YCoord_PolyContact]]
 
@@ -253,8 +260,11 @@ class SRLatchHalf(StickDiagram._StickDiagram):
 
         for mosfet in ('PM1', 'PM2', 'PM3', 'PM4'):
             # set coordinates
-            YCoord_PolyContact_case1 = min(self.getXYBot(mosfet, '_Met1Layer')[0][1], self.getXYBot(f'M1V1M2On{mosfet}Drain', '_Met1Layer')[0][1]) - _DRCObj._Metal1MinSpaceAtCorner - self.getYWidth(f'PolyContactOn{mosfet}', '_Met1Layer') / 2
-            YCoord_PolyContact_case2 = 0
+            YCoord_PolyContact_case1 = min(self.getXYBot(mosfet, '_Met1Layer')[0][1], self.getXYBot(f'M1V1M2On{mosfet}Drain', '_Met1Layer')[0][1]) - _DRCObj._Metal1MinSpace2 - self.getYWidth(f'PolyContactOn{mosfet}', '_Met1Layer') / 2
+            # YCoord_PolyContact_case2
+            _XGapPolyDummyEdge2PolyEdge = (self.getXYLeft(mosfet, '_PODummyLayer')[1][0] - self.getXY(mosfet)[0][0]) - self.getXWidth(f'PolyContactOn{mosfet}', '_POLayer') / 2
+            _YGapPolyDummy2InputViaPoly = math.ceil(math.sqrt(_DRCObj._PolygateMinSpaceAtCorner ** 2 - _XGapPolyDummyEdge2PolyEdge ** 2))
+            YCoord_PolyContact_case2 = self.getXYBot(mosfet, '_PODummyLayer')[1][1] - _YGapPolyDummy2InputViaPoly - self.getYWidth(f'PolyContactOn{mosfet}', '_POLayer') / 2
             YCoord_PolyContact = min(YCoord_PolyContact_case1, YCoord_PolyContact_case2)
             self._DesignParameter[f'PolyContactOn{mosfet}']['_XYCoordinates'] = [[self.getXY(mosfet)[0][0], YCoord_PolyContact]]
 
@@ -421,10 +431,92 @@ class SRLatchHalf(StickDiagram._StickDiagram):
             self._DesignParameter['PolyContactOnPM1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self.getXWidth('M1V1M2OnPM1Gate', '_Met1Layer')
 
         ''' -------------------------------------------------------------------------------------------------------- '''
+        # ''' --- '''
+        # ##
+        # # YCoord_M1V1M2OnPM3Gate_reCalc = self.getXYTop('M1V1M2OnNM3Gate', '_Met2Layer')[0][1] + _DRCObj._MetalxMinSpace * 2 + _DRCObj._MetalxMinWidth + self.getYWidth('M1V1M2OnPM3Gate', '_Met2Layer') / 2
+        # YCoord_M1V1M2OnPM3Gate_reCalc = self.getXYTop('M1V1M2OnNM3Gate', '_COLayer')[0][1] + _DRCObj._VIAxMinSpace * 2 + _DRCObj._MetalxMinWidth + self.getYWidth('M1V1M2OnPM3Gate', '_COLayer') / 2
+        # Offset_PMSide_case1 = YCoord_M1V1M2OnPM3Gate_reCalc - self.getXY('M1V1M2OnPM3Gate')[0][1]
+        #
+        # # case2
+        # YCoord_MaxNMSide = max(self.getXYTop('PolyContactOnNM1', '_Met1Layer')[0][1],
+        #                        self.getXYTop('PolyContactOnNM2', '_Met1Layer')[0][1],
+        #                        self.getXYTop('M1ForNM3Gate')[0][1],
+        #                        self.getXYTop('PolyContactOnNM4', '_Met1Layer')[0][1])
+        # YCoordBot_MinPMSide_reCalc = YCoord_MaxNMSide + _DRCObj._Metal1MinSpace * 2 + _DRCObj._Metal1MinWidth
+        # YCoordBot_MinNMSide = min(self.getXYBot('PolyContactOnPM1', '_Met1Layer')[0][1],
+        #                           self.getXYBot('PolyContactOnPM2', '_Met1Layer')[0][1],
+        #                           self.getXYBot('M1ForPM3Gate')[0][1],
+        #                           self.getXYBot('PolyContactOnPM4', '_Met1Layer')[0][1])
+        #
+        # if YCoordBot_MinNMSide == self.getXYBot('PolyContactOnPM1', '_Met1Layer')[0][1]:
+        #     Offset_PMSide_case2 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM1', '_Met1Layer')[0][1]
+        # elif YCoordBot_MinNMSide == self.getXYBot('PolyContactOnPM2', '_Met1Layer')[0][1]:
+        #     Offset_PMSide_case2 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM2', '_Met1Layer')[0][1]
+        # elif YCoordBot_MinNMSide == self.getXYBot('M1ForPM3Gate')[0][1]:
+        #     Offset_PMSide_case2 = YCoordBot_MinPMSide_reCalc - self.getXYBot('M1ForPM3Gate')[0][1]
+        # else:
+        #     Offset_PMSide_case2 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM4', '_Met1Layer')[0][1]
+        #
+        # # case3
+        # YCoord_MaxNMSide = max(self.getXY('PolyContactOnNM1')[0][1],
+        #                        self.getXY('PolyContactOnNM2')[0][1],
+        #                        self.getXY('M1V1M2OnNM3Gate')[0][1],
+        #                        self.getXY('PolyContactOnNM4')[0][1])
+        # YCoordBot_MinPMSide_reCalc = YCoord_MaxNMSide + _DRCObj._Metal1MinSpace * 2 + _DRCObj._Metal1MinWidth
+        # YCoordBot_MinPMSide = min(self.getXY('PolyContactOnPM1')[0][1],
+        #                           self.getXY('PolyContactOnPM2')[0][1],
+        #                           self.getXY('M1V1M2OnPM3Gate')[0][1],
+        #                           self.getXY('PolyContactOnPM4')[0][1])
+        #
+        # if YCoordBot_MinPMSide == self.getXYBot('PolyContactOnPM1', '_Met1Layer')[0][1]:
+        #     Offset_PMSide_case3 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM1', '_Met1Layer')[0][1]
+        # elif YCoordBot_MinPMSide == self.getXYBot('PolyContactOnPM2', '_Met1Layer')[0][1]:
+        #     Offset_PMSide_case3 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM2', '_Met1Layer')[0][1]
+        # elif YCoordBot_MinPMSide == self.getXYBot('M1ForPM3Gate')[0][1]:
+        #     Offset_PMSide_case3 = YCoordBot_MinPMSide_reCalc - self.getXYBot('M1ForPM3Gate')[0][1]
+        # else:
+        #     Offset_PMSide_case3 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM4', '_Met1Layer')[0][1]
+        #
+        #
+        # Offset_PMSide = max(Offset_PMSide_case1, Offset_PMSide_case2, Offset_PMSide_case3)
+        ''' --- '''
 
-        YCoord_M1V1M2OnPM3Gate_reCalc = self.getXYTop('M1V1M2OnNM3Gate', '_Met2Layer')[0][1] + _DRCObj._MetalxMinSpace * 2 + _DRCObj._MetalxMinWidth + self.getYWidth('M1V1M2OnPM3Gate', '_Met2Layer') / 2
-        Offset_PMSide = YCoord_M1V1M2OnPM3Gate_reCalc - self.getXY('M1V1M2OnPM3Gate')[0][1]
 
+        YCoordMidVia_case1 = max(self.getXYTop('M1V1M2OnNM1Gate', '_COLayer')[0][1],
+                                 self.getXYTop('M1V1M2OnNM3Gate', '_COLayer')[0][1]) + _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth / 2
+        YCoordMidVia_case2 = max(self.getXYTop('PolyContactOnNM1', '_Met1Layer')[0][1],
+                                 self.getXYTop('PolyContactOnNM2', '_Met1Layer')[0][1],
+                                 self.getXYTop('M1ForNM3Gate')[0][1],
+                                 self.getXYTop('PolyContactOnNM4', '_Met1Layer')[0][1]) + _DRCObj._Metal1MinSpace2 + _DRCObj._Metal1MinWidth / 2
+        YCoordMidVia = max(YCoordMidVia_case1, YCoordMidVia_case2)  ##
+        self.YCoordMidVia = YCoordMidVia
+        # case1
+        YCoordBot_MinPMSide_reCalc = YCoordMidVia + _DRCObj._VIAxMinSpace2 + _DRCObj._VIAxMinWidth
+        YCoordBot_MinPMSide = min(self.getXY('M1V1M2OnPM1Gate', '_COLayer')[0][1],
+                                  self.getXY('M1V1M2OnPM3Gate', '_COLayer')[0][1])
+
+        if YCoordBot_MinPMSide == self.getXY('M1V1M2OnPM1Gate', '_COLayer')[0][1]:
+            Offset_PMSide_case1 = YCoordBot_MinPMSide_reCalc - self.getXY('M1V1M2OnPM1Gate', '_COLayer')[0][1]
+        else:
+            Offset_PMSide_case1 = YCoordBot_MinPMSide_reCalc - self.getXY('M1V1M2OnPM3Gate', '_COLayer')[0][1]
+
+        # case2
+        YCoordBot_MinPMSide_reCalc = YCoordMidVia + _DRCObj._Metal1MinWidth / 2 + _DRCObj._Metal1MinSpace2
+        YCoordBot_MinPMSide = min(self.getXYBot('PolyContactOnPM1', '_Met1Layer')[0][1],
+                                  self.getXYBot('PolyContactOnPM2', '_Met1Layer')[0][1],
+                                  self.getXYBot('M1ForPM3Gate')[0][1],
+                                  self.getXYBot('PolyContactOnPM4', '_Met1Layer')[0][1])
+
+        if YCoordBot_MinPMSide == self.getXYBot('PolyContactOnPM1', '_Met1Layer')[0][1]:
+            Offset_PMSide_case2 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM1', '_Met1Layer')[0][1]
+        elif YCoordBot_MinPMSide == self.getXYBot('PolyContactOnPM2', '_Met1Layer')[0][1]:
+            Offset_PMSide_case2 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM2', '_Met1Layer')[0][1]
+        elif YCoordBot_MinPMSide == self.getXYBot('M1ForPM3Gate')[0][1]:
+            Offset_PMSide_case2 = YCoordBot_MinPMSide_reCalc - self.getXYBot('M1ForPM3Gate')[0][1]
+        else:
+            Offset_PMSide_case2 = YCoordBot_MinPMSide_reCalc - self.getXYBot('PolyContactOnPM4', '_Met1Layer')[0][1]
+
+        Offset_PMSide = max(Offset_PMSide_case1, Offset_PMSide_case2)
         ObjList_PMSide = ['PM1', 'PM2', 'PM3', 'PM4', 'VDDRail',
                           'M1V1M2OnPM1Drain', 'M1V1M2OnPM2Drain', 'M1V1M2OnPM3Drain', 'M1V1M2OnPM4Drain',
                           'M1V1M2OnPM3Source', 'M2V2M3OnPM1Drain', 'M2V2M3OnPM3Source',
@@ -585,63 +677,108 @@ class SRLatchHalf(StickDiagram._StickDiagram):
             _XYCoordinates=[[self.getXY('M3V3M4OnNet11')[0][0], (topBoundary + botBoundary) / 2]]
         )
 
-        # ''' -------------------------------------------------------------------------------------------------------- '''
-        # # print('print all obj...')
-        # # tmpObjDict_Up = copy.deepcopy(self._DesignParameter)
-        # # del tmpObjDict_Up['_Name']
-        # # del tmpObjDict_Up['_GDSFile']
-        # #
-        # # tmpObjDict_Dn = {}
-        # # for i, obj in enumerate(tmpObjDict_Up):
-        # #     print(f'obj{i} : {obj}')
-        # #     tmpXYs = []
-        # #     for XYs in self._DesignParameter[obj]['_XYCoordinates']:
-        # #         tmpXYs.append(CoordCalc.FlipY(XYs))
-        # #     self._DesignParameter[obj]['_XYCoordinates'].extend(tmpXYs)
-        # #
-        # #     tmpObjDict_Dn[obj] = tmpObjDict_Up[obj]
-        # #     tmpObjDict_Dn[obj]['_XYCoordinates'] = tmpXYs
-        # #
-        # #
-        # #
-        # # topBoundary = self.getXYBot('M3V3M4OnNet11', '_Met4Layer')[0][1]
-        # # botBoundary = self.getXYTop('M3V3M4OnNet12', '_Met4Layer')[0][1]
-        # # self._DesignParameter['tempM4V'] = self._BoundaryElementDeclaration(
-        # #     _Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],
-        # #     _XWidth=self.getXWidth('M3V3M4OnNet11', '_Met4Layer'),
-        # #     _YWidth=topBoundary - botBoundary,
-        # #     _XYCoordinates=[[self.getXY('M3V3M4OnNet11')[0][0], (topBoundary + botBoundary) / 2]]
-        # # )
-        #
-        #
-        # ''' -------------------------------------------------------------------------------------------------------- '''
-        # print('print all obj...')
-        # tmpObjDict_Up = copy.deepcopy(self._DesignParameter)
-        # del tmpObjDict_Up['_Name']
-        # del tmpObjDict_Up['_GDSFile']
-        #
-        # for i, obj in enumerate(tmpObjDict_Up):
-        #     print(f'obj{i} : {obj}')
-        #     tmpXYs = []
-        #     for XYs in self._DesignParameter[obj]['_XYCoordinates']:
-        #         tmpXYs.append(CoordCalc.FlipY(XYs))
-        #     self._DesignParameter[f'{obj}_Dn'] = self._DesignParameter[obj]
-        #     self._DesignParameter[f'{obj}_Dn']['_XYCoordinates'] = tmpXYs
-        #
-        #
-        #
-        #
-        #
-        # topBoundary = self.getXYBot('M3V3M4OnNet11', '_Met4Layer')[0][1]
-        # botBoundary = self.getXYTop('M3V3M4OnNet12', '_Met4Layer')[0][1]
-        # self._DesignParameter['tempM4V'] = self._BoundaryElementDeclaration(
-        #     _Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],
-        #     _XWidth=self.getXWidth('M3V3M4OnNet11', '_Met4Layer'),
-        #     _YWidth=topBoundary - botBoundary,
-        #     _XYCoordinates=[[self.getXY('M3V3M4OnNet11')[0][0], (topBoundary + botBoundary) / 2]]
-        # )
+        ''' -------------------------------------------------------------------------------------------------------- '''
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
+            XWidth=self.getXWidth('VDDRail', '_Met1Layer'),
+            YWidth=self.getYWidth('VDDRail', '_Met1Layer'))
+        self._DesignParameter['VDDVia1'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='VDDVia1In{}'.format(_Name)))[0]
+        self._DesignParameter['VDDVia1']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet12Met2NumberOfCOX=NumViaXY[0], _ViaMet12Met2NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['VDDVia1']['_XYCoordinates'] = self.getXY('VDDRail')
+
+        self._DesignParameter['VDDVia2'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='VDDVia2In{}'.format(_Name)))[0]
+        self._DesignParameter['VDDVia2']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['VDDVia2']['_XYCoordinates'] = self.getXY('VDDRail')
+
+        self._DesignParameter['VDDVia3'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='VDDVia3In{}'.format(_Name)))[0]
+        self._DesignParameter['VDDVia3']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['VDDVia3']['_XYCoordinates'] = self.getXY('VDDRail')
+
+        self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+
+        self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+
+        self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
 
 
+        ''' ---------------------------------------------- PP(BP) Layer ----------------------------------------------- '''
+        rightBoundary = self.getXYRight('PM4', '_PPLayer')[0][0]
+        leftBoundary = self.getXYLeft('PM1', '_PPLayer')[0][0]
+        topBoundary = max(self.getXYTop('PM1', '_PPLayer')[0][1], self.getXYTop('PM2', '_PPLayer')[0][1],
+                          self.getXYTop('PM3', '_PPLayer')[0][1], self.getXYTop('PM4', '_PPLayer')[0][1])
+        botBoundary = max(self.getXYBot('PM1', '_PPLayer')[0][1], self.getXYBot('PM2', '_PPLayer')[0][1],
+                          self.getXYBot('PM3', '_PPLayer')[0][1], self.getXYBot('PM4', '_PPLayer')[0][1])
+        self._DesignParameter['_PPLayer'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1],
+            _XWidth=rightBoundary-leftBoundary,
+            _YWidth=topBoundary-botBoundary,
+            _XYCoordinates=[[(rightBoundary + leftBoundary) / 2, (topBoundary + botBoundary) / 2]]
+        )
+        ''' ---------------------------------------------- XVT Layer ----------------------------------------------- '''
+        _XVTLayer = '_' + XVT + 'Layer'
+        rightBoundary = self.getXYRight('PM4', _XVTLayer)[0][0]
+        leftBoundary = self.getXYLeft('PM1', _XVTLayer)[0][0]
+        topBoundary = max(self.getXYTop('PM1', _XVTLayer)[0][1], self.getXYTop('PM2', _XVTLayer)[0][1], self.getXYTop('PM3', _XVTLayer)[0][1], self.getXYTop('PM4', _XVTLayer)[0][1])
+        botBoundary = min(self.getXYBot('PM1', _XVTLayer)[0][1], self.getXYBot('PM2', _XVTLayer)[0][1], self.getXYBot('PM3', _XVTLayer)[0][1], self.getXYBot('PM4', _XVTLayer)[0][1])
+        self._DesignParameter['XVTOnPM'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping[XVT][0],
+            _Datatype=DesignParameters._LayerMapping[XVT][1],
+            _XWidth=rightBoundary-leftBoundary,
+            _YWidth=topBoundary-botBoundary,
+            _XYCoordinates=[[(rightBoundary + leftBoundary) / 2, (topBoundary + botBoundary) / 2]]
+        )
+
+        rightBoundary = self.getXYRight('NM4', _XVTLayer)[0][0]
+        leftBoundary = self.getXYLeft('NM1', _XVTLayer)[0][0]
+        topBoundary = max(self.getXYTop('NM1', _XVTLayer)[0][1], self.getXYTop('NM2', _XVTLayer)[0][1],
+                          self.getXYTop('NM3', _XVTLayer)[0][1], self.getXYTop('NM4', _XVTLayer)[0][1])
+        botBoundary = max(self.getXYBot('NM1', _XVTLayer)[0][1], self.getXYBot('NM2', _XVTLayer)[0][1],
+                          self.getXYBot('NM3', _XVTLayer)[0][1], self.getXYBot('NM4', _XVTLayer)[0][1])
+        self._DesignParameter['XVTOnNM'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping[XVT][0],
+            _Datatype=DesignParameters._LayerMapping[XVT][1],
+            _XWidth=rightBoundary - leftBoundary,
+            _YWidth=topBoundary - botBoundary,
+            _XYCoordinates=[[(rightBoundary + leftBoundary) / 2, (topBoundary + botBoundary) / 2]]
+        )
+
+
+        ''' ------------------------------------------- NWELL Layer ------------------------------------------- '''
+        XWidth_NW_case1 = self.getXWidth('VDDRail', '_ODLayer') + 2 * _DRCObj._NwMinEnclosurePactive
+        XWidth_NW_case2 = (self.getXYRight('PM4', '_ODLayer')[0][0] - self.getXYLeft('PM1', '_ODLayer')[0][0]) + 2 * _DRCObj._NwMinEnclosurePactive2
+        XWidth_NW_case3 = self.getXWidth('XVTOnPM') + 2 * _DRCObj._NwMinSpacetoSLVT
+        XWidth_NW = max(XWidth_NW_case1, XWidth_NW_case2, XWidth_NW_case3)
+
+        botBoundary_OD = min(self.getXYBot('PM1', '_ODLayer')[0][1], self.getXYBot('PM2', '_ODLayer')[0][1], self.getXYBot('PM3', '_ODLayer')[0][1], self.getXYBot('PM4', '_ODLayer')[0][1])
+        topBoundary_NW = self.getXYTop('VDDRail', '_ODLayer')[0][1] + _DRCObj._NwMinEnclosurePactive
+        botBoundary_NW = botBoundary_OD - _DRCObj._NwMinEnclosurePactive
+        YWidth_NW = topBoundary_NW - botBoundary_NW
+
+        if (XWidth_NW * YWidth_NW) < _DRCObj._NwMinArea:
+            XWidth_NW = self.CeilMinSnapSpacing(_DRCObj._NwMinArea / YWidth_NW, 2 * MinSnapSpacing)
+        else:
+            pass
+
+        self._DesignParameter['_NWLayer'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1],
+            _XWidth=XWidth_NW,
+            _YWidth=YWidth_NW,
+            _XYCoordinates=[[0, (topBoundary_NW + botBoundary_NW) / 2]]
+        )
 
         ''' -------------------------------------------------------------------------------------------------------- '''
         ''' -------------------------------------------------------------------------------------------------------- '''

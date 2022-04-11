@@ -36,7 +36,7 @@ class Inverter(StickDiagram._StickDiagram):
                                   Width_PM=600,
                                   Width_NM=200,
 
-                                  NumContactY_Gate=2,                   # option
+                                  NumContactY_Gate=1,                   # option
                                   NumContactY_SupplyRail=2,             # option
 
                                   ChannelLength=30,
@@ -336,6 +336,7 @@ class Inverter(StickDiagram._StickDiagram):
         print(''.center(105, '#') + '\n')
         ''' -------------------------------------------------------------------------------------------------------- '''
 
+
 if __name__ == '__main__':
     from Private import MyInfo
     import DRCchecker
@@ -364,7 +365,7 @@ if __name__ == '__main__':
         Width_NM=200,
         Width_PM=600,
     )
-    InputParams = InputParams_12G
+    InputParams = InputParams_20G
 
     Mode_DRCCheck = False  # True | False
     Num_DRCCheck = 10

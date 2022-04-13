@@ -678,41 +678,41 @@ class SRLatchHalf(StickDiagram._StickDiagram):
         )
 
         ''' -------------------------------------------------------------------------------------------------------- '''
-        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
-            XWidth=self.getXWidth('VDDRail', '_Met1Layer'),
-            YWidth=self.getYWidth('VDDRail', '_Met1Layer'))
-        self._DesignParameter['VDDVia1'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='VDDVia1In{}'.format(_Name)))[0]
-        self._DesignParameter['VDDVia1']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(
-            **dict(_ViaMet12Met2NumberOfCOX=NumViaXY[0], _ViaMet12Met2NumberOfCOY=NumViaXY[1]))
-        self._DesignParameter['VDDVia1']['_XYCoordinates'] = self.getXY('VDDRail')
-
-        self._DesignParameter['VDDVia2'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='VDDVia2In{}'.format(_Name)))[0]
-        self._DesignParameter['VDDVia2']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
-            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1]))
-        self._DesignParameter['VDDVia2']['_XYCoordinates'] = self.getXY('VDDRail')
-
-        self._DesignParameter['VDDVia3'] = self._SrefElementDeclaration(
-            _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='VDDVia3In{}'.format(_Name)))[0]
-        self._DesignParameter['VDDVia3']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
-            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
-        self._DesignParameter['VDDVia3']['_XYCoordinates'] = self.getXY('VDDRail')
-
-        self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
-
-        self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
-
-        self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
-        self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        # NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(
+        #     XWidth=self.getXWidth('VDDRail', '_Met1Layer'),
+        #     YWidth=self.getYWidth('VDDRail', '_Met1Layer'))
+        # self._DesignParameter['VDDVia1'] = self._SrefElementDeclaration(
+        #     _DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='VDDVia1In{}'.format(_Name)))[0]
+        # self._DesignParameter['VDDVia1']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(
+        #     **dict(_ViaMet12Met2NumberOfCOX=NumViaXY[0], _ViaMet12Met2NumberOfCOY=NumViaXY[1]))
+        # self._DesignParameter['VDDVia1']['_XYCoordinates'] = self.getXY('VDDRail')
+        #
+        # self._DesignParameter['VDDVia2'] = self._SrefElementDeclaration(
+        #     _DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='VDDVia2In{}'.format(_Name)))[0]
+        # self._DesignParameter['VDDVia2']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+        #     **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=NumViaXY[1]))
+        # self._DesignParameter['VDDVia2']['_XYCoordinates'] = self.getXY('VDDRail')
+        #
+        # self._DesignParameter['VDDVia3'] = self._SrefElementDeclaration(
+        #     _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='VDDVia3In{}'.format(_Name)))[0]
+        # self._DesignParameter['VDDVia3']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+        #     **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        # self._DesignParameter['VDDVia3']['_XYCoordinates'] = self.getXY('VDDRail')
+        #
+        # self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia1']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        #
+        # self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia2']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        #
+        # self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met3Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth'] = self.getXWidth('VDDRail', '_Met1Layer')
+        # self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] = self.getYWidth('VDDRail', '_Met1Layer')
 
 
         ''' ---------------------------------------------- PP(BP) Layer ----------------------------------------------- '''

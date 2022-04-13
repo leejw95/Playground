@@ -71,7 +71,7 @@ class Inverter(StickDiagram._StickDiagram):
 
         # Supply Rail
         CellXWidth = self.getXYRight('NMOS', '_PODummyLayer')[-1][0] * 2
-        NumContactX_SupplyRail = int((CellXWidth - 2 * _DRCObj._CoMinEnclosureByODAtLeastTwoSide - _DRCObj._CoMinWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + 1)
+        NumContactX_SupplyRail = int((CellXWidth - 2 * _DRCObj._CoMinEnclosureByODAtLeastTwoSide - _DRCObj._CoMinWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace) + 1) + 1
 
         self._DesignParameter['VDDRail'] = self._SrefElementDeclaration(_DesignObj=NbodyContact._NbodyContact(_Name='VDDRailIn{}'.format(_Name)))[0]
         self._DesignParameter['VDDRail']['_DesignObj']._CalculateDesignParameter(**dict(_NumberOfNbodyCOX=NumContactX_SupplyRail, _NumberOfNbodyCOY=NumContactY_SupplyRail))

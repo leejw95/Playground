@@ -288,7 +288,7 @@ class StrongArmLatch(StickDiagram._StickDiagram):
         botBoundary_M4V_net05 = self.getXYBot('NMOSSET', 'M3HOnNM1Gate')[0][1]
         XCoord_M4V_net05_byPMOSSET = (self.getXY('PMOSSET', 'PM2', '_Met1Layer')[-1][0] + self.getXY('PMOSSET', 'PM46', '_Met1Layer')[0][0]) / 2
         XCoord_M4V_net05_byNMOSSET = (self.getXY('NMOSSET', 'NM5', '_Met1Layer')[-1][0] + self.getXY('NMOSSET', 'NM3', '_Met1Layer')[0][0]) / 2
-        XCoord_M4V_net05 = min(XCoord_M4V_net05_byPMOSSET, XCoord_M4V_net05_byNMOSSET)
+        XCoord_M4V_net05 = max(XCoord_M4V_net05_byPMOSSET, XCoord_M4V_net05_byNMOSSET)
         self._DesignParameter['M4V_net05'] = self._BoundaryElementDeclaration(
             _Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],
             _XWidth=_DRCObj._MetalxMinWidth*2,

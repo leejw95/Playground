@@ -295,6 +295,14 @@ class TransmissionGate(StickDiagram._StickDiagram):
             [(rightBoundary + leftBoundary) / 2, (topBoundary + botBoundary) / 2]
         ]
 
+        # nwell
+        self._DesignParameter['_NWLayer'] = self._BoundaryElementDeclaration(
+            _Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1],
+            _XWidth=rightBoundary - leftBoundary + self.getYWidth('NSubring', 'met_top'),
+            _YWidth=topBoundary - botBoundary + self.getXWidth('NSubring', 'met_right'),
+            _XYCoordinates=self.getXY('NSubring')
+        )
+
         ''' -------------------------------------------------------------------------------------------------------- '''
         YCoord_reCalc = self.getXYTop('PSubring', 'top', '_PPLayer')[0][1] + _DRCObj._NwMinEnclosurePactive
         YCoord_prev = self.getXYBot('NSubring', 'nw_bot')[0][1]
@@ -344,6 +352,13 @@ class TransmissionGate(StickDiagram._StickDiagram):
         self._DesignParameter['Via2ForM2VNM'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='Via2ForM2VNMIn{}'.format(_Name)))[0]
         self._DesignParameter['Via2ForM2VNM']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**dict(_ViaMet22Met3NumberOfCOX=NumViaXYs[0], _ViaMet22Met3NumberOfCOY=NumViaXYs[1]))
         self._DesignParameter['Via2ForM2VNM']['_XYCoordinates'] = OverlappedBoundaryForVia2['_XYCoordinates']
+
+        OverlappedBoundaryForVia2 = BoundaryCalc.getOverlappedBoundaryElement(self._DesignParameter['M3HOnPMSource'], self._DesignParameter['M2VOnSource'])
+        NumViaXYs = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(XWidth=OverlappedBoundaryForVia2['_XWidth'], YWidth=OverlappedBoundaryForVia2['_YWidth'])
+        self._DesignParameter['Via2ForM2VPM'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='Via2ForM2VPMIn{}'.format(_Name)))[0]
+        self._DesignParameter['Via2ForM2VPM']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXYs[0], _ViaMet22Met3NumberOfCOY=NumViaXYs[1]))
+        self._DesignParameter['Via2ForM2VPM']['_XYCoordinates'] = OverlappedBoundaryForVia2['_XYCoordinates']
 
         ''' -------------------------------------------------------------------------------------------------------- '''
         topBoundary = self.getXYTop('Via1ForPMDrain', '_Met2Layer')[0][1]

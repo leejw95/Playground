@@ -407,6 +407,70 @@ class StrongArmLatch(StickDiagram._StickDiagram):
         self._DesignParameter['M2V2M3OnVSS']['_XYCoordinates'] = self.getXY('M3_VSS')
 
         ''' -------------------------------------------------------------------------------------------------------- '''
+        InputMet1_XWidth = self.getXWidth('NMOSSET', 'PolyContactOnNM23', '_Met1Layer')
+        InputMet1_YWidth = self.getYWidth('NMOSSET', 'PolyContactOnNM23', '_Met1Layer')
+        InputMet1_XY_INp = [self.getXY('NMOSSET', 'PolyContactOnNM23')[0]]
+        InputMet1_XY_INn = [self.getXY('NMOSSET', 'PolyContactOnNM23')[1]]
+
+        # Via1
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(XWidth=InputMet1_XWidth, YWidth=InputMet1_YWidth)
+        self._DesignParameter['Via1ForVIN'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet12Met2._ViaMet12Met2(_Name='Via1ForVINIn{}'.format(_Name)))[0]
+        self._DesignParameter['Via1ForVIN']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet12Met2NumberOfCOX=NumViaXY[0], _ViaMet12Met2NumberOfCOY=1))
+        self._DesignParameter['Via1ForVIN']['_XYCoordinates'] = InputMet1_XY_INn + InputMet1_XY_INp
+
+
+        # Via2
+        RightBoundaryM4 = CoordCalc.getXYCoords_MaxX(self.getXYRight('M4V_net05'))[0][0]
+        leftBoundary_Via2 = max(RightBoundaryM4 + _DRCObj._MetalxMinSpace21, self.getXYLeft('NMOSSET', 'PolyContactOnNM23', '_Met1Layer')[1][0])
+        rightBoundary_Via2 = self.getXYRight('NMOSSET', 'PolyContactOnNM23', '_Met1Layer')[1][0]
+        InputMet4_XWidth = rightBoundary_Via2 - leftBoundary_Via2
+        InputMet4_YWidth = self.getYWidth('NMOSSET', 'PolyContactOnNM23', '_Met1Layer')
+
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(XWidth=InputMet4_XWidth, YWidth=InputMet4_YWidth)
+        self._DesignParameter['Via2ForVIN'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet22Met3._ViaMet22Met3(_Name='Via2ForVINIn{}'.format(_Name)))[0]
+        self._DesignParameter['Via2ForVIN']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet22Met3NumberOfCOX=NumViaXY[0], _ViaMet22Met3NumberOfCOY=1))
+        self._DesignParameter['Via2ForVIN']['_XYCoordinates'] = [
+            [-(rightBoundary_Via2 + leftBoundary_Via2) / 2, self.getXY('NMOSSET', 'PolyContactOnNM23')[0][1]],
+            [+(rightBoundary_Via2 + leftBoundary_Via2) / 2, self.getXY('NMOSSET', 'PolyContactOnNM23')[0][1]],
+        ]
+
+        # Via3
+        RightBoundaryM4 = CoordCalc.getXYCoords_MaxX(self.getXYRight('M4V_net05'))[0][0]
+        leftBoundary_Via3 = max(RightBoundaryM4 + _DRCObj._MetalxMinSpace4, self.getXYLeft('NMOSSET', 'PolyContactOnNM23', '_Met1Layer')[1][0])
+        rightBoundary_Via3 = self.getXYRight('NMOSSET', 'PolyContactOnNM23', '_Met1Layer')[1][0]
+        InputMet4_XWidth = rightBoundary_Via3 - leftBoundary_Via3
+        InputMet4_YWidth = self.getYWidth('NMOSSET', 'PolyContactOnNM23', '_Met1Layer')
+
+        try:
+            NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(XWidth=InputMet4_XWidth, YWidth=InputMet4_YWidth)
+            if NumViaXY[1] < 2:
+                raise NotImplementedError
+        except Exception as e:
+            print('Error Occurred: ', e)
+            NumViaXY = (NumViaXY[0], 2)
+
+        self._DesignParameter['Via3ForVINp'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='Via3ForVINpIn{}'.format(_Name)))[0]
+        self._DesignParameter['Via3ForVINp']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['Via3ForVINp']['_XYCoordinates'] = [
+            [-(rightBoundary_Via3 + leftBoundary_Via3) / 2, self.getXY('NMOSSET', 'PolyContactOnNM23')[0][1]]
+        ]
+
+        self._DesignParameter['Via3ForVINn'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='Via3ForVINnIn{}'.format(_Name)))[0]
+        self._DesignParameter['Via3ForVINn']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['Via3ForVINn']['_XYCoordinates'] = [
+            [+(rightBoundary_Via3 + leftBoundary_Via3) / 2, self.getXY('NMOSSET', 'PolyContactOnNM23')[0][1]]
+        ]
+
+
+        ''' -------------------------------------------------------------------------------------------------------- '''
 
         self._DesignParameter['PIN_VSS'] = self._TextElementDeclaration(
             _Layer=DesignParameters._LayerMapping['METAL3PIN'][0],
@@ -547,7 +611,7 @@ if __name__ == '__main__':
         XVT='SLVT',
         _GateSpacing=None
     )
-    InputParams = InputParams_20G
+    InputParams = InputParams_12G
 
     Mode_DRCCheck = False  # True | False
     Num_DRCCheck = 10

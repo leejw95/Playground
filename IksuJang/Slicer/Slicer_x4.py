@@ -413,6 +413,24 @@ class Slicer_x4(StickDiagram._StickDiagram):
         ]
 
 
+        #
+        leftBoundary = max(self.getXYLeft('Slicer', 'Inverter', 'M3H_Input')[0][0], self.getXYRight('M5H_07')[0][0] + _DRCObj._MetalxMinSpace21)
+        rightBoundary = self.getXYRight('Slicer', 'Inverter', 'M3H_Input')[0][0]
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(XWidth=rightBoundary-leftBoundary,
+                                                                      YWidth=self.getYWidth('Slicer', 'Inverter', 'M3H_Input'))
+        self._DesignParameter['Via4ForCLK'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet42Met5._ViaMet42Met5(_Name='Via4ForCLKIn{}'.format(_Name)))[0]
+        self._DesignParameter['Via4ForCLK']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet42Met5NumberOfCOX=NumViaXY[0], _ViaMet42Met5NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['Via4ForCLK']['_XYCoordinates'] = [
+            [(rightBoundary + leftBoundary) / 2, self.getXY('Slicer', 'Inverter', 'M3H_Input')[0][1]],
+            [(rightBoundary + leftBoundary) / 2, self.getXY('Slicer', 'Inverter', 'M3H_Input')[1][1]],
+            [(rightBoundary + leftBoundary) / 2, self.getXY('Slicer', 'Inverter', 'M3H_Input')[2][1]],
+            [(rightBoundary + leftBoundary) / 2, self.getXY('Slicer', 'Inverter', 'M3H_Input')[3][1]],
+        ]
+
+
+
         ''' ---------------------------------------------- PIN ----------------------------------------------------- '''
         self._DesignParameter['PIN_VSS'] = self._TextElementDeclaration(
             _Layer=DesignParameters._LayerMapping['METAL6PIN'][0],
@@ -476,7 +494,7 @@ if __name__ == '__main__':
     My = MyInfo.USER(DesignParameters._Technology)
     Bot = PlaygroundBot.PGBot(token=My.BotToken, chat_id=My.ChatID)
 
-    libname = 'TEST_Slicer_x4'
+    libname = 'TEST_Slicer_x4_12G'
     cellname = 'Slicer_x4'
     _fileName = cellname + '.gds'
 
@@ -628,7 +646,7 @@ if __name__ == '__main__':
         XVT='SLVT',
         _GateSpacing=None
     )
-    InputParams = InputParams_20G
+    InputParams = InputParams_12G
 
     Mode_DRCCheck = False  # True | False
     Num_DRCCheck = 10

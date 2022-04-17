@@ -387,6 +387,15 @@ class Slicer(StickDiagram._StickDiagram):
         self._DesignParameter['VDDVia3']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth'] = self.getYWidth('SRLatch', 'SRLatchUp', 'VDDRail', '_Met1Layer')
 
 
+        ##
+        NumViaXY = ViaMet12Met2._ViaMet12Met2.CalcNumViaMinEnclosureY(XWidth=self.getXWidth('Inverter', 'M3H_Input'), YWidth=self.getYWidth('Inverter', 'M3H_Input'))
+        self._DesignParameter['Via3ForCLK'] = self._SrefElementDeclaration(
+            _DesignObj=ViaMet32Met4._ViaMet32Met4(_Name='Via3ForCLKIn{}'.format(_Name)))[0]
+        self._DesignParameter['Via3ForCLK']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureY(
+            **dict(_ViaMet32Met4NumberOfCOX=NumViaXY[0], _ViaMet32Met4NumberOfCOY=NumViaXY[1]))
+        self._DesignParameter['Via3ForCLK']['_XYCoordinates'] = self.getXY('Inverter', 'M3H_Input')
+
+
         ''' ---------------------------------------------- PIN ----------------------------------------------------- '''
         self._DesignParameter['PIN_VSS'] = self._TextElementDeclaration(
             _Layer=DesignParameters._LayerMapping['METAL1PIN'][0],

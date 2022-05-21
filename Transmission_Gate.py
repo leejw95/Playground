@@ -286,7 +286,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                                 self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
                                 self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] + \
                                 self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] + \
-                                + 5 * _DRCObj._Metal1MinSpace3
+                                + 3 * _DRCObj._Metal1MinSpace3 + 2 * _DRCObj._Metal1MinSpace2
 
             else :
                 _VDD2VSSMinHeight = (self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) + \
@@ -630,7 +630,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                                             '_XYCoordinates'][0][1] +
                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace) // 4]]]
       
-                self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
+                self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
                 self._DesignParameter['_OutputRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
                 self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
                     self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
@@ -992,7 +992,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
     import time
     start = time.time()
-    ans = [6, 275, 30, 2, None, True, True, 4, 2, None, None, None, None, None, None, False]
+    ans = [4, 200, 30, 2, None, True, True, 4, 2, None, None, None, None, None, None, False]
     # for i in range (17) :
     #     if i == 5 or i==6 or i==7 or i==8 :
     #         print (lst[i]+'?'+'(True/False)')
@@ -1041,12 +1041,12 @@ if __name__ == '__main__' :
     testStreamFile.close()
     print ("time : ", time.time() - start)
 
-    # print ('###############      Sending to FTP Server...      ##################')
+    print ('###############      Sending to FTP Server...      ##################')
 
-    # ftp = ftplib.FTP('141.223.29.62')
-    # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    # myfile = open('TransmissionGate.gds', 'rb')
-    # ftp.storbinary('STOR TransmissionGate.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('TransmissionGate.gds', 'rb')
+    ftp.storbinary('STOR TransmissionGate.gds', myfile)
+    myfile.close()
+    ftp.close()

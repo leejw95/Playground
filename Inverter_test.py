@@ -189,8 +189,11 @@ class _Inverter(StickDiagram._StickDiagram) :
         self._DesignParameter['_NMOS']['_XYCoordinates'] = [[0, HeightofNMOS]]
 
 
-        _VDD2VSSMinHeight = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 + max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 + max(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) +\
-                                                        2 * _DRCObj._Metal1DefaultSpace + self._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 2 * _DRCObj._Metal1DefaultSpace + _DRCObj._Metal1MinSpace, MinSnapSpacing)
+        _VDD2VSSMinHeight = self.CeilMinSnapSpacing(self._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 
+        + max(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) 
+        + self._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2 
+        + max(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], self._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) +\
+        2 * _DRCObj._Metal1DefaultSpace + self._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + 2 * _DRCObj._Metal1DefaultSpace + _DRCObj._Metal1MinSpace, MinSnapSpacing)
 
 
         if _VDD2VSSHeight == None :
@@ -450,7 +453,7 @@ if __name__ == '__main__':
     import ftplib
 
     for i in range(1, 2) :
-        _Finger = 6#random.randint(5,16)
+        _Finger = 5#random.randint(5,16)
         _ChannelWidth = 200#random.randrange(700,1200,10)
         _ChannelLength = 30
         _NPRatio = 2

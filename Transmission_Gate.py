@@ -144,8 +144,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSGateRouting']['_XYCoordinates'][0][0] + 2 * self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_POLayer']['_XWidth']
         
         tmp4X_P = int(round(_TotalLenOfPMOSGate // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)))
-        if tmp4X_P <= 1:
-            tmp4X_P = 2  ## Default value for # of contact in x axis
+        if tmp4X_P < 1:
+            tmp4X_P = 1  ## Default value for # of contact in x axis
             _NumVIAPoly2Met1COX = tmp4X_P
         if _NumVIAPoly2Met1COX == None:
             _NumVIAPoly2Met1COX = tmp4X_P
@@ -166,8 +166,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         ## [-1] means the last value of the list or key of dict
         
         tmp4X = int(round(_TotalLenOfNMOSGate // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace)))
-        if tmp4X <= 1:
-            tmp4X = 2  ## Default value for # of contact in x axis
+        if tmp4X < 1:
+            tmp4X = 1  ## Default value for # of contact in x axis
         if _NumVIAPoly2Met1COX == None:
             _NumVIAPoly2Met1COX = tmp4X
         if _NumVIAPoly2Met1COY == None:
@@ -268,36 +268,33 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
         _ViaPMOSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
 
-        tmp4vX_P = int(round(self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)))
-        if tmp4vX_P <= 1:
-            tmp4vX_P = 2  ## Default value for # of contact in x axis
-            _NumVIAMet12Met2COX = tmp4vX_P
-        else:
-            _NumVIAMet12Met2COX = tmp4vX_P
-        _NumVIAMet12Met2COY = 1
-        _ViaPMOSMet12Met2['_ViaMet12Met2NumberOfCOX'] = 2
-        _ViaPMOSMet12Met2['_ViaMet12Met2NumberOfCOY'] = 1
+        # tmp4vX_P = int(round(self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)))
+        # if tmp4vX_P <= 1:
+        #     tmp4vX_P = 2  ## Default value for # of contact in x axis
+        #     _NumVIAMet12Met2COX = tmp4vX_P
+        # else:
+        #     _NumVIAMet12Met2COX = tmp4vX_P
+        # _NumVIAMet12Met2COY = 1
+        _ViaPMOSMet12Met2['_ViaMet12Met2NumberOfCOX'] = 1
+        _ViaPMOSMet12Met2['_ViaMet12Met2NumberOfCOY'] = 2
 
         self._DesignParameter['_ViaMet12Met2OnPMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,_Name='ViaMet12Met2OnPMOSControlIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaPMOSMet12Met2)
+        self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**_ViaPMOSMet12Met2)
 
         _ViaNMOSMet12Met2 = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
 
-        tmp4vX = int(round(self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)))
-        if tmp4vX <= 1:
-            tmp4vX = 2  ## Default value for # of contact in x axis
-        else:
-            _NumVIAMet12Met2COX = tmp4vX
-        _NumVIAMet12Met2COY = 1
-        _ViaNMOSMet12Met2['_ViaMet12Met2NumberOfCOX'] = 2
-        _ViaNMOSMet12Met2['_ViaMet12Met2NumberOfCOY'] = 1
+        # tmp4vX = int(round(self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)))
+        # if tmp4vX <= 1:
+        #     tmp4vX = 2  ## Default value for # of contact in x axis
+        # else:
+        #     _NumVIAMet12Met2COX = tmp4vX
+        # _NumVIAMet12Met2COY = 1
+        _ViaNMOSMet12Met2['_ViaMet12Met2NumberOfCOX'] = 1
+        _ViaNMOSMet12Met2['_ViaMet12Met2NumberOfCOY'] = 2
 
 
         self._DesignParameter['_ViaMet12Met2OnNMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None,_Name='ViaMet12Met2OnNMOSControlIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureY(**_ViaNMOSMet12Met2)
-
-        self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'] = self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates']
-        self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'] = self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates']
+        self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**_ViaNMOSMet12Met2)
 
 
         ##input output via coordinates
@@ -318,7 +315,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
         self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_XYCoordinates'] = tmp1 + tmp2
-        self._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_XYCoordinates'] = tmp1
+        self._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_XYCoordinates'] = tmp2
         del tmp1, tmp2
 
         tmp1 = []
@@ -341,112 +338,125 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         del tmp1, tmp2
 
         ###output metal 3 routing
-        if (_Finger != 1) :
-            if (_Finger % 2) != 0 :
-                self._DesignParameter['_OutputPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-                self._DesignParameter['_OutputPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-                self._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0],
-                                                                                self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][1] -
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
-                                                                                [self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
-                                                                                self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][1] -
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
+        # if (_Finger != 1) :
+        #     if (_Finger % 2) != 0 :
+        self._DesignParameter['_OutputPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
+        self._DesignParameter['_OutputPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        self._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+                                                                        self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0],
+                                                                        self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+                                                                        self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][1] -
+                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
+                                                                        [self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+                                                                        self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
+                                                                        self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+                                                                        self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][1] -
+                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
 
-                self._DesignParameter['_OutputNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-                self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-                self._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
-                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0],
-                                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1] +
-                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
-                                        [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
-                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0],
-                                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1] +
-                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
+        # self._DesignParameter['_OutputNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
+        # self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        # self._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+        #                         self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0],
+        #                         self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+        #                         self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1] +
+        #                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
+        #                         [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+        #                         self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0],
+        #                         self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+        #                         self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1] +
+        #                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
 
-                self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-                self._DesignParameter['_OutputRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-                self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                    self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
-                    self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                    self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][1]],
-                    [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
-                    self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0],
-                    self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                    self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][1]]]]
-
-            else :
-                self._DesignParameter['_OutputPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-                self._DesignParameter['_OutputPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-                self._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0],
-                                                                                self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][1] -
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
-                                                                                [self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][-1][0],
-                                                                                self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][1] -
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
-
-                self._DesignParameter['_OutputNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-                self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-                self._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
-                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0],
-                                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1] +
-                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
-                                        [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
-                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0],
-                                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1] +
-                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
-
-                self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-                self._DesignParameter['_OutputRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-                self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                    self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][-1][0],
-                    self._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][0][1] + self._DesignParameter['_OutputPMOSRoutingXTG']['_Width'] // 2],
-                    [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
-                    self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0],
-                    self._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'][0][0][1] - self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] // 2]]]
+        self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
+        self._DesignParameter['_OutputRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        # self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+        #     self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
+        #     self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+        #     self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][1]],
+        #     [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+        #     self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0],
+        #     self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+        #     self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][1]]]]
+        tmp = []
+        for i in range (0, len(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'])) :
+            tmp.append([[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+                        self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][0],
+                            self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+                            self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][i][1]],
+                        [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] + 
+                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][0],
+                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] + 
+                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][i][1]]])
+        self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'] = tmp
         
-        else :
-            self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=100)
-            self._DesignParameter['_OutputRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-            self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                                                                            self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0] + _DRCObj._MetalxMinSpace +
-                                                                            self._DesignParameter['_OutputRoutingYTG']['_Width'],
-                                                                            self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                                                                            self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][1]],
-                                                                            [self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                                                                            self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0] + _DRCObj._MetalxMinSpace +
-                                                                            self._DesignParameter['_OutputRoutingYTG']['_Width'],
-                                                                            self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                                                                            self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][1]]]]
+        del tmp
 
-            self._DesignParameter['_OutputPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-            self._DesignParameter['_OutputPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-            self._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] + 
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
-                                                                                self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] + 
-                                                                                self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][1]],
-                                                                                [self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][0][0] + self._DesignParameter['_OutputRoutingYTG']['_Width'] // 2,
-                                                                                self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][0][1]]]]
+        #     else :
+        #         self._DesignParameter['_OutputPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
+        #         self._DesignParameter['_OutputPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        #         self._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+        #                                                                         self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][0],
+        #                                                                         self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+        #                                                                         self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][0][1] -
+        #                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
+        #                                                                         [self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+        #                                                                         self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][-1][0],
+        #                                                                         self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+        #                                                                         self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][1] -
+        #                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
 
-            self._DesignParameter['_OutputNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
-            self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-            self._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] + 
-                                                                                self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0],
-                                                                                self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] + 
-                                                                                self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][1]],
-                                                                                [self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][1][0] + self._DesignParameter['_OutputRoutingYTG']['_Width'] // 2,
-                                                                                self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][1][1]]]]
+        #         self._DesignParameter['_OutputNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
+        #         self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        #         self._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+        #                                 self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0],
+        #                                 self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+        #                                 self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1] +
+        #                                 (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
+        #                                 [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+        #                                 self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0],
+        #                                 self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+        #                                 self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1] +
+        #                                 (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
+
+        #         self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
+        #         self._DesignParameter['_OutputRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        #         self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+        #             self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][-1][0],
+        #             self._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][0][1] + self._DesignParameter['_OutputPMOSRoutingXTG']['_Width'] // 2],
+        #             [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+        #             self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0],
+        #             self._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'][0][0][1] - self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] // 2]]]
+        
+        # else :
+        #     self._DesignParameter['_OutputRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[], _Width=100)
+        #     self._DesignParameter['_OutputRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        #     self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+        #                                                                     self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0] + _DRCObj._MetalxMinSpace +
+        #                                                                     self._DesignParameter['_OutputRoutingYTG']['_Width'],
+        #                                                                     self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+        #                                                                     self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][1]],
+        #                                                                     [self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+        #                                                                     self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0] + _DRCObj._MetalxMinSpace +
+        #                                                                     self._DesignParameter['_OutputRoutingYTG']['_Width'],
+        #                                                                     self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+        #                                                                     self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][1]]]]
+
+        #     self._DesignParameter['_OutputPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
+        #     self._DesignParameter['_OutputPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        #     self._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] + 
+        #                                                                         self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][0],
+        #                                                                         self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] + 
+        #                                                                         self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][1]],
+        #                                                                         [self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][0][0] + self._DesignParameter['_OutputRoutingYTG']['_Width'] // 2,
+        #                                                                         self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][0][1]]]]
+
+        #     self._DesignParameter['_OutputNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
+        #     self._DesignParameter['_OutputNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        #     self._DesignParameter['_OutputNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] + 
+        #                                                                         self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0],
+        #                                                                         self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] + 
+        #                                                                         self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][1]],
+        #                                                                         [self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][1][0] + self._DesignParameter['_OutputRoutingYTG']['_Width'] // 2,
+        #                                                                         self._DesignParameter['_OutputRoutingYTG']['_XYCoordinates'][0][1][1]]]]
 
         ##Input Poly Routings (Vertical & Horizontal)
 
@@ -530,47 +540,78 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                                                                                   self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] // 2,
                                                                                  self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'][0][1]]]]
 
-        self._DesignParameter['_SupplyPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
-        self._DesignParameter['_SupplyPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-        self._DesignParameter['_SupplyPMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][0] -
-                                                                                    self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']//2,
-                                                                                self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                                                                                self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 +
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
-                                                                                self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2],
-                                                                                [self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][-1][0] +
-                                                                                    self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2,
-                                                                                self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
-                                                                                self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 +
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
-                                                                                self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2]]]
+        self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'][0][0][0] + self._DesignParameter['_ControlNMOSRoutingMet1TG']['_Width'] // 2,
+                                                                                    self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'][0][0][1]]]
+        self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'] = [[self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'][0][0][0] - self._DesignParameter['_ControlPMOSRoutingMet1TG']['_Width'] // 2,
+                                                                                    self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'][0][0][1]]]
+
+        # self._DesignParameter['_SupplyPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
+        # self._DesignParameter['_SupplyPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+        # self._DesignParameter['_SupplyPMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][0] -
+        #                                                                             self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']//2,
+        #                                                                         self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+        #                                                                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 +
+        #                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
+        #                                                                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2],
+        #                                                                         [self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][-1][0] +
+        #                                                                             self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2,
+        #                                                                         self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+        #                                                                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 +
+        #                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
+        #                                                                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2]]]
 
 
-        self._DesignParameter['_SupplyNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
+        self._DesignParameter['_SupplyNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
         self._DesignParameter['_SupplyNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-        self._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0] -
-                                                                                self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2,
-                                                                                self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] -
-                                                                                (self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 +
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
-                                                                                self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2)],
-                                                                                [self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0] +
-                                                                                self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2,
-                                                                                self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] -
-                                                                                (self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 +
-                                                                                (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
-                                                                                self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2)]]]
+        # self._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0] -
+        #                                                                         self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2,
+        #                                                                         self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] -
+        #                                                                         (self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 +
+        #                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
+        #                                                                         self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2)],
+        #                                                                         [self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0] +
+        #                                                                         self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2,
+        #                                                                         self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] -
+        #                                                                         (self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_YWidth'] // 2 +
+        #                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
+        #                                                                         self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2)]]]
+
+        self._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+                                                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0],
+                                                                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+                                                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1] +
+                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
+                                                                        [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+                                                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0],
+                                                                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+                                                                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1] +
+                                                                        (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
+
 
         self._DesignParameter['_SupplyRoutingYTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
         self._DesignParameter['_SupplyRoutingYTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
-        self._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
-                                                                            self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][0],
-                                                                                self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1]+
-                                                                            self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][1]],
-                                                                                [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
-                                                                                self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0],
-                                                                                self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
-                                                                                self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1]]]]
+        # self._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'] = [[[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+        #                                                                     self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][0],
+        #                                                                         self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1]+
+        #                                                                     self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][0][1]],
+        #                                                                         [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] +
+        #                                                                         self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0],
+        #                                                                         self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] +
+        #                                                                         self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1]]]]
+        tmp = []
+        for i in range (0, len(self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'])) :
+            tmp.append([[self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][0] +
+                        self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][i][0],
+                            self._DesignParameter['_PMOSTG']['_XYCoordinates'][0][1] +
+                            self._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][i][1]],
+                        [self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][0] + 
+                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][i][0],
+                        self._DesignParameter['_NMOSTG']['_XYCoordinates'][0][1] + 
+                        self._DesignParameter['_NMOSTG']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][i][1]]])
+        self._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'] = tmp
+        
+        del tmp
+
 
         self._DesignParameter['_NWLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1], _XYCoordinates=[], _Width=None)
         self._DesignParameter['_NWLayer']['_Width'] = self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive

@@ -80,7 +80,7 @@ class _DLatch (StickDiagram._StickDiagram) :
         _InverterInputs['_SupplyLine'] = _INVSupplyLine
 
         self._DesignParameter['_Inverter'] = self._SrefElementDeclaration(_DesignObj=Inverter_test._Inverter(_DesignParameter=None,_Name='InverterIn{}'.format(_Name)))[0]
-        self._DesignParameter['_Inverter']['_DesignObj']._CalculateInverter(**_InverterInputs)
+        self._DesignParameter['_Inverter']['_DesignObj']._CalculateDesignParameter(**_InverterInputs)
 
         print ('#################################       Coordinates Settings      ########################################')
         _DLatchOrigin = [[0,0]]
@@ -89,39 +89,57 @@ class _DLatch (StickDiagram._StickDiagram) :
 
         if _Dummy == True :
             self._DesignParameter['_Inverter']['_XYCoordinates'] = [[_DLatchOrigin[0][0] + 
-                                                                    self._DesignParameter['_TransmissionGate']['_DesignObj']._DesignParameter['_NMOS']]]
+                        abs(self._DesignParameter['_TransmissionGate']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) +
+                        self._DesignParameter['_TransmissionGate']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth'] // 2 +
+                        _DRCObj._PolygateMinSpace +
+                        self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth'] // 2 +
+                        abs(self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]),
+                        _DLatchOrigin[0][1]]]
+            
+        print ("a")
 
 
 
 if __name__ == '__main__' :
     import time
     start = time.time()
-    ans = [3, 200, 30, 2, None, True, '_SLVT', 4, 2, None, None, None, None, None, None]
 
-    _Finger = ans[0]
-    _ChannelWidth = ans[1]
-    _ChannelLength = ans[2]
-    _NPRatio = ans[3]
-    _VDD2VSSHeight = ans[4]
-    _Dummy = ans[5]
-    _XVT = ans[6]
-    _NumSupplyCOX = ans[7]
-    _NumSupplyCOY = ans[8]
-    _SupplyMet1XWidth = ans[9]
-    _SupplyMet1YWidth = ans[10]
-    _NumVIAPoly2Met1COX = ans[11]
-    _NumVIAPoly2Met1COY = ans[12]
-    _NumVIAMet12COX = ans[13]
-    _NumVIAMet12COY = ans[14]
-    #print (_NumVIAMet12COY, _NumVIAMet12COX)
+    _TGFinger = 3
+    _TGChannelWidth = 200
+    _TGChannelLength = 30
+    _TGNPRatio = 2
+    _TGVDD2VSSHeight = None
+    _Dummy = True
+    _TGXVT = 'SLVT'
+    _TGSupplyMet1YWidth = None
+    _INVFinger = 5
+    _INVChannelWidth = 200
+    _INVChannelLength = 30
+    _INVNPRatio = 2
+    _INVVDD2VSSHeight = None
+    _INVNumSupplyCoX = None
+    _INVNumSupplyCoY = None
+    _INVSupplyMet1XWidth = None
+    _INVSupplyMet1YWidth = None
+    _INVNumViaPoly2Met1CoX = None
+    _INVNumViaPoly2Met1CoY = None
+    _INVNumViaPMOSMet12Met2CoX = None
+    _INVNumViaPMOSMet12Met2CoY = None
+    _INVNumViaNMOSMet12Met2CoX = None
+    _INVNumViaNMOSMet12Met2CoY = None
+    _INVXVT = 'SLVT'
+    _INVSupplyLine = None
+    
     DesignParameters._Technology = '028nm'
 
-    DLatchObj = _DLatch(_DesignParameter=None, _Name='TransmissionGate')
+    DLatchObj = _DLatch(_DesignParameter=None, _Name='D_Latch')
     #print ("A!!")
-    DLatchObj._CalculateDLatch(_Finger=_Finger, _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength, _NPRatio=_NPRatio, _VDD2VSSHeight=_VDD2VSSHeight,
-                                   _Dummy=_Dummy, _XVT=_XVT, _NumSupplyCOX=_NumSupplyCOX, _NumSupplyCOY = _NumSupplyCOY, _SupplyMet1XWidth= _SupplyMet1XWidth,
-                                   _SupplyMet1YWidth=_SupplyMet1YWidth, _NumVIAPoly2Met1COX=_NumVIAPoly2Met1COX, _NumVIAPoly2Met1COY= _NumVIAPoly2Met1COY,
-                                   _NumVIAMet12COX=_NumVIAMet12COX, _NumVIAMet12COY=_NumVIAMet12COY, _Bodycontact = True)
+    DLatchObj._CalculateDLatch(_TGFinger = _TGFinger, _TGChannelWidth = _TGChannelWidth, _TGChannelLength = _TGChannelLength, _TGNPRatio = _TGNPRatio, _TGVDD2VSSHeight = _TGVDD2VSSHeight, _Dummy = _Dummy, _TGXVT = _TGXVT, _TGSupplyMet1YWidth = _TGSupplyMet1YWidth,
+                                  _INVFinger = _INVFinger,  _INVChannelWidth = _INVChannelWidth, _INVChannelLength = _INVChannelLength, _INVNPRatio = _INVNPRatio,
+                                  _INVVDD2VSSHeight = _INVVDD2VSSHeight, _INVNumSupplyCoX = _INVNumSupplyCoX, _INVNumSupplyCoY = _INVNumSupplyCoY,
+                                  _INVSupplyMet1XWidth = _INVSupplyMet1XWidth, _INVSupplyMet1YWidth = _INVSupplyMet1YWidth, _INVNumViaPoly2Met1CoX = _INVNumViaPoly2Met1CoX,
+                                  _INVNumViaPoly2Met1CoY = _INVNumViaPoly2Met1CoY, _INVNumViaPMOSMet12Met2CoX = _INVNumViaPMOSMet12Met2CoX,
+                                  _INVNumViaPMOSMet12Met2CoY = _INVNumViaPMOSMet12Met2CoY, _INVNumViaNMOSMet12Met2CoX = _INVNumViaNMOSMet12Met2CoX, _INVNumViaNMOSMet12Met2CoY = _INVNumViaNMOSMet12Met2CoY, _INVXVT = _INVXVT, _INVSupplyLine = _INVSupplyLine)
 
 
     DLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=DLatchObj._DesignParameter)

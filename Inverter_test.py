@@ -34,7 +34,7 @@ class _Inverter(StickDiagram._StickDiagram) :
                                   _NumViaPoly2Met1CoY = None, _NumViaPMOSMet12Met2CoX = None, _NumViaPMOSMet12Met2CoY = None, _NumViaNMOSMet12Met2CoX = None, _NumViaNMOSMet12Met2CoY = None, _XVT = None, _SupplyLine = None) :
 
         _DRCObj = DRC.DRC()
-        _Name = 'Inverter'
+        _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
         #####################################_NMOS Generation######################################
@@ -203,6 +203,8 @@ class _Inverter(StickDiagram._StickDiagram) :
             if _VDD2VSSHeight < _VDD2VSSMinHeight :
                 print("ERROR! VDD2VSSMinHeight =", _VDD2VSSMinHeight)
                 raise NotImplementedError
+
+        self._DesignParameter['_INVVDD2VSSMinHeight']= {'_Ignore': _VDD2VSSMinHeight, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
 
         self._DesignParameter['NbodyContact']['_XYCoordinates'] = [[0, _VDD2VSSHeight]]
 

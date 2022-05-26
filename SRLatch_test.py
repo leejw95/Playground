@@ -2737,7 +2737,7 @@ if __name__ == '__main__':
         _PMOSChannelWidth = int(_SRRandWidth * _NPRatio)
 
 
-        _ChannelLength = 40
+        _ChannelLength = 30
 
         _VDD2VSSHeightAtOneSide = None
         _NumSupplyCoX = None
@@ -2745,12 +2745,9 @@ if __name__ == '__main__':
 
 
         _Dummy = True
-        _XVT = 'LVT'
+        _XVT = 'SLVT'
         _PowerLine = False
 
-
-        from Private import MyInfo
-        import DRCchecker
         libname = 'SRLatch'
         cellname = 'SRLatch'
         _fileName = cellname + '.gds'
@@ -2791,20 +2788,17 @@ if __name__ == '__main__':
         tmp.write_binary_gds_stream(testStreamFile)
         testStreamFile.close()
 
-        print('#############################      Sending to FTP Server...      #############################')
-        My = MyInfo.USER(DesignParameters._Technology)
-        Checker = DRCchecker.DRCchecker(
-            username=My.ID,
-            password=My.PW,
-            WorkDir=My.Dir_Work,
-            DRCrunDir=My.Dir_DRCrun,
-            libname=libname,
-            cellname=cellname,
-            GDSDir=My.Dir_GDS
-        )
-        Checker.Upload2FTP()
-        Checker.StreamIn(tech=DesignParameters._Technology)
+        import ftplib
+        
+        print ('###############      Sending to FTP Server...      ##################')
 
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('junung', 'chlwnsdnd1!')
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        myfile = open('SRLatch.gds', 'rb')
+        ftp.storbinary('STOR SRLatch.gds', myfile)
+        myfile.close()
+        ftp.close()
 
 
     #     import ftplib

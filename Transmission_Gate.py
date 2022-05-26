@@ -33,7 +33,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         print ('#########################################################################################################')
 
         _DRCObj = DRC.DRC()
-        _Name = 'TransmissionGate'
+        _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
         print ('###############################     MOSFET Generation    ################################################')
@@ -208,6 +208,8 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
         if _VDD2VSSHeight == None:
             _VDD2VSSHeight = _VDD2VSSMinHeight
+
+        self._DesignParameter['_TGVDD2VSSMinHeight']= {'_Ignore': _VDD2VSSMinHeight, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
 
         # else:
         #     if _VDD2VSSHeight < _VDD2VSSMinHeight:
@@ -579,12 +581,12 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'] = [[[self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] +
                                                                         self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][0],
                                                                         self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] +
-                                                                        self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1] +
+                                                                        self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1] -
                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4],
                                                                         [self._DesignParameter['_NMOS']['_XYCoordinates'][0][0] +
                                                                         self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][-1][0],
                                                                         self._DesignParameter['_NMOS']['_XYCoordinates'][0][1] +
-                                                                        self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1] +
+                                                                        self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSSupplyRouting']['_XYCoordinates'][0][1] -
                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4]]]
 
 

@@ -1,3 +1,5 @@
+from re import S
+from select import select
 from tkinter import N
 import StickDiagram
 import DesignParameters
@@ -166,12 +168,552 @@ class _DLatch (StickDiagram._StickDiagram) :
                     _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] +
                     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][1]]]]
 
+
+        _ViaNum = _INVNumViaNMOSMet12Met2CoY
+        if _ViaNum == None:
+            _ViaNum = int(self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+        if _ViaNum < 2 :
+            _ViaNum = 2
+
+        if _INVNumViaNMOSMet12Met2CoX == None:
+            _INVNumViaNMOSMet12Met2CoX = 1
+        
         _ViaMet22Met3OnINV2Output = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-        _ViaMet22Met3OnINV2Output['_ViaMet22Met3NumberOfCOX'] = NumViaNMOSMet12Met2CoX
+        _ViaMet22Met3OnINV2Output['_ViaMet22Met3NumberOfCOX'] = _INVNumViaNMOSMet12Met2CoX
         _ViaMet22Met3OnINV2Output['_ViaMet22Met3NumberOfCOY'] = _ViaNum
 
         self._DesignParameter['_ViaMet22Met3OnINV2Output'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,_Name='ViaMet22Met3OnINV2OutputIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaMet22Met3OnINV2Output']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(**_ViaMet22Met3OnINV2Output)
+        self._DesignParameter['_ViaMet22Met3OnINV2Output']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_ViaMet22Met3OnINV2Output)
+        self._DesignParameter['_ViaMet22Met3OnINV2Output']['_XYCoordinates'] = [[_DLatchOrigin[0][0] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0],
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] -
+                abs(self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1])]]
+
+        del _ViaNum
+
+        self._DesignParameter['_TGtoINVOutputRouting2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_TGtoINVOutputRouting2']['_Width'] = self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_Width']
+        self._DesignParameter['_TGtoINVOutputRouting2']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'][0][0][0],
+                _DLatchOrigin[0][1] - abs(self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'][0][0][1])],
+                [self._DesignParameter['_ViaMet22Met3OnINV2Output']['_XYCoordinates'][0][0],
+                _DLatchOrigin[0][1] - abs(self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'][0][0][1])]]]
+
+
+        _ViaNum = _INVNumViaNMOSMet12Met2CoY
+        if _ViaNum == None:
+            _ViaNum = int(abs(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0] -
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0] + 
+                    self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2)
+                    // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
+        if _ViaNum < 2 :
+            _ViaNum = 2
+
+        _ViaMet22Met3OnINV1Output = copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
+        _ViaMet22Met3OnINV1Output['_ViaMet22Met3NumberOfCOX'] = _ViaNum
+        _ViaMet22Met3OnINV1Output['_ViaMet22Met3NumberOfCOY'] = 1
+        self._DesignParameter['_ViaMet22Met3OnINV1Output'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,_Name='ViaMet22Met3OnINV1OutputIn{}'.format(_Name)))[0]
+        self._DesignParameter['_ViaMet22Met3OnINV1Output']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureY(**_ViaMet22Met3OnINV1Output)
+        self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'] = [[self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][0] + 
+                    (self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0] +
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0]) // 2,
+                    self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][1] +
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][1]]]
+
+        del _ViaNum
+
+        self._DesignParameter['_INV1OuttoINV2InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_INV1OuttoINV2InRouting']['_Width'] = self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_Met2OnOutput']['_Width']
+        self._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][0],
+                            self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][1]],
+                            [self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][0],
+                            _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] -
+                            abs(self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][1])]]]
+
+        ### Additional Routings for Doping & Supply Metals
+        self._DesignParameter['_UpwardVDDMet1Routing'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_UpwardVDDMet1Routing']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_UpwardVDDMet1Routing']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2)) // 2]]]
+
+
+        self._DesignParameter['_UpwardVDDODRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_UpwardVDDODRouting']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_UpwardVDDODRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2)) // 2]]]
+
+
+
+        self._DesignParameter['_DownwardVDDMet1Routing'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_DownwardVDDMet1Routing']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_DownwardVDDMet1Routing']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2)) // 2]]]
+
+        
+        self._DesignParameter['_DownwardVDDODRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_DownwardVDDODRouting']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_DownwardVDDODRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] // 2,
+                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] // 2,
+                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2)) // 2]]]
+
+
+        self._DesignParameter['_CenterVSSMet1Routing'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_CenterVSSMet1Routing']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_CenterVSSMet1Routing']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2)) // 2]]]
+
+        self._DesignParameter['_CenterVSSODRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['DIFF'][0], _Datatype=DesignParameters._LayerMapping['DIFF'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_CenterVSSODRouting']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_CenterVSSODRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_ODLayer']['_YWidth'] // 2)) // 2]]]
+
+        
+        self._DesignParameter['_CenterVSSPPRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_CenterVSSPPRouting']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_CenterVSSPPRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2]]]
+
+
+        self._DesignParameter['_UpwardPMOSPPRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_UpwardPMOSPPRouting']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
+                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2]]]
+
+        
+        self._DesignParameter['_DownwardPMOSPPRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_DownwardPMOSPPRouting']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) -
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2), 2 * MinSnapSpacing)
+
+        self._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] -
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
+                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2],
+                [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] +
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
+                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2) +
+                min(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
+                _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2]]]
+
+
+        self._DesignParameter['_UpwardPMOSNWRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_UpwardPMOSNWRouting']['_Width'] = self.CeilMinSnapSpacing(max(self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2,
+                self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2) -
+                min(self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0] - 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2,
+                self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0] -
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2), 2 * MinSnapSpacing)
+
+
+        self._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'] = [[[(self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0]) +
+                (self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0]) // 2,
+                max((self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][1]),
+                (self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][1]))],
+                [(self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0]) +
+                (self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0]) // 2,
+                min((self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][1][1]),
+                (self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][1][1]))]]]
+
+        
+        self._DesignParameter['_DownwardPMOSNWRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_DownwardPMOSNWRouting']['_Width'] = self.CeilMinSnapSpacing(max(self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2,
+                self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2) -
+                min(self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0] - 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2,
+                self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0] -
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] // 2), 2 * MinSnapSpacing)
+
+
+        self._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'] = [[[(self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0]) +
+                (self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0]) // 2,
+                -max((self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][1]),
+                (self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][1]))],
+                [(self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0]) +
+                (self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][0][0]) // 2,
+                -min((self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][1][1]),
+                (self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_XYCoordinates'][0][1][1]))]]]
+
+        
         
 
 

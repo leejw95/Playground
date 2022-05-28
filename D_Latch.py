@@ -958,3 +958,7 @@ if __name__ == '__main__' :
     ftp.storbinary('STOR D_Latch.gds', myfile)
     myfile.close()
     ftp.close()
+
+    import lvstest
+    _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n')
+    _LVS.LVSchecker()

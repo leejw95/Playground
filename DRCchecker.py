@@ -6,21 +6,6 @@ import os
 import time
 import DesignParameters
 
-'''
-    This is Beta Version For auto DRC checker.
-    Before you start, write your skill code at your directory.
-    # File name of this skill code should be 'Skillcode.il'
-    # copy and paste of this file at /mnt/sdc/junung/OPUS/Samsung28n . (Not Working for now)
-    This now works only at server 141.223.22.156
-    Write down every parameters as string, for example : '/mnt/sdc/username/...'
-    DO NOT WRITE DOWN SLASH (/) AT THE END OF YOUR DIRECTORY!!!
-    Make sure to write down Dir1 as your working directory of cadence virtuoso.
-    Also do not use library name that already exists in your directory.
-    
-    Usage : Make an instance for this class, and use the function 'DRCchecker'
-
-    2021-08-06 Junung
-'''
 
 
 class DRCchecker:

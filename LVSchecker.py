@@ -5,6 +5,11 @@ import sys
 import time
 import DesignParameters
 
+'''
+    LVS checker 
+    you should convert schematic into netlist (.src.net) first via CDL
+    Vir_Connect option specifies LVS options to use connect all nets by name or not
+'''
 
 class LVStest :
     def __init__(self, username, password, WorkDir, LVSrunDir, libname, cellname, GDSDir, Vir_Connect) :

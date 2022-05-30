@@ -151,22 +151,40 @@ class _DLatch (StickDiagram._StickDiagram) :
 
         del tmp
 
-        self._DesignParameter['_TGtoINVOutputRouting1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_TGtoINVOutputRouting1']['_Width'] = self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_Width']
-        self._DesignParameter['_TGtoINVOutputRouting1']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + 
+        self._DesignParameter['_TGtoINV1OutputRouting1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_TGtoINV1OutputRouting1']['_Width'] = self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_Width']
+        self._DesignParameter['_TGtoINV1OutputRouting1']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + 
                     self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][0][0],
                     _DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][0][1]],
                     [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] +
-                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][0],
-                    _DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][0][1]]],
-                    [[_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] +
-                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][0],
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][-1][0],
+                    _DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][0][1]]]]
+                #     [[_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] +
+                #     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][0],
+                #     _DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][0][1] +
+                #     self._DesignParameter['_TGtoINV1OutputRouting1']['_Width'] // 2],
+                #     [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] +
+                #     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][0],
+                #     _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] +
+                #     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][1]]]]
+
+        self._DesignParameter['_TGtoINV1OutputRouting2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_TGtoINV1OutputRouting2']['_Width'] = self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_Width']
+        
+        tmp = []
+        for i in range (0, len(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'])) :
+                tmp.append([[_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] +
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][i][0],
                     _DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_OutputPMOSRoutingXTG']['_XYCoordinates'][0][0][1] +
-                    self._DesignParameter['_TGtoINVOutputRouting1']['_Width'] // 2],
+                    self._DesignParameter['_TGtoINV1OutputRouting1']['_Width'] // 2],
                     [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] +
-                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][0],
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][i][0],
                     _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] +
-                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][1]]]]
+                    self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][i][1]]])
+
+        self._DesignParameter['_TGtoINV1OutputRouting2']['_XYCoordinates'] = tmp
+
+        del tmp
 
 
         _ViaNum = _INVNumViaNMOSMet12Met2CoY
@@ -227,11 +245,26 @@ class _DLatch (StickDiagram._StickDiagram) :
 
         self._DesignParameter['_INV1OuttoINV2InRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_INV1OuttoINV2InRouting']['_Width'] = self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_Met2OnOutput']['_Width']
-        self._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][0],
-                            self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][1]],
-                            [self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][0],
-                            _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] -
-                            abs(self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][1])]]]
+        
+        tmp = []
+        for i in range (0, len(self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'])) :
+                tmp.append([[self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] +
+                        self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][i][0],
+                        self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][1]],
+                        [self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] +
+                        self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][i][0],
+                        self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] -
+                        abs(self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][1])]])
+
+        self._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'] = tmp
+        
+        del tmp
+        
+        # self._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'] = [[[self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][0],
+        #                     self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][1]],
+        #                     [self._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][0][0],
+        #                     _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] -
+        #                     abs(self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet22Met3forInput']['_XYCoordinates'][0][1])]]]
 
         ### Additional Routings for Doping & Supply Metals
         self._DesignParameter['_UpwardVDDMet1Routing'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],_XYCoordinates=[],_Width=100)
@@ -942,7 +975,7 @@ if __name__ == '__main__' :
     _Dummy = True
     _TGXVT = 'SLVT'
     _TGSupplyMet1YWidth = None
-    _INVFinger = 5
+    _INVFinger = 10
     _INVChannelWidth = 200
     _INVChannelLength = 30
     _INVNPRatio = 2
@@ -993,6 +1026,6 @@ if __name__ == '__main__' :
     myfile.close()
     ftp.close()
 
-    import lvstest
-    _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
-    _LVS.LVSchecker()
+#     import LVSchecker
+#     _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+#     _LVS.LVSchecker()

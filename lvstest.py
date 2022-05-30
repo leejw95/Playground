@@ -7,7 +7,7 @@ import DesignParameters
 
 
 class LVStest :
-    def __init__(self, username, password, WorkDir, LVSrunDir, libname, cellname, GDSDir) :
+    def __init__(self, username, password, WorkDir, LVSrunDir, libname, cellname, GDSDir, Vir_Connect) :
         self.server = '141.223.29.62'
         self.port = 22
         self.username = username
@@ -17,6 +17,7 @@ class LVStest :
         self.libname = libname
         self.cellname = cellname
         self.GDSDir = GDSDir if GDSDir != None else WorkDir
+        self.Vir_Connect = Vir_Connect
 
 
     def LVSchecker(self) :
@@ -54,17 +55,24 @@ class LVStest :
         if (result2.split()[-6]) != "'0'":
             raise Exception("XstreamOut ERROR")
 
-        ##### Step 2 : Modifying lvs.cal file
+        ##### Step 2 : Modifying lvs.cal file , you should extract schematic once before this procedure!!!!
 
-        commandlines3 = "cd {0}; sed -i '11s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' {2}; sed -i '12s,.*,LAYOUT PRIMARY \"{1}\",' {2}; sed -i '15s,.*,SOURCE PATH \"{3}/{1}.sp\",' {2}; sed -i '16s,.*,SOURCE PRIMARY \"{1}\",' {2}; sed -i '21s,.*,LVS REPORT \"{1}.lvs.report\",' {2}; sed -i '46s,.*,ERC RESULTS DATABASE \"{1}.erc.results\" ,' {2}; sed -i '47s,.*,ERC SUMMARY REPORT \"{1}.erc.summary\" REPLACE HIER,' {2}"
-        stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.LVSrunDir, self.cellname, LVSfile, self.WorkDir))
-        print(f'print after commandlines3 :')
-        print(f"stdout: {stdout.read().decode('utf-8')}")
-        print(f"stderr: {stderr.read().decode('utf-8')}")
-
+        if self.Vir_Connect == True :
+            commandlines3 = "cd {0}; sed -i '11s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' {2}; sed -i '12s,.*,LAYOUT PRIMARY \"{1}\",' {2}; sed -i '15s,.*,SOURCE PATH \"{0}/{1}.src.net\",' {2}; sed -i '16s,.*,SOURCE PRIMARY \"{1}\",' {2}; sed -i '21s,.*,LVS REPORT \"{1}.lvs.report\",' {2}; sed -i '46s,.*,ERC RESULTS DATABASE \"{1}.erc.results\" ,' {2}; sed -i '47s,.*,ERC SUMMARY REPORT \"{1}.erc.summary\" REPLACE HIER,' {2}"
+            stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.LVSrunDir, self.cellname, LVSfile, self.WorkDir))
+            print(f'print after commandlines3 :')
+            print(f"stdout: {stdout.read().decode('utf-8')}")
+            print(f"stderr: {stderr.read().decode('utf-8')}")
+        
+        else :
+            commandlines3 = "cd {0}; sed -i '11s,.*,LAYOUT PATH  \"{0}/{1}.calibre.db\",' {2}; sed -i '12s,.*,LAYOUT PRIMARY \"{1}\",' {2}; sed -i '15s,.*,SOURCE PATH \"{0}/{1}.src.net\",' {2}; sed -i '16s,.*,SOURCE PRIMARY \"{1}\",' {2}; sed -i '21s,.*,LVS REPORT \"{1}.lvs.report\",' {2}; sed -i '45s,.*,ERC RESULTS DATABASE \"{1}.erc.results\" ,' {2}; sed -i '46s,.*,ERC SUMMARY REPORT \"{1}.erc.summary\" REPLACE HIER,' {2}"
+            stdin, stdout, stderr = ssh.exec_command(commandlines3.format(self.LVSrunDir, self.cellname, LVSfile, self.WorkDir))
+            print(f'print after commandlines3 :')
+            print(f"stdout: {stdout.read().decode('utf-8')}")
+            print(f"stderr: {stderr.read().decode('utf-8')}")
         ##### Step 3 : Delete previous lvs report file
 
-        commandlines33 = f"cd {self.LVSrunDir}; rm {self.cellname}.lvs.report; rm {self.cellname}.erc.results; rm {self.cellname}.erc.summary"
+        commandlines33 = f"cd {self.LVSrunDir}; rm {self.cellname}.lvs.report; rm {self.cellname}.erc.results; rm {self.cellname}.erc.summary; cd {self.WorkDir}; rm {self.cellname}.sp"
         stdin, stdout, stderr = ssh.exec_command(commandlines33)
         print(f'print after commandlines33 :')
         print(f"stdout: {stdout.read().decode('utf-8')}")
@@ -74,14 +82,13 @@ class LVStest :
 
         commandlines4 = "cd {0}; source setup.cshrc; cd {1}; calibre -spice {0}/{3}.sp -turbo -lvs -hier -nowait {1}/{2}"
         stdin, stdout, stderr = ssh.exec_command(commandlines4.format(self.WorkDir, self.LVSrunDir, LVSfile, self.cellname))
-        
         print(f"stdout: {stdout.read().decode('utf-8')}")
         print(f"stderr: {stderr.read().decode('utf-8')}")
 
         ##### Step 5 : Reading LVS report file..
 
         readfile = ssh.open_sftp()
-        file = readfile.open('{0}/{1}.lvs.report'.format(self.WorkDir, self.cellname))
+        file = readfile.open('{0}/{1}.lvs.report'.format(self.LVSrunDir, self.cellname))
         print(f"Reading '{self.WorkDir}/{self.cellname}.lvs.report' for check LVS Error......")
         if DesignParameters._Technology == '028nm' :
             lines = file.readlines()

@@ -891,6 +891,41 @@ class _DLatch (StickDiagram._StickDiagram) :
                     self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][1] -
                     self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_YWidth'] // 2)) // 2]]]
 
+
+        self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'VDD')
+        self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'VSS')
+        self._DesignParameter['_CLKpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'CLK')
+        self._DesignParameter['_CLKbpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'CLKb')
+        self._DesignParameter['_Dpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'D')
+        self._DesignParameter['_Qpin'] = self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = 'Q')
+
+        self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[0,_TGVDD2VSSHeight], [0,-_TGVDD2VSSHeight]]
+        self._DesignParameter['_VSSpin']['_XYCoordinates'] = [[0,0]]
+        self._DesignParameter['_CLKpin']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] +
+                                                        self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][0],
+                                                        self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] +
+                                                        self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][1]],
+                                                        [self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] +
+                                                        self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][0],
+                                                        self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] +
+                                                        -self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_CLKbpin']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] +
+                                                        self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][0],
+                                                        self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] +
+                                                        self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][1]],
+                                                        [self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] +
+                                                        self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][0],
+                                                        self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] +
+                                                        -self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_Dpin']['_XYCoordinates'] = [[self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] +
+                                                        self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'][0][0][0],
+                                                        self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] +
+                                                        self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_XYCoordinates'][0][0][1]]]
+        self._DesignParameter['_Qpin']['_XYCoordinates'] = [[self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] +
+                                                        self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_OutputRouting']['_XYCoordinates'][-1][0][0],
+                                                        self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] +
+                                                        -self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_OutputRouting']['_XYCoordinates'][-1][0][1]]]
+
         
         
 
@@ -960,5 +995,5 @@ if __name__ == '__main__' :
     ftp.close()
 
     import lvstest
-    _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n')
+    _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
     _LVS.LVSchecker()

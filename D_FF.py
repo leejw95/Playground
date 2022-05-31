@@ -177,7 +177,7 @@ class _DFF(StickDiagram._StickDiagram):
         _M2M3CLKinputparam['_ViaMet22Met3NumberOfCOY'] = 2
 
         _M3M4CLKinputparam=copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-        _M3M4CLKinputparam['_ViaMet32Met4NumberOfCOX'] = 1
+        _M3M4CLKinputparam['_ViaMet32Met4NumberOfCOX'] = 2
         _M3M4CLKinputparam['_ViaMet32Met4NumberOfCOY'] = 2
 
         self._DesignParameter['_ViaM22M3forCLK']= self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,_Name='ViaM22M3forCLKIn{}'.format(_Name)))[0]
@@ -191,6 +191,11 @@ class _DFF(StickDiagram._StickDiagram):
         self._DesignParameter['_ViaM32M4forCLK']= self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,_Name='ViaM32M4forCLKIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_M3M4CLKinputparam)
         self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates']=self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates']
+                                                                    #  [[self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][0][0]+self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']/2-self._DesignParameter['_ViaM22M3forCLK']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']/2, self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][0][1]],\
+                                                                    # [self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][1][0], self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][1][1]],\
+                                                                    # [self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][2][0], self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][2][1]],\
+                                                                    #  [self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][3][0], self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][3][1]]]
+
 
         self._DesignParameter['_ViaM22M3forCLKb'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaM22M3forCLKbIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaM22M3forCLKb']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_M2M3CLKinputparam)
@@ -203,6 +208,10 @@ class _DFF(StickDiagram._StickDiagram):
         self._DesignParameter['_ViaM32M4forCLKb'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaM32M4forCLKbIn{}'.format(_Name)))[0]
         self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_M3M4CLKinputparam)
         self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates']=self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates']
+                                                                    # [[self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][0][0], self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][0][1]], \
+                                                                    #  [self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][1][0], self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][1][1]],\
+                                                                    #  [self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][2][0]+self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']/2-self._DesignParameter['_ViaM22M3forCLKb']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']/2, self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][2][1]],\
+                                                                    #  [self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][3][0], self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][3][1]]]
 
         self._DesignParameter['_Met4CLKRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_Met4CLKRouting']['_Width']=_DRCObj._MetalxMinWidth * 5
@@ -242,6 +251,24 @@ class _DFF(StickDiagram._StickDiagram):
         self._DesignParameter['_Met5CLKbRouting']['_Width']=_DRCObj._MetalxMinWidth * 5
         self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates']=[[self._DesignParameter['_ViaM42M5forCLKb']['_XYCoordinates'][0],  self._DesignParameter['_ViaM42M5forCLKb']['_XYCoordinates'][1]]]
 
+        self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VDD')
+        self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VSS')
+        self._DesignParameter['_CLKpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLK')
+        self._DesignParameter['_CLKbpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLKb')
+        self._DesignParameter['_Dpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='D')
+        self._DesignParameter['_Qpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='Q')
+        self._DesignParameter['_Qbpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='Qb')
+
+        self._DesignParameter['_VDDpin']['_XYCoordinates']=[[(self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][0][0][0]+self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][0][1][0])/2, self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][0][0][1]],\
+                                                            [(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][0][0]+self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][1][0])/2, self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][0][1]]]
+        self._DesignParameter['_VSSpin']['_XYCoordinates']=[[(self._DesignParameter['_VSSMet1']['_XYCoordinates'][0][0][0]+self._DesignParameter['_VSSMet1']['_XYCoordinates'][0][1][0])/2, self._DesignParameter['_VSSMet1']['_XYCoordinates'][0][0][1]]]
+
+        self._DesignParameter['_CLKpin']['_XYCoordinates']=[[self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], (self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][1][1])/2]]
+        self._DesignParameter['_CLKbpin']['_XYCoordinates']=[[self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], (self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][1][1])/2]]
+
+        self._DesignParameter['_Dpin']['_XYCoordinates']=[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Dpin']['_XYCoordinates'][0][0], self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Dpin']['_XYCoordinates'][0][1]]]
+        self._DesignParameter['_Qbpin']['_XYCoordinates']=[[self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][0], -(self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][1])]]
+        self._DesignParameter['_Qpin']['_XYCoordinates']=[[self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+(self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][1][1])/2]]
 
 
 

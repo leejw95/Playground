@@ -992,8 +992,12 @@ if __name__ == '__main__' :
     _INVNumViaNMOSMet12Met2CoY = None
     _INVXVT = 'SLVT'
     _INVSupplyLine = None
+
+    essential_param = {'_TGFinger' : _TGFinger, '_TGChannelWidth' : _TGChannelWidth, '_TGChannelLength' : _TGChannelLength, '_TGNPRatio' : _TGNPRatio,
+        '_INVFinger' : _INVFinger, '_INVChannelWidth' : _INVChannelWidth, '_INVChannelLength' : _TGChannelLength, '_INVNPRatio' : _INVNPRatio}
     
     DesignParameters._Technology = '028nm'
+    _Name = 'D_Latch'
 
     DLatchObj = _DLatch(_DesignParameter=None, _Name='D_Latch')
     #print ("A!!")
@@ -1015,6 +1019,11 @@ if __name__ == '__main__' :
 
     testStreamFile.close()
     print ("time : ", time.time() - start)
+
+    print ("###############        Generating Netlist...         ###############")
+    import Sche
+    _Sche = Sche.Schematic(essential_param, _Name)
+    _Sche.SchematicGenerator()
 
     print ('###############      Sending to FTP Server...      ##################')
 

@@ -341,6 +341,14 @@ if __name__ == '__main__':
     myfile.close()
     ftp.close()
 
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('D_FF.gds', 'rb')
+    ftp.storbinary('STOR D_FF.gds', myfile)
+    myfile.close()
+    ftp.close()
+
     # import lvstest
     # _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n')
     # _LVS.LVSchecker()

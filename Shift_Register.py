@@ -333,7 +333,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         del tmp_m3_even
         del tmp_m3_odd
 
-      #  _tempforoffset
+
 
         # _M2M3CLKinputparam=copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
         # _M2M3CLKinputparam['_ViaMet22Met3NumberOfCOX'] = 1

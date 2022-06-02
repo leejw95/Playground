@@ -333,87 +333,127 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         del tmp_m3_even
         del tmp_m3_odd
 
+        self._DesignParameter['_Met2SigRouting_X_even_odd']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']=self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_Met2OnOutput']['_Width']
+
+        tmp=[]
 
 
-        # _M2M3CLKinputparam=copy.deepcopy(ViaMet22Met3._ViaMet22Met3._ParametersForDesignCalculation)
-        # _M2M3CLKinputparam['_ViaMet22Met3NumberOfCOX'] = 1
-        # _M2M3CLKinputparam['_ViaMet22Met3NumberOfCOY'] = 2
-        #
-        # _M3M4CLKinputparam=copy.deepcopy(ViaMet32Met4._ViaMet32Met4._ParametersForDesignCalculation)
-        # _M3M4CLKinputparam['_ViaMet32Met4NumberOfCOX'] = 2
-        # _M3M4CLKinputparam['_ViaMet32Met4NumberOfCOY'] = 2
-        #
-        # self._DesignParameter['_ViaM22M3forCLK']= self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None,_Name='ViaM22M3forCLKIn{}'.format(_Name)))[0]
-        # self._DesignParameter['_ViaM22M3forCLK']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_M2M3CLKinputparam)
-        # self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates']=[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][0], self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][1]],\
-        #                                                             [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][0], self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][1]],\
-        #                                                             [self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][0], -(self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][1])],\
-        #                                                             [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][0], -(self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][1])]]
-        #
-        #
-        # self._DesignParameter['_ViaM32M4forCLK']= self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None,_Name='ViaM32M4forCLKIn{}'.format(_Name)))[0]
-        # self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_M3M4CLKinputparam)
-        # self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates']=self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates']
-        #                                                             #  [[self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][0][0]+self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']/2-self._DesignParameter['_ViaM22M3forCLK']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']/2, self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][0][1]],\
-        #                                                             # [self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][1][0], self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][1][1]],\
-        #                                                             # [self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][2][0], self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][2][1]],\
-        #                                                             #  [self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][3][0], self._DesignParameter['_ViaM22M3forCLK']['_XYCoordinates'][3][1]]]
-        #
-        #
-        # self._DesignParameter['_ViaM22M3forCLKb'] = self._SrefElementDeclaration(_DesignObj=ViaMet22Met3._ViaMet22Met3(_DesignParameter=None, _Name='ViaM22M3forCLKbIn{}'.format(_Name)))[0]
-        # self._DesignParameter['_ViaM22M3forCLKb']['_DesignObj']._CalculateViaMet22Met3DesignParameterMinimumEnclosureX(**_M2M3CLKinputparam)
-        # self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates']=[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][0], self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][1]],\
-        #                                                             [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][0], self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'][0][1]],\
-        #                                                             [self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][0], -(self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][1])],\
-        #                                                             [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][0], -(self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'][0][1])]]
-        #
-        #
-        # self._DesignParameter['_ViaM32M4forCLKb'] = self._SrefElementDeclaration(_DesignObj=ViaMet32Met4._ViaMet32Met4(_DesignParameter=None, _Name='ViaM32M4forCLKbIn{}'.format(_Name)))[0]
-        # self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._CalculateViaMet32Met4DesignParameterMinimumEnclosureX(**_M3M4CLKinputparam)
-        # self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates']=self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates']
-        #                                                             # [[self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][0][0], self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][0][1]], \
-        #                                                             #  [self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][1][0], self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][1][1]],\
-        #                                                             #  [self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][2][0]+self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']/2-self._DesignParameter['_ViaM22M3forCLKb']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']/2, self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][2][1]],\
-        #                                                             #  [self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][3][0], self._DesignParameter['_ViaM22M3forCLKb']['_XYCoordinates'][3][1]]]
-        #
-        # self._DesignParameter['_Met4CLKRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[],_Width=100)
-        # self._DesignParameter['_Met4CLKRouting']['_Width']=_DRCObj._MetalxMinWidth * 5
-        # self._DesignParameter['_Met4CLKRouting']['_XYCoordinates']=[[[self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][0][0]-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKRouting']['_Width']/2, self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][0][1]-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth']/2], [self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][0][0]-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKRouting']['_Width']/2, self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1]],\
-        #                                                              [self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][1][0], self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1]],\
-        #                                                              [self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][1][0], self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][1][1]-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth']/2]],\
-        #                                                             [[self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][2][0]-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKRouting']['_Width']/2, self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][2][1]-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth']/2], [self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][2][0]-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKRouting']['_Width']/2, -(self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][1])], \
-        #                                                              [self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][3][0], -(self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][1])], [self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][3][0], self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][3][1]-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth']/2]]]
-        #
-        #
-        # self._DesignParameter['_Met4CLKbRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL4'][0], _Datatype=DesignParameters._LayerMapping['METAL4'][1],_XYCoordinates=[],_Width=100)
-        # self._DesignParameter['_Met4CLKbRouting']['_Width']=_DRCObj._MetalxMinWidth * 5
-        # self._DesignParameter['_Met4CLKbRouting']['_XYCoordinates']=[[[self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][0][0]-self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKbRouting']['_Width']/2, self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][0][1]+self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth']/2], [self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][0][0]-self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKbRouting']['_Width']/2, self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][1]],\
-        #                                                              [self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][1][0], self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][1]],\
-        #                                                              [self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][1][0], self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][1][1]+self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth']/2]],\
-        #                                                             [[self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][2][0]-self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKRouting']['_Width']/2, self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][2][1]+self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth']/2], [self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][2][0]-self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKbRouting']['_Width']/2, -(self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1])], \
-        #                                                              [self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][3][0], -(self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1])], [self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][3][0], self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][3][1]+self._DesignParameter['_ViaM32M4forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_YWidth']/2]]]
-        #
-        # _M4M5CLKinputparam=copy.deepcopy(ViaMet42Met5._ViaMet42Met5._ParametersForDesignCalculation)
-        # _M4M5CLKinputparam['_ViaMet42Met5NumberOfCOX'] = 4
-        # _M4M5CLKinputparam['_ViaMet42Met5NumberOfCOY'] = 2
-        #
-        #
-        # self._DesignParameter['_ViaM42M5forCLK']= self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None,_Name='ViaM42M5forCLKIn{}'.format(_Name)))[0]
-        # self._DesignParameter['_ViaM42M5forCLK']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureY(**_M4M5CLKinputparam)
-        # self._DesignParameter['_ViaM42M5forCLK']['_XYCoordinates']=[[self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][2][0]+self._DesignParameter['_ViaM42M5forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2, self._DesignParameter['_Met4CLKRouting']['_XYCoordinates'][0][1][1]], [self._DesignParameter['_ViaM32M4forCLK']['_XYCoordinates'][2][0]+self._DesignParameter['_ViaM42M5forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2-self._DesignParameter['_ViaM32M4forCLK']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2, self._DesignParameter['_Met4CLKRouting']['_XYCoordinates'][-1][1][1]]]
-        #
-        # self._DesignParameter['_ViaM42M5forCLKb'] = self._SrefElementDeclaration(_DesignObj=ViaMet42Met5._ViaMet42Met5(_DesignParameter=None, _Name='ViaM42M5forCLKbIn{}'.format(_Name)))[0]
-        # self._DesignParameter['_ViaM42M5forCLKb']['_DesignObj']._CalculateViaMet42Met5DesignParameterMinimumEnclosureY(**_M4M5CLKinputparam)
-        # self._DesignParameter['_ViaM42M5forCLKb']['_XYCoordinates']=[[self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][3][0]-self._DesignParameter['_ViaM42M5forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKRouting']['_Width']/2, self._DesignParameter['_Met4CLKbRouting']['_XYCoordinates'][0][1][1]], [self._DesignParameter['_ViaM32M4forCLKb']['_XYCoordinates'][3][0]-self._DesignParameter['_ViaM42M5forCLKb']['_DesignObj']._DesignParameter['_Met4Layer']['_XWidth']/2+self._DesignParameter['_Met4CLKRouting']['_Width']/2, self._DesignParameter['_Met4CLKbRouting']['_XYCoordinates'][-1][1][1]]]
-        #
-        # self._DesignParameter['_Met5CLKRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[],_Width=100)
-        # self._DesignParameter['_Met5CLKRouting']['_Width']=_DRCObj._MetalxMinWidth * 5
-        # self._DesignParameter['_Met5CLKRouting']['_XYCoordinates']=[[self._DesignParameter['_ViaM42M5forCLK']['_XYCoordinates'][0],  self._DesignParameter['_ViaM42M5forCLK']['_XYCoordinates'][1]]]
-        #
-        # self._DesignParameter['_Met5CLKbRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[],_Width=100)
-        # self._DesignParameter['_Met5CLKbRouting']['_Width']=_DRCObj._MetalxMinWidth * 5
-        # self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates']=[[self._DesignParameter['_ViaM42M5forCLKb']['_XYCoordinates'][0],  self._DesignParameter['_ViaM42M5forCLKb']['_XYCoordinates'][1]]]
-        #
+        for j in range(0, len(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'])):
+            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][Xnum-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'][0][0],\
+                         self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][j][0][1]], \
+                        [(self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][Xnum-1][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][0][0][0]), \
+                         self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][j][0][1]]])
+        # if Ynum%2==1:
+        #     del tmp[-1]
+        self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates']=tmp
+
+        del tmp
+
+        self._DesignParameter['_Met2SigRouting_Y_even_odd']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_Met2SigRouting_Y_even_odd']['_Width']=self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']
+
+
+        tmp=[]
+
+        for j in range(0, len(self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates'])):
+            for i in range(0,len(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'])):
+                tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][Xnum-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][0],\
+                             self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][j*Xnum+Xnum-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][1]],\
+                            [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][Xnum-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][0],\
+                             self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates'][j][0][1]-self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']/2]])
+            # if Ynum % 2 == 1:
+            #     del tmp[-1]
+            for i in range(0,len(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'])):
+                tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][Xnum-1][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][0],\
+                             self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][j*Xnum+Xnum-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][1]],\
+                            [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][Xnum-1][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][0],\
+                             self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates'][j][0][1]+self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']/2]])
+            # if Ynum % 2 == 1:
+            #     del tmp[-1]
+
+        self._DesignParameter['_Met2SigRouting_Y_even_odd']['_XYCoordinates']=tmp
+
+        del tmp
+
+
+        self._DesignParameter['_Met2SigRouting_X_odd_even']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_Met2SigRouting_X_odd_even']['_Width']=self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_Met2OnOutput']['_Width']
+
+        tmp=[]
+
+
+        for j in range(0, len(self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'])-1):
+            tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][0]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'][0][0]),\
+                         self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][j+1][0][1]], \
+                        [(self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][0][0][0]), \
+                         self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][j+1][0][1]]])
+        if Ynum%2==0:
+            del tmp[-1]
+        self._DesignParameter['_Met2SigRouting_X_odd_even']['_XYCoordinates']=tmp
+
+        del tmp
+
+
+
+        self._DesignParameter['_Met2SigRouting_Y_odd_even']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_Met2SigRouting_Y_odd_even']['_Width']=self._DesignParameter['_Met2SigRouting_X_odd_even']['_Width']
+
+
+        tmp=[]
+
+        for j in range(0, len(self._DesignParameter['_Met2SigRouting_X_odd_even']['_XYCoordinates'])):
+            for i in range(0,len(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'])):
+                tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][0]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][0]),\
+                             self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][j*Xnum][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][1]],\
+                            [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][0]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][0]),\
+                             self._DesignParameter['_Met2SigRouting_X_odd_even']['_XYCoordinates'][j][0][1]-self._DesignParameter['_Met2SigRouting_X_odd_even']['_Width']/2]])
+            # if Ynum % 2 == 0:
+            #     del tmp[-1]
+            for i in range(0,len(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'])):
+                tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][0],\
+                             self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][(j+1)*Xnum][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][1]],\
+                            [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][0],\
+                             self._DesignParameter['_Met2SigRouting_X_odd_even']['_XYCoordinates'][j][0][1]+self._DesignParameter['_Met2SigRouting_Y_odd_even']['_Width']/2]])
+            #if Ynum % 2 == 0:
+            #     del tmp[-1]
+
+        self._DesignParameter['_Met2SigRouting_Y_odd_even']['_XYCoordinates']=tmp
+
+        del tmp
+
+
+        self._DesignParameter['_Met5CLKRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_Met5CLKRouting']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_Width']
+
+        tmp=[]
+
+        for i in range(0,Xnum):
+            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
+                        [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
+            tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
+                        [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
+
+        self._DesignParameter['_Met5CLKRouting']['_XYCoordinates']=tmp
+
+        del tmp
+
+        self._DesignParameter['_Met5CLKbRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_Met5CLKbRouting']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_Width']
+
+        tmp=[]
+
+        for i in range(0,Xnum):
+            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
+                        [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
+            tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
+                        [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
+
+
+        self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates']=tmp
+
+        del tmp
+
         # self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VDD')
         # self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VSS')
         # self._DesignParameter['_CLKpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLK')

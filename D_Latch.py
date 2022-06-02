@@ -975,7 +975,7 @@ if __name__ == '__main__' :
     _Dummy = True
     _TGXVT = 'SLVT'
     _TGSupplyMet1YWidth = None
-    _INVFinger = 10
+    _INVFinger = 5
     _INVChannelWidth = 200
     _INVChannelLength = 30
     _INVNPRatio = 2
@@ -993,8 +993,6 @@ if __name__ == '__main__' :
     _INVXVT = 'SLVT'
     _INVSupplyLine = None
 
-    essential_param = {'_TGFinger' : _TGFinger, '_TGChannelWidth' : _TGChannelWidth, '_TGChannelLength' : _TGChannelLength, '_TGNPRatio' : _TGNPRatio,
-        '_INVFinger' : _INVFinger, '_INVChannelWidth' : _INVChannelWidth, '_INVChannelLength' : _TGChannelLength, '_INVNPRatio' : _INVNPRatio}
     
     DesignParameters._Technology = '028nm'
     _Name = 'D_Latch'
@@ -1021,8 +1019,13 @@ if __name__ == '__main__' :
     print ("time : ", time.time() - start)
 
     print ("###############        Generating Netlist...         ###############")
+
+    subckt_list = ['TransmissionGate', 'Inverter']
+    essential_param = {'1Finger' : _TGFinger, '1ChannelWidth' : _TGChannelWidth, '1ChannelLength' : _TGChannelLength, '1NPRatio' : _TGNPRatio,
+        '2Finger' : _INVFinger, '2ChannelWidth' : _INVChannelWidth, '2ChannelLength' : _TGChannelLength, '2NPRatio' : _INVNPRatio}
+
     import Sche
-    _Sche = Sche.Schematic(essential_param, _Name)
+    _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
     _Sche.SchematicGenerator()
 
     print ('###############      Sending to FTP Server...      ##################')

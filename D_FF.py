@@ -313,6 +313,7 @@ if __name__ == '__main__':
                      '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}
 
     DesignParameters._Technology = '028nm'
+    _Name = 'D_FF'
 
     DFFObj = _DFF(_DesignParameter=None, _Name='D_FF')
     # print ("A!!")
@@ -348,6 +349,17 @@ if __name__ == '__main__':
     ftp.storbinary('STOR D_FF.gds', myfile)
     myfile.close()
     ftp.close()
+
+    print ("###############        Generating Netlist...         ###############")
+    subckt_list = ['TransmissionGate', 'Inverter1', 'Inverter2']
+    essential_param = {'1Finger': 3, '1ChannelWidth': 200, '1ChannelLength': 30, '1NPRatio': 2,
+        '2Finger': 5, '2ChannelWidth': 200, '2ChannelLength': 30, '2NPRatio': 2,
+        '3Finger': 10, '3ChannelWidth': 200, '3ChannelLength': 30, '3NPRatio': 2}
+
+    import Sche
+    _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
+    _Sche.SchematicGenerator()
+
 
     # import lvstest
     # _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n')

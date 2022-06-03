@@ -4,6 +4,9 @@ import os
 import ftplib
 import DesignParameters
 
+'''
+    Schematic Generator for D_Latch, FF in SS28nm
+'''
 
 class Schematic () :
     def __init__ (self, parameter, arch, subckt_list):

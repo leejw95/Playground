@@ -38,7 +38,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
                          '_INVSupplyMet1XWidth':None, '_INVSupplyMet1YWidth':None, '_INVNumViaPoly2Met1CoX':None, \
                          '_INVNumViaPoly2Met1CoY':None, '_INVNumViaPMOSMet12Met2CoX':None, \
                          '_INVNumViaPMOSMet12Met2CoY':None, '_INVNumViaNMOSMet12Met2CoX':None,
-                         '_INVNumViaNMOSMet12Met2CoY':None, '_INVXVT':'SLVT', '_INVSupplyLine':None}}, Xnum=None, Ynum=None):
+                         '_INVNumViaNMOSMet12Met2CoY':None, '_INVXVT':'SLVT', '_INVSupplyLine':None}}, Xnum=None, Ynum=None,_CLK_Grid=None):
 
         print(
             '#########################################################################################################')
@@ -422,37 +422,38 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         del tmp
 
+        if _CLK_Grid==True:
 
-        self._DesignParameter['_Met5CLKRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_Met5CLKRouting']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_Width']
+            self._DesignParameter['_Met5CLKRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[],_Width=100)
+            self._DesignParameter['_Met5CLKRouting']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_Width']
 
-        tmp=[]
+            tmp=[]
 
-        for i in range(0,Xnum):
-            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
-                        [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
-            tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
-                        [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
+            for i in range(0,Xnum):
+                tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
+                            [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
+                tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
+                            [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
 
-        self._DesignParameter['_Met5CLKRouting']['_XYCoordinates']=tmp
+            self._DesignParameter['_Met5CLKRouting']['_XYCoordinates']=tmp
 
-        del tmp
+            del tmp
 
-        self._DesignParameter['_Met5CLKbRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_Met5CLKbRouting']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_Width']
+            self._DesignParameter['_Met5CLKbRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5'][0], _Datatype=DesignParameters._LayerMapping['METAL5'][1],_XYCoordinates=[],_Width=100)
+            self._DesignParameter['_Met5CLKbRouting']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_Width']
 
-        tmp=[]
+            tmp=[]
 
-        for i in range(0,Xnum):
-            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
-                        [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
-            tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
-                        [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
+            for i in range(0,Xnum):
+                tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
+                            [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
+                tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
+                            [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
 
 
-        self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates']=tmp
+            self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates']=tmp
 
-        del tmp
+            del tmp
 
         self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VDD')
         self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VSS')
@@ -484,23 +485,27 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         del tmp
 
-        tmp = []
 
-        for i in range(0, len(self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'])):
-            tmp.append([self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][0][0], (self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][0][1]+self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][1][1])/2])
 
-        self._DesignParameter['_CLKpin']['_XYCoordinates']=tmp
 
-        del tmp
+        # tmp = []
+        #
+        # for i in range(0, len(self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'])):
+        #     tmp.append([self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][0][0], (self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][0][1]+self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][1][1])/2])
+        #
+        # self._DesignParameter['_CLKpin']['_XYCoordinates']=tmp
+        #
+        # del tmp
+        #
+        # tmp=[]
+        #
+        # for i in range(0, len(self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'])):
+        #     tmp.append([self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][0][0], (self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][0][1]+self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][1][1])/2])
+        #
+        # self._DesignParameter['_CLKbpin']['_XYCoordinates']=tmp
+        #
+        # del tmp
 
-        tmp=[]
-
-        for i in range(0, len(self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'])):
-            tmp.append([self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][0][0], (self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][0][1]+self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][1][1])/2])
-
-        self._DesignParameter['_CLKbpin']['_XYCoordinates']=tmp
-
-        del tmp
 
 
 
@@ -534,7 +539,7 @@ if __name__ == '__main__':
                      '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
                      '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
                      '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}},
-                        'Xnum':3,'Ynum':2}
+                        'Xnum':3,'Ynum':1,'_CLK_Grid':False}
 
 
     DesignParameters._Technology = '028nm'

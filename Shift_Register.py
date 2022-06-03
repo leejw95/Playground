@@ -454,21 +454,59 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         del tmp
 
-        # self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VDD')
-        # self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VSS')
-        # self._DesignParameter['_CLKpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLK')
-        # self._DesignParameter['_CLKbpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLKb')
-        # self._DesignParameter['_Dpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='D')
-        # self._DesignParameter['_Qpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='Q')
-        # self._DesignParameter['_Qbpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='Qb')
-        #
-        # self._DesignParameter['_VDDpin']['_XYCoordinates']=[[(self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][0][0][0]+self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][0][1][0])/2, self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][0][0][1]],\
-        #                                                     [(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][0][0]+self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][1][0])/2, self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][0][1]]]
-        # self._DesignParameter['_VSSpin']['_XYCoordinates']=[[(self._DesignParameter['_VSSMet1']['_XYCoordinates'][0][0][0]+self._DesignParameter['_VSSMet1']['_XYCoordinates'][0][1][0])/2, self._DesignParameter['_VSSMet1']['_XYCoordinates'][0][0][1]]]
-        #
-        # self._DesignParameter['_CLKpin']['_XYCoordinates']=[[self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], (self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][1][1])/2]]
-        # self._DesignParameter['_CLKbpin']['_XYCoordinates']=[[self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], (self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][1][1])/2]]
-        #
+        self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VDD')
+        self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VSS')
+        self._DesignParameter['_CLKpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLK')
+        self._DesignParameter['_CLKbpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLKb')
+        self._DesignParameter['_Dpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='D')
+        self._DesignParameter['_Qpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='Q')
+        self._DesignParameter['_Qbpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='Qb')
+
+        tmp=[]
+
+        for i in range(0, len(self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'])):
+            tmp.append([(self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][0][0]+self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][1][0])/2, self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][0][1]])
+
+        for i in range(0, len(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'])):
+            tmp.append([(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][0][0]+self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][1][0])/2, self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][0][1]])
+
+        self._DesignParameter['_VDDpin']['_XYCoordinates']=tmp
+
+        del tmp
+
+        tmp = []
+
+        for i in range(0, len(self._DesignParameter['_VSSMet1']['_XYCoordinates'])):
+            tmp.append([(self._DesignParameter['_VSSMet1']['_XYCoordinates'][i][0][0] + self._DesignParameter['_VSSMet1']['_XYCoordinates'][i][1][0]) / 2, self._DesignParameter['_VSSMet1']['_XYCoordinates'][i][0][1]])
+
+
+        self._DesignParameter['_VSSpin']['_XYCoordinates']=tmp
+
+        del tmp
+
+        tmp = []
+
+        for i in range(0, len(self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'])):
+            tmp.append([self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][0][0], (self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][0][1]+self._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][i][1][1])/2])
+
+        self._DesignParameter['_CLKpin']['_XYCoordinates']=tmp
+
+        del tmp
+
+        tmp=[]
+
+        for i in range(0, len(self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'])):
+            tmp.append([self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][0][0], (self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][0][1]+self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][i][1][1])/2])
+
+        self._DesignParameter['_CLKbpin']['_XYCoordinates']=tmp
+
+        del tmp
+
+
+
+
+
+
         # self._DesignParameter['_Dpin']['_XYCoordinates']=[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Dpin']['_XYCoordinates'][0][0], self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Dpin']['_XYCoordinates'][0][1]]]
         # self._DesignParameter['_Qbpin']['_XYCoordinates']=[[self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][0], -(self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][1])]]
         # self._DesignParameter['_Qpin']['_XYCoordinates']=[[self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+(self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][1][1])/2]]

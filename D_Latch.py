@@ -965,6 +965,7 @@ class _DLatch (StickDiagram._StickDiagram) :
 
 if __name__ == '__main__' :
     import time
+    import sys
     start = time.time()
 
     _TGFinger = 3
@@ -1038,6 +1039,18 @@ if __name__ == '__main__' :
     myfile.close()
     ftp.close()
 
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/PEX_run')
+    myfile = open('./D_FF_test/D_Latch.src.net', 'rb')
+    ftp.storbinary('STOR D_Latch.src.net', myfile)
+    myfile.close()
+    ftp.close()
+
 #     import LVSchecker
 #     _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
 #     _LVS.LVSchecker()
+
+    import PEX
+    _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+    _PEX.PEXchecker()

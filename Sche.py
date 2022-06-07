@@ -55,7 +55,7 @@ class Schematic () :
         new_string = "".join(new_string_list)
         print (new_string)
 
-        with open(_HomeDirectory + "/D_FF_test/b.src.net", 'w') as f :
+        with open(_HomeDirectory + "/D_FF_test/{}.src.net".format(self.arch), 'w') as f :
             f.write(new_string)
             f.close()
         sch.close()

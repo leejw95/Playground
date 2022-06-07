@@ -2,35 +2,24 @@
 .INCLUDE  /home/PDK/ss28nm/SEC_CDS/ln28lppdk/S00-V1.1.0.1_SEC2.0.6.2/oa/cmos28lp/.resources/devices.cdl
 .PARAM
 
-.SUBCKT Inverter1 IN OUT VDD VSS
-MP0 OUT IN VDD VDD slvtpfet w=1.2u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1 
+.SUBCKT TransmissionGate IN OUT S SB VDD VSS
+MP0 IN SB OUT VDD slvtpfet w=1.2u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
-MN0 OUT IN VSS VSS slvtnfet w=0.6u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1 
+MN1 IN S OUT VSS slvtnfet w=0.6u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
 .ENDS
 
-.SUBCKT Inverter2 IN OUT VDD VSS
+.SUBCKT Inverter IN OUT VDD VSS
 MP0 OUT IN VDD VDD slvtpfet w=2.0u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
 MN0 OUT IN VSS VSS slvtnfet w=1.0u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
 .ENDS
 
-.SUBCKT TransmissionGate IN OUT S SB VDD VSS
-MP0 IN SB OUT VDD slvtpfet w=4.0u l=0.03u nf=10.0 pccrit=1 plorient=1 ngcon=1 
-+ p_la=0u ptwell=0
-MN1 IN S OUT VSS slvtnfet w=2.0u l=0.03u nf=10.0 pccrit=1 plorient=1 ngcon=1 
-+ p_la=0u ptwell=0
-.ENDS
-
-.SUBCKT D_FF CLK CLKb D Q Qb VDD VSS
-XI2 net13 net16 VDD VSS / Inverter1
-XI1 net11 net13 VDD VSS / Inverter1
-XI8 Q Qb VDD VSS / Inverter2
-XI9 net14 Q VDD VSS / Inverter2
-XI12 Qb net14 CLKb CLK VDD VSS / TransmissionGate
-XI5 net13 net14 CLK CLKb VDD VSS / TransmissionGate
+.SUBCKT D_Latch CLK CLKb D Q
 XI11 net16 net11 CLK CLKb VDD VSS / TransmissionGate
 XI3 D net11 CLKb CLK VDD VSS / TransmissionGate
+XI2 Q net16 VDD VSS / Inverter
+XI1 net11 Q VDD VSS / Inverter
 .ENDS
 

@@ -539,7 +539,7 @@ if __name__ == '__main__':
                      '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
                      '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
                      '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}},
-                        'Xnum':3,'Ynum':1,'_CLK_Grid':False}
+                        'Xnum':3,'Ynum':1,'_CLK_Grid':True}
 
 
     DesignParameters._Technology = '028nm'

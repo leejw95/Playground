@@ -10,16 +10,16 @@ MN1 IN S OUT VSS slvtnfet w=0.6u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1
 .ENDS
 
 .SUBCKT Inverter IN OUT VDD VSS
-MP0 OUT IN VDD VDD slvtpfet w=2u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
+MP0 OUT IN VDD VDD slvtpfet w=2.0u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
-MN0 OUT IN VSS VSS slvtnfet w=1u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
+MN0 OUT IN VSS VSS slvtnfet w=1.0u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
 .ENDS
 
-.SUBCKT D_Latch CLK CLKb D Q
-XI11 net16 net11 CLK CLKb VDD VSS / TransmissionGate
+.SUBCKT D_Latch CLK CLKb D Q VDD VSS
+XI11 Q net11 CLK CLKb VDD VSS / TransmissionGate
 XI3 D net11 CLKb CLK VDD VSS / TransmissionGate
-XI2 Q net16 VDD VSS / Inverter
-XI1 net11 Q VDD VSS / Inverter
+XI2 net05 Q VDD VSS / Inverter
+XI1 net11 net05 VDD VSS / Inverter
 .ENDS
 

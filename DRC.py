@@ -397,7 +397,7 @@ class DRCCO:
             self._CoMinSpace3 = 184                     # GR221b : ((CA, CAREC, or CAMINI) Arra with width >= 0.540) minimum space (CA, CAREC, or CAMINI) array >= 0.184
             self._CoMinEnclosureByOD = 8
             self._CoMinEnclosureByODAtLeastTwoSide = 30
-            self._CoMinEnclosureByPO = 30
+            self._CoMinEnclosureByPO = 4
             self._CoMinEnclosureByPOAtLeastTwoSide = 10
 
             ##Created By junung for OPLayer rules
@@ -414,7 +414,7 @@ class DRCCO:
             self._CoMinSpaceFor3neighboring=150
             self._CoMinEnclosureByOD=30
             self._CoMinEnclosureByODAtLeastTwoSide=30
-            self._CoMinEnclosureByPO=40
+            self._CoMinEnclosureByPO=10
             self._CoMinEnclosureByPOAtLeastTwoSide=40
 
             ##Created By junung for OPLayer rules

@@ -554,7 +554,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
                 self._DesignParameter['_Q<{0}>pin'.format((2*(j+1)*Xnum-1)-i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][1][1])/2]], \
                                                                                                     _Mag=0.05, _Angle=0, _TEXT='Q<{0}>'.format((2*(j+1)*Xnum-1)-i+Xnum*j))
 
-        del self._DesignParameter['_Q<{0}>pin'.format(0)]
+       # del self._DesignParameter['_Q<{0}>pin'.format(0)]
 
 
 

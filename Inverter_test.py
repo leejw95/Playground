@@ -43,7 +43,7 @@ class _Inverter(StickDiagram._StickDiagram) :
         _NMOSinputs['_NMOSChannelWidth'] = _ChannelWidth
         _NMOSinputs['_NMOSChannellength'] = _ChannelLength
         _NMOSinputs['_NMOSDummy'] = _Dummy
-        _NMOSinputs['_XVT'] = 'SLVT'
+        _NMOSinputs['_XVT'] = _XVT
 
         self._DesignParameter['_NMOS'] = self._SrefElementDeclaration(_Reflect = [1,0,0], _Angle=0, _DesignObj = NMOSWithDummy_iksu._NMOS(_DesignParameter = None, \
                                                                                                            _Name = 'NMOSIn{}'.format(_Name)))[0]
@@ -56,7 +56,7 @@ class _Inverter(StickDiagram._StickDiagram) :
         _PMOSinputs['_PMOSChannelWidth'] = round(_ChannelWidth * _NPRatio)
         _PMOSinputs['_PMOSChannellength'] = _ChannelLength
         _PMOSinputs['_PMOSDummy'] = _Dummy
-        _PMOSinputs['_XVT'] = 'SLVT'
+        _PMOSinputs['_XVT'] = _XVT
 
         self._DesignParameter['_PMOS'] = self._SrefElementDeclaration(_DesignObj = PMOSWithDummy_iksu._PMOS(_DesignParameter = None, \
                                                                                                             _Name = 'PMOSIn{}'.format(_Name)))[0]
@@ -471,7 +471,7 @@ if __name__ == '__main__':
         _NumViaPMOSMet12Met2CoY = None
         _NumViaNMOSMet12Met2CoX = None
         _NumViaNMOSMet12Met2CoY = None
-        _XVT = 'SLVT'
+        _XVT = 'LVT'
         _SupplyLine = True
 
 
@@ -511,13 +511,13 @@ if __name__ == '__main__':
 
         print('#############################      Sending to FTP Server...      #############################')
 
-        ftp = ftplib.FTP('141.223.29.62')
-        ftp.login('junung', 'chlwnsdnd1!')
-        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        myfile = open('Inverter.gds', 'rb')
-        ftp.storbinary('STOR Inverter.gds', myfile)
-        myfile.close()
-        ftp.close()
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        # myfile = open('Inverter.gds', 'rb')
+        # ftp.storbinary('STOR Inverter.gds', myfile)
+        # myfile.close()
+        # ftp.close()
         # My = MyInfo.USER(DesignParameters._Technology)
         # Checker = DRCchecker.DRCchecker(
         #     username=My.ID,

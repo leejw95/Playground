@@ -66,7 +66,7 @@ class _Inverter(StickDiagram._StickDiagram) :
         #####################################VDD Generation######################################
         _ContactNum = _NumSupplyCoX
         if _ContactNum == None:
-            _ContactNum = int((self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2)) + 1
+            _ContactNum = int((self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_ODLayer']['_XWidth']) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2)) + 1
         if _ContactNum < 2 :
             _ContactNum = 2
 

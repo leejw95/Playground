@@ -574,10 +574,19 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
                                                                                   self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] // 2, MinSnapSpacing),
                                                                                  self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'][0][1]]]]
 
+        if DesignParameters._Technology == '028nm':
+            _tmp1=0
+            _tmp2=0
+            
+        else :
+            _tmp1=+self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2-self._DesignParameter['_ControlNMOSRoutingMet1TG']['_Width'] // 2
+            _tmp2=-self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2+self._DesignParameter['_ControlPMOSRoutingMet1TG']['_Width'] // 2
+
+            
         self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'][0][0][0] + self._DesignParameter['_ControlNMOSRoutingMet1TG']['_Width'] // 2, MinSnapSpacing),
-                                                                                    self.CeilMinSnapSpacing(self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'][0][0][1] + self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2-self._DesignParameter['_ControlNMOSRoutingMet1TG']['_Width'] // 2, MinSnapSpacing)]]
+                                                                                    self.CeilMinSnapSpacing(self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'][0][0][1] + _tmp1, MinSnapSpacing)]]
         self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'][0][0][0] - self._DesignParameter['_ControlPMOSRoutingMet1TG']['_Width'] // 2, MinSnapSpacing),
-                                                                                    self.CeilMinSnapSpacing(self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'][0][0][1] - self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2+self._DesignParameter['_ControlPMOSRoutingMet1TG']['_Width'] // 2, MinSnapSpacing)]]
+                                                                                    self.CeilMinSnapSpacing(self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'][0][0][1] + _tmp2, MinSnapSpacing)]]
 
         # self._DesignParameter['_SupplyPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
         # self._DesignParameter['_SupplyPMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']

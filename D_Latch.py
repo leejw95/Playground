@@ -744,7 +744,9 @@ class _DLatch (StickDiagram._StickDiagram) :
 
         if (DesignParameters._Technology == '028nm') and _TGXVT in ('SLVT', 'LVT', 'RVT', 'HVT'):
             _XVTPLayer = '_' + _TGXVT + 'Layer'
+            _XVTPLayerLayerMapping = _TGXVT
             _XVTNLayer = '_' + _TGXVT + 'Layer'
+            _XVTNLayerLayerMapping = _TGXVT
         elif (DesignParameters._Technology == '065nm') and _TGXVT in ('LVT', 'HVT'):
             _XVTPLayer = '_P' + _TGXVT + 'Layer'
             _XVTPLayerLayerMapping = 'P' + _TGXVT
@@ -971,17 +973,25 @@ class _DLatch (StickDiagram._StickDiagram) :
                                                         self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] +
                                                         -self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_OutputRouting']['_XYCoordinates'][-1][0][1]]]
 
+        if DesignParameters._Technology != '028nm':
 
-
-        del self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]
-        del self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]
-        del self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]
-        del self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]
-        del self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]
-        del self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]
-        del self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]
-        del self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]
-
+            del self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+    
+            del self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
+            del self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0]# Should be corrected
 
 
 

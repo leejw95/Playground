@@ -3,23 +3,23 @@
 .PARAM
 
 .SUBCKT Inverter1 IN OUT VDD VSS
-MP0 OUT IN VDD VDD slvtpfet w=2u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
+MP0 OUT IN VDD VDD slvtpfet w=1.2u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
-MN0 OUT IN VSS VSS slvtnfet w=1u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
+MN0 OUT IN VSS VSS slvtnfet w=0.6u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
 .ENDS
 
 .SUBCKT Inverter2 IN OUT VDD VSS
-MP0 OUT IN VDD VDD slvtpfet w=4u l=0.03u nf=10.0 pccrit=1 plorient=1 ngcon=1 
+MP0 OUT IN VDD VDD slvtpfet w=2.0u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
-MN0 OUT IN VSS VSS slvtnfet w=2u l=0.03u nf=10.0 pccrit=1 plorient=1 ngcon=1 
+MN0 OUT IN VSS VSS slvtnfet w=1.0u l=0.03u nf=5.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
 .ENDS
 
 .SUBCKT TransmissionGate IN OUT S SB VDD VSS
-MP0 IN SB OUT VDD slvtpfet w=1.2u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1 
+MP0 IN SB OUT VDD slvtpfet w=4.0u l=0.03u nf=10.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
-MN1 IN S OUT VSS slvtnfet w=0.6u l=0.03u nf=3.0 pccrit=1 plorient=1 ngcon=1 
+MN1 IN S OUT VSS slvtnfet w=2.0u l=0.03u nf=10.0 pccrit=1 plorient=1 ngcon=1 
 + p_la=0u ptwell=0
 .ENDS
 

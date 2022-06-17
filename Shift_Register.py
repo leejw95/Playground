@@ -213,9 +213,26 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         del tmp
 
+        if (DesignParameters._Technology == '028nm') and DFF_param['DLatch1_param']['_TGXVT'] in ('SLVT', 'LVT', 'RVT', 'HVT'):
+            _XVTPLayer = '_' + DFF_param['DLatch1_param']['_TGXVT'] + 'Layer'
+            _XVTPLayerLayerMapping = DFF_param['DLatch1_param']['_TGXVT']
+            _XVTNLayer = '_' + DFF_param['DLatch1_param']['_TGXVT'] + 'Layer'
+            _XVTNLayerLayerMapping = DFF_param['DLatch1_param']['_TGXVT']
+        elif (DesignParameters._Technology == '065nm') and DFF_param['DLatch1_param']['_TGXVT'] in ('LVT', 'HVT'):
+            _XVTPLayer = '_P' + DFF_param['DLatch1_param']['_TGXVT'] + 'Layer'
+            _XVTPLayerLayerMapping = 'P' + DFF_param['DLatch1_param']['_TGXVT']
+            _XVTNLayer = '_N' + DFF_param['DLatch1_param']['_TGXVT'] + 'Layer'
+            _XVTNLayerLayerMapping = 'N' + DFF_param['DLatch1_param']['_TGXVT']
+        elif (DesignParameters._Technology == '065nm') and (DFF_param['DLatch1_param']['_TGXVT'] == None):
+            _XVTLayer = None
+            _XVTLayerMappingName = None
+
+
+
+
         tmp=[]
 
-        self._DesignParameter['_DownPMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_DownPMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_DownPMOSXVT']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_Width']
 
         for i in range(0,Ynum):
@@ -229,7 +246,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         tmp=[]
 
-        self._DesignParameter['_DownNMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_DownNMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_DownNMOSXVT']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_Width']
 
         for i in range(0,Ynum):
@@ -243,7 +260,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         tmp=[]
 
-        self._DesignParameter['_UpPMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_UpPMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_UpPMOSXVT']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_Width']
 
         for i in range(0,Ynum):
@@ -257,7 +274,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         tmp=[]
 
-        self._DesignParameter['_UpNMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['SLVT'][0], _Datatype=DesignParameters._LayerMapping['SLVT'][1],_XYCoordinates=[],_Width=100)
+        self._DesignParameter['_UpNMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_UpNMOSXVT']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_Width']
 
         for i in range(0,Ynum):
@@ -554,7 +571,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
                 self._DesignParameter['_Q<{0}>pin'.format((2*(j+1)*Xnum-1)-i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][1][1])/2]], \
                                                                                                     _Mag=0.05, _Angle=0, _TEXT='Q<{0}>'.format((2*(j+1)*Xnum-1)-i+Xnum*j))
 
-        del self._DesignParameter['_Q<{0}>pin'.format(0)]
+       # del self._DesignParameter['_Q<{0}>pin'.format(0)]
 
 
 
@@ -577,26 +594,26 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    input_params={'DFF_param':{'DLatch1_param':{'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 5, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
+    input_params={'DFF_param':{'DLatch1_param':{'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
+                     '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
+                     '_INVFinger': 5, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
                      '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
                      '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
                      '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
                      '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None},\
-                                'DLatch2_param':{'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 10, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
+                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None},\
+                                'DLatch2_param':{'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
+                     '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
+                     '_INVFinger': 10, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
                      '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
                      '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
                      '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
                      '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}},
-                        'Xnum':2,'Ynum':2,'_CLK_Grid':True}
+                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}},
+                        'Xnum':5,'Ynum':5,'_CLK_Grid':True}
 
 
-    DesignParameters._Technology = '028nm'
+    DesignParameters._Technology = '065nm'
 
     ShiftRegisterObj = _ShiftRegister(_DesignParameter=None, _Name='Shift_Register')
 
@@ -616,6 +633,14 @@ if __name__ == '__main__':
     print('###############      Sending to FTP Server...      ##################')
 
     import ftplib
+
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+    myfile = open('Shift_Register.gds', 'rb')
+    ftp.storbinary('STOR Shift_Register.gds', myfile)
+    myfile.close()
+    ftp.close()
 
     # ftp = ftplib.FTP('141.223.29.62')
     # ftp.login('jicho0927', 'cho89140616!!')

@@ -118,7 +118,7 @@ class _ViaPoly2Met1(StickDiagram._StickDiagram):
                 NumOfCOX=_ViaPoly2Met1NumberOfCOX, NumOfCOY=_ViaPoly2Met1NumberOfCOY)
             self._DesignParameter['_POLayer']['_XYCoordinates'] = _XYCoordinateOfViaPoly2Met1
             self._DesignParameter['_POLayer']['_XWidth'] = _DRCObj._CoMinWidth + (
-                        _ViaPoly2Met1NumberOfCOX - 1) * _LengthViaPoly2Met1BtwCO + 2 * 4
+                        _ViaPoly2Met1NumberOfCOX - 1) * _LengthViaPoly2Met1BtwCO + 2 * _DRCObj._CoMinEnclosureByPO
             self._DesignParameter['_POLayer']['_YWidth'] = _DRCObj._CoMinWidth + (
                         _ViaPoly2Met1NumberOfCOY - 1) * _LengthViaPoly2Met1BtwCO + 2 * _DRCObj._CoMinEnclosureByPOAtLeastTwoSide
 
@@ -204,7 +204,7 @@ class _ViaPoly2Met1(StickDiagram._StickDiagram):
         self._DesignParameter['_POLayer']['_XWidth'] = _DRCObj._CoMinWidth + (
                     _ViaPoly2Met1NumberOfCOX - 1) * _LengthViaPoly2Met1BtwCO + 2 * _DRCObj._CoMinEnclosureByPOAtLeastTwoSide
         self._DesignParameter['_POLayer']['_YWidth'] = _DRCObj._CoMinWidth + (
-                    _ViaPoly2Met1NumberOfCOY - 1) * _LengthViaPoly2Met1BtwCO + 2 * 4
+                    _ViaPoly2Met1NumberOfCOY - 1) * _LengthViaPoly2Met1BtwCO + 2 * _DRCObj._CoMinEnclosureByPO
 
         print(
             '#############################     Met2 Layer Calculation   ##############################################')

@@ -1025,9 +1025,9 @@ if __name__ == '__main__' :
     essential_param = {'1Finger' : _TGFinger, '1ChannelWidth' : _TGChannelWidth, '1ChannelLength' : _TGChannelLength, '1NPRatio' : _TGNPRatio,
         '2Finger' : _INVFinger, '2ChannelWidth' : _INVChannelWidth, '2ChannelLength' : _TGChannelLength, '2NPRatio' : _INVNPRatio}
 
-    import Sche
-    _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
-    _Sche.SchematicGenerator()
+#     import Sche
+#     _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
+#     _Sche.SchematicGenerator()
 
     print ('###############      Sending to FTP Server...      ##################')
 
@@ -1039,18 +1039,18 @@ if __name__ == '__main__' :
     myfile.close()
     ftp.close()
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/PEX_run')
-    myfile = open('./D_FF_test/D_Latch.src.net', 'rb')
-    ftp.storbinary('STOR D_Latch.src.net', myfile)
-    myfile.close()
-    ftp.close()
+#     ftp = ftplib.FTP('141.223.29.62')
+#     ftp.login('junung', 'chlwnsdnd1!')
+#     ftp.cwd('/mnt/sdc/junung/PEX_run')
+#     myfile = open('./D_FF_test/D_Latch.src.net', 'rb')
+#     ftp.storbinary('STOR D_Latch.src.net', myfile)
+#     myfile.close()
+#     ftp.close()
 
 #     import LVSchecker
 #     _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
 #     _LVS.LVSchecker()
 
-    import PEX
-    _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
-    _PEX.PEXchecker()
+#     import PEX
+#     _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+#     _PEX.PEXchecker()

@@ -328,19 +328,19 @@ if __name__ == '__main__':
     tmp.write_binary_gds_stream(testStreamFile)
 
     testStreamFile.close()
-    print("time : ", time.time() - start)
+    
 
     print('###############      Sending to FTP Server...      ##################')
 
     import ftplib
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('D_FF.gds', 'rb')
-    ftp.storbinary('STOR D_FF.gds', myfile)
-    myfile.close()
-    ftp.close()
+    # ftp = ftplib.FTP('141.223.29.62')
+    # ftp.login('jicho0927', 'cho89140616!!')
+    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    # myfile = open('D_FF.gds', 'rb')
+    # ftp.storbinary('STOR D_FF.gds', myfile)
+    # myfile.close()
+    # ftp.close()
 
     ftp = ftplib.FTP('141.223.29.62')
     ftp.login('junung', 'chlwnsdnd1!')
@@ -360,7 +360,24 @@ if __name__ == '__main__':
     _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
     _Sche.SchematicGenerator()
 
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/LVS_run')
+    myfile = open('./D_FF_test/D_FF.src.net', 'rb')
+    ftp.storbinary('STOR D_FF.src.net', myfile)
+    myfile.close()
+    ftp.close()
 
-    # import lvstest
-    # _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n')
+    import DRCchecker
+    _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','D_FF','D_FF')
+    _DRC.DRCchecker()
+
+    # import LVSchecker
+    # _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
     # _LVS.LVSchecker()
+
+    # import LVSchecker
+    # _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+    # _LVS.LVSchecker()
+
+    print("time : ", time.time() - start)

@@ -86,21 +86,35 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         # self._DesignParameter['_InverterRB'] = self._SrefElementDeclaration(_DesignObj=Inverter._Inverter(_DesignParameter=None, _Name='InverterIn{}'.format(_Name)))[0]
         # self._DesignParameter['_InverterRB']['_DesignObj']._CalculateInverter(**_Inverterinputs)
 
-        print ('##############################     TransmissionGate Generation    ########################################')
-        _TransmissionGateinputs = copy.deepcopy(TG2._TransmissionGate._ParametersForDesignCalculation)
-        _TransmissionGateinputs['_Finger'] = _TransmissionGateFinger
-        _TransmissionGateinputs['_ChannelWidth'] = _TransmissionGateChannelWidth
-        _TransmissionGateinputs['_ChannelLength'] = _TransmissionGateChannelLength
-        _TransmissionGateinputs['_NPRatio'] = _TransmissionGateNPRatio
-        _TransmissionGateinputs['_Dummy'] = _TransmissionGateDummy
-        _TransmissionGateinputs['_VDD2VSSHeight'] = _TransmissionGateVDD2VSSHeight
-        _TransmissionGateinputs['_XVT'] = _TransmissionGateXVT
-        _TransmissionGateinputs['_SupplyMet1YWidth'] = _NMOSSubringWidth
-        _TransmissionGateinputs['_Gatereverse'] = False
-        _TransmissionGateinputs['_Bodycontact'] = False
+        if _TransmissionGateVDD2VSSHeight == None :
+            det = 0
+        else :
+            det = 1
 
-        self._DesignParameter['_TransmissionGateRB'] = self._SrefElementDeclaration(_DesignObj=TG2._TransmissionGate(_DesignParameter=None, _Name = 'TransmissionGateIn{}'.format(_Name)))[0]
-        self._DesignParameter['_TransmissionGateRB']['_DesignObj']._CalculateTransmissionGate(**_TransmissionGateinputs)
+        while det != 2 :
+
+            print ('##############################     TransmissionGate Generation    ########################################')
+            _TransmissionGateinputs = copy.deepcopy(TG2._TransmissionGate._ParametersForDesignCalculation)
+            _TransmissionGateinputs['_Finger'] = _TransmissionGateFinger
+            _TransmissionGateinputs['_ChannelWidth'] = _TransmissionGateChannelWidth
+            _TransmissionGateinputs['_ChannelLength'] = _TransmissionGateChannelLength
+            _TransmissionGateinputs['_NPRatio'] = _TransmissionGateNPRatio
+            _TransmissionGateinputs['_Dummy'] = _TransmissionGateDummy
+            _TransmissionGateinputs['_VDD2VSSHeight'] = _TransmissionGateVDD2VSSHeight
+            _TransmissionGateinputs['_XVT'] = _TransmissionGateXVT
+            _TransmissionGateinputs['_SupplyMet1YWidth'] = _NMOSSubringWidth
+            _TransmissionGateinputs['_Gatereverse'] = False
+            _TransmissionGateinputs['_Bodycontact'] = False
+
+            self._DesignParameter['_TransmissionGateRB'] = self._SrefElementDeclaration(_DesignObj=TG2._TransmissionGate(_DesignParameter=None, _Name = 'TransmissionGateIn{}'.format(_Name)))[0]
+            self._DesignParameter['_TransmissionGateRB']['_DesignObj']._CalculateTransmissionGate(**_TransmissionGateinputs)
+
+            if _TransmissionGateVDD2VSSHeight == None :
+                _TransmissionGateVDD2VSSHeight = self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_VDD2VSSMinHeight']['_Ignore']
+                det += 1
+
+            else :
+                det += 1
 
 
         print ('############################       Via for Digital input Generation       ################################')
@@ -309,10 +323,12 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         print ('@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@# SET MINIMUM HEIGHT VALUE FOR RESISTOR BANK : ', _VDD2VSSMinHeight)
 
         if _TransmissionGateVDD2VSSHeight < _VDD2VSSMinHeight :
-            raise Exception('@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@# SET MINIMUM HEIGHT VALUE FOR RESISTOR BANK : ', _VDD2VSSMinHeight)
+            _TransmissionGateVDD2VSSHeight = _VDD2VSSMinHeight
 
         if _TransmissionGateVDD2VSSHeight == None :
-            raise Exception('@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@# SET MINIMUM HEIGHT VALUE FOR RESISTOR BANK : ', _VDD2VSSMinHeight)
+            _TransmissionGateVDD2VSSHeight = _VDD2VSSMinHeight
+
+        self._DesignParameter['_VDD2VSSMinHeight'] = {'_Ignore' : _VDD2VSSMinHeight, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
 
         if DesignParameters._Technology != '028nm' :
             _GapBtwRL = abs(self.CeilMinSnapSpacing(((self._DesignParameter['_TransmissionGateRB']['_DesignObj']._DesignParameter['_PMOSTG']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0] -

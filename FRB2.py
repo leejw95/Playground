@@ -61,39 +61,52 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
 
         print ('###############################      ResistorBank Generation     #########################################')
 
-        _ResistorBankinputs = copy.deepcopy(RB2._ResistorBank._ParametersForDesignCalculation)
-        _ResistorBankinputs['_TransmissionGateFinger'] = _TransmissionGateFinger
-        _ResistorBankinputs['_TransmissionGateChannelWidth'] = _TransmissionGateChannelWidth
-        _ResistorBankinputs['_TransmissionGateChannelLength'] = _TransmissionGateChannelLength
-        _ResistorBankinputs['_TransmissionGateNPRatio'] = _TransmissionGateNPRatio
-        _ResistorBankinputs['_TransmissionGateDummy'] = _TransmissionGateDummy
-        _ResistorBankinputs['_TransmissionGateVDD2VSSHeight'] = _TransmissionGateVDD2VSSHeight
-        _ResistorBankinputs['_TransmissionGateXVT'] = _TransmissionGateXVT
-        _ResistorBankinputs['_PowerLine'] = _PowerLine
+        if _TransmissionGateVDD2VSSHeight == None :
+            det = 0
+        else :
+            det = 1
 
-        _ResistorBankinputs['_ResistorWidth'] = _ResistorWidth
-        _ResistorBankinputs['_ResistorLength'] = _ResistorLength
-        _ResistorBankinputs['_ResistorMetXCO'] = _ResistorMetXCO
-        _ResistorBankinputs['_ResistorMetYCO'] = _ResistorMetYCO
+        while det != 2 :
 
-        _ResistorBankinputs['_PMOSSubringType'] = _PMOSSubringType
-        _ResistorBankinputs['_PMOSSubringXWidth'] = _PMOSSubringXWidth
-        _ResistorBankinputs['_PMOSSubringYWidth'] = _PMOSSubringYWidth
-        _ResistorBankinputs['_PMOSSubringWidth'] = _PMOSSubringWidth
+            _ResistorBankinputs = copy.deepcopy(RB2._ResistorBank._ParametersForDesignCalculation)
+            _ResistorBankinputs['_TransmissionGateFinger'] = _TransmissionGateFinger
+            _ResistorBankinputs['_TransmissionGateChannelWidth'] = _TransmissionGateChannelWidth
+            _ResistorBankinputs['_TransmissionGateChannelLength'] = _TransmissionGateChannelLength
+            _ResistorBankinputs['_TransmissionGateNPRatio'] = _TransmissionGateNPRatio
+            _ResistorBankinputs['_TransmissionGateDummy'] = _TransmissionGateDummy
+            _ResistorBankinputs['_TransmissionGateVDD2VSSHeight'] = _TransmissionGateVDD2VSSHeight
+            _ResistorBankinputs['_TransmissionGateXVT'] = _TransmissionGateXVT
+            _ResistorBankinputs['_PowerLine'] = _PowerLine
 
-        _ResistorBankinputs['_NMOSSubringType'] = _NMOSSubringType
-        _ResistorBankinputs['_NMOSSubringXWidth'] = _NMOSSubringXWidth
-        _ResistorBankinputs['_NMOSSubringYWidth'] = _NMOSSubringYWidth
-        _ResistorBankinputs['_NMOSSubringWidth'] = _NMOSSubringWidth
+            _ResistorBankinputs['_ResistorWidth'] = _ResistorWidth
+            _ResistorBankinputs['_ResistorLength'] = _ResistorLength
+            _ResistorBankinputs['_ResistorMetXCO'] = _ResistorMetXCO
+            _ResistorBankinputs['_ResistorMetYCO'] = _ResistorMetYCO
 
-        _ResistorBankinputs['_TotalSubringType'] = _TotalSubringType
-        _ResistorBankinputs['_TotalSubringXWidth'] = _TotalSubringXWidth
-        _ResistorBankinputs['_TotalSubringYWidth'] = _TotalSubringYWidth
-        _ResistorBankinputs['_TotalSubringWidth'] = _TotalSubringWidth
+            _ResistorBankinputs['_PMOSSubringType'] = _PMOSSubringType
+            _ResistorBankinputs['_PMOSSubringXWidth'] = _PMOSSubringXWidth
+            _ResistorBankinputs['_PMOSSubringYWidth'] = _PMOSSubringYWidth
+            _ResistorBankinputs['_PMOSSubringWidth'] = _PMOSSubringWidth
 
-        self._DesignParameter['_ResistorBank'] = self._SrefElementDeclaration(_DesignObj=RB2._ResistorBank(_DesignParameter=None,_Name='ResistorBankIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ResistorBank']['_DesignObj']._CalculateResistorBank(**_ResistorBankinputs)
+            _ResistorBankinputs['_NMOSSubringType'] = _NMOSSubringType
+            _ResistorBankinputs['_NMOSSubringXWidth'] = _NMOSSubringXWidth
+            _ResistorBankinputs['_NMOSSubringYWidth'] = _NMOSSubringYWidth
+            _ResistorBankinputs['_NMOSSubringWidth'] = _NMOSSubringWidth
 
+            _ResistorBankinputs['_TotalSubringType'] = _TotalSubringType
+            _ResistorBankinputs['_TotalSubringXWidth'] = _TotalSubringXWidth
+            _ResistorBankinputs['_TotalSubringYWidth'] = _TotalSubringYWidth
+            _ResistorBankinputs['_TotalSubringWidth'] = _TotalSubringWidth
+
+            self._DesignParameter['_ResistorBank'] = self._SrefElementDeclaration(_DesignObj=RB2._ResistorBank(_DesignParameter=None,_Name='ResistorBankIn{}'.format(_Name)))[0]
+            self._DesignParameter['_ResistorBank']['_DesignObj']._CalculateResistorBank(**_ResistorBankinputs)
+
+            if _TransmissionGateVDD2VSSHeight == None :
+                _TransmissionGateVDD2VSSHeight = self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_VDD2VSSMinHeight']['_Ignore']
+                det += 1
+
+            else :
+                det += 1
 
 
         print ('#################################       Coordinates Settings      ########################################')
@@ -1726,7 +1739,7 @@ if __name__ == '__main__' :
         _TransmissionGateChannelLength = 30
         _TransmissionGateNPRatio = 2  ##Default = 2
         _TransmissionGateDummy = True     #T/F?
-        _TransmissionGateVDD2VSSHeight = 6000 ## FIXED
+        _TransmissionGateVDD2VSSHeight = None ## FIXED
         _TransmissionGateXVT = 'SLVT'     #T/F?
 
         _PowerLine = False # T/F?

@@ -441,7 +441,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
             else:
                 if _VDD2VSSHeight < _VDD2VSSMinHeight:
-                    raise Exception('@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@#@# SET MINIMUM HEIGHT VALUE FOR TransmissionGate : ', _VDD2VSSMinHeight)
+                    _VDD2VSSHeight = _VDD2VSSMinHeight
+
+            self._DesignParameter['_VDD2VSSMinHeight'] = {'_Ignore' : _VDD2VSSMinHeight, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
 
             ## BODY CONTACTS, MOS FIRST
             _PbodyObj = PbodyContact._PbodyContact()

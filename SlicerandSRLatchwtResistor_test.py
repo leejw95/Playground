@@ -793,7 +793,7 @@ if __name__ == '__main__':
         _TransmissionGateNPRatio = 2  ##Default = 2
         _ResistorWidth = 2000#random.randrange(1500,2500, 100)#random.randrange(1500,2500, 100), random.randrange(1000,2000, 2)
         _ResistorLength = 2000#_ResistorWidth + random.randrange(100,2000, 100)##_ResistorWidth + random.randrange(100,1000, 100), random.randrange(400,2000, 2)  ## minimum : 400
-        _TransmissionGateVDD2VSSHeight = 3850  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
+        _TransmissionGateVDD2VSSHeight = None  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
 
         _TransmissionGateDummy = True  # T//F? only true @ 40, 28nm process
         _TransmissionGateXVT = 'SLVT'  # T//F?
@@ -860,7 +860,7 @@ if __name__ == '__main__':
         _SLCLKinputNMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
         _SLChannelLength = 30#30
 
-        _SLDummy = False
+        _SLDummy = True
         _SLXVT = 'SLVT'
         _SLGuardringWidth = 200#200
         _SLGuardring = True
@@ -978,15 +978,15 @@ if __name__ == '__main__':
         # # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         # # myfile.close()
 
-        # import ftplib
-        
-        # ftp = ftplib.FTP('141.223.29.62')
-        # ftp.login('junung', 'chlwnsdnd1!')
-        # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-        # #ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        # myfile.close()
+    import ftplib
+    
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('junung', 'chlwnsdnd1!')
+    # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    myfile.close()
     
         # import DRCchecker
 

@@ -284,7 +284,7 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         if DesignParameters._Technology == '028nm' :
             _TotalSubringinputs['_XWidth'] =_NMOSSubringinputs['_XWidth'] + (_NMOSSubringinputs['_Width']+1) * 2 + _DRCObj._PpMinExtensiononPactive2 * 2+ \
                                             self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + \
-                                            _DRCObj._RXMinSpacetoPRES * 2 + _DRCObj._PpMinSpace
+                                            _DRCObj._RXMinSpacetoPRES * 2 + _DRCObj._PpMinSpace + 90
 
             _TotalSubringinputs['_YWidth'] = max(_TransmissionGateVDD2VSSHeight + _NMOSSubringinputs['_Width'] +\
                                                 + _DRCObj._Metal1MinSpace3 + _DRCObj._PpMinExtensiononPactive2 * 2 + _DRCObj._PpMinSpace,
@@ -377,9 +377,9 @@ class _ResistorBank(StickDiagram._StickDiagram) :
         ## Resistor Settings
         if DesignParameters._Technology == '028nm' :
             self._DesignParameter['_OpppcresRB']['_XYCoordinates'] = [
-                [self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] +self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
-                _NMOSSubringinputs['_Width'] + int(round(_NMOSSubringinputs['_XWidth'] + 0.5)) // 2 + _DRCObj._RXMinSpacetoPRES +
-                int(round(self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + 0.5)) // 2,
+                [self.CeilMinSnapSpacing(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][0] +self._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] +
+                _NMOSSubringinputs['_Width'] + int(round(_NMOSSubringinputs['_XWidth'] + 0.5)) // 2 + _DRCObj._RXMinSpacetoPRES + 30 +
+                int(round(self._DesignParameter['_OpppcresRB']['_DesignObj']._DesignParameter['_PRESLayer']['_XWidth'] + 0.5)) // 2, 2*_MinSnapSpacing),
                 min(self._DesignParameter['_TransmissionGateRB']['_XYCoordinates'][0][1] + _TransmissionGateVDD2VSSHeight // 2, self._DesignParameter['_TotalSubringRB']['_XYCoordinates'][0][1])]]
 
         else :

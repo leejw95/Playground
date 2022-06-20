@@ -548,6 +548,11 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
             self._DesignParameter['_VDDpinSL'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[], _Mag=0.5, _Angle=0, _TEXT='VDD')
 
             self._DesignParameter['_VSSpinSL'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[], _Mag=0.5, _Angle=0, _TEXT='VSS')
+            
+            self._DesignParameter['_VDDpinSR'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[], _Mag=0.5, _Angle=0, _TEXT='VDD')
+
+            self._DesignParameter['_VSSpinINV'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[], _Mag=0.5, _Angle=0, _TEXT='VSS')
+            
             tmp1 = []
             for i in range (0, _N) :
                 tmp1.append([self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVDD']['_XYCoordinates'][i][0],
@@ -559,6 +564,24 @@ class _SlicerandSRLatchwtResistor(StickDiagram._StickDiagram):
                 tmp2.append([self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVSS']['_XYCoordinates'][i][0],
                             self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PinVSS']['_XYCoordinates'][i][1]])
             self._DesignParameter['_VSSpinSL']['_XYCoordinates'] = tmp2
+
+            del tmp1, tmp2
+
+            
+            tmp1 = []
+            for i in range (0, _N) :
+                tmp1.append([self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][i][0]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates'][0][0],
+                            self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][i][1]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][1]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates'][0][1]])
+                tmp1.append([self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][i][0]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][0]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates'][1][0],
+                            self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][i][1]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_XYCoordinates'][0][1]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_VDDpin']['_XYCoordinates'][1][1]])
+
+            self._DesignParameter['_VDDpinSR']['_XYCoordinates'] = tmp1
+
+            tmp2 = []
+            for i in range (0, _N) :
+                tmp2.append([self._DesignParameter['_Slicer']['_XYCoordinates'][0][0] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][i][0]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][0]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_VSSpin']['_XYCoordinates'][0][0],
+                            self._DesignParameter['_Slicer']['_XYCoordinates'][0][1] + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_XYCoordinates'][i][1]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_XYCoordinates'][0][1]+self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_SlicerWithSRLatchX4']['_DesignObj']._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_VSSpin']['_XYCoordinates'][0][1]])
+            self._DesignParameter['_VSSpinINV']['_XYCoordinates'] = tmp2
 
             del tmp1, tmp2
 
@@ -811,11 +834,11 @@ if __name__ == '__main__':
         _XRBNum = 4#random.randint(3,6)
         _YRBNum = 8#32//_XRBNum
         _TransmissionGateFinger = 8#random.randint(2,13)
-        _TransmissionGateChannelWidth = 250#random.randrange(700,900,10)  ## 40 : random.randrange(350,500,10), 65nm : random.randrange(500,700,10), 90nm : random.randrange(700,900,10)
+        _TransmissionGateChannelWidth = 270#random.randrange(700,900,10)  ## 40 : random.randrange(350,500,10), 65nm : random.randrange(500,700,10), 90nm : random.randrange(700,900,10)
         _TransmissionGateChannelLength = 30  ##40 : 40, 65 : 60, 90 : 100
         _TransmissionGateNPRatio = 2  ##Default = 2
-        _ResistorWidth = 2000#random.randrange(1500,2500, 100)#random.randrange(1500,2500, 100), random.randrange(1000,2000, 2)
-        _ResistorLength = 2000#_ResistorWidth + random.randrange(100,2000, 100)##_ResistorWidth + random.randrange(100,1000, 100), random.randrange(400,2000, 2)  ## minimum : 400
+        _ResistorWidth = 1250#random.randrange(1500,2500, 100)#random.randrange(1500,2500, 100), random.randrange(1000,2000, 2)
+        _ResistorLength = 1234#_ResistorWidth + random.randrange(100,2000, 100)##_ResistorWidth + random.randrange(100,1000, 100), random.randrange(400,2000, 2)  ## minimum : 400
         _TransmissionGateVDD2VSSHeight = None  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
 
         _TransmissionGateDummy = True  # T//F? only true @ 40, 28nm process
@@ -837,6 +860,25 @@ if __name__ == '__main__':
         _TotalSubringYWidth = None  ## FIXED
         _TotalSubringWidth = _PMOSSubringWidth
 
+
+        # #12G
+        # _SRRandWidth = 200#random.randrange(700,1400,10)#(200,400,2)
+        # _SRNPRatio = 2##round(2 + random.random())
+        # _SRFinger1 = 2#random.randint(1,15)
+        # _SRPMOSChannelWidth1 = _SRRandWidth * _SRNPRatio
+        # _SRNMOSChannelWidth1 = _SRRandWidth
+        # _SRFinger2 = 1#random.randint(1,15)
+        # _SRPMOSChannelWidth2 = _SRRandWidth * _SRNPRatio
+        # _SRNMOSChannelWidth2 = _SRRandWidth
+        # _SRFinger3 = 1#random.randint(1,15)
+        # _SRPMOSChannelWidth3 = _SRRandWidth * _SRNPRatio
+        # _SRNMOSChannelWidth3 = _SRRandWidth
+        # _SRFinger4 = 1#random.randint(1,15)
+        # _SRPMOSChannelWidth4 = _SRRandWidth * _SRNPRatio
+        # _SRNMOSChannelWidth4 = _SRRandWidth
+        # _SRChannelLength = 30
+
+        #20G
         _SRRandWidth = 200#random.randrange(700,1400,10)#(200,400,2)
         _SRNPRatio = 2##round(2 + random.random())
         _SRFinger1 = 5#random.randint(1,15)
@@ -872,15 +914,64 @@ if __name__ == '__main__':
         _SRXVT = 'SLVT'
         _SRPowerLine = False
 
+        ##12G
+        # _SLCLKinputPMOSFinger1 = 3#random.randint(1,15)
+        # _SLCLKinputPMOSFinger2 = 3#random.randint(1,15)
+        # _SLPMOSFinger = 2#random.randint(1,15)
+        # _SLPMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
+        # _SLNMOSFinger = 1#random.randint(1,15)
+        # _SLDATAinputNMOSFinger = 8#random.randint(2,15)
+        # _SLCLKinputNMOSFinger = 20#random.randint(1,15)
+        # _SLNMOSChannelWidth = 1000#random.randrange(700,3500,10)#(200,1050,2)
+        # _SLCLKinputNMOSChannelWidth = 300#random.randrange(700,3500,10)#(200,1050,2)
+        # _SLChannelLength = 30#30
+        # _SLDummy = True
+        # _SLXVT = 'SLVT'
+        # _SLGuardringWidth = 200#200
+        # _SLGuardring = True
+        # _SLSlicerGuardringWidth = 200#200
+        # _SLSlicerGuardring = None
+        # _SLNumSupplyCOY = None
+        # _SLNumSupplyCOX = None
+        # _SLSupplyMet1XWidth = None
+        # _SLSupplyMet1YWidth = None
+        # _SLVDD2VSSHeight = None
+        # _SLNumVIAPoly2Met1COX = None
+        # _SLNumVIAPoly2Met1COY = None
+        # _SLNumVIAMet12COX = None
+        # _SLNumVIAMet12COY = None
+        # _SLPowerLine = False
+        # _N = 4#random.randint(1,8)
+        # _InvChannelWidth = 200#random.randrange(700,750,10)#(200,400,2)
+        # _InvChannelLength = 30
+        # _InvFinger = 15#random.randint(5,16)
+        # _InvNPRatio = 3##round(2+random.random())
+        # _InvVDD2VSSHeight = None
+        # _InvDummy = True
+        # _InvNumSupplyCoX = None
+        # _InvNumSupplyCoY = None
+        # _InvSupplyMet1XWidth = None
+        # _InvSupplyMet1YWidth = None
+        # _InvNumViaPoly2Met1CoX = None
+        # _InvNumViaPoly2Met1CoY = None
+        # _InvNumViaPMOSMet12Met2CoX = None
+        # _InvNumViaPMOSMet12Met2CoY = None
+        # _InvNumViaNMOSMet12Met2CoX = None
+        # _InvNumViaNMOSMet12Met2CoY = None
+        # _InvXVT = 'SLVT'
+        # _InvPowerLine = False
+        # _SLSRInvSupplyLineX4 = False
+
+        ##20G
         _SLCLKinputPMOSFinger1 = 6#random.randint(1,15)
         _SLCLKinputPMOSFinger2 = 3#random.randint(1,15)
         _SLPMOSFinger = 2#random.randint(1,15)
-        _SLPMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
+        _SLPMOSChannelWidth = 1000#random.randrange(700,3500,10)#(200,1050,2)
         _SLNMOSFinger = 2#random.randint(1,15)
-        _SLDATAinputNMOSFinger = 8#random.randint(2,15)
-        _SLCLKinputNMOSFinger = 10#random.randint(1,15)
-        _SLNMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
-        _SLCLKinputNMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
+        _SLDATAinputNMOSFinger = 12#random.randint(2,15)
+        _SLCLKinputNMOSFinger = 8#random.randint(1,15)
+        _SLNMOSChannelWidth = 1000#random.randrange(700,3500,10)#(200,1050,2)
+        _SLCLKinputNMOSChannelWidth = 1000#random.randrange(700,3500,10)#(200,1050,2)
         _SLChannelLength = 30#30
 
         _SLDummy = True
@@ -902,7 +993,7 @@ if __name__ == '__main__':
         _N = 4#random.randint(1,8)
         _InvChannelWidth = 200#random.randrange(700,750,10)#(200,400,2)
         _InvChannelLength = 30
-        _InvFinger = 15#random.randint(5,16)
+        _InvFinger = 16#random.randint(5,16)
         _InvNPRatio = 3##round(2+random.random())
         _InvVDD2VSSHeight = None
         _InvDummy = True
@@ -926,7 +1017,7 @@ if __name__ == '__main__':
         # import DRCchecker
 
         libname = 'SlicerandSRLatchwtResistor'
-        cellname = 'SlicerandSRLatchwtResistor'
+        cellname = 'SlicerandSRLatchwtResistor_20G'
         _fileName = cellname + '.gds'
 
         InputParams = dict(
@@ -1010,6 +1101,14 @@ if __name__ == '__main__':
     myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
     ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     myfile.close()
+
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('myungguk', 'vmfl!225')
+    # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+    ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
+    myfile = open(_fileName, 'rb')
+    ftp.storbinary('STOR '+_fileName, myfile)
+    myfile.close() 
     
         # import DRCchecker
 

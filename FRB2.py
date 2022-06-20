@@ -1477,6 +1477,37 @@ class _FullResistorBank(StickDiagram._StickDiagram) :
                             _Mag = 0.5, _Angle=0, _TEXT='VSS')
 
             del tmp
+        
+        else :
+            tmp = []
+            for i in range (0, _XRBNum) :
+                for j in range (0, _YRBNum) :
+                    tmp.append([_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][0] +
+                                            i * _ResistorSpaceX,
+                                _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_XYCoordinates'][0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_PMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1] +
+                                            j * _ResistorSpaceY])
+            
+            self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],
+                            _Presentation=[0,1,2], _Reflect=[0,0,0], 
+                            _XYCoordinates=tmp,
+                            _Mag = 0.5, _Angle=0, _TEXT='VDD')
+
+            del tmp
+
+            tmp = []
+            for i in range (0, _XRBNum) :
+                for j in range (0, _YRBNum) :
+                    tmp.append([_ResistorBankOrigin[0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][0] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][0] +
+                                            i * _ResistorSpaceX,
+                                _ResistorBankOrigin[0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB']['_XYCoordinates'][0][1] + self._DesignParameter['_ResistorBank']['_DesignObj']._DesignParameter['_NMOSSubringRB']['_DesignObj']._DesignParameter['_Met1Layerx']['_XYCoordinates'][0][1] +
+                                            j * _ResistorSpaceY])
+            
+            self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],
+                            _Presentation=[0,1,2], _Reflect=[0,0,0], 
+                            _XYCoordinates=tmp,
+                            _Mag = 0.5, _Angle=0, _TEXT='VSS')
+
+            del tmp
 
         tmp = []
         for i in range (len(self._DesignParameter['_Met7LayerVCM']['_XYCoordinates'])) :

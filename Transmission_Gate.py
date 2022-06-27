@@ -156,7 +156,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
         self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnPMOSControlIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._CalculateViaPoly2Met1DesignParameterMinimumEnclosureY(**_ViaPMOSPoly2Met1)
+        self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_ViaPMOSPoly2Met1)
 
 
         print ("###########################     Via Generation for NMOS Controls      #####################################")
@@ -177,7 +177,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
         self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG'] = self._SrefElementDeclaration(_DesignObj=ViaPoly2Met1._ViaPoly2Met1(_DesignParameter=None,_Name='ViaPoly2Met1OnNMOSControlIn{}'.format(_Name)))[0]
-        self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._CalculateViaPoly2Met1DesignParameterMinimumEnclosureY(**_ViaNMOSPoly2Met1)
+        self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_DesignObj']._CalculateViaPoly2Met1DesignParameter(**_ViaNMOSPoly2Met1)
 
 
         print('################################     Coordinates Settings     ############################################')
@@ -553,8 +553,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'] = [[[self.CeilMinSnapSpacing(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][-1][0] +
                                                                                     self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 + _DRCObj._Metal1MinSpace2, MinSnapSpacing),
                                                                                     self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'][0][1]],
-                                                                                 [self.CeilMinSnapSpacing(self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][0][0] -
-                                                                                  self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] // 2, MinSnapSpacing),
+                                                                                 [self.CeilMinSnapSpacing(self._DesignParameter['_NMOS']['_XYCoordinates'][0][0], MinSnapSpacing),
                                                                                  self._DesignParameter['_ViaPoly2Met1OnNMOSControlTG']['_XYCoordinates'][0][1]]]]
 
 
@@ -570,8 +569,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'] = [[[self.CeilMinSnapSpacing(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] -
                                                                                     self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2 - _DRCObj._Metal1MinSpace2, MinSnapSpacing),
                                                                                     self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'][0][1]],
-                                                                                 [self.CeilMinSnapSpacing(self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_XYCoordinates'][0][0] +
-                                                                                  self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_POLayer']['_XWidth'] // 2, MinSnapSpacing),
+                                                                                 [self.CeilMinSnapSpacing(self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], MinSnapSpacing),
                                                                                  self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'][0][1]]]]
 
         if DesignParameters._Technology == '028nm':
@@ -583,9 +581,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
             _tmp2=-self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']//2+self._DesignParameter['_ControlPMOSRoutingMet1TG']['_Width'] // 2
 
             
-        self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'][0][0][0] + self._DesignParameter['_ControlNMOSRoutingMet1TG']['_Width'] // 2, MinSnapSpacing),
+        self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'][0][0][0] + self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2, MinSnapSpacing),
                                                                                     self.CeilMinSnapSpacing(self._DesignParameter['_ControlNMOSRoutingMet1TG']['_XYCoordinates'][0][0][1] + _tmp1, MinSnapSpacing)]]
-        self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'][0][0][0] - self._DesignParameter['_ControlPMOSRoutingMet1TG']['_Width'] // 2, MinSnapSpacing),
+        self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'][0][0][0] - self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] // 2, MinSnapSpacing),
                                                                                     self.CeilMinSnapSpacing(self._DesignParameter['_ControlPMOSRoutingMet1TG']['_XYCoordinates'][0][0][1] + _tmp2, MinSnapSpacing)]]
 
         # self._DesignParameter['_SupplyPMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=100)
@@ -696,68 +694,85 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 if __name__ == '__main__' :
     import time
+    import random
     start = time.time()
     ans = [3, 200, 30, 2, None, True, 'SLVT', 4, 2, None, None, None, None, None, None]
+    # ans = [3, 500, 60, 2, None, False, 'LVT', 4, 2, None, None, None, None, None, None]
 
-    _Finger = ans[0]
-    _ChannelWidth = ans[1]
-    _ChannelLength = ans[2]
-    _NPRatio = ans[3]
-    _VDD2VSSHeight = ans[4]
-    _Dummy = ans[5]
-    _XVT = ans[6]
-    _NumSupplyCOX = ans[7]
-    _NumSupplyCOY = ans[8]
-    _SupplyMet1XWidth = ans[9]
-    _SupplyMet1YWidth = ans[10]
-    _NumVIAPoly2Met1COX = ans[11]
-    _NumVIAPoly2Met1COY = ans[12]
-    _NumVIAMet12COX = ans[13]
-    _NumVIAMet12COY = ans[14]
-    #print (_NumVIAMet12COY, _NumVIAMet12COX)
-    DesignParameters._Technology = '028nm'
+    for i in range (0, 100) :
+        _Finger = random.randint(1,13)#ans[0]
+        _ChannelWidth = random.randrange(200,400,10)#ans[1]
+        _ChannelLength = 30#ans[2]
+        _NPRatio = 2#ans[3]
+        _VDD2VSSHeight = ans[4]
+        _Dummy = ans[5]
+        _XVT = ans[6]
+        _NumSupplyCOX = ans[7]
+        _NumSupplyCOY = ans[8]
+        _SupplyMet1XWidth = ans[9]
+        _SupplyMet1YWidth = ans[10]
+        _NumVIAPoly2Met1COX = ans[11]
+        _NumVIAPoly2Met1COY = ans[12]
+        _NumVIAMet12COX = ans[13]
+        _NumVIAMet12COY = ans[14]
+        #print (_NumVIAMet12COY, _NumVIAMet12COX)
+        # DesignParameters._Technology = '028nm'
 
-    TransmissionGateObj = _TransmissionGate(_DesignParameter=None, _Name='TransmissionGate')
-    #print ("A!!")
-    TransmissionGateObj._CalculateTransmissionGate(_Finger=_Finger, _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength, _NPRatio=_NPRatio, _VDD2VSSHeight=_VDD2VSSHeight,
-                                   _Dummy=_Dummy, _XVT=_XVT, _NumSupplyCOX=_NumSupplyCOX, _NumSupplyCOY = _NumSupplyCOY, _SupplyMet1XWidth= _SupplyMet1XWidth,
-                                   _SupplyMet1YWidth=_SupplyMet1YWidth, _NumVIAPoly2Met1COX=_NumVIAPoly2Met1COX, _NumVIAPoly2Met1COY= _NumVIAPoly2Met1COY,
-                                   _NumVIAMet12COX=_NumVIAMet12COX, _NumVIAMet12COY=_NumVIAMet12COY)
+        TransmissionGateObj = _TransmissionGate(_DesignParameter=None, _Name='TransmissionGate')
+        #print ("A!!")
+        TransmissionGateObj._CalculateTransmissionGate(_Finger=_Finger, _ChannelWidth=_ChannelWidth, _ChannelLength=_ChannelLength, _NPRatio=_NPRatio, _VDD2VSSHeight=_VDD2VSSHeight,
+                                    _Dummy=_Dummy, _XVT=_XVT, _NumSupplyCOX=_NumSupplyCOX, _NumSupplyCOY = _NumSupplyCOY, _SupplyMet1XWidth= _SupplyMet1XWidth,
+                                    _SupplyMet1YWidth=_SupplyMet1YWidth, _NumVIAPoly2Met1COX=_NumVIAPoly2Met1COX, _NumVIAPoly2Met1COY= _NumVIAPoly2Met1COY,
+                                    _NumVIAMet12COX=_NumVIAMet12COX, _NumVIAMet12COY=_NumVIAMet12COY)
 
 
-    TransmissionGateObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=TransmissionGateObj._DesignParameter)
-    _fileName = 'TransmissionGate.gds'
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
+        TransmissionGateObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=TransmissionGateObj._DesignParameter)
+        _fileName = 'TransmissionGate.gds'
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    tmp = TransmissionGateObj._CreateGDSStream(TransmissionGateObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp = TransmissionGateObj._CreateGDSStream(TransmissionGateObj._DesignParameter['_GDSFile']['_GDSFile'])
 
-    tmp.write_binary_gds_stream(testStreamFile)
+        tmp.write_binary_gds_stream(testStreamFile)
 
-    testStreamFile.close()
-    print ("time : ", time.time() - start)
+        testStreamFile.close()
+        print ("time : ", time.time() - start)
 
-    print ('###############      Sending to FTP Server...      ##################')
+        print ('###############      Sending to FTP Server...      ##################')
 
-    # ftp = ftplib.FTP('141.223.29.62')
-    # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    # myfile = open('TransmissionGate.gds', 'rb')
-    # ftp.storbinary('STOR TransmissionGate.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('junung', 'chlwnsdnd1!')
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        myfile = open('TransmissionGate.gds', 'rb')
+        ftp.storbinary('STOR TransmissionGate.gds', myfile)
+        myfile.close()
+        ftp.close()
 
-    # ftp = ftplib.FTP('141.223.29.62')
-    # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-    # myfile = open('TransmissionGate.gds', 'rb')
-    # ftp.storbinary('STOR TransmissionGate.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        # myfile = open('TransmissionGate.gds', 'rb')
+        # ftp.storbinary('STOR TransmissionGate.gds', myfile)
+        # myfile.close()
+        # ftp.close()
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    myfile = open('TransmissionGate.gds', 'rb')
-    ftp.storbinary('STOR TransmissionGate.gds', myfile)
-    myfile.close()
-    ftp.close()
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('jicho0927', 'cho89140616!!')
+        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+        # myfile = open('TransmissionGate.gds', 'rb')
+        # ftp.storbinary('STOR TransmissionGate.gds', myfile)
+        # myfile.close()
+        # ftp.close()
+
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('jicho0927', 'cho89140616!!')
+        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        # myfile = open('TransmissionGate.gds', 'rb')
+        # ftp.storbinary('STOR TransmissionGate.gds', myfile)
+        # myfile.close()
+        # ftp.close()
+
+        import DRCchecker
+
+        a = DRCchecker.DRCchecker('junung', 'chlwnsdnd1!', '/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/DRC/run', 'TransmissionGate', 'TransmissionGate', None)
+        a.DRCchecker()
+    print("DRC clean!!")

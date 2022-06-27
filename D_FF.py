@@ -1,4 +1,5 @@
 # from re import S
+from re import T
 from select import select
 from tkinter import N
 import StickDiagram
@@ -311,24 +312,41 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    DLatch1 = {'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 5, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
+    # DLatch1 = {'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
+    #                  '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
+    #                  '_INVFinger': 5, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
+    #                  '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
+    #                  '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
+    #                  '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
+    #                  '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
+    #                  '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}
+    # DLatch2 = {'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
+    #                  '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
+    #                  '_INVFinger': 10, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
+    #                  '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
+    #                  '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
+    #                  '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
+    #                  '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
+    #                  '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}
+    
+    DLatch1 = {'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
+                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
+                     '_INVFinger': 5, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
                      '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
                      '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
                      '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
                      '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}
-    DLatch2 = {'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 10, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
+                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}
+    DLatch2 = {'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
+                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
+                     '_INVFinger': 10, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
                      '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
                      '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
                      '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
                      '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}
+                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}
 
-    DesignParameters._Technology = '065nm'
+    DesignParameters._Technology = '028nm'
     _Name = 'D_FF'
 
     DFFObj = _DFF(_DesignParameter=None, _Name='D_FF')
@@ -368,9 +386,9 @@ if __name__ == '__main__':
 
     print ("###############        Generating Netlist...         ###############")
     subckt_list = ['TransmissionGate', 'Inverter1', 'Inverter2']
-    essential_param = {'1Finger': 3, '1ChannelWidth': 200, '1ChannelLength': 30, '1NPRatio': 2,
-        '2Finger': 5, '2ChannelWidth': 200, '2ChannelLength': 30, '2NPRatio': 2,
-        '3Finger': 10, '3ChannelWidth': 200, '3ChannelLength': 30, '3NPRatio': 2}
+    essential_param = {'1Finger': DLatch1['_TGFinger'], '1ChannelWidth': DLatch1['_TGChannelWidth'], '1ChannelLength': DLatch1['_TGChannelLength'], '1NPRatio': DLatch1['_TGNPRatio'],
+        '2Finger': DLatch1['_INVFinger'], '2ChannelWidth': DLatch1['_INVChannelWidth'], '2ChannelLength': DLatch1['_INVChannelLength'], '2NPRatio': DLatch1['_INVNPRatio'],
+        '3Finger': DLatch2['_INVFinger'], '3ChannelWidth': DLatch2['_INVChannelWidth'], '3ChannelLength': DLatch2['_INVChannelLength'], '3NPRatio': DLatch2['_INVNPRatio']}
 
     import Sche
     _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
@@ -379,21 +397,25 @@ if __name__ == '__main__':
     ftp = ftplib.FTP('141.223.29.62')
     ftp.login('junung', 'chlwnsdnd1!')
     ftp.cwd('/mnt/sdc/junung/LVS_run')
-    myfile = open('./D_FF_test/D_FF.src.net', 'rb')
+    myfile = open('./Netlist/D_FF.src.net', 'rb')
     ftp.storbinary('STOR D_FF.src.net', myfile)
     myfile.close()
     ftp.close()
 
-    import DRCchecker
-    _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','D_FF','D_FF')
-    _DRC.DRCchecker()
+    # import DRCchecker
+    # _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','D_FF','D_FF')
+    # _DRC.DRCchecker()
 
     # import LVSchecker
     # _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
     # _LVS.LVSchecker()
 
-    # import LVSchecker
-    # _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
-    # _LVS.LVSchecker()
+    # import PEX
+    # _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+    # _PEX.PEXchecker()
+
+    import Posim
+    _Posim = Posim.POSIM('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/Ocean_script','Setup_Hold_CLK2Q_simulation.ocn','/mnt/sdc/junung/simulation/tb_D_FF/spectre/schematic','/mnt/sdc/junung/OPUS/Samsung28n/lib_spectre/LN28LPP_Spectre.lib', 'ss', '/mnt/sdc/junung/PEX_run/D_FF.pex.netlist')
+    _Posim.Posimchecker()
 
     print("time : ", time.time() - start)

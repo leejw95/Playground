@@ -601,6 +601,22 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
         #                                                                         (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace)//4 +
         #                                                                         self._DesignParameter['_ViaMet12Met2OnPMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth'] // 2]]]
 
+        if DesignParameters._Technology != '028nm' : ## 65nm excess metal for minimum metal area rule 
+            self._DesignParameter['_DRCMet2LayerOnNMOSControlTG'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],_Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[],_XWidth=None, _YWidth=None, _ElementName=None)
+            self._DesignParameter['_DRCMet2LayerOnNMOSControlTG']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+            self._DesignParameter['_DRCMet2LayerOnNMOSControlTG']['_YWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea / self._DesignParameter['_DRCMet2LayerOnNMOSControlTG']['_XWidth'], MinSnapSpacing)
+            self._DesignParameter['_DRCMet2LayerOnNMOSControlTG']['_XYCoordinates'] = self._DesignParameter['_ViaMet12Met2OnNMOSControlTG']['_XYCoordinates']
+
+            self._DesignParameter['_DRCMet2LayerOnPMOSControlTG'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0],_Datatype=DesignParameters._LayerMapping['METAL2'][1], _XYCoordinates=[],_XWidth=None, _YWidth=None, _ElementName=None)
+            self._DesignParameter['_DRCMet2LayerOnPMOSControlTG']['_XWidth'] = self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
+            self._DesignParameter['_DRCMet2LayerOnPMOSControlTG']['_YWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea / self._DesignParameter['_DRCMet2LayerOnPMOSControlTG']['_XWidth'], MinSnapSpacing)
+            self._DesignParameter['_DRCMet2LayerOnPMOSControlTG']['_XYCoordinates'] = self._DesignParameter['_ViaMet12Met2OnPMOSControlTG']['_XYCoordinates']
+
+            self._DesignParameter['_DRCMet3LayerOnNMOSOutputTG'] = self._BoundaryElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0],_Datatype=DesignParameters._LayerMapping['METAL3'][1], _XYCoordinates=[],_XWidth=None, _YWidth=None, _ElementName=None)
+            self._DesignParameter['_DRCMet3LayerOnNMOSOutputTG']['_XWidth'] = self._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met3Layer']['_XWidth']
+            self._DesignParameter['_DRCMet3LayerOnNMOSOutputTG']['_YWidth'] = self.CeilMinSnapSpacing(_DRCObj._MetalxMinArea / self._DesignParameter['_DRCMet3LayerOnNMOSOutputTG']['_XWidth'], MinSnapSpacing)
+            self._DesignParameter['_DRCMet3LayerOnNMOSOutputTG']['_XYCoordinates'] = self._DesignParameter['_ViaMet22Met3OnNMOSOutputTG']['_XYCoordinates']
+
 
         self._DesignParameter['_SupplyNMOSRoutingXTG'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[], _Width=100)
         self._DesignParameter['_SupplyNMOSRoutingXTG']['_Width'] = self._DesignParameter['_ViaMet12Met2OnNMOSOutputTG']['_DesignObj']._DesignParameter['_Met2Layer']['_XWidth']
@@ -696,13 +712,34 @@ if __name__ == '__main__' :
     import time
     import random
     start = time.time()
-    ans = [3, 200, 30, 2, None, True, 'SLVT', 4, 2, None, None, None, None, None, None]
-    # ans = [3, 500, 60, 2, None, False, 'LVT', 4, 2, None, None, None, None, None, None]
+    # ans = [3, 200, 30, 2, None, True, 'SLVT', 4, 2, None, None, None, None, None, None] ## 28nm default
+    ans = [3, 500, 60, 2, None, False, 'LVT', 4, 2, None, None, None, None, None, None] ## 65nm default
 
     for i in range (0, 100) :
+
+        ## random DRC set for 28nm
+
+        # _Finger = random.randint(1,13)#ans[0]
+        # _ChannelWidth = random.randrange(200,400,10)#ans[1]
+        # _ChannelLength = 30#ans[2]
+        # _NPRatio = 2#ans[3]
+        # _VDD2VSSHeight = ans[4]
+        # _Dummy = ans[5]
+        # _XVT = ans[6]
+        # _NumSupplyCOX = ans[7]
+        # _NumSupplyCOY = ans[8]
+        # _SupplyMet1XWidth = ans[9]
+        # _SupplyMet1YWidth = ans[10]
+        # _NumVIAPoly2Met1COX = ans[11]
+        # _NumVIAPoly2Met1COY = ans[12]
+        # _NumVIAMet12COX = ans[13]
+        # _NumVIAMet12COY = ans[14]
+
+        ## random DRC set for 65nm
+
         _Finger = random.randint(1,13)#ans[0]
-        _ChannelWidth = random.randrange(200,400,10)#ans[1]
-        _ChannelLength = 30#ans[2]
+        _ChannelWidth = random.randrange(500,1500,10)#ans[1]
+        _ChannelLength = 60#ans[2]
         _NPRatio = 2#ans[3]
         _VDD2VSSHeight = ans[4]
         _Dummy = ans[5]
@@ -715,8 +752,25 @@ if __name__ == '__main__' :
         _NumVIAPoly2Met1COY = ans[12]
         _NumVIAMet12COX = ans[13]
         _NumVIAMet12COY = ans[14]
-        #print (_NumVIAMet12COY, _NumVIAMet12COX)
-        # DesignParameters._Technology = '028nm'
+
+        ## For default setting
+
+        # _Finger = ans[0]
+        # _ChannelWidth = ans[1]
+        # _ChannelLength = ans[2]
+        # _NPRatio = ans[3]
+        # _VDD2VSSHeight = ans[4]
+        # _Dummy = ans[5]
+        # _XVT = ans[6]
+        # _NumSupplyCOX = ans[7]
+        # _NumSupplyCOY = ans[8]
+        # _SupplyMet1XWidth = ans[9]
+        # _SupplyMet1YWidth = ans[10]
+        # _NumVIAPoly2Met1COX = ans[11]
+        # _NumVIAPoly2Met1COY = ans[12]
+        # _NumVIAMet12COX = ans[13]
+        # _NumVIAMet12COY = ans[14]
+
 
         TransmissionGateObj = _TransmissionGate(_DesignParameter=None, _Name='TransmissionGate')
         #print ("A!!")
@@ -739,21 +793,21 @@ if __name__ == '__main__' :
 
         print ('###############      Sending to FTP Server...      ##################')
 
-        ftp = ftplib.FTP('141.223.29.62')
-        ftp.login('junung', 'chlwnsdnd1!')
-        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        myfile = open('TransmissionGate.gds', 'rb')
-        ftp.storbinary('STOR TransmissionGate.gds', myfile)
-        myfile.close()
-        ftp.close()
-
         # ftp = ftplib.FTP('141.223.29.62')
         # ftp.login('junung', 'chlwnsdnd1!')
-        # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
         # myfile = open('TransmissionGate.gds', 'rb')
         # ftp.storbinary('STOR TransmissionGate.gds', myfile)
         # myfile.close()
         # ftp.close()
+
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('junung', 'chlwnsdnd1!')
+        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        myfile = open('TransmissionGate.gds', 'rb')
+        ftp.storbinary('STOR TransmissionGate.gds', myfile)
+        myfile.close()
+        ftp.close()
 
         # ftp = ftplib.FTP('141.223.29.62')
         # ftp.login('jicho0927', 'cho89140616!!')
@@ -771,8 +825,12 @@ if __name__ == '__main__' :
         # myfile.close()
         # ftp.close()
 
-        import DRCchecker
+        # import DRCchecker
+        # a = DRCchecker.DRCchecker('junung', 'chlwnsdnd1!', '/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/DRC/run', 'TransmissionGate', 'TransmissionGate', None)
+        # a.DRCchecker()
 
-        a = DRCchecker.DRCchecker('junung', 'chlwnsdnd1!', '/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/DRC/run', 'TransmissionGate', 'TransmissionGate', None)
+        import DRCchecker
+        a = DRCchecker.DRCchecker('junung', 'chlwnsdnd1!', '/mnt/sdc/junung/OPUS/TSMC65n', '/mnt/sdc/junung/OPUS/TSMC65n/DRC/DRC_run', 'TransmissionGate', 'TransmissionGate', None)
         a.DRCchecker()
+
     print("DRC clean!!")

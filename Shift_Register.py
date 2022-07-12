@@ -355,7 +355,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         tmp=[]
 
 
-        for j in range(0, (len(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'])//2)*2):
+        for j in range(0, int((len(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'])/2)*2)):
             tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][Xnum-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'][0][0],\
                          self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][j][0][1]], \
                         [(self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][Xnum-1][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][0][0][0]), \
@@ -577,12 +577,12 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         for j in range(0,(Ynum+1)//2):
             for i in range(Xnum*j,Xnum*(j+1)):
-                self._DesignParameter['_Qb<{0}>pin'.format(i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][1]]], \
+                self._DesignParameter['_Qb<{0}>pin'.format(i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Qbpin']['_XYCoordinates'][0][1]]],#+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][1]]], \
                                                                                                     _Mag=0.05, _Angle=0, _TEXT='Qb<{0}>'.format(i+Xnum*j))
 
         for j in range(0,Ynum//2):
             for i in range(Xnum*j,Xnum*(j+1)):
-                self._DesignParameter['_Qb<{0}>pin'.format((2*(j+1)*Xnum-1)-i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][1]]], \
+                self._DesignParameter['_Qb<{0}>pin'.format((2*(j+1)*Xnum-1)-i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Qbpin']['_XYCoordinates'][0][1]]], #-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Qpin']['_XYCoordinates'][0][1]]], \
                                                                                                     _Mag=0.05, _Angle=0, _TEXT='Qb<{0}>'.format((2*(j+1)*Xnum-1)-i+Xnum*j))
 
 
@@ -594,26 +594,45 @@ if __name__ == '__main__':
 
     start = time.time()
 
-    input_params={'DFF_param':{'DLatch1_param':{'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 5, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
+    # input_params={'DFF_param':{'DLatch1_param':{'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
+    #                  '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
+    #                  '_INVFinger': 5, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
+    #                  '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
+    #                  '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
+    #                  '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
+    #                  '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
+    #                  '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None},\
+    #                             'DLatch2_param':{'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
+    #                  '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
+    #                  '_INVFinger': 10, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
+    #                  '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
+    #                  '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
+    #                  '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
+    #                  '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
+    #                  '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}},
+    #                     'Xnum':2,'Ynum':2,'_CLK_Grid':True}
+
+    input_params={'DFF_param':{'DLatch1_param':{'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
+                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
+                     '_INVFinger': 5, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
                      '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
                      '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
                      '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
                      '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None},\
-                                'DLatch2_param':{'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': False, '_TGXVT': 'LVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 10, '_INVChannelWidth': 500, '_INVChannelLength': 60, '_INVNPRatio': 2, \
+                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None},\
+                                'DLatch2_param':{'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
+                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
+                     '_INVFinger': 10, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
                      '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
                      '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
                      '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
                      '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}},
+                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}},
                         'Xnum':5,'Ynum':5,'_CLK_Grid':True}
 
 
-    DesignParameters._Technology = '065nm'
+    # DesignParameters._Technology = '065nm'
+    _Name = 'Shift_Register'
 
     ShiftRegisterObj = _ShiftRegister(_DesignParameter=None, _Name='Shift_Register')
 
@@ -661,3 +680,14 @@ if __name__ == '__main__':
     # import lvstest
     # _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n')
     # _LVS.LVSchecker()
+
+    subckt_list = ['TransmissionGate', 'Inverter1', 'Inverter2']
+    essential_param = \
+        {'1Finger' : input_params['DFF_param']['DLatch1_param']['_TGFinger'], '1ChannelWidth' : input_params['DFF_param']['DLatch1_param']['_TGChannelWidth'], '1ChannelLength' : input_params['DFF_param']['DLatch1_param']['_TGChannelLength'], '1NPRatio' : input_params['DFF_param']['DLatch1_param']['_TGNPRatio'],
+        '2Finger' :  input_params['DFF_param']['DLatch1_param']['_INVFinger'], '2ChannelWidth' :  input_params['DFF_param']['DLatch1_param']['_INVChannelWidth'], '2ChannelLength' :  input_params['DFF_param']['DLatch1_param']['_INVChannelLength'], '2NPRatio' :  input_params['DFF_param']['DLatch1_param']['_INVNPRatio'],
+        '3Finger' :  input_params['DFF_param']['DLatch2_param']['_INVFinger'], '3ChannelWidth' :  input_params['DFF_param']['DLatch2_param']['_INVChannelWidth'], '3ChannelLength' :  input_params['DFF_param']['DLatch2_param']['_INVChannelLength'], '3NPRatio' :  input_params['DFF_param']['DLatch2_param']['_INVNPRatio']}
+
+    import Sche
+    _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
+    _Sche.SchematicGenerator()
+    _Sche.ArrayGenerator('Shift_Register','D_FF',input_params['Xnum'] * input_params['Ynum'])

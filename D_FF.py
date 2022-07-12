@@ -368,21 +368,21 @@ if __name__ == '__main__':
 
     import ftplib
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-    myfile = open('D_FF.gds', 'rb')
-    ftp.storbinary('STOR D_FF.gds', myfile)
-    myfile.close()
-    ftp.close()
-
     # ftp = ftplib.FTP('141.223.29.62')
-    # ftp.login('junung', 'chlwnsdnd1!')
-    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    # ftp.login('jicho0927', 'cho89140616!!')
+    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
     # myfile = open('D_FF.gds', 'rb')
     # ftp.storbinary('STOR D_FF.gds', myfile)
     # myfile.close()
     # ftp.close()
+
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('junung', 'chlwnsdnd1!')
+    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+    myfile = open('D_FF.gds', 'rb')
+    ftp.storbinary('STOR D_FF.gds', myfile)
+    myfile.close()
+    ftp.close()
 
     print ("###############        Generating Netlist...         ###############")
     subckt_list = ['TransmissionGate', 'Inverter1', 'Inverter2']
@@ -402,9 +402,9 @@ if __name__ == '__main__':
     myfile.close()
     ftp.close()
 
-    # import DRCchecker
-    # _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','D_FF','D_FF')
-    # _DRC.DRCchecker()
+    import DRCchecker
+    _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','D_FF','D_FF')
+    _DRC.DRCchecker()
 
     # import LVSchecker
     # _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
@@ -414,8 +414,8 @@ if __name__ == '__main__':
     # _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
     # _PEX.PEXchecker()
 
-    import Posim
-    _Posim = Posim.POSIM('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/Ocean_script','Setup_Hold_CLK2Q_simulation.ocn','/mnt/sdc/junung/simulation/tb_D_FF/spectre/schematic','/mnt/sdc/junung/OPUS/Samsung28n/lib_spectre/LN28LPP_Spectre.lib', 'ss', '/mnt/sdc/junung/PEX_run/D_FF.pex.netlist')
-    _Posim.Posimchecker()
+    # import Posim
+    # _Posim = Posim.POSIM('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/Ocean_script','Setup_Hold_CLK2Q_simulation.ocn','/mnt/sdc/junung/simulation/tb_D_FF/spectre/schematic','/mnt/sdc/junung/OPUS/Samsung28n/lib_spectre/LN28LPP_Spectre.lib', 'ss', '/mnt/sdc/junung/PEX_run/D_FF.pex.netlist')
+    # _Posim.Posimchecker()
 
     print("time : ", time.time() - start)

@@ -104,7 +104,7 @@ class Schematic () :
         for i in range (num_array, 1, -1) :
             new_topcell.append('XI{0} CLK CLKb {1} {2} {3} VDD VSS / {4}\n'.format(i, pin_list[((i-2) * 2)], pin_list[(i - 1) * 2], pin_list[(i - 1) * 2 + 1], subcell))
         
-        new_topcell.append('XI1 CLK CLKb D {0} {1} {2} VDD VSS / {3}\n'.format(pin_list[0], pin_list[1], pin_list[2], subcell))
+        new_topcell.append('XI1 CLK CLKb D {0} {1} VDD VSS / {2}\n'.format(pin_list[0], pin_list[1], subcell))
         new_topcell.append('.ENDS\n')
         # print (new_topcell)
         new_string_list = new_string_list + new_topcell

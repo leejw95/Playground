@@ -606,7 +606,7 @@ class _DLatch (StickDiagram._StickDiagram) :
         self._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0] + 
                 self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] -
                 self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
-                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self.CeilMinSnapSpacing((max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
@@ -617,11 +617,11 @@ class _DLatch (StickDiagram._StickDiagram) :
                 self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
-                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2],
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2, 2 * MinSnapSpacing)],
                 [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][0] + 
                 self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] +
                 self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
-                (max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
+                self.CeilMinSnapSpacing((max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
@@ -632,7 +632,7 @@ class _DLatch (StickDiagram._StickDiagram) :
                 self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter1']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
-                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2]]]
+                self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2, 2 * MinSnapSpacing)]]]
 
         
         self._DesignParameter['_DownwardPMOSPPRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1],_XYCoordinates=[],_Width=100)
@@ -652,7 +652,7 @@ class _DLatch (StickDiagram._StickDiagram) :
         self._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] -
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
-                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                -self.CeilMinSnapSpacing((max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
@@ -663,11 +663,11 @@ class _DLatch (StickDiagram._StickDiagram) :
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
-                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2],
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2, 2 * MinSnapSpacing)],
                 [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] + 
                 self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] +
                 self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth'] // 2,
-                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                -self.CeilMinSnapSpacing((max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
@@ -678,7 +678,7 @@ class _DLatch (StickDiagram._StickDiagram) :
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
-                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2]]]
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_YWidth'] // 2)) // 2, 2 * MinSnapSpacing)]]]
 
 
         self._DesignParameter['_UpwardPMOSNWRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1],_XYCoordinates=[],_Width=100)
@@ -775,7 +775,7 @@ class _DLatch (StickDiagram._StickDiagram) :
         self._DesignParameter['_DownwardPMOSXVTRouting']['_XYCoordinates'] = [[[_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][0] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] -
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_XWidth'] // 2,
-                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                -self.CeilMinSnapSpacing((max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
@@ -786,11 +786,11 @@ class _DLatch (StickDiagram._StickDiagram) :
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
-                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_YWidth'] // 2)) // 2],
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_YWidth'] // 2)) // 2, 2 * MinSnapSpacing)],
                 [_DLatchOrigin[0][0] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][0] + 
                 self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0] +
                 self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_XWidth'] // 2,
-                -(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
+                -self.CeilMinSnapSpacing((max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate2']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
@@ -801,7 +801,7 @@ class _DLatch (StickDiagram._StickDiagram) :
                 self._DesignParameter['_TransmissionGate2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_YWidth'] // 2,
                 _DLatchOrigin[0][1] + self._DesignParameter['_Inverter2']['_XYCoordinates'][0][1] + 
                 self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] -
-                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_YWidth'] // 2)) // 2]]]
+                self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter[_XVTPLayer]['_YWidth'] // 2)) // 2, 2 * MinSnapSpacing)]]]
 
         self._DesignParameter['_UpwardPMOSXVTRouting'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_UpwardPMOSXVTRouting']['_Width'] = self.CeilMinSnapSpacing(max(_DLatchOrigin[0][1] + self._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1] + 
@@ -997,101 +997,159 @@ class _DLatch (StickDiagram._StickDiagram) :
 
 if __name__ == '__main__' :
     import time
-    import sys
+    import random
     start = time.time()
 
-    _TGFinger = 3
-    _TGChannelWidth = 500
-    _TGChannelLength = 60
-    _TGNPRatio = 2
-    _TGVDD2VSSHeight = None
-    _Dummy = False
-    _TGXVT = 'LVT'
-    _TGSupplyMet1YWidth = None
-    _INVFinger = 5
-    _INVChannelWidth = 500
-    _INVChannelLength = 60
-    _INVNPRatio = 2
-    _INVVDD2VSSHeight = None
-    _INVNumSupplyCoX = None
-    _INVNumSupplyCoY = None
-    _INVSupplyMet1XWidth = None
-    _INVSupplyMet1YWidth = None
-    _INVNumViaPoly2Met1CoX = None
-    _INVNumViaPoly2Met1CoY = None
-    _INVNumViaPMOSMet12Met2CoX = None
-    _INVNumViaPMOSMet12Met2CoY = None
-    _INVNumViaNMOSMet12Met2CoX = None
-    _INVNumViaNMOSMet12Met2CoY = None
-    _INVXVT = 'LVT'
-    _INVSupplyLine = None
+    for i in range (0, 100) :
+        #     _TGFinger = 3
+        #     _TGChannelWidth = 500
+        #     _TGChannelLength = 60
+        #     _TGNPRatio = 2
+        #     _TGVDD2VSSHeight = None
+        #     _Dummy = False
+        #     _TGXVT = 'LVT'
+        #     _TGSupplyMet1YWidth = None
+        #     _INVFinger = 5
+        #     _INVChannelWidth = 500
+        #     _INVChannelLength = 60
+        #     _INVNPRatio = 2
+        #     _INVVDD2VSSHeight = None
+        #     _INVNumSupplyCoX = None
+        #     _INVNumSupplyCoY = None
+        #     _INVSupplyMet1XWidth = None
+        #     _INVSupplyMet1YWidth = None
+        #     _INVNumViaPoly2Met1CoX = None
+        #     _INVNumViaPoly2Met1CoY = None
+        #     _INVNumViaPMOSMet12Met2CoX = None
+        #     _INVNumViaPMOSMet12Met2CoY = None
+        #     _INVNumViaNMOSMet12Met2CoX = None
+        #     _INVNumViaNMOSMet12Met2CoY = None
+        #     _INVXVT = 'LVT'
+        #     _INVSupplyLine = None
 
-    
-    DesignParameters._Technology = '065nm'
-    _Name = 'D_Latch'
+        # _TGFinger = 3
+        # _TGChannelWidth = 200
+        # _TGChannelLength = 30
+        # _TGNPRatio = 2
+        # _TGVDD2VSSHeight = None
+        # _Dummy = True
+        # _TGXVT = 'SLVT'
+        # _TGSupplyMet1YWidth = None
+        # _INVFinger = 5
+        # _INVChannelWidth = 200
+        # _INVChannelLength = 30
+        # _INVNPRatio = 2
+        # _INVVDD2VSSHeight = None
+        # _INVNumSupplyCoX = None
+        # _INVNumSupplyCoY = None
+        # _INVSupplyMet1XWidth = None
+        # _INVSupplyMet1YWidth = None
+        # _INVNumViaPoly2Met1CoX = None
+        # _INVNumViaPoly2Met1CoY = None
+        # _INVNumViaPMOSMet12Met2CoX = None
+        # _INVNumViaPMOSMet12Met2CoY = None
+        # _INVNumViaNMOSMet12Met2CoX = None
+        # _INVNumViaNMOSMet12Met2CoY = None
+        # _INVXVT = 'SLVT'
+        # _INVSupplyLine = None
 
-    DLatchObj = _DLatch(_DesignParameter=None, _Name='D_Latch')
-    #print ("A!!")
-    DLatchObj._CalculateDLatch(_TGFinger = _TGFinger, _TGChannelWidth = _TGChannelWidth, _TGChannelLength = _TGChannelLength, _TGNPRatio = _TGNPRatio, _TGVDD2VSSHeight = _TGVDD2VSSHeight, _Dummy = _Dummy, _TGXVT = _TGXVT, _TGSupplyMet1YWidth = _TGSupplyMet1YWidth,
-                                  _INVFinger = _INVFinger,  _INVChannelWidth = _INVChannelWidth, _INVChannelLength = _INVChannelLength, _INVNPRatio = _INVNPRatio,
-                                  _INVVDD2VSSHeight = _INVVDD2VSSHeight, _INVNumSupplyCoX = _INVNumSupplyCoX, _INVNumSupplyCoY = _INVNumSupplyCoY,
-                                  _INVSupplyMet1XWidth = _INVSupplyMet1XWidth, _INVSupplyMet1YWidth = _INVSupplyMet1YWidth, _INVNumViaPoly2Met1CoX = _INVNumViaPoly2Met1CoX,
-                                  _INVNumViaPoly2Met1CoY = _INVNumViaPoly2Met1CoY, _INVNumViaPMOSMet12Met2CoX = _INVNumViaPMOSMet12Met2CoX,
-                                  _INVNumViaPMOSMet12Met2CoY = _INVNumViaPMOSMet12Met2CoY, _INVNumViaNMOSMet12Met2CoX = _INVNumViaNMOSMet12Met2CoX, _INVNumViaNMOSMet12Met2CoY = _INVNumViaNMOSMet12Met2CoY, _INVXVT = _INVXVT, _INVSupplyLine = _INVSupplyLine)
+        ## random DRC set for 28nm
+        _TGFinger = random.randint(1,13)
+        _TGChannelWidth = random.randrange(200,400,10)
+        _TGChannelLength = 30
+        _TGNPRatio = 1 + round(random.random(),1) * 2
+        _TGVDD2VSSHeight = None
+        _Dummy = True
+        _TGXVT = 'SLVT'
+        _TGSupplyMet1YWidth = None
+        _INVFinger = random.randint(5,16)
+        _INVChannelWidth = random.randrange(200,400,10)
+        _INVChannelLength = 30
+        _INVNPRatio = 1 + round(random.random(),1) *2
+        _INVVDD2VSSHeight = None
+        _INVNumSupplyCoX = None
+        _INVNumSupplyCoY = None
+        _INVSupplyMet1XWidth = None
+        _INVSupplyMet1YWidth = None
+        _INVNumViaPoly2Met1CoX = None
+        _INVNumViaPoly2Met1CoY = None
+        _INVNumViaPMOSMet12Met2CoX = None
+        _INVNumViaPMOSMet12Met2CoY = None
+        _INVNumViaNMOSMet12Met2CoX = None
+        _INVNumViaNMOSMet12Met2CoY = None
+        _INVXVT = 'SLVT'
+        _INVSupplyLine = None
+
+        
+        #     DesignParameters._Technology = '065nm'
+        _Name = 'D_Latch'
+
+        DLatchObj = _DLatch(_DesignParameter=None, _Name='D_Latch')
+        #print ("A!!")
+        DLatchObj._CalculateDLatch(_TGFinger = _TGFinger, _TGChannelWidth = _TGChannelWidth, _TGChannelLength = _TGChannelLength, _TGNPRatio = _TGNPRatio, _TGVDD2VSSHeight = _TGVDD2VSSHeight, _Dummy = _Dummy, _TGXVT = _TGXVT, _TGSupplyMet1YWidth = _TGSupplyMet1YWidth,
+                                        _INVFinger = _INVFinger,  _INVChannelWidth = _INVChannelWidth, _INVChannelLength = _INVChannelLength, _INVNPRatio = _INVNPRatio,
+                                        _INVVDD2VSSHeight = _INVVDD2VSSHeight, _INVNumSupplyCoX = _INVNumSupplyCoX, _INVNumSupplyCoY = _INVNumSupplyCoY,
+                                        _INVSupplyMet1XWidth = _INVSupplyMet1XWidth, _INVSupplyMet1YWidth = _INVSupplyMet1YWidth, _INVNumViaPoly2Met1CoX = _INVNumViaPoly2Met1CoX,
+                                        _INVNumViaPoly2Met1CoY = _INVNumViaPoly2Met1CoY, _INVNumViaPMOSMet12Met2CoX = _INVNumViaPMOSMet12Met2CoX,
+                                        _INVNumViaPMOSMet12Met2CoY = _INVNumViaPMOSMet12Met2CoY, _INVNumViaNMOSMet12Met2CoX = _INVNumViaNMOSMet12Met2CoX, _INVNumViaNMOSMet12Met2CoY = _INVNumViaNMOSMet12Met2CoY, _INVXVT = _INVXVT, _INVSupplyLine = _INVSupplyLine)
 
 
-    DLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=DLatchObj._DesignParameter)
-    _fileName = 'D_Latch.gds'
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
+        DLatchObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=DLatchObj._DesignParameter)
+        _fileName = 'D_Latch.gds'
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    tmp = DLatchObj._CreateGDSStream(DLatchObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp = DLatchObj._CreateGDSStream(DLatchObj._DesignParameter['_GDSFile']['_GDSFile'])
 
-    tmp.write_binary_gds_stream(testStreamFile)
+        tmp.write_binary_gds_stream(testStreamFile)
 
-    testStreamFile.close()
-    print ("time : ", time.time() - start)
+        testStreamFile.close()
+        print ("time : ", time.time() - start)
 
-    print ("###############        Generating Netlist...         ###############")
+        # print ("###############        Generating Netlist...         ###############")
 
-    subckt_list = ['TransmissionGate', 'Inverter']
-    essential_param = {'1Finger' : _TGFinger, '1ChannelWidth' : _TGChannelWidth, '1ChannelLength' : _TGChannelLength, '1NPRatio' : _TGNPRatio,
-        '2Finger' : _INVFinger, '2ChannelWidth' : _INVChannelWidth, '2ChannelLength' : _TGChannelLength, '2NPRatio' : _INVNPRatio}
+        # subckt_list = ['TransmissionGate', 'Inverter']
+        # essential_param = {'1Finger' : _TGFinger, '1ChannelWidth' : _TGChannelWidth, '1ChannelLength' : _TGChannelLength, '1NPRatio' : _TGNPRatio,
+        #         '2Finger' : _INVFinger, '2ChannelWidth' : _INVChannelWidth, '2ChannelLength' : _TGChannelLength, '2NPRatio' : _INVNPRatio}
 
-#     import Sche
-#     _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
-#     _Sche.SchematicGenerator()
+        #     import Sche
+        #     _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
+        #     _Sche.SchematicGenerator()
 
-    print ('###############      Sending to FTP Server...      ##################')
+        print ('###############      Sending to FTP Server...      ##################')
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('D_Latch.gds', 'rb')
-    ftp.storbinary('STOR D_Latch.gds', myfile)
-    myfile.close()
-    ftp.close()
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('junung', 'chlwnsdnd1!')
+        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        myfile = open('D_Latch.gds', 'rb')
+        ftp.storbinary('STOR D_Latch.gds', myfile)
+        myfile.close()
+        ftp.close()
 
-#     ftp = ftplib.FTP('141.223.29.62')
-#     ftp.login('junung', 'chlwnsdnd1!')
-#     ftp.cwd('/mnt/sdc/junung/PEX_run')
-#     myfile = open('./D_FF_test/D_Latch.src.net', 'rb')
-#     ftp.storbinary('STOR D_Latch.src.net', myfile)
-#     myfile.close()
-#     ftp.close()
+        import DRCchecker
+        _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run',_Name,_Name)
+        _DRC.DRCchecker()
 
-#     import LVSchecker
-#     _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
-#     _LVS.LVSchecker()
+        #     ftp = ftplib.FTP('141.223.29.62')
+        #     ftp.login('junung', 'chlwnsdnd1!')
+        #     ftp.cwd('/mnt/sdc/junung/PEX_run')
+        #     myfile = open('./D_FF_test/D_Latch.src.net', 'rb')
+        #     ftp.storbinary('STOR D_Latch.src.net', myfile)
+        #     myfile.close()
+        #     ftp.close()
 
-    # import PEX
-    # _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
-    # _PEX.PEXchecker()
+        #     import LVSchecker
+        #     _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+        #     _LVS.LVSchecker()
+
+        # import PEX
+        # _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+        # _PEX.PEXchecker()
 
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('jicho0927', 'cho89140616!!')
-    ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-    myfile = open('D_Latch.gds', 'rb')
-    ftp.storbinary('STOR D_Latch.gds', myfile)
-    myfile.close()
-    ftp.close()
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('jicho0927', 'cho89140616!!')
+        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+        # myfile = open('D_Latch.gds', 'rb')
+        # ftp.storbinary('STOR D_Latch.gds', myfile)
+        # myfile.close()
+        # ftp.close()

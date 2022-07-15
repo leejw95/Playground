@@ -298,9 +298,8 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
                                                                 Slicer_righttmp + self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_Guardring']['_DesignObj']._DesignParameter['_PPLayer']['_Width'] / 2 + self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] / 2 + _DRCObj._NwMinSpacetoNactive), MinSnapSpacing), self.CeilMinSnapSpacing(int(round((PMOS_bottomtmp + NMOS_toptmp + 0.5) // 2)), MinSnapSpacing)]]
 
 
-        self._DesignParameter['_Inverter']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(SRLatchCenterX + self._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] - self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] / 2 +  self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] / 2, MinSnapSpacing), \
+        self._DesignParameter['_Inverter']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(SRLatchCenterX + self._DesignParameter['_SRLatch']['_XYCoordinates'][0][0] - self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 +  self._DesignParameter['_Inverter']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2, MinSnapSpacing), \
                                                                  self.CeilMinSnapSpacing(self._DesignParameter['_SRLatch']['_XYCoordinates'][0][1] + self._DesignParameter['_SRLatch']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][1][1] - VDD2VSSHeightofInverter, MinSnapSpacing)]]
-
 
         PMOS_toptmp = self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_PMOSSET']['_DesignObj']._DesignParameter['PMOS_toptmp']['_Ignore']
         NMOS_bottomtmp = self._DesignParameter['_Slicer']['_DesignObj']._DesignParameter['_NMOSSET']['_DesignObj']._DesignParameter['NMOS_bottomtmp']['_Ignore']
@@ -569,13 +568,13 @@ class _SlicerWithSRLatch (StickDiagram._StickDiagram) :
 if __name__ == '__main__' :
 
 
-    for _tries in range(1, 101) :
+    for _tries in range(1, 2) :
         #####################SRLatch#######################
-        _SRFinger1 = random.randint(1, 16)
-        _SRFinger2 = random.randint(1, 16)
-        _SRFinger3 = random.randint(1, 16)
-        _SRFinger4 = random.randint(1, 16)
-        _RandomNMOSChannelWidth = random.randrange(200,400,3)
+        _SRFinger1 = 2#random.randint(1, 16)
+        _SRFinger2 = 1#random.randint(1, 16)
+        _SRFinger3 = 1#random.randint(1, 16)
+        _SRFinger4 = 1#random.randint(1, 16)
+        _RandomNMOSChannelWidth = 200#random.randrange(200,400,3)
         _SRNMOSChannelWidth1 = _RandomNMOSChannelWidth
         _SRPMOSChannelWidth1 = 2 * _RandomNMOSChannelWidth
         _SRNMOSChannelWidth2 = _RandomNMOSChannelWidth
@@ -602,22 +601,22 @@ if __name__ == '__main__' :
         _SRNumViaPMOSMet22Met3CoY = None
         _SRNumViaNMOSMet22Met3CoX = None
         _SRNumViaNMOSMet22Met3CoY = None
-        _SRXVT = 'LVT'
+        _SRXVT = 'SLVT'
         _SRPowerLine = None
         #####################Slicer#######################
-        _SLCLKinputPMOSFinger1 = random.randint(1, 16)
-        _SLCLKinputPMOSFinger2 = random.randint(1, 16)
-        _SLPMOSFinger = random.randint(1, 16)
-        _SLPMOSChannelWidth = random.randrange(200, 1050, 3)
-        _SLDATAinputNMOSFinger = random.randint(3, 16)
-        _SLNMOSFinger = random.randint(1, 16)
-        _SLCLKinputNMOSFinger = random.randint(1, 16)
-        _SLNMOSChannelWidth = random.randrange(200, 1050, 3)
-        _SLCLKinputNMOSChannelWidth = random.randrange(200, 1050, 3)
+        _SLCLKinputPMOSFinger1 = 4#random.randint(1, 16)
+        _SLCLKinputPMOSFinger2 = 2#random.randint(1, 16)
+        _SLPMOSFinger = 4#random.randint(1, 16)
+        _SLPMOSChannelWidth = 500#random.randrange(200, 1050, 3)
+        _SLDATAinputNMOSFinger = 9#random.randint(3, 16)
+        _SLNMOSFinger = 2#random.randint(1, 16)
+        _SLCLKinputNMOSFinger = 8#random.randint(1, 16)
+        _SLNMOSChannelWidth = 1000#random.randrange(200, 1050, 3)
+        _SLCLKinputNMOSChannelWidth = 1000#random.randrange(200, 1050, 3)
 
         _SLChannelLength = 30
         _SLDummy = True
-        _SLXVT = 'LVT'
+        _SLXVT = 'SLVT'
         _SLGuardringWidth = 200
         _SLGuardring = True
         _SLSlicerGuardringWidth = 200
@@ -633,8 +632,8 @@ if __name__ == '__main__' :
         _SLNumVIAMet12COY = None
         _SLPowerLine = None
         #####################Inverter#######################
-        _InvFinger = random.randint(5, 16)
-        _InvChannelWidth = random.randrange(200,400,3)
+        _InvFinger = 20#random.randint(5, 16)
+        _InvChannelWidth = 200#random.randrange(200,400,3)
         _InvChannelLength = 30
         _InvNPRatio = 3
         _InvVDD2VSSHeight = None
@@ -649,15 +648,15 @@ if __name__ == '__main__' :
         _InvNumViaPMOSMet12Met2CoY = None
         _InvNumViaNMOSMet12Met2CoX = None
         _InvNumViaNMOSMet12Met2CoY = None
-        _InvXVT = 'LVT'
+        _InvXVT = 'SLVT'
         _InvPowerLine = None
         #####################Power Line#######################
         _SLSRInvSupplyLine = False
 
 
 
-        from Private import MyInfo
-        import DRCchecker
+        # from Private import MyInfo
+        # import DRCchecker
 
         libname = 'SlicerWithSRLatch'
         cellname = 'SlicerWithSRLatch'
@@ -718,11 +717,11 @@ if __name__ == '__main__' :
         ftp.storbinary('STOR SlicerWithSRLatch.gds', myfile)
         myfile.close()
 
-        import DRCchecker
-        a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerWithSRLatch','SlicerWithSRLatch',None)
-        a.DRCchecker()
-
-    print ("DRC Clean!!!")
+    #     import DRCchecker
+    #     a = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','SlicerWithSRLatch','SlicerWithSRLatch',None)
+    #     a.DRCchecker()
+    #
+    # print ("DRC Clean!!!")
 
     #     import ftplib
     #

@@ -1083,24 +1083,24 @@ if __name__ == '__main__':
         # Checker.Upload2FTP()
         # Checker.StreamIn(tech=DesignParameters._Technology)
 
-        # # import ftplib
-
-        # # ftp = ftplib.FTP('141.223.22.156')
-        # # ftp.login('jicho0927', 'cho89140616!!')
-        # # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-        # # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-        # # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-        # # myfile.close()
-
         import ftplib
-        
+
         ftp = ftplib.FTP('141.223.29.62')
-        ftp.login('junung', 'chlwnsdnd1!')
-        # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
-        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
         myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         myfile.close()
+
+        # import ftplib
+        #
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # # ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+        # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+        # myfile.close()
 
     # ftp = ftplib.FTP('141.223.29.62')
     # ftp.login('myungguk', 'vmfl!225')

@@ -610,9 +610,9 @@ if __name__ == '__main__' :
         _SLPMOSChannelWidth = 500#random.randrange(200, 1050, 3)
         _SLDATAinputNMOSFinger = 9#random.randint(3, 16)
         _SLNMOSFinger = 2#random.randint(1, 16)
-        _SLCLKinputNMOSFinger = 8#random.randint(1, 16)
+        _SLCLKinputNMOSFinger = 16#random.randint(1, 16)
         _SLNMOSChannelWidth = 1000#random.randrange(200, 1050, 3)
-        _SLCLKinputNMOSChannelWidth = 1000#random.randrange(200, 1050, 3)
+        _SLCLKinputNMOSChannelWidth = 500#random.randrange(200, 1050, 3)
 
         _SLChannelLength = 30
         _SLDummy = True

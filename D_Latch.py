@@ -116,20 +116,23 @@ class _DLatch (StickDiagram._StickDiagram) :
 
 
        # if _Dummy == True :
-        self._DesignParameter['_Inverter1']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(_DLatchOrigin[0][0] +
+        self._DesignParameter['_Inverter1']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(max((_DLatchOrigin[0][0] +
                     abs(self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) +
                     self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth'] // 2 +
                     _DRCObj._PolygateMinSpace +
                     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth'] // 2 +
-                    abs(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]), MinSnapSpacing),
+                    abs(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0])),\
+                    (_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][0]+self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][-1][0]+\
+                     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0]+abs(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0][0])+_DRCObj._CoMinWidth+_DRCObj._CoMinSpace)), MinSnapSpacing),
                     _DLatchOrigin[0][1]]]
 
-        self._DesignParameter['_Inverter2']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(_DLatchOrigin[0][0] +
+        self._DesignParameter['_Inverter2']['_XYCoordinates'] = [[self.CeilMinSnapSpacing(max((_DLatchOrigin[0][0] +
                     abs(self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]) +
                     self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth'] // 2 +
                     _DRCObj._PolygateMinSpace +
                     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth'] // 2 +
-                    abs(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0]), MinSnapSpacing),
+                    abs(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0])), ((_DLatchOrigin[0][0] + self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][0]+self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][-1][0]+\
+                     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0]+abs(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0][0])+_DRCObj._CoMinWidth+_DRCObj._CoMinSpace))), MinSnapSpacing),
                     _DLatchOrigin[0][1]]]
 
     
@@ -1117,17 +1120,17 @@ if __name__ == '__main__' :
 
         print ('###############      Sending to FTP Server...      ##################')
 
-        ftp = ftplib.FTP('141.223.29.62')
-        ftp.login('junung', 'chlwnsdnd1!')
-        ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-        myfile = open('D_Latch.gds', 'rb')
-        ftp.storbinary('STOR D_Latch.gds', myfile)
-        myfile.close()
-        ftp.close()
-
-        import DRCchecker
-        _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run',_Name,_Name)
-        _DRC.DRCchecker()
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        # myfile = open('D_Latch.gds', 'rb')
+        # ftp.storbinary('STOR D_Latch.gds', myfile)
+        # myfile.close()
+        # ftp.close()
+        #
+        # import DRCchecker
+        # _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run',_Name,_Name)
+        # _DRC.DRCchecker()
 
         #     ftp = ftplib.FTP('141.223.29.62')
         #     ftp.login('junung', 'chlwnsdnd1!')
@@ -1146,10 +1149,14 @@ if __name__ == '__main__' :
         # _PEX.PEXchecker()
 
 
-        # ftp = ftplib.FTP('141.223.29.62')
-        # ftp.login('jicho0927', 'cho89140616!!')
-        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-        # myfile = open('D_Latch.gds', 'rb')
-        # ftp.storbinary('STOR D_Latch.gds', myfile)
-        # myfile.close()
-        # ftp.close()
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        myfile = open('D_Latch.gds', 'rb')
+        ftp.storbinary('STOR D_Latch.gds', myfile)
+        myfile.close()
+        ftp.close()
+
+        import DRCchecker
+        _DRC = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run',_Name,_Name)
+        _DRC.DRCchecker()

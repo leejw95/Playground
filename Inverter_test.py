@@ -204,7 +204,7 @@ class _Inverter(StickDiagram._StickDiagram) :
                 print("ERROR! VDD2VSSMinHeight =", _VDD2VSSMinHeight)
                 raise NotImplementedError
 
-        self._DesignParameter['_INVVDD2VSSMinHeight']= {'_Ignore': _VDD2VSSMinHeight, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
+        self._DesignParameter['_INVVDD2VSSMinHeight']= {'_Ignore': _VDD2VSSHeight, '_DesignParametertype': None, '_ElementName': None, '_XYCoordinates': None, '_Width': None, '_Layer': None, '_Datatype': None}
 
         self._DesignParameter['NbodyContact']['_XYCoordinates'] = [[0, _VDD2VSSHeight]]
 

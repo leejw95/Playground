@@ -49,7 +49,7 @@ class _DLatch (StickDiagram._StickDiagram) :
         _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
-        if _TGVDD2VSSHeight == None and _INVVDD2VSSHeight == None :
+        if _TGVDD2VSSHeight == None or _INVVDD2VSSHeight == None :
             det = 0
         else :
             det = 1
@@ -97,7 +97,7 @@ class _DLatch (StickDiagram._StickDiagram) :
             self._DesignParameter['_Inverter2'] = self._SrefElementDeclaration(_DesignObj=Inverter_test._Inverter(_DesignParameter=None,_Name='Inverter2In{}'.format(_Name)), _Reflect = [1,0,0], _Angle = 0)[0]
             self._DesignParameter['_Inverter2']['_DesignObj']._CalculateDesignParameter(**_InverterInputs)
 
-            if _TGVDD2VSSHeight == None and _INVVDD2VSSHeight == None :
+            if _TGVDD2VSSHeight == None or _INVVDD2VSSHeight == None :
                 _TGVDD2VSSHeight = max(self._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_TGVDD2VSSMinHeight']['_Ignore'], 
                                         self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_INVVDD2VSSMinHeight']['_Ignore'])
                 

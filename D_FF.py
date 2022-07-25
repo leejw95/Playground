@@ -70,12 +70,31 @@ class _DFF(StickDiagram._StickDiagram):
         _Name = self._DesignParameter['_Name']['_Name']
         MinSnapSpacing = _DRCObj._MinSnapSpacing
 
-        self._DesignParameter['dlatch1']=self._SrefElementDeclaration(_DesignObj=D_Latch._DLatch(_Name='dlatch1In{}'.format(_Name)))[0]
-        self._DesignParameter['dlatch1']['_DesignObj']._CalculateDLatch(**dict(**DLatch1_param))
+        if DLatch1_param['_TGVDD2VSSHeight'] == None and DLatch1_param['_INVVDD2VSSHeight'] == None and DLatch2_param['_TGVDD2VSSHeight'] == None and DLatch2_param['_INVVDD2VSSHeight'] == None:
+            det = 0
+        else :
+            det = 1
 
-        self._DesignParameter['dlatch2']=self._SrefElementDeclaration(_DesignObj=D_Latch._DLatch(_Name='dlatch2In{}'.format(_Name)),_Reflect = [1,0,0], _Angle = 0)[0]
-        self._DesignParameter['dlatch2']['_DesignObj']._CalculateDLatch(**dict(**DLatch2_param))
+        while det !=2 :
+            self._DesignParameter['dlatch1']=self._SrefElementDeclaration(_DesignObj=D_Latch._DLatch(_Name='dlatch1In{}'.format(_Name)))[0]
+            self._DesignParameter['dlatch1']['_DesignObj']._CalculateDLatch(**dict(**DLatch1_param))
 
+            self._DesignParameter['dlatch2']=self._SrefElementDeclaration(_DesignObj=D_Latch._DLatch(_Name='dlatch2In{}'.format(_Name)),_Reflect = [1,0,0], _Angle = 0)[0]
+            self._DesignParameter['dlatch2']['_DesignObj']._CalculateDLatch(**dict(**DLatch2_param))
+
+            if det == 0 :
+                _CelltotalHeight = max(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_TGVDD2VSSMinHeight']['_Ignore'], self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_INVVDD2VSSMinHeight']['_Ignore'],\
+                                       self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_TGVDD2VSSMinHeight']['_Ignore'], self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_INVVDD2VSSMinHeight']['_Ignore'])
+
+                DLatch1_param['_TGVDD2VSSHeight']=_CelltotalHeight
+                DLatch1_param['_INVVDD2VSSHeight']=_CelltotalHeight
+                DLatch2_param['_TGVDD2VSSHeight']=_CelltotalHeight
+                DLatch2_param['_INVVDD2VSSHeight']=_CelltotalHeight
+
+                det += 1
+
+            else :
+                det += 1
 
         _OriginXY=[[0,0]]
         self._DesignParameter['dlatch1']['_XYCoordinates']=_OriginXY
@@ -87,7 +106,7 @@ class _DFF(StickDiagram._StickDiagram):
         _Xcoordinate_dlatch2=self.CeilMinSnapSpacing(self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+\
                              max(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter[ 'dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0]+self._DesignParameter[ 'dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0],\
                                  self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0])+\
-                             _Xcoordinate_temp+(DLatch1_param['_TGChannelLength']+DLatch2_param['_TGChannelLength'])//2+_DRCObj._PolygateMinSpace,MinSnapSpacing)
+                             _Xcoordinate_temp+(DLatch1_param['_TGChannelLength']+DLatch2_param['_TGChannelLength'])//2+_DRCObj._PolygateMinSpace, MinSnapSpacing)
 
         self._DesignParameter['dlatch2']['_XYCoordinates'] = [[_Xcoordinate_dlatch2,self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]]]
 
@@ -153,55 +172,55 @@ class _DFF(StickDiagram._StickDiagram):
 
 
         self._DesignParameter['_DownPMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_DownPMOSXVT']['_Width']=self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_Width']
+        self._DesignParameter['_DownPMOSXVT']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_Width'], 2*MinSnapSpacing) + 2*MinSnapSpacing
         self._DesignParameter['_DownPMOSXVT']['_XYCoordinates']=[[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_XYCoordinates'][0][0][0],self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_XYCoordinates'][0][0][1]], \
                                                               [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_XYCoordinates'][0][-1][0],self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_XYCoordinates'][0][0][1]]], \
                                                               ]
 
         self._DesignParameter['_DownNMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_DownNMOSXVT']['_Width']=self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_Width']
+        self._DesignParameter['_DownNMOSXVT']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_Width'], 2*MinSnapSpacing) + 2*MinSnapSpacing
         self._DesignParameter['_DownNMOSXVT']['_XYCoordinates']=[[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_XYCoordinates'][0][0][0],self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_XYCoordinates'][0][0][1]], \
                                                               [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_XYCoordinates'][0][-1][0],self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_XYCoordinates'][0][0][1]]], \
                                                               ]
 
         self._DesignParameter['_UpPMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_UpPMOSXVT']['_Width']=self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_Width']
+        self._DesignParameter['_UpPMOSXVT']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_Width'], 2*MinSnapSpacing) + 2*MinSnapSpacing
         self._DesignParameter['_UpPMOSXVT']['_XYCoordinates']=[[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_XYCoordinates'][0][0][0],self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_XYCoordinates'][0][0][1]], \
                                                               [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_XYCoordinates'][0][-1][0],self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_XYCoordinates'][0][0][1]]], \
                                                               ]
 
         self._DesignParameter['_UpNMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_UpNMOSXVT']['_Width']=self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_Width']
+        self._DesignParameter['_UpNMOSXVT']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_Width'], 2*MinSnapSpacing) + 2*MinSnapSpacing
         self._DesignParameter['_UpNMOSXVT']['_XYCoordinates']=[[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_XYCoordinates'][0][0][0],self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_XYCoordinates'][0][0][1]], \
                                                               [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_XYCoordinates'][0][-1][0],self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_XYCoordinates'][0][0][1]]], \
                                                               ]
 
         self._DesignParameter['_UpPMOSPP']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_UpPMOSPP']['_Width']=max(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_Width'],self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_Width'])
+        self._DesignParameter['_UpPMOSPP']['_Width']=self.CeilMinSnapSpacing(max(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_Width'],self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_Width']), 2*MinSnapSpacing) + 2*MinSnapSpacing
         self._DesignParameter['_UpPMOSPP']['_XYCoordinates']=[[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][0],self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][1]], \
                                                               [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][-1][0],self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][1]]], \
                                                               ]
 
         self._DesignParameter['_DownPMOSPP']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_DownPMOSPP']['_Width']=max(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_Width'],self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_Width'])
+        self._DesignParameter['_DownPMOSPP']['_Width']=self.CeilMinSnapSpacing(max(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_Width'],self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_Width']), 2*MinSnapSpacing) + 2*MinSnapSpacing
         self._DesignParameter['_DownPMOSPP']['_XYCoordinates']=[[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][0],self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][1]], \
                                                               [self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][-1][0],self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][1]]], \
                                                               ]
 
         self._DesignParameter['_UpPMOSNW']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_UpPMOSNW']['_Width']=self.CeilMinSnapSpacing((self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2)-(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2),2*MinSnapSpacing)
-        self._DesignParameter['_UpPMOSNW']['_XYCoordinates']=[[[self.CeilMinSnapSpacing(((self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2)+(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2))/2,MinSnapSpacing), self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][1]], \
-                                                              [self.CeilMinSnapSpacing(((self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2)+(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2))/2,MinSnapSpacing), self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][1][1]]], \
+        self._DesignParameter['_UpPMOSNW']['_Width']=self.CeilMinSnapSpacing((self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2)-(self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2),2*MinSnapSpacing)
+        self._DesignParameter['_UpPMOSNW']['_XYCoordinates']=[[[self.CeilMinSnapSpacing(((self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2)+(self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2))/2,MinSnapSpacing), self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][1]], \
+                                                              [self.CeilMinSnapSpacing(((self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2)+(self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_Width']/2))/2,MinSnapSpacing), self.FloorMinSnapSpacing(min(self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSNWRouting']['_XYCoordinates'][0][1][1], self._DesignParameter['_UpPMOSXVT']['_XYCoordinates'][0][0][1]-self._DesignParameter['_UpPMOSXVT']['_Width']//2), MinSnapSpacing)]], \
                                                               ]
 
         self._DesignParameter['_DownPMOSNW']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_DownPMOSNW']['_Width']=self.CeilMinSnapSpacing((self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2)-(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2),2*MinSnapSpacing)
-        self._DesignParameter['_DownPMOSNW']['_XYCoordinates']=[[[self.CeilMinSnapSpacing(((self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2)+(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2))/2,MinSnapSpacing), self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][1]], \
-                                                              [self.CeilMinSnapSpacing(((self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2)+(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2))/2, MinSnapSpacing), self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][1][1]]], \
+        self._DesignParameter['_DownPMOSNW']['_Width']=self.CeilMinSnapSpacing((self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2)-(self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2),2*MinSnapSpacing)
+        self._DesignParameter['_DownPMOSNW']['_XYCoordinates']=[[[self.CeilMinSnapSpacing(((self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2)+(self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2))/2,MinSnapSpacing), self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][1]], \
+                                                              [self.CeilMinSnapSpacing(((self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2)+(self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][0][0]-self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_Width']/2))/2, MinSnapSpacing), self.CeilMinSnapSpacing(max(self._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSNWRouting']['_XYCoordinates'][0][1][1], self._DesignParameter['_DownPMOSXVT']['_XYCoordinates'][0][0][1]+self._DesignParameter['_DownPMOSXVT']['_Width']//2), MinSnapSpacing)]], \
                                                               ]
 
         self._DesignParameter['_Met3SigRouting']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_Met3SigRouting']['_Width']=self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_Width']
+        self._DesignParameter['_Met3SigRouting']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_Width'], 2*MinSnapSpacing)
         self._DesignParameter['_Met3SigRouting']['_XYCoordinates']=[[[self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][-1][0], self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][-1][1]],\
                                                                      [self.CeilMinSnapSpacing((self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0]+self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0])/2, MinSnapSpacing), self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_ViaMet22Met3OnINV1Output']['_XYCoordinates'][-1][1]],\
                                                                      [self.CeilMinSnapSpacing((self._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0]+self._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][0]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0])/2, MinSnapSpacing), self._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+self._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_TGtoINVOutputRouting2']['_XYCoordinates'][0][0][1]],\
@@ -309,7 +328,7 @@ class _DFF(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     import time
-
+    import random
     start = time.time()
 
     # DLatch1 = {'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
@@ -328,94 +347,98 @@ if __name__ == '__main__':
     #                  '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
     #                  '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
     #                  '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}
+
+    for i in range(0,100):
+        width=random.randrange(200,400,2)
+        npratio=1 + round(random.random(),1) * 2
+        
+        DLatch1 = {'_TGFinger': random.randint(1,13), '_TGChannelWidth': width, '_TGChannelLength': 30, '_TGNPRatio': npratio,
+                         '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
+                         '_INVFinger': random.randint(5,16), '_INVChannelWidth': width, '_INVChannelLength': 30, '_INVNPRatio': npratio, \
+                         '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
+                         '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
+                         '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
+                         '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
+                         '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}
+        DLatch2 = {'_TGFinger': random.randint(1,13), '_TGChannelWidth': width, '_TGChannelLength': 30, '_TGNPRatio': npratio,
+                         '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
+                         '_INVFinger': random.randint(5,16), '_INVChannelWidth': width, '_INVChannelLength': 30, '_INVNPRatio': npratio, \
+                         '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
+                         '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
+                         '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
+                         '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
+                         '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}
     
-    DLatch1 = {'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 5, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
-                     '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
-                     '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
-                     '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
-                     '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}
-    DLatch2 = {'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 10, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
-                     '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
-                     '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
-                     '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
-                     '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}
+        DesignParameters._Technology = '028nm'
+        _Name = 'D_FF'
 
-    DesignParameters._Technology = '028nm'
-    _Name = 'D_FF'
+        DFFObj = _DFF(_DesignParameter=None, _Name='D_FF')
+        # print ("A!!")
+        DFFObj._CalculateDFF(DLatch1_param=DLatch1,DLatch2_param=DLatch2)
 
-    DFFObj = _DFF(_DesignParameter=None, _Name='D_FF')
-    # print ("A!!")
-    DFFObj._CalculateDFF(DLatch1_param=DLatch1,DLatch2_param=DLatch2)
+        DFFObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=DFFObj._DesignParameter)
+        _fileName = 'D_FF.gds'
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    DFFObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=DFFObj._DesignParameter)
-    _fileName = 'D_FF.gds'
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = DFFObj._CreateGDSStream(DFFObj._DesignParameter['_GDSFile']['_GDSFile'])
 
-    tmp = DFFObj._CreateGDSStream(DFFObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
 
-    tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
 
-    testStreamFile.close()
-    
 
-    print('###############      Sending to FTP Server...      ##################')
+        print('###############      Sending to FTP Server...      ##################')
 
-    import ftplib
+        import ftplib
 
-    # ftp = ftplib.FTP('141.223.29.62')
-    # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-    # myfile = open('D_FF.gds', 'rb')
-    # ftp.storbinary('STOR D_FF.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        myfile = open('D_FF.gds', 'rb')
+        ftp.storbinary('STOR D_FF.gds', myfile)
+        myfile.close()
+        ftp.close()
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('D_FF.gds', 'rb')
-    ftp.storbinary('STOR D_FF.gds', myfile)
-    myfile.close()
-    ftp.close()
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
+        # myfile = open('D_FF.gds', 'rb')
+        # ftp.storbinary('STOR D_FF.gds', myfile)
+        # myfile.close()
+        # ftp.close()
+        #
+        # print ("###############        Generating Netlist...         ###############")
+        # subckt_list = ['TransmissionGate', 'Inverter1', 'Inverter2']
+        # essential_param = {'1Finger': DLatch1['_TGFinger'], '1ChannelWidth': DLatch1['_TGChannelWidth'], '1ChannelLength': DLatch1['_TGChannelLength'], '1NPRatio': DLatch1['_TGNPRatio'],
+        #     '2Finger': DLatch1['_INVFinger'], '2ChannelWidth': DLatch1['_INVChannelWidth'], '2ChannelLength': DLatch1['_INVChannelLength'], '2NPRatio': DLatch1['_INVNPRatio'],
+        #     '3Finger': DLatch2['_INVFinger'], '3ChannelWidth': DLatch2['_INVChannelWidth'], '3ChannelLength': DLatch2['_INVChannelLength'], '3NPRatio': DLatch2['_INVNPRatio']}
+        # 
+        # import Sche
+        # _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
+        # _Sche.SchematicGenerator()
+        # 
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('junung', 'chlwnsdnd1!')
+        # ftp.cwd('/mnt/sdc/junung/LVS_run')
+        # myfile = open('./Netlist/D_FF.src.net', 'rb')
+        # ftp.storbinary('STOR D_FF.src.net', myfile)
+        # myfile.close()
+        # ftp.close()
 
-    print ("###############        Generating Netlist...         ###############")
-    subckt_list = ['TransmissionGate', 'Inverter1', 'Inverter2']
-    essential_param = {'1Finger': DLatch1['_TGFinger'], '1ChannelWidth': DLatch1['_TGChannelWidth'], '1ChannelLength': DLatch1['_TGChannelLength'], '1NPRatio': DLatch1['_TGNPRatio'],
-        '2Finger': DLatch1['_INVFinger'], '2ChannelWidth': DLatch1['_INVChannelWidth'], '2ChannelLength': DLatch1['_INVChannelLength'], '2NPRatio': DLatch1['_INVNPRatio'],
-        '3Finger': DLatch2['_INVFinger'], '3ChannelWidth': DLatch2['_INVChannelWidth'], '3ChannelLength': DLatch2['_INVChannelLength'], '3NPRatio': DLatch2['_INVNPRatio']}
+        import DRCchecker
+        _DRC = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','D_FF','D_FF')
+        _DRC.DRCchecker()
 
-    import Sche
-    _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
-    _Sche.SchematicGenerator()
+        # import LVSchecker
+        # _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+        # _LVS.LVSchecker()
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/LVS_run')
-    myfile = open('./Netlist/D_FF.src.net', 'rb')
-    ftp.storbinary('STOR D_FF.src.net', myfile)
-    myfile.close()
-    ftp.close()
+        # import PEX
+        # _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
+        # _PEX.PEXchecker()
 
-    # import DRCchecker
-    # _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run','D_FF','D_FF')
-    # _DRC.DRCchecker()
+        # import Posim
+        # _Posim = Posim.POSIM('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/Ocean_script','Setup_Hold_CLK2Q_simulation.ocn','/mnt/sdc/junung/simulation/tb_D_FF/spectre/schematic','/mnt/sdc/junung/OPUS/Samsung28n/lib_spectre/LN28LPP_Spectre.lib', 'ss', '/mnt/sdc/junung/PEX_run/D_FF.pex.netlist')
+        # _Posim.Posimchecker()
 
-    # import LVSchecker
-    # _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
-    # _LVS.LVSchecker()
-
-    # import PEX
-    # _PEX = PEX.PEX('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/PEX_run','D_FF','D_FF','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
-    # _PEX.PEXchecker()
-
-    # import Posim
-    # _Posim = Posim.POSIM('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/OPUS/Samsung28n/Ocean_script','Setup_Hold_CLK2Q_simulation.ocn','/mnt/sdc/junung/simulation/tb_D_FF/spectre/schematic','/mnt/sdc/junung/OPUS/Samsung28n/lib_spectre/LN28LPP_Spectre.lib', 'ss', '/mnt/sdc/junung/PEX_run/D_FF.pex.netlist')
-    # _Posim.Posimchecker()
-
-    print("time : ", time.time() - start)
+        #print("time : ", time.time() - start)

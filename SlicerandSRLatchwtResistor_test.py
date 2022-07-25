@@ -915,15 +915,15 @@ if __name__ == '__main__':
         _SRPowerLine = False
 
         ##12G
-        _SLCLKinputPMOSFinger1 = 3#random.randint(1,15)
-        _SLCLKinputPMOSFinger2 = 3#random.randint(1,15)
-        _SLPMOSFinger = 2#random.randint(1,15)
+        _SLCLKinputPMOSFinger1 = 4#random.randint(1,15)
+        _SLCLKinputPMOSFinger2 = 2#random.randint(1,15)
+        _SLPMOSFinger = 4#random.randint(1,15)
         _SLPMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
-        _SLNMOSFinger = 1#random.randint(1,15)
-        _SLDATAinputNMOSFinger = 8#random.randint(2,15)
-        _SLCLKinputNMOSFinger = 20#random.randint(1,15)
+        _SLNMOSFinger = 2#random.randint(1,15)
+        _SLDATAinputNMOSFinger = 9#random.randint(2,15)
+        _SLCLKinputNMOSFinger = 16#random.randint(1,15)
         _SLNMOSChannelWidth = 1000#random.randrange(700,3500,10)#(200,1050,2)
-        _SLCLKinputNMOSChannelWidth = 300#random.randrange(700,3500,10)#(200,1050,2)
+        _SLCLKinputNMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
         _SLChannelLength = 30#30
         _SLDummy = True
         _SLXVT = 'SLVT'
@@ -941,11 +941,11 @@ if __name__ == '__main__':
         _SLNumVIAMet12COX = None
         _SLNumVIAMet12COY = None
         _SLPowerLine = False
-        _N = 4#random.randint(1,8)
+        _N = 2#random.randint(1,8)
         _InvChannelWidth = 200#random.randrange(700,750,10)#(200,400,2)
         _InvChannelLength = 30
         _InvFinger = 15#random.randint(5,16)
-        _InvNPRatio = 3##round(2+random.random())
+        _InvNPRatio = 2##round(2+random.random())
         _InvVDD2VSSHeight = None
         _InvDummy = True
         _InvNumSupplyCoX = None
@@ -1091,6 +1091,8 @@ if __name__ == '__main__':
         myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
         ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
         myfile.close()
+
+
 
         # import ftplib
         #

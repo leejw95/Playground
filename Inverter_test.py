@@ -242,11 +242,11 @@ class _Inverter(StickDiagram._StickDiagram) :
                                          [self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSSupplyRouting']['_XYCoordinates'][i][0] + self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], self._DesignParameter['NbodyContact']['_XYCoordinates'][0][1]]])
 
         self._DesignParameter['_NMOSSupplyRouting'] = self._PathElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1'][0], _Datatype = DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates = [], _Width = None)
-        self._DesignParameter['_NMOSSupplyRouting']['_Width'] = _DRCObj._Metal1MinWidth
+        self._DesignParameter['_NMOSSupplyRouting']['_Width'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
         self._DesignParameter['_NMOSSupplyRouting']['_XYCoordinates'] = tmpNMOSSupplyRouting
 
         self._DesignParameter['_PMOSSupplyRouting'] = self._PathElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1'][0], _Datatype = DesignParameters._LayerMapping['METAL1'][1], _XYCoordinates = [], _Width = None)
-        self._DesignParameter['_PMOSSupplyRouting']['_Width'] = _DRCObj._Metal1MinWidth
+        self._DesignParameter['_PMOSSupplyRouting']['_Width'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']
         self._DesignParameter['_PMOSSupplyRouting']['_XYCoordinates'] = tmpPMOSSupplyRouting
 
 
@@ -376,11 +376,13 @@ class _Inverter(StickDiagram._StickDiagram) :
         if DesignParameters._Technology != '028nm' :
             self._DesignParameter['_PPLayer'] = self._PathElementDeclaration(_Layer = DesignParameters._LayerMapping['PIMP'][0],_Datatype = DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates = [], _Width=None)
             self._DesignParameter['_PPLayer']['_Width'] = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']
-            self._DesignParameter['_PPLayer']['_XYCoordinates'] = [[self._DesignParameter['_PMOS']['_XYCoordinates'][0], self._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0]]]
+            self._DesignParameter['_PPLayer']['_XYCoordinates'] = [[self._DesignParameter['_PMOS']['_XYCoordinates'][0], [self._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][0],
+                                                                                                                            self.CeilMinSnapSpacing(self._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1], 2*MinSnapSpacing)]]]
 
             self._DesignParameter['_NPLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NIMP'][0], _Datatype=DesignParameters._LayerMapping['NIMP'][1], _XYCoordinates=[], _Width=None)
             self._DesignParameter['_NPLayer']['_Width'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_NPLayer']['_XWidth']
-            self._DesignParameter['_NPLayer']['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0], self._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0]]]
+            self._DesignParameter['_NPLayer']['_XYCoordinates'] = [[self._DesignParameter['_NMOS']['_XYCoordinates'][0], [self._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][0],
+                                                                                                                            self.CeilMinSnapSpacing(self._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1], 2*MinSnapSpacing)]]]
 
 
             _SupplyRailYwidth = _DRCObj._CoMinWidth * _NumSupplyCoY + _DRCObj._CoMinSpace * _NumSupplyCoY

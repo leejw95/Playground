@@ -689,7 +689,9 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
             self._DesignParameter['_AdditionalPPLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['PIMP'][0], _Datatype=DesignParameters._LayerMapping['PIMP'][1], _XYCoordinates=[], _Width=None)
             self._DesignParameter['_AdditionalPPLayer']['_Width'] = self._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PPLayer']['_XWidth']
-            self._DesignParameter['_AdditionalPPLayer']['_XYCoordinates']=[[self._DesignParameter['_PMOS']['_XYCoordinates'][0], [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], self.FloorMinSnapSpacing(self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'][0][1]-self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']//2-_DRCObj._NpMinEnclosureOfPo,MinSnapSpacing)]]]
+            self._DesignParameter['_AdditionalPPLayer']['_XYCoordinates']=[[self._DesignParameter['_PMOS']['_XYCoordinates'][0], 
+                                            [self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], 
+                                            self.FloorMinSnapSpacing(self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_XYCoordinates'][0][1]-self._DesignParameter['_ViaPoly2Met1OnPMOSControlTG']['_DesignObj']._DesignParameter['_POLayer']['_YWidth']//2-_DRCObj._NpMinEnclosureOfPo,MinSnapSpacing)]]]
 
 
 

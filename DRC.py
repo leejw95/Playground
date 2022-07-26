@@ -835,8 +835,7 @@ class DRCNW:
             self._NwMinSpacetoRX=60
             self._NwMinSpacetoNactive = 60
             self._NwMinSpacetoPactive = 60
-            self.kf = 60
-            self._NwMinSpacetoSLVT = 170  # ADDED! (by JiCho)
+            self._NwMinSpacetoXVT = 170  # ADDED! (by JiCho)
             self._NwMinArea = 500000
 
         if DesignParameters._Technology=='065nm':
@@ -849,6 +848,7 @@ class DRCNW:
             self._NwMinSpacetoNactive=160
             self._NwMinSpacetoPactive=160 # Nwell space to PP added by junung
             self._NwMinArea = 640000
+            self._NwMinSpacetoXVT = 0  # ADDED! (by JiCho)
 
         if DesignParameters._Technology=='090nm':
             self._NwMinWidth=620

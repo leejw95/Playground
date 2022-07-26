@@ -56,9 +56,11 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         self._DesignParameter['Shift_Register_Odd']=self._SrefElementDeclaration(_DesignObj=D_FF._DFF(_Name='dff_odd'.format(_Name)),_Reflect=[1,0,0], _Angle=180)[0]
         self._DesignParameter['Shift_Register_Odd']['_DesignObj']._CalculateDFF(**dict(**DFF_param))
 
-        _tempX_distance=self.CeilMinSnapSpacing((self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0])- \
+        _tempX_distance=self.CeilMinSnapSpacing(max((self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][-1][0])- \
                        (self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XYCoordinates'][0][0])+\
-                        self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth']/2+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth']/2+_DRCObj._PolygateMinSpace, MinSnapSpacing)
+                        self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth']/2+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_PODummyLayer']['_XWidth']/2+_DRCObj._PolygateMinSpace, \
+                        self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][-1][0]+\
+                       -(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0][0])+_DRCObj._CoMinWidth+_DRCObj._CoMinSpace), MinSnapSpacing)
 
         _tempY_distance=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][0][0][1]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][0][1]
 
@@ -233,7 +235,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         tmp=[]
 
         self._DesignParameter['_DownPMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_DownPMOSXVT']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_Width']
+        self._DesignParameter['_DownPMOSXVT']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_Width'], 2*MinSnapSpacing) + 2*MinSnapSpacing
 
         for i in range(0,Ynum):
             tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSXVTRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)], \
@@ -247,7 +249,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         tmp=[]
 
         self._DesignParameter['_DownNMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_DownNMOSXVT']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_Width']
+        self._DesignParameter['_DownNMOSXVT']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_Width'], 2*MinSnapSpacing) + 2*MinSnapSpacing
 
         for i in range(0,Ynum):
             tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardNMOSXVTRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)], \
@@ -261,7 +263,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         tmp=[]
 
         self._DesignParameter['_UpPMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTPLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_UpPMOSXVT']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_Width']
+        self._DesignParameter['_UpPMOSXVT']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_Width'], 2*MinSnapSpacing) + 2*MinSnapSpacing
 
         for i in range(0,Ynum):
             tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSXVTRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)], \
@@ -275,7 +277,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         tmp=[]
 
         self._DesignParameter['_UpNMOSXVT']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][0], _Datatype=DesignParameters._LayerMapping[_XVTNLayerLayerMapping][1],_XYCoordinates=[],_Width=100)
-        self._DesignParameter['_UpNMOSXVT']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_Width']
+        self._DesignParameter['_UpNMOSXVT']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_Width'], 2*MinSnapSpacing) + 2*MinSnapSpacing
 
         for i in range(0,Ynum):
             tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardNMOSXVTRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)], \
@@ -292,8 +294,8 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         self._DesignParameter['_UpPMOSPP']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_UpPMOSPP']['_Width'],2*MinSnapSpacing)
 
         for i in range(0,Ynum):
-            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][0]-10*MinSnapSpacing, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)], \
-                        [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][-1][0]+10*MinSnapSpacing, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)]]
+            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][0]-6*MinSnapSpacing, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)], \
+                        [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][-1][0]+6*MinSnapSpacing, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_UpwardPMOSPPRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)]]
                        )
 
         self._DesignParameter['_UpPMOSPP']['_XYCoordinates']=tmp
@@ -306,15 +308,32 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         self._DesignParameter['_DownPMOSPP']['_Width']=self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownPMOSPP']['_Width'],2*MinSnapSpacing)
 
         for i in range(0,Ynum):
-            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][0]-10*MinSnapSpacing, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)], \
-                        [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][-1][0]+10*MinSnapSpacing, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)]]
+            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][0]-6*MinSnapSpacing, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)], \
+                        [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][-1][0]+6*MinSnapSpacing, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1] + self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_DownwardPMOSPPRouting']['_XYCoordinates'][0][0][1]-i*(_tempY_distance)]]
                        )
 
         self._DesignParameter['_DownPMOSPP']['_XYCoordinates']=tmp
 
         del tmp
 
+
         _CenterX=(self._DesignParameter['_VSSMet1']['_XYCoordinates'][0][0][0]+self._DesignParameter['_VSSMet1']['_XYCoordinates'][0][1][0])/2
+
+
+        if Ynum > 1 :
+            self._DesignParameter['_NWLayer']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1],_XYCoordinates=[],_Width=100)
+            self._DesignParameter['_NWLayer']['_Width']=2*self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownPMOSNW']['_XYCoordinates'][0][1][1]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][0][1],2*MinSnapSpacing)
+
+            tmp=[]
+            for i in range(0, Ynum-1):
+                tmp.append([[self.FloorMinSnapSpacing(min(self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownPMOSNW']['_XYCoordinates'][0][0][0]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownPMOSNW']['_Width']//2, self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_UpPMOSXVT']['_XYCoordinates'][0][0][0]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_UpPMOSXVT']['_Width']//2-_DRCObj._NwMinSpacetoXVT), MinSnapSpacing)-2*MinSnapSpacing, \
+                             self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][0][1]-_tempY_distance*i], \
+                            [self.CeilMinSnapSpacing(max(2*_CenterX-(self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownPMOSNW']['_XYCoordinates'][0][0][0]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownPMOSNW']['_Width']//2), 2*_CenterX-(self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_UpPMOSXVT']['_XYCoordinates'][0][0][0]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_UpPMOSXVT']['_Width']//2-_DRCObj._NwMinSpacetoXVT)), MinSnapSpacing), \
+                             self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][0][0][1]-_tempY_distance*i]])
+
+            self._DesignParameter['_NWLayer']['_XYCoordinates']=tmp
+
+            del tmp
 
         self._DesignParameter['_Met3SigRouting_even']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3'][0], _Datatype=DesignParameters._LayerMapping['METAL3'][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_Met3SigRouting_even']['_Width']=self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyNMOSRoutingXTG']['_Width']
@@ -352,20 +371,21 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         self._DesignParameter['_Met2SigRouting_X_even_odd']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']=self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_Met2OnOutput']['_Width']
 
-        tmp=[]
 
 
-        for j in range(0, int((len(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'])/2)*2)):
-            tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][Xnum-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'][0][0],\
-                         self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][j][0][1]], \
-                        [(self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][Xnum-1][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][0][0][0]), \
-                         self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][j][0][1]]])
-        if Ynum%2==1:
-            tmp.pop()
+        if Ynum > 1 :
+            tmp=[]
+            for j in range(0, int((len(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'])/2)*2)):
+                tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][Xnum-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_XYCoordinates'][0][0],\
+                             self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][j][0][1]], \
+                            [(self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][Xnum-1][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][0][0][0]), \
+                             self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][j][0][1]]])
+            if Ynum%2==1:
+                tmp.pop()
 
-        self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates']=tmp
+            self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates']=tmp
 
-        del tmp
+            del tmp
 
         self._DesignParameter['_Met2SigRouting_Y_even_odd']=self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[],_Width=100)
         self._DesignParameter['_Met2SigRouting_Y_even_odd']['_Width']=self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']
@@ -378,14 +398,14 @@ class _ShiftRegister(StickDiagram._StickDiagram):
                 tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][Xnum-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][0],\
                              self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][j*Xnum+Xnum-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][1]],\
                             [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][Xnum-1][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][0],\
-                             self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates'][j][0][1]-self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']/2]])
+                             self.CeilMinSnapSpacing(self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates'][j][0][1]-self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']/2, MinSnapSpacing)]])
             # if Ynum % 2 == 1:
             #     del tmp[-1]
             for i in range(0,len(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'])):
                 tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][Xnum-1][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][0],\
                              self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][j*Xnum+Xnum-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][1]],\
                             [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][Xnum-1][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][0],\
-                             self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates'][j][0][1]+self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']/2]])
+                             self.CeilMinSnapSpacing(self._DesignParameter['_Met2SigRouting_X_even_odd']['_XYCoordinates'][j][0][1]+self._DesignParameter['_Met2SigRouting_X_even_odd']['_Width']/2, MinSnapSpacing)]])
             # if Ynum % 2 == 1:
             #     del tmp[-1]
 
@@ -424,14 +444,14 @@ class _ShiftRegister(StickDiagram._StickDiagram):
                 tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][0]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][0]),\
                              self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][j*Xnum][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][1]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][1]],\
                             [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][0]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_XYCoordinates'][i][0]),\
-                             self._DesignParameter['_Met2SigRouting_X_odd_even']['_XYCoordinates'][j][0][1]-self._DesignParameter['_Met2SigRouting_X_odd_even']['_Width']/2]])
+                             self.CeilMinSnapSpacing(self._DesignParameter['_Met2SigRouting_X_odd_even']['_XYCoordinates'][j][0][1]-self._DesignParameter['_Met2SigRouting_X_odd_even']['_Width']/2, MinSnapSpacing)]])
             # if Ynum % 2 == 0:
             #     del tmp[-1]
             for i in range(0,len(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'])):
                 tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][0],\
                              self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][(j+1)*Xnum][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][1]],\
                             [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch1']['_DesignObj']._DesignParameter['_TransmissionGate1']['_DesignObj']._DesignParameter['_SupplyRoutingYTG']['_XYCoordinates'][i][0][0],\
-                             self._DesignParameter['_Met2SigRouting_X_odd_even']['_XYCoordinates'][j][0][1]+self._DesignParameter['_Met2SigRouting_Y_odd_even']['_Width']/2]])
+                             self.CeilMinSnapSpacing(self._DesignParameter['_Met2SigRouting_X_odd_even']['_XYCoordinates'][j][0][1]+self._DesignParameter['_Met2SigRouting_Y_odd_even']['_Width']/2, MinSnapSpacing)]])
             #if Ynum % 2 == 0:
             #     del tmp[-1]
 
@@ -482,11 +502,17 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
             tmp=[]
 
-            for i in range(0,Xnum):
-                tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
-                            [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
-                tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
-                            [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
+            if Ynum > 1:
+                for i in range(0,Xnum):
+                    tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
+                                [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
+                    tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
+                                [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
+
+            # else:
+            #     for i in range(0,Xnum):
+            #         tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][1]], \
+            #                     [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKRouting']['_XYCoordinates'][0][-1][1]]])
 
             self._DesignParameter['_Met5CLKRouting']['_XYCoordinates']=tmp
 
@@ -497,16 +523,21 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
             tmp=[]
 
-            for i in range(0,Xnum):
-                tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
-                            [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
-                tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
-                            [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
+            if Ynum > 1:
+                for i in range(0,Xnum):
+                    tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
+                                [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
+                    tmp.append([[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
+                                [self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
 
+            # else :
+            #     for i in range(0,Xnum):
+            #         tmp.append([[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][1]], \
+            #                     [self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][-1][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['_Met5CLKbRouting']['_XYCoordinates'][0][-1][1]]])
 
-            self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates']=tmp
+                self._DesignParameter['_Met5CLKbRouting']['_XYCoordinates']=tmp
 
-            del tmp
+                del tmp
 
             self._DesignParameter['_CLKpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLK')
             self._DesignParameter['_CLKbpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL5PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL5PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='CLKb')
@@ -538,10 +569,10 @@ class _ShiftRegister(StickDiagram._StickDiagram):
         tmp=[]
 
         for i in range(0, len(self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'])):
-            tmp.append([(self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][0][0]+self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][1][0])/2, self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][0][1]])
+            tmp.append([self.CeilMinSnapSpacing((self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][0][0]+self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][1][0])/2, MinSnapSpacing), self._DesignParameter['_UpwardVDDMet1']['_XYCoordinates'][i][0][1]])
 
         for i in range(0, len(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'])):
-            tmp.append([(self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][0][0]+self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][1][0])/2, self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][0][1]])
+            tmp.append([self.CeilMinSnapSpacing((self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][0][0]+self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][1][0])/2, MinSnapSpacing), self._DesignParameter['_DownwardVDDMet1']['_XYCoordinates'][i][0][1]])
 
         self._DesignParameter['_VDDpin']['_XYCoordinates']=tmp
 
@@ -564,12 +595,12 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
         for j in range(0,(Ynum+1)//2):
             for i in range(Xnum*j,Xnum*(j+1)):
-                self._DesignParameter['_Q<{0}>pin'.format(i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][1][1])/2]], \
+                self._DesignParameter['_Q<{0}>pin'.format(i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Even']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]+(self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['Shift_Register_Even']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][1][1])/2, MinSnapSpacing)]], \
                                                                                                     _Mag=0.05, _Angle=0, _TEXT='Q<{0}>'.format(i+Xnum*j))
 
         for j in range(0,Ynum//2):
             for i in range(Xnum*j,Xnum*(j+1)):
-                self._DesignParameter['_Q<{0}>pin'.format((2*(j+1)*Xnum-1)-i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][1][1])/2]], \
+                self._DesignParameter['_Q<{0}>pin'.format((2*(j+1)*Xnum-1)-i+Xnum*j)] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL3PIN'][0], _Datatype=DesignParameters._LayerMapping['METAL3PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][0]-self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][0], self.CeilMinSnapSpacing(self._DesignParameter['Shift_Register_Odd']['_XYCoordinates'][i][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_XYCoordinates'][0][1]-(self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][0][1]+self._DesignParameter['Shift_Register_Odd']['_DesignObj']._DesignParameter['dlatch2']['_DesignObj']._DesignParameter['_INV1OuttoINV2InRouting']['_XYCoordinates'][0][1][1])/2, MinSnapSpacing)]], \
                                                                                                     _Mag=0.05, _Angle=0, _TEXT='Q<{0}>'.format((2*(j+1)*Xnum-1)-i+Xnum*j))
 
        # del self._DesignParameter['_Q<{0}>pin'.format(0)]
@@ -592,7 +623,7 @@ class _ShiftRegister(StickDiagram._StickDiagram):
 
 if __name__ == '__main__':
     import time
-
+    import random
     start = time.time()
 
     # input_params={'DFF_param':{'DLatch1_param':{'_TGFinger': 3, '_TGChannelWidth': 500, '_TGChannelLength': 60, '_TGNPRatio': 2,
@@ -613,94 +644,113 @@ if __name__ == '__main__':
     #                  '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'LVT', '_INVSupplyLine': None}},
     #                     'Xnum':2,'Ynum':2,'_CLK_Grid':True}
 
-    input_params={'DFF_param':{'DLatch1_param':{'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 5, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
-                     '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
-                     '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
-                     '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
-                     '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None},\
-                                'DLatch2_param':{'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
-                     '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
-                     '_INVFinger': 10, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
-                     '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
-                     '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
-                     '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
-                     '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
-                     '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}},
-                        'Xnum':7,'Ynum':7,'_CLK_Grid':True}
+    # input_params={'DFF_param':{'DLatch1_param':{'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
+    #                  '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
+    #                  '_INVFinger': 5, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
+    #                  '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
+    #                  '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
+    #                  '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
+    #                  '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
+    #                  '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None},\
+    #                             'DLatch2_param':{'_TGFinger': 3, '_TGChannelWidth': 200, '_TGChannelLength': 30, '_TGNPRatio': 2,
+    #                  '_TGVDD2VSSHeight': None, '_Dummy': True, '_TGXVT': 'SLVT', '_TGSupplyMet1YWidth': None,
+    #                  '_INVFinger': 10, '_INVChannelWidth': 200, '_INVChannelLength': 30, '_INVNPRatio': 2, \
+    #                  '_INVVDD2VSSHeight': None, '_INVNumSupplyCoX': None, '_INVNumSupplyCoY': None, \
+    #                  '_INVSupplyMet1XWidth': None, '_INVSupplyMet1YWidth': None, '_INVNumViaPoly2Met1CoX': None, \
+    #                  '_INVNumViaPoly2Met1CoY': None, '_INVNumViaPMOSMet12Met2CoX': None, \
+    #                  '_INVNumViaPMOSMet12Met2CoY': None, '_INVNumViaNMOSMet12Met2CoX': None,
+    #                  '_INVNumViaNMOSMet12Met2CoY': None, '_INVXVT': 'SLVT', '_INVSupplyLine': None}},
+    #                     'Xnum':7,'Ynum':7,'_CLK_Grid':True}
+
+    for i in range(0,50):
+        ### 028nm ###
+        # width=random.randrange(200,400,2)
+        # npratio=1 + round(random.random(),1) * 2
+        #
+        # input_params={'DFF_param':{'DLatch1_param':{'_TGFinger':random.randint(1,13), '_TGChannelWidth':width, '_TGChannelLength':30, '_TGNPRatio':npratio,
+        #                  '_TGVDD2VSSHeight':None, '_Dummy':True, '_TGXVT':'SLVT', '_TGSupplyMet1YWidth':None,
+        #                  '_INVFinger':random.randint(5,16), '_INVChannelWidth':width, '_INVChannelLength':30, '_INVNPRatio':npratio, \
+        #                  '_INVVDD2VSSHeight':None, '_INVNumSupplyCoX':None, '_INVNumSupplyCoY':None, \
+        #                  '_INVSupplyMet1XWidth':None, '_INVSupplyMet1YWidth':None, '_INVNumViaPoly2Met1CoX':None, \
+        #                  '_INVNumViaPoly2Met1CoY':None, '_INVNumViaPMOSMet12Met2CoX':None, \
+        #                  '_INVNumViaPMOSMet12Met2CoY':None, '_INVNumViaNMOSMet12Met2CoX':None,
+        #                  '_INVNumViaNMOSMet12Met2CoY':None, '_INVXVT':'SLVT', '_INVSupplyLine':None},\
+        #                 'DLatch2_param':{'_TGFinger':random.randint(1,13), '_TGChannelWidth':width, '_TGChannelLength':30, '_TGNPRatio':npratio,
+        #                  '_TGVDD2VSSHeight':None, '_Dummy':True, '_TGXVT':'SLVT', '_TGSupplyMet1YWidth':None,
+        #                  '_INVFinger':random.randint(5,16), '_INVChannelWidth':width, '_INVChannelLength':30, '_INVNPRatio':npratio, \
+        #                  '_INVVDD2VSSHeight':None, '_INVNumSupplyCoX':None, '_INVNumSupplyCoY':None, \
+        #                  '_INVSupplyMet1XWidth':None, '_INVSupplyMet1YWidth':None, '_INVNumViaPoly2Met1CoX':None, \
+        #                  '_INVNumViaPoly2Met1CoY':None, '_INVNumViaPMOSMet12Met2CoX':None, \
+        #                  '_INVNumViaPMOSMet12Met2CoY':None, '_INVNumViaNMOSMet12Met2CoX':None,
+        #                  '_INVNumViaNMOSMet12Met2CoY':None, '_INVXVT':'SLVT', '_INVSupplyLine':None}}, 'Xnum':random.randrange(1,10),'Ynum':random.randrange(1,10), '_CLK_Grid':True}
+
+        ### 065nm ###
+        width=random.randrange(500,800,10)
+        npratio= (width + random.randrange(500,1600,10)) / width
+
+        input_params={'DFF_param':{'DLatch1_param':{'_TGFinger':random.randint(1,13), '_TGChannelWidth':width, '_TGChannelLength':60, '_TGNPRatio':npratio,
+                         '_TGVDD2VSSHeight':None, '_Dummy':False, '_TGXVT':'LVT', '_TGSupplyMet1YWidth':None,
+                         '_INVFinger':random.randint(5,16), '_INVChannelWidth':width, '_INVChannelLength':60, '_INVNPRatio':npratio, \
+                         '_INVVDD2VSSHeight':None, '_INVNumSupplyCoX':None, '_INVNumSupplyCoY':None, \
+                         '_INVSupplyMet1XWidth':None, '_INVSupplyMet1YWidth':None, '_INVNumViaPoly2Met1CoX':None, \
+                         '_INVNumViaPoly2Met1CoY':None, '_INVNumViaPMOSMet12Met2CoX':None, \
+                         '_INVNumViaPMOSMet12Met2CoY':None, '_INVNumViaNMOSMet12Met2CoX':None,
+                         '_INVNumViaNMOSMet12Met2CoY':None, '_INVXVT':'LVT', '_INVSupplyLine':None},\
+                        'DLatch2_param':{'_TGFinger':random.randint(1,13), '_TGChannelWidth':width, '_TGChannelLength':60, '_TGNPRatio':npratio,
+                         '_TGVDD2VSSHeight':None, '_Dummy':False, '_TGXVT':'LVT', '_TGSupplyMet1YWidth':None,
+                         '_INVFinger':random.randint(5,16), '_INVChannelWidth':width, '_INVChannelLength':60, '_INVNPRatio':npratio, \
+                         '_INVVDD2VSSHeight':None, '_INVNumSupplyCoX':None, '_INVNumSupplyCoY':None, \
+                         '_INVSupplyMet1XWidth':None, '_INVSupplyMet1YWidth':None, '_INVNumViaPoly2Met1CoX':None, \
+                         '_INVNumViaPoly2Met1CoY':None, '_INVNumViaPMOSMet12Met2CoX':None, \
+                         '_INVNumViaPMOSMet12Met2CoY':None, '_INVNumViaNMOSMet12Met2CoX':None,
+                         '_INVNumViaNMOSMet12Met2CoY':None, '_INVXVT':'LVT', '_INVSupplyLine':None}}, 'Xnum':random.randrange(1,10),'Ynum':random.randrange(1,10), '_CLK_Grid':True}
 
 
-    # DesignParameters._Technology = '065nm'
-    _Name = 'Shift_Register'
 
-    ShiftRegisterObj = _ShiftRegister(_DesignParameter=None, _Name='Shift_Register')
+        #DesignParameters._Technology = '028nm'
+        _Name = 'Shift_Register'
 
-    ShiftRegisterObj._CalculateShiftRegister(**input_params)
+        SRObj = _ShiftRegister(_DesignParameter=None, _Name='Shift_Register')
+        # print ("A!!")
+        SRObj._CalculateShiftRegister(**input_params)
 
-    ShiftRegisterObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=ShiftRegisterObj._DesignParameter)
-    _fileName = 'Shift_Register.gds'
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
+        SRObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=SRObj._DesignParameter)
+        _fileName = 'Shift_Register.gds'
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
 
-    tmp = ShiftRegisterObj._CreateGDSStream(ShiftRegisterObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp = SRObj._CreateGDSStream(SRObj._DesignParameter['_GDSFile']['_GDSFile'])
 
-    tmp.write_binary_gds_stream(testStreamFile)
+        tmp.write_binary_gds_stream(testStreamFile)
 
-    testStreamFile.close()
-    print("time : ", time.time() - start)
+        testStreamFile.close()
 
-    print('###############      Sending to FTP Server...      ##################')
 
-    import ftplib
+        print('###############      Sending to FTP Server...      ##################')
 
-    # ftp = ftplib.FTP('141.223.29.62')
-    # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
-    # myfile = open('Shift_Register.gds', 'rb')
-    # ftp.storbinary('STOR Shift_Register.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        import ftplib
 
-    # ftp = ftplib.FTP('141.223.29.62')
-    # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
-    # myfile = open('Shift_Register.gds', 'rb')
-    # ftp.storbinary('STOR Shift_Register.gds', myfile)
-    # myfile.close()
-    # ftp.close()
+        # ftp = ftplib.FTP('141.223.29.62')
+        # ftp.login('jicho0927', 'cho89140616!!')
+        # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+        # myfile = open('Shift_Register.gds', 'rb')
+        # ftp.storbinary('STOR Shift_Register.gds', myfile)
+        # myfile.close()
+        # ftp.close()
+        #
+        # import DRCchecker
+        # _DRC = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n','/mnt/sdc/jicho0927/OPUS/SAMSUNG28n/DRC/run','Shift_Register','Shift_Register')
+        # _DRC.DRCchecker()
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('Shift_Register.gds', 'rb')
-    ftp.storbinary('STOR Shift_Register.gds', myfile)
-    myfile.close()
-    ftp.close()
 
-    # import lvstest
-    # _LVS = lvstest.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','D_Latch','D_Latch','/mnt/sdc/junung/OPUS/Samsung28n')
-    # _LVS.LVSchecker()
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/tsmc65n')
+        myfile = open('Shift_Register.gds', 'rb')
+        ftp.storbinary('STOR Shift_Register.gds', myfile)
+        myfile.close()
+        ftp.close()
 
-    subckt_list = ['TransmissionGate', 'Inverter1', 'Inverter2']
-    essential_param = \
-        {'1Finger' : input_params['DFF_param']['DLatch1_param']['_TGFinger'], '1ChannelWidth' : input_params['DFF_param']['DLatch1_param']['_TGChannelWidth'], '1ChannelLength' : input_params['DFF_param']['DLatch1_param']['_TGChannelLength'], '1NPRatio' : input_params['DFF_param']['DLatch1_param']['_TGNPRatio'],
-        '2Finger' :  input_params['DFF_param']['DLatch1_param']['_INVFinger'], '2ChannelWidth' :  input_params['DFF_param']['DLatch1_param']['_INVChannelWidth'], '2ChannelLength' :  input_params['DFF_param']['DLatch1_param']['_INVChannelLength'], '2NPRatio' :  input_params['DFF_param']['DLatch1_param']['_INVNPRatio'],
-        '3Finger' :  input_params['DFF_param']['DLatch2_param']['_INVFinger'], '3ChannelWidth' :  input_params['DFF_param']['DLatch2_param']['_INVChannelWidth'], '3ChannelLength' :  input_params['DFF_param']['DLatch2_param']['_INVChannelLength'], '3NPRatio' :  input_params['DFF_param']['DLatch2_param']['_INVNPRatio']}
 
-    import Sche
-    _Sche = Sche.Schematic(essential_param, _Name, subckt_list)
-    _Sche.SchematicGenerator()
-    _Sche.ArrayGenerator('Shift_Register','D_FF',input_params['Xnum'] * input_params['Ynum'])
-
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('junung', 'chlwnsdnd1!')
-    ftp.cwd('/mnt/sdc/junung/LVS_run')
-    myfile = open('./Netlist/Shift_Register.src.net', 'rb')
-    ftp.storbinary('STOR Shift_Register.src.net', myfile)
-    myfile.close()
-    ftp.close()
-
-    import LVSchecker
-    _LVS = LVSchecker.LVStest('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n', '/mnt/sdc/junung/LVS_run','Shift_Register','Shift_Register','/mnt/sdc/junung/OPUS/Samsung28n', Vir_Connect=True)
-    _LVS.LVSchecker()
+        import DRCchecker
+        _DRC = DRCchecker.DRCchecker('jicho0927','cho89140616!!','/mnt/sdc/jicho0927/OPUS/tsmc65n','/mnt/sdc/jicho0927/OPUS/tsmc65n/DRC/run','Shift_Register','Shift_Register')
+        _DRC.DRCchecker()

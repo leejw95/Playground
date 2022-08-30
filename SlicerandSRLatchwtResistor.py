@@ -883,53 +883,182 @@ if __name__ == '__main__':
     #         m += 1
     #     print ("@@@@@@@@@@@@@@@@@@", i, j, k,l,m,n,o)
 
-    # 20Gb/s Slicer Sizing ##
-    _XRBNum = 4
-    _YRBNum = 6
-    _TransmissionGateFinger = 10
-    _TransmissionGateChannelWidth = 230  ##200nm ~ 500nm range
+    # # 20Gb/s Slicer Sizing ##
+    # _XRBNum = 4
+    # _YRBNum = 6
+    # _TransmissionGateFinger = 10
+    # _TransmissionGateChannelWidth = 230  ##200nm ~ 500nm range
+    # _TransmissionGateChannelLength = 30
+    # _TransmissionGateNPRatio = 2  ##Default = 2
+    # _TransmissionGateDummy = True  # T/F?
+    # _TransmissionGateVDD2VSSHeight = 2426  ## FIXED
+    # _TransmissionGateSLVT = True  # T/F?
+    #
+    # _PowerLine = True  # T/F?
+    # _InputLine = False
+    #
+    # _ResistorWidth = 1250
+    # _ResistorLength = 1234  ## minimum : 400
+    # _ResistorMetXCO = None
+    # _ResistorMetYCO = None
+    #
+    # _PMOSSubringType = False  ## FIXED
+    # _PMOSSubringXWidth = None  ## FIXED
+    # _PMOSSubringYWidth = None  ## FIXED
+    # _PMOSSubringWidth = 170
+    #
+    # _NMOSSubringType = True  ## FIXED
+    # _NMOSSubringXWidth = None  ## FIXED
+    # _NMOSSubringYWidth = None  ## FIXED
+    # _NMOSSubringWidth = _PMOSSubringWidth
+    #
+    # _TotalSubringType = True  ## FIXED
+    # _TotalSubringXWidth = None  ## FIXED
+    # _TotalSubringYWidth = None  ## FIXED
+    # _TotalSubringWidth = _PMOSSubringWidth
+    # _SRFinger1 = 5
+    # _SRFinger2 = 1
+    # _SRFinger3 = 2
+    # _SRFinger4 = 2
+    # _SRNMOSChannelWidth1 = 200
+    # _SRPMOSChannelWidth1 = 400
+    # _SRNMOSChannelWidth2 = 200
+    # _SRPMOSChannelWidth2 = 400
+    # _SRNMOSChannelWidth3 = 200
+    # _SRPMOSChannelWidth3 = 400
+    # _SRNMOSChannelWidth4 = 200
+    # _SRPMOSChannelWidth4 = 400
+    # _SRChannelLength = 30
+    # _SRNPRatio = None
+    # _SRVDD2VSSHeightAtOneSide = None
+    # _SRDummy = True
+    # _SRNumSupplyCoX = None
+    # _SRNumSupplyCoY = 2
+    # _SRSupplyMet1XWidth = None
+    # _SRSupplyMet1YWidth = None
+    # _SRNumViaPoly2Met1CoX = None
+    # _SRNumViaPoly2Met1CoY = None
+    # _SRNumViaPMOSMet12Met2CoX = None
+    # _SRNumViaPMOSMet12Met2CoY = None
+    # _SRNumViaNMOSMet12Met2CoX = None
+    # _SRNumViaNMOSMet12Met2CoY = None
+    # _SRNumViaPMOSMet22Met3CoX = None
+    # _SRNumViaPMOSMet22Met3CoY = None
+    # _SRNumViaNMOSMet22Met3CoX = None
+    # _SRNumViaNMOSMet22Met3CoY = None
+    # _SRSLVT = True
+    # _SRPowerLine = True
+    # _SLCLKinputPMOSFinger1 = 6
+    # _SLCLKinputPMOSFinger2 = 3
+    # _SLPMOSFinger = 2
+    # _SLPMOSChannelWidth = 1000
+    # _SLDATAinputNMOSFinger = 12
+    # _SLNMOSFinger = 2
+    # _SLCLKinputNMOSFinger = 8
+    # _SLNMOSChannelWidth = 1000
+    # _SLCLKinputNMOSChannelWidth = 1000
+    # _SLChannelLength = 30
+    # _SLDummy = True
+    # _SLSLVT = True
+    # _SLGuardringWidth = 200
+    # _SLGuardring = True
+    # _SLSlicerGuardringWidth = 200
+    # _SLSlicerGuardring = None
+    # _SLNumSupplyCOY = None
+    # _SLNumSupplyCOX = None
+    # _SLSupplyMet1XWidth = None
+    # _SLSupplyMet1YWidth = None
+    # _SLVDD2VSSHeight = None
+    # _SLNumVIAPoly2Met1COX = None
+    # _SLNumVIAPoly2Met1COY = None
+    # _SLNumVIAMet12COX = None
+    # _SLNumVIAMet12COY = None
+    # _SLPowerLine = True
+    # _N = 1
+    # _InvFinger = 16
+    # _InvChannelWidth = 200
+    # _InvChannelLength = 30
+    # _InvNPRatio = 3
+    # _InvVDD2VSSHeight = None
+    # _InvDummy = True
+    # _InvNumSupplyCoX = None
+    # _InvNumSupplyCoY = None
+    # _InvSupplyMet1XWidth = None
+    # _InvSupplyMet1YWidth = None
+    # _InvNumViaPoly2Met1CoX = None
+    # _InvNumViaPoly2Met1CoY = None
+    # _InvNumViaPMOSMet12Met2CoX = None
+    # _InvNumViaPMOSMet12Met2CoY = None
+    # _InvNumViaNMOSMet12Met2CoX = None
+    # _InvNumViaNMOSMet12Met2CoY = None
+    # _InvSLVT = True
+    # _InvPowerLine = None
+    # _SLSRInvSupplyLineX4 = True
+
+    _XRBNum = 4#random.randint(3,6)
+    _YRBNum = 8#40//_XRBNum
+    _TransmissionGateFinger = 8#8#random.randint(2,13)
+    _TransmissionGateChannelWidth = 270#random.randrange(200,400,10)
     _TransmissionGateChannelLength = 30
-    _TransmissionGateNPRatio = 2  ##Default = 2
-    _TransmissionGateDummy = True  # T/F?
-    _TransmissionGateVDD2VSSHeight = 2426  ## FIXED
-    _TransmissionGateSLVT = True  # T/F?
+    _TransmissionGateNPRatio = 2#round(2 + random.random())  ##Default = 2
+    _ResistorWidth = 1250#random.randrange(1000,2000, 100)#random.randrange(1500,2500, 100), random.randrange(1000,2000, 2)
+    _ResistorLength = 1234#_ResistorWidth + random.randrange(100,1000, 100)##_ResistorWidth + random.randrange(100,1000, 100), random.randrange(400,2000, 2)  ## minimum : 400
+    _TransmissionGateVDD2VSSHeight = 2426  ## 40nm : 4000, 65nm : 5000, 90nm : 6000  if DRC error occurs, set this value for minimum value
 
-    _PowerLine = True  # T/F?
-    _InputLine = False
-
-    _ResistorWidth = 1250
-    _ResistorLength = 1234  ## minimum : 400
+    _TransmissionGateDummy = True  # T//F? only true @ 40, 28nm process
+    _TransmissionGateSLVT = True  # T//F?
+    _PowerLine = True  # T//F?
+    _InputLine = True
     _ResistorMetXCO = None
-    _ResistorMetYCO = None
-
+    _ResistorMetYCO = 2#random.randint(1,3)
     _PMOSSubringType = False  ## FIXED
     _PMOSSubringXWidth = None  ## FIXED
     _PMOSSubringYWidth = None  ## FIXED
-    _PMOSSubringWidth = 170
-
+    _PMOSSubringWidth = 170  ## 40, 65nm : 170, 90nm : 200
     _NMOSSubringType = True  ## FIXED
     _NMOSSubringXWidth = None  ## FIXED
     _NMOSSubringYWidth = None  ## FIXED
     _NMOSSubringWidth = _PMOSSubringWidth
-
     _TotalSubringType = True  ## FIXED
     _TotalSubringXWidth = None  ## FIXED
     _TotalSubringYWidth = None  ## FIXED
     _TotalSubringWidth = _PMOSSubringWidth
-    _SRFinger1 = 5
-    _SRFinger2 = 1
-    _SRFinger3 = 2
-    _SRFinger4 = 2
-    _SRNMOSChannelWidth1 = 200
-    _SRPMOSChannelWidth1 = 400
-    _SRNMOSChannelWidth2 = 200
-    _SRPMOSChannelWidth2 = 400
-    _SRNMOSChannelWidth3 = 200
-    _SRPMOSChannelWidth3 = 400
-    _SRNMOSChannelWidth4 = 200
-    _SRPMOSChannelWidth4 = 400
+
+
+    # #12G
+    _SRRandWidth = 200#random.randrange(700,1400,10)#(200,400,2)
+    _SRNPRatio = 2##round(2 + random.random())
+    _SRFinger1 = 2#random.randint(1,15)
+    _SRPMOSChannelWidth1 = _SRRandWidth * _SRNPRatio
+    _SRNMOSChannelWidth1 = _SRRandWidth
+    _SRFinger2 = 1#random.randint(1,15)
+    _SRPMOSChannelWidth2 = _SRRandWidth * _SRNPRatio
+    _SRNMOSChannelWidth2 = _SRRandWidth
+    _SRFinger3 = 1#random.randint(1,15)
+    _SRPMOSChannelWidth3 = _SRRandWidth * _SRNPRatio
+    _SRNMOSChannelWidth3 = _SRRandWidth
+    _SRFinger4 = 1#random.randint(1,15)
+    _SRPMOSChannelWidth4 = _SRRandWidth * _SRNPRatio
+    _SRNMOSChannelWidth4 = _SRRandWidth
     _SRChannelLength = 30
-    _SRNPRatio = None
+
+    #20G
+    # _SRRandWidth = 200#random.randrange(200,400,2)#random.randrange(700,1400,10)#(200,400,2)
+    # _SRNPRatio = 2#round(2 + random.random())
+    # _SRFinger1 = 5#random.randint(1,15)
+    # _SRPMOSChannelWidth1 = _SRRandWidth * _SRNPRatio
+    # _SRNMOSChannelWidth1 = _SRRandWidth
+    # _SRFinger2 = 1#random.randint(1,15)
+    # _SRPMOSChannelWidth2 = _SRRandWidth * _SRNPRatio
+    # _SRNMOSChannelWidth2 = _SRRandWidth
+    # _SRFinger3 = 2#random.randint(1,15)
+    # _SRPMOSChannelWidth3 = _SRRandWidth * _SRNPRatio
+    # _SRNMOSChannelWidth3 = _SRRandWidth
+    # _SRFinger4 = 2#random.randint(1,15)
+    # _SRPMOSChannelWidth4 = _SRRandWidth * _SRNPRatio
+    # _SRNMOSChannelWidth4 = _SRRandWidth
+    # _SRChannelLength = 30
+
     _SRVDD2VSSHeightAtOneSide = None
     _SRDummy = True
     _SRNumSupplyCoX = None
@@ -947,22 +1076,24 @@ if __name__ == '__main__':
     _SRNumViaNMOSMet22Met3CoX = None
     _SRNumViaNMOSMet22Met3CoY = None
     _SRSLVT = True
-    _SRPowerLine = True
-    _SLCLKinputPMOSFinger1 = 6
-    _SLCLKinputPMOSFinger2 = 3
-    _SLPMOSFinger = 2
-    _SLPMOSChannelWidth = 1000
-    _SLDATAinputNMOSFinger = 12
-    _SLNMOSFinger = 2
-    _SLCLKinputNMOSFinger = 8
-    _SLNMOSChannelWidth = 1000
-    _SLCLKinputNMOSChannelWidth = 1000
-    _SLChannelLength = 30
+    _SRPowerLine = False
+
+    ##12G
+    _SLCLKinputPMOSFinger1 = 4#random.randint(1,15)
+    _SLCLKinputPMOSFinger2 = 2#random.randint(1,15)
+    _SLPMOSFinger = 4#random.randint(1,15)
+    _SLPMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
+    _SLNMOSFinger = 2#random.randint(1,15)
+    _SLDATAinputNMOSFinger = 9#random.randint(2,15)
+    _SLCLKinputNMOSFinger = 16#random.randint(1,15)
+    _SLNMOSChannelWidth = 1000#random.randrange(700,3500,10)#(200,1050,2)
+    _SLCLKinputNMOSChannelWidth = 500#random.randrange(700,3500,10)#(200,1050,2)
+    _SLChannelLength = 30#30
     _SLDummy = True
     _SLSLVT = True
-    _SLGuardringWidth = 200
+    _SLGuardringWidth = 200#200
     _SLGuardring = True
-    _SLSlicerGuardringWidth = 200
+    _SLSlicerGuardringWidth = 200#200
     _SLSlicerGuardring = None
     _SLNumSupplyCOY = None
     _SLNumSupplyCOX = None
@@ -973,12 +1104,12 @@ if __name__ == '__main__':
     _SLNumVIAPoly2Met1COY = None
     _SLNumVIAMet12COX = None
     _SLNumVIAMet12COY = None
-    _SLPowerLine = True
-    _N = 1
-    _InvFinger = 16
-    _InvChannelWidth = 200
+    _SLPowerLine = False
+    _N = 2#random.randint(1,8)
+    _InvChannelWidth = 200#random.randrange(700,750,10)#(200,400,2)
     _InvChannelLength = 30
-    _InvNPRatio = 3
+    _InvFinger = 15#random.randint(5,16)
+    _InvNPRatio = 3##round(2+random.random())
     _InvVDD2VSSHeight = None
     _InvDummy = True
     _InvNumSupplyCoX = None
@@ -994,6 +1125,7 @@ if __name__ == '__main__':
     _InvSLVT = True
     _InvPowerLine = None
     _SLSRInvSupplyLineX4 = True
+
 
     DesignParameters._Technology = '028nm'
 
@@ -1050,31 +1182,31 @@ if __name__ == '__main__':
 
     print ('###############      Sending to FTP Server...      ##################')
 
-    import base64
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
-    ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
-    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    myfile.close()
-    ftp.close()
-
-    import ftplib
-
-    ftp = ftplib.FTP('141.223.22.156')
-    ftp.login('myungguk', 'vmfl!225')
-    ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
-    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
-    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
-    myfile.close()
-    ftp.close()
-
+    # import base64
     # ftp = ftplib.FTP('141.223.22.156')
-    # ftp.login('jicho0927', 'cho89140616!!')
-    # ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    # ftp.login(base64.b64decode('anVudW5n'), base64.b64decode('Y2hsd25zZG5kMSE='))
+    # ftp.cwd('/mnt/sdc/junung/OPUS/Samsung28n')
     # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
     # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
     # myfile.close()
+    # ftp.close()
+    #
+    # import ftplib
+    #
+    # ftp = ftplib.FTP('141.223.22.156')
+    # ftp.login('myungguk', 'vmfl!225')
+    # ftp.cwd('/mnt/sdd/myungguk/OPUS/ss28nm_workspace')
+    # myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    # ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    # myfile.close()
+    # ftp.close()
+
+    ftp = ftplib.FTP('141.223.29.62')
+    ftp.login('jicho0927', 'cho89140616!!')
+    ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
+    myfile = open('SlicerandSRLatchwtResistor.gds', 'rb')
+    ftp.storbinary('STOR SlicerandSRLatchwtResistor.gds', myfile)
+    myfile.close()
 
 #     print ('###############      DRC checking... {}/100      ##################'.format(tries + 1))
 #

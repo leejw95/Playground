@@ -1262,7 +1262,7 @@ if __name__ == '__main__' :
     import random
     start = time.time()
 
-    for i in range (0, 50) :
+    for i in range (0, 1) :
         #     _TGFinger = 3
         #     _TGChannelWidth = 500
         #     _TGChannelLength = 60
@@ -1342,20 +1342,18 @@ if __name__ == '__main__' :
         # _INVXVT = 'SLVT'
         # _INVSupplyLine = None
 
-
-        ## random DRC set for 65nm
-        _TGFinger = random.randint(1,13)
-        _TGChannelWidth = random.randrange(500,800,10)
-        _TGChannelLength = 60
-        _TGNPRatio = 2
+        _TGFinger = 4#random.randint(1,13)
+        _TGChannelWidth = 200#random.randrange(200,400,10)
+        _TGChannelLength = 30
+        _TGNPRatio = 2#1 + round(random.random(),1) * 2
         _TGVDD2VSSHeight = None
-        _Dummy = False
-        _TGXVT = 'LVT'
+        _Dummy = True
+        _TGXVT = 'SLVT'
         _TGSupplyMet1YWidth = None
-        _INVFinger = random.randint(5,16)
-        _INVChannelWidth = random.randrange(500,800,10)
-        _INVChannelLength = 60
-        _INVNPRatio = 2
+        _INVFinger = 15#random.randint(5,16)
+        _INVChannelWidth = 200#random.randrange(200,400,10)
+        _INVChannelLength = 30
+        _INVNPRatio = 2#1 + round(random.random(),1) *2
         _INVVDD2VSSHeight = None
         _INVNumSupplyCoX = None
         _INVNumSupplyCoY = None
@@ -1367,8 +1365,34 @@ if __name__ == '__main__' :
         _INVNumViaPMOSMet12Met2CoY = None
         _INVNumViaNMOSMet12Met2CoX = None
         _INVNumViaNMOSMet12Met2CoY = None
-        _INVXVT = 'LVT'
+        _INVXVT = 'SLVT'
         _INVSupplyLine = None
+        ## random DRC set for 65nm
+        # _TGFinger = random.randint(1,13)
+        # _TGChannelWidth = random.randrange(500,800,10)
+        # _TGChannelLength = 60
+        # _TGNPRatio = 2
+        # _TGVDD2VSSHeight = None
+        # _Dummy = False
+        # _TGXVT = 'LVT'
+        # _TGSupplyMet1YWidth = None
+        # _INVFinger = random.randint(5,16)
+        # _INVChannelWidth = random.randrange(500,800,10)
+        # _INVChannelLength = 60
+        # _INVNPRatio = 2
+        # _INVVDD2VSSHeight = None
+        # _INVNumSupplyCoX = None
+        # _INVNumSupplyCoY = None
+        # _INVSupplyMet1XWidth = None
+        # _INVSupplyMet1YWidth = None
+        # _INVNumViaPoly2Met1CoX = None
+        # _INVNumViaPoly2Met1CoY = None
+        # _INVNumViaPMOSMet12Met2CoX = None
+        # _INVNumViaPMOSMet12Met2CoY = None
+        # _INVNumViaNMOSMet12Met2CoX = None
+        # _INVNumViaNMOSMet12Met2CoY = None
+        # _INVXVT = 'LVT'
+        # _INVSupplyLine = None
 
 
         
@@ -1417,8 +1441,8 @@ if __name__ == '__main__' :
         # ftp.close()
 
         ftp = ftplib.FTP('141.223.29.62')
-        ftp.login('junung', 'chlwnsdnd1!')
-        ftp.cwd('/mnt/sdc/junung/OPUS/TSMC65n')
+        ftp.login('jicho0927', 'cho89140616!!')
+        ftp.cwd('/mnt/sdc/jicho0927/OPUS/SAMSUNG28n')
         myfile = open('D_Latch.gds', 'rb')
         ftp.storbinary('STOR D_Latch.gds', myfile)
         myfile.close()
@@ -1430,9 +1454,9 @@ if __name__ == '__main__' :
         # _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/Samsung28n','/mnt/sdc/junung/OPUS/Samsung28n/DRC/run',_Name,_Name)
         # _DRC.DRCchecker()
 
-        import DRCchecker
-        _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/TSMC65n','/mnt/sdc/junung/OPUS/TSMC65n/DRC/DRC_run',_Name,_Name)
-        _DRC.DRCchecker()
+        # import DRCchecker
+        # _DRC = DRCchecker.DRCchecker('junung','chlwnsdnd1!','/mnt/sdc/junung/OPUS/TSMC65n','/mnt/sdc/junung/OPUS/TSMC65n/DRC/DRC_run',_Name,_Name)
+        # _DRC.DRCchecker()
 
         # ftp = ftplib.FTP('141.223.29.62')
         # ftp.login('junung', 'chlwnsdnd1!')

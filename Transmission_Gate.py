@@ -675,7 +675,7 @@ class _TransmissionGate (StickDiagram._StickDiagram) :
 
 
         self._DesignParameter['_NWLayer'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['NWELL'][0], _Datatype=DesignParameters._LayerMapping['NWELL'][1], _XYCoordinates=[], _Width=None)
-        if DesignParameters._Technology == '028nm' : self._DesignParameter['_NWLayer']['_Width'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] + 2 * _DRCObj._NwMinSpacetoSLVT
+        if DesignParameters._Technology == '028nm' : self._DesignParameter['_NWLayer']['_Width'] = self._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_SLVTLayer']['_XWidth'] + 2 * _DRCObj._NwMinSpacetoXVT
         else : self._DesignParameter['_NWLayer']['_Width'] = self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive2
         self._DesignParameter['_NWLayer']['_XYCoordinates'] = [[[self._DesignParameter['_PMOS']['_XYCoordinates'][0][0], self.CeilMinSnapSpacing(self._DesignParameter['_NbodycontactTG']['_XYCoordinates'][0][1] + 
                             self._DesignParameter['_NbodycontactTG']['_DesignObj']._DesignParameter['_NPLayer']['_YWidth'] // 2 + _DRCObj._NwMinEnclosurePactive2, MinSnapSpacing)], 

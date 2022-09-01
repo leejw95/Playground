@@ -232,7 +232,7 @@ class _DLatch (StickDiagram._StickDiagram) :
         if _ViaNum == None:
             _ViaNum = int(abs(self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][0] -
                     self._DesignParameter['_Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][0][0] + 
-                    self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2)
+                    self._DesignParameter['_Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] - _DRCObj._VIAxMinWidth - _DRCObj._MetalxMinEnclosureCO2 * 2)
                     // (_DRCObj._VIAxMinWidth + _DRCObj._VIAxMinSpace))
         if _ViaNum < 2 :
             _ViaNum = 2

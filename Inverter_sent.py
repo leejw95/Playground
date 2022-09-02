@@ -13,6 +13,10 @@ import ViaMet32Met4
 import math
 import random
 import Inverter_test
+import SST_resistor
+import SST_GuardRingResistor
+
+
 
 class _Inverter_sent(StickDiagram._StickDiagram) :
     _ParametersForDesignCalculation = dict(_Finger1 = None, _Finger2 = None,_Finger3 = None,_ChannelWidth1 = None, _ChannelLength1 = None,_ChannelWidth2 = None, _ChannelLength2 = None,_ChannelWidth3 = None, _ChannelLength3 = None, _NPRatio = None,\
@@ -409,7 +413,7 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
              self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]]]
 
 
-        ##################################### Inv2,Inv3 Pin Delete#######################################
+        ##################################### Inv1,Inv2,Inv3 Pin Delete#######################################
 
         self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_VDDpin'] = \
             self._TextElementDeclaration(_Layer = DesignParameters._LayerMapping['METAL1PIN'][0], _Datatype = DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation = [0,1,2], _Reflect = [0,0,0], _XYCoordinates=[[0,0]], _Mag = 0.05, _Angle = 0, _TEXT = '')
@@ -419,124 +423,164 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
             self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],_Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]],_Mag=0.05, _Angle=0, _TEXT='')
         self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_VSSpin'] = \
             self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],_Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]],_Mag=0.05, _Angle=0, _TEXT='')
+        self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VDDpin'] = \
+            self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],_Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]],_Mag=0.05, _Angle=0, _TEXT='')
+        self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VSSpin'] = \
+            self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],_Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]],_Mag=0.05, _Angle=0, _TEXT='')
+
 
         self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_Inputpin'] = \
             self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='')
         self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_Outputpin'] = \
             self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='')
-
         self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_Inputpin'] = \
             self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='')
         self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_Outputpin'] = \
             self._TextElementDeclaration( _Layer=DesignParameters._LayerMapping['METAL2PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL2PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='')
-        #Inv1 outputpin Delete
         self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_Outputpin'] = \
             self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL2PIN'][1],_Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]],_Mag=0.05, _Angle=0, _TEXT='')
+        self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_Inputpin'] = \
+            self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1],_Presentation=[0, 1, 2], _Reflect=[0, 0, 0], _XYCoordinates=[[0, 0]],_Mag=0.05, _Angle=0, _TEXT='')
+
+        ##################################### Inv1 IN, VDD, VSS pin Genteration #######################################
+
+        _VDD2VSSMinHeight = self.CeilMinSnapSpacing(
+            self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2
+            + max(self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], \
+                  self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnNMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'])
+            + self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] // 2
+            + max(self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'], \
+                  self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_ViaMet12Met2OnPMOSOutput']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth']) + \
+                2 * _DRCObj._Metal1DefaultSpace +self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_YWidth'] + \
+            2 * _DRCObj._Metal1DefaultSpace + _DRCObj._Metal1MinSpace, MinSnapSpacing)
 
 
-        #  self._DesignParameter['Inverter']['_DesignObj']._DesignParameter['_Inputpin']['_XYCoordinates'] = [[\
-        #    self.CeilMinSnapSpacing(round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][0] + self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][0]) / 2),MinSnapSpacing),\
-       #             self.CeilMinSnapSpacing(round((self._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][1]) / 2),MinSnapSpacing)]]
+        self._DesignParameter['_VDDpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VDD')
+        self._DesignParameter['_VSSpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='VSS')
+        self._DesignParameter['_Inputpin'] = self._TextElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1PIN'][0],_Datatype=DesignParameters._LayerMapping['METAL1PIN'][1], _Presentation=[0, 1, 2], _Reflect=[0, 0, 0],_XYCoordinates=[[0, 0]], _Mag=0.05, _Angle=0, _TEXT='IN')
 
-       # self._DesignParameter['_Outputpin']['_XYCoordinates'] = [[\
-       #     self.CeilMinSnapSpacing(round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][0] + self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][0]) / 2),MinSnapSpacing),\
-        #     self.CeilMinSnapSpacing(round((self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][0][1] + self._DesignParameter['_OutputRouting']['_XYCoordinates'][0][1][1]) / 2),MinSnapSpacing)]]
+        self._DesignParameter['_VDDpin']['_XYCoordinates'] = [[0, _VDD2VSSMinHeight]]
+        self._DesignParameter['_VSSpin']['_XYCoordinates'] = [[0, 0]]
+        self._DesignParameter['_Inputpin']['_XYCoordinates'] = [
+            [self.CeilMinSnapSpacing(round((self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][0] + \
+                                            self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][0]) / 2),MinSnapSpacing),
+             self.CeilMinSnapSpacing(round((self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_InputRouting']['_XYCoordinates'][0][0][1] + \
+                                            self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_InputRouting']['_XYCoordinates'][0][1][1]) / 2),MinSnapSpacing)]]
 
 
 
-        print((self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 +\
-                                      self._DesignParameter['Inverter3']['_XYCoordinates'][0][0]+self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 )/2\
-                                         -self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2)
-        print( self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']/2)
-        print( self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'])
-        print(  self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'])
 
+        #print( self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'])
+        #print(  self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'])
+
+        if _Finger1 == 2 :
+            self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']=self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']*2
+
+
+        if _Finger1 == 1 or _Finger2 ==1 or _Finger3==1 :
+            raise NotImplementedError("Finger of MOS should be larger than 1!!")
 
 if __name__ == '__main__':
-    import ftplib
-    _Finger3 = 16
-    _Finger2 = 8
-    _Finger1 = 2
+    for i in range(0,100):
+        import ftplib
+        import random
 
-    _ChannelWidth1 = _ChannelWidth2 = _ChannelWidth3 = 200
-    _ChannelLength1 = _ChannelLength2 = _ChannelLength3 = 30
+        _Finger3 = random.randint(2,40)
+        _Finger2 = random.randint(2,40)
+        _Finger1 = random.randint(2,40)
 
-    _NPRatio = 2
-    _VDD2VSSHeight = None
-    _Dummy = True
+       # _Finger3 = 32
+        #_Finger2 = 8
+        #_Finger1 = 2
 
+        _ChannelWidth1 = _ChannelWidth2 = _ChannelWidth3 = random.randrange(200,500,2)
+        _ChannelLength1 = _ChannelLength2 = _ChannelLength3 = random.randrange(30,48,2)
 
-    _NumSupplyCoX1= None
-    _NumSupplyCoY1 = _NumSupplyCoY2=_NumSupplyCoY3=3
-    _NumSupplyCoX2 = None
-    _NumSupplyCoX3 = None
+       # _ChannelWidth1 = _ChannelWidth2 = _ChannelWidth3 = 200
+        #_ChannelLength1 = _ChannelLength2 = _ChannelLength3 = 30
 
-    _SupplyMet1XWidth = None
-    _SupplyMet1YWidth = None
-    _NumViaPoly2Met1CoX = None
-    _NumViaPoly2Met1CoY = None
-    _NumViaPMOSMet12Met2CoX = None
-    _NumViaPMOSMet12Met2CoY = None
-    _NumViaNMOSMet12Met2CoX = None
-    _NumViaNMOSMet12Met2CoY = None
-    _XVT = 'LVT'
-    _SupplyLine = False
-
-    # from Private import MyInfo
-    # import DRCchecker
-    libname = 'Inverter'
-    cellname = 'Inverter'
-    _fileName = cellname + '.gds'
-
-    InputParams = dict(
-        _Finger1=_Finger1,
-        _Finger2=_Finger2,
-        _Finger3=_Finger3,
-        _ChannelWidth1=_ChannelWidth1,
-        _ChannelLength1=_ChannelLength1,
-        _ChannelWidth2=_ChannelWidth2,
-        _ChannelLength2=_ChannelLength2,
-        _ChannelWidth3=_ChannelWidth3,
-        _ChannelLength3=_ChannelLength3,
-        _NPRatio=_NPRatio,
-        _VDD2VSSHeight=_VDD2VSSHeight,
-        _Dummy=_Dummy,
+        _NPRatio = 2
+        _VDD2VSSHeight = None
+        _Dummy = True
 
 
-        _NumSupplyCoX1=_NumSupplyCoX1,
-        _NumSupplyCoY1=_NumSupplyCoY1,
-        _NumSupplyCoX2 = _NumSupplyCoX2,
-        _NumSupplyCoY2 = _NumSupplyCoY2,
-        _NumSupplyCoX3 = _NumSupplyCoX3,
-        _NumSupplyCoY3 = _NumSupplyCoY3,
-        _SupplyMet1XWidth=_SupplyMet1XWidth,
-        _SupplyMet1YWidth=_SupplyMet1YWidth,
-        _NumViaPoly2Met1CoX=_NumViaPoly2Met1CoX,
-        _NumViaPoly2Met1CoY=_NumViaPoly2Met1CoY,
-        _NumViaPMOSMet12Met2CoX=_NumViaPMOSMet12Met2CoX,
-        _NumViaPMOSMet12Met2CoY=_NumViaPMOSMet12Met2CoY,
-        _NumViaNMOSMet12Met2CoX=_NumViaNMOSMet12Met2CoX,
-        _NumViaNMOSMet12Met2CoY=_NumViaNMOSMet12Met2CoY,
-        _XVT=_XVT,
-        _SupplyLine=_SupplyLine
-    )
+        _NumSupplyCoX1= None
+        _NumSupplyCoY1 = _NumSupplyCoY2=_NumSupplyCoY3=3
+        _NumSupplyCoX2 = None
+        _NumSupplyCoX3 = None
+
+        _SupplyMet1XWidth = None
+        _SupplyMet1YWidth = None
+        _NumViaPoly2Met1CoX = None
+        _NumViaPoly2Met1CoY = None
+        _NumViaPMOSMet12Met2CoX = None
+        _NumViaPMOSMet12Met2CoY = None
+        _NumViaNMOSMet12Met2CoX = None
+        _NumViaNMOSMet12Met2CoY = None
+        _XVT = 'LVT'
+        _SupplyLine = False
+
+        # from Private import MyInfo
+        # import DRCchecker
+        libname = 'Inverter'
+        cellname = 'Inverter'
+        _fileName = cellname + '.gds'
+
+        InputParams = dict(
+            _Finger1=_Finger1,
+            _Finger2=_Finger2,
+            _Finger3=_Finger3,
+            _ChannelWidth1=_ChannelWidth1,
+            _ChannelLength1=_ChannelLength1,
+            _ChannelWidth2=_ChannelWidth2,
+            _ChannelLength2=_ChannelLength2,
+            _ChannelWidth3=_ChannelWidth3,
+            _ChannelLength3=_ChannelLength3,
+            _NPRatio=_NPRatio,
+            _VDD2VSSHeight=_VDD2VSSHeight,
+            _Dummy=_Dummy,
+
+
+            _NumSupplyCoX1=_NumSupplyCoX1,
+            _NumSupplyCoY1=_NumSupplyCoY1,
+            _NumSupplyCoX2 = _NumSupplyCoX2,
+            _NumSupplyCoY2 = _NumSupplyCoY2,
+            _NumSupplyCoX3 = _NumSupplyCoX3,
+            _NumSupplyCoY3 = _NumSupplyCoY3,
+            _SupplyMet1XWidth=_SupplyMet1XWidth,
+            _SupplyMet1YWidth=_SupplyMet1YWidth,
+            _NumViaPoly2Met1CoX=_NumViaPoly2Met1CoX,
+            _NumViaPoly2Met1CoY=_NumViaPoly2Met1CoY,
+            _NumViaPMOSMet12Met2CoX=_NumViaPMOSMet12Met2CoX,
+            _NumViaPMOSMet12Met2CoY=_NumViaPMOSMet12Met2CoY,
+            _NumViaNMOSMet12Met2CoX=_NumViaNMOSMet12Met2CoX,
+            _NumViaNMOSMet12Met2CoY=_NumViaNMOSMet12Met2CoY,
+            _XVT=_XVT,
+            _SupplyLine=_SupplyLine
+        )
 
 
 
-    LayoutObj = _Inverter_sent(_DesignParameter=None, _Name=cellname)
-    LayoutObj._CalculateDesignParameter(**InputParams)
-    LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
-    testStreamFile = open('./{}'.format(_fileName), 'wb')
-    tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
+        LayoutObj = _Inverter_sent(_DesignParameter=None, _Name=cellname)
+        LayoutObj._CalculateDesignParameter(**InputParams)
+        LayoutObj._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=LayoutObj._DesignParameter)
+        testStreamFile = open('./{}'.format(_fileName), 'wb')
+        tmp = LayoutObj._CreateGDSStream(LayoutObj._DesignParameter['_GDSFile']['_GDSFile'])
+        tmp.write_binary_gds_stream(testStreamFile)
+        testStreamFile.close()
 
 
-    ftp = ftplib.FTP('141.223.29.62')
-    ftp.login('ljw95', 'dlwodn123')
-    ftp.cwd('/mnt/sdc/ljw95/OPUS/ss28')
-    myfile = open('Inverter.gds', 'rb')
-    ftp.storbinary('STOR Inverter.gds', myfile)
-    myfile.close()
-    ftp.close()
+        ftp = ftplib.FTP('141.223.29.62')
+        ftp.login('ljw95', 'dlwodn123')
+        ftp.cwd('/mnt/sdc/ljw95/OPUS/ss28')
+        myfile = open('Inverter.gds', 'rb')
+        ftp.storbinary('STOR Inverter.gds', myfile)
+        myfile.close()
+        ftp.close()
+
+        import DRCchecker
+        a = DRCchecker.DRCchecker('ljw95','dlwodn123','/mnt/sdc/ljw95/OPUS/ss28','/mnt/sdc/ljw95/OPUS/ss28/DRC/run','Inverter','Inverter',None)
+        a.DRCchecker()
+
+    print ("DRC Clean!!!")
 

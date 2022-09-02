@@ -39,14 +39,9 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
         _DRCObj=DRC.DRC()
         MinSnapSpacing = _DRCObj._MinSnapSpacing
         _Name = self._DesignParameter['_Name']['_Name']
-        #_XYCoordinateOfPbodyContact = [[0, 0]]
+
         _LengthPMOSBtwPO = _DRCObj.DRCPolyMinSpace(_Width=_ChannelWidth1,_ParallelLength=_ChannelLength1) + _ChannelLength1
-        #_LengthPbodyBtwCO = _DRCObj._CoMinWidth + _DRCObj.DRCCOMinSpace(NumOfCOX=_NumberOfPbodyCOX,NumOfCOY=_NumberOfPbodyCOY)
 
-        #####################################Inverter1######################################
-
-        #self._DesignParameter['_ODLayer']['_XWidth']=_DRCObj._CoMinWidth + (_NumberOfPbodyCOX - 1) * _LengthPbodyBtwCO + 2 * _DRCObj._CoMinEnclosureByODAtLeastTwoSide
-        #_NumSupplyCoX = int(( max(self._DesignParameter['_ODLayer']['_XWidth'] + 2 * _DRCObj._PpMinExtensiononPactive2, _DRCObj._PpMinWidth) // (_DRCObj._CoMinWidth + _DRCObj._CoMinSpace2)) + 1
 
         _Inv = copy.deepcopy(Inverter_test._Inverter._ParametersForDesignCalculation)
         _Inv['_Finger'] = _Finger1
@@ -69,9 +64,6 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
         _Inv['_SupplyLine'] = _SupplyLine
 
 
-
-        #['_Inv']['_DesignObj'].
-        #['NbodyContact_iksu']['_DesignObj'].
         self._DesignParameter['Inverter1'] = self._SrefElementDeclaration(_DesignObj=Inverter_test._Inverter(_DesignParameter=None, _Name='Inverter1In{}'.format(_Name)))[0]
         self._DesignParameter['Inverter1']['_DesignObj']._CalculateDesignParameter(**_Inv)
         self._DesignParameter['Inverter1']['_XYCoordinates'] = [[0,0]]
@@ -80,12 +72,6 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
         self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_NWLayer']['_Width']=\
             self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive2
 
-       # self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates']=[]
-       # self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'] = []
-
-
-
-        #print(self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'])
 
         #####################################Inverter2######################################
 
@@ -116,22 +102,8 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
 
         self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] = \
             self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive2
-        '''
-        if _Finger2 > 4:
-            self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_OutputRouting']['_XYCoordinates']=\
-            [[[self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][5][0]+ \
-               self._DesignParameter['Inverter2']['_XYCoordinates'][0][0], \
-               self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_XYCoordinates'][0][1] + \
-               self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_XYCoordinatePMOSOutputRouting']['_XYCoordinates'][-1][1]],\
-              [self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_PMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][5][0]+ \
-               self._DesignParameter['Inverter2']['_XYCoordinates'][0][0], \
-               self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_XYCoordinates'][0][1] + \
-               self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_XYCoordinateNMOSOutputRouting']['_XYCoordinates'][-1][1]]]]
-'''
 
 
-        #self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'] = []
-        #self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'] = []
 
         #####################################Inverter3######################################
         _Inv1 = copy.deepcopy(Inverter_test._Inverter._ParametersForDesignCalculation)
@@ -157,37 +129,13 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
         self._DesignParameter['Inverter3'] = self._SrefElementDeclaration(_DesignObj=Inverter_test._Inverter(_DesignParameter=None, _Name='Inverter3In{}'.format(_Name)))[0]
         self._DesignParameter['Inverter3']['_DesignObj']._CalculateDesignParameter(**_Inv1)
         self._DesignParameter['Inverter3']['_XYCoordinates'] = [[_LengthPMOSBtwPO*((_Finger1+_Finger3)/2+_Finger2+2),0]]
-        #tmp=[]
-        #self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'] = []
-        #self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'] = []
-        #tmp= self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0]-self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0]
 
 
 
         self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_NWLayer']['_Width'] = \
             self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] + 2 * _DRCObj._NwMinEnclosurePactive2
 
-
-
-    #####################################################BP Repositioning###########################################
-
-      #  LenContoCon1 = self._DesignParameter['Inverter2']['_XYCoordinates'][0][0]- self._DesignParameter['Inverter1']['_XYCoordinates'][0][0]+\
-      #                 self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0][0]-\
-      #                  self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][_NumSupplyCoY1*(NumCoX1-1)][0]
-
-      #  LenContoCon2 = self._DesignParameter['Inverter3']['_XYCoordinates'][0][0] - self._DesignParameter['Inverter2']['_XYCoordinates'][0][0] + \
-       #                self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][0][0] - \
-       #                 self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates'][_NumSupplyCoY1 * (NumCoX2 - 1)][0]
-
-
-
-       # self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] = LenContoCon1
-       # self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] = LenContoCon1
-
-       # self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'][0][0] = -LenContoCon2
-       # self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'][0][0] = -LenContoCon2
-
-        #####################################################PNbodyContact Delete###########################################
+        ##################################################### P,NbodyContact Delete ###########################################
 
         self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates']=[]
         self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_DesignObj']._DesignParameter['_COLayer']['_XYCoordinates']=[]
@@ -224,8 +172,6 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
         _Nbodyinputs['_NumberOfNbodyCOX'] = _ContactNum
         _Nbodyinputs['_NumberOfNbodyCOY'] = _NumSupplyCoY1
         _Nbodyinputs['_Met1XWidth'] = 0
-            #self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 + self._DesignParameter['Inverter3']['_XYCoordinates'][0][0] + \
-              #      self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2
         _Nbodyinputs['_Met1YWidth'] = 0
 
 
@@ -247,8 +193,6 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
         _Pbodyinputs['_NumberOfNbodyCOX'] = _ContactNum
         _Pbodyinputs['_NumberOfNbodyCOY'] = _NumSupplyCoY1
         _Pbodyinputs['_Met1XWidth'] = 0
-        # self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2 + self._DesignParameter['Inverter3']['_XYCoordinates'][0][0] + \
-        #      self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth'] / 2
         _Pbodyinputs['_Met1YWidth'] = 0
 
         self._DesignParameter['_Pbodyinputs'] = self._SrefElementDeclaration(_DesignObj=NbodyContact_iksu._NbodyContact(_DesignParameter=None, _Name='_PbodyinputsIn{}'.format(_Name)))[0]
@@ -333,7 +277,7 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
 
 
     ##################################################### Output Met2 Boundary&Routing ###########################################
-        # 가로 Met2  inv1
+        # Horizontal Met2  inv1
         self._DesignParameter['_Met2ouput1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=None)
 
         self._DesignParameter['_Met2ouput1']['_Width'] = _DRCObj._MetalxMinWidth
@@ -345,7 +289,7 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
                self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]]]]
 
 
-        #가로 Met2  inv2
+        #Horizontal Met2  inv2
         self._DesignParameter['_Met2ouput2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=None)
         self._DesignParameter['_Met2ouput2']['_Width'] = _DRCObj._MetalxMinWidth
 
@@ -357,7 +301,7 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
                    self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0] \
                       , self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]]]]
 
-        # 가로 Met2  inv3
+        # Horizontal Met2  inv3
     #    self._DesignParameter['_Met2ouput3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=None)
      #   self._DesignParameter['_Met2ouput3']['_Width'] = _DRCObj._MetalxMinWidth
 
@@ -367,9 +311,9 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
      #         [다음에 이어질 output좌표, \
       #         self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]]]]
 
-        ##################################################### Metal1 added ##########################################
+        ##################################################### Metal1 added in Vin ,Vout Contact ##########################################
 
-        # 가로Met1 inv3
+        # Horizontal Met1 inv3
 
         self._DesignParameter['_Met1ouput2'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],_XYCoordinates=[], _Width=None)
 
@@ -379,7 +323,7 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
             self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]] , \
            [self._DesignParameter['Inverter3']['_XYCoordinates'][0][0], self._DesignParameter['Inverter2']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1] ]]]
 
-        # 가로Met1 inv2
+        # Horizontal Met1 inv2
         self._DesignParameter['_Met1ouput3'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL1'][0], _Datatype=DesignParameters._LayerMapping['METAL1'][1],_XYCoordinates=[], _Width=None)
 
         self._DesignParameter['_Met1ouput3']['_Width'] = _DRCObj._VIAxMinWidth  +  max([_DRCObj._Metal1MinEnclosureVia12,_DRCObj._MetalxMinEnclosureCO2])
@@ -390,9 +334,7 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
 
 
 
-        ##################################################### Via1 added ###########################################
-
-
+        ##################################################### Via1 added to Vin, Vout Contact ###########################################
 
         _Via1added = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
         _Via1added['_ViaMet12Met2NumberOfCOX'] = 1
@@ -473,42 +415,39 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
         #print( self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['NbodyContact']['_XYCoordinates'])
         #print(  self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['PbodyContact']['_XYCoordinates'])
 
-        if _Finger1 == 2 :
-            self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']=self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']*2
+      #  if _Finger1 == 2 :
+      #      self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']=self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_DesignObj']._DesignParameter['_Met1Layer']['_XWidth']*2
 
 
-        if _Finger1 == 1 or _Finger2 ==1 or _Finger3==1 :
-            raise NotImplementedError("Finger of MOS should be larger than 1!!")
+       # if _Finger1 == 1 or _Finger2 ==1 or _Finger3==1 :
+        #    raise NotImplementedError("Finger of MOS should be larger than 1!!")
 
 if __name__ == '__main__':
-    for i in range(0,100):
+    #for i in range(0,100):
         import ftplib
         import random
 
-        _Finger3 = random.randint(2,40)
-        _Finger2 = random.randint(2,40)
-        _Finger1 = random.randint(2,40)
+       # _Finger3 = random.randint(2,40)
+       # _Finger2 = random.randint(2,40)
+        #_Finger1 = random.randint(2,40)
 
-       # _Finger3 = 32
-        #_Finger2 = 8
-        #_Finger1 = 2
+        _Finger3 = 32
+        _Finger2 = 8
+        _Finger1 = 2
 
-        _ChannelWidth1 = _ChannelWidth2 = _ChannelWidth3 = random.randrange(200,500,2)
-        _ChannelLength1 = _ChannelLength2 = _ChannelLength3 = random.randrange(30,48,2)
+        #_ChannelWidth1 = _ChannelWidth2 = _ChannelWidth3 = random.randrange(200,500,2)
+       # _ChannelLength1 = _ChannelLength2 = _ChannelLength3 = random.randrange(30,48,2)
 
-       # _ChannelWidth1 = _ChannelWidth2 = _ChannelWidth3 = 200
-        #_ChannelLength1 = _ChannelLength2 = _ChannelLength3 = 30
+        _ChannelWidth1 = _ChannelWidth2 = _ChannelWidth3 = 200
+        _ChannelLength1 = _ChannelLength2 = _ChannelLength3 = 30
 
         _NPRatio = 2
         _VDD2VSSHeight = None
         _Dummy = True
-
-
         _NumSupplyCoX1= None
-        _NumSupplyCoY1 = _NumSupplyCoY2=_NumSupplyCoY3=3
+        _NumSupplyCoY1 = _NumSupplyCoY2=_NumSupplyCoY3=3   # The number of inverter 1,2,3 contact Y direction
         _NumSupplyCoX2 = None
         _NumSupplyCoX3 = None
-
         _SupplyMet1XWidth = None
         _SupplyMet1YWidth = None
         _NumViaPoly2Met1CoX = None
@@ -578,9 +517,9 @@ if __name__ == '__main__':
         myfile.close()
         ftp.close()
 
-        import DRCchecker
-        a = DRCchecker.DRCchecker('ljw95','dlwodn123','/mnt/sdc/ljw95/OPUS/ss28','/mnt/sdc/ljw95/OPUS/ss28/DRC/run','Inverter','Inverter',None)
-        a.DRCchecker()
+       # import DRCchecker
+       # a = DRCchecker.DRCchecker('ljw95','dlwodn123','/mnt/sdc/ljw95/OPUS/ss28','/mnt/sdc/ljw95/OPUS/ss28/DRC/run','Inverter','Inverter',None)
+       # a.DRCchecker()
 
-    print ("DRC Clean!!!")
+    #print ("DRC Clean!!!")
 

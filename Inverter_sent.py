@@ -277,6 +277,7 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
 
 
     ##################################################### Output Met2 Boundary&Routing ###########################################
+
         # Horizontal Met2  inv1
         self._DesignParameter['_Met2ouput1'] = self._PathElementDeclaration(_Layer=DesignParameters._LayerMapping['METAL2'][0], _Datatype=DesignParameters._LayerMapping['METAL2'][1],_XYCoordinates=[], _Width=None)
 
@@ -332,8 +333,6 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
             self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]], \
             [self._DesignParameter['Inverter2']['_XYCoordinates'][0][0],self._DesignParameter['Inverter1']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]]]]
 
-
-
         ##################################################### Via1 added to Vin, Vout Contact ###########################################
 
         _Via1added = copy.deepcopy(ViaMet12Met2._ViaMet12Met2._ParametersForDesignCalculation)
@@ -353,7 +352,6 @@ class _Inverter_sent(StickDiagram._StickDiagram) :
         self._DesignParameter['_Via1added2']['_XYCoordinates'] = [[self._DesignParameter['Inverter3']['_XYCoordinates'][0][0]+\
              self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_NMOS']['_DesignObj']._DesignParameter['_Met1Layer']['_XYCoordinates'][0][0], \
              self._DesignParameter['Inverter3']['_DesignObj']._DesignParameter['_VIAMOSPoly2Met1']['_XYCoordinates'][0][1]]]
-
 
         ##################################### Inv1,Inv2,Inv3 Pin Delete#######################################
 

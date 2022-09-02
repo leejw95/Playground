@@ -326,6 +326,7 @@ class _StickDiagram:
     def CenterCoordinateAndWidth2XYCoordinate(self, _XYCenter, _WidthX, _WidthY):
         x_list = [_XYCenter[0] - float(_WidthX) / 2, _XYCenter[0] + float(_WidthX) / 2]
         y_list = [_XYCenter[1] - float(_WidthY) / 2, _XYCenter[1] + float(_WidthY) / 2]
+        y_list = [_XYCenter[1] - float(_WidthY) / 2, _XYCenter[1] + float(_WidthY) / 2]
         return self.MinMaxXY2XYCoordinate([x_list, y_list])
 
     def _CreateGDSStream(self, _GDSStructures=[]):
@@ -735,33 +736,33 @@ class _StickDiagram:
         return dict(_DesignParametertype=6, _HorizontalSupplyRailArea=_HorizontalSupplyRailArea, _VerticalSupplyRailArea=_VerticalSupplyRailArea,  _ViaArrays = _ViaArrays, _Rails =_Rails, _SupplyNodeName=_SupplyNodeName)
 
 
-if __name__ == '__main__':
-    from generatorLib.generator_models import ViaMet12Met2
-
-    tmp = _StickDiagram()
-    tmp._DesignParameter = dict(
-        _Name=tmp._NameDeclaration('top'), _GDSFile = tmp._GDSObjDeclaration(None)
-    )
-    tmp._DesignParameter['sref1'] = tmp._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='test1'))[0]
-    tmp._DesignParameter['sref2'] = tmp._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='test2'))[0]
-    tmp._DesignParameter['sref1']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=3,
-                                                                            _ViaMet12Met2NumberOfCOY=4)
-    tmp._DesignParameter['sref2']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=1,
-                                                                            _ViaMet12Met2NumberOfCOY=1)
-    tmp._DesignParameter['sref1']['_XYCoordinates'] = [[0,0]]
-    tmp._DesignParameter['sref2']['_XYCoordinates'] = [[1000,0]]
-    tmp._UpdateDesignParameter2GDSStructure(tmp._DesignParameter)
-
-
-
-    tmpB = ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2test3')
-    tmpB._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=3,
-                                                                            _ViaMet12Met2NumberOfCOY=4)
-    tmpB._DesignParameter['macro_inv'] = tmpB._MacroElementDeclaration(_ReferenceGDS='./PyQTInterface/GDSFile/INV2.gds', _XYCoordinates=[[1200,100]])
-    tmpB._DesignParameter['macro_inv2'] = tmpB._MacroElementDeclaration(_ReferenceGDS='./PyQTInterface/GDSFile/INV2.gds', _XYCoordinates=[[-1200,100]])
-    tmpB._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=tmpB._DesignParameter)
-    testStreamFile=open('./macro.gds','wb')
-
-    tmp1=tmpB._CreateGDSStream(tmpB._DesignParameter['_GDSFile']['_GDSFile'])
-    tmp1.write_binary_gds_stream(testStreamFile)
-    testStreamFile.close()
+# if __name__ == '__main__':
+#     from generatorLib.generator_models import ViaMet12Met2
+#
+#     tmp = _StickDiagram()
+#     tmp._DesignParameter = dict(
+#         _Name=tmp._NameDeclaration('top'), _GDSFile = tmp._GDSObjDeclaration(None)
+#     )
+#     tmp._DesignParameter['sref1'] = tmp._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='test1'))[0]
+#     tmp._DesignParameter['sref2'] = tmp._SrefElementDeclaration(_DesignObj=ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='test2'))[0]
+#     tmp._DesignParameter['sref1']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=3,
+#                                                                             _ViaMet12Met2NumberOfCOY=4)
+#     tmp._DesignParameter['sref2']['_DesignObj']._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=1,
+#                                                                             _ViaMet12Met2NumberOfCOY=1)
+#     tmp._DesignParameter['sref1']['_XYCoordinates'] = [[0,0]]
+#     tmp._DesignParameter['sref2']['_XYCoordinates'] = [[1000,0]]
+#     tmp._UpdateDesignParameter2GDSStructure(tmp._DesignParameter)
+#
+#
+#
+#     tmpB = ViaMet12Met2._ViaMet12Met2(_DesignParameter=None, _Name='ViaMet12Met2test3')
+#     tmpB._CalculateViaMet12Met2DesignParameterMinimumEnclosureX(_ViaMet12Met2NumberOfCOX=3,
+#                                                                             _ViaMet12Met2NumberOfCOY=4)
+#     tmpB._DesignParameter['macro_inv'] = tmpB._MacroElementDeclaration(_ReferenceGDS='./PyQTInterface/GDSFile/INV2.gds', _XYCoordinates=[[1200,100]])
+#     tmpB._DesignParameter['macro_inv2'] = tmpB._MacroElementDeclaration(_ReferenceGDS='./PyQTInterface/GDSFile/INV2.gds', _XYCoordinates=[[-1200,100]])
+#     tmpB._UpdateDesignParameter2GDSStructure(_DesignParameterInDictionary=tmpB._DesignParameter)
+#     testStreamFile=open('./macro.gds','wb')
+#
+#     tmp1=tmpB._CreateGDSStream(tmpB._DesignParameter['_GDSFile']['_GDSFile'])
+#     tmp1.write_binary_gds_stream(testStreamFile)
+#     testStreamFile.close()

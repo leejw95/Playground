@@ -72,18 +72,18 @@ class _PMOS(StickDiagram._StickDiagram):
         # elif _PMOSChannellength >= 48:
         #     _LengthPMOSBtwPO = _DRCObj._PolygateMinSpace2 + _PMOSChannellength
 
-        tmp = []
+        tmp = []#리스트 자료형
 
         for i in range(0, _PMOSNumberofGate):
-            if (_PMOSNumberofGate % 2) == 0:
+            if (_PMOSNumberofGate % 2) == 0:# 게이트수가 짝수면
                 _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate / 2 - 0.5) \
                                  *  _LengthPMOSBtwPO + i *  _LengthPMOSBtwPO,  _XYCoordinateOfPMOS[0][1]]
-            elif (_PMOSNumberofGate % 2) == 1:
+            elif (_PMOSNumberofGate % 2) == 1:#게이트수가 홀수면
                 _xycoordinatetmp = [_XYCoordinateOfPMOS[0][0] - ( _PMOSNumberofGate - 1) / 2 \
                                  *  _LengthPMOSBtwPO + i *  _LengthPMOSBtwPO, _XYCoordinateOfPMOS[0][1]]
             tmp.append(_xycoordinatetmp)
         self._DesignParameter['_POLayer']['_XYCoordinates']=tmp
-
+        print(tmp)
         print ('#############################     DIFF(OD/RX) Layer Calculation    ##############################################')
         #_LengthPMOSBtwPO = _DRCObj.DRCPolygateMinSpace(_DRCObj._CoMinWidth + 2 * _DRCObj._PolygateMinSpace2Co) + self._DesignParameter['_POLayer']['_XWidth']
         # DIFF Layer XWidth and YWidth
@@ -327,7 +327,7 @@ class _PMOS(StickDiagram._StickDiagram):
             for i in range(0, int(_PMOSNumberofGate / 2 + 1)):
                 #_XYCenter=[self._XYCoordinatePMOS[0] -  self._NumberOfPMOSGate / 2 * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinatePMOS[1]]
                 tmp.append([_XYCoordinateOfPMOS[0][0] -  _PMOSNumberofGate / 2 \
-                                                                                       * _LengthPMOSBtwMet1 + i * 2 * _LengthPMOSBtwMet1, _XYCoordinateOfPMOS[0][1]])
+                            * _LengthPMOSBtwMet1 + i * 2 * _LengthPMOSBtwMet1, _XYCoordinateOfPMOS[0][1]])
         elif (_PMOSNumberofGate % 2)==1:
             for i in range(0,int((_PMOSNumberofGate - 1) / 2 + 1)):
                 #_XYCenter=[self._XYCoordinatePMOS[0] - (  (self._NumberOfPMOSGate + 1) / 2 - 0.5) * self._LengthBtwMet1 + i * self._LengthBtwMet1, self._XYCoordinatePMOS[1]]
